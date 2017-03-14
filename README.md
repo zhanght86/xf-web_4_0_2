@@ -1,11 +1,12 @@
+
 # webpack-avalon2_xf #
 
 
+- 然后请手动打开浏览器，在地址栏里输入`http://localhost:10086`，Duang！页面就出来了！
 
-- 启动服务器
-```
-$ npm run dev-hrm
+- 如果是端口号问题，请直接在package.json中修改所想要的端口号即可
 
+- 如果想改变avalon引入（avalon.js替换为avalon.modern.js），请在webpack.config.js的159行处理
 
 ## CLI命令(npm scripts)
 | 命令            | 作用&效果          |
@@ -43,4 +44,3 @@ $ npm run dev-hrm
     ├─index.html # 单页面应用主页（模版）
     └─index.js # 单页面应用入口js文件（包括路由设置）
 ```
-
