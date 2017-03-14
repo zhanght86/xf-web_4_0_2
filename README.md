@@ -1,39 +1,11 @@
-# webpack-avalon2-SPA-seed #
+# webpack-avalon2_xf #
 
-## 项目介绍
-本项目是一个参考诸多大神项目，利用webpack整合avalon2.2.4和mmRouter路由的简单项目：
-- 整合avalon最新主干代码
-- 加入官网路由例子
-- 加入(**https://github.com/RubyLouvre/avalon/issues/1815**)中jinwyp大神写的最佳表单验证实践
-- 加入es6-promise
-- 兼容IE8，请替换lodash版本到3.10.1，该工具插件后面版本不支持IE8
-- 加载图片需要用require('图片路径')来引入
-- 目前html、js、css、图片可以直接打包出来，但是按需加载css还在解决中
 
-## 尚未解决的问题
-- 路由跳转后前个路由页面数据没有统一清除，目前的解决办法是自行一一重置；
-- 使用avalon.modern.js时，在grid页面(bb/second)首次加载很慢，相比avalon.js要卡好一会
-- 在路由页面dd/four中想触发id为root的顶级controller的方法，但报错TypeError: __vmodel__.getRootFun is not a function(…) "in on dir"，
-
-  在(**http://runjs.cn/code/2ufz7n25**)中单独测试controller嵌套调用方法又是正常的
-
-## 使用说明
-
-- 本项目使用包管理工具NPM，因此需要先把本项目所依赖的包下载下来：
-```
-$ npm install
-```
 
 - 启动服务器
 ```
 $ npm run dev-hrm
-```
 
-- 然后请手动打开浏览器，在地址栏里输入`http://localhost:10086`，Duang！页面就出来了！
-
-- 如果是端口号问题，请直接在package.json中修改所想要的端口号即可
-
-- 如果想改变avalon引入（avalon.js替换为avalon.modern.js），请在webpack.config.js的159行处理
 
 ## CLI命令(npm scripts)
 | 命令            | 作用&效果          |
