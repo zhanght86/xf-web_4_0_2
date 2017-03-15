@@ -1,7 +1,16 @@
 ﻿require('es6-promise').polyfill();
-require("../libs/js/H-ui.js");
-import api from "../libs/js/common.js";
+//require("../libs/js/H-ui.js");
+//require("../libs/js/WdatePicker.js");
+//require("../libs/js/H-ui.admin.js");
+//require("../libs/js/layer.js");
 
+//require("./js/Plugins/H-ui.min.css");
+//require("../libs/css/H-ui.admin.css");
+//require("../libs/css/H-ui.ie.css");
+//require("./css/Plugins/H-ui.min.css");
+
+import api from "../libs/js/common.js";
+//layer.confirm('确认要删除吗？');
 //**************************   Login  *****************************//
 require("./js/Login/Login.js");
 
@@ -25,7 +34,6 @@ require("./js/HomePage/HomePageContent.js");
 //**************************   MyApplication  *****************************//
 //**************************   TestFunction  *****************************//
 //**************************   TestFunction  *****************************//
-
 // 关闭log 日志
 avalon.config({
     loader : false
