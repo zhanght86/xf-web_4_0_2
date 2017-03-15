@@ -35,7 +35,7 @@
   "config": {
     "devHost": "localhost",
     "devPort": 8888,
-    "devApi": "",
+    "devApi": "http://192.168.191.106:1021/xf-ms/",
     "devPic": ""
   }
 }

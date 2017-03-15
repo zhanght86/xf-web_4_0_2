@@ -3,7 +3,6 @@
  */
 require("../../css/Login/login.css");
 import api from "../../../libs/js/common.js";
-
 avalon.define({
     $id : "login",
     userName:"",
@@ -14,12 +13,18 @@ avalon.define({
         this.randomNumber = randomNumber(4)
     },
     login : function(){
+        var userName=this.userName;
+        var password=this.userName;
+        //avalon.router.navigate( '/HomePage', 0);
         if(this.randomNumberVal.length==0){
             alert("验证码不能为空")
         }else if(this.randomNumberVal!=this.randomNumber){
             alert("验证码错误")
         }else{
-            api.httpRequest("../../users/userLogin",{},function(data){
+            api.httpRequest("users/userLogin",{
+                "user_name":userName,
+                "user_password":password
+            },function(data){
                 console.log(data)
             },function(err){
                 console.log(err)

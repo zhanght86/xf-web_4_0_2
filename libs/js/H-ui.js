@@ -782,4 +782,4 @@ function displayimg(){
 		$("#top").slideDown(1000);
 	});
 }
-setTimeout("displayimg()",4000);
+setTimeout(displayimg,4000);

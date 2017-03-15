@@ -3,7 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/libs/js/common.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/js/Login/Login.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/js/Plugins/common.js" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
