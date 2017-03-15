@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <!--[if lt IE 9]>
+    <link href="../../libs/css/H-ui.ie.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../libs/lib/html5.js"></script>
+    <script type="text/javascript" src="../../libs/lib/respond.min.js"></script>
+    <script type="text/javascript" src="../../libs/js/PIE_IE678.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="../../libs/css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../../libs/css/H-ui.admin.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/style1.css">
+    
+    <title>统计分析-分类统计</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../../libs/css/layer.css" id="layui_layer_skinlayercss">
+    <link rel="stylesheet" href="../../libs/js/skin/WdatePicker.css">
+    
+
+</head>
+
+<body>
+<div class="wrap">
+
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+
+            <div class="titlt mb10 clearfix">
+                <span class="L">
+                    <img src="../images/home.png">
+                    <a href="javascript:;" onclick="parent.window.parentMethod();">首页</a>>统计分析>分类统计
+                </span>
+                <a href="javascript:;" class="R" onclick="window.location.reload();">
+                    <img src="../images/refresh.png">
+                </a>
+            </div>
+            <div class="con_box mb25 p30">
+                
+                <div class="clearfix p10 cus_ser_scene">
+                    <div class="tab_tit">
+                        <span class="cur" style="width:150px;" >知识分类统计 </span>
+                        <span class="" style="width:150px;" >问答分类统计 </span>
+                    </div>
+                    <div class="tab_con pt30 pb30">
+                        <div class="db">
+							<div class="data_time_statis_top ">
+                                <select class="sel bd L mr-5" id="request_time_type">
+                                <option value="0">全部时间</option>
+                                <option value="1">今日</option>
+                                <option value="2">昨日</option>
+                                <option value="3">过去7天</option>
+                                <option value="4">过去30天</option>
+                                </select>
+                                <select class="sel bd L mr-5" id="channel_id"></select>
+                                <select class="sel bd L mr-5" id="dimension_id"></select>
+                                <span>
+                        日期范围:
+                        <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
+                        <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
+                    </span>
+                                <input type="button" class="btn1" value="查找"  onclick="searchByAttribute()"/>
+                            </div>
+                            <div class="data_time_statis_bot" >
+                            	<h3 class="f16 bold mb-20">知识分类统计</h3>
+                                <div id="classificationDiv">
+                                </div>
+                            	<div class="echart_div" id="commodityId"  style="width:1000px;height:500px">
+                                </div>
+                                <div>
+                                    <table class="access_amount_table ">
+                                        <thead id="theadId">
+                                    </table>
+                                </div>
+                                <div class="text-r pt-10">
+                                    <a href="javascript:;" class=" c-primary" onclick="exportExcel()">导出图表</a>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="dn" >
+                            <div class="data_time_statis_top ">
+                                <select class="sel bd L mr-5" id="request_time_type1">
+                                    <option value="0">全部时间</option>
+                                    <option value="1">今日</option>
+                                    <option value="2">昨日</option>
+                                    <option value="3">过去7天</option>
+                                    <option value="4">过去30天</option>
+                                </select>
+                                <select class="sel bd L mr-5" id="channel_id1"></select>
+                                <select class="sel bd L mr-5" id="dimension_id1"></select>
+                                <span>
+                                	日期范围:
+                                	<input type="text" id="startTime1" onclick="WdatePicker()" class="input-text Wdate " style="width:185px;" placeholder="" > -
+                                    <input type="text" id="endTime1" onclick="WdatePicker()" class="input-text Wdate " style="width:185px;" placeholder="" >
+                                </span>
+                                <input type="button" class="btn1" value="查找" />
+                            </div>
+                            <div class="data_time_statis_bot" >
+                            	<h3 class="f16 bold mb-20">问答分类统计</h3>
+                                <div id="classificationId">
+                                </div>
+                            	<div class="echart_div" id="echart_divId"  style="width:1000px;height:500px">
+                                </div>
+                                <div>
+                                    <table class="access_amount_table ">
+                                        <thead id="theadQaId">
+                                    </table>
+                                </div>
+                                <div class="text-r pt-10">
+                                    <a href="javascript:;" class=" c-primary" >导出图表</a>
+                                </div>                                
+                            </div>                          
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+<script type="text/javascript" src="../../libs/js/jquery.min.js"></script>
+<script src="../../libs/js/common_2.js"></script>
+<script type="text/javascript" src="../../libs/js/layer.js"></script>
+<script type="text/javascript" src="../../libs/js/H-ui.js"></script>
+<script type="text/javascript" src="../../libs/js/H-ui.admin.js"></script>
+<script src="../../libs/js/WdatePicker.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    //弹窗
+    function add_popup(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+
+    
+	
+	
+</script>
+</body>
+</html>
