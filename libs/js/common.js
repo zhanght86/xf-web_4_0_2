@@ -17,9 +17,11 @@ function httpRequest(url, data, sucCallBack,falCallback, needToken, ajaxType) {
     //    jQuery.support.cors = true;
     //}
     //转换字符
-    if (typeof(data) == 'string') {
-        data = JSON.parse(data);
-    }
+
+    //if (typeof(data) == 'string') {
+    //    data = JSON.parse(data);
+    //}
+    data = JSON.stringify(data);
 
     //验证是否需要加token
     var header = {
@@ -32,7 +34,8 @@ function httpRequest(url, data, sucCallBack,falCallback, needToken, ajaxType) {
     }
     $.ajax(url, {
         dataType: 'json', //服务器返回json格式数据
-        type: ajaxType, //HTTP请求类型
+     
+        type: "POST", //HTTP请求类型
         timeout: 10000, //超时时间设置为10秒；
         headers: header,
         data: data,

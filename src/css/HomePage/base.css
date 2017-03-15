@@ -92,16 +92,16 @@ textarea{resize:none;}
 .fl{float:left;}
 .fr{float:right;}
 
-/*文字排版*/  
-.f12{font-size:12px;} 
-.f14{font-size:14px;} 
-.f16{font-size:16px;} 
+/*文字排版*/
+.f12{font-size:12px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
 .f18{font-size:18px;}
-.fb{font-weight:bold} 
-.fn{font-weight:normal;} 
-.t2{text-indent:2em;} 
-.lh150{line-height:1.5;} 
-.lh180{line-height:1.8;} 
+.fb{font-weight:bold}
+.fn{font-weight:normal;}
+.t2{text-indent:2em;}
+.lh150{line-height:1.5;}
+.lh180{line-height:1.8;}
 .lh200{line-height:2;}
 .mt10{ margin-top: 10px;}
 .ml10{ margin-left: 10px;}
@@ -130,10 +130,10 @@ textarea{resize:none;}
 .mb30{margin-bottom: 30px;}
 .pt30{padding-top: 30px;}
 .pb30{padding-bottom: 30px;}
-.unl{text-decoration:underlline;} 
+.unl{text-decoration:underlline;}
 .no_unl{text-decoration:none;}
 
-/*定位及排版*/  
+/*定位及排版*/
 .oh{overflow: hidden;}
 .rel{position:relative;}
 .abs{position:absolute;}

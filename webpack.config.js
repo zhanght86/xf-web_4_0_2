@@ -501,6 +501,20 @@ if (devServer) {
                  *  代理访问
                  *  1、可以绕过同源策略 和 webpack '热更新'结合使用
                  */
+
+                proxy: {
+                 '/api/*': {
+                 target: "http://192.168.191.106:1021/xf-ms/",
+                 secure: true,
+                 ///!*
+                 //* rewrite 的方式扩展性更强，不限制服务的名称
+                 //* *!/
+                 rewrite: function (req) {
+                 req.url = req.url.replace(/^\/devApi/, '');
+                 }
+                 }
+                 }
+
                 /*proxy: {
                     '/devApi/!*': {
                         target: pkg.config.devApi,

@@ -116,7 +116,7 @@ h4{line-height:30px}
 .portfolio-area li{position: relative; float: left; margin-right: 20px; width:162px; height:162px;margin-top: 20px;}
 .portfolio-area li.hover{ z-index:9}
 .portfolio-area li .portfoliobox{ position: absolute; top: 0; left: 0; width: 152px; height: 152px;padding:5px;border: solid 1px #eee; background-color: #fff;}
-.portfolio-area li .checkbox{position: absolute; top: 10px; right: 5px; cursor:pointer}
+.portfolio-area li .checkbox{position: absolute; top: 10px; right: 5px; cursor:pointerz}
 .portfolio-area li.hover .portfoliobox{ height:auto;padding-bottom:10px;box-shadow:0 1px 3px rgba(68, 68, 68,0.3);-moz-box-shadow:0 1px 3px rgba(68, 68, 68,0.3);-webkit-box-shadow:0 1px 3px rgba(68, 68, 68,0.3)}
 .portfolio-area li .picbox{width: 150px; height: 150px;overflow: hidden;text-align: center;vertical-align:middle;display:table-cell; line-height:150px;}
 .portfolio-area li .picbox img{max-width:150px; max-height:150px;vertical-align:middle;_margin-top: expression_r(( 150 - this.height ) / 2);}

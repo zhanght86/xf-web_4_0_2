@@ -1,5 +1,5 @@
 ﻿require('es6-promise').polyfill();
-
+require("../libs/js/H-ui.js");
 import api from "../libs/js/common.js";
 
 //**************************   Login  *****************************//
@@ -58,14 +58,28 @@ function getPage(path){
     console.log("35"+path);
 //  //  var html = "<xmp is='ms-component' class='ms-view-content' ms-widget='{path:\'" + path + "}></xmp>";
     return require("./html/"+path+".html");
-}
+};
+//添加所有路由
+//我的应用
+//let page_MyApplication = ["MyApplication","","","",""];
+////业务建模
+//let page_BusinessModeling = ["BusinessModeling","","","",""];
+////知识管理
+//let page_KnowledgeManagement = ["KnowledgeManagement","","","",""];
+////测试功能
+//let page_TestFunction = ["TestFunction","","","",""];
+////应用分析
+//let page_ApplicationAnalysis = ["ApplicationAnalysis","","","",""];
+////素材管理
+//let page_MaterialManagement = ["MaterialManagement","","","",""];
 
+//登陆以及首页
 var page = ["HomePage","Login"];
-
 page.forEach(function(pathName){
     var html = require("./html/"+pathName+"/"+pathName+".html"); //获取html
     avalon.router.add("/"+pathName,function(){
         root.currPath = html;
+
     })
 });
 avalon.history.start({
@@ -74,7 +88,6 @@ avalon.history.start({
     //hashPrefix: "!",//
     //autoScroll: false //滚动
 });
-
 //默认打开
 var hash = location.hash.replace(/#!?/, '');
 avalon.router.navigate(hash || '/Login', 0);
