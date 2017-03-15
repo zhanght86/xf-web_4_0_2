@@ -20,6 +20,7 @@ function httpRequest(url, data, sucCallBack,falCallback, needToken, ajaxType) {
     if (typeof(data) == 'string') {
         data = JSON.parse(data);
     }
+
     //验证是否需要加token
     var header = {
         'Accept': 'application/json',
