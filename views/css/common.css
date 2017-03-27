@@ -1,5 +1,5 @@
 
-html,body{font-family: "\5FAE\8F6F\96C5\9ED1"; min-width: 1280px;}
+html,body{font-family: "\5FAE\8F6F\96C5\9ED1"; }
 .ellipsis{ display: block; white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
 .btn{padding: 0.39em 1.2em; font-size: 14px; vertical-align: middle; text-align: center; cursor: pointer;border: 1px solid transparent; border-radius: 3px; display: inline-block; *display: inline; *zoom: 1;}
 .btn.btn-blue{background-color: #3ea9fb; color: #fff;}

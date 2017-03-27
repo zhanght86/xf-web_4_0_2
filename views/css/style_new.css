@@ -124,3 +124,6 @@
 .talk_ul .li_right .talk_arrow2{width:10px;height:12px;background:url(../images/talk_arrow2.jpg) no-repeat;position:absolute;right:-10px;top:10px;}
 
 .talk_ul_usersession{box-sizing:border-box;height:100%;overflow:auto;}
+.node_ul{width:530px;}
+.node_ul li{cursor:pointer;}
+.node_ul li:hover{background:#3ea9fb;color:#fff;}

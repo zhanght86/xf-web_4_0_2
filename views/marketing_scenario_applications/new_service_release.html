@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>发布新服务</title>
+    <link href="../css/base.css" type="text/css" rel="stylesheet" />
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/robotSetup.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/addContent.css"/>
+    
+    <!--[if lt IE 9]>
+	<link type="text/css" rel="stylesheet" href="../css/H-ui.ie.css">
+	<script type="text/javascript" src="../lib/html5.js"></script>
+	<script type="text/javascript" src="../lib/respond.min.js"></script>
+	<script type="text/javascript" src="../js/PIE_IE678.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="../css/H-ui.min.css">
+	<link rel="stylesheet" href="../css/H-ui.admin.css">
+    <link rel="stylesheet" href="../css/zTreeStyle.css ">
+	<link rel="stylesheet" href="../css/common2.css">
+    <link rel="stylesheet" href="../css/style_new.css">
+    <link rel="stylesheet" href="../lib/autocomplete-0.3.0/autocomplete-0.3.0.min.css" />
+</head>
+<body>
+
+<div class="main warp">
+    <div class="crumbs-nav bgwhite mt20">
+        <span class="cn-lable">你曾经路过此地：</span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+    </div>
+
+    <div class="addContent pd30">
+        <div class="r-cont-hd mb-20">
+            <span>发布新服务</span>
+        </div>
+        <div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">发布名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input  type="text" class="bk-gray input-text" placeholder="" style="width:392px;" >
+                    <div class="c-red " style="display:block;" >错误提示</div>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">发布渠道：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <label class="mr-10"><input type="checkbox" /> Web</label>
+                    <label class="mr-10"><input type="checkbox" /> 微信</label>
+                    <label class="mr-10"><input type="checkbox" /> app</label>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">发布纬度：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div  id="search_bar" style="min-width:500px;min-height:30px;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">发布内容：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input class="addBth" type="button" value="选择分类" onclick="add_popup('选择分类','add_classification.html','520','400')"/>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">发布类型：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <label class="mr-10"><input type="radio" name="style"> 生产</label>
+                    <label class="mr-10"><input type="radio" name="style"> 测试</label>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">发布节点：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <ul class="bd pd-10 node_ul L mr-10" >
+                        <li>192.168.0.1:8031</li>
+                        <li>192.168.0.1:8031</li>
+                        <li>192.168.0.1:8031</li>
+                        <li>192.168.0.1:8031</li>
+                        <li>192.168.0.1:8031</li>
+                    </ul>
+                    <a href="#" class="c-primary">不在列表内，去创建新节点</a>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <button class="btn1 btn1_blue"  >发布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script type="text/javascript" src="../js/jquery.ztree.all-3.5.min.js"></script>
+<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.plugIn.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/base.js" charset="utf-8"></script>
+<script type="text/javascript" src="../lib/autocomplete-0.3.0/autocomplete-0.3.0.min.js" ></script>
+<script>
+    //弹窗
+    function add_popup(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    //插件
+    var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

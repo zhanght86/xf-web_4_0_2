@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="../css/H-ui.ie.css">
+    <script type="text/javascript" src="../lib/html5.js"></script>
+    <script type="text/javascript" src="../lib/respond.min.js"></script>
+    <script type="text/javascript" src="../js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+    <link rel="stylesheet" type="text/css" href="../lib/1.0.8/iconfont.css">
+    <link rel="stylesheet" href="../css/zTreeStyle.css ">
+
+    <link rel="stylesheet" type="text/css" href="../css/common2.css">
+    <link rel="stylesheet" type="text/css" href="../css/style_new.css">
+
+
+
+
+<title>选择分类</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+<link rel="stylesheet" href="../js/skin/WdatePicker.css">
+</head>
+
+<body style="background:#fff;">
+<div class=""  >
+        <div class="bd mb-20" style="width:80%;min-height:200px;overflow:auto;margin:20px auto;">
+            <ul id="treeDemo" class="ztree">
+
+            </ul>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input type="submit" class="btn1 btn1_blue mr-15" value="确认"/>
+                <input type="button" class="btn1 btn_gray" value="取消" />
+            </div>
+        </div>
+
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/common.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script type="text/javascript" src="../js/jquery.ztree.all-3.5.min.js"></script>
+
+<script type="text/javascript">
+    // tree
+    var setting = {
+        view: {
+            dblClickExpand: false,
+            showLine: false,
+            selectedMulti: false
+        },
+        data: {
+            simpleData: {
+                enable:true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: ""
+            }
+        },
+        callback: {
+            beforeClick: function(treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+                if (treeNode.isParent) {
+                    zTree.expandNode(treeNode);
+                    return false;
+                } else {
+                    demoIframe.attr("src",treeNode.file + ".html");
+                    return true;
+                }
+            }
+        }
+    };
+    var zNodes =[
+        { id:1, pId:0, name:"一级分类", open:true},
+        { id:11, pId:1, name:"二级分类"},
+        { id:111, pId:11, name:"三级分类"},
+        { id:112, pId:11, name:"三级分类"},
+        { id:113, pId:11, name:"三级分类"},
+        { id:114, pId:11, name:"三级分类"},
+        { id:115, pId:11, name:"三级分类"},
+        { id:12, pId:1, name:"二级分类 1-2"},
+        { id:121, pId:12, name:"三级分类 1-2-1"},
+        { id:122, pId:12, name:"三级分类 1-2-2"},
+    ];
+    //    var code;
+    //    function showCode(str) {
+    //        if (!code) code = $("#code");
+    //        code.empty();
+    //        code.append("<li>"+str+"</li>");
+    //    }
+    $(document).ready(function(){
+        var t = $("#treeDemo");
+        t = $.fn.zTree.init(t, setting, zNodes);
+        // demoIframe = $("#testIframe");
+        // demoIframe.bind("load", loadReady);
+        // var zTree = $.fn.zTree.getZTreeObj("tree");
+        // zTree.selectNode(zTree.getNodeByParam("id",'11'));
+    });
+</script>
+</body>
+</html>
