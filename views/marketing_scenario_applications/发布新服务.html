@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>发布新服务</title>
+    <link href="../css/base.css" type="text/css" rel="stylesheet" />
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/robotSetup.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/addContent.css"/>
+    
+    <!--[if lt IE 9]>
+	<link type="text/css" rel="stylesheet" href="../css/H-ui.ie.css">
+	<script type="text/javascript" src="../lib/html5.js"></script>
+	<script type="text/javascript" src="../lib/respond.min.js"></script>
+	<script type="text/javascript" src="../js/PIE_IE678.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="../css/H-ui.min.css">
+	<link rel="stylesheet" href="../css/H-ui.admin.css">
+	<link rel="stylesheet" href="../css/common2.css">
+</head>
+<body>
+
+<div class="main warp">
+    <div class="crumbs-nav bgwhite mt20">
+        <span class="cn-lable">你曾经路过此地：</span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+    </div>
+
+    <div class="addContent pd30">
+        <div class="r-cont-hd">
+            <span>发布新服务</span>
+        </div>
+        <div class="r-cont-bd oh">
+
+            <div class="jqrsz-item">
+                <div class="item-line">
+                    <div class="lable">
+                        发布名称：
+                    </div>
+                    <div class="value">
+                        <div class="ipt-txt-box">
+                            <input class="ipt-txt" type="text" />
+                            <i class="btn-empty"></i>
+                        </div>
+                        <div class="error-tip">
+                            错误提示
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-line">
+                    <div class="lable">
+                        发布渠道：
+                    </div>
+                    <div class="">
+                        <label class="mr-10"><input type="checkbox" /> Web</label>
+                        <label class="mr-10"><input type="checkbox" /> 微信</label>
+                        <label class="mr-10"><input type="checkbox" /> app</label>
+                    </div>
+                </div>
+                <div class="item-line">
+                    <div class="lable">
+                        发布维度：
+                    </div>
+                    <div class="value menu_1Div" id="menu_1Div">
+                        <div class="ipt-txt-box">
+
+                        </div>
+                        <div class="error-tip">
+                            错误提示
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="jqrsz-item">
+                <div class="item-line">
+                    <div class="lable">
+                        发布内容：
+                    </div>
+                    <div class="value">
+                        <div class="ipt-txt-box">
+                            <input class="addBth" type="button" value="选择分类"/>
+                            <i class="btn-empty"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-line">
+                    <div class="lable">
+                        发布类型：
+                    </div>
+                    <div class="">
+                        <label class="mr-10"><input type="radio"> 生产</label>
+                        <label class="mr-10"><input type="radio"> 测试</label>
+                    </div>
+                </div>
+                <div class="item-line">
+                    <div class="lable">
+                        发布节点：
+                    </div>
+                    <div class="">
+                        <ul>
+                            <li>192.168.0.1:8031</li>
+                            <li>192.168.0.1:8031</li>
+                            <li>192.168.0.1:8031</li>
+                            <li>192.168.0.1:8031</li>
+                            <li>192.168.0.1:8031</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <div class="jqrsz-btn-box">
+                    <a class="btn btn-gray" href="javascript:;" style="background: #e24e4e; color: #fff;">删除</a>
+                </div>
+            </div>
+
+            <div class="jqrsz-item">
+                <div class="item-line">
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value">
+                        <div class="ipt-txt-box textareaDiv2">
+                            <input class="ipt-txt" type="text" placeholder="请输入问题" style="" />
+                            <div class="my-select" style="width: 90px;">
+                                <div class="my-value">
+                                    <label>概念类</label><em></em>
+                                </div>
+                                <div class="my-option" style="display: none;">
+                                    <dl>
+                                        <dd value="1">概念类</dd>
+                                        <dd value="2">概念类</dd>
+                                        <dd value="3">概念类</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <i class="btn-empty"></i>
+                            <span></span>
+                        </div>
+                        <div class="error-tip hide">
+                            错误提示
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jqrsz-btn-box">
+                <a class="btn btn-blue mr10" href="javascript:;">保存</a>
+                <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;">预览</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--弹窗-->
+<div class="namePopupBG" id="namePopupBG">
+    <div class="namePopup addPopup">
+        <p>修改应用名称<span><i class="namePopupClose"></i></span></p>
+        <div class="addPopupCnt">
+            <textarea></textarea>
+            <div class="checkboxStr">
+                <div>渠道：</div>
+                <div class="my-checkbox">
+                    <label>web</label>
+                </div>
+                <div class="my-checkbox">
+                    <label>微信</label>
+                </div>
+                <div class="my-checkbox">
+                    <label>App</label>
+                </div>
+                <div class="my-checkbox">
+                    <label>网银</label>
+                </div>
+                <div class="my-checkbox">
+                    <label>融云</label>
+                </div>
+            </div>
+            <div class="checkboxAddress">
+                维度：
+                <div class="my-select">
+                    <div class="my-value">
+                        <label>山西</label><em></em>
+                    </div>
+                    <div class="my-option" style="display: none;">
+                        <dl>
+                            <dd value="1">山西</dd>
+                            <dd value="2">重庆</dd>
+                            <dd value="3">四川</dd>
+                            <dd value="3">河南</dd>
+                            <dd value="3">湖北</dd>
+                        </dl>
+                    </div>
+                    <div class="deleteAddress"></div>
+                </div>
+                <div class="my-select">
+                    <div class="my-value">
+                        <label>山西</label><em></em>
+                    </div>
+                    <div class="my-option" style="display: none;">
+                        <dl>
+                            <dd value="1">山西</dd>
+                            <dd value="2">重庆</dd>
+                            <dd value="3">四川</dd>
+                            <dd value="3">河南</dd>
+                            <dd value="3">湖北</dd>
+                        </dl>
+                    </div>
+                    <div class="deleteAddress"></div>
+                </div>
+                <div class="addAddress"></div>
+            </div>
+            <p class="Concept-p">概念扩展：</p>
+            <div class="Concept-Ipt"><input type="text"/><span></span></div>
+            <div class="Concept-Ipt Concept-Ipt2"><input type="text"/><span></span></div>
+            <div class="Concept-Ipt-nxtDiv">
+                <span class="Concept-Ipt-nxt-ico"></span>
+                <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
+            </div>
+            <div class="jqrsz-btn-box" style="padding-left: 0px;">
+                <a class="btn btn-blue mr10" href="javascript:;">保存</a>
+                <a class="btn btn-gray" href="javascript:;">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.plugIn.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/base.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

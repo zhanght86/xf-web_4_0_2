@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="../css/H-ui.ie.css">
+    <script type="text/javascript" src="../lib/html5.js"></script>
+    <script type="text/javascript" src="../lib/respond.min.js"></script>
+    <script type="text/javascript" src="../js/PIE_IE678.js"></script>
+    <![endif]-->
+<link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+<link rel="stylesheet" type="text/css" href="../lib/1.0.8/iconfont.css">
+
+<link rel="stylesheet" type="text/css" href="../css/common2.css">
+<link rel="stylesheet" type="text/css" href="../css/style_new.css">
+    <link href="../css/base.css" type="text/css" rel="stylesheet" />
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+
+<!--[if IE 6]>
+    <script type="text/javascript" src="../lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+<title>知识管理-维度管理-添加维度</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+<link rel="stylesheet" href="../js/skin/WdatePicker.css">
+</head>
+
+<body style="background:#fff;">
+<div class="page-container" >
+	<form class="form form-horizontal">
+        <div class="mb-10 mt-10 pl30" style="height:200px;overflow:auto;">
+            <div class="latit_repres_div">
+            	<div class="mb-10 clearfix">
+                    <span class="add_ele_span L">维度名称：</span>
+                    <div class="dib L pl-5">
+                        <input type="text"  class="input-text " placeholder="维度名称" />
+                    </div>
+                    <div class="dib ml-15 pt-5 L mr-15">		
+                    	<span class="L mr-10">状态：</span>
+                        <div  class="open1 b_box" style="display:inline-block;float:left;">
+                            <div  class="open2 s_box" onclick="turn_on(this);"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-10 ">
+                    <span class="add_ele_span">维度表示：</span>
+                    <div class="dib">
+                        <input type="text" placeholder="请输入纬度表示" class="input-text  latitude"/>
+                    </div>
+                    <a href="javascript:;" class="create_a" onclick="add_pro();"><img src="../images/add_img.png" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+		<div class="tc">
+			<input type="button" class="btn1 btn1_blue mr-15" value="保存" />
+			<input type="button" class="btn1 btn_gray" value="取消" />
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.plugIn.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/base.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    //开关
+    function turn_on(obj){
+        if($(obj).parent().hasClass('close1')){
+            $(obj).parent().attr('class','b_box open1');
+
+        }else{
+            $(obj).parent().attr('class','b_box close1');
+        }
+        if($(obj).hasClass('close2')){
+            $(obj).attr('class','s_box open2');
+        }else{
+            $(obj).attr('class','s_box close2');
+        }
+    }
+    function add_pro(obj){
+        var oVal=$('.latitude').val();
+        var str='<div class="mb-10 "><span class="add_ele_span">维度表示：</span> <div class="dib"><input type="text" value="'+oVal+'" class="input-text  latitude"></div><a href="javascript:;" class="create_a" onclick="rem_concept(this);"> <img src="../images/delete_img.png" ></a></div>';
+        $('.latit_repres_div').append(str);
+    }
+    function rem_concept(obj){
+        $(obj).parent().remove();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!--[if lt IE 9]>
+    <link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../lib/html5.js"></script>
+    <script type="text/javascript" src="../lib/respond.min.js"></script>
+    <script type="text/javascript" src="../js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/common2.css">
+    <link rel="stylesheet" type="text/css" href="../css/style_new.css">
+
+    <link href="../css/base.css" type="text/css" rel="stylesheet" />
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/robotSetup.css"/>
+       
+    
+    <title>统计分析-访问统计</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+    <link rel="stylesheet" href="../js/skin/WdatePicker.css">     
+
+</head>
+
+<body>
+<div class="wrap">
+
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+
+            <div class="crumbs-nav bgwhite mt20 mb-10">
+                <span class="cn-lable">你曾经路过此地：</span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+            </div>
+            <div class="con_box mb25 p30">
+                
+                <div class="clearfix p10 cus_ser_scene">
+                    <div class="tab_tit">
+                        <span class="cur"  onclick="tabtab(this);">访问数据时间统计  </span>
+                        <span class="" onclick="tabtab(this);">访问数据渠道统计 </span>
+                    </div>
+                    <div class="tab_con pt30 pb30">
+                        <div class="db">
+							<div class="data_time_statis_top ">
+                            	<select class="sel bd L mr-5" id="request_time_type">
+                                    <option value="1">今日</option>
+                                    <option value="2">昨日</option>
+                                    <option value="3">过去7天</option>
+                                    <option value="4">过去30天</option>
+                                </select>
+                                <select class="sel bd L mr-5" >
+                                    <option value="">选择渠道</option>
+                                    <option value="">WEB</option>
+                                    <option value="">APP</option>
+                                    <option value="">微信</option>
+                                </select>
+                                <select class="sel bd L mr-5" >
+                                    <option value="">选择维度</option>
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                </select>
+                               <span>
+                        日期范围:
+                        <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
+                        <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
+                    </span>
+                                <input type="button" class="btn1 btn1_blue" value="查找" />
+                            </div>
+                            <div class="data_time_statis_bot" >
+                                <div class="tabBar cl tabBar2" >
+                                    <span class="current">访问量趋势图</span>
+                                    <span class="">回复类型趋势图</span>
+                                </div>
+                                <div class="tabCon_box">
+                                    <div class="tabCon" style="display: block;">
+                                        <div class="echart_div" id="commodityId" style="width:700px;height:400px">
+                                            <img src="../images/u25740.png" alt="">
+                                        </div>
+                                        <div>
+                                            <table class="access_amount_table ">
+                                                <thead >
+                                                    <tr>
+                                                        <th width="16%">日期</th>
+                                                        <th width="14%">总会话数</th>
+                                                        <th width="14%">总提问数</th>
+                                                        <th width="14%">已有用户数</th>
+                                                        <th width="14%">新增用户数</th>
+                                                        <th width="14%">活跃用户数</th>
+                                                        <th width="14%">总登记人数</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>2016-3</td>
+                                                        <td>57</td>
+                                                        <td>121</td>
+                                                        <td>44</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-r pt-10">
+                                            <a href="javascript:;" class=" c-primary" >导出图表</a>
+                                        </div>
+                                    </div>
+                                    <div class="tabCon" style="display: none;">
+                                        <div class="echart_div" id="echart_div_id" style="width:700px;height:400px">
+                                            <img src="../images/u25742.png" alt="">
+                                        </div>
+                                        <div>
+                                            <table class="access_amount_table ">
+                                                <thead id="theadId3">
+                                                <tr>
+                                                    <th width="9%">日期</th>
+                                                    <th width="9%">会话超时</th>
+                                                    <th width="9%">未知回答</th>
+                                                    <th width="9%">推荐回答</th>
+                                                    <th width="9%">标准回复</th>
+                                                    <th width="9%">寒暄回复</th>
+                                                    <th width="9%">敏感词回复</th>
+                                                    <th width="9%">重复回复</th>
+                                                    <th width="9%">过期回复</th>
+                                                    <th width="9%">命中率</th>
+                                                    <th width="10%">未知回答率</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-r pt-10">
+                                            <a href="javascript:;" class=" c-primary" onclick="exportExcelReply()">导出图表</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dn" >
+                            <div class="data_time_statis_top " style="width:605px;">
+                            	<select class="sel bd L mr-5" id="request_time_typeId">
+                                    <option value="1">今日</option>
+                                    <option value="2">昨日</option>
+                                    <option value="3">过去7天</option>
+                                    <option value="4">过去30天</option>
+                                </select>                                
+                                <span>
+                                	日期范围:
+                                	<input type="text" id="startTimeId" onclick="WdatePicker()" class="input-text Wdate" style="width:185px;" placeholder="请选择生效日期" readonly> -
+                                    <input type="text" id="endTimeId" onclick="WdatePicker()" class="input-text Wdate " style="width:185px;" placeholder="请选择结束日期" readonly>
+                                </span>
+                                <input type="button" class="btn1 btn1_blue" value="查找" />
+                            </div>
+                            <div class="data_time_statis_bot" >
+                            	<h3 class="text-c f-16 bold">访问数据渠道统计</h3>
+                                <div class="echart_div" id="histogramId"  style="width:560px;height:508px">
+                                    <img src="../images/u26257.png" alt="">
+                                </div>
+                                <div>
+                                    <table class="access_amount_table ">
+                                        <thead id="theadId2">
+                                            <tr>
+                                                <th width="7%">统计项</th>
+                                                <th width="7%">会话总数</th>
+                                                <th width="7%">总提问数</th>
+                                                <th width="7%">已有用户数</th>
+                                                <th width="7%">新增用户数</th>
+                                                <th width="7%">活跃用户数</th>
+                                                <th width="7%">总登陆人数</th>
+                                                <th width="7%">标准回复</th>
+                                                <th width="7%">寒暄</th>
+                                                <th width="7%">敏感词</th>
+                                                <th width="7%">其它</th>
+                                                <th width="7%">命中率</th>
+                                                <th width="9%">未知回答率</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>微信</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>97%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-r pt-10">
+                                    <a href="javascript:;" class=" c-primary" onclick="exportExcelChannel()">导出图表</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function tabtab(obj) {
+        $(obj).addClass('cur').siblings().removeClass();
+        $(obj).parent().next().children('div').eq($(obj).index()).attr('class', 'db').siblings().attr('class', 'dn');
+    }
+    $('.tabBar span').click(function(){
+        $(this).addClass('current').siblings().removeClass();
+        $('.tabCon_box .tabCon').eq($(this).index()).css('display','block').siblings().css('display','none');
+    });
+</script>
+</body>
+</html>

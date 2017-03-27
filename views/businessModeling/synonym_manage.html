@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<!--[if lt IE 9]>
+	<link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../lib/html5.js"></script>
+	<script type="text/javascript" src="../lib/respond.min.js"></script>
+	<script type="text/javascript" src="../js/PIE_IE678.js"></script>
+	<![endif]-->
+<link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+<link rel="stylesheet" type="text/css" href="../lib/1.0.8/iconfont.css">
+
+<link rel="stylesheet" type="text/css" href="../css/common2.css">
+<link rel="stylesheet" type="text/css" href="../css/style1.css">
+
+
+<!--[if IE 6]>
+	<script type="text/javascript" src="../lib/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+<title>业务建模-词库管理-同义词管理</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+<link rel="stylesheet" href="../js/skin/WdatePicker.css">
+</head>
+
+<body>
+<div class="wrap mb30">
+    <div class="titlt mb10 clearfix">
+        <span class="L">
+            <img src="../images/home.png">
+            <a href="javascript:;" onclick="parent.window.parentMethod();">首页</a>>知识管理>同义词管理
+        </span>
+        <a href="javascript:;" class="R" onclick="window.location.reload();">
+            <img src="../images/refresh.png">
+        </a>
+    </div>
+    <div class="con_box p30 mb25">
+        <div class="cl mr10" style="width:400px;margin:0 auto 20px;">
+            <select class="sel bd L">
+                <option>概念类名</option>
+                <option>概念类权重</option>
+                <option>XX词</option>
+                <option>创建人</option>
+                <option>上传日期</option>
+            </select>
+            <input type="text" class="input-text L" style="width:250px;height:30px;margin-left: -1px;"/>
+            <input type="button" class="btn1" value="查找" />
+        </div>
+        <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
+            <div class="cl mb-10">
+                <span class="L">
+                    <button class="L btn1 mr-10" onclick="add_popup('新增同义概念类','add_synonym.html','510','200')">新增概念类</button>
+                    <button class="L btn1 btn_green mr-10" onclick="add_popup('批量新增','add_concept.html','510','400')">批量新增</button>
+                    <button class="L btn1  mr-10" >继承概念库</button>
+                    <button class="L btn1 btn_green" >下载模版</button>
+                </span>
+                <span class="R">
+                    <button class="L btn1 btn_green2" >导出词库</button>
+                </span>
+            </div>
+            <p class="f16">同义概念列表</p>
+            <div>
+                <table class="stop_word_tab" id="synonym_tab">
+                    <thead>
+                    <tr>
+                        <th class="bold" width="10%"><input id="selectAll" type="checkbox"/></th>
+                        <th class="bold" width="12%">概念类名</th>
+                        <th class="bold" width="12%">概念权重</th>
+                        <th class="bold" width="21%">同义概念</th>
+                        <th class="bold" width="15%">更新时间</th>
+                        <th class="bold" width="15%">创建人</th>
+                        <th class="bold" width="15%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input  type="checkbox"/></td>
+                        <td><span class="c-primary">打</span></td>
+                        <td><span class="c-primary">一般</span></td>
+                        <td><span class="c-primary">打击,</span><span class="c-error">敲打</span></td>
+                        <td>2016-04-29 14:40:54</td>
+                        <td>admin</td>
+                        <td>
+                            <a href="javascript:;" class="c-primary mr-10" onclick="add_popup('修改同义概念','edit_synonym.html','560','450')">修改</a>
+                            <a href="javascript:;" class="c-error" onclick="member_del(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input  type="checkbox"/></td>
+                        <td><span class="c-primary">打</span></td>
+                        <td><span class="c-primary">一般</span></td>
+                        <td><span class="c-primary">打击,</span><span class="c-error">敲打</span></td>
+                        <td>2016-04-29 14:40:54</td>
+                        <td>admin</td>
+                        <td>
+                            <a href="javascript:;" class="c-primary mr-10" onclick="add_popup('修改同义概念','edit_synonym.html','560','450')">修改</a>
+                            <a href="javascript:;" class="c-error" onclick="member_del(this)">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="page clearfix">
+                    <span class="page_span ">上一页</span>
+                    <a href="javascript:;" class="cura">1</a>
+                    <a href="javascript:;">2</a>
+                    <a href="javascript:;">3</a>
+                    <a href="javascript:;">4</a>
+                    <a href="javascript:;">5</a>
+                    <span class="page_span ">下一页</span>
+                    <span>共<b class="page_b">12</b>页</span>
+                    <span>跳转到</span>
+                    <input type="text" class="page_txt">
+                    <span>页</span>
+                    <span class="go_span">GO</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/common.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    //弹窗
+    function add_popup(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+   //删除
+    function member_del(obj){
+        layer.confirm('概念类下面的所有概念都会被删除');
+    }
+    
+</script>
+</body>
+</html>

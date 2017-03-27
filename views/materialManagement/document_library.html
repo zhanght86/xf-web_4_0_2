@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!--[if lt IE 9]>
+    <link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/html5.js"></script>
+    <script type="text/javascript" src="../lib/respond.min.js"></script>
+    <script type="text/javascript" src="../js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="../css/common2.css">
+    <link rel="stylesheet" type="text/css" href="../css/style1.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+
+    <!--[if IE 6]>
+    <script type="text/javascript" src="../lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>素材管理-文档库</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+    <link rel="stylesheet" href="../js/skin/WdatePicker.css">
+</head>
+
+<body >
+<div class="wrap" >
+
+    <div class="titlt mb10 clearfix">
+    	<span class="L">
+            <img src="../images/home.png">
+            <a href="javascript:;" onclick="parent.window.parentMethod();">首页</a>>素材管理>文档库
+        </span>
+        <a href="javascript:;" class="R" onclick="window.location.reload();">
+            <img src="../images/refresh.png">
+        </a>
+    </div>
+    <div class="text-c mb-20">
+        <input type="text" placeholder="" style="width:250px" class="input-text" id="inputId">
+        <button class="btn1" type="button" onclick="lookUpDocument()">查找</button>
+    </div>
+    <div class="pt-10 pb-10 pl-20 pr-20" style="background:#fff;">
+        <div class="cl bd_b pb-10">
+            <div class="l">
+                <button class="btn1 add_temes_a L mr-10" onclick="upload()">上传文档</button>
+                <button class="btn1 btn_green2 L mr-10" onclick="batchMove()">批量移动</button>
+                <button class="btn_delete L mr-10" onclick="member_delele()">批量删除</button>
+            </div>
+            <div class="r">
+                <span class="c-999 pl-10">共有数据：<strong id="total"></strong> 条 </span>
+            </div>
+        </div>
+        <div class="cl p10">
+            <ul class="L not_grouped cl" id="documentsGroupingUlId">
+                <input type="text" class="bd txt_m pl-5 doc_lib_txt" onclick="inputOn(this,event)" id="documentsGroupingId"/>
+            </ul>
+            <input type="text" class="bd txt_m pl-5 doc_lib_txt"  />
+            <span class="R">
+                <button class="btn_gray new_grouping"   onclick="new_grouping()">新建分组</button>
+                <button class="btn_gray new_grouping"  onclick="deleteGroup()">删除</button>
+                <button class="btn_gray new_grouping"  onclick="updateGroup()">修改</button>
+            </span>
+        </div>
+    </div>
+    <div class="cl graphic_message pt-10 pb-10" id="documentId" >
+    </div>
+    <div class="page clearfix" id="page" style="background:0;"></div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+
+<script src="../js/common.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+
+
+<script>
+        $(function(){
+        //tab
+        $.Huitab("#tab-system .tabBar span","#tab-system .tabCon","current","click","0");
+        
+         });
+        
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!--[if lt IE 9]>
+    <link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../lib/html5.js"></script>
+    <script type="text/javascript" src="../lib/respond.min.js"></script>
+    <script type="text/javascript" src="../js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+    <link rel="stylesheet" type="text/css" href="../lib/1.0.8/iconfont.css"> 
+    
+    <link rel="stylesheet" type="text/css" href="../css/common2.css">
+    <link rel="stylesheet" type="text/css" href="../css/style1.css">
+    
+
+    <!--[if IE 6]>
+    <script type="text/javascript" src="../lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>知识管理-知识新增</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+    <link rel="stylesheet" href="../js/skin/WdatePicker.css">
+    <link rel="stylesheet" href="../css/autocomplete-0.3.0.min.css">
+    <style type="text/css">
+        /*修改维度节点样式*/
+        div.autocomplete-container-7a26d {
+            border-width: 1px;
+            border-radius: 2px;
+            padding: 2px 4px;
+            width: 705px;
+            box-sizing: border-box;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+</head>
+
+<body style="background:#fff;padding:20px;">
+<div style="width:900px;margin:0 auto;">
+    <div class="db" id="step_1">
+
+        <div class="know_con_top" id="content">
+            <div class="mb-10 bd">
+                <div class=" tab_tit2">
+                    <a href="javascript:;" class="cur" c-type="text"><i class="Hui-iconfont">
+                        &#xe6ec;</i> 文字</a>
+                    <a href="javascript:;" c-type="picture"><i class="Hui-iconfont">&#xe612;</i> 图片</a>
+                    <a href="javascript:;" c-type="rich_text"><i class="Hui-iconfont">&#xe613;</i> 图文消息</a>
+                    <a href="javascript:;" c-type="table"><i class="Hui-iconfont">&#xe6c0;</i> 表格</a>
+                </div>
+                <div class="tab_con2 ">
+                    <div class="db" id="main">
+                        <div id="show"></div>
+                        <div class="comment">
+                            <div class="com_form">
+                                <div class="input" id="saytext" contenteditable="true" onkeydown="countWord()"></div>
+
+                                <p class="cl">
+                                    <span class="R" id="num">还可以输入1000字</span>
+                                    <span class="emotion">表情</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dn">
+                        <div class="cl pt-20 pb-20 pl-30 pr-30">
+
+                            <dl class="L upload_dl mr-15">
+                                <span class="popup_s"></span>
+                                <dt class="tc mb-15">
+                                    <img src="../images/u1134.png" class="img_pra" id="showPictureId"/>
+                                    <a href="javascript:;" class=" c_blue"
+                                       onclick="add_popup('添加图片','add_picture_tp.html','780','500')">
+                                        +</a></dt>
+                                <dd class="tc c-999">从图片库中选择</dd>
+                                <input type="hidden" id="pictureId">
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="dn">
+
+                        <div class="upload_div m20" style="min-height:177px;" id="showGraphicId">
+                            <div class="tc mb-15" id="addId" style="display:block;">
+                                <!--img src="../images/u1134.png" class="img_pra"/>-->
+                                <a href="javascript:;" class="add_sucai c_blue"
+                                   onclick="add_popup('添加图文消息','add_source_material.html','780','500')">+</a>
+                            </div>
+                            <p class="tc c-999 add_sucaip" id="tcid" style="display:block;">从图文消息库中选择</p>
+                        </div>
+
+                    </div>
+                    <div class="dn">
+                        <div class="p20 mb-20">
+                            <div id="table1_div">
+                                <div class="mb-10">
+                                    <a href="javascript:;" class="add_row mr-15" onclick="add_row()"><img
+                                            src="../images/ys_img1.png" alt=""></a>
+                                    <a href="javascript:;" class="delete_row mr-15" onclick="rem_row()"><img
+                                            src="../images/ys_img2.png" alt=""></a>
+                                    <a href="javascript:;" class="add_col mr-15"
+                                       onclick="add_popup('添加要素','knowledge_factor_select.html','510','300')"><img
+                                            src="../images/ys_img3.png" alt=""></a>
+                                    <a href="javascript:;" class="delete_col mr-15" onclick="rem_col()"><img
+                                            src="../images/ys_img4.png" alt=""></a>
+                                </div>
+                                <div class="mb-10">
+                                    <b class="f-18">产品表</b><span class="f14 c-999">（首行首列为产品列表，表格限制50个汉字）</span>
+                                </div>
+                                <div class="add_table_wrap ">
+                                    <table class="add_table" id="add_table1">
+                                        <tbody>
+                                        <tr>
+                                            <td class="bold">产品名称</td>
+                                        </tr>
+                                        <tr class="c-red">
+                                            <td class="">
+                                                <div contenteditable="true"  onblur="maxlength(this);" onfocus="selected(this)"
+                                                     class="c-999">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div class="mb-10">
+                                    <b class="f-18">反问表</b><span class="f14 c-999">（反问条数和要素条数完全一致）</span>
+                                </div>
+                                <div id="table2_div">
+                                    <div class="add_table_wrap ">
+                                        <table class="add_table" id="ask">
+                                            <tr>
+                                                <td class="bold">
+                                                    要素
+                                                </td>
+                                                <td class="bold">
+                                                    反问
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="pl50 pr mb-10" id="channel_div" style="height: 25px;">
+                <span class="pa" style="left:0;top:0;">渠道：</span>
+            </div>
+            <div class="pl50 pr mb-10" id="dimension_div" style="min-height: 25px;">
+                <span class="pa" style="left:0;top:4px;">维度：</span>
+
+                <div id="dimension_bar"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row cl mb-30">
+        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="button" class="btn1 mr-20" value="保存"
+                   onclick="content_text_add()"/>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.qqFace.js"></script>
+<script type="text/javascript" src="../js/autocomplete-0.3.0.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+        
+    //弹窗
+    function add_popup(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+
+</script>
+
+
+
+</body>
+</html>

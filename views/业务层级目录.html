@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>业务层级目录</title>
+    <link href="css/base.css" type="text/css" rel="stylesheet" />
+    <link href="css/common.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/robotSetup.css"/>
+    <link rel="stylesheet" href="css/addContent.css">
+
+    <!--[if lt IE 9]>
+    <link type="text/css" rel="stylesheet" href="css/H-ui.ie.css">
+    <script type="text/javascript" src="lib/html5.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <script type="text/javascript" src="js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="css/H-ui.min.css">
+    <link rel="stylesheet" href="css/H-ui.admin.css">
+    <link rel="stylesheet" href="css/common2.css">
+</head>
+<body>
+<div class="header clearfix">
+    <div class="logo">
+        <a href="首页.html"><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>
+    </div>
+    <ul class="nav">
+        <li>
+            <a href="javascript:;">首页</a>
+        </li>
+        <li>
+            <a href="javascript:;">我的应用</a>
+        </li>
+        <li>
+            <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
+            <ul class="menu_1">
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_jmzy"></i>
+                        <span>建模资源</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_lmgl"></i>
+                        <span>类目管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_gngl"></i>
+                        <span>概念管理</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
+            <ul class="menu_1">
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_zszl"></i>
+                        <span>知识总览</span>
+                    </a>
+                </li>
+                <li>
+                    <ul class="menu_1 menu_2 ">
+                    	 <li>
+		                    <a href="javascript:;">
+		                        <span>FAQ知识新增</span>
+		                    </a>
+		                </li>
+		                <li>
+		                    <a href="javascript:;">
+		                        <span>概念知识新增</span>
+		                    </a>
+		                </li>
+		                <li>
+		                    <a href="javascript:;">
+		                        <span>列表知识新增</span>
+		                    </a>
+		                </li>
+		                <li>
+		                    <a href="javascript:;">
+		                        <span>要素知识新增</span>
+		                    </a>
+		                </li>
+                    </ul>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_zsjg"></i>
+                        <span>知识单条新增</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-zsplxz"></i>
+                        <span>知识批量新增</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-wdjgxz"></i>
+                        <span>文档加工新增</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_zsfb"></i>
+                        <span>知识发布</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_zssh"></i>
+                        <span>知识审核</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_lsck"></i>
+                        <span>历史查看</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;">测试功能<i class="nav-more nav-more__nav-more"></i></a>
+            <ul class="menu_1">
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_wfcs"></i>
+                        <span>问法测试</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_ltcs"></i>
+                        <span>聊天测试</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_plcs"></i>
+                        <span>批量测试</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;">应用分析<i class="nav-more nav-more__nav-more"></i></a>
+            <ul class="menu_1">
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_fwtj"></i>
+                        <span>访问统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_zsdpm"></i>
+                        <span>知识点排名统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_wpp"></i>
+                        <span>未匹配问题统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_fltj"></i>
+                        <span>分类统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_hhmx"></i>
+                        <span>会话明细统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
+                        <span>解决率统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_myltj"></i>
+                        <span>满意率统计</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;">素材管理<i class="nav-more nav-more__nav-more"></i></a>
+            <ul class="menu_1">
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_ltzsk"></i>
+                        <span>聊天知识库</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_hxck"></i>
+                        <span>寒暄词库</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_tpk"></i>
+                        <span>图片库</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_twfxk"></i>
+                        <span>图文消息库</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-nav icon-nav__icon-nav_wdk"></i>
+                        <span>文档库</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div class="header-r">
+        <div class="user-admin">
+            <a class="user-name" href="javascript:;"><i></i><span>鼎富科技</span></a>
+            <div class="ua-menu_1-box">
+                <ul class="ua-menu_1">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-header-r icon-header-r__h-r1"></i>
+                            <span>全线管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-header-r icon-header-r__h-r2"></i>
+                            <span>切换应用</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-header-r icon-header-r__h-r3"></i>
+                            <span>退出登录</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mail-conver">
+            <a href="javascript:;" class="mail">
+                <em>2</em>
+            </a>
+            <a href="javascript:;" class="conver"></a>
+        </div>
+    </div>
+</div>
+<div class="main warp">
+    <div class="crumbs-nav bgwhite mt20">
+        <span class="cn-lable">你曾经路过此地：</span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+    </div>
+
+    <div class="libraryCnt">
+        <div class="libraryFt">
+            <input class="libSearch" type="text">
+            <div class="libraryPtoDiv">
+                <img src="images/bank_16.png"/>
+                <h3>银行领域</h3>
+            </div>
+            <div class="aside-navs bank-navs">
+                <div class="aside-navs-cont">
+                    <ul class="menus show">
+                        <li>
+                            <div class="slide-a">
+                                <a class="ellipsis" href="javascript:;">
+                                    <i class="icon-jj"></i>
+                                    <span>分属性展开</span>
+                                </a>
+                            </div>
+                            <ul class="menus">
+                                <li>
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <span>分属性展开1</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <span>分属性展开2</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <span>分属性展开3</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="slide-a">
+                                <a class="ellipsis" href="javascript:;">
+                                    <i class="icon-jj"></i>
+                                    <span>分业务展开</span>
+                                </a>
+                            </div>
+                            <ul class="menus">
+                                <li>
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <i class="icon-jj"></i>
+                                            <span>个人业务</span>
+                                        </a>
+                                    </div>
+                                    <ul class="menus">
+                                        <li>
+                                            <div class="slide-a">
+                                                <a class="ellipsis" href="javascript:;">
+                                                    <i class="icon-jj"></i>
+                                                    <span>存款业务</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="slide-a">
+                                                <a class="ellipsis" href="javascript:;">
+                                                    <i class="icon-jj"></i>
+                                                    <span>理财业务</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="slide-a">
+                                                <a class="ellipsis" href="javascript:;">
+                                                    <i class="icon-jj"></i>
+                                                    <span>信用卡业务</span>
+                                                </a>
+                                            </div>
+                                            <ul class="menus">
+                                                <li>
+                                                    <div class="slide-a">
+                                                        <a class="ellipsis" href="javascript:;">
+                                                            <i class="icon-jj"></i>
+                                                            <img src="images/pic-navs-dy.png"/>
+                                                            <span>按地域展开</span>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="slide-a">
+                                                        <a class="ellipsis" href="javascript:;">
+                                                            <i class="icon-jj"></i>
+                                                            <img src="images/pic-navs-lc.png"/>
+                                                            <span>按办理流程展开</span>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="slide-a">
+                                                        <a class="ellipsis" href="javascript:;">
+                                                            <i class="icon-jj"></i>
+                                                            <img src="images/pic-navs-sx.png"/>
+                                                            <span>按属性展开</span>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="slide-a">
+                                                        <a class="ellipsis" href="javascript:;">
+                                                            <i class="icon-jj"></i>
+                                                            <img src="images/pic-navs-rq.png"/>
+                                                            <span>按人群卡类展开</span>
+                                                        </a>
+                                                    </div>
+                                                    <ul class="menus">
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <span>白领卡</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <span>农民卡</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <span>学生卡</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <i class="icon-jj"></i>
+                                            <span>个公业务</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <i class="icon-jj"></i>
+                                            <span>其他业务</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="libraryRth">
+            <div class="tac mt10" style="margin: 0; text-align: left">
+                <a class="btn btn-blue" href="javascript:;">新增框架</a>
+                <a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>
+                <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
+            </div>
+            <div class="HierarchyCnt">
+                <p>新建子类</p>
+                <div>
+                    <span>分支类型: </span>
+                    <select>
+                        <option>属性</option>
+                        <option>属性</option>
+                        <option>属性</option>
+                    </select>
+                </div>
+                <div>
+                    <span>分支名称: </span>
+                    <input type="text"/>
+                </div>
+                <div>
+                    <span>子名称: </span>
+                    <input type="text"/>
+                </div>
+                <div class="tac mt10" style="text-align: left;padding-left: 105px;">
+                    <a class="btn btn-blue" href="javascript:;">保存</a>
+                    <a class="btn btn-gray ml15" href="javascript:;">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery.plugIn.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/base.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(function () {
+        $(".libraryCntMenu li").on("click",function () {
+            var current=$(this).find("ul");
+            if(current.css("display")=="block"){
+                current.slideUp();
+            }else{
+                current.slideDown();
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

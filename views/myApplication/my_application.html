@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<!--[if lt IE 9]>
+	<link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../lib/html5.js"></script>
+	<script type="text/javascript" src="../lib/respond.min.js"></script>
+	<script type="text/javascript" src="../js/PIE_IE678.js"></script>
+	<![endif]-->
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+    <link rel="stylesheet" type="text/css" href="../lib/1.0.8/iconfont.css">
+    
+    <link rel="stylesheet" type="text/css" href="../css/common2.css">
+    <link rel="stylesheet" type="text/css" href="../css/style_new.css">
+	<link href="../css/base.css" type="text/css" rel="stylesheet" />
+	<link href="../css/common.css" type="text/css" rel="stylesheet" />
+
+
+	<!--[if IE 6]>
+	<script type="text/javascript" src="../lib/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+<title>我的应用</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+<link rel="stylesheet" href="../js/skin/WdatePicker.css">
+</head>
+
+<body >
+<div class="wrap" >
+	<h4 class="pt-10 pb-10"><img src="../images/u13.png" width="30" height="30" />我的应用</h4>
+    <div class="p20 my_appbox cl mb-20">
+    	<div class="L">
+        	<div class="mb-10">用户名称：zhangzheng</div>
+        	<div><span>所属部门：云创中心</span><span>用户权限：超级管理员</span></div>
+        </div>
+    	<div class="R">
+        	<a href="javascript:;" onclick="add_popup('新增应用','add_application.html','600','420')">
+				<img src="../images/u24.png" width="50" height="50" />
+            	<p class="mt-10">新建应用</p>
+			</a>
+        </div>
+    </div>
+	<div class="application_box cl">
+		<div class="L text-c application_box_list">
+			<a href="#"><img src="../images/u46.png " width="150" height="150"/></a>
+			<div class="p10 mb-10 bd_bot" >
+				<p>长沙银行机器人</p>
+				<p>场景类型：<span>客服型</span></p>
+				<p>应用状态：<span class="c-primary">使用中</span></p>
+			</div>
+			<p>长沙银行机器人交付应用</p>
+		</div>
+		<div class="L text-c application_box_list">
+			<a href="#"><img src="../images/u33.png " width="150" height="150"/></a>
+			<div class="p10 mb-10 bd_bot" >
+				<p>长沙营销机器人</p>
+				<p>场景类型：<span>营销型</span></p>
+				<p>应用状态：<span class="c-error">已停用</span></p>
+			</div>
+			<p>当用户问到或触发某一个关键词的时候，机器人回推送出相关的营销知识，产生额外的营销机会</p>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	//弹窗
+	function add_popup(title,url,w,h){
+		layer_show(title,url,w,h);
+	}
+</script>
+</body>
+</html>

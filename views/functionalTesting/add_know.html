@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<!--[if lt IE 9]>
+	<link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../lib/html5.js"></script>
+	<script type="text/javascript" src="../lib/respond.min.js"></script>
+	<script type="text/javascript" src="../js/PIE_IE678.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+	<link rel="stylesheet" type="text/css" href="../lib/1.0.8/iconfont.css">
+
+	<link rel="stylesheet" type="text/css" href="../css/common2.css">
+	<link rel="stylesheet" type="text/css" href="../css/style_new.css">
+
+	<link href="../css/base.css" type="text/css" rel="stylesheet" />
+	<link href="../css/common.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="../css/robotSetup.css"/>
+
+
+<!--[if IE 6]>
+	<script type="text/javascript" src="../lib/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+<title>高级功能-测试结果</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+<link rel="stylesheet" href="../js/skin/WdatePicker.css">
+</head>
+
+<body style="background:#fff;">
+<div class="p30" >
+	<div class="mb-10 mb-20">
+		<span class="text-r dib mr-10" style="width:80px;">测试问法：</span>
+		<input type="text" class="input-text" style="width:300px;" placeholder="请输入测试问法" />
+	</div>
+    <div class="mb-10">
+    	<span class="text-r dib mr-10" style="width:80px;">知识标题：</span>
+        <input type="text" class="input-text" style="width:300px;" placeholder="请输入知识标题" />
+    </div>
+
+    <div class="tc">
+    	<button class="btn1 btn1_blue mr-10" >确定</button>
+		<button class="btn1 btn_gray" onclick="exit()">取消</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+	//弹窗
+	function add_popup(title,url,w,h){
+		layer_show(title,url,w,h);
+	}
+
+	//关闭弹窗
+	function exit() {
+		layer_close();
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!--[if lt IE 9]>
+    <link href="../css/H-ui.ie.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../lib/html5.js"></script>
+    <script type="text/javascript" src="../lib/respond.min.js"></script>
+    <script type="text/javascript" src="../js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/H-ui.admin.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/common2.css">
+    <link rel="stylesheet" type="text/css" href="../css/style_new.css">
+
+    <link href="../css/base.css" type="text/css" rel="stylesheet" />
+    <link href="../css/common.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/robotSetup.css"/>
+
+    
+    <title>统计分析-解决率统计</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/layer.css" id="layui_layer_skinlayercss">
+    <link rel="stylesheet" href="../js/skin/WdatePicker.css">      
+
+</head>
+
+<body>
+<div class="wrap">
+
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+
+            <div class="crumbs-nav bgwhite mt20 mb-10">
+                <span class="cn-lable">你曾经路过此地：</span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+            </div>
+            <div class="con_box mb25 p30" style="min-height:500px;">
+                
+                <div class="data_time_statis_top pt-10" style="width:985px;">
+                    <select class="sel bd L mr-5" id="request_time_type">
+                        <option value="0">全部时间</option>
+                        <option value="1">今日</option>
+                        <option value="2">昨日</option>
+                        <option value="3">过去7天</option>
+                        <option value="4">过去30天</option>
+                    </select>
+                    <select class="sel bd L mr-5" id="channel_id">
+                        <option>Web</option>
+                        <option>微信</option>
+                        <option>app</option>
+                    </select>
+                    <select class="sel bd L mr-5" id="dimension_id">
+                        <option>选择维度</option>
+                    </select>
+                    <span>
+                        日期范围:
+                        <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
+                        <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
+                    </span>
+                    <input type="text" id="knowledgeTitle" class="input-text" style="width:200px;">
+                    <input type="button" class="btn1 btn1_blue" value="查找" />
+                </div>
+                <div class="echart_div" id="settlementRatePie">
+                    <img src="../images/u28052.png" />
+                </div>
+                <div class="">                            	
+                    <table class="access_amount_table" id="settlementrate_table">
+                        <thead>
+                            <tr>
+                                <th width="25%">访问知识</th>
+                                <th width="25%">所属分类</th>
+                                <th width="10%">访问人数</th>
+                                <th width="10%">解决</th>
+                                <th width="10%">未解决</th>
+                                <th width="10%">参评比</th>  
+                                <th width="10%">解决率</th>                                    
+                            </tr>
+                            </thead>
+                        <tbody>
+                        <tr role="row" class="odd">
+                            <td>你好</td>
+                            <td></td>
+                            <td>13</td>
+                            <td>38</td>
+                            <td>0</td>
+                            <td>0%</td>
+                            <td>100%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-r pt-10">
+                        <a href="javascript:;" class=" c-primary" onclick="exportExcel()">导出图表</a>
+                    </div>
+                    <div class="page clearfix">
+                        <span class="page_span ">上一页</span>
+                        <a href="javascript:;" class="cura">1</a>
+                        <a href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <span class="page_span ">下一页</span>
+                        <span>共<b class="page_b">12</b>页</span>
+                        <span>跳转到</span>
+                        <input type="text" class="page_txt">
+                        <span>页</span>
+                        <span class="go_span">GO</span>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/common.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/H-ui.js"></script>
+<script type="text/javascript" src="../js/H-ui.admin.js"></script>
+<script src="../js/WdatePicker.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+        
+    
+   
+</script>
+</body>
+</html>
