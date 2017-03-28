@@ -1,0 +1,45 @@
+
+/* CSS Document */
+.btn1{padding:5px 15px;height:30px;border-radius:2px;cursor:pointer;color:#fff;border:0;}
+.btn1_blue{background:#529ff6;}
+.btn1_blue:hover{background:#488cd8;}
+.btn_green{background:#2bcacc;}
+.btn_green:hover{background:#2dbcbe;}
+.btn_green2{background:#63d197;}
+.btn_green2:hover{background:#60c690;}
+.btn_gray{background:#d5d4d4;}
+.btn_gray:hover{background:#c7c7c7;}
+.btn_delete{background:#d95353;}
+.btn_delete:hover{background:#be5353;}
+
+/*我的应用*/
+.my_appbox{box-sizing:border-box;background:#fff;}
+.application_box_list{width:23%;margin:1%;}
+
+/*参数设置*/
+
+/*开关*/
+.b_box{ width: 34px;
+    height: 20px;
+    border-radius: 4px;
+    position: relative;
+}
+.s_box{ width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    position: absolute;
+    background: white;
+    box-shadow: 0px 2px 4px #999;
+    cursor:pointer;
+}
+.open1{background: #3ea9fb;}
+.open2{top: 2px; right: 1px; }
+.close1{background: #ccc;  border-left: transparent;}
+.close2{left: 1px;  top: 2px; }
+/*纬度*/
+.con_box{padding:20px 0px;box-sizing:border-box;background:#fff;}
+.con_box_serl{width:324px;height:32px;}
+.con_box_serl .txt{width:160px;height:28px;line-height:28px;padding-left:5px;}
+.con_box_serl .btn1{position:absolute;right:-1px;top:-1px;width:65px;height:32px;background:#3ea9fb;cursor:pointer;}
+.stop_word_tab{border-collapse:collapse;}
+.stop_word_tab th,.stop_word_tab td{border:1px solid #e3e3e3;height:40px;line-height:40px;text-align:center;font-size:14px;}

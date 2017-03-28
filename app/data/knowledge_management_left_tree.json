@@ -1,0 +1,13 @@
+[{
+  "sref": "index.know_dept_management",
+  "text": "知识库组织管理"
+}, {
+  "sref": "index.know_role_management",
+  "text": "知识库角色"
+}, {
+  "sref": "index.know_user_management",
+  "text": "知识库人员"
+}, {
+  "sref": "index.know_content_management",
+  "text": "知识库内容管理"
+}]

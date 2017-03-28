@@ -1,0 +1,144 @@
+<!-- con-->
+<div class="know_manage wrap mb50" >
+    <div class="know_man_tit clearfix mb20">
+        <p class="current" ui-sref="back.gateway" >文档导入</p>
+        <!--<p ui-sref="back.adapter" >适配器接入</p>-->
+    </div>
+    <div class="bd doc_import">
+        <div class="doc_import_tit clearfix">
+            <a href="javascript:;" class="cur_p">任务分析</a>
+            <a ui-sref="back.template">模板配置</a>
+
+        </div>
+        <div class="proce_result p20">
+            <div class="proce_result_top clearfix mb15">
+                <a href="javascript:;" class="L know_import f16 c_blue" gateway-menu="file" >从文件导入知识</a>
+                <div class="R app_search mr20">
+                    <input type="text" class="input-text txt L" placeholder="文档名称" ng-model="SearchPOJO.docName"/>
+                    <input type="button" class="btn L" value="检索" style="font-size:14px;padding:0" ng-click="queryKnowDocList()"/>
+                </div>
+            </div>
+            <div class="proce_result_bot">
+                <table class="app_manage_tab">
+                    <tbody>
+                    <tr class="bold tr1">
+                        <td width="10%">序号</td>
+                        <td width="20%">文档名称</td>
+                        <td width="10%">上传人</td>
+                        <td width="10%">创建时间</td>
+                        <td width="10%">任务状态</td>
+                        <td width="10%">操作</td>
+                    </tr>
+                    <tr ng-repeat="knowDoc in knowDocs">
+                        <td>{{$index+1}}</td>
+                        <td class="c_blue cp" ng-if="knowDoc.documentationStatus == 9" ui-sref="back.know_view({knowDocId:knowDoc.documentationId})" ng-bind="knowDoc.documentationName"></td>
+                        <td  ng-if="knowDoc.documentationStatus == 0 ||knowDoc.documentationStatus == 1||knowDoc.documentationStatus == 2 ||knowDoc.documentationStatus ==3" ng-bind="knowDoc.documentationName"></td>
+                        <td  ng-if="knowDoc.documentationStatus == undefine"></td>
+                        <td>{{knowDoc.documentationCreater}}</td>
+                        <td>{{knowDoc.documentationCreateTime|date:'yyyy-MM-dd'}}</td>
+                        <td ng-if="knowDoc.documentationStatus == undefine"></td>
+                        <td ng-if="knowDoc.documentationStatus == 0">未分析</td>
+                        <td ng-if="knowDoc.documentationStatus == 1">分析出错</td>
+                        <td ng-if="knowDoc.documentationStatus == 2">没有相应的模板规则</td>
+                        <td ng-if="knowDoc.documentationStatus == 3">模板解析无结果</td>
+                        <td ng-if="knowDoc.documentationStatus == 9">分析完成</td>
+                        <td><a href="javascript:;" ng-click="deleteKnowDoc(knowDoc.documentationId)" class="c_red" alertBar ng-confirm="确认删除?">删除</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination ng-if="paginationConf.totalItems && paginationConf.totalItems>0" conf="paginationConf"></pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<span class="popup_span " style="display:none"></span>
+<div class="popup import_knowledge_popup import_from_txt" style="visibility:hidden">
+    <a href="javascript:;" class="close_btn f20" close-menu=""> × </a>
+    <h3 class="popup_h3 bold">从文件导入知识</h3>
+    <div class="popup_div">
+        <div class="db" style="">
+            <!--<div class="mb10 clearfix">-->
+                <!--<span class="L know_span">知识分类:</span>-->
+                <!--&lt;!&ndash;ztree下拉树&ndash;&gt;-->
+                <!--<div class="content_wrap">-->
+                    <!--<div class="zTreeDemoBackground left">-->
+                        <!--<ul class="list">-->
+                            <!--<input id="citySel" drop-down-menu-by-ztree="citySel,menuContent,treeDemo" type="text" readonly value="" class="txt L bd" style="border: 1px solid #BFBABA;width:270px"/>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div id="menuContent"  class="menuContent" style="display:none; position: absolute;z-index:2;padding:20px;margin:-20px;">-->
+                    <!--<ul id="treeDemo"  class="ztree" style="border: 1px solid #617775;overflow-y: hidden;overflow-x: hidden;background: #f0f6e4;margin-top:0px; width:258px; height: 330px;"></ul>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;ztree下拉树&ndash;&gt;-->
+            <!--</div>-->
+            <div class="mb10 clearfix">
+                <span class="L know_span">选择模板:</span>
+                <ol class="L" style="margin-top:6px">
+                    <li class="clearfix">
+                        <!--<label class="mr20 L">-->
+                            <!--<input type="checkbox" ng-model="processMethod" value="s" class="rad chip_produce" name="machining" process-method-menu="s"/>碎片化加工-->
+                        <!--</label>-->
+                        <div  id="modelSelect" style="position:relative;width:167px;" class="L dn show">
+                            <input  placeholder="请选择解析模板" template-input type='text' class='template_inpt bd'/>
+                            <a href="" class="refresh" ></a>
+                        </div>
+                        <div style='' template-con class='template_con dn'>
+                            <!--<span class="R">模板名称 : <input  type='text' class='template_search' ng-model="TemSearchPOJO.name"/></span>-->
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>模板名称</th>
+                                    <th>上传人</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="template in  templates" on-render-finish="">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{template.templateName}}</td>
+                                    <td>{{template.templateCreater}}</td>
+                                    <td ng-show="false">{{template.templateId}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <pagination ng-if="temPaginationConf.totalItems && temPaginationConf.totalItems>0" conf="temPaginationConf"></pagination>
+                        </div>
+                    </li>
+                    <!--<li>-->
+                        <!--<label ><input ng-model="processMethod" value="a" type="radio" class="rad" name="machining" process-method-menu="a"/>完整加工</label>-->
+                    <!--</li>-->
+                </ol>
+                <a type="button" style="display: none" id="modelAdd" class=" know_add_icon" ui-sref="back.createTemplate({isGo:true})"  target="_blank">创建模板</a>
+
+            </div>
+            <div class="mb10 clearfix" style="margin-top:16px">
+                <span class="L know_span">要加工的文档:</span>
+                <div class="L" style="width:484px">
+                    <div class="upload bd mb20" >
+
+                        <div id="filelist">
+                            <div class="file_title">
+                                <span class="name">文件名</span>
+                                <b class="progress">状态</b>
+                                <span class="size" style="right:113px">大小</span>
+                            </div>
+                            <div id="file_container" class="file_wrapper"></div>
+                            <div style="padding:10px">
+                                <input type="button" value="选择文件" class="upload_btn" id="pickfiles" plupload=""/>
+                                <!--<input type="button" value="上传文件" class="upload_btn" id="uploadfiles"/>-->
+                            </div>
+                        </div>
+
+                        <pre id="console"></pre>
+
+                    </div>
+                    <div class="tc">
+                        <input type="button" id="uploadfiles" value="确定" class="btn btn1 mr20"/>
+                        <input type="button" id="reset" value="重置" class="btn btn2"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

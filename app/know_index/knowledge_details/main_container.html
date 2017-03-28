@@ -1,0 +1,272 @@
+<!--主体-->
+<div class="main bgGray">
+    <div class="warp">
+        <div class="i-section mb30 mt20">
+            <div class="gjss-cont fl pb25">
+                <div class="knowledge-detail">
+                    <div class="kd-cz">
+                        <div class="fr">
+                            <!--<a href="javascript:;"><i class="icon icoimg bj"></i><span>编辑</span></a>-->
+                            <!--<em>|</em>-->
+                            <a href="javascript:;"  ng-click="likeKnowItem(knowItem.agreeStatus,knowItem.id,knowItem.libraryId,knowItem.libraryName)"><i  ng-class="canAgree(knowItem.agreeStatus)"></i><span ng-if="!knowItem.agreeStatus">点赞</span><span ng-if="knowItem.agreeStatus">取消点赞</span></a>
+                            <em>|</em>
+                            <!--<a href="javascript:;"><i class="icon icoimg pl"></i><span>评论</span></a>-->
+                            <!--<em>|</em>-->
+                            <a href="javascript:;"  ng-click="collectKnowItem(knowItem.collectStatus,knowItem.id,knowItem.libraryId,knowItem.libraryName)"><i ng-class="canCollect(knowItem.collectStatus)"></i><span ng-if="!knowItem.collectStatus">收藏</span><span ng-if="knowItem.collectStatus">取消收藏</span></a>
+                        </div>
+                    </div>
+
+                    <div class="kd-text-cont mt30">
+                        <h3 class="title ellipsis" title="{{knowItem.titleHtml}}" ng-bind-html="knowItem.titleHtml"></h3>
+                        <div class="txt">
+                            <!--<p ng-bind-html="knowItem.contentHtml" ></p>-->
+                            <p ng-bind-html="knowItem.contentHtml" ></p>
+                        </div>
+                        <div class="kd-table mt30">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="label">
+                                            版本号
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.version"></span>
+                                            <a href="javascript:;" ui-sref="index.history_version({knowItemId:knowItem.id})">历史版本</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label">
+                                            渠道
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span>适配器</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="label">
+                                            更新时间
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.utime | date:'yyyy-MM-dd'"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label">
+                                            创建时间
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.ctime | date:'yyyy-MM-dd'"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="label">
+                                            上传人
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.userName"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label">
+                                            加工方式
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="label">
+                                            来源
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <a class="fr" ui-sref="index.know_view({knowDocId:knowItem.knowDocId})">查看来源</a>
+                                            <span ng-bind="knowItem.knowDocName"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label">
+                                            所属库
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.libraryName"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="label">
+                                            标签
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.titleElement"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label">
+                                            分类
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="label ellipsis">
+                                            <span ng-bind="knowItem.ontology"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="kd-c-box mt30 act-box">
+                            <div class="kd-hd-box pb10">
+                                <h3 class="hd-title fl">知识评论</h3>
+                                <a class="btn qr-btn fr js-pl" href="javascript:;" comment>我来评论</a>
+                            </div>
+                            <div class="act-comment mb20">
+                                <div class="comment-cont">
+                                    <div class="comment-title fl">评论：</div>
+                                    <div class="comment-text-box">
+                                        <textarea class="comment-text" ng-model="comment" ng-change="checkText(1,$index)" placeholder="请输入500字以内"></textarea>
+                                    </div>
+                                </div>
+                                <div class="comment-btn tar">
+                                    <span class="qr-btn js-qr" add-comment>确认</span>
+                                    <span class="qx-btn js-qx" cancel-comment ng-click="cancelComment()">取消</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bgWhite mb30">
+                            <ul class="kdc-list">
+                                <li ng-repeat="comment in comments" style="padding-left:0px">
+                                    <!--<div class="kdc-poto" style="width:30px;height:30px;top:15px">-->
+                                        <!--<img ng-if="comment.createUserProtarit!='' && comment.createUserProtarit!=null && comment.createUserProtarit!=undefined" ng-src="{{comment.createUserProtarit}}" />-->
+                                        <!--<img ng-if="comment.createUserProtarit=='' ||comment.createUserProtarit==null ||comment.createUserProtarit==undefined" ng-src="images/example/per-poto.png" />-->
+                                    <!--</div>-->
+                                    <div class="kdc-name" >
+                                        <img ng-if="comment.createUserProtarit!='' && comment.createUserProtarit!=null && comment.createUserProtarit!=undefined" ng-src="{{comment.createUserProtarit}}" width="30" height="30"/>
+                                        <img ng-if="comment.createUserProtarit=='' ||comment.createUserProtarit==null ||comment.createUserProtarit==undefined" ng-src="images/example/per-poto.png" width="30" height="30"/>
+                                        <span ng-bind="comment.createName"></span>&nbsp
+                                        <span style="color: black;" ng-show="comment.type==0">评论</span><span style="color: black;" ng-show="comment.type==1">回复</span>&nbsp
+                                        <img ng-if="comment.targetUserProtarit!='' && comment.targetUserProtarit!=null && comment.targetUserProtarit!=undefined" ng-src="{{comment.targetUserProtarit}}" width="30" height="30"/>
+                                        <img ng-if="comment.targetUserProtarit=='' ||comment.targetUserProtarit==null ||comment.targetUserProtarit==undefined" ng-src="images/example/per-poto.png" width="30" height="30"/>
+                                        <span ng-bind="comment.targetName"></span>&nbsp
+                                    </div>
+                                    <!--<div style="width:60px;height:60px">-->
+                                        <!--<img ng-if="comment.targetUserProtarit!='' && comment.targetUserProtarit!=null && comment.targetUserProtarit!=undefined" ng-src="{{comment.targetUserProtarit}}"/>-->
+                                        <!--<img ng-if="comment.targetUserProtarit=='' ||comment.targetUserProtarit==null ||comment.targetUserProtarit==undefined" ng-src="images/example/per-poto.png"/>-->
+                                    <!--</div>-->
+                                    <!--<span ng-bind="comment.targetName"></span>-->
+                                    <div class="sa-text" ng-bind="comment.content" style="height:auto;overflow:visible">
+                                    </div>
+                                    <div class="sa-box pt10">
+                                        <div class="ut fl">
+                                            <em ng-bind="comment.ctime | date:'yyyy-MM-dd'"></em>
+                                        </div>
+                                        <div class="zn fr">
+													<span class="js-answer" answer>
+														回复
+													</span>
+                                            <em>|</em>
+													<span class="js-delete" style="color: red" ng-click="deleteComment(comment.id)" ng-confirm="确定删除?">
+														删除
+													</span>
+                                        </div>
+                                    </div>
+                                    <div class="act-comment ">
+                                        <div class="comment-cont">
+                                            <div class="comment-text-box">
+                                                <textarea class="comment-text" ng-model="$parent.require[$index]" ng-change="checkText(2,$index)" placeholder="请输入500字以内"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="comment-btn tar">
+                                            <span class="qr-btn" ng-click="addAnswer(knowItem.id,comment.userId,$index)" >确认</span>
+                                            <span class="qx-btn js-qx" cancel-comment>取消</span>
+                                        </div>
+                                        <!--<dl>-->
+                                            <!--<dd ng-repeat="require in requires">-->
+                                                <!--<div class="hf-text">-->
+                                                    <!--<span>{{require.targetName}}</span> 回复 <span>{{require.createName}}</span> : {{require.content}}-->
+                                                <!--</div>-->
+                                                <!--<div class="hf-titme">-->
+                                                   <!--{{require.ctime | date:'yyyy-MM-dd'}}-->
+                                                <!--</div>-->
+                                            <!--</dd>-->
+                                        <!--</dl>-->
+                                        <!--<pagination-require conf="paginationConfRequire"></pagination-require>-->
+                                    </div>
+                                </li>
+                            </ul>
+                            <pagination ng-if="paginationConf.totalItems && paginationConf.totalItems>0" conf="paginationConf"></pagination>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="search-history-aside fr pt25 pb25">
+                <div class="hd-title">
+                    知识统计
+                </div>
+                <ul class="ks-aside-cont mb30">
+                    <li class="bg1">
+                        <span class="fl">阅览次数</span>
+                        <em class="fr" ng-bind="knowItem.readnum"></em>
+                    </li>
+                    <li class="bg2">
+                        <span class="fl">编辑次数</span>
+                        <em class="fr" ng-bind="knowItem.editnum"></em>
+                    </li>
+                    <li class="bg1">
+                        <span class="fl">点赞次数</span>
+                        <em class="fr" ng-bind="knowItem.agreenum"></em>
+                    </li>
+                    <li class="bg2">
+                        <span class="fl">收藏次数</span>
+                        <em class="fr" ng-bind="knowItem.collectnum"></em>
+                    </li>
+                </ul>
+                <div class="hd-title">
+                    关联知识
+                </div>
+                <ul class="knowledge-list">
+                    <li class="ellipsis" ng-repeat="linkItem in linkKnowItems">
+                        <span class="cxl fr" ng-bind="linkItem.ctiem|date:'yyyy-MM-dd'"></span>
+                        <div class="ellipsis">
+                            <div class="left fl">
+                                <img class="hot fr" src="images/icon-hot.png"/>
+                                <a class="ellipsis" href="#" title="{{linkItem.title}}" ng-bind="linkItem.title">
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<!--end 主体-->

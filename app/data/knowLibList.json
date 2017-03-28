@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "测试库",
+    "description": "fhjsajsfj",
+    "createName": "admin",
+    "knowRole": "产品经理",
+    "item": 123,
+    "updateTime": "2016\/5\/20 20:32:53"
+  },
+  {
+    "id": 2,
+    "name": "海尔客服知识库",
+    "description": 10,
+    "createName": "admin",
+    "knowRole": 1,
+    "item": "2016\/5\/24 09:44:36",
+    "updateTime": "2016\/5\/24 09:44:36"
+  },
+  {
+    "id": 3,
+    "name": "test",
+    "description": 10,
+    "createName": "admin",
+    "knowRole": 1,
+    "item": "2016\/5\/30 12:40:51",
+    "updateTime": "2016\/5\/30 12:40:51"
+  }
+]

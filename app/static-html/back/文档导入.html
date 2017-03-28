@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文档导入</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="js/1.9.1/jquery.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script src="DatePicker/WdatePicker.js"></script>
+</head>
+
+<body>
+	<div class="header_wrap">
+    	<div class="header wrap clearfix">
+        	<h1 class="L mr200 logo"><img src="images/logo.png" alt=""></h1>            
+            <div class="header_r R">
+            	<span class="mr10 L">知识管理</span>    
+                <div class="dis user_div L">            
+                	<a href="javascript:;" class="header_ra ">admin</a>
+                    <ul class="drop_down">
+                    	<li>退出</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--nav-->
+    <div class="nav_wrap">
+    	<div class="nav wrap">
+        	<ul class="nav_ul nav_ul2 clearfix">
+            	<li style="border-left:0;"><a href="javascript:;">首页</a></li>
+                <li class="current" ><a href="javascript:;">知识接入</a></li>
+                <li><a href="javascript:;">知识审核</a></li>
+                <li ><a href="javascript:;">知识库管理</a></li>
+                <li><a href="javascript:;">知识建模</a></li>
+                <li><a href="javascript:;">考试管理</a></li>
+                <li ><a href="javascript:;">应用管理</a></li>
+                <li style="border-right:0;"><a href="javascript:;">系统管理</a></li>
+            </ul>
+        </div>
+    </div>
+   <!-- con-->
+    <div class="know_manage wrap mb50" >
+    	<div class="know_man_tit clearfix mb20">
+        	<p class="current">文档导入</p>
+            <p>适配器接入</p>            
+        </div>
+        <div class="bd doc_import">
+        	<div class="doc_import_tit clearfix">
+                <a href="javascript:;" class="cur_p">文档列表</a>
+                <a href="javascript:;" >模板配置</a>
+            </div>
+            <div class="proce_result p20">
+            	<div class="proce_result_top clearfix mb15">
+                    <a href="javascript:;" class="L know_import f16 c_blue">从文件导入知识</a> 
+                    <a href="javascript:;" class="L add_person_a f16 c_blue single_add" style="margin-left:16px">添加单条知识</a>                	
+                    <div class="R pr">
+                    	<a href="javascript:;" class="advan_search">高级检索</a>
+                        <div class="pa bd advan_search_div">
+                        	<div class="mb10 clearfix">
+                                <span class="L know_span">文档名称:</span>
+                                <input type="text" class="txt L bd" placeholder="模型1"/>
+                            </div>
+                            <div class="mb10 clearfix">
+                                <span class="L know_span">上传人:</span>
+                                <input type="text" class="txt L bd" placeholder="模型1"/>
+                            </div>
+                            <div class="mb10 clearfix">
+                                <span class="L know_span">上传时间:</span>
+                                <input type="text" class="riqi_txt L Wdate" id="d11" onclick="WdatePicker()"/>
+                                <span class="L pl10 pr10">至</span>
+                                <input type="text" class="riqi_txt L Wdate" id="d11" onclick="WdatePicker()"/>
+                            </div>
+                            <div class="mb10 clearfix">
+                                <span class="L know_span">所属知识库:</span>
+                                <input type="text" class="txt L bd" placeholder="模型1"/>
+                            </div>
+                            <div class="mb10 clearfix">
+                                <span class="L know_span">是否异常:</span>
+                                <label class="mr20">
+                                	<input type="radio" class="rad"/>是
+                                </label>
+                                <label>
+                                	<input type="radio" class="rad"/>否
+                                </label>
+                            </div>
+                            <div class="tc">
+                            	<input type="button" value="检索" class="btn btn1 mr20"/>
+                                <input type="button" value="取消" class="btn btn2"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="R app_search mr20">
+                        <input type="text" class="input-text txt L" placeholder="文档名称" />
+                        <input type="button" class="btn L" value="检索" />
+                    </div>
+                </div>
+                <div class="proce_result_bot">
+                	<table class="app_manage_tab">            
+                        <tbody>
+                            <tr class="bold">
+                                <td width="10%">序号</td>
+                                <td width="30%">文档名称</td>
+                                <td width="12%">上传人</td>                	
+                                <td width="12%">上传时间</td>
+                                <td width="12%">所属知识库</td>
+                                <td width="12%">重复知识</td>
+                                <td width="12%">加工知识量</td>                                
+                            </tr>                    
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>			                            
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>                            
+                            <tr class="c_red">
+                                <td>4</td>
+                                <td class="bold">免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td>是</td>
+                                <td>345</td>                                
+                            </tr>                            
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>                            
+                            <tr class="c_red">
+                                <td>6</td>
+                                <td class="bold">免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td>是</td>
+                                <td>345</td>                                
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>免费清洗”洗衣机活动说明</td>
+                                <td>admin </td>
+                                <td>2016-01-01</td>
+                                <td>知识库1</td>
+                                <td></td>
+                                <td>345</td>                                
+                            </tr>                                                                
+                    	</tbody>
+                    </table>
+                    <div class="page clearfix">
+                        <span class="page_span ">上一页</span>
+                        <a href="javascript:;" class="cura">1</a>
+                        <a href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <span class="page_span ">下一页</span>
+                        <span>共<b class="page_b">12</b>页</span>
+                        <span>跳转到</span>
+                        <input type="text" class="page_txt">
+                        <span>页</span>
+                        <span class="go_span">GO</span>
+                    </div>
+                </div>             
+            </div>
+        </div>       
+    </div>
+    <!-- footer -->
+    <div class="footer_wrap footer_wrap2 tc">    	
+    	<p>©CopyRight...</p>
+    </div>
+    <!--从文件导入知识弹框-->
+    <div class="popup_wrap import_knowledge">
+        <span class="popup_span"></span>
+        <div class="popup import_knowledge_popup">      
+            <a href="javascript:;" class="close_btn f20"> × </a>
+            <h3 class="popup_h3 bold">从文件导入知识</h3>
+            <div class="popup_div">         
+                <div class="db" style="">
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">知识库:</span>                            
+                        <select class="txt L bd">
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">知识分类:</span>                            
+                        <select class="txt L bd">
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">性别:</span>                            
+                        <ol class="L" style="margin-top:6px">
+                            <li class="clearfix">
+                                <label class="mr20 L"><input type="radio" class="rad chip_produce" name="machining"/>碎片化加工</label>
+                                <select class="sel bd mr20 L dn produce_style">
+                                    <option value="请选择">请选择</option>
+                                    <option value="目录加工">目录加工</option>
+                                    <option value="模板加工">模板加工</option>
+                                    <option value="插件加工">插件加工</option>
+                                </select>
+                                <select class="sel bd mr20 L dn" style="width:70px">
+                                    <option value="">请选择</option>
+                                    <option value="">模板A</option>
+                                    <option value="">模板B</option>
+                                    <option value="">模板C</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label ><input type="radio" class="rad" name="machining"/>完整加工</label>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="mb10 clearfix" style="margin-top:16px">
+                        <span class="L know_span">要加工的文档:</span>                            
+                        <div class="L" style="width:484px">
+                            <div class="upload bd mb20" >
+                                
+                                <div id="filelist">
+                                    <div class="file_title">
+                                        <span class="name">文件名</span>
+                                        <b class="progress">状态</b>
+                                        <span class="size" style="right:113px">大小</span>
+                                    </div>
+                                    <div id="file_container" class="file_wrapper"></div>
+                                    <div style="padding:10px">
+                                        <input type="button" value="选择文件" class="upload_btn" id="pickfiles"/>
+                                        <input type="button" value="上传文件" class="upload_btn" id="uploadfiles"/>
+                                    </div>
+                                </div>
+                                <pre id="console"></pre>
+                               
+                            </div>
+                            <div class="tc">
+                                <input type="button" value="确定" class="btn btn1 mr20"/>
+                                <input type="button" value="重置" class="btn btn2"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+    </div>
+    <!--添加单条知识弹框-->
+     <div class="popup_wrap add_single">
+        <span class="popup_span"></span>
+        <div class="popup add_single_popup">      
+            <a href="javascript:;" class="close_btn f20"> × </a>
+            <h3 class="popup_h3 bold">添加单条知识</h3>
+            <div class="popup_div">         
+                <div class="db">
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">知识库:</span>                            
+                        <select class="txt L bd">
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">知识分类:</span>                            
+                        <select class="txt L bd">
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">知识标题:</span>                            
+                        <input type="text" class="L txt bd" style="width:280px"/>
+                    </div>
+                    <div class="mb10 clearfix">
+                        <span class="L know_span">知识内容:</span>                            
+                        <div class="L">
+                            <div class="upload bd mb20" style="height:176px">
+                                
+                            </div>
+                            <a href="javascript:;" class="mb10 bd upload_attach" style="border-radius:0">上传附件</a>
+                            <div class="tc">
+                                <input type="button" value="确定" class="btn btn1 mr20"/>
+                                <input type="button" value="清空" class="btn btn2"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="js/upload/plupload.full.min.js"></script>
+<script type="text/javascript" src="js/upload/jquery.nicescroll.js"></script>
+<script type="text/javascript" src="js/upload/index.js"></script>   
+</body>
+</html>

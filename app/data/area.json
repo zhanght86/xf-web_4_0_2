@@ -1,0 +1,42 @@
+[
+  {
+    "id":6,
+    "area_name":"青岛",
+    "create_user":"admin",
+    "create_date":"2016\/5\/21 11:01:58",
+    "modify_user":null,
+    "modify_date":"2016\/5\/21 11:01:52"
+  },
+  {
+    "id":2,
+    "area_name":"中国",
+    "create_user":"admin",
+    "create_date":"2016\/4\/26 13:26:58",
+    "modify_user":"admin",
+    "modify_date":"2016\/4\/26 13:27:29"
+  },
+  {
+    "id":3,
+    "area_name":"北京",
+    "create_user":"admin",
+    "create_date":"2016\/5\/9 22:52:52",
+    "modify_user":"admin",
+    "modify_date":"2016\/4\/26 13:27:29"
+  },
+  {
+    "id":4,
+    "area_name":"上海",
+    "create_user":"admin",
+    "create_date":"2016\/5\/3 14:53:37",
+    "modify_user":"admin",
+    "modify_date":"2016\/4\/26 13:27:29"
+  },
+  {
+    "id":5,
+    "area_name":"深圳",
+    "create_user":"admin",
+    "create_date":"2016\/5\/3 14:53:37",
+    "modify_user":null,
+    "modify_date":"2016\/4\/26 13:27:29"
+  }
+]

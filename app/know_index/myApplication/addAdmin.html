@@ -1,0 +1,65 @@
+<script type="text/ng-template" >
+</script>
+    <div class="page-container" style="width: 700px" >
+                 <form  class="form form-horizontal" >
+                     <div class="mb-11 cl">
+                         <label class="form-label col-xs-3 col-sm-2">应用名称：</label>
+                         <div class="formControls col-xs-9 col-sm-9">
+
+                             <input type="text" ng-model="vm.newApplicationName" class="input-text"/>
+                         </div>
+                     </div>
+                     
+                     <div class="mb-11 cl">
+                         <label class="form-label col-xs-3 col-sm-2">场景选择：</label>
+                         <div class="formControls col-xs-9 col-sm-9">
+
+                             <select class="input-text" ng-model="vm.newScene">
+                                 <option ng-repeat="licence in vm.selectLicence" ng-value="licence.sceneId" ng-selected="$index==0? true :false" >{{licence.sceneName}}</option>
+                             </select>
+                         </div>
+                     </div>
+                     <div class="mb-10 cl">
+                         <label class="form-label col-xs-3 col-sm-2">licence：</label>
+                         <div class="formControls col-xs-9 col-sm-9">
+                             <input type="text"  class="input-text" ng-model="vm.newLicence" placeholder="请输入XX位license"/>
+                         </div>
+                     </div>
+                     <div class="mb-10 cl">
+                         <label class="form-label col-xs-3 col-sm-2">应用描述：</label>
+                         <div class="formControls col-xs-9 col-sm-9">
+                             <textarea class="textarea" ng-model="vm.newDescribe"></textarea>
+                         </div>
+                     </div>
+                     <div class="row cl">
+                         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                             <input type="submit" class="btn1 btn1_blue mr-15" value="确认" ng-click="closeThisDialog(1)"/>
+                             <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+                         </div>
+                     </div>
+                 </form>
+        </div>
+
+<style>
+    .ngdialog.ngdialog-theme-default .ngdialog-content {
+        -webkit-animation: ngdialog-flyin .5s;
+        animation: ngdialog-flyin .5s;
+        background: #f0f0f0;
+        border-radius: 5px;
+        color: #444;
+        font-family: Helvetica,sans-serif;
+        font-size: 1.1em;
+        line-height: 1.5em;
+        margin: 0 auto;
+        max-width: 100%;
+        padding: 1em;
+        position: relative;
+        width: 700px;
+    }
+    .cl{
+        margin-top: 15px;
+    }
+</style>
+
+
+

@@ -1,0 +1,37 @@
+{
+  "name": "Angular-NestedSortable",
+  "version": "1.2.8",
+  "homepage": "https://github.com/JimLiu/Angular-NestedSortable",
+  "authors": [
+    "Jim Liu <junminliu@gmail.com>"
+  ],
+  "description": "NestedSortable directive for the angular.js",
+  "main": "dist/angular-nested-sortable.js",
+  "keywords": [
+    "angular",
+    "NestedSortable",
+    "sortable",
+    "nested",
+    "tree",
+    "node"
+  ],
+  "dependencies": {
+    "angular": ">= 1.2.0",
+    "es5-shim": "2.3.0"
+  },
+  "devDependencies": {
+    "angular": ">= 1.2.0",
+    "bootstrap": "~3.1.0",
+    "jquery": ">=1.10.x",
+    "jasmine-jquery": "~1.0.0",
+    "angular-mocks": "~1.2.11"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests"
+  ]
+}

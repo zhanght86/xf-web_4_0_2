@@ -1,0 +1,852 @@
+.table-checkbox label{
+    margin: 0 auto;
+}
+.table-checkbox1{
+    visibility: hidden;
+}
+/*-------聊天弹窗------*/
+.chaPopBG{
+    position: fixed;
+    display: none;
+    z-index: 1050;
+    background: #000;
+    background: rgba(0,0,0,.7);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+.chatPop{
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 0;  bottom: 0;  left: 0;right: 0;
+    margin: auto;
+}
+.chatPop > p{
+    height: 60px;
+    background: #000;
+    margin: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background: rgba(0,0,0,.6);
+    padding: 0 20px;
+    line-height: 60px;
+}
+.chatPopTitleFl{
+    color: #fff;
+    font-size: 16px;
+    float: left;
+}
+.chatPopTitleRt{
+    float: right;
+    color: #e0e0e0;
+}
+.chatPopTitle span > img{
+    width: 30px;
+    height: 30px;
+}
+
+.chatPopLeft{
+    width: 550px;
+    height: 540px;
+    box-sizing: border-box;
+    float: left;
+    background: rgba(255,255,255,.86);
+    border-bottom-left-radius: 8px;
+}
+.chatPopLeftCnt{
+    width: 100%;
+    height: 390px;
+    border-bottom: 1px solid #ccc;
+}
+.chatPopLeft i{
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    border-radius: 50%;
+    background: url("../../images/images/poto.png") no-repeat center;
+    background-size: cover;
+}
+.chatPopLeftHe{
+    padding: 20px;
+}
+.chatPopLeftHe > div{
+    clear: both;
+}
+.chatPopLeftHe p{
+    max-width: 370px;
+    display: inline-block;
+    vertical-align: top;
+    background: #ffe6d3;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 12px;
+    color: #333;
+    position: relative;
+    margin-left: 10px;
+}
+.chatPopLeftHe p > span{
+    color: #ff6c00;
+    font-weight: bold;
+}
+.chatPopLeftHe sub{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: -5px;
+    top: 30px;
+    background: #ffe6d3;
+    transform: rotate(45deg);
+}
+.chatPopLeftMe{
+    padding: 20px;
+}
+.chatPopLeftMe > div{
+    float: right;
+}
+.chatPopLeftMe p{
+    max-width: 370px;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 12px;
+    color: #333;
+}
+.chatPopLeftMe p > b{
+    color: #999;
+    float: right;
+}
+.chatPopLeftMeMSg{
+    background: #ededed;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+.chatPopLeftMe sub{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: -5px;
+    top: 10px;
+    background: #ededed;
+    transform: rotate(45deg);
+}
+.chatPopLeftTime{
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.chatPopLeftSend{
+    width: 100%;
+    height: 150px;
+}
+.chatPopLeftSend textarea{
+    width: 100%;
+    height: 110px;
+    background: none;
+    padding: 5px;
+}
+.chatPopLeftSendBth{
+    text-align: right;
+    padding-right: 10px;
+}
+.chatPopLeftSendBth span{
+    padding: 5px 10px;
+    color: #fff;
+    background: #4ea5ff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.chatPopRight{
+    width: 250px;
+    height: 540px;
+    float: right;
+    background: rgba(235,235,235,.86);
+    border-bottom-right-radius: 8px;
+    position: relative;
+}
+.chatPopRightNav{
+    width: 100%;
+    height: 35px;
+}
+.chatPopRightNav li{
+    width: 33.06%;
+    height: 100%;
+    float: left;
+    text-align: center;
+    line-height: 35px;
+    color: #333;
+    cursor: pointer;
+    background: #e5e3e3;
+}
+.chatPopRightNav > div{
+    width: 1px;
+    height: 100%;
+    float: left;
+}
+.chatPopRightNav li:hover{
+    background: #505767;
+    color: #fff;
+}
+.chatPopRightNav .chatPopRightNavOn{
+    background: #505767;
+    color: #fff;
+}
+.chatPopSearch{
+    width: 230px;
+    height: 35px;
+    margin: 20px auto;
+    position: relative;
+}
+.chatPopSearch > input{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-radius: 5px;
+}
+.chatPopSearch i{
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background: url("../../images/images/search_img.png") no-repeat center;
+    background-size: cover;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+.chatPopSe p{
+    margin-bottom: 5px;
+    padding-left: 10px;
+    color: #333;
+}
+.chatPopSe li{
+    list-style-type: disc;
+    margin-left: 30px;
+    margin-bottom: 2px;
+}
+.chatPopSe i{
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background: url("../../images/images/hot.png") no-repeat center;
+    vertical-align: sub;
+}
+.chatPopSeQR{
+    width: 180px;
+    height: 100px;
+    margin: auto;
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+}
+.chatPopSeQR img{
+    margin: 50px 0 10px 0;
+}
+.chatPopRightBot{
+    font-size: 12px;
+    color: #333;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -100px;
+}
+.hotPBM{
+    display: none;
+}
+.hotPromotion{
+    display: none;
+}
+.chatPopSearchPic{
+    text-align: center;
+}
+.chatPopSearchPic img{
+    margin: 5px 2px;
+}
+.chatPopRight3{
+    background: #f7f7f7;
+}
+/*--------概念知识新增----------*/
+.addContent{
+    margin-top: 10px;
+    background: #fff;
+}
+.checkboxDiv{
+    padding-top: 5px;
+}
+#checkbox{
+    width: 18px;
+    height: 18px;
+    border:1px solid #e1e1e1;
+    background: #fff;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+#checkbox + label{
+    font-size: 14px;
+}
+.aside-navs2{
+    margin: 0px;
+    background: #fbfbfb;
+    display: none;
+}
+.ipt-txt-box .btn-menu_1{
+    cursor: pointer;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    background: url(../../images/images/menuIcon.png) no-repeat center;
+}
+.addBth{
+    padding: 4px 8px;
+    font-family: "Microsoft YaHei";
+    border: solid #e1e1e1 1px;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+.textareaDiv{
+    width: 420px;
+    line-height:20px;
+    font-size: 14px;
+    padding: 6px;
+    margin: 6px 0;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    color: #333;
+    display: inline-block;
+    position: relative;
+}
+.textareaDiv1{background: #f1f1f1;}
+.item-line{
+	box-sizing: initial;
+}
+.item-line .left{
+    width: 227px;
+    height: 20px;
+    display: inline-block;
+}
+.optionDiv{
+    padding: 4px 0;
+    display: inline-block;
+}
+.optionDiv span{
+    color: #999;
+    box-sizing: initial;
+}
+#item-line{
+    height: 16px;
+    padding: 5px 0;
+}
+.pd30 span{
+    color: #333;
+}
+.Concept-Ipt-nxtDivOut{
+    width: 666px;
+    padding-left: 230px;
+}
+.Concept-Ipt-nxtDivOut span{ color: #ccc;}
+.textareaDiv2 .my-select{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.textareaDiv2 label{border-left: none !important;height: 32px !important;}
+.treeLeft{
+    display: block;
+    text-align: right;
+    width: 230px;
+}
+.textareClose2{
+    background-position: bottom !important;
+    top: 30px !important;
+}
+/*弹窗*/
+/*.addPopup{*/
+    /*height: 520px !important;*/
+/*}*/
+.addPopupCnt{
+    width: 420px;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+.addPopupCnt textarea {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #e1e1e1;
+    padding: 5px;
+}
+.checkboxStr > div{
+    display: inline-block;
+    vertical-align: middle;
+}
+.checkboxStr label{
+    margin-right: 20px;
+}
+.checkboxAddress{
+    height: 34px;
+    line-height: 34px;
+}
+.checkboxAddress > div{
+    display: inline-block;
+}
+.checkboxAddress .my-select{
+    width: 80px;
+}
+.addAddress{
+    width: 14px;
+    height: 14px;
+    background: url("../../images/images/addIcon.png") no-repeat;
+    cursor: pointer;
+    cursor: pointer;
+    margin: 2px 0 0 5px;
+}
+.deleteAddress{
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    background: url("../../images/images/addIcon.png") no-repeat center;
+    display: none;
+    cursor: pointer;
+}
+.Concept-p{
+    padding-top: 20px;
+}
+.Concept-Ipt{
+    width: 100%;
+    height: 34px;
+    margin-bottom: 15px;
+    position: relative;
+}
+.Concept-Ipt span,.textareaDiv2 span{
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: -25px;
+    top: 10px;
+    background: url("../../images/images/addIcon.png") no-repeat center;
+    cursor: pointer;
+}
+.Concept-Ipt2 span{
+    background-position: top;
+}
+.Concept-Ipt input{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e1e1e1;
+    padding: 5px;
+}
+.Concept-Ipt-nxtDiv{
+    margin-bottom: 15px;
+}
+.Concept-Ipt-nxt-ico{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url("../../images/images/Prompt_24.png") no-repeat center;
+    vertical-align: middle;
+}
+.Concept-Ipt-nxt{
+    color: #ccc;
+    font-size: 12px;
+}
+
+/*---------客服场景预览--------*/
+.Preview > li{
+    border-bottom: 1px dashed #dadada;
+    padding: 20px 0;
+    color: #333;
+}
+.Preview span{
+    width: 150px;
+    height: 22px;
+    color: #666;
+    display: inline-block;
+    text-align: right;
+    vertical-align:top;
+}
+.PreviewRight{
+    display: inline-block;
+    vertical-align:top;
+    width: 920px;
+}
+.PreviewRight > p{
+    color: #3ea9fb;
+}
+.PreviewRight i{
+    color: #999;
+    font-style: normal;
+}
+.PreviewRightPic{
+    width: 230px;
+    color: #888;
+    background: #fcfdfd;
+    border: solid 1px #eee;
+    padding-bottom: 8px;
+}
+.PreviewRightPic p{
+    height: 30px;
+    margin-bottom: 2px;
+    padding: 0 5px;
+}
+.PreviewRightPic .PreviewRightPic_L,.PreviewRightPic .PreviewRightPic_R{
+    width: auto;
+    float: right;
+    font-size: 12px;
+    line-height: 34px;
+}
+.PreviewRightPic .PreviewRightPic_L{
+    float: left;
+    color: #333;
+}
+.PreviewRightPic div{
+    font-size: 12px;
+    padding: 0 5px;
+}
+
+/*----------客服应用信息--------*/
+.msgR-cont{
+
+}
+.msgR-name{
+    font-size: 26px;
+    color: #333;
+    padding-top: 40px;
+}
+.msgR-name > span{
+    font-size: 14px;
+    color: #3ea9fb;
+    cursor: pointer;
+}
+.msgR-name i{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background: url("../../images/images/addIcon.png") bottom no-repeat;
+    vertical-align: middle;
+}
+.msgR-state > li{
+    width: 160px;
+    display: inline-block;
+}
+.msgR-title{
+    font-size: 16px;
+    color: #333;
+}
+.msgR-table-1{
+    width: 290px;
+    display: inline-block;
+    border-top: #e8e8e8 solid 1px;
+    border-left: #e8e8e8 solid 1px;
+    border-right: #e8e8e8 solid 1px;
+
+}
+.msgR-table-1 > li{
+    border-bottom: #e8e8e8 solid 1px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 90px;
+}
+.msgR-table-1 > .msgR-table-head{
+    background: #f0f0f0;
+    font-weight: bold;
+    color: #333;
+    padding-left: 0;
+    text-align: center;
+}
+.msgR-table-1 span{
+    color: #5777ed;
+}
+.msgR-table-2{
+    width: 560px;
+    margin-left: 15px;
+}
+.msgR-table-2 > li{
+    padding: 0 20px;
+}
+.msgR-table-2 p{
+    display: inline-block;
+}
+.msgR-table-2 .release,.msgR-table-2 .Nrelease{
+    border-radius: 2px;
+    color: #fff;
+    padding: 3px;
+}
+.msgR-table-2 .release{
+    background: #ff5050;
+
+}
+.msgR-table-2 .Nrelease{
+    background: #32aa9e;
+}
+.msgR-table-2 .Offline{
+    color: #e24e4e;
+}
+.msgR-table-2 .restart{
+    color: #529ff6;
+}
+.msgR-table-2 p{
+    float: right;
+    margin: 0;
+}
+.msgR-table-2 span{
+    color: #529ff6;
+}
+/*-------用户名修改弹�?----------*/
+.namePopupBG{
+    position: fixed;
+    display: none;
+    z-index: 1050;
+    background: #000;
+    background: rgba(0,0,0,.1);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+.namePopup{
+    position: absolute;
+    background: #fff;
+    width: 510px;
+    height: 250px;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.namePopup > p{
+    padding: 0 18px;
+    background: #f8f8f8;
+    height: 44px;
+    color: #333;
+    line-height: 44px;
+    margin: 0;
+}
+.namePopup > p > span{
+    display: inline-block;
+    float: right;
+}
+.namePopup i{
+    display: inline-block;
+    width: 16px;
+    height: 12px;
+    cursor: pointer;
+    transition: .3s;
+    background: url("../../images/images/icon-pop.png") no-repeat bottom;
+}
+.namePopup i:hover{
+    transform: rotate(90deg);
+}
+.namePopupCnt input{
+    width: 380px;
+    height: 36px;
+    border: #e5e5e5 solid 1px;
+    margin: 44px auto 0 64px;
+    padding: 5px;
+}
+.namePopupCnt p{
+    margin-left: 64px;
+    padding: 10px;
+    color: #e44242;
+    font-size: 12px;
+}
+.namePopupCnt .namePopupCntTxt{
+    font-size: 16px;
+    color: #333;
+    margin: 35px 0;
+    text-align: center;
+}
+
+/*-------框架�?---------*/
+.libraryCnt{
+    margin-top: 10px;
+}
+.libraryFt{
+    width: 450px;
+    height: 875px;
+    background: #fff;
+    float: left;
+}
+.libSearch{
+    margin: 50px auto;
+   
+}
+.libraryPtoDiv{
+    width: 110px;
+    text-align: center;
+    margin: auto;
+}
+
+.bank-navs{width: 282px; margin: 30px auto;}
+
+.libraryPtoDiv h3{
+    color: #333;
+    padding: 10px 0;
+}
+.libraryCntMenu{
+    padding: 40px 0 0 80px;
+}
+.libraryCntMenu > li{
+    height: 22px;
+    color: #333;
+    cursor: pointer;
+}
+.libraryCntMenu > li i{
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url("../../images/images/aside-nav-icon.png") no-repeat;
+    vertical-align: middle;
+}
+.libraryCntMenu > li ul{
+    padding-left: 26px;
+}
+.libraryRth{
+    width: 670px;
+    height: 875px;
+    background: #fff;
+    float: right;
+    padding: 30px;
+}
+.libraryRthCnt{
+    width: 295px;
+    height: 220px;
+    margin-top: 20px;
+    border: #ccc solid 1px;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+}
+.libraryRthCnt img{
+    margin: 20px 0 10px 0;
+}
+.libraryRthCnt > div{
+    width: 100%;
+    height: 40px;
+    background: #f0f0f0;
+    position: absolute;
+    bottom: 0;
+    padding: 0 10px;
+    color: #529ff6;
+    line-height: 40px;
+    text-align: left;
+}
+.even{
+    margin-left: 15px;
+}
+/*-------业务层级目录-------*/
+.aside-nav .icon-navA{  background-image:url("../../images/images/leftMenuIco.png");}
+.aside-nav .icon-navB{  background-position: 0 -4px;}
+.aside-nav .icon-navC{  background-position: 0 -52px;}
+.aside-nav .icon-navD{  background-position: 0 -102px;}
+.aside-nav .icon-navE{  background-position: 0 -154px;}
+.aside-nav .icon-navF{  background-position: 0 -203px;}
+.aside-nav .icon-navG{  background-position: 0 -253px;}
+.aside-nav .icon-navH{  background-position: 0 -302px;}
+.aside-nav .icon-navI{  background-position: 0 -354px;}
+
+    .HierarchyCnt{
+    width: 610px;
+    height: 300px;
+    background: #f7f7f7;
+    border: 1px solid #e3e3e3;
+    margin-top: 20px;
+    padding: 20px;
+    }
+    .HierarchyCnt > p{
+    font-weight: bold;
+    color: #333;
+    }
+    .HierarchyCnt > div{
+    height: 50px;
+    }
+    .HierarchyCnt select{
+    width: 80px;
+    height: 34px;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    padding: 5px;
+    }
+    .HierarchyCnt input{
+    width: 420px;
+    height: 34px;
+    padding: 5px;
+    }
+    .HierarchyCnt span{
+    width: 100px;
+    display: inline-block;
+    text-align: right;
+    }
+    /*-------同义概念搜索--------*/
+    .conceptSearch{
+    margin: 30px 0;
+    }
+    .conceptSearchFl{
+    width: 320px;
+    height: 36px;
+    position: relative;
+    display: inline-block;
+    }
+    .conceptSearchFl input{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e3e3e3;
+    padding: 5px 5px 5px 70px;
+    }
+    .conceptSearchFl > div{
+    width: 85px !important;
+    position: absolute;
+    font-size: 14px;
+    color: #666;
+    top: 1px;
+    left: 1px;
+    }
+    .conceptSearchFl label {
+        border: none !important;
+    }
+    .conceptSearchRt{
+    display: inline-block;
+    padding: 0;
+    float: right;
+    }
+    .conceptTab table{
+    width: 870px;
+    height: 200px;
+    text-align: center;
+    border: 1px solid #d5d5d5;
+    color: #5777ed;
+    font-size: 14px;
+    }
+    .conceptTab td{
+    font-size: 14px;
+    }
+    .color-blue2{
+    color: #5777ed;
+    }
+    .conceptTab table a{
+    color: #e24e4e;
+    }
+    .conceptTab .color-blue{
+    color: #3ea9fb;
+    }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+

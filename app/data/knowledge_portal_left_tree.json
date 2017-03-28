@@ -1,0 +1,13 @@
+[{
+  "sref": "index.knowledge_portal",
+  "text": "知识搜索"
+}, {
+  "sref": "index.knowledge_upload",
+  "text": "知识上传"
+},{
+  "sref": "index.test1",
+  "text": "文档管理"
+},{
+  "sref": "index.test2",
+  "text": "知识统计"
+}]

@@ -1,0 +1,26 @@
+[
+  {
+    "username":"admin",
+    "name":"张三",
+    "sex":"男",
+    "card":1217657418278831332,
+    "knowlibrole":"产品经理",
+    "deptrole":"部门经理"
+  },
+  {
+    "username":"admin",
+    "name":"张三",
+    "sex":"男",
+    "card":1217657418278831332,
+    "knowlibrole":"产品经理",
+    "deptrole":"部门经理"
+  },
+  {
+    "username":"admin",
+    "name":"张三",
+    "sex":"男",
+    "card":1217657418278831332,
+    "knowlibrole":"产品经理",
+    "deptrole":"部门经理"
+  }
+]

@@ -1,0 +1,61 @@
+
+<div class="login-cont" >
+    <div class="login-box">
+        <div class="hd">
+            <img class="log-logo" src="../../images/images/log-logo.png"/>
+            <span>小富机器人控制平台</span>
+            <em>V4.0</em>
+        </div>
+        <div class="bd" style="border: 0;">
+            <h3 class="title">登 &nbsp;录</h3>
+            <div class="from-box">
+                <div class="item">
+                    <input class="login-ipt-box" ng-model="vm.userName" ng-keydown="vm.keyLogin($event)" type="text" placeholder="用户名" />
+                </div>
+                <div class="item">
+                    <input class="login-ipt-box" type="password" ng-keydown="vm.keyLogin($event)" ng-model="vm.password" placeholder="密码" />
+                </div>
+                <div class="item">
+                    <input class="login-ipt-box" style="width: 216px;" ng-keydown="vm.keyLogin($event)" ng-model="vm.randomNumberValue" type="text" placeholder="验证码" />
+                    <span class="yzm"  ng-click="vm.randomNumberChange()">{{vm.randomNumber}}</span>
+                </div>
+                <div class="tac">
+                    <span  class="login-btn"   ng-click="vm.login()">登录</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /*登录*/
+    html,body{height: 100%; position: relative;}
+    body{background: url(../../images/images/log-bg.jpg) no-repeat center; background-size: cover;}
+    .login-cont{ width: 1220px; height: 568px;position: absolute; left: 50%; top: 50%; margin-left: -610px; margin-top: -284px; background: url(../../images/images/logo-bg.png) no-repeat left top;}
+    .login-cont:after{position: absolute; right: 0; top: 290px; content: ""; width: 65px; height: 42px; display: block; background: url(../../images/images/pic-xq1.png) no-repeat left top;}
+    .login-box{ width: 430px; height: 472px; margin-left: 700px; margin-top: 70px; background: url(../../images/images/logbox-bg.png) no-repeat center;}
+    .login-box .hd{text-align: center; font-size: 22px; color: #74bcfc; padding: 36px 0;}
+    .login-box .log-logo{ vertical-align: middle; position: relative; top: -0.2em;}
+    .login-box .hd span{ padding: 0 6px;}
+    .login-box .hd em{font-size: 16px; color: #f86565;}
+    .login-box .bd .title{font-size: 24px; text-align: center; color: #333; margin: 10px 0 20px;}
+    .login-ipt-box{width: 100%; line-height: 1.1; padding: 10px 0px; font-size: 14px; border: none;}
+    .from-box{ width: 290px; margin:0 auto;}
+    .from-box .item{margin-bottom: 20px; border:1px solid #e2e2e2; padding: 0 4px; position: relative;}
+    .from-box .item .yzm{cursor:pointer;position: absolute; right: 0; top: 0; text-align: center; font-size: 16px; width: 68px; height: 100%; line-height: 35px; background-color: #f1f1f1; color: #3ea9fb; display: block;}
+    .from-box .login-btn{cursor:pointer;height: 38px; line-height: 38px; text-align: center; border-radius: 4px; background-color: #3ea9fb; color: #fff; font-size: 16px; display: block;}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

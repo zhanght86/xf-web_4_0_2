@@ -1,0 +1,22 @@
+[{
+  "sref": ".home",
+  "text": "首页"
+}, {
+  "sref": ".knowledge_portal",
+  "text": "知识门户"
+}, {
+  "sref": ".knowledge_assessment",
+  "text": "知识考核"
+}, {
+  "sref": ".workflow",
+  "text": "流程审核"
+},{
+  "sref": ".knowledge_management",
+  "text": "知识库管理"
+}, {
+  "sref": ".personal_settings",
+  "text": "个人设置"
+}, {
+  "sref": ".user_management",
+  "text": "系统设置"
+}]

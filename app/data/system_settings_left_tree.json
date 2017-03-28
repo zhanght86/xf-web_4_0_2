@@ -1,0 +1,19 @@
+[{
+  "sref": "index.knowledge_portal",
+  "text": "用户管理"
+}, {
+  "sref": "index.item_detail",
+  "text": "角色管理"
+}, {
+  "sref": "index.test",
+  "text": "组织管理"
+}, {
+  "sref": "index.test1",
+  "text": "菜单管理"
+},{
+  "sref": "index.test2",
+  "text": "分类管理"
+},{
+  "sref": "index.test2",
+  "text": "工作流管理"
+}]

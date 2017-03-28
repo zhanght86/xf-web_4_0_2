@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="knowledge_static_web" ng-controller="ApplicationController">
+<head>
+    <script>
+    /*IE8兼容start*/
+        if (!Array.prototype.indexOf) {
+        Array.prototype.indexOf = function (item, i) {
+        //alert("prototyping...");
+        i || (i = 0);
+        var length = this.length;
+        if (i < 0) i = length + i;
+        for (; i < length; i++)
+        if (this[i] === item) return i;
+        return -1;
+        };
+        }
+        if (!window.WebSocket) {
+        window.WebSocket = function () { };
+        window.WebSocket.prototype = {
+        onmessage: function () { },
+        onclose: function () { },
+        onopen: function () { },
+        close: function(){}
+        }
+        }
+        if (!String.prototype.trim) {
+        String.prototype.trim=function(){
+        return this.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        }
+    /*IE8兼容end*/
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>xf_4.0.2</title>
+
+    <link rel="stylesheet" href="css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="css/common.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="css/back_common.css" type="text/css"/>
+    <link rel="stylesheet" href="css/back_demo.css" type="text/css"/>
+    <link rel="stylesheet" href="css/back_easyui.css" type="text/css"/>
+    <link rel="stylesheet" href="css/back_icon.css" type="text/css"/>
+    <link rel="stylesheet" href="css/back_style.css" type="text/css"/>
+    <!--ztree下拉树-->
+    <link rel="stylesheet" href="bower_components/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+    <link rel="stylesheet" href="css/back_ztree.css" type="text/css"/>
+    <!--拖拽-->
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css"/>
+
+    <script src="libs/H_ui/lib/jquery/1.9.1/jquery.js"></script>
+    <!-- H-ui-->
+
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.ie.css"/>
+        <script type="text/javascript" src="js/plugins/html5.js"></script>
+        <script type="text/javascript" src="js/plugins/respond.min.js"></script>
+        <script type="text/javascript" src="js/plugins/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.css"/>
+    <!--<link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.min.css"/>-->
+    <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.reset.css"/>
+
+    <script src="libs/H_ui/static/h-ui/js/H-ui.js"></script>
+    <!--<script src="libs/H_ui/static/h-ui/js/H-ui.min.js"></script>-->
+
+    <script src="libs/H_ui/lib/waterfall.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/plugins/1.0.8/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/home/style_new.css">
+
+    <link rel="stylesheet" href="css/home/base.css"/>
+    <link rel="stylesheet" href="css/home/common.css"/>
+    <link rel="stylesheet" href="css/home/robotSetup.css"/>
+    <link rel="stylesheet" href="css/home/addContent.css"/>
+    <link rel="stylesheet" href="css/plugins/base.css"/>
+    <link rel="stylesheet" href="css/plugins/common.css"/>
+    <link rel="stylesheet" href="css/plugins/common2.css"/>
+
+
+
+
+    <link rel="stylesheet" href="css/plugins/layer.css"/>
+    <link rel="stylesheet" href="css/plugins/autocomplete-0.3.0.min.css"/>
+
+
+    <!-- 上线引入know_front-min 测试试用 know_front  需要进行样式调优 统一后实行 -->
+    <!--<link rel="stylesheet" href="dest/css/know_front.css" type="text/css"/>-->
+
+    <!-- 第三方样式库 -->
+    <link href="css/bootstrap-datepicker.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.min.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css" type="text/css">
+    <!-- angularjs css -->
+
+    <!--下拉复选框-->
+    <link rel="stylesheet" href="js/common/plugins/select2/select2.css" />
+    <link rel="stylesheet" href="js/common/plugins/select2/select2-bootstrap.css" />
+
+
+</head>
+<body>
+
+    <div class="container" style="width: 100%;margin: 0;padding: 0;" ui-view>
+    </div>
+    <script src="js/plugins/common.js"></script>
+    <script src="js/plugins/calendar.js"></script>
+    <script src="js/plugins/H-ui.admin.js"></script>
+    <!--<script src="js/plugins/H-ui.js"></script>-->
+    <script src="js/plugins/jquery.pin.min.js"></script>
+    <script src="js/plugins/jquery.placeholder.min.js"></script>
+    <script src="js/plugins/layer.js"></script>
+    <script src="js/plugins/PIE_IE678.js"></script>
+    <!--<script src="js/plugins/WdatePicker.js"></script>-->
+
+
+
+    <script src="bower_components/es5-shim/es5-shim.min.js"></script>
+    <script src="bower_components/es5-shim/es5-sham.min.js"></script>
+    <!--上传图片-->
+    <script src="js/console-sham.js"  charset="utf-8"></script>
+
+
+    <script src="js/index.js"></script>
+    <script src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="js/My97DatePicker/WdatePicker.js"  charset="utf-8"></script>
+    <script src="js/htmldiff.js"  charset="utf-8"></script>
+
+    <!-- angularjs js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+
+    <script type="text/javascript" src="bower_components/ng-dialog/js/ngDialog.js"></script>
+
+    <script type="text/javascript" src="js/ng-text-truncate.js"></script>
+    <script type="text/javascript" src="bower_components/angular-elastic/elastic.js"></script>
+    <script type="text/javascript" src="bower_components/angular-recursion/angular-recursion.min.js"></script>
+    <script type="text/javascript" src="js/echarts.js"></script>
+
+    <!--下拉复选框-->
+    <script src="js/common/plugins/select2/select2.js" type="text/javascript"></script>
+
+    <!--上传图片-->
+    <script type="text/javascript" src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+    <!--知识加工上传 最好能统一 -->
+    <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+
+
+    <script type="text/javascript" src="js/plupload/moxie.js"></script>
+    <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
+
+
+    <!-- flexpaper -->
+    <script type="text/javascript" src="js/flexpaper.js"></script>
+
+    <!--<script type="text/javascript" src="js/plupload.full.min.js"></script>-->
+
+
+    <!--zTree -->
+    <script src="bower_components/zTree/js/jquery.ztree.all.js" type="text/javascript"></script>
+    <!-- 总入口 后续会拆分成 module 和 config -->
+    <script src="app.js"></script>
+    <script src="dest/src-concated/js/know_front_module.js"></script>
+    <script src="dest/src-concated/js/know_front.js"></script>
+
+
+    <!-- 富文本编辑器 -->
+    <script type="text/javascript" src="js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.config.js"></script>
+    <script type="text/javascript" src="js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.all.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ueditor/dist/angular-ueditor.js"></script>
+
+    <!-- 确定提示框 -->
+    <script type="text/javascript" src="bower_components/angular-confirm/dist/ng-confirm.js"></script>
+    <!-- 修复ie8 placeholder不兼容-->
+    <script type="text/javascript" src="js/jquery.placeholder.min.js"></script>
+    <script type="text/javascript" src="js/angular-shims-placeholder.min.js"></script>
+
+    <!--拖拽-->
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script  src="js/home/jquery.plugIn.min.js"></script>
+    <script src="js/home/base.js"></script>
+    <script src="js/home/autocomplete-0.3.0.js"></script>
+
+
+
+
+</body>
+</html>

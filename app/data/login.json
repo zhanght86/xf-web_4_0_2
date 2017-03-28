@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "user": {
+    "id": 1,
+    "userName" : "allen young",
+    "loginName" : "allen loginName",
+    "lastLoginTime" : "1465199937422"
+  }
+}
