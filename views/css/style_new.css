@@ -64,8 +64,8 @@
 .classifica_ul li{float:left;border:1px solid #eee;margin:0 10px 10px 0;height:30px;line-height:30px;padding:0 10px;cursor:pointer;}
 .classifica_ul li:hover{background:#3ea9fb;color:#fff;}
 .classifica_ul li.cur{background:#3ea9fb;color:#fff;}
-.sel{width:84px;height:30px;outline:none;}
-.input_text{width:260px;height:30px;border:1px solid #e3e3e3;padding-left:5px;line-height:30px;}
+.sel{width:84px;height:31px;outline:none;}
+.input_text{width:260px;height:31px;border:1px solid #e3e3e3;padding-left:5px;line-height:30px;}
 .lock_span{right:5px;top:5px;color:red;}
 .check_div,.chk{display:none;}
 .search_btn{width:30px;height:29px;cursor:pointer;background:url(../images/icon-search_03.png) no-repeat center;}
@@ -127,3 +127,13 @@
 .node_ul{width:530px;}
 .node_ul li{cursor:pointer;}
 .node_ul li:hover{background:#3ea9fb;color:#fff;}
+
+/*FAQ知识*/
+.content_box{box-sizing:border-box;padding:30px 20px;background:#fff;}
+.qiyong_span{background:url(../images/my-checkbox.png) no-repeat left center;padding-left:25px;}
+.qiyong_span_on{background:url(../images/my-checkbox-on.png) no-repeat left center;padding-left:25px;}
+.channel_div{position: relative;padding-left:50px;min-height:25px;}
+.channel_s{position:absolute;left:0;top:0;}
+.word_div{width:700px;height:200px;padding:10px;box-sizing:border-box;}
+.delete_a{width: 14px; height: 14px; display:block;background: url(../images/addIcon.png) no-repeat 0px center;}
+.edit_a{width: 14px; height: 14px; display:block;background: url(../images/addIcon.png) no-repeat 0px bottom; }
