@@ -20,6 +20,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'loginModule',
     'indexModule',
 "adminModule",
+
     //首页 模块
     'homePage',
     //素材管理
@@ -184,22 +185,6 @@ knowledge_static_web
                     },
                 }
             })
-            .state("setting.robot", {
-                //params:{"userPermission" : null},
-                url: "/robot",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                    },
-                    'content': {
-                        templateUrl: 'know_index/myApplication/settingContent.html',
-                        //controller: "adminContentController"
-                    },
-                }
-            })
-
-
-
 
             //materialManagement
             .state("materialManagement", {
@@ -253,6 +238,19 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/essential/knowledgeEssential.html',
                         controller: "knowledgeEssentialController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.list", {
+                url: "/list",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowManaList.html',
+                        //controller: "knowledgeEssentialController"
                     }
                 }
             })

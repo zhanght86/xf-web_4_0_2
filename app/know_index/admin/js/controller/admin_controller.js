@@ -8,6 +8,5 @@ angular.module('adminModule').controller('adminController', [
     function ($scope,  $state ,$stateParams) {
                 //console.log("state"+$stateParams.userPermission);
         $state.go("admin.manage",{userPermission:$stateParams.userPermission});
-
     }
 ]);
