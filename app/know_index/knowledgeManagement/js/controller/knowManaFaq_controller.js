@@ -13,7 +13,7 @@
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-          fagAdd : faqAdd
+          faqAdd : faqAdd             
         };
         function faqAdd(){
             var dialog = ngDialog.openConfirm({
