@@ -184,6 +184,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.robot", {
+                //params:{"userPermission" : null},
+                url: "/robot",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/settingContent.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })
 
 
 
