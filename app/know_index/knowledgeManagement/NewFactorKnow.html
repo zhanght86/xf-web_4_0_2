@@ -1,0 +1,344 @@
+
+<div class="wrap">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+            <div class="crumbs-nav bgwhite mt20 mb-10">
+                <span class="cn-lable">你曾经路过此地：</span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+            </div>
+            <div class="content_box mb25 ">
+                <h3 class="f22 pl-10 mb15">要素知识新增</h3>
+                <div class=" p10 ">
+                    <div class="row cl mb-10">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
+                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+                            <input  type="text" class="bk-gray input-text mr-10" placeholder="请输入标题" style="width:250px;"/>
+                            <a href="javascript:;" class=" mr-15" onclick="add_bot();"><img src="../images/add_img.png" alt=""></a>
+                            <div class="dib">
+                                知识有效期：
+                                <span class=" qiyong_span" id="qiyong_span">启用</span>
+                                <span class="date_span" style="display:none;">
+                                    <input type="text"  onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'knowledge_exp_date_end\')}'})" class="input-text Wdate"
+                                           style="width:185px;"  placeholder="请选择生效日期"/>
+                            至
+                            <input type="text" onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'knowledge_exp_date_start\')}'})"
+                                   class="input-text Wdate"  style="width:185px;" placeholder="请选择结束日期"/>
+                                </span>
+                            </div>
+                            <div class="c-red " style="display:none;" ></div>
+                        </div>
+                    </div>
+                    <div class="bot_box">
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <div id="menu_1Div" >
+                                    <div class="ipt-txt-box" >
+                                        <input class="ipt-txt" id="ipt-txt" type="text" style="width:352px;"/>
+                                        <i class="btn-menu_1"></i>
+                                        <div class="aside-navs aside-navs2" style="margin:10px;display:none;">
+                                            <ul class="menus show">
+                                                <li>
+                                                    <div class="slide-a">
+                                                        <a class="ellipsis" href="javascript:;">
+                                                            <i class="icon-jj"></i>
+                                                            <span>分属性展开</span>
+                                                        </a>
+                                                    </div>
+                                                    <ul class="menus">
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <span>分属性展开1</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <span>分属性展开2</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <span>分属性展开3</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div class="slide-a">
+                                                        <a class="ellipsis" href="javascript:;">
+                                                            <i class="icon-jj"></i>
+                                                            <span>分业务展开</span>
+                                                        </a>
+                                                    </div>
+                                                    <ul class="menus">
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <i class="icon-jj"></i>
+                                                                    <span>个人业务</span>
+                                                                </a>
+                                                            </div>
+                                                            <ul class="menus">
+                                                                <li>
+                                                                    <div class="slide-a">
+                                                                        <a class="ellipsis" href="javascript:;">
+                                                                            <i class="icon-jj"></i>
+                                                                            <span>存款业务</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="slide-a">
+                                                                        <a class="ellipsis" href="javascript:;">
+                                                                            <i class="icon-jj"></i>
+                                                                            <span>理财业务</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="slide-a">
+                                                                        <a class="ellipsis" href="javascript:;">
+                                                                            <i class="icon-jj"></i>
+                                                                            <span>信用卡业务</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <ul class="menus">
+                                                                        <li>
+                                                                            <div class="slide-a">
+                                                                                <a class="ellipsis" href="javascript:;">
+                                                                                    <i class="icon-jj"></i>
+                                                                                    <img src="images/pic-navs-dy.png"/>
+                                                                                    <span>按地域展开</span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="slide-a">
+                                                                                <a class="ellipsis" href="javascript:;">
+                                                                                    <i class="icon-jj"></i>
+                                                                                    <img src="images/pic-navs-lc.png"/>
+                                                                                    <span>按办理流程展开</span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="slide-a">
+                                                                                <a class="ellipsis" href="javascript:;">
+                                                                                    <i class="icon-jj"></i>
+                                                                                    <img src="images/pic-navs-sx.png"/>
+                                                                                    <span>按属性展开</span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="slide-a">
+                                                                                <a class="ellipsis" href="javascript:;">
+                                                                                    <i class="icon-jj"></i>
+                                                                                    <img src="images/pic-navs-rq.png"/>
+                                                                                    <span>按人群卡类展开</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <ul class="menus">
+                                                                                <li>
+                                                                                    <div class="slide-a">
+                                                                                        <a class="ellipsis" href="javascript:;">
+                                                                                            <span>白领卡</span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="slide-a">
+                                                                                        <a class="ellipsis" href="javascript:;">
+                                                                                            <span>农民卡</span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="slide-a">
+                                                                                        <a class="ellipsis" href="javascript:;">
+                                                                                            <span>学生卡</span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <i class="icon-jj"></i>
+                                                                    <span>个公业务</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-a">
+                                                                <a class="ellipsis" href="javascript:;">
+                                                                    <i class="icon-jj"></i>
+                                                                    <span>其他业务</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row cl mb-10">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <select class="input-text" style="width:395px;">
+                                <option>信用卡办理</option>
+                                <option>金葵花卡办理流程</option>
+                                <option>黑金卡办理流程</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="exten_problem" >
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" class="L input-text extended_query_txt" placeholder="请输入问题"
+                                       style="width:279px;" >
+                                <select class="sel bd L mr-10" style="margin-left:-1px;">
+                                    <option >普通</option>
+                                    <option >否定</option>
+                                </select>
+                                <a href="javascript:;" class="create_a" onclick="add_ques();">
+                                    <img src="../images/add_img.png" >
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl mb-50">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">要素知识导入:</label>
+                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+                            <div class="clearfix mb-10">
+                                <button class="btn1 btn1_blue mb-10">上传线下编辑场景知识</button>
+                                <span class="f-14 pl-10">请先<a href="javascript::" class="c-primary">下载模板</a>进行填写</span>
+                                <div class="essential_factor_div bd">
+                                    <div class="mb-10">
+                                        <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"/></a>
+                                        <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"/></a>
+                                        <a href="javascript:;" class="add_column mr-10" onclick="add_popup('新增要素','knowledge_factor_select.html','520','400')"><img src="../images/ys_img3.png"/></a>
+                                        <a href="javascript:;" class="delete_column"><img src="../images/ys_img4.png"/></a>
+                                    </div>
+                                    <div>
+                                        <table class="essential_factor_tab">
+                                            <tr>
+                                                <td>对象名称</td>
+                                                <td>被投保人</td>
+                                                <td>地区</td>
+                                                <td>价格</td>
+                                                <td>期限</td>
+                                            </tr>
+                                            <tr>
+                                                <td>儿童走失险</td>
+                                                <td>儿童</td>
+                                                <td>走失</td>
+                                                <td>3000</td>
+                                                <td>1-3年</td>
+                                            </tr>
+                                            <tr>
+                                                <td>儿童教育险</td>
+                                                <td>儿童</td>
+                                                <td>走失</td>
+                                                <td>3000</td>
+                                                <td>1-3年</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="channel_div  mb-10">
+                                <span class="channel_s">渠道：</span>
+                                <div>
+                                    <label class="mr-10"><input type="checkbox">Web </label>
+                                    <label class="mr-10"><input type="checkbox">微信 </label>
+                                    <label class="mr-10"><input type="checkbox">app </label>
+                                </div>
+                            </div>
+                            <div class="channel_div mb-10">
+                                <span class="channel_s">维度：</span>
+                                <div id="dimension_bar"><div class="autocomplete-container-7a26d"><div class="placeholder-d722a"></div><div class="tokens-6a7a0"></div><input type="text" class="input-8f2fe"><div class="clear-53545"></div><ul class="dropdown-a3d44" style="display:none"></ul></div><span class="input-width-proxy-1c13e" style="position:absolute; top:-9999px;"></span></div>
+                            </div>
+                            <div class="channel_div mb-10" style="padding-left:80px;">
+                                <span class="channel_s">高级选项：</span>
+                                <a href="javascript:;" class="c-primary unfold_fit">展开</a>
+                            </div>
+                            <div class="senior_div">
+                                <div class=" mb-10">
+                                    <span>知识配置：</span>
+                                    <div class="dib pt-5 mr-15">
+                                        <div class="open1 b_box" style="float:left;margin-right:10px;">
+                                            <div class="open2 s_box" onclick="turn_on(this);"></div>
+                                        </div>
+                                        <span>不显示相关问题</span>
+                                    </div>
+                                    <div class="dib pt-5 mr-15">
+                                        <div class="open1 b_box" style="float:left;margin-right:10px;">
+                                            <div class="open2 s_box" onclick="turn_on(this);"></div>
+                                        </div>
+                                        <span>不在相关问题内提示</span>
+                                    </div>
+                                    <div class="dib pt-5 mr-15">
+                                        <div class="open1 b_box" style="float:left;margin-right:10px;">
+                                            <div class="open2 s_box" onclick="turn_on(this);"></div>
+                                        </div>
+                                        <span>不弹出评价小尾巴</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-10">
+                                        <span>指定相关知识:</span>
+                                        <input type="text" class="input-text extended_query_txt" placeholder="" style="width:279px;">
+                                        <a href="javascript:;" onclick="">
+                                            <img src="../images/add_img.png">
+                                        </a>
+                                    </div>
+                                    <div class="channel_div mb-20">
+                                        <span class="channel_s c-primary">已添加</span>
+                                        <ul>
+                                            <li>1、储蓄卡办理方式  <span class="delete_a R "></span></li>
+                                            <li>1、储蓄卡办理方式  <span class="delete_a R "></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl mb-10 ">
+                        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="button" class="btn1 btn1_blue mr-20" value="预览"/>
+                            <input type="button" class="btn1 btn_green" value="保存"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>
