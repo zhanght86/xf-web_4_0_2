@@ -2122,7 +2122,7 @@ knowledge_static_web.controller('ApplicationController',
                     id: data.id,
                     userName: data.name,
                     realName: data.realName,
-                    sex: data.sex,            
+                    sex: data.sex,
                     email: data.email,
                     protarit: data.protarit,
                     phone: data.phone,
@@ -2360,22 +2360,6 @@ knowledge_static_web.controller('ApplicationController',
             });
 
         }]);;
-// Source: app/know_index/admin/js/controller/addAdmin_controller.js
-/**
- * Created by 41212 on 2017/3/23.
- */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
-angular.module('adminModule').controller('addAdminController', [
-    '$scope', "$state", "$stateParams",
-    function ($scope,$state, $stateParams) {
-        $state.go("admin.manage",{userPermission:$stateParams.userPermission});
-
-    }
-]);;
 // Source: app/know_index/admin/js/controller/adminContent_controller.js
 /**
  * Created by 41212 on 2017/3/21.
@@ -2485,7 +2469,6 @@ angular.module('adminModule').controller('adminContentController', [
 angular.module('adminModule').controller('adminController', [
     '$scope',  "$state", "$stateParams",
     function ($scope,  $state ,$stateParams) {
-
                 //console.log("state"+$stateParams.userPermission);
         $state.go("admin.manage",{userPermission:$stateParams.userPermission});
 
@@ -3059,27 +3042,72 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
     }
 ]);;
-// Source: app/know_index/knowledgeManagement/js/controller/knowledgeManagementFaq_controller.js
-/**
- * Created by dinfo on 2017/3/28.
- */
+// Source: app/know_index/knowledgeManagement/js/controller/knowledgeEssential_controller.js
 /**
  * Created by 41212 on 2017/3/28.
  */
+
 
 /**
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
-angular.module('knowledgeManagementModule').controller('knowledgeManagementFaqController', [
+angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-          fagAdd : faqAdd
+            aa : {list:["s","a","z"]},
+            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botValChange : botValChange,
+            knowledgeTitle : "",   //标题
+            timeStart : "",      //起始时间
+            timeEnd : "",
+            isTimeTable : false,  //时间表隐藏
+            timeFlag : "启用",
+            titleGroup : "", //点击标题添加内容
+            channels : "",
+            a : function(){
+                alert("ddddd")
+            }
+
         };
-        function faqAdd(){
+        //检测时间表开关
+        $scope.$watch("vm.isTimeTable",function(val){
+            if(val==true){
+                $scope.vm.timeFlag="禁用"
+            }else{
+                $scope.vm.timeFlag="启用"
+            }
+        });
+////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+        //获取bot
+        function getKnowledgeBot(){
+            httpRequestPost("/api/user/userLogin",{
+
+            },function(data){
+
+            },function(err){
+
+            });
+        }
+        //点击bot 下拉
+        function knowledgeBot(ev,lev){
+            var ele = ev.target;
+            if(lev == 0){
+                $(ele).next().slideToggle()
+            }else{
+                $(ele).css({backgroundPosition:"left bottom"}).parent().parent().next().slideToggle()
+            }
+        }
+        //点击更改bot value
+        function botValChange(val,id){
+            $scope.vm.knowledgeBotVal = val;
+        }
+////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
+        function KnowledgeAdd(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/knowledgeManagementFaqDialog.html",
+                template:"/know_index/knowledgeManagement/essential/essentialDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -3097,7 +3125,30 @@ angular.module('knowledgeManagementModule').controller('knowledgeManagementFaqCo
                 }
             });
         }
-      
+        //維度
+        function  getDimensions(){
+            httpRequestPost("",{
+
+            },function(data){
+
+            },function(err){
+
+            });
+        }
+        getChannel();
+        //渠道
+        function  getChannel(){
+            httpRequestPost("/api/elementKnowledgeAdd/loadChannel",{
+                "applicationId":"360619411498860544"
+            },function(data){
+                $scope.vm.channels = data.data;
+                $scope.$apply();
+                console.log(data)
+            },function(err){
+
+            });
+        }
+
 
     }
 ]);;
@@ -3125,16 +3176,22 @@ angular.module('knowledgeManagementModule').controller('knowledgeManagementContr
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            KnowledgeAdd: KnowledgeAdd,
-            knowledgeBot:knowledgeBot,
-            password: '',
-            isTimeTable : false,
+            aa : {list:["s","a","z"]},
+            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botValChange : botValChange,
+            knowledgeTitle : "",   //标题
+            timeStart : "",      //起始时间
+            timeEnd : "",
+            isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
+            titleGroup : "", //点击标题添加内容
         };
+        //检测时间表开关
         $scope.$watch("vm.isTimeTable",function(val){
             if(val==true){
                 $scope.vm.timeFlag="禁用"
@@ -3142,17 +3199,34 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 $scope.vm.timeFlag="启用"
             }
             });
+////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+        //获取bot
+       function getKnowledgeBot(){
+           httpRequestPost("/api/user/userLogin",{
+
+           },function(data){
+
+           },function(err){
+
+           });
+       }
+        //点击bot 下拉
         function knowledgeBot(ev,lev){
             var ele = ev.target;
             if(lev == 0){
-                $(ele).next().show().children().show().slideDown()
+                $(ele).next().slideToggle()
             }else{
-                $(ele).parent().parent().next().show().slideDown()
+                $(ele).css({backgroundPosition:"left bottom"}).parent().parent().next().slideToggle()
             }
         }
+        //点击更改bot value
+        function botValChange(val,id){
+            $scope.vm.knowledgeBotVal = val;
+        }
+////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
        function KnowledgeAdd(){
            var dialog = ngDialog.openConfirm({
-               template:"/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html",
+               template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
                //controller:function($scope){
                //    $scope.show = function(){
                //
@@ -3170,6 +3244,30 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                }
            });
        }
+
+
+
+
+        //維度
+        function  getDimensions(){
+            httpRequestPost("/api/user/userLogin",{
+
+            },function(data){
+
+            },function(err){
+
+            });
+        }
+        //渠道
+        function  getChannel(){
+            httpRequestPost("/api/user/userLogin",{
+
+            },function(data){
+
+            },function(err){
+
+            });
+        }
 
 
     }
@@ -4072,21 +4170,6 @@ angular.module('loginModule').controller('loginController', [
       //  }
     }
 ]);
-// Source: app/know_index/login/js/directive/logininput.js
-
-knowledge_static_web.directive("loginInput", function() {
-    return {
-        restrict: "AE",
-        link: function(scope, elem, attrs) {
-            
-           elem.on("focus",function(e){
-                $(this).parents(".login-fItem").addClass("focus");
-            }).on("blur",function(){
-                $(this).parents(".login-fItem").removeClass("focus");
-            });
-        }
-    }
-});;
 ;
 // Source: app/know_index/materialManagement/js/controller/materialManagement_controller.js
 /**
