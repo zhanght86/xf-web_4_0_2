@@ -10,13 +10,13 @@
                 <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
             </div>
             <div class="content_box mb25 ">
-                <h3 class="f22 pl-10 mb15">FAQ知识新增</h3>
-                <div class="p10">
+                <h3 class="f22 pl-10 mb15">列表型知识新增</h3>
+                <div class=" p10 ">
                     <div class="row cl mb-10">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">标准问题：</label>
+                        <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <input  type="text" class="bk-gray input-text mr-10" placeholder="请输入标题" style="width:250px;"/>
-                            <a href="javascript:;" class=" mr-15" onclick="add_bot();"><img src="../../images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class=" mr-15" onclick="add_bot();"><img src="../images/add_img.png" alt=""></a>
                             <div class="dib">
                                 知识有效期：
                                 <span class=" qiyong_span" id="qiyong_span">启用</span>
@@ -37,7 +37,7 @@
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div id="menu_1Div" >
                                     <div class="ipt-txt-box" >
-                                        <input class="ipt-txt bd" id="ipt-txt" type="text" style="width:352px;"/>
+                                        <input class="bd ipt-txt" id="ipt-txt" type="text" style="width:352px;"/>
                                         <i class="btn-menu_1"></i>
                                         <div class="aside-navs aside-navs2" style="margin:10px;display:none;">
                                             <ul class="menus show">
@@ -213,7 +213,7 @@
                     </div>
                     <div class="exten_problem" >
                         <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label>
+                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <input type="text" class="L input-text extended_query_txt" placeholder="请输入问题"
                                        style="width:279px;" >
@@ -222,41 +222,38 @@
                                     <option >否定</option>
                                 </select>
                                 <a href="javascript:;" class="create_a" onclick="add_ques();">
-                                    <img src="../../images/add_img.png" >
+                                    <img src="../images/add_img.png" >
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="row cl mb-10">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
-                        <div class="formControls col-xs-8 col-sm-9" >
-                            <button class="btn1 btn_green2 mb-10"
-                                    ng-click="vm.fagAdd()">新增
-                            </button>
-                            <div class="c-red " style="display:inline;" id="knowledge_add_msg"></div>
-                        </div>
-                    </div>
+
                     <div class="row cl mb-50">
-                        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容:</label>
                         <div class="formControls col-xs-8 col-sm-9">
                             <div class="clearfix mb-10">
-                                <div class="L word_div bd mr-10">信用卡年费没有</div>
-                                <div class="L word_div_r">
-                                    <a href="javascript:;" class="delete_a mb-20"></a>
-                                    <a href="javascript:;" class="edit_a"></a>
+                                <p class="mb-10 f-16">肯定回答:</p>
+                                <div class="word_div bd">
+                                    <span>#违禁品#是违禁物品，不可以带上飞机</span>
                                 </div>
                             </div>
-                            <div class="channel_div mb-10" >
-                                <span class="channel_s" >渠道：</span>
-                                <span>Web</span>
+                            <div class="clearfix mb-10">
+                                <p class="mb-10 f-16">否定回答:</p>
+                                <div class="word_div bd">
+                                    <span>不是违禁物品，可以带上飞机</span>
+                                </div>
                             </div>
-                            <div class="channel_div mb-10" >
-                                <span class="channel_s" >维度：</span>
+                            <div class="channel_div  mb-10">
+                                <span class="channel_s">渠道：</span>
                                 <div>
-                                    <span class="mr-10">地区_北京</span>
-                                    <span class="mr-10">地区_河北</span>
-                                    <span class="mr-10">地区_湖南</span>
+                                    <label class="mr-10"><input type="checkbox">Web </label>
+                                    <label class="mr-10"><input type="checkbox">微信 </label>
+                                    <label class="mr-10"><input type="checkbox">app </label>
                                 </div>
+                            </div>
+                            <div class="channel_div mb-10">
+                                <span class="channel_s">维度：</span>
+                                <div id="dimension_bar"><div class="autocomplete-container-7a26d"><div class="placeholder-d722a" style="display: none;"></div><div class="tokens-6a7a0"><div class="token-group-c7334" data-token-group-index="0"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="1"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="2"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="3"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="4"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="5"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="6"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="7"><span class="remove-token-group-53474">×</span><span class="token-75233">Banana</span></div></div><input type="text" class="input-8f2fe"><div class="clear-53545"></div><ul class="dropdown-a3d44" style="top: 23px; left: 604px; display: none;"></ul></div><span class="input-width-proxy-1c13e" style="position:absolute; top:-9999px;"></span></div>
                             </div>
                         </div>
                     </div>
