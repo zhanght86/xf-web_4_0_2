@@ -184,6 +184,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.parameter", {
+                //params:{"userPermission" : null},
+                url: "/parameter",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/parameterSetting.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })
 
 
 
@@ -240,6 +253,32 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/knowledgeManagementFaq.html',
                         controller: "knowledgeManagementFaqController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.listAdd", {
+                url: "/listAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowManaList.html',
+                        controller: "knowManaListController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.factorAdd", {
+                url: "/factorAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/NewFactorKnow.html',
+                        controller: "NewFactorKnowController"
                     }
                 }
             })
