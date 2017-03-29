@@ -2999,6 +2999,48 @@ angular.module('knowledgeManagementModule').controller('NewFactorKnowController'
 
     }
 ]);;
+// Source: app/know_index/knowledgeManagement/js/controller/knowManaFaq_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+          faqAdd : faqAdd
+        };
+        function faqAdd(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
 // Source: app/know_index/knowledgeManagement/js/controller/knowManaList_controller.js
 /**
  * Created by dinfo on 2017/3/28.
@@ -4218,6 +4260,90 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
     }
 ]);;
 ;
+// Source: app/know_index/myApplication/js/controller/NewServiceRelease_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('NewServiceReleaseController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            newService : newService
+        };
+        function newService(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationRelease/NewServiceReleaseDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/NodeManage_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('NodeManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addNode : addNode
+        };
+        function addNode(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
 // Source: app/know_index/myApplication/js/controller/addAdmin_controller.js
 /**
  * Created by 41212 on 2017/3/23.
