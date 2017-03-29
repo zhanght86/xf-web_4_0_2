@@ -179,14 +179,73 @@ knowledge_static_web
                         templateUrl: 'know_index/home/homePageNav.html',
                     },
                     'content': {
-                        templateUrl: 'know_index/myApplication/settingContent.html',
+                        templateUrl: 'know_index/myApplication/applicationConfig/settingContent.html',
                         //controller: "adminContentController"
+                    },
+                }
+            })        
+            .state("setting.parameter", {
+                //params:{"userPermission" : null},
+                url: "/parameter",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })
+<<<<<<< HEAD
+=======
+            //应用发布
+            .state("setting.releaseMan", {
+                //params:{"userPermission" : null},
+                url: "/releaseMan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/ReleaseManage.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })
+            .state("setting.newService", {
+                //params:{"userPermission" : null},
+                url: "/newService",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/NewServiceRelease.html',
+                        controller: "NewServiceReleaseController"
+                    },
+                }
+            })
+            .state("setting.nodeMan", {
+                //params:{"userPermission" : null},
+                url: "/nodeMan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/NodeManage.html',
+                        controller: "NodeManageController"
                     },
                 }
             })
 
 
 
+<<<<<<< HEAD
+=======
+>>>>>>> 5e264ade12d2b814bc498089e8880de06f98f59c
+>>>>>>> 3e744796262562ba80d4fc779632e7362edc4a54
 
             //materialManagement
             .state("materialManagement", {
@@ -230,6 +289,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("knowledgeManagement.faqAdd", {
+                url: "/faqAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/faq/knowManaFaq.html',
+                        controller: "knowManaFaqController"
+                    }
+                }
+            })
             .state("knowledgeManagement.essential", {
                 url: "/essential",
                 views: {
@@ -243,6 +315,45 @@ knowledge_static_web
                     }
                 }
             })
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            .state("knowledgeManagement.list", {
+                url: "/list",
+=======
+            .state("knowledgeManagement.listAdd", {
+                url: "/listAdd",
+>>>>>>> 5e264ade12d2b814bc498089e8880de06f98f59c
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+<<<<<<< HEAD
+                        templateUrl: 'know_index/knowledgeManagement/knowManaList.html',
+                        //controller: "knowledgeEssentialController"
+=======
+                        templateUrl: 'know_index/knowledgeManagement/list/knowManaList.html',
+                        controller: "knowManaListController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.factorAdd", {
+                url: "/factorAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        controller: "NewFactorKnowController"
+>>>>>>> 5e264ade12d2b814bc498089e8880de06f98f59c
+                    }
+                }
+            })
+>>>>>>> 3e744796262562ba80d4fc779632e7362edc4a54
 
             //我的应用admin
 
