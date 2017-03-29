@@ -1,9 +1,5 @@
 @charset "utf-8";
 /* CSS Document */
-.w22{width:22%;}
-.w78{width:78%;}
-.bd_l{border-left:1px solid #eee;}
-.bd_r{border-right:1px solid #eee;}
 
 .btn1{padding:5px 15px;height:30px;border-radius:2px;cursor:pointer;color:#fff;border:0;}
 .btn1_blue{background:#529ff6;}
@@ -64,8 +60,8 @@
 .classifica_ul li{float:left;border:1px solid #eee;margin:0 10px 10px 0;height:30px;line-height:30px;padding:0 10px;cursor:pointer;}
 .classifica_ul li:hover{background:#3ea9fb;color:#fff;}
 .classifica_ul li.cur{background:#3ea9fb;color:#fff;}
-.sel{width:84px;height:31px;outline:none;}
-.input_text{width:260px;height:31px;border:1px solid #e3e3e3;padding-left:5px;line-height:30px;}
+.sel{width:84px;height:30px;outline:none;}
+.input_text{width:260px;height:30px;border:1px solid #e3e3e3;padding-left:5px;line-height:30px;}
 .lock_span{right:5px;top:5px;color:red;}
 .check_div,.chk{display:none;}
 .search_btn{width:30px;height:29px;cursor:pointer;background:url(../images/icon-search_03.png) no-repeat center;}
@@ -104,36 +100,3 @@
 .access_amount_table td,.access_amount_table th{text-align:center;border:1px solid #e3e3e3;height:40px;}
 .sorting_asc{width:20px;height:19px;display:inline-block;background:url(../images/sort_asc.png) no-repeat;}
 .sorting_asc2{width:20px;height:19px;display:inline-block;background:url(../images/sort_desc.png) no-repeat;}
-
-.user_session{padding-top:36px;padding-bottom:50px;height:100%;box-sizing:border-box;position:relative;}
-.user_sessionp{width:100%;position:absolute;left:0;top:0;text-align:center;}
-.user_session_pag{position:absolute;left:0;bottom:0;}
-.talk_ul_usersession{box-sizing:border-box;height:100%;overflow:auto;}
-.chat_theme_ul{height:100%;overflow:auto;}
-.chat_theme_ul li{text-align:center;height:40px;line-height:40px;background:#f8f8f8;border-bottom:1px solid #e3e3e3;}
-
-.talk_ul{width:100%;}
-.talk_ul li{width:100%;overflow:hidden;margin-bottom:10px;}
-.talk_ul2 li{margin-bottom:0;}
-.talk_ul .head{width:12%;text-align:center;}
-.head p span{font-size:12px;color:#75777b;margin-right:5px;}
-.talk_msg{max-width:75%;position:relative;}
-.talk_msg .talk_content{padding:10px 20px;background:#f5f5f7;border-radius:5px;}
-.talk_arrow{width:10px;height:12px;background:url(../images/talk_arrow.jpg) no-repeat;position:absolute;left:-9px;top:10px;}
-.talk_ul .li_right .talk_content{background:#2eaeff;color:#fff;}
-.talk_ul .li_right .talk_arrow2{width:10px;height:12px;background:url(../images/talk_arrow2.jpg) no-repeat;position:absolute;right:-10px;top:10px;}
-
-.talk_ul_usersession{box-sizing:border-box;height:100%;overflow:auto;}
-.node_ul{width:530px;}
-.node_ul li{cursor:pointer;}
-.node_ul li:hover{background:#3ea9fb;color:#fff;}
-
-/*FAQ知识*/
-.content_box{box-sizing:border-box;padding:30px 20px;background:#fff;}
-.qiyong_span{background:url(../../images/my-checkbox.png) no-repeat left center;padding-left:25px;}
-.qiyong_span_on{background:url(../../images/my-checkbox-on.png) no-repeat left center;padding-left:25px;}
-.channel_div{position: relative;padding-left:50px;min-height:25px;}
-.channel_s{position:absolute;left:0;top:0;}
-.word_div{width:700px;height:200px;padding:10px;box-sizing:border-box;}
-.delete_a{width: 14px; height: 14px; display:block;background: url(../../images/images/addIcon.png) no-repeat 0px center;}
-.edit_a{width: 14px; height: 14px; display:block;background: url(../../images/images/addIcon.png) no-repeat 0px bottom; }

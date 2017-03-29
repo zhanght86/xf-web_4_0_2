@@ -19,7 +19,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //前台模块
     'loginModule',
     'indexModule',
-
+"adminModule",
     //首页 模块
     'homePage',
     //素材管理
@@ -225,25 +225,50 @@ knowledge_static_web
                         //controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/knowledgeSingleAddConcept.html',
+                        templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
                         controller: "knowledgeSingleAddConceptController"
                     }
                 }
-            })            
-            .state("knowledgeManagement.faqAdd", {
-                url: "/faqAdd",
+            })
+            .state("knowledgeManagement.essential", {
+                url: "/essential",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         //controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/knowledgeManagementFaq.html',
-                        controller: "knowledgeManagementFaqController"
+                        templateUrl: 'know_index/knowledgeManagement/essential/knowledgeEssential.html',
+                        controller: "knowledgeEssentialController"
                     }
                 }
             })
 
+            //我的应用admin
+
+            .state("admin", {
+                url: "/admin",
+                templateUrl: 'know_index/admin/admin.html',
+                controller: "adminController"
+            })
+            .state("admin.manage", {
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "myApplicationController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/admin/adminContent.html',
+                        controller: "adminContentController"
+                    },
+                    //'myApplicationSidebar': {
+                    //    templateUrl: 'know_index/home/chatKnowledgeBase.html',
+                    //    //controller: "homePageNavController"
+                    //}
+                }
+
+            })
 
             //我的应用myApplication
 

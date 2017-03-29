@@ -1,0 +1,85 @@
+
+<script type="text/ng-template" >
+</script>
+<div class="page-container" style="width: 550px" >
+
+    <p>修改应用名称<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
+    <div class="addPopupCnt">
+        <textarea></textarea>
+        <div class="checkboxStr">
+            <div>渠道：</div>
+            <label ng-repeat="channel in vm.channels">
+                <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" >
+                {{channel}}
+            </label>
+            <!--<div class="skin-minimal">-->
+            <!--<div class="check-box">-->
+            <!--<label><input type="checkbox" >web</label>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="checkboxAddress" >
+            维度：
+            <div id="search_bar">
+
+            </div>
+        </div>
+        <!--<p class="Concept-p " style="margin-top: 20px;">概念扩展：</p>-->
+        <!--<div class="Concept-Ipt"><input type="text"/><span></span></div>-->
+        <!--<div class="Concept-Ipt Concept-Ipt2"><input type="text"/><span></span></div>-->
+        <div class="Concept-Ipt-nxtDiv" style="margin-top: 50px;">
+            <span class="Concept-Ipt-nxt-ico"></span>
+            <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
+        </div>
+        <div class="jqrsz-btn-box" style="padding-left: 0px;">
+            <a class="btn btn-blue mr10" ng-click="closeThisDialog(1)" href="javascript:;">保存</a>
+            <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    #search_bar{
+        width: 421px;
+    }
+    .addPopup {
+        height: 500px
+    }
+    .ngdialog.ngdialog-theme-default .ngdialog-content {
+        -webkit-animation: ngdialog-flyin .5s;
+        animation: ngdialog-flyin .5s;
+        background: #f0f0f0;
+        border-radius: 5px;
+        color: #444;
+        font-family: Helvetica,sans-serif;
+        font-size: 1.1em;
+        line-height: 1.5em;
+        margin: 0 auto;
+        max-width: 100%;
+        padding: 1em;
+        position: relative;
+        width: 500px;
+    }
+    .addPopupCnt{
+        margin-left: 22px;
+    }
+</style>
+<script>
+    //    $(function(){
+    //        $('.skin-minimal input').iCheck({
+    //            checkboxClass: 'icheckbox-blue',
+    //            radioClass: 'iradio-blue',
+    //            increaseArea: '20%'
+    //        })});
+
+    var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
+</script>
+
+
+
+
+
+
+
+
