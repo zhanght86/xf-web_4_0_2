@@ -183,16 +183,16 @@ knowledge_static_web
                         //controller: "adminContentController"
                     },
                 }
-            })
-            .state("setting.robot", {
+            })        
+            .state("setting.parameter", {
                 //params:{"userPermission" : null},
-                url: "/robot",
+                url: "/parameter",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                     },
                     'content': {
-                        templateUrl: 'know_index/myApplication/settingContent.html',
+                        templateUrl: 'know_index/myApplication/parameterSetting.html',
                         //controller: "adminContentController"
                     },
                 }
@@ -243,6 +243,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("knowledgeManagement.faqAdd", {
+                url: "/faqAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/faq/knowManaFaq.html',
+                        controller: "knowManaFaqController"
+                    }
+                }
+            })
             .state("knowledgeManagement.essential", {
                 url: "/essential",
                 views: {
@@ -253,6 +266,32 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/essential/knowledgeEssential.html',
                         controller: "knowledgeEssentialController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.listAdd", {
+                url: "/listAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/list/knowManaList.html',
+                        controller: "knowManaListController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.factorAdd", {
+                url: "/factorAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        controller: "NewFactorKnowController"
                     }
                 }
             })
