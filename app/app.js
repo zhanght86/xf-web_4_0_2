@@ -179,7 +179,7 @@ knowledge_static_web
                         templateUrl: 'know_index/home/homePageNav.html',
                     },
                     'content': {
-                        templateUrl: 'know_index/myApplication/settingContent.html',
+                        templateUrl: 'know_index/myApplication/applicationConfig/settingContent.html',
                         //controller: "adminContentController"
                     },
                 }
@@ -192,8 +192,48 @@ knowledge_static_web
                         templateUrl: 'know_index/home/homePageNav.html',
                     },
                     'content': {
-                        templateUrl: 'know_index/myApplication/parameterSetting.html',
+                        templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
                         //controller: "adminContentController"
+                    },
+                }
+            })
+            //应用发布
+            .state("setting.releaseMan", {
+                //params:{"userPermission" : null},
+                url: "/releaseMan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/ReleaseManage.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })
+            .state("setting.newService", {
+                //params:{"userPermission" : null},
+                url: "/newService",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/NewServiceRelease.html',
+                        controller: "NewServiceReleaseController"
+                    },
+                }
+            })
+            .state("setting.nodeMan", {
+                //params:{"userPermission" : null},
+                url: "/nodeMan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/NodeManage.html',
+                        controller: "NodeManageController"
                     },
                 }
             })
