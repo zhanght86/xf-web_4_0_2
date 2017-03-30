@@ -19,7 +19,7 @@ angular.module('pagination',[]).directive('pagination',[function(){
                     $(window).scrollTop(0);
 
                 }
-            }
+            };
 
             function getPagination(newValve, oldValue){
                 //console.log(newValve);

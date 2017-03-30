@@ -7,11 +7,46 @@
  */
 
 angular.module('businessModelingModule').controller('aggregateConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
         $scope.vm = {
             addAggregate : addAggregate,
-            editAggregate : editAggregate
+            editAggregate : editAggregate,
+            paginationConf : ""  ,//分页条件
+            listData : ""
         };
+        /**
+         * 加载分页条
+         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         */
+        $scope.vm.paginationConf = {
+            currentPage: 2,//当前页
+            totalItems: 15, //总条数
+            pageSize: 2,//第页条目数
+            pagesLength: 10,//分页框数量
+        };
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            httpRequestPost("",{},function(){
+
+            },function(){
+
+            })
+        });
+        getAggre(0);
+        //
+        function getAggre(index,size){
+                size=size?size:5;   //设置pageSize默认是5
+                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                    "businessConceptApplicationId": "360619411498860544",
+                    "index" :index,
+                    "pageSize": size
+                },function(data){
+                    $scope.vm.listData = data.data
+                    console.log(data)
+                },function(){
+
+                })
+        }
+
         function addAggregate(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",

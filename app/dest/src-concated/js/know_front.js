@@ -847,7 +847,6 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
         var self = this;
         $scope.processMethod = true;
 
-
         self.initSearch = function (column) {
             if (!$scope.SearchPOJO) {
                 $scope.SearchPOJO = $scope.initSearchPOJO();
@@ -856,11 +855,13 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
              * 加载分页条
              * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
              */
+            console.log()
             $scope.paginationConf = {
                 currentPage: $scope.SearchPOJO.currentPage,//当前页
                 totalItems: 0, //总条数
                 pageSize: $scope.SearchPOJO.pageSize,//第页条目数
-                pagesLength: 6//分页框数量
+                pagesLength: 6,//分页框数量
+
             };
         }
 
@@ -980,8 +981,6 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
                 }
             })
         }
-
-
 
         var timeout;
         $scope.$watch('SearchPOJO', function (SearchPOJO) {
@@ -2544,7 +2543,7 @@ angular.module('pagination',[]).directive('pagination',[function(){
                     $(window).scrollTop(0);
 
                 }
-            }
+            };
 
             function getPagination(newValve, oldValue){
                 //console.log(newValve);
@@ -2818,11 +2817,46 @@ knowledge_static_web.controller('knowItemShareController',
  */
 
 angular.module('businessModelingModule').controller('aggregateConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
         $scope.vm = {
             addAggregate : addAggregate,
-            editAggregate : editAggregate
+            editAggregate : editAggregate,
+            paginationConf : ""  ,//分页条件
+            listData : ""
         };
+        /**
+         * 加载分页条
+         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         */
+        $scope.vm.paginationConf = {
+            currentPage: 2,//当前页
+            totalItems: 15, //总条数
+            pageSize: 2,//第页条目数
+            pagesLength: 10,//分页框数量
+        };
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            httpRequestPost("",{},function(){
+
+            },function(){
+
+            })
+        });
+        getAggre(0);
+        //
+        function getAggre(index,size){
+                size=size?size:5;   //设置pageSize默认是5
+                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                    "businessConceptApplicationId": "360619411498860544",
+                    "index" :index,
+                    "pageSize": size
+                },function(data){
+                    $scope.vm.listData = data.data
+                    console.log(data)
+                },function(){
+
+                })
+        }
+
         function addAggregate(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
