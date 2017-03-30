@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5740e66-6c18-4856-9445-93592a6267e4" name="Default" comment="Default">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/js/home/autocomplete-0.3.0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/js/home/jquery.plugIn.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagementFaq_controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeSingleAddConcept_controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementFaq.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementFaqDialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.js" afterPath="$PROJECT_DIR$/app/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/css/home/addContent.css" afterPath="$PROJECT_DIR$/app/css/home/addContent.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/css/home/style_new.css" afterPath="$PROJECT_DIR$/app/css/home/style_new.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dest/release/js/know_front.min.js" afterPath="$PROJECT_DIR$/app/dest/release/js/know_front.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dest/release/js/know_front_module.min.js" afterPath="$PROJECT_DIR$/app/dest/release/js/know_front_module.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dest/src-concated/js/know_front.js" afterPath="$PROJECT_DIR$/app/dest/src-concated/js/know_front.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dest/src-concated/js/know_front_module.js" afterPath="$PROJECT_DIR$/app/dest/src-concated/js/know_front_module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/ApplicationController.js" afterPath="$PROJECT_DIR$/app/know_index/ApplicationController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/base/tip/directives/tip_service.js" afterPath="$PROJECT_DIR$/app/know_index/base/tip/directives/tip_service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/home/homePageNav.html" afterPath="$PROJECT_DIR$/app/know_index/home/homePageNav.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/index/js/controller/index_controller.js" afterPath="$PROJECT_DIR$/app/know_index/index/js/controller/index_controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagement_controller.js" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagement_controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/module/knowledgeManagement_module.js" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/module/knowledgeManagement_module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html" afterPath="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html" />
+    <list default="true" id="7d684b7f-081b-4295-8055-61135898a1ff" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
-    <ignored path="knowledge-front.iws" />
+    <ignored path="xf-web_4_0_2.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,63 +20,49 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="E:\knowledge-front" />
+    <option name="PATCH_PATH" value="" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="knowledge-front" />
+    <favorites_list name="xf-web_4_0_2" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/app.js">
+    <leaf>
+      <file leaf-file-name="knowledgeAddSingleConceptDialog.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="173" column="37" selection-start-line="173" selection-start-column="37" selection-end-line="173" selection-end-column="37" />
+            <state vertical-scroll-proportion="-3.392857">
+              <caret line="5" column="85" selection-start-line="5" selection-start-column="85" selection-end-line="5" selection-end-column="85" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="knowledgeManagementFaq.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementFaq.html">
+      <file leaf-file-name="knowledgeSingleAddConcept.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="233" column="55" selection-start-line="233" selection-start-column="49" selection-end-line="233" selection-end-column="55" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="knowledgeManagement_controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagement_controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+            <state vertical-scroll-proportion="-4.321429">
+              <caret line="59" column="50" selection-start-line="59" selection-start-column="50" selection-end-line="59" selection-end-column="58" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="homePageNav.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/know_index/home/homePageNav.html">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="11" column="41" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.35315314">
+              <caret line="131" column="91" selection-start-line="131" selection-start-column="91" selection-end-line="131" selection-end-column="91" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ngDialog.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/bower_components/ng-dialog/js/ngDialog.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -104,20 +73,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
-        <option value="Html5" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="xfZq_dev_20170317" />
-      </map>
-    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -127,65 +88,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/know_index/admin/adminContent.html" />
-        <option value="$PROJECT_DIR$/app/know_index/admin/addAdmin.html" />
-        <option value="$PROJECT_DIR$/app/know_index/materialManagement/chatKnowledgeBase .html" />
-        <option value="$PROJECT_DIR$/app/know_index/materialManagement/materialManagement.html" />
-        <option value="$PROJECT_DIR$/app/know_index/materialManagement/chatKnowledgeBase.html" />
-        <option value="$PROJECT_DIR$/app/css/home/base.css" />
-        <option value="$PROJECT_DIR$/app/know_index/materialManagement/js/controller/materialManagement_controller.js" />
-        <option value="$PROJECT_DIR$/app/css/home/common.css" />
-        <option value="$PROJECT_DIR$/app/css/common.css" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/controller/addAdmin_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/controller/admin_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/module/myApplication_module.js" />
-        <option value="$PROJECT_DIR$/app/know_index/login/js/controller/login_controller.js" />
-        <option value="$PROJECT_DIR$/app/css/home/robotSetup.css" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/myApplication.html" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/settingContent.html" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/controller/setting_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/module/myApplicationSetting_module.js" />
-        <option value="$PROJECT_DIR$/app/js/home/base.js" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/setting.html" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/controller/setting_cotroller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/js/module/knowledgeManagement.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/js/controller/login_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/js/controller/knowledgeManagement_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/js/knowledgeSingleAddConcept.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/knowledgeSingleAddConcept.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/js/module/knowledgeManagement_module.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManage/knowledgeManagement.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagement.html" />
-        <option value="$PROJECT_DIR$/app/dest/release/js/know_front.min.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/module/knowledgeManagement_module.js" />
-        <option value="$PROJECT_DIR$/app/know_index/base/tip/directives/tip_service.js" />
-        <option value="$PROJECT_DIR$/app/know_index/index/js/controller/index_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/knowledgeAddSingleConceptDialog.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagement_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/myApplication/js/controller/adminContent_controller.js" />
-        <option value="$PROJECT_DIR$/app/css/home/addContent.css" />
-        <option value="$PROJECT_DIR$/app/index.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementSingleFaq.html" />
-        <option value="$PROJECT_DIR$/app/know_index/home/homePageNav.html" />
-        <option value="$PROJECT_DIR$/app/know_index/ApplicationController.js" />
-        <option value="$PROJECT_DIR$/app/css/home/style_new.css" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementSingleAddFaq.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementSingleAddFaqDialog.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeFaq_controller.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeSingleAddConcept_controller.js" />
-        <option value="$PROJECT_DIR$/app/app.js" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementFaq.html" />
-        <option value="$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagementFaq_controller.js" />
+        <option value="$PROJECT_DIR$/app/helloworld.js" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true">
+    <gruntfile path="$PROJECT_DIR$/Gruntfile.js" />
+  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -194,33 +105,14 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="NamedScopeManager">
+    <order />
+  </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1386" />
-    <option name="height" value="788" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>JavaScript</id>
-          </State>
-          <State>
-            <id>JavaScript validity issuesJavaScript</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>BadExpressionStatementJS</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -229,12 +121,6 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <OptionsSetting value="true" id="添加" />
-    <OptionsSetting value="true" id="移除" />
-    <OptionsSetting value="true" id="签出" />
-    <OptionsSetting value="true" id="更新" />
-    <OptionsSetting value="true" id="状态" />
-    <OptionsSetting value="true" id="编辑" />
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
@@ -249,1161 +135,447 @@
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
-      <manualOrder />
-      <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
+              <option name="myItemId" value="xf-web_4_0_2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
+              <option name="myItemId" value="xf-web_4_0_2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
+              <option name="myItemId" value="xf-web_4_0_2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
+              <option name="myItemId" value="xf-web_4_0_2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
+              <option name="myItemId" value="xf-web_4_0_2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="know_index" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="know_index" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="myApplication" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="know_index" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledgeManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="know_index" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="home" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledge-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../xf-docs_4_0_2/小富机器人控制平台/views" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="254" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="254" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="283" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1077" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="367" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="370" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="370" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="761" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="setCookie&#9;null&#9;null&#10;toGMTString&#9;null&#9;null&#10;TipService&#9;FILE&#9;file://C:/Users/41212/Desktop/xf_4.0.2/knowledge-front/app/know_index/base/tip/directives/tip_service.js&#10;bootstrap-datepicker.css&#9;ACTION&#9;null&#10;ngDialog&#9;null&#9;null&#10;backdrop.html&#9;null&#9;null&#10;window.html&#9;null&#9;null&#10;checkStr&#9;null&#9;null&#10;indexModule&#9;FILE&#9;file://C:/Users/41212/Desktop/xf_4.0.2/新建文件夹/knowledge-front/app/know/index/index_module.js&#10;app&#9;FILE&#9;file://E:/knowledge-front/app/app.js&#10;page.js&#9;FILE&#9;file://E:/knowledge-front/app/know_index/base/page/page.js&#10;authse&#9;FILE&#9;file://E:/knowledge-front/app/know/base/auth/auth_service.js&#10;applicationC&#9;null&#9;null&#10;appli&#9;FILE&#9;file://E:/knowledge-front/app/know_background/application/js/controller/application_controller.js&#10;role&#9;FILE&#9;file://E:/knowledge-front/app/know_background/system_role/js/controller/role_controller.js&#10;auth&#9;FILE&#9;file://E:/knowledge-front/app/know/base/auth/auth_service.js&#10;back&#9;FILE&#9;file://E:/knowledge-front/app/know_background/back/js/controller/back_controller.js&#10;loginc&#9;FILE&#9;file://E:/knowledge-front/app/know_index/login/js/controller/login_controller.js&#10;require.js&#9;FILE&#9;file://E:/knowledge-front/node_modules/grunt/node_modules/js-yaml/lib/js-yaml/require.js&#10;require&#9;FILE&#9;file://E:/knowledge-front/node_modules/protractor/node_modules/request/node_modules/har-validator/node_modules/is-my-json-valid/require.js&#10;requirejs&#9;FILE&#9;file://E:/knowledge-front/node_modules/karma/requirejs.config.tpl.js&#10;app.js&#9;FILE&#9;file://E:/knowledge-front/app/app.js&#10;know_f&#9;FILE&#9;file://E:/knowledge-front/app/dest/src-concated/js/know_front.js&#10;index&#9;FILE&#9;file://E:/knowledge-front/app/know_index/index/js/controller/index_controller.js&#10;ada&#9;FILE&#9;file://E:/knowledge-front/app/know_background/know_gateway/js/controller/adapter_controller.js&#10;adap&#9;FILE&#9;file://E:/knowledge-front/app/know_background/know_gateway/js/controller/adapter_controller.js&#10;config&#9;null&#9;null&#10;适配器&#9;FILE&#9;file://E:/knowledge-front/app/static-html/back/适配器接入.html&#10;文档&#9;FILE&#9;file://E:/knowledge-front/app/static-html/back/文档导入_模版配置.html" />
-    <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="FullScreen" value="false" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/app.js" />
+    <property name="SearchEverywhereHistoryKey" value="knowadd&#9;FILE&#9;file://E:/bitbucket/4.0.1/xf-web_4_0_2/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html&#10;knadd&#9;FILE&#9;file://E:/bitbucket/4.0.1/xf-web_4_0_2/app/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html" />
   </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\know_index\knowledgeManagement" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\know_index\knowledgeManage" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\css\home" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\know_index\admin" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\新建文件夹\knowledge-front\app\images" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\js\home" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\know_index\knowledgeManage" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\know_index\myApplication\js\module" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\css\home" />
-      <recent name="C:\Users\41212\Desktop\xf_4.0.2\knowledge-front\app\know_index\myApplication" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+  <component name="RunManager" selected="Node.js.xf-web_4.0.2">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <pass-parent-envs>true</pass-parent-envs>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
+      <method />
+    </configuration>
+    <configuration default="false" name="xf-web_4.0.2" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="E:/download/node-v6.10.1-win-x64/node" path-to-js-file="app/app.js" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.xf-web_4.0.2" />
+    </list>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
-  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b5740e66-6c18-4856-9445-93592a6267e4" name="Default" comment="" />
-      <created>1482319894590</created>
+      <changelist id="7d684b7f-081b-4295-8055-61135898a1ff" name="Default" comment="" />
+      <created>1490768287909</created>
       <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1482319894590</updated>
-      <workItem from="1482319901180" duration="1285000" />
-      <workItem from="1482367239926" duration="11461000" />
-      <workItem from="1482453441490" duration="103000" />
-      <workItem from="1482453921759" duration="20928000" />
-      <workItem from="1482492493405" duration="6570000" />
-      <workItem from="1482556992809" duration="6861000" />
-      <workItem from="1482568194665" duration="3993000" />
-      <workItem from="1482632921611" duration="13089000" />
-      <workItem from="1482713742241" duration="101637000" />
-      <workItem from="1483057988836" duration="35912000" />
-      <workItem from="1483403832752" duration="29748000" />
-      <workItem from="1483491176405" duration="94448000" />
-      <workItem from="1484008336692" duration="62803000" />
-      <workItem from="1484270493453" duration="11168000" />
-      <workItem from="1484529164673" duration="51344000" />
-      <workItem from="1484786924868" duration="4109000" />
-      <workItem from="1484793576645" duration="23821000" />
-      <workItem from="1484875665810" duration="27995000" />
-      <workItem from="1486170352062" duration="1784000" />
-      <workItem from="1486187561738" duration="243000" />
-      <workItem from="1486189981941" duration="649000" />
-      <workItem from="1486197124858" duration="297000" />
-      <workItem from="1486197829017" duration="29849000" />
-      <workItem from="1486342138208" duration="211000" />
-      <workItem from="1486342361641" duration="21321000" />
-      <workItem from="1486428204290" duration="24621000" />
-      <workItem from="1486461925141" duration="49283000" />
-      <workItem from="1486644384520" duration="30645000" />
-      <workItem from="1486952666266" duration="2609000" />
-      <workItem from="1486956497687" duration="3814000" />
-      <workItem from="1486971209040" duration="1196000" />
-      <workItem from="1486973264673" duration="9524000" />
-      <workItem from="1487035106412" duration="3668000" />
-      <workItem from="1487040713515" duration="36399000" />
-      <workItem from="1487205046926" duration="78745000" />
-      <workItem from="1487636678571" duration="17053000" />
-      <workItem from="1487723916155" duration="84761000" />
-      <workItem from="1488250306274" duration="22683000" />
-      <workItem from="1488362410986" duration="22000" />
-      <workItem from="1488362462686" duration="59000" />
-      <workItem from="1488415859788" duration="598000" />
-      <workItem from="1488418676704" duration="1327000" />
-      <workItem from="1488504024007" duration="1119000" />
-      <workItem from="1488506903533" duration="683000" />
-      <workItem from="1488521189198" duration="8628000" />
-      <workItem from="1488767139144" duration="1188000" />
-      <workItem from="1488790554988" duration="4371000" />
-      <workItem from="1488848286698" duration="767000" />
-      <workItem from="1488854502874" duration="24895000" />
-      <workItem from="1489107938009" duration="12707000" />
-      <workItem from="1489197682799" duration="660000" />
-      <workItem from="1489366717149" duration="1421000" />
-      <workItem from="1489371811725" duration="19530000" />
-      <workItem from="1489471256590" duration="1563000" />
-      <workItem from="1489476356236" duration="4674000" />
-      <workItem from="1489546614100" duration="1232000" />
-      <workItem from="1489562184542" duration="2906000" />
-      <workItem from="1489567457228" duration="1582000" />
-      <workItem from="1489625677473" duration="1680000" />
-      <workItem from="1489630761873" duration="655000" />
-      <workItem from="1489646582670" duration="2252000" />
-      <workItem from="1489654389881" duration="2146000" />
-      <workItem from="1489658539797" duration="887000" />
-      <workItem from="1489717618129" duration="13257000" />
-      <workItem from="1489806741134" duration="23000" />
-      <workItem from="1489806873012" duration="4679000" />
-      <workItem from="1490683744755" duration="7065000" />
+      <updated>1490768287909</updated>
+      <workItem from="1490768290576" duration="5062000" />
     </task>
-    <task id="LOCAL-00178" summary="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/know_background/know_gateway/main_create_template_container.html&#10;">
-      <created>1488348528234</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1488348528234</updated>
-    </task>
-    <task id="LOCAL-00179" summary="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/know_background/know_gateway/main_create_template_container.html&#10;">
-      <created>1488767167152</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1488767167153</updated>
-    </task>
-    <task id="LOCAL-00180" summary="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/know_background/know_gateway/main_create_template_container.html&#10;">
-      <created>1488767246634</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1488767246634</updated>
-    </task>
-    <task id="LOCAL-00181" summary="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/know_background/know_gateway/main_create_template_container.html&#10;">
-      <created>1488790676857</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1488790676857</updated>
-    </task>
-    <task id="LOCAL-00182" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1488791476904</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1488791476905</updated>
-    </task>
-    <task id="LOCAL-00183" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1488791488515</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1488791488515</updated>
-    </task>
-    <task id="LOCAL-00184" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1488794056650</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1488794056650</updated>
-    </task>
-    <task id="LOCAL-00185" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1488794118196</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1488794118197</updated>
-    </task>
-    <task id="LOCAL-00186" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1488848372127</created>
-      <option name="number" value="00186" />
-      <option name="presentableId" value="LOCAL-00186" />
-      <option name="project" value="LOCAL" />
-      <updated>1488848372139</updated>
-    </task>
-    <task id="LOCAL-00187" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1488886805102</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1488886805103</updated>
-    </task>
-    <task id="LOCAL-00188" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1489020796532</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1489020796532</updated>
-    </task>
-    <task id="LOCAL-00189" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1489045874600</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1489045874600</updated>
-    </task>
-    <task id="LOCAL-00190" summary="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/app.js&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489058040600</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1489058040600</updated>
-    </task>
-    <task id="LOCAL-00191" summary="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/app.js&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489129483353</created>
-      <option name="number" value="00191" />
-      <option name="presentableId" value="LOCAL-00191" />
-      <option name="project" value="LOCAL" />
-      <updated>1489129483364</updated>
-    </task>
-    <task id="LOCAL-00192" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489138334791</created>
-      <option name="number" value="00192" />
-      <option name="presentableId" value="LOCAL-00192" />
-      <option name="project" value="LOCAL" />
-      <updated>1489138334791</updated>
-    </task>
-    <task id="LOCAL-00193" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489139808312</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1489139808312</updated>
-    </task>
-    <task id="LOCAL-00194" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489371853152</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1489371853163</updated>
-    </task>
-    <task id="LOCAL-00195" summary="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/know_background/know_gateway/main_container.html&#10;">
-      <created>1489385912317</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1489385912317</updated>
-    </task>
-    <task id="LOCAL-00196" summary="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/know_background/know_gateway/main_container.html&#10;">
-      <created>1489385930712</created>
-      <option name="number" value="00196" />
-      <option name="presentableId" value="LOCAL-00196" />
-      <option name="project" value="LOCAL" />
-      <updated>1489385930712</updated>
-    </task>
-    <task id="LOCAL-00197" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_container.html&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1489390276690</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1489390276690</updated>
-    </task>
-    <task id="LOCAL-00198" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_container.html&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1489390292837</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1489390292837</updated>
-    </task>
-    <task id="LOCAL-00199" summary="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_container.html&#10;&#9;app/know_index/home/main_container.html&#10;">
-      <created>1489399367188</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1489399367188</updated>
-    </task>
-    <task id="LOCAL-00200" summary="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/know_background/know_gateway/js/controller/gateway_controller.js&#10;">
-      <created>1489454443936</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1489454443936</updated>
-    </task>
-    <task id="LOCAL-00201" summary="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/know_background/know_gateway/js/controller/gateway_controller.js&#10;">
-      <created>1489454494851</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1489454494851</updated>
-    </task>
-    <task id="LOCAL-00202" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489471262488</created>
-      <option name="number" value="00202" />
-      <option name="presentableId" value="LOCAL-00202" />
-      <option name="project" value="LOCAL" />
-      <updated>1489471262488</updated>
-    </task>
-    <task id="LOCAL-00203" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;">
-      <created>1489471291133</created>
-      <option name="number" value="00203" />
-      <option name="presentableId" value="LOCAL-00203" />
-      <option name="project" value="LOCAL" />
-      <updated>1489471291133</updated>
-    </task>
-    <task id="LOCAL-00204" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489479507726</created>
-      <option name="number" value="00204" />
-      <option name="presentableId" value="LOCAL-00204" />
-      <option name="project" value="LOCAL" />
-      <updated>1489479507726</updated>
-    </task>
-    <task id="LOCAL-00205" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489479518267</created>
-      <option name="number" value="00205" />
-      <option name="presentableId" value="LOCAL-00205" />
-      <option name="project" value="LOCAL" />
-      <updated>1489479518267</updated>
-    </task>
-    <task id="LOCAL-00206" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489558371208</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1489558371208</updated>
-    </task>
-    <task id="LOCAL-00207" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489564547723</created>
-      <option name="number" value="00207" />
-      <option name="presentableId" value="LOCAL-00207" />
-      <option name="project" value="LOCAL" />
-      <updated>1489564547723</updated>
-    </task>
-    <task id="LOCAL-00208" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489566446099</created>
-      <option name="number" value="00208" />
-      <option name="presentableId" value="LOCAL-00208" />
-      <option name="project" value="LOCAL" />
-      <updated>1489566446099</updated>
-    </task>
-    <task id="LOCAL-00209" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489627017967</created>
-      <option name="number" value="00209" />
-      <option name="presentableId" value="LOCAL-00209" />
-      <option name="project" value="LOCAL" />
-      <updated>1489627017967</updated>
-    </task>
-    <task id="LOCAL-00210" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489630873825</created>
-      <option name="number" value="00210" />
-      <option name="presentableId" value="LOCAL-00210" />
-      <option name="project" value="LOCAL" />
-      <updated>1489630873825</updated>
-    </task>
-    <task id="LOCAL-00211" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489654592257</created>
-      <option name="number" value="00211" />
-      <option name="presentableId" value="LOCAL-00211" />
-      <option name="project" value="LOCAL" />
-      <updated>1489654592257</updated>
-    </task>
-    <task id="LOCAL-00212" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489656353625</created>
-      <option name="number" value="00212" />
-      <option name="presentableId" value="LOCAL-00212" />
-      <option name="project" value="LOCAL" />
-      <updated>1489656353625</updated>
-    </task>
-    <task id="LOCAL-00213" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489731573616</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1489731573617</updated>
-    </task>
-    <task id="LOCAL-00214" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489731692741</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1489731692741</updated>
-    </task>
-    <task id="LOCAL-00215" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489731861644</created>
-      <option name="number" value="00215" />
-      <option name="presentableId" value="LOCAL-00215" />
-      <option name="project" value="LOCAL" />
-      <updated>1489731861644</updated>
-    </task>
-    <task id="LOCAL-00216" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489732555701</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1489732555702</updated>
-    </task>
-    <task id="LOCAL-00217" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489732874320</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1489732874320</updated>
-    </task>
-    <task id="LOCAL-00218" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489738780155</created>
-      <option name="number" value="00218" />
-      <option name="presentableId" value="LOCAL-00218" />
-      <option name="project" value="LOCAL" />
-      <updated>1489738780155</updated>
-    </task>
-    <task id="LOCAL-00219" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489738891995</created>
-      <option name="number" value="00219" />
-      <option name="presentableId" value="LOCAL-00219" />
-      <option name="project" value="LOCAL" />
-      <updated>1489738891995</updated>
-    </task>
-    <task id="LOCAL-00220" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489749111888</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1489749111888</updated>
-    </task>
-    <task id="LOCAL-00221" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489973514981</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1489973515016</updated>
-    </task>
-    <task id="LOCAL-00222" summary="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;">
-      <created>1489973582161</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1489973582161</updated>
-    </task>
-    <task id="LOCAL-00223" summary="Default">
-      <created>1490610135570</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1490610135576</updated>
-    </task>
-    <task id="LOCAL-00224" summary="Default">
-      <created>1490611624326</created>
-      <option name="number" value="00224" />
-      <option name="presentableId" value="LOCAL-00224" />
-      <option name="project" value="LOCAL" />
-      <updated>1490611624326</updated>
-    </task>
-    <task id="LOCAL-00225" summary="Default">
-      <created>1490612339702</created>
-      <option name="number" value="00225" />
-      <option name="presentableId" value="LOCAL-00225" />
-      <option name="project" value="LOCAL" />
-      <updated>1490612339702</updated>
-    </task>
-    <task id="LOCAL-00226" summary="Default">
-      <created>1490612396807</created>
-      <option name="number" value="00226" />
-      <option name="presentableId" value="LOCAL-00226" />
-      <option name="project" value="LOCAL" />
-      <updated>1490612396807</updated>
-    </task>
-    <option name="localTasksCounter" value="227" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1049206000" />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
+    <option name="totallyTimeSpent" value="5062000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1386" height="788" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4707792" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38014784" sideWeight="0.5960666" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22526637" sideWeight="0.40393344" order="17" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17099567" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3122172" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="JRebel Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15321252" sideWeight="0.5637329" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26298702" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="消息" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46536797" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="JRebel remote servers log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="19" side_tool="true" content_ui="tabs" />
-      <window_info id="JRebel" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25080386" sideWeight="0.47040972" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.96568626" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
-  </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection />
-    </option>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.96568626" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Merge branch 'master' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;&#9;app/index.html&#10;" />
-    <MESSAGE value="Merge branches 'master' and 'zq_20161116_dev' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/app.js&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;&#9;app/know/know_module.js&#10;" />
-    <MESSAGE value="Merge branches 'lc_know-front' and 'zq_20161116_dev' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/app.js&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;&#9;app/know/know_module.js&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;&#9;app/know/know_module.js&#10;" />
-    <MESSAGE value="Merge branches 'master' and 'zq_20161116_dev' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branch 'lc_know-front' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://218.107.34.39:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/know/base/auth/auth_service.js&#10;&#9;app/know_background/back/main.html&#10;&#9;app/know_background/know_base_management/main_container.html&#10;&#9;app/know_index/home/main_container.html&#10;" />
-    <MESSAGE value="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/know_background/system_user/js/controller/user_controller.js&#10;&#9;app/know_background/system_user/main_container.html&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branches 'lc_know-front' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front_module.js&#10;" />
-    <MESSAGE value="Merge branch 'lc_know-front' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/release/js/know_front_module.min.js&#10;&#9;app/know_background/know_gateway/main_create_template_container.html&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_index/home/main_container.html&#10;" />
-    <MESSAGE value="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/app.js&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/know_background/know_gateway/main_container.html&#10;" />
-    <MESSAGE value="Merge branch 'master' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_container.html&#10;&#9;app/know_index/home/main_container.html&#10;" />
-    <MESSAGE value="Merge branches 'dcc_20170227_dev3.0' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/index.html&#10;" />
-    <MESSAGE value="Merge branches 'master' and 'zq_20161116_dev' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/dest/src-concated/js/know_front.js&#10;&#9;app/know_background/know_gateway/js/controller/gateway_controller.js&#10;" />
-    <MESSAGE value="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;" />
-    <MESSAGE value="Merge branch 'dcc_20170227_dev3.0' of http://114.67.37.157:10001/bitbucket/scm/cp/knowledge-front into zq_20161116_dev&#10;&#10;Conflicts:&#10;&#9;app/dest/release/js/know_front.min.js&#10;&#9;app/know_background/know_gateway/main_adapter_container.html&#10;" />
-    <MESSAGE value="Default" />
-    <option name="LAST_COMMIT_MESSAGE" value="Default" />
-  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="43" />
-    </breakpoint-manager>
+    <breakpoint-manager />
     <watches-manager />
   </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/know_index/home/homePageContent.html">
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/home/homePage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/settingContent.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/js/module/knowledgeManagement_module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/dest/release/js/know_front.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="1" column="13325" selection-start-line="1" selection-start-column="13325" selection-end-line="1" selection-end-column="13325" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/dest/src-concated/js/know_front.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="529" column="22" selection-start-line="529" selection-start-column="22" selection-end-line="529" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_background/back/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="42" selection-start-line="0" selection-start-column="42" selection-end-line="0" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_background/know_gateway/js/controller/adapter_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_background/know_gateway/js/controller/analyse_task_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_background/know_gateway/js/controller/create_tem_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_background/know_gateway/js/controller/tem_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/base/window_template/knowItem_delete/knowItem_delete_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know/know_doc/doc_service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know/index/index_service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/index/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="38" column="77" selection-start-line="38" selection-start-column="60" selection-end-line="38" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/base/window_template/knowItem_share/knowItem_share_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know/index/index_module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledge_details/js/controller/know_details_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledge_details/js/controller/know_edit_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/base/tip/directives/tip_service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/index/js/controller/index_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/home/jquery.plugIn.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/js/controller/setting_cotroller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/js/controller/addAdmin_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="16" selection-start-line="0" selection-start-column="0" selection-end-line="14" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/js/controller/admin_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="5" column="73" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/home/autocomplete-0.3.0.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/js/controller/adminContent_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/addContent.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="368" column="14" selection-start-line="368" selection-start-column="14" selection-end-line="368" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/addAdmin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="54" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/ApplicationController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="22" column="46" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/myApplication/setting.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="28" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="74" column="47" selection-start-line="74" selection-start-column="47" selection-end-line="74" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/admin.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="23" column="33" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/robotSetup.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/plugins/common2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding>
-            <marker date="1490086895860" expanded="true" signature="843:867" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/style_new.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#label#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#select#0;n#div#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagement.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeSingleAddConcept_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="77" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#5;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementFaqDialog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
-          <caret line="61" column="29" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#4;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeManagementFaq.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="233" column="55" selection-start-line="233" selection-start-column="49" selection-end-line="233" selection-end-column="55" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/index-async.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="78" column="59" selection-start-line="78" selection-start-column="59" selection-end-line="78" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagementFaq_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-          <folding>
-            <element signature="e#42#83#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/js/controller/knowledgeManagement_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/know_index/home/homePageNav.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.22735043">
+          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="173" column="37" selection-start-line="173" selection-start-column="37" selection-end-line="173" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeAddSingleConceptDialog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.392857">
+          <caret line="5" column="85" selection-start-line="5" selection-start-column="85" selection-end-line="5" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/bower_components/angular/angular.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.5384617">
+          <caret line="14841" column="36" selection-start-line="14841" selection-start-column="36" selection-end-line="14841" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/know_index/knowledgeManagement/knowledgeSingleAddConcept.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.321429">
+          <caret line="59" column="50" selection-start-line="59" selection-start-column="50" selection-end-line="59" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/bower_components/ng-dialog/js/ngDialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35315314">
+          <caret line="131" column="91" selection-start-line="131" selection-start-column="91" selection-end-line="131" selection-end-column="91" />
           <folding />
         </state>
       </provider>
