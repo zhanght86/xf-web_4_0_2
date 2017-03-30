@@ -27,6 +27,8 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //我的应用
     "myApplicationModule",
     "myApplicationSettingModule",
+    //业务建模
+    "businessModelingModule",
 
     //知识管理
     "knowledgeManagementModule",
@@ -141,6 +143,26 @@ knowledge_static_web
                         templateUrl: 'know_index/home/homePageContent.html',
                         //controller: "homePageNavController"
                     }
+                }
+            })
+            //业务建模
+            .state("conceptManage", {
+                //params:{"userPermission" : null},
+                url: "/conceptManage",
+                templateUrl: 'know_index/businessModeling/conceptManage.html',
+                controller:"businessModelingController"
+            })
+            .state("conceptManage.synony", {
+                //params:{"userPermission" : null},
+                url: "/synony",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/synony/synonyConceptManage.html',
+                        controller: "synonyConceptManageController"
+                    },
                 }
             })
             // 我的应用myApplication

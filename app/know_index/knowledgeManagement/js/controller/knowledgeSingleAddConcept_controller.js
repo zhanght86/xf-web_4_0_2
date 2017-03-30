@@ -13,7 +13,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,
+            botValChange : botValChange,            
             knowledgeTitle : "",   //标题
             timeStart : "",      //起始时间
             timeEnd : "",
