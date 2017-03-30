@@ -192,6 +192,71 @@ knowledge_static_web
                     },
                 }
             })
+            .state("conceptManage.sensitive", {
+                //params:{"userPermission" : null},
+                url: "/sensitive",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/sensitive/sensitiveConceptManage.html',
+                        controller: "sensitiveConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.errorCorrection", {
+                //params:{"userPermission" : null},
+                url: "/errorCorrection",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/errorCorrection/errorCorrectionConceptManage.html',
+                        controller: "errorCorrectionConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.disable", {
+                //params:{"userPermission" : null},
+                url: "/disable",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/disable/disableConceptManage.html',
+                        controller: "disableConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.emotion", {
+                //params:{"userPermission" : null},
+                url: "/emotion",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/emotion/emotionConceptManage.html',
+                        controller: "emotionConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.intention", {
+                //params:{"userPermission" : null},
+                url: "/intention",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/intention/intentionConceptManage.html',
+                        controller: "intentionConceptManageController"
+                    },
+                }
+            })
             // 我的应用myApplication
             .state("myApplication", {
                 params:{"userPermission" : null},
