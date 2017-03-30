@@ -2123,7 +2123,7 @@ knowledge_static_web.controller('ApplicationController',
                     userName: data.name,
                     realName: data.realName,
                     sex: data.sex,
-                    email: data.email,
+                    email: data.email,             
                     protarit: data.protarit,
                     phone: data.phone,
                     identity: data.identity,
@@ -2803,6 +2803,215 @@ knowledge_static_web.controller('knowItemShareController',
 
     }
 }]);
+// Source: app/know_index/businessModeling/js/controller/aggregateConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('aggregateConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addAggregate : addAggregate,
+            editAggregate : editAggregate
+        };
+        function addAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/businessConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('aggregateConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addAggregate : addAggregate,
+            editAggregate : editAggregate
+        };
+        function addAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/businessModeling_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('businessModelingController', [
+    '$scope', "$state", "$stateParams",
+    function ($scope,$state, $stateParams) {
+        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            isSlide : isSlide,
+        };
+
+        function isSlide(event){
+            var self=event.target;
+            if($(self).hasClass("slideActive")){
+                $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
+            }else{
+                $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
+            }
+
+        }
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/synonyConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('synonyConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addSynony : addSynony,
+            editSynony : editSynony
+        };
+        function addSynony(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editSynony(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+;
 // Source: app/know_index/home/js/controller/homePageNav_controller.js
 /**
  * Created by 41212 on 2017/3/21.
@@ -2979,6 +3188,48 @@ angular.module('knowledgeManagementModule').controller('NewFactorKnowController'
         function listAdd(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/knowledgeManagementFaqDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
+// Source: app/know_index/knowledgeManagement/js/controller/knowManaFaq_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+          faqAdd : faqAdd
+        };
+        function faqAdd(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -3183,7 +3434,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,
+            botValChange : botValChange,            
             knowledgeTitle : "",   //标题
             timeStart : "",      //起始时间
             timeEnd : "",
@@ -4188,6 +4439,90 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
     }
 ]);;
 ;
+// Source: app/know_index/myApplication/js/controller/NewServiceRelease_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('NewServiceReleaseController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            newService : newService
+        };
+        function newService(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationRelease/NewServiceReleaseDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/NodeManage_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('NodeManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addNode : addNode
+        };
+        function addNode(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
 // Source: app/know_index/myApplication/js/controller/addAdmin_controller.js
 /**
  * Created by 41212 on 2017/3/23.
