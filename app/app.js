@@ -136,7 +136,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/home/homePageContent.html',
@@ -158,7 +158,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/adminContent.html',
@@ -178,6 +178,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/settingContent.html',
@@ -191,6 +192,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
@@ -206,6 +208,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/ReleaseManage.html',
@@ -219,6 +222,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/NewServiceRelease.html',
@@ -240,10 +244,6 @@ knowledge_static_web
                 }
             })
 
-
-
-
-
             //materialManagement
             .state("materialManagement", {
                 params:{"userPermission" : null},
@@ -258,7 +258,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/materialManagement/chatKnowledgeBase.html',
@@ -278,7 +278,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
@@ -291,7 +291,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/faq/knowManaFaq.html',
@@ -305,7 +305,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/list/knowManaList.html',
@@ -318,7 +318,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
@@ -340,7 +340,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "myApplicationController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/admin/adminContent.html',
