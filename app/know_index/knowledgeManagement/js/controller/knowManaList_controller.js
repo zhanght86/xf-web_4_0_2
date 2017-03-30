@@ -7,6 +7,7 @@
 
 /**
  * Created by Administrator on 2016/6/3.
+ *
  * 控制器
  */
 
@@ -25,7 +26,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 //        $scope.closeThisDialog(); //关闭弹窗
                 //    }},
                 scope: $scope,
-                closeByDocument:false,
+                closeByDocument:false     ,
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',

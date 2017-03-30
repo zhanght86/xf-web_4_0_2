@@ -299,25 +299,6 @@ knowledge_static_web
                     }
                 }
             })
-            .state("knowledgeManagement.essential", {
-                url: "/essential",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'know_index/knowledgeManagement/essential/knowledgeEssential.html',
-                        controller: "knowledgeEssentialController"
-                    }
-                }
-            })
-
-            .state("knowledgeManagement.list", {
-                url: "/list"
-            })
-
-
             .state("knowledgeManagement.listAdd", {
                 url: "/listAdd",
 
