@@ -142,3 +142,7 @@
 .essential_factor_div{width:100%;min-height:200px;padding:10px;box-sizing:border-box;overflow:auto;}
 .essential_factor_tab{border-collapse: collapse;}
 .essential_factor_tab td{border:1px solid #eee;height:30px;padding:5px;}
+
+/*词库*/
+.concept_div{position: relative;padding-left:110px;min-height:25px;}
+.concept_s{position:absolute;left:0;top:0;}

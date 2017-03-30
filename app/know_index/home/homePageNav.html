@@ -11,7 +11,7 @@
             <li>
                 <a ui-sref="setting.robot">我的应用</a>
             </li>
-            <li>
+            <li ng-if="vm.applicatioinId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -27,14 +27,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="conceptManage.synony">
                             <i class="icon-nav icon-nav__icon-nav_gngl"></i>
                             <span>概念管理</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-if="vm.applicatioinId">
                 <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -105,7 +105,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-if="vm.applicatioinId">
                 <a href="javascript:;">测试功能<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -128,7 +128,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-if="vm.applicatioinId">
                 <a href="javascript:;">应用分析<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -175,11 +175,11 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-if="vm.applicatioinId">
                 <a href="javascript:;">素材管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="materialManagement.chatKnowledgeBase">
                             <i class="icon-nav icon-nav__icon-nav_ltzsk"></i>
                             <span>聊天知识库</span>
                         </a>
@@ -219,7 +219,7 @@
                         <li>
                             <a href="javascript:;">
                                 <i class="icon-header-r icon-header-r__h-r1"></i>
-                                <span>全线管理</span>
+                                <span>权限管理</span>
                             </a>
                         </li>
                         <li>
@@ -231,7 +231,7 @@
                         <li>
                             <a href="javascript:;">
                                 <i class="icon-header-r icon-header-r__h-r3"></i>
-                                <span>退出登录</span>
+                                <span ui-sref="login">退出登录</span>
                             </a>
                         </li>
                     </ul>

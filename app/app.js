@@ -28,6 +28,8 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //我的应用
     "myApplicationModule",
     "myApplicationSettingModule",
+    //业务建模
+    "businessModelingModule",
 
     //知识管理
     "knowledgeManagementModule",
@@ -136,12 +138,58 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/home/homePageContent.html',
                         //controller: "homePageNavController"
                     }
+                }
+            })
+            //业务建模
+            .state("conceptManage", {
+                //params:{"userPermission" : null},
+                url: "/conceptManage",
+                templateUrl: 'know_index/businessModeling/conceptManage.html',
+                controller:"businessModelingController"
+            })
+            .state("conceptManage.synony", {
+                //params:{"userPermission" : null},
+                url: "/synony",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/synony/synonyConceptManage.html',
+                        controller: "synonyConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.aggregate", {
+                //params:{"userPermission" : null},
+                url: "/aggregate",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/aggregate/aggregateConceptManage.html',
+                        controller: "aggregateConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.business", {
+                //params:{"userPermission" : null},
+                url: "/business",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/business/businessConceptManage.html',
+                        controller: "businessConceptManageController"
+                    },
                 }
             })
             // 我的应用myApplication
@@ -158,7 +206,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/adminContent.html',
@@ -178,6 +226,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/settingContent.html',
@@ -191,6 +240,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
@@ -206,6 +256,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/ReleaseManage.html',
@@ -219,6 +270,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/NewServiceRelease.html',
@@ -240,10 +292,6 @@ knowledge_static_web
                 }
             })
 
-
-
-
-
             //materialManagement
             .state("materialManagement", {
                 params:{"userPermission" : null},
@@ -258,7 +306,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/materialManagement/chatKnowledgeBase.html',
@@ -278,7 +326,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
@@ -291,7 +339,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/faq/knowManaFaq.html',
@@ -305,7 +353,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/list/knowManaList.html',
@@ -318,7 +366,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
@@ -340,7 +388,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        //controller: "myApplicationController"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/admin/adminContent.html',

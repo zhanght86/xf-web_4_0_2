@@ -9,8 +9,14 @@
 angular.module('adminModule').controller('adminContentController', [
     '$scope',"$state","$timeout","$stateParams","ngDialog",
     function ($scope,  $state,$timeout,$stateParams,ngDialog) {
+
+
+        //"applicationId": "string",
+
+
         setCookie("userName","mf");
         getCookie("userName");
+
         //setCookie("userId","359873057331875840");
         //$stateParams.userPermission = ['超级管理员','初级管理员'];
                 $scope.vm = {

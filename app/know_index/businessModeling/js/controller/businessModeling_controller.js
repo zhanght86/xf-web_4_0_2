@@ -1,7 +1,4 @@
 /**
- * Created by 41212 on 2017/3/27.
- */
-/**
  * Created by 41212 on 2017/3/23.
  */
 /**
@@ -9,10 +6,9 @@
  * 控制器
  */
 
-angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
+angular.module('businessModelingModule').controller('businessModelingController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
-        alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,
