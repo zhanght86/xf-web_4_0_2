@@ -165,6 +165,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("conceptManage.aggregate", {
+                //params:{"userPermission" : null},
+                url: "/aggregate",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/aggregate/aggregateConceptManage.html',
+                        controller: "aggregateConceptManageController"
+                    },
+                }
+            })
             // 我的应用myApplication
             .state("myApplication", {
                 params:{"userPermission" : null},
