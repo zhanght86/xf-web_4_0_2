@@ -235,22 +235,9 @@
                         <div class="lable">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
                         <div class="formControls col-xs-8 col-sm-9">
-                            <!--<select class="input-text" style="width:407px;">-->
-                                <!--<option>信用卡办理</option>-->
-                                <!--<option>金葵花卡办理流程</option>-->
-                                <!--<option>黑金卡办理流程</option>-->
-                            <!--</select>-->
-
-                            <select ng-model="vm.am" ng-options="x for x in in vm.framework">
-                                <option value="">所有人</option> <!-- 不加这句代码，会出现空白 -->
+                            <select class="input-text" style="width:407px;">
+                                <option value="" ng-repeat="x in vm.framework">{{x}}</option>
                             </select>
-
-
-                            <!--<select class="input-text" style="width:407px;">-->
-                                <!--<option>信用卡办理</option>-->
-                                <!--<option>金葵花卡办理流程</option>-->
-                                <!--<option>黑金卡办理流程</option>-->
-                            <!--</select>-->
                         </div>
                     </div>
 
