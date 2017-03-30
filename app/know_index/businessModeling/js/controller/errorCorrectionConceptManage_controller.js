@@ -6,15 +6,15 @@
  * 控制器
  */
 
-angular.module('businessModelingModule').controller('businessConceptManageController', [
+angular.module('businessModelingModule').controller('errorCorrectionConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            addBusiness : addBusiness,
-            editBusiness : editBusiness
+            addErrorCorrection : addErrorCorrection,
+            editErrorCorrection : editErrorCorrection
         };
-        function addBusiness(){
+        function addErrorCorrection(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/business/businessConceptManageDialog.html",
+                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -32,9 +32,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
-        function editBusiness(){
+        function editErrorCorrection(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
+                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //

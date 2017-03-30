@@ -2877,15 +2877,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
  * 控制器
  */
 
-angular.module('businessModelingModule').controller('aggregateConceptManageController', [
+angular.module('businessModelingModule').controller('businessConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            addAggregate : addAggregate,
-            editAggregate : editAggregate
+            addBusiness : addBusiness,
+            editBusiness : editBusiness
         };
-        function addAggregate(){
+        function addBusiness(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
+                template:"/know_index/businessModeling/business/businessConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -2903,9 +2903,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 }
             });
         }
-        function editAggregate(){
+        function editBusiness(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
+                template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -2954,6 +2954,306 @@ angular.module('businessModelingModule').controller('businessModelingController'
             }
 
         }
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/disableConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('disableConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addDisable : addDisable,
+            editDisable : editDisable
+        };
+        function addDisable(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/disable/disableConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editDisable(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/emotionConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('emotionConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addEmotion : addEmotion,
+            editEmotion : editEmotion
+        };
+        function addEmotion(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/emotion/emotionConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editEmotion(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/emotion/emotionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/errorCorrectionConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('errorCorrectionConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addErrorCorrection : addErrorCorrection,
+            editErrorCorrection : editErrorCorrection
+        };
+        function addErrorCorrection(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editErrorCorrection(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/intentionConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('intentionConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addIntention : addIntention,
+            editIntention : editIntention
+        };
+        function addIntention(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/intention/intentionConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editIntention(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/intention/intentionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/sensitiveConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('sensitiveConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addSensitive : addSensitive,
+            editSensitive : editSensitive
+        };
+        function addSensitive(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editSensitive(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
     }
 ]);;
 // Source: app/know_index/businessModeling/js/controller/synonyConceptManage_controller.js

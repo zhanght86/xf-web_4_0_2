@@ -6,15 +6,15 @@
  * 控制器
  */
 
-angular.module('businessModelingModule').controller('businessConceptManageController', [
+angular.module('businessModelingModule').controller('sensitiveConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            addBusiness : addBusiness,
-            editBusiness : editBusiness
+            addSensitive : addSensitive,
+            editSensitive : editSensitive
         };
-        function addBusiness(){
+        function addSensitive(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/business/businessConceptManageDialog.html",
+                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -32,9 +32,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
-        function editBusiness(){
+        function editSensitive(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
+                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
