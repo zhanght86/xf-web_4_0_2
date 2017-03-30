@@ -1,41 +1,42 @@
 <div alert-bar class="alert_bar" message="tipService.message" type="tipService.type"></div>
+<div ui-view="header"></div>
 <!--头部-->
-<div class="header_wrap">
-    <div class="header wrap clearfix header_b" >
-        <!--<h1 class="L mr200 logo"><img src="images/logo.png" alt=""></h1>-->
-        <a class="logo">
-            <span>Dinfo-UBKM</span>
-            <em>统一业务知识库 · 知识的海洋</em>
-        </a>
-        <div class="header_r R" style="color:#fff;">
-            <span class="mr10 L" ui-sref="index.home" style="cursor:pointer;padding: 0 18px;border-right: 1px solid #f6f6f6;">知识首页</span>
-            <div class="dis user_div L">
-                <!--<a  ng-bind="currentUser.userName"></a>-->
-                <!--<a class="header_ra " ng-bind="currentUser.userName"></a>-->
-                <!--<ul class="drop_down">-->
-                    <!--<li>退出</li>-->
-                <!--</ul>-->
-                <!--<span  ui-sref="index.home" style="cursor:pointer" ng-click="logout()">退出</span>-->
-                <span class="ellipsis" ng-bind="currentUser.userName"></span>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="header_wrap">-->
+    <!--<div class="header wrap clearfix header_b" >-->
+        <!--&lt;!&ndash;<h1 class="L mr200 logo"><img src="images/logo.png" alt=""></h1>&ndash;&gt;-->
+        <!--<a class="logo">-->
+            <!--<span>Dinfo-UBKM</span>-->
+            <!--<em>统一业务知识库 · 知识的海洋</em>-->
+        <!--</a>-->
+        <!--<div class="header_r R" style="color:#fff;">-->
+            <!--<span class="mr10 L" ui-sref="index.home" style="cursor:pointer;padding: 0 18px;border-right: 1px solid #f6f6f6;">知识首页</span>-->
+            <!--<div class="dis user_div L">-->
+                <!--&lt;!&ndash;<a  ng-bind="currentUser.userName"></a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="header_ra " ng-bind="currentUser.userName"></a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<ul class="drop_down">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li>退出</li>&ndash;&gt;-->
+                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span  ui-sref="index.home" style="cursor:pointer" ng-click="logout()">退出</span>&ndash;&gt;-->
+                <!--<span class="ellipsis" ng-bind="currentUser.userName"></span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 <!--nav-->
-<div class="nav_wrap">
-    <div class="nav wrap">
-        <ul class="nav_ul nav_ul2 clearfix">
-            <!--<li ng-class="active('home')" style="border-left:0;" ng-if="isAuth('back.home')"><a ui-sref="back.home({isGo:true})">首页</a></li>-->
-            <li ng-class="active('gateway')" ><a ui-sref="back.gateway({isGo:true})" href="javascript:;">知识接入</a></li>
-            <!--<li ng-class="active('task')" ng-if="isAuth('back.task')"><a ui-sref="back.task({isGo:true})">知识审核</a></li>-->
-            <!--<li ng-class="active('manageBase')" ng-if="isAuth('back.manageBase')" ng-click="buttonHas(['back.manageBase.base','back.manageBase.content','back.manageBase.member','back.manageBase.checkFlow'])"><a href="javascript:;">知识库管理</a></li>-->
-            <!--&lt;!&ndash;<li ng-class="active('jianmo')"><a href="javascript:;">知识建模</a></li>&ndash;&gt;-->
-            <!--&lt;!&ndash;<li ng-class="active('kaoshiguanli')"><a href="javascript:;">考试管理</a></li>&ndash;&gt;-->
-            <!--<li ng-class="active('application')" ng-if="isAuth('back.application')"><a ui-sref="back.application">应用管理</a></li>-->
-            <!--<li ng-class="active('system')" style="border-right:0;" ng-if="isAuth('back.system')" ng-click="buttonHas(['back.user','back.role','back.rule'])"><a href="javascript:;">系统管理</a></li>-->
-        </ul>
-    </div>
-</div>
+<!--<div class="nav_wrap">-->
+    <!--<div class="nav wrap">-->
+        <!--<ul class="nav_ul nav_ul2 clearfix">-->
+            <!--&lt;!&ndash;<li ng-class="active('home')" style="border-left:0;" ng-if="isAuth('back.home')"><a ui-sref="back.home({isGo:true})">首页</a></li>&ndash;&gt;-->
+            <!--<li ng-class="active('gateway')" ><a ui-sref="back.gateway({isGo:true})" href="javascript:;">知识接入</a></li>-->
+            <!--&lt;!&ndash;<li ng-class="active('task')" ng-if="isAuth('back.task')"><a ui-sref="back.task({isGo:true})">知识审核</a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li ng-class="active('manageBase')" ng-if="isAuth('back.manageBase')" ng-click="buttonHas(['back.manageBase.base','back.manageBase.content','back.manageBase.member','back.manageBase.checkFlow'])"><a href="javascript:;">知识库管理</a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<li ng-class="active('jianmo')"><a href="javascript:;">知识建模</a></li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<li ng-class="active('kaoshiguanli')"><a href="javascript:;">考试管理</a></li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li ng-class="active('application')" ng-if="isAuth('back.application')"><a ui-sref="back.application">应用管理</a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li ng-class="active('system')" style="border-right:0;" ng-if="isAuth('back.system')" ng-click="buttonHas(['back.user','back.role','back.rule'])"><a href="javascript:;">系统管理</a></li>&ndash;&gt;-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
 
 <!--end 头部-->
 
@@ -44,8 +45,8 @@
 
 <!--尾部-->
 <!-- footer -->
-<div class="footer_wrap footer_wrap2 tc">
-    <p>©CopyRight...</p>
-</div>
+<!--<div class="footer_wrap footer_wrap2 tc">-->
+    <!--<p>©CopyRight...</p>-->
+<!--</div>-->
 
 <!--end 尾部-->

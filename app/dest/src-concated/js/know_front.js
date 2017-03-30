@@ -246,9 +246,9 @@ angular.module('know.index').factory('IndexService', ['$resource', function ($re
  */
 angular.module('know.knowdoc').factory('KnowDocService',['$resource',function ($resource) {
     var knowDocService = {};
-    knowDocService.queryKnowDocList = $resource('/knowledgeDocumentation/queryDocumentation', {}, {});
-    knowDocService.queryDetailByDocId = $resource('/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
-    knowDocService.deleteKnowDoc = $resource('/knowledgeDocumentation/deleteDocumentation', {}, {});
+    knowDocService.queryKnowDocList = $resource('/api/knowledgeDocumentation/queryDocumentation', {}, {});
+    knowDocService.queryDetailByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
+    knowDocService.deleteKnowDoc = $resource('/api/knowledgeDocumentation/deleteDocumentation', {}, {});
     //knowDocService.singleImport = $resource('/back/knowaccess/docimport/docmanager/singleImport', {}, {});
     // knowDocService.queryAnalyseTask = $resource('/back/knowaccess//AnalyseTask/queryAnalyseTask', {}, {});
     // knowDocService.queryAnalyseTaskCount = $resource('/back/knowaccess/AnalyseTask/queryAnalyseTaskCount', {}, {});
@@ -268,8 +268,8 @@ angular.module('know.detail').factory('DetailService',['$resource',function ($re
     detailService.queryRequireByComment = $resource('pre/Comment/queryComment', {}, {});
     detailService.queryVersionByIdentity = $resource('pre/KnowledgeDetail/queryVersionByIdentity', {}, {});
     detailService.queryCompareKnowItem = $resource('pre/KnowledgeDetail/queryCompareKnowItem', {}, {});
-    detailService.queryKnowItemsByDocId = $resource('/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
-    detailService.queryKnowDocByDocId = $resource('/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
+    detailService.queryKnowItemsByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
+    detailService.queryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
     detailService.queryLinkKnowItems = $resource('pre/KnowledgeDetail/queryLinkKnowItems', {}, {});
     //查询知识条目
     detailService.queryKnowItem = $resource('pre/KnowledgeDetail/getKnowledgeDetail', {}, {});
@@ -374,18 +374,18 @@ angular.module('know.center').factory('PersonalCenterService',['$resource',funct
  */
 angular.module('know.template').factory('TemplateService',['$resource',function ($resource) {
     var templateService = {};
-    templateService.queryTemplate = $resource('/template/queryTemplate', {}, {});
-    templateService.deleteTemplate = $resource('/template/deleteTemplate', {}, {});
-    templateService.queryRules = $resource('/templateRule/queryAllRule', {}, {});
-    templateService.queryTemplateById = $resource('/template/queryTemplate', {}, {});
-    templateService.generateRule = $resource('/templateRule/getJuniorText', {}, {});
-    templateService.getSimilarText = $resource('/templateRule/getSimilarText', {}, {});
-    templateService.optimizeText = $resource('/templateRule/optimizeText', {}, {});
-    templateService.queryTemplateContent = $resource('/template/previewKnowDoc', {}, {});
-    templateService.addWordRule = $resource('/templateRule/addWordRule', {}, {});
-    templateService.checkTemName = $resource('/template/searchByTemplateName', {}, {});
-    templateService.deleteRule = $resource('/templateRule/deleteWordRule', {}, {});
-    templateService.queryRuleById = $resource('/templateRule/queryRuleById', {}, {});
+    templateService.queryTemplate = $resource('/api/template/queryTemplate', {}, {});
+    templateService.deleteTemplate = $resource('/api/template/deleteTemplate', {}, {});
+    templateService.queryRules = $resource('/api/templateRule/queryAllRule', {}, {});
+    templateService.queryTemplateById = $resource('/api/template/queryTemplate', {}, {});
+    templateService.generateRule = $resource('/api/templateRule/getJuniorText', {}, {});
+    templateService.getSimilarText = $resource('/api/templateRule/getSimilarText', {}, {});
+    templateService.optimizeText = $resource('/api/templateRule/optimizeText', {}, {});
+    templateService.queryTemplateContent = $resource('/api/template/previewKnowDoc', {}, {});
+    templateService.addWordRule = $resource('/api/templateRule/addWordRule', {}, {});
+    templateService.checkTemName = $resource('/api/template/searchByTemplateName', {}, {});
+    templateService.deleteRule = $resource('/api/templateRule/deleteWordRule', {}, {});
+    templateService.queryRuleById = $resource('/api/templateRule/queryRuleById', {}, {});
 
     return templateService;
 }]);
@@ -400,7 +400,7 @@ angular.module('backModule').controller('backController', [
     "IndexService", "AuthService",
     function ($scope, $location, $interval, $timeout, $state,
               IndexService , AuthService) {
-        $state.go("back.gateway")
+        $state.go("back.gateway");
         // var self = this;
         // $scope.active = function(path){
         //     var url = $location.absUrl();
@@ -1478,7 +1478,7 @@ knowledge_static_web.directive('plupload', ['$timeout', function ($timeout) {
                                 //params.targetId = $scope.targetId;
                             }
                             uploader.setOption('multipart_params', params);
-                            uploader.setOption('url', '/knowledgeDocumentation/createDocumentation');
+                            uploader.setOption('url', '/api/knowledgeDocumentation/createDocumentation');
                             uploader.start();
                             return false;
                         });

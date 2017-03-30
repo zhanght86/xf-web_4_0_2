@@ -438,6 +438,10 @@ knowledge_static_web
                     isGo: null
                 },
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_container.html',
                         controller: "analyseTaskController"
@@ -448,6 +452,10 @@ knowledge_static_web
             .state("back.doclist", {
                 url: "/gateway/doclist",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_doclist_container.html',
                         controller: "knowGatewayController"
@@ -458,6 +466,10 @@ knowledge_static_web
             .state("back.template", {
                 url: "/gateway/template",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_template_container.html',
                         controller: "temController"
@@ -472,6 +484,10 @@ knowledge_static_web
                     temId : null
                 },
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_create_template_container.html',
                         controller: "createTemController"
@@ -482,6 +498,10 @@ knowledge_static_web
             .state("back.docselect", {
                 url: "/doc_select/:temId/:level/:roleId",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/doc_select.html',
                         controller: "docSelectController"
@@ -495,6 +515,10 @@ knowledge_static_web
             .state("back.adapter", {
                 url: "/gateway/adapter",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_adapter_container.html',
                         controller: "adapterController"
@@ -506,6 +530,10 @@ knowledge_static_web
                 url: "/know_view/:knowDocId",
                 views: {
                     'main_container': {
+                        'header': {
+                            templateUrl: 'know_index/home/homePageNav.html',
+                            controller: "homePageNavController"
+                        },
                         templateUrl: 'know_index/knowledge_details/main_know_view_container.html',
                         controller: "knowViewController"
                     }
