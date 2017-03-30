@@ -6,15 +6,15 @@
  * 控制器
  */
 
-angular.module('businessModelingModule').controller('aggregateConceptManageController', [
+angular.module('businessModelingModule').controller('businessConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            addAggregate : addAggregate,
-            editAggregate : editAggregate
+            addBusiness : addBusiness,
+            editBusiness : editBusiness
         };
-        function addAggregate(){
+        function addBusiness(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
+                template:"/know_index/businessModeling/business/businessConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -32,9 +32,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 }
             });
         }
-        function editAggregate(){
+        function editBusiness(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
+                template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //

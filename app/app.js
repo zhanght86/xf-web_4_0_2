@@ -179,6 +179,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("conceptManage.business", {
+                //params:{"userPermission" : null},
+                url: "/business",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/business/businessConceptManage.html',
+                        controller: "businessConceptManageController"
+                    },
+                }
+            })
             // 我的应用myApplication
             .state("myApplication", {
                 params:{"userPermission" : null},
