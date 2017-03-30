@@ -19,6 +19,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //前台模块
     'loginModule',
     'indexModule',
+"adminModule",
 
     //首页 模块
     'homePage',
@@ -179,11 +180,66 @@ knowledge_static_web
                         templateUrl: 'know_index/home/homePageNav.html',
                     },
                     'content': {
-                        templateUrl: 'know_index/myApplication/settingContent.html',
+                        templateUrl: 'know_index/myApplication/applicationConfig/settingContent.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })        
+            .state("setting.parameter", {
+                //params:{"userPermission" : null},
+                url: "/parameter",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
                         //controller: "adminContentController"
                     },
                 }
             })
+
+            //应用发布
+            .state("setting.releaseMan", {
+                //params:{"userPermission" : null},
+                url: "/releaseMan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/ReleaseManage.html',
+                        //controller: "adminContentController"
+                    },
+                }
+            })
+            .state("setting.newService", {
+                //params:{"userPermission" : null},
+                url: "/newService",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/NewServiceRelease.html',
+                        controller: "NewServiceReleaseController"
+                    },
+                }
+            })
+            .state("setting.nodeMan", {
+                //params:{"userPermission" : null},
+                url: "/nodeMan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationRelease/NodeManage.html',
+                        controller: "NodeManageController"
+                    },
+                }
+            })
+
 
 
 
@@ -225,11 +281,11 @@ knowledge_static_web
                         //controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/knowledgeSingleAddConcept.html',
+                        templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
                         controller: "knowledgeSingleAddConceptController"
                     }
                 }
-            })            
+            })
             .state("knowledgeManagement.faqAdd", {
                 url: "/faqAdd",
                 views: {
@@ -238,12 +294,65 @@ knowledge_static_web
                         //controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/knowledgeManagementFaq.html',
-                        controller: "knowledgeManagementFaqController"
+                        templateUrl: 'know_index/knowledgeManagement/faq/knowManaFaq.html',
+                        controller: "knowManaFaqController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.listAdd", {
+                url: "/listAdd",
+
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/list/knowManaList.html',
+                        controller: "knowManaListController"
+                    }
+                }
+            })
+            .state("knowledgeManagement.factorAdd", {
+                url: "/factorAdd",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        controller: "NewFactorKnowController"
+
                     }
                 }
             })
 
+            //我的应用admin
+
+            .state("admin", {
+                url: "/admin",
+                templateUrl: 'know_index/admin/admin.html',
+                controller: "adminController"
+            })
+            .state("admin.manage", {
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        //controller: "myApplicationController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/admin/adminContent.html',
+                        controller: "adminContentController"
+                    },
+                    //'myApplicationSidebar': {
+                    //    templateUrl: 'know_index/home/chatKnowledgeBase.html',
+                    //    //controller: "homePageNavController"
+                    //}
+                }
+
+            })
 
             //我的应用myApplication
 

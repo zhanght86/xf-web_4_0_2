@@ -137,3 +137,8 @@
 .word_div{width:700px;height:200px;padding:10px;box-sizing:border-box;}
 .delete_a{width: 14px; height: 14px; display:block;background: url(../../images/images/addIcon.png) no-repeat 0px center;}
 .edit_a{width: 14px; height: 14px; display:block;background: url(../../images/images/addIcon.png) no-repeat 0px bottom; }
+
+/*要素知识*/
+.essential_factor_div{width:100%;min-height:200px;padding:10px;box-sizing:border-box;overflow:auto;}
+.essential_factor_tab{border-collapse: collapse;}
+.essential_factor_tab td{border:1px solid #eee;height:30px;padding:5px;}
