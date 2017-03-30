@@ -12,6 +12,7 @@
 angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
+        alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,

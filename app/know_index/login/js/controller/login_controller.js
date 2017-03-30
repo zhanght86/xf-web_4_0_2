@@ -33,9 +33,9 @@ angular.module('loginModule').controller('loginController', [
 
             if($scope.vm.randomNumberValue.length==0){
                 console.log($scope.vm.randomNumberValue);
-                alert("验证码不能为空")
+                layer.msg("验证码不能为空")
             }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
-                alert("验证码错误")
+                layer.msg("验证码错误");
             }else{
                 console.log($scope.vm.userName);
 
@@ -50,6 +50,7 @@ angular.module('loginModule').controller('loginController', [
                     $state.go("admin",{userPermission : data.data.roleList});
                     //console.dir(data.data.roleList)
                 },function(err){
+                    layer.msg("登陆失败");
                     console.log(err)
                 });
             }

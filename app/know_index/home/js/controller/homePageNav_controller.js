@@ -7,7 +7,14 @@
  */
 
 angular.module('homePage').controller('homePageNavController', [
-    '$scope', '$location', 'localStorageService', 'AuthService', function ($scope, $location, localStorageService, AuthService) {
 
+    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", function ($scope, $location, localStorageService, AuthService,$timeout) {
+
+            $scope.vm = {
+                applicatioinId : true
+            };
+        //$timeout(function(){
+        //    $scope.vm.applicatioinId = false;
+        //},1000)
     }
 ])

@@ -21,6 +21,7 @@
                         <div class="ipt-txt-box">
                             <input ng-model="vm.knowledgeTitle" class="ipt-txt" type="text" />
                             <i class="btn-empty"></i>
+                            <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
                         <!--<div class="error-tip">-->
                             <!--错误提示-->
@@ -57,129 +58,15 @@
                             <input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>
                             <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
                             <div class="aside-navs aside-navs2" >
-                                <ul class="menus show" >
-                                    <li>
+                                <ul class="menus show">
+                                    <!--//test-->
+                                    <li ng-repeat="item in vm.botRoot">
                                         <div class="slide-a">
-
-                                            <a class="ellipsis" href="javascript: ;">
-                                                <i class="icon-jj" ng-click="vm.knowledgeBot($event,1)"></i>
-                                                <span ng-click="vm.botValChange()">分业务展开</span>
+                                            <a class="ellipsis" href="javascript:;">
+                                                <i class="icon-jj" data-option="{{item.categoryId}}"></i>
+                                                <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
                                             </a>
                                         </div>
-                                        <ul class="menus">
-                                            <li>
-                                                <div class="slide-a">
-                                                    <a class="ellipsis" href="javascript:;">
-                                                        <i class="icon-jj" ng-click="vm.knowledgeBot($event,1)"></i>
-                                                        <span>个人业务</span>
-                                                    </a>
-                                                </div>
-                                                <ul class="menus">
-                                                    <li>
-                                                        <div class="slide-a">
-                                                            <a class="ellipsis" href="javascript:;">
-                                                                <i class="icon-jj"></i>
-                                                                <span>存款业务</span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="slide-a">
-                                                            <a class="ellipsis" href="javascript:;">
-                                                                <i class="icon-jj"></i>
-                                                                <span>理财业务</span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="slide-a">
-                                                            <a class="ellipsis" href="javascript:;">
-                                                                <i class="icon-jj"></i>
-                                                                <span>信用卡业务</span>
-                                                            </a>
-                                                        </div>
-                                                        <ul class="menus">
-                                                            <li>
-                                                                <div class="slide-a">
-                                                                    <a class="ellipsis" href="javascript:;">
-                                                                        <i class="icon-jj"></i>
-                                                                        <img src="../../../images/images/pic-navs-dy.png"/>
-                                                                        <span>按地域展开</span>
-                                                                    </a>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="slide-a">
-                                                                    <a class="ellipsis" href="javascript:;">
-                                                                        <i class="icon-jj"></i>
-                                                                        <img src="../../../images/images/pic-navs-lc.png"/>
-                                                                        <span>按办理流程展开</span>
-                                                                    </a>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="slide-a">
-                                                                    <a class="ellipsis" href="javascript:;">
-                                                                        <i class="icon-jj"></i>
-                                                                        <img src="../../../images/images/pic-navs-sx.png"/>
-                                                                        <span>按属性展开</span>
-                                                                    </a>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="slide-a">
-                                                                    <a class="ellipsis" href="javascript:;">
-                                                                        <i class="icon-jj"></i>
-                                                                        <img src="../../../images/images/pic-navs-rq.png"/>
-                                                                        <span>按人群卡类展开</span>
-                                                                    </a>
-                                                                </div>
-                                                                <ul class="menus">
-                                                                    <li>
-                                                                        <div class="slide-a">
-                                                                            <a class="ellipsis" href="javascript:;">
-                                                                                <span>白领卡</span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="slide-a">
-                                                                            <a class="ellipsis" href="javascript:;">
-                                                                                <span>农民卡</span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="slide-a">
-                                                                            <a class="ellipsis" href="javascript:;">
-                                                                                <span>学生卡</span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <div class="slide-a">
-                                                    <a class="ellipsis" href="javascript:;">
-                                                        <i class="icon-jj"></i>
-                                                        <span>个公业务</span>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="slide-a">
-                                                    <a class="ellipsis" href="javascript:;">
-                                                        <i class="icon-jj"></i>
-                                                        <span>其他业务</span>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </div>
 
@@ -197,18 +84,16 @@
                 </div>
 
 
+
                 <div class="item-line">
-                    <div class="lable">
-                        业务框架：
-                    </div>
-                    <div class="value menu_1Div" id="menu_1Div">
-                        <div class="ipt-txt-box">
-                            <input class="ipt-txt" type="text" />
-                            <i class="btn-empty"></i>
+                    <div class="row cl mb-10">
+                        <div class="lable">业务框架：</div>
+                        <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <select class="input-text" style="width:407px;">
+                                <option value="" ng-repeat="x in vm.framework">{{x}}</option>
+                            </select>
                         </div>
-                        <!--<div class="error-tip">-->
-                            <!--错误提示-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -306,17 +191,17 @@
     }
 </style>
 <script>
-    $(function(){
-        $(".checkboxAddress .my-select").hover(function () {
-            $(this).find("[class='deleteAddress']").css("display","block");
-            $(this).find("em").css("display","none")
-        },function () {
-            $(this).find("[class='deleteAddress']").css("display","none");
-            $(this).find("em").css("display","block")
-        });
-        $(".deleteAddress").click(function () {
-            $(this).parents("[class='my-select']").remove();
-        });
+//    $(function(){
+//        $(".checkboxAddress .my-select").hover(function () {
+//            $(this).find("[class='deleteAddress']").css("display","block");
+//            $(this).find("em").css("display","none")
+//        },function () {
+//            $(this).find("[class='deleteAddress']").css("display","none");
+//            $(this).find("em").css("display","block")
+//        });
+//        $(".deleteAddress").click(function () {
+//            $(this).parents("[class='my-select']").remove();
+//        });
 
 //        $("#ipt-txt").focus(function () {
 //            $(".aside-navs2").slideDown()
@@ -324,15 +209,15 @@
 //        $(".btn-menu_1").click(function () {
 //            $(".aside-navs2").slideDown();
 //        });
-        $(document).click(function () {
-            $(".aside-navs2").slideUp()
-        });
-
-        $("#ipt-txt,.btn-menu_1,.aside-navs2").click(function(e){//自己要阻止
-
-            e.stopPropagation();//阻止冒泡到body
-        });
-    });
+//        $(document).click(function () {
+//            $(".aside-navs2").slideUp()
+//        });
+//
+//        $("#ipt-txt,.btn-menu_1,.aside-navs2").click(function(e){//自己要阻止
+//
+//            e.stopPropagation();//阻止冒泡到body
+//        });
+//    });
 //   hui  checkbox
 //    $(function(){
 //        $('.skin-minimal input').iCheck({
