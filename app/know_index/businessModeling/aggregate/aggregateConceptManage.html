@@ -46,9 +46,9 @@
                     <td><div class="my-checkbox table-checkbox"><label></label></div></td>
                     <td class="color-blue2">{{item.businessConceptKey}}</td>
                     <td class="color-blue2">{{item.businessConceptWeight}}</td>
-                    <!--<td class="color-blue2">{{item.businessConceptTerm.replace(/'\；'/,",")}}</td>-->
+                    <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
                     <!--<td class="color-blue2">{{item.businessConceptTerm.replace("/\;/",",")}}打击、<a href="javascript:;">敲打</a></td>-->
-                    <td>2016-04-29 14:40:54</td>
+                    <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                     <td>{{item.businessConceptModifier}}</td>
                     <td><a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editAggregate()">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
                 </tr>
