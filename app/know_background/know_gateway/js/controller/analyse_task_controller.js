@@ -12,7 +12,6 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
         var self = this;
         $scope.processMethod = true;
 
-
         self.initSearch = function (column) {
             if (!$scope.SearchPOJO) {
                 $scope.SearchPOJO = $scope.initSearchPOJO();
@@ -21,11 +20,13 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
              * 加载分页条
              * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
              */
+            console.log()
             $scope.paginationConf = {
                 currentPage: $scope.SearchPOJO.currentPage,//当前页
                 totalItems: 0, //总条数
                 pageSize: $scope.SearchPOJO.pageSize,//第页条目数
-                pagesLength: 6//分页框数量
+                pagesLength: 6,//分页框数量
+
             };
         }
 
@@ -145,8 +146,6 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
                 }
             })
         }
-
-
 
         var timeout;
         $scope.$watch('SearchPOJO', function (SearchPOJO) {

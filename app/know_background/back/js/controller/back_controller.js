@@ -8,7 +8,7 @@ angular.module('backModule').controller('backController', [
     "IndexService", "AuthService",
     function ($scope, $location, $interval, $timeout, $state,
               IndexService , AuthService) {
-        $state.go("back.gateway")
+        $state.go("back.gateway");
         // var self = this;
         // $scope.active = function(path){
         //     var url = $location.absUrl();

@@ -8,8 +8,8 @@ angular.module('know.detail').factory('DetailService',['$resource',function ($re
     detailService.queryRequireByComment = $resource('pre/Comment/queryComment', {}, {});
     detailService.queryVersionByIdentity = $resource('pre/KnowledgeDetail/queryVersionByIdentity', {}, {});
     detailService.queryCompareKnowItem = $resource('pre/KnowledgeDetail/queryCompareKnowItem', {}, {});
-    detailService.queryKnowItemsByDocId = $resource('/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
-    detailService.queryKnowDocByDocId = $resource('/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
+    detailService.queryKnowItemsByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
+    detailService.queryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
     detailService.queryLinkKnowItems = $resource('pre/KnowledgeDetail/queryLinkKnowItems', {}, {});
     //查询知识条目
     detailService.queryKnowItem = $resource('pre/KnowledgeDetail/getKnowledgeDetail', {}, {});

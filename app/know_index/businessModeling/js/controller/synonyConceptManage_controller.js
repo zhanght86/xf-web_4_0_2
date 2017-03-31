@@ -10,7 +10,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
             addSynony : addSynony,
-            editSynony : editSynony
+            editSynony : editSynony,
+            deleteSynony:deleteSynony
         };
         function addSynony(){
             var dialog = ngDialog.openConfirm({
@@ -35,6 +36,26 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         function editSynony(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteSynony(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/conceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //

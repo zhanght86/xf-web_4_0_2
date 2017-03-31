@@ -1,0 +1,98 @@
+<div class="r-cont pd30 L">
+    <div class="r-cont-hd">
+        <span>情感概念管理</span>
+    </div>
+    <div>
+        <div class="conceptSearch clearfix">
+            <div class=" L bd mr-5">
+                <select>
+                    <option>概念类名</option>
+                    <option>概念类权重</option>
+                    <option>概念词</option>
+                    <option>创建人</option>
+                    <option>上传日期</option>
+                </select>
+                <input type="text" class="input_text" style="border:0;"/>
+            </div>
+            <input type="button" value="查找" class="btn1 btn1_blue"/>
+            <div class=" conceptSearchRt">
+                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addEmotion()">新增</a>
+                <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
+                <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
+                <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
+                <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
+            </div>
+        </div>
+        <div class="conceptTab">
+            <table border="1">
+                <thead>情感概念列表</thead>
+                <tr>
+                    <td><div class="my-checkbox table-checkbox1"><label></label></div></td>
+                    <td>概念类名</td>
+                    <td>概念类权重</td>
+                    <td>情感概念</td>
+                    <td>更新时间</td>
+                    <td>创建人</td>
+                    <td>操作</td>
+                </tr>
+                <tr>
+                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
+                    <td class="color-blue2">打</td>
+                    <td class="color-blue2">一般</td>
+                    <td class="color-blue2">打击、<a href="javascript:;">敲打</a></td>
+                    <td>2016-04-29 14:40:54</td>
+                    <td>张三</td>
+                    <td>
+                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editEmotion()">修改</a> &nbsp;
+                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteEmotion()">删除</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
+                    <td class="color-blue2">吃</td>
+                    <td class="color-blue2">重要</td>
+                    <td class="color-blue2">吃饭、<a href="javascript:;">食</a></td>
+                    <td>2016-04-29 14:40:54</td>
+                    <td>张三</td>
+                    <td><a href="javascript:;" class="color-blue modifyConcept">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
+                </tr>
+                <tr>
+                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
+                    <td class="color-blue2">喝</td>
+                    <td class="color-blue2">不重要</td>
+                    <td class="color-blue2">饮、<a href="javascript:;">喝、</a>灌</td>
+                    <td>2016-04-29 14:40:54</td>
+                    <td>张三</td>
+                    <td><a href="javascript:;" class="color-blue modifyConcept">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
+                </tr>
+                <tr>
+                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
+                    <td class="color-blue2">喝</td>
+                    <td class="color-blue2">一般</td>
+                    <td class="color-blue2">饮、喝、<a href="javascript:;">灌</a></td>
+                    <td>2016-04-29 14:40:54</td>
+                    <td>张三</td>
+                    <td><a href="javascript:;" class="color-blue modifyConcept">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="paging" style="padding-right: 0">
+            <div class="fr">
+                <ul class="fl">
+                    <li><a class="prev" href="#">上一页</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a class="active" href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">...</a></li>
+                    <li><a href="#">9</a></li>
+                    <li><a href="#">10</a></li>
+                    <li><a class="next" href="#">下一页</a></li>
+                </ul>
+                <span class="paging-tj fl">共<em>67</em>页，跳至<input class="paging-page" type="text">页</span>
+                <a class="btn fl go" href="javascript:;" style="margin-right: 0">GO</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,11 +13,32 @@
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-          faqAdd : faqAdd
+            faqAdd : faqAdd,
+            faqEdit: faqEdit
         };
         function faqAdd(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function faqEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //

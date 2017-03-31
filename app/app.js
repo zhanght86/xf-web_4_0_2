@@ -192,6 +192,71 @@ knowledge_static_web
                     },
                 }
             })
+            .state("conceptManage.sensitive", {
+                //params:{"userPermission" : null},
+                url: "/sensitive",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/sensitive/sensitiveConceptManage.html',
+                        controller: "sensitiveConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.errorCorrection", {
+                //params:{"userPermission" : null},
+                url: "/errorCorrection",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/errorCorrection/errorCorrectionConceptManage.html',
+                        controller: "errorCorrectionConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.disable", {
+                //params:{"userPermission" : null},
+                url: "/disable",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/disable/disableConceptManage.html',
+                        controller: "disableConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.emotion", {
+                //params:{"userPermission" : null},
+                url: "/emotion",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/emotion/emotionConceptManage.html',
+                        controller: "emotionConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.intention", {
+                //params:{"userPermission" : null},
+                url: "/intention",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/intention/intentionConceptManage.html',
+                        controller: "intentionConceptManageController"
+                    },
+                }
+            })
             // 我的应用myApplication
             .state("myApplication", {
                 params:{"userPermission" : null},
@@ -245,6 +310,62 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
                         //controller: "adminContentController"
+                    },
+                }
+            })
+            .state("setting.chatPageConfig", {
+                //params:{"userPermission" : null},
+                url: "/chatPageConfig",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/chatPageConfig.html',
+                        controller: "chatPageConfigController"
+                    },
+                }
+            })
+            .state("setting.sceneManage", {
+                //params:{"userPermission" : null},
+                url: "/sceneManage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/sceneManage.html',
+                        controller: "sceneManageController"
+                    },
+                }
+            })
+            .state("setting.dimension", {
+                //params:{"userPermission" : null},
+                url: "/dimension",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/dimensionManage.html',
+                        controller: "dimensionManageController"
+                    },
+                }
+            })
+            .state("setting.channel", {
+                //params:{"userPermission" : null},
+                url: "/channel",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/channelManage.html',
+                        controller: "channelManageController"
                     },
                 }
             })
@@ -311,6 +432,48 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/materialManagement/chatKnowledgeBase.html',
                         controller: "chatKnowledgeBaseController"
+                    }
+                }
+            })
+            .state("materialManagement.chatKnowledgeBasePreview", {
+                params:{"userPermission" : null},
+                url: "/materialManagement/chatKnowledgeBasePreview",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/chatKnowledgeBasePreview.html',
+                        controller: "chatKnowledgeBasePreController"
+                    }
+                }
+            })
+            .state("materialManagement.faqChat", {
+                params:{"userPermission" : null},
+                url: "/materialManagement/faqChat",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/faqChat.html',
+                        controller: "faqChatController"
+                    }
+                }
+            })
+            .state("materialManagement.conceptChat", {
+                params:{"userPermission" : null},
+                url: "/materialManagement/conceptChat",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/conceptChat.html',
+                        controller: "conceptChatController"
                     }
                 }
             })
@@ -451,6 +614,10 @@ knowledge_static_web
                     isGo: null
                 },
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_container.html',
                         controller: "analyseTaskController"
@@ -461,6 +628,10 @@ knowledge_static_web
             .state("back.doclist", {
                 url: "/gateway/doclist",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_doclist_container.html',
                         controller: "knowGatewayController"
@@ -471,6 +642,10 @@ knowledge_static_web
             .state("back.template", {
                 url: "/gateway/template",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_template_container.html',
                         controller: "temController"
@@ -485,6 +660,10 @@ knowledge_static_web
                     temId : null
                 },
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_create_template_container.html',
                         controller: "createTemController"
@@ -495,6 +674,10 @@ knowledge_static_web
             .state("back.docselect", {
                 url: "/doc_select/:temId/:level/:roleId",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/doc_select.html',
                         controller: "docSelectController"
@@ -508,6 +691,10 @@ knowledge_static_web
             .state("back.adapter", {
                 url: "/gateway/adapter",
                 views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_adapter_container.html',
                         controller: "adapterController"
@@ -519,6 +706,10 @@ knowledge_static_web
                 url: "/know_view/:knowDocId",
                 views: {
                     'main_container': {
+                        'header': {
+                            templateUrl: 'know_index/home/homePageNav.html',
+                            controller: "homePageNavController"
+                        },
                         templateUrl: 'know_index/knowledge_details/main_know_view_container.html',
                         controller: "knowViewController"
                     }

@@ -62,7 +62,7 @@ knowledge_static_web.directive('plupload', ['$timeout', function ($timeout) {
                                 //params.targetId = $scope.targetId;
                             }
                             uploader.setOption('multipart_params', params);
-                            uploader.setOption('url', '/knowledgeDocumentation/createDocumentation');
+                            uploader.setOption('url', '/api/knowledgeDocumentation/createDocumentation');
                             uploader.start();
                             return false;
                         });
