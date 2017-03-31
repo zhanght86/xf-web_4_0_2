@@ -4857,7 +4857,7 @@ angular.module('loginModule').controller('loginController', [
  */
 
 angular.module('materialManagement').controller('conceptChatController', [
-    '$scope',"$state", function ($scope,$state) {
+    '$scope',"$state","ngDialog", function ($scope,$state,ngDialog) {
         //alert()
         //$state.go("materialManagement.conceptChat");
         $scope.vm = {
