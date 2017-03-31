@@ -1,0 +1,100 @@
+<div class="r-cont pd30">
+    <div class="r-cont-hd mb-10">
+        <span>场景管理</span>
+    </div>
+    <div class="scene_box">
+        <div class="scene_box_top">
+            <span >知识类型</span>
+            <span class="cur">交互方式</span>
+        </div>
+        <div class="scene_box_bot">
+            <div style="display:none;">
+                <h3 class="pt-20 pb-20 f16">客服型场景所包含的知识类型</h3>
+                <div class="mb-20" >
+                    <input type="text" class="bd input-text " placeholder="请输入知识框架" style="width:257px;">
+                    <input type="button" class="btn1 btn1_blue " value="查找">
+                </div>
+                <div class="cl">
+                    <div class="bd know_style">
+                        <p class="tc">FAQ知识</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1435.png " width="50" height="50"/></dt>
+                            <dd><a href="javascript:;">禁用</a></dd>
+                        </dl>
+                        <p class="c-999">*最简单的一问一答知识，不支持富文本</p>
+                    </div>
+                    <div class="bd know_style">
+                        <p class="tc">概念型知识</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1435.png " width="50" height="50"/></dt>
+                            <dd><a href="javascript:;">禁用</a></dd>
+                        </dl>
+                        <p class="c-999">*最简单的一问一答知识，不支持富文本</p>
+                    </div>
+                    <div class="bd know_style">
+                        <p class="tc">列表型知识</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1435.png " width="50" height="50"/></dt>
+                            <dd><a href="javascript:;">禁用</a></dd>
+                        </dl>
+                        <p class="c-999">*最简单的一问一答知识，不支持富文本</p>
+                    </div>
+                    <div class="bd know_style">
+                        <p class="tc">要素型知识</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1435.png " width="50" height="50"/></dt>
+                            <dd><a href="javascript:;">禁用</a></dd>
+                        </dl>
+                        <p class="c-999">*最简单的一问一答知识，不支持富文本</p>
+                    </div>
+                </div>
+            </div>
+            <div style="display:block;">
+                <h3 class="pt-20 pb-20 f16">客服型场景所包含的交互方式</h3>
+                <div class="mb-20" >
+                    <input type="text" class="bd input-text " placeholder="请输入交互方式" style="width:257px;">
+                    <input type="button" class="btn1 btn1_blue " value="查找">
+                </div>
+                <div class="cl">
+                    <div class="bd know_style">
+                        <p class="tc">被动文本型</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1456.png " width="50" height="50"/></dt>
+                            <dd><a href="javascript:;">禁用</a></dd>
+                        </dl>
+                        <p class="c-999">一问一答类型；用户先提问，机器人回答文本类型的知识</p>
+                    </div>
+                    <div class="bd know_style">
+                        <p class="tc">主动文本型</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1456.png " width="50" height="50"/></dt>
+                            <dd><a href="javascript:;">禁用</a></dd>
+                        </dl>
+                        <p class="c-999">一问一答类型；机器人先提问，回答为文本型的知识</p>
+                    </div>
+                    <div class="bd know_style">
+                        <p class="tc">多伦文本型</p>
+                        <dl class="bd_bot text-c pb-10 mb-10">
+                            <dt><img src="../../../images/images/u1456.png " width="50" height="50"/></dt>
+                            <dd>
+                                <a href="javascript:;" class="mr-10">禁用</a>
+                                <a href="javascript:;">配置</a>
+                            </dd>
+                        </dl>
+                        <p class="c-999">多轮回话型；机器人和用户进行多次交互。</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+    $('.scene_box_top span').click(function(){
+        $(this).addClass('cur').siblings().removeClass();
+        $('.scene_box_bot').children('div').eq($(this).index()).css('display','block').siblings().css('display','none');
+    });
+</script>

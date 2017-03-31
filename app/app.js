@@ -313,6 +313,62 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.chatPageConfig", {
+                //params:{"userPermission" : null},
+                url: "/chatPageConfig",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/chatPageConfig.html',
+                        controller: "chatPageConfigController"
+                    },
+                }
+            })
+            .state("setting.sceneManage", {
+                //params:{"userPermission" : null},
+                url: "/sceneManage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/sceneManage.html',
+                        controller: "sceneManageController"
+                    },
+                }
+            })
+            .state("setting.dimension", {
+                //params:{"userPermission" : null},
+                url: "/dimension",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/dimensionManage.html',
+                        controller: "dimensionManageController"
+                    },
+                }
+            })
+            .state("setting.channel", {
+                //params:{"userPermission" : null},
+                url: "/channel",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/channelManage.html',
+                        controller: "channelManageController"
+                    },
+                }
+            })
 
             //应用发布
             .state("setting.releaseMan", {
