@@ -3643,11 +3643,32 @@ angular.module('knowledgeManagementModule').controller('NewFactorKnowController'
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-          faqAdd : faqAdd
+            faqAdd : faqAdd,
+            faqEdit: faqEdit
         };
         function faqAdd(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function faqEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -4901,6 +4922,96 @@ angular.module('loginModule').controller('loginController', [
     }
 ]);
 ;
+// Source: app/know_index/materialManagement/js/controller/conceptChat_controller.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('materialManagement').controller('conceptChatController', [
+    '$scope',"$state","ngDialog", function ($scope,$state,ngDialog) {
+        //alert()
+        //$state.go("materialManagement.conceptChat");
+        $scope.vm = {
+            addKnow:addKnow,
+            editKnow:editKnow
+        };
+        function addKnow(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/materialManagement/conceptChatDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editKnow(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/materialManagement/conceptChatDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+    }
+]);;
+// Source: app/know_index/materialManagement/js/controller/faqChat_controller.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('materialManagement').controller('faqChatController', [
+    '$scope',"$state", function ($scope,$state) {
+       // alert()
+        //$state.go("materialManagement.faqChat");
+        $scope.vm = {
+
+            
+        };
+
+    }
+]);;
+// Source: app/know_index/materialManagement/js/controller/materialManagementPre_controller.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('materialManagement').controller('chatKnowledgeBasePreController', [
+    '$scope',"$state", function ($scope,$state) {
+        alert()
+        $state.go("materialManagement.chatKnowledgeBasePreview");
+        $scope.vm = {
+
+        };
+
+    }
+]);;
 // Source: app/know_index/materialManagement/js/controller/materialManagement_controller.js
 /**
  * Created by Administrator on 2016/6/3.
