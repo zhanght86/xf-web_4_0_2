@@ -1,0 +1,70 @@
+<div class="wrap">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+            <div class="crumbs-nav bgwhite mt20 mb-10">
+                <span class="cn-lable">你曾经路过此地：</span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+                <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+            </div>
+            <div class="content_box mb25 ">
+                <h3 class="f22 pl-10 mb15">概念型聊天新增</h3>
+                <div class=" p10 ">
+                    <div class="row cl mb-10">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">标准问题：</label>
+                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+                            <input  type="text" class="bk-gray input-text mr-10" placeholder="请输入标题" style="width:250px;"/>
+
+                            <div class="c-red " style="display:none;" ></div>
+                        </div>
+                    </div>
+
+                    <div class="exten_problem" >
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" class="L input-text extended_query_txt" placeholder="请输入问题"
+                                       style="width:279px;" >
+                                <select class="sel bd L mr-10" style="margin-left:-1px;">
+                                    <option >普通</option>
+                                    <option >否定</option>
+                                </select>
+                                <a href="javascript:;" class="create_a" onclick="add_ques();">
+                                    <img src="../../images/images/add_img.png" >
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl mb-10">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
+                        <div class="formControls col-xs-8 col-sm-9" >
+                            <button class="btn1 btn_green2 mb-10"  ng-click="vm.addKnow()">新增</button>
+                            <div class="c-red " style="display:inline;" id="knowledge_add_msg"></div>
+                        </div>
+                    </div>
+                    <div class="row cl mb-50">
+                        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <div class="clearfix mb-10">
+                                <div class="L word_div bd mr-10">信用卡年费没有</div>
+                                <div class="L word_div_r">
+                                    <a href="javascript:;" class="delete_a mb-20"></a>
+                                    <a href="javascript:;" class="edit_a" ng-click="vm.editKnow()"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row cl mb-10 ">
+                        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="button" class="btn1 btn1_blue mr-20" value="预览"/>
+                            <input type="button" class="btn1 btn_green" value="保存"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

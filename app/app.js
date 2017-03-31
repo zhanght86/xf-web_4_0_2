@@ -379,6 +379,48 @@ knowledge_static_web
                     }
                 }
             })
+            .state("materialManagement.chatKnowledgeBasePreview", {
+                params:{"userPermission" : null},
+                url: "/materialManagement/chatKnowledgeBasePreview",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/chatKnowledgeBasePreview.html',
+                        controller: "chatKnowledgeBasePreController"
+                    }
+                }
+            })
+            .state("materialManagement.faqChat", {
+                params:{"userPermission" : null},
+                url: "/materialManagement/faqChat",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/faqChat.html',
+                        controller: "faqChatController"
+                    }
+                }
+            })
+            .state("materialManagement.conceptChat", {
+                params:{"userPermission" : null},
+                url: "/materialManagement/conceptChat",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/conceptChat.html',
+                        controller: "conceptChatController"
+                    }
+                }
+            })
             //知识管理knowledgeManagement
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",

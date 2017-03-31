@@ -1,24 +1,19 @@
 /**
- * Created by dinfo on 2017/3/28.
- */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
 
-angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+angular.module('materialManagement').controller('conceptChatController', [
+    '$scope',"$state", function ($scope,$state) {
+        //alert()
+        //$state.go("materialManagement.conceptChat");
         $scope.vm = {
-            faqAdd : faqAdd,
-            faqEdit: faqEdit
+            addKnow:addKnow,
+            editKnow:editKnow
         };
-        function faqAdd(){
+        function addKnow(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template:"/know_index/materialManagement/conceptChatDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -36,9 +31,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 }
             });
         }
-        function faqEdit(){
+        function editKnow(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
+                template:"/know_index/materialManagement/conceptChatDialog2.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
@@ -56,7 +51,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 }
             });
         }
-      
 
     }
 ]);

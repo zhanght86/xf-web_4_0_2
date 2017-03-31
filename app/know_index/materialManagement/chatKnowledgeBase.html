@@ -12,39 +12,29 @@
                 <span>聊天知识库</span>
             </div>
             <div class="r-cont-bd">
-                <!--<div class="mt20 mb20">-->
-                <!--<button class="btn1 btn_gray mr10">全部</button>-->
-                <!--<button class="btn1 btn1_blue mr10">天气</button>-->
-                <!--<button class="btn1 btn_green mr10">饮食</button>-->
-                <!--<button class="btn1 btn_green2 mr10">问候</button>-->
-                <!--</div>-->
                 <div class="csso-cz-box clearfix  mb-10">
-                    <select class="sel bd mr-10 L" style="width:120px;">
-                        <option>FAQ型聊天新增</option>
-                        <option>概念型聊天新增</option>
-                    </select>
-                    <!--<button class="btn1 btn1_blue L mr-10">批量导入</button>-->
-                    <!--<div class="bd L pd-5" style="height:30px;line-height:20px;">-->
-                    <!--知识导出：字段选择-->
-                    <!--<select class="">-->
-                    <!--<option>聊天主题</option>-->
-                    <!--<option>聊天内容</option>-->
-                    <!--<option>聊天问法</option>-->
-                    <!--<option>作者</option>-->
-                    <!--<option>更新时间</option>-->
+                    <!--<select class="sel bd mr-10 L" style="width:120px;">-->
+                        <!--<option ui-sref="materialManagement.faqChat">FAQ型聊天新增</option>-->
+                        <!--<option ui-sref="">概念型聊天新增</option>-->
                     <!--</select>-->
-                    <!--</div>-->
-                    <div class="dib">
+                    <div class="L pr chat_add_div">
+                        <p class="bd mr-10 chat_add_p" >FAQ型聊天新增</p>
+                        <ul class="bd pa chat_add_ul" >
+                            <li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>
+                            <li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>
+                        </ul>
+                    </div>
+                    <div class="L mr-10">
                         <input class="input_text" type="text" placeholder="请输入知识标题" >
                         <button class="btn1 btn1_blue">查找</button>
                     </div>
-                    <button class="btn se-search-btn " style="border: 1px solid #3ea9fb;">高级查找</button>
+                    <button class="L btn se-search-btn " style="border: 1px solid #3ea9fb;">高级查找</button>
                 </div>
 
                 <div class="clearfix csso-bd bd pl-20 pr-20 mt-30">
                     <ul class="csso-lsit">
                         <li>
-                            <div class="mb-10"><a href="javascript:;" class="c-primary f-16">聊天主题：问候寒暄</a></div>
+                            <div class="mb-10"><a  class="c-primary f-16" ui-sref="materialManagement.chatKnowledgeBasePreview">聊天主题：问候寒暄</a></div>
                             <div class="f-14 mb-10">聊天问法个数：10个</div>
                             <div class="cl">
                                 <div class="L">
@@ -57,7 +47,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="mb-10"><a href="javascript:;" class="c-primary f-16">聊天主题：问候寒暄</a></div>
+                            <div class="mb-10"><a  class="c-primary f-16" ui-sref="materialManagement.chatKnowledgeBasePreview">聊天主题：问候寒暄</a></div>
                             <div class="f-14 mb-10">聊天问法个数：10个</div>
                             <div class="cl">
                                 <div class="L">
@@ -102,10 +92,25 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 
 </div>
+<style>
+
+</style>
+<script>
+    $('.chat_add_p').click(function(){
+        if($(this).next().is(':hidden')){
+            $(this).next().show();
+        }else{
+            $(this).next().hide();
+        }
+    });
+    $('.chat_add_ul li a').click(function(){
+        var str=$(this).html();
+        $('.chat_add_p').html(str);
+        $(this).parent().parent().hide();
+    });
+</script>

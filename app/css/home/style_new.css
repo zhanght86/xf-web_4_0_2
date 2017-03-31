@@ -146,3 +146,9 @@
 /*词库*/
 .concept_div{position: relative;padding-left:110px;min-height:25px;}
 .concept_s{position:absolute;left:0;top:0;}
+
+/*素材-FAQ聊天*/
+.chat_add_div{}
+.chat_add_div p{line-height:30px;padding:0 5px;width:150px;height:30px;cursor:pointer;background:url(../../images/my-select-arr.png) no-repeat right center;}
+.chat_add_ul{display:none;left:0;top:29px;background:#fff;width:150px;padding:10px;box-sizing:border-box;}
+.chat_add_ul li{cursor:pointer;line-height:30px;}
