@@ -43,7 +43,10 @@
                     <!--<td class="color-blue2">{{item.businessConceptTerm.replace("/\;/",",")}}打击、<a href="javascript:;">敲打</a></td>-->
                     <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                     <td>{{item.businessConceptModifier}}</td>
-                    <td><a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editAggregate()">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
+                    <td>
+                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editAggregate()">修改</a> &nbsp;
+                        <a href="javascript:;" class="delConcept" ng-click="vm.deteteAggregate()">删除</a>
+                    </td>
                 </tr>
 
             </table>

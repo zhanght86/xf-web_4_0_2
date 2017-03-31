@@ -12,7 +12,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         $scope.vm = {
             addBusiness : addBusiness,
             editBusiness : editBusiness,
-            listData : "",   // table 数据
+             deleteBusiness:deleteBusiness,            listData : "",   // table 数据
             singleDel : singleDel,    //單條刪除
             singleAdd : singleAdd,
             paginationConf : ""  ,//分页条件
@@ -162,5 +162,32 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 layer.msg("刪除失敗")
             })
         }
+        function deleteBusiness(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+<<<<<<< .mine
+
+
+=======
+
+
+>>>>>>> .theirs
     }
 ]);

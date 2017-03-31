@@ -10,7 +10,8 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
             addDisable : addDisable,
-            editDisable : editDisable
+            editDisable : editDisable,
+            deleteDisable: deleteDisable
         };
         function addDisable(){
             var dialog = ngDialog.openConfirm({
@@ -35,6 +36,26 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         function editDisable(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteDisable(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
