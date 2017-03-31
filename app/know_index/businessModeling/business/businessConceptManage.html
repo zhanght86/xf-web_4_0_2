@@ -16,7 +16,7 @@
             </div>
             <input type="button" value="查找" class="btn1 btn1_blue"/>
             <div class="jqrsz-btn-box conceptSearchRt">
-                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addAggregate()">新增</a>
+                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBusiness()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
                 <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
@@ -37,11 +37,14 @@
                 </tr>
                 <tr ng-repeat="item in vm.listData">
                     <td><div class="my-checkbox table-checkbox"><label></label></div></td>
+     
                     <td class="color-blue2">{{item.businessConceptKey}}</td>
-                    <td class="color-blue2">{{item.businessConceptWeight}}</td>
+        
+                    <td class="color-blue2">{{item.businessConceptWeight | weightFilter}}</td>
                     <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
                     <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                     <td>{{item.businessConceptModifier}}</td>
+
                     <td>
                         <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editAggregate()">修改</a> &nbsp;
                         <a href="javascript:;" class="delConcept" ng-click="vm.deleteBusiness()">删除</a>
