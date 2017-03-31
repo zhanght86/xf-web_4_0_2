@@ -3,7 +3,7 @@
 
 /*清除默认样式，设置自定义属性*/
 
-html,body{width:100%;}
+html,body{width:100%;height:100%}
 *{
 	margin:0;
 	padding:0;
