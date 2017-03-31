@@ -12,40 +12,51 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             addAggregate : addAggregate,
             editAggregate : editAggregate,
             paginationConf : ""  ,//分页条件
-            listData : ""
+            listData : "",
+            pageSize : 5
         };
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        $scope.vm.paginationConf = {
-            currentPage: 2,//当前页
-            totalItems: 15, //总条数
-            pageSize: 2,//第页条目数
-            pagesLength: 10,//分页框数量
-        };
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            httpRequestPost("",{},function(){
 
-            },function(){
-
-            })
-        });
-        getAggre(0);
-        //
-        function getAggre(index,size){
-                size=size?size:5;   //设置pageSize默认是5
+var applicationId = "360619411498860544";
+        getAggre(1);
+        //請求列表
+        function getAggre(index){
+                //size=size?size:5;   //设置pageSize默认是5
                 httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": "360619411498860544",
-                    "index" :index,
-                    "pageSize": size
+                    "businessConceptApplicationId": applicationId,
+                    "index" :index==1?0:index,
+                    "pageSize": $scope.vm.pageSize
                 },function(data){
-                    $scope.vm.listData = data.data
-                    console.log(data)
-                },function(){
+                    $scope.vm.listData = data.data;
 
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: Math.ceil(data.total/5), //总条数
+                        pageSize: 1,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
+                    $scope.$apply()
+                },function(){
+                    layer.msg("请求失败")
                 })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                console.log(current,$scope.vm.pageSize);
+                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                    "businessConceptApplicationId": applicationId,
+                    "index" :current*$scope.vm.pageSize,
+                    "pageSize": $scope.vm.pageSize
+                },function(){
+                    getAggre(current);
+                },function(){
+                })
+            }
+
+        });
 
         function addAggregate(){
             var dialog = ngDialog.openConfirm({
