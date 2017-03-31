@@ -10,7 +10,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
             addSensitive : addSensitive,
-            editSensitive : editSensitive
+            editSensitive : editSensitive,
+            deleteSensitive: deleteSensitive
         };
         function addSensitive(){
             var dialog = ngDialog.openConfirm({
@@ -35,6 +36,26 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         function editSensitive(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteSensitive(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //

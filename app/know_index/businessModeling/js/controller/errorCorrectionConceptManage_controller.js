@@ -10,7 +10,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
             addErrorCorrection : addErrorCorrection,
-            editErrorCorrection : editErrorCorrection
+            editErrorCorrection : editErrorCorrection,
+            deleteErrorCorrection:deleteErrorCorrection
         };
         function addErrorCorrection(){
             var dialog = ngDialog.openConfirm({
@@ -35,6 +36,26 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         function editErrorCorrection(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteErrorCorrection(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //

@@ -11,6 +11,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         $scope.vm = {
             addAggregate : addAggregate,
             editAggregate : editAggregate,
+            deleteAggregate:deleteAggregate,
             paginationConf : ""  ,//分页条件
             listData : "",
             pageSize : 5
@@ -98,7 +99,26 @@ var applicationId = "360619411498860544";
                 }
             });
         }
-
+        function deleteAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
 
 
     }
