@@ -2662,8 +2662,8 @@ angular.module('pagination',[]).directive('pagination',[function(){
 ;
 // Source: app/know_index/base/repalace/replace.js
 /**
- * Created by 41212 on 2017/3/31.
- */
+* Created by 41212 on 2017/3/31.
+*/
 angular.module('knowledge_static_web').filter('strReplace', function () {
     return function (value) {
         return value.replace(/；/g,'，') ;
@@ -2770,6 +2770,28 @@ knowledge_static_web
 
         return tipService;
     }]);;
+// Source: app/know_index/base/weightFilter/weightFilter.js
+/**
+* Created by 41212 on 2017/3/31.
+*/
+angular.module('knowledge_static_web').filter('weightFilter', function () {
+    return function (value) {
+        switch (value){
+            case 1 : return "不重要";
+                break;
+            case 3 : return "一般";
+                break;
+            case 5 : return "重要";
+                break;
+        }
+
+    };
+});
+//angular.module('knowledge_static_web').filter('strReplace', function () {
+//    return function (value) {
+//        return value.replace(/，/g,'；') ;
+//    };
+//});;
 // Source: app/know_index/base/window_template/knowItem_delete/knowItem_delete_controller.js
 /**
  * Created by Administrator on 2016/6/17.
@@ -2942,9 +2964,11 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         $scope.vm = {
             addBusiness : addBusiness,
             editBusiness : editBusiness,
+            listData : "",   // table 数据
+            singleDel : singleDel,    //單條刪除
             paginationConf : ""  ,//分页条件
-            listData : "",
-            pageSize : 5
+            pageSize : 5   //默认每页数量
+
         };
         /**
          * 加载分页条
@@ -2962,7 +2986,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 "pageSize": $scope.vm.pageSize
             },function(data){
                 $scope.vm.listData = data.data;
-
+                    //console.log(data)
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
@@ -3029,7 +3053,15 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
-
+        function singleDel(id){
+            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                "businessConceptId":id
+            },function(){
+               layer.msg("刪除成功")
+            },function(){
+                layer.msg("刪除失敗")
+            })
+        }
 
 
     }

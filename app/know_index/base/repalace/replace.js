@@ -1,6 +1,6 @@
 /**
- * Created by 41212 on 2017/3/31.
- */
+* Created by 41212 on 2017/3/31.
+*/
 'use strict';
 
 angular.module('knowledge_static_web').filter('strReplace', function () {
