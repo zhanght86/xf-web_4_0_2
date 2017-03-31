@@ -2777,14 +2777,17 @@ knowledge_static_web
 angular.module('knowledge_static_web').filter('weightFilter', function () {
     return function (value) {
         switch (value){
-            case 1 : return "不重要";
+            case 1 : return "极不重要";
+                break;
+            case 2 : return "不重要";
                 break;
             case 3 : return "一般";
                 break;
-            case 5 : return "重要";
+            case 4 : return "重要";
+                break;
+            case 5 : return "极重要";
                 break;
         }
-
     };
 });
 //angular.module('knowledge_static_web').filter('strReplace', function () {
@@ -2985,15 +2988,20 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             addBusiness : addBusiness,
             editBusiness : editBusiness,
              deleteBusiness:deleteBusiness,            listData : "",   // table 数据
-            singleDel : singleDel,    //單條刪除            paginationConf : ""  ,//分页条件
-            pageSize : 5
-
+            singleDel : singleDel,    //單條刪除
+            singleAdd : singleAdd,
+            paginationConf : ""  ,//分页条件
+            pageSize : 5  , //默认每页数量
+            //新增
+            "key": "",
+            "modifier": "",
+            "term": "",
+            "weight": ""
         };
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-
         var applicationId = "360619411498860544";
         getAggre(1);
         //請求列表
@@ -3048,10 +3056,41 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        console.log($scope.vm.key);
+                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
+                            "businessConceptApplicationId": applicationId,
+                            "businessConceptKey": $scope.vm.key
+                        },function(data){
+                            //
+                            //类名重複
+                            //
+                            if(data.status===10002){
+                                layer.msg("概念类名重复");
+                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                                    "businessConceptApplicationId": applicationId,
+                                    "businessConceptKey":$scope.vm.key,
+                                    "index":0,
+                                    "pageSize":1
+                                },function(data){
+                                    console.log(data)
+                                },function(){
+
+                                })
+                                //
+                                //类名无冲突
+                                //
+                             }else{
+                                editBusiness()
+                            }
+                        },function(){
+                            layer.msg("刪除失敗")
+                        })
                     }
                 }
             });
         }
+
+
         function editBusiness(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
@@ -3072,11 +3111,28 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
-        function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptId":id
+
+        function singleAdd(){
+            httpRequestPost("/api/modeling/concept/business/add",{
+                "businessConceptApplicationId": applicationId,
+                "businessConceptKey": "尼米兹级航母",
+                "businessConceptModifier": "",
+                "businessConceptTerm": "尼米兹号航空母舰；艾森豪威尔号航空母舰；杜鲁门号航空母舰；布什号航空母舰",
+                "businessConceptWeight": 3
+            },function(data){
+                layer.msg("刪除成功");
+                $state.reload()
             },function(){
-               layer.msg("刪除成功")
+                layer.msg("刪除失敗")
+            })
+        }
+
+        function singleDel(id){
+            httpRequestPost("/api/modeling/concept/business/delete",{
+                "businessConceptId":id
+            },function(data){
+               layer.msg("刪除成功");
+                $state.reload()
             },function(){
                 layer.msg("刪除失敗")
             })
@@ -3101,8 +3157,13 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
+<<<<<<< .mine
 
 
+=======
+
+
+>>>>>>> .theirs
     }
 ]);;
 // Source: app/know_index/businessModeling/js/controller/businessModeling_controller.js

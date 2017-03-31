@@ -36,7 +36,6 @@
                     <td>操作</td>
                 </tr>
                 <tr ng-repeat="item in vm.listData">
-                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
      
                     <td class="color-blue2">{{item.businessConceptKey}}</td>
         
@@ -44,6 +43,7 @@
                     <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
                     <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                     <td>{{item.businessConceptModifier}}</td>
+                    
 
                     <td>
                         <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editAggregate()">修改</a> &nbsp;
