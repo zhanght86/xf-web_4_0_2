@@ -42,7 +42,7 @@
                     <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
                     <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                     <td>{{item.businessConceptModifier}}</td>
-                    <td><a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBusiness()">修改</a> &nbsp;<a ng-click="vm.singleDel(item.businessConceptId)" class="delConcept">删除</a></td>
+                    <td><a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBusiness(item.businessConceptId)">修改</a> &nbsp;<a ng-click="vm.singleDel(item.businessConceptId)" class="delConcept">删除</a></td>
                 </tr>
 
             </table>
