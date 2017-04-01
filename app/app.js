@@ -147,6 +147,24 @@ knowledge_static_web
                 }
             })
             //业务建模
+                    //框架库
+            .state("frameworkLibrary", {
+                //params:{"userPermission" : null},
+                url: "/frameworkLibrary",
+                templateUrl: 'know_index/businessModeling/frameworkLibrary.html',
+                controller:"frameworkLibraryController"
+            })
+            .state("frameworkLibrary.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                }
+            })
+
+                    //概念管理
             .state("conceptManage", {
                 //params:{"userPermission" : null},
                 url: "/conceptManage",

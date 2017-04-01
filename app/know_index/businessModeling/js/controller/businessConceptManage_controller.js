@@ -182,12 +182,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
-<<<<<<< .mine
 
-
-=======
-
-
->>>>>>> .theirs
     }
 ]);

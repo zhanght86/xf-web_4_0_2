@@ -3159,7 +3159,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
 
     }
-]);
+]);;
 // Source: app/know_index/businessModeling/js/controller/businessModeling_controller.js
 /**
  * Created by 41212 on 2017/3/23.
@@ -3427,6 +3427,27 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             });
         }
 
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/frameworkLibrary_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('frameworkLibraryController', [
+    '$scope', "$state", "$stateParams",
+    function ($scope,$state, $stateParams) {
+        $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+
+        };
+        
 
 
     }
