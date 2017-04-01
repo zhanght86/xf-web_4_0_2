@@ -27,8 +27,9 @@
     "angular-elastic": "0.0.1",
     "angular-file-upload": "1.x.x",
     "angular-recursion": "1.0.5",
-    "angular-ueditor":"",
-    "angular-confirm":"",
-    "bootstrap":"3.0.0"
+    "angular-ueditor": "",
+    "angular-confirm": "",
+    "bootstrap": "3.0.0",
+    "ui-autocomplete": "^0.6.1"
   }
 }
