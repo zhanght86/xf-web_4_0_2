@@ -2846,6 +2846,857 @@ knowledge_static_web.controller('knowItemShareController',
 
     }
 }]);
+// Source: app/know_index/businessModeling - 副本/js/controller/aggregateConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('aggregateConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+        $scope.vm = {
+            addAggregate : addAggregate,
+            editAggregate : editAggregate,
+            deleteAggregate:deleteAggregate,
+            paginationConf : ""  ,//分页条件
+            listData : "",
+            pageSize : 5
+        };
+        /**
+         * 加载分页条
+         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         */
+
+var applicationId = "360619411498860544";
+        getAggre(1);
+        //請求列表
+        function getAggre(index){
+                //size=size?size:5;   //设置pageSize默认是5
+                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                    "businessConceptApplicationId": applicationId,
+                    "index" :index==1?0:index,
+                    "pageSize": $scope.vm.pageSize
+                },function(data){
+                    $scope.vm.listData = data.data;
+
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: Math.ceil(data.total/5), //总条数
+                        pageSize: 1,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
+                    $scope.$apply()
+                },function(){
+                    layer.msg("请求失败")
+                })
+        }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                console.log(current,$scope.vm.pageSize);
+                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                    "businessConceptApplicationId": applicationId,
+                    "index" :current*$scope.vm.pageSize,
+                    "pageSize": $scope.vm.pageSize
+                },function(){
+                    getAggre(current);
+                },function(){
+                })
+            }
+
+        });
+
+        function addAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteAggregate(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/businessConceptManage_controller.js
+
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('businessConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+        $scope.vm = {
+            addBusiness : addBusiness,
+            editBusiness : editBusiness,
+             deleteBusiness:deleteBusiness,            listData : "",   // table 数据
+            singleDel : singleDel,    //單條刪除
+            singleAdd : singleAdd,
+            paginationConf : ""  ,//分页条件
+            pageSize : 5  , //默认每页数量
+            //新增
+            "key": "",
+            "modifier": "",
+            "term": "",
+            "weight": ""
+        };
+        /**
+         * 加载分页条
+         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         */
+        var applicationId = "360619411498860544";
+        getAggre(1);
+        //請求列表
+        function getAggre(index){
+            //size=size?size:5;   //设置pageSize默认是5
+            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                "businessConceptApplicationId": applicationId,
+                "index" :index==1?0:index,
+                "pageSize": $scope.vm.pageSize
+            },function(data){
+                $scope.vm.listData = data.data;
+                    //console.log(data)
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply()
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                console.log(current,$scope.vm.pageSize);
+                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                    "businessConceptApplicationId": applicationId,
+                    "index" :current*$scope.vm.pageSize,
+                    "pageSize": $scope.vm.pageSize
+                },function(){
+                    getAggre(current);
+                },function(){
+                })
+            }
+
+        });
+
+        function addBusiness(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/business/businessConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        console.log($scope.vm.key);
+                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
+                            "businessConceptApplicationId": applicationId,
+                            "businessConceptKey": $scope.vm.key
+                        },function(data){
+                            //
+                            //类名重複
+                            //
+                            if(data.status===10002){
+                                layer.msg("概念类名重复");
+                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                                    "businessConceptApplicationId": applicationId,
+                                    "businessConceptKey":$scope.vm.key,
+                                    "index":0,
+                                    "pageSize":1
+                                },function(data){
+                                    console.log(data)
+                                },function(){
+
+                                })
+                                //
+                                //类名无冲突
+                                //
+                             }else{
+                                editBusiness()
+                            }
+                        },function(){
+                            layer.msg("刪除失敗")
+                        })
+                    }
+                }
+            });
+        }
+
+
+        function editBusiness(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+        function singleAdd(){
+            httpRequestPost("/api/modeling/concept/business/add",{
+                "businessConceptApplicationId": applicationId,
+                "businessConceptKey": "尼米兹级航母",
+                "businessConceptModifier": "",
+                "businessConceptTerm": "尼米兹号航空母舰；艾森豪威尔号航空母舰；杜鲁门号航空母舰；布什号航空母舰",
+                "businessConceptWeight": 3
+            },function(data){
+                layer.msg("刪除成功");
+                $state.reload()
+            },function(){
+                layer.msg("刪除失敗")
+            })
+        }
+
+        function singleDel(id){
+            httpRequestPost("/api/modeling/concept/business/delete",{
+                "businessConceptId":id
+            },function(data){
+               layer.msg("刪除成功");
+                $state.reload()
+            },function(){
+                layer.msg("刪除失敗")
+            })
+        }
+        function deleteBusiness(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/businessModeling_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('businessModelingController', [
+    '$scope', "$state", "$stateParams",
+    function ($scope,$state, $stateParams) {
+        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            isSlide : isSlide,
+        };
+
+        function isSlide(event){
+            var self=event.target;
+            if($(self).hasClass("slideActive")){
+                $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
+            }else{
+                $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
+            }
+
+        }
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/disableConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('disableConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addDisable : addDisable,
+            editDisable : editDisable,
+            deleteDisable: deleteDisable
+        };
+        function addDisable(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/disable/disableConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editDisable(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteDisable(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/emotionConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('emotionConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addEmotion : addEmotion,
+            editEmotion : editEmotion,
+            deleteEmotion: deleteEmotion
+        };
+        function addEmotion(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/emotion/emotionConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editEmotion(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/emotion/emotionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteEmotion(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/errorCorrectionConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('errorCorrectionConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addErrorCorrection : addErrorCorrection,
+            editErrorCorrection : editErrorCorrection,
+            deleteErrorCorrection:deleteErrorCorrection
+        };
+        function addErrorCorrection(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editErrorCorrection(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteErrorCorrection(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/frameworkLibrary_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('frameworkLibraryController', [
+    '$scope', "$state", "$stateParams",
+    function ($scope,$state, $stateParams) {
+        
+        $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+
+        };
+        
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/intentionConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('intentionConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addIntention : addIntention,
+            editIntention : editIntention,
+            deleteIntention: deleteIntention
+        };
+        function addIntention(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/intention/intentionConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editIntention(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/intention/intentionConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteIntention(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/sensitiveConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('sensitiveConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addSensitive : addSensitive,
+            editSensitive : editSensitive,
+            deleteSensitive: deleteSensitive
+        };
+        function addSensitive(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editSensitive(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteSensitive(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling - 副本/js/controller/synonyConceptManage_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('synonyConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+            addSynony : addSynony,
+            editSynony : editSynony,
+            deleteSynony:deleteSynony
+        };
+        function addSynony(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editSynony(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteSynony(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/conceptManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+
+
+    }
+]);;
+;
 // Source: app/know_index/businessModeling/js/controller/aggregateConceptManage_controller.js
 /**
  * Created by 41212 on 2017/3/23.
