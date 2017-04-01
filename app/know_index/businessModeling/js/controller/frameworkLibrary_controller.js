@@ -9,6 +9,7 @@
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
+        
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
 

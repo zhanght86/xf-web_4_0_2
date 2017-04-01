@@ -3443,6 +3443,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
+        
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
 
@@ -5687,6 +5688,46 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
     }
 ]);;
+// Source: app/know_index/myApplication/js/controller/custKnowledgePreview_controller.js
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('custKnowledgePreviewController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        $state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+
+        };
+
+
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/custServScenaOverview_controller.js
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+
+        };
+
+
+      
+
+    }
+]);;
 // Source: app/know_index/myApplication/js/controller/dimensionManage_controller.js
 /**
  * Created by dinfo on 2017/3/28.
@@ -5730,6 +5771,66 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
 
     }
 ]);;
+// Source: app/know_index/myApplication/js/controller/markKnowledgePreview_controller.js
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('KnowledgePreviewController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        $state.go("KnowledgePreview.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+
+        };
+
+
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/markServScenaOverview_controller.js
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('markServScenaOverviewController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        $state.go("markServScenaOverview.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+
+        };
+
+
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/relationalCatalog_controller.js
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('relationalCatalogController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        $state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+
+        };
+
+
+      
+
+    }
+]);;
 // Source: app/know_index/myApplication/js/controller/sceneManage_controller.js
 /**
  * Created by dinfo on 2017/3/28.
@@ -5768,7 +5869,7 @@ angular.module('knowledgeManagementModule').controller('sceneManageController', 
 angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
-        alert();
+       // alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,
