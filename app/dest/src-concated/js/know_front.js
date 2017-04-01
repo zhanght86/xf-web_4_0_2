@@ -3157,15 +3157,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
-<<<<<<< .mine
 
-
-=======
-
-
->>>>>>> .theirs
     }
-]);;
+]);
 // Source: app/know_index/businessModeling/js/controller/businessModeling_controller.js
 /**
  * Created by 41212 on 2017/3/23.
