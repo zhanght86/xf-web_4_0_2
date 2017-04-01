@@ -18,7 +18,7 @@
             <div class="aside-nav aside-nav2">
                 <ul>
                     <li>
-                        <a class="slide-a ellipsis" ng-click="vm.isSlide($event)">
+                        <a class="slide-a ellipsis" ng-click="vm.isSlide($event)" ui-sref="setting.Infor">
                             <i class="icon-l icon-nav1"></i>
                             <span>应用信息</span>
                             <i class="icon-r icon-jt"></i>
@@ -43,10 +43,12 @@
                         </a>
                         <ul class="menu_1">
                             <li>
-                                <a class="ellipsis" href="javascript:;"><span>业务建模</span></a>
+                                <a class="ellipsis" ui-sref="relationalCatalog.manage"><span>业务建模</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" href="javascript:;"><span>知识管理</span></a>
+                                <a class="ellipsis" ui-sref="custServScenaOverview.manage"><span>知识管理</span></a>
+                                <!--营销型-->
+                                <!--<a class="ellipsis" ui-sref="markServScenaOverview.manage"><span>知识管理</span></a>-->
                             </li>
                         </ul>
                     </li>
@@ -64,16 +66,16 @@
                                 <a class="ellipsis" ui-sref="setting.parameter"><span>参数设置</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" href="javascript:;"><span>聊天页面配置</span></a>
+                                <a class="ellipsis" ui-sref="setting.chatPageConfig"><span>聊天页面配置</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" href="javascript:;"><span>场景管理</span></a>
+                                <a class="ellipsis" ui-sref="setting.sceneManage"><span>场景管理</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" href="javascript:;"><span>维度管理</span></a>
+                                <a class="ellipsis" ui-sref="setting.dimension"><span>维度管理</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" href="javascript:;"><span>渠道管理</span></a>
+                                <a class="ellipsis" ui-sref="setting.channel"><span>渠道管理</span></a>
                             </li>
                         </ul>
                     </li>

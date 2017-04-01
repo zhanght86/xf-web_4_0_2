@@ -9,7 +9,7 @@
                 <a ui-sref="homePage.define">首页</a>
             </li>
             <li>
-                <a ui-sref="setting.robot">我的应用</a>
+                <a ui-sref="setting.Infor">我的应用</a>
             </li>
             <li ng-if="vm.applicatioinId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
@@ -21,9 +21,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="frameworkLibrary.manage">
                             <i class="icon-nav icon-nav__icon-nav_lmgl"></i>
-                            <span>类目管理</span>
+                            <span>框架库</span>
                         </a>
                     </li>
                     <li>
@@ -38,10 +38,15 @@
                 <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="custServScenaOverview.manage">
                             <i class="icon-nav icon-nav__icon-nav_zszl"></i>
                             <span>知识总览</span>
                         </a>
+                        <!--营销型-->
+                        <!--<a ui-sref="markServScenaOverview.manage">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_zszl"></i>-->
+                            <!--<span>知识总览</span>-->
+                        <!--</a>-->
                     </li>
                     <li>
                         <ul class="menu_1 menu_2 ">
