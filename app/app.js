@@ -148,12 +148,6 @@ knowledge_static_web
             })
             //业务建模
                     //框架库
-            .state("frameworkLibrary", {
-                //params:{"userPermission" : null},
-                url: "/frameworkLibrary",
-                templateUrl: 'know_index/businessModeling/frameworkLibrary.html',
-                controller:"frameworkLibraryController"
-            })
             .state("frameworkLibrary.manage", {
                 //params:{"userPermission" : null},
                 url: "/manage",
@@ -163,6 +157,13 @@ knowledge_static_web
                     },
                 }
             })
+            .state("frameworkLibrary", {
+                //params:{"userPermission" : null},
+                url: "/frameworkLibrary",
+                templateUrl: 'know_index/businessModeling/frameworkLibrary.html',
+                controller:"frameworkLibraryController"
+            })
+
 
                     //概念管理
             .state("conceptManage", {
@@ -387,7 +388,21 @@ knowledge_static_web
                     },
                 }
             })
-
+            //应用信息
+            .state("setting.Infor", {
+                //params:{"userPermission" : null},
+                url: "/Infor",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationInfor/applicationInfor.html',
+                        controller: "applicationInforController"
+                    },
+                }
+            })
             //应用发布
             .state("setting.releaseMan", {
                 //params:{"userPermission" : null},
