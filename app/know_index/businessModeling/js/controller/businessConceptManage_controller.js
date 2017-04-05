@@ -8,10 +8,11 @@
  */
 
 angular.module('businessModelingModule').controller('businessConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
+            list :[{businessConceptKey:'eidtcart',businessConceptWeight:3,businessConceptTerm:'重要',businessConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
             addBusiness : addBusiness,
             editBusiness : editBusiness,
@@ -43,12 +44,13 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             addSingleTerm : addSingleTerm,
             addSingleTermVal : "",
 
-            addSingleTermValChange : addSingleTermValChange
-
         };
-        function addSingleTermValChange(e){
-            console.log(e)
-        }
+
+        $scope.$watch("vm.addSingleTermVal",function (val) {
+            console.log(val)
+        },true);
+
+
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -72,7 +74,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     pageSize: 1,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
-                $scope.$apply()
+                $scope.$apply();
             },function(){
                 layer.msg("请求失败")
             })
@@ -89,7 +91,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 },function(){
                 })
             }
-
         });
         //编辑
         function editBusiness(item){
@@ -176,7 +177,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                 },function(data){
                                     $scope.vm.dialogTitle="修改停用概念";
                                     console.log(data);
-                                    addDelDialog(singleEdit,data.data[0])
+                                    addDelDialog(singleEdit,data.data[0]);
                                     $scope.vm.key = data.data[0].businessConceptKey;
                                     $scope.vm.term =  data.data[0].businessConceptTerm;
                                     $scope.vm.weight =  data.data[0].businessConceptWeight;
@@ -257,7 +258,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 "businessConceptTerm": item.businessConceptTerm,
                 "businessConceptWeight": item.businessConceptWeight
             },function(data){
-                console.log(item)
+                console.log(item);
                 console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 console.log(data);
                 layer.msg("编辑成功");
@@ -280,7 +281,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 layer.msg("添加成功");
                 $state.reload()
             },function(){
-                layer.msg("添加失敗")
+                layer.msg("添加失败")
             })
         }
         //单条刪除
@@ -304,20 +305,23 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         function addSingleTerm(e){
                   var keycode = window.event?e.keyCode:e.which;
                   if(keycode==13){
+                      //$scope.vm.addSingleTermVal += "";
+                      //console.log("kkkkkkkkkkkkkkkkkkk"+$scope.vm.addSingleTermVal);
                       var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
-                      console.log(str);
-                      if($.inArray($scope.vm.addSingleTermVal, str)==-1){
+                        if($scope.vm.addSingleTermVal.length==0){
+                          //console.log($scope.vm.addSingleTermVal,"second");
+                          $scope.vm.addSingleTermVal = "";
+                          layer.msg("扩展名不能为空")
+                      }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
+                            $scope.vm.addSingleTermVal = "";
+                          console.log($scope.vm.addSingleTermVal);
                           str.push($scope.vm.addSingleTermVal);
-                          console.log(str)
+                          console.log(str);
                           $scope.vm.term = str.join("；");
                           $scope.vm.addSingleTermVal = "";
                           console.log($scope.vm.term);
-                      }else if($scope.vm.addSingleTermVal.length==0){
-                          console.log($scope.vm.addSingleTermVal);
-                          $scope.vm.addSingleTermVal = "";
-                          layer.msg("扩展名不能为空")
                       }else{
-                          console.log($scope.vm.addSingleTermVal);
+                          console.log($scope.vm.addSingleTermVal );
                           $scope.vm.addSingleTermVal = "";
                           layer.msg("扩展名重复,请重新填写")
                       }

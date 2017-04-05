@@ -5,7 +5,7 @@
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
     '$scope',"$state", function ($scope,$state) {
-        alert()
+
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
 

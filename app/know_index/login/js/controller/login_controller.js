@@ -15,10 +15,7 @@ angular.module('loginModule').controller('loginController', [
             login: login,
             keyLogin : keyLogin
         };
-
-
        function keyLogin($event){
-
             if($event.keyCode==13){//回车
                 login();
             }
@@ -30,15 +27,13 @@ angular.module('loginModule').controller('loginController', [
          //登陆
         function login(){
             //$state.go("materialManagement.chatKnowledgeBase",{userPermission : "['超级管理员','初级管理员']"});
-
             if($scope.vm.randomNumberValue.length==0){
                 console.log($scope.vm.randomNumberValue);
                 layer.msg("验证码不能为空")
             }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
                 layer.msg("验证码错误");
             }else{
-                console.log($scope.vm.userName);
-
+                //console.log($scope.vm.userName);
                 httpRequestPost("/api/user/userLogin",{
                     "userName":$scope.vm.userName,
                     "userPassword":$scope.vm.password
@@ -51,7 +46,7 @@ angular.module('loginModule').controller('loginController', [
                     //console.dir(data.data.roleList)
                 },function(err){
                     layer.msg("登陆失败");
-                    console.log(err)
+                    //console.log(err)
                 });
             }
         }
