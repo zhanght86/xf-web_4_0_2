@@ -33,7 +33,8 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
     //    "categoryApplicationId": "360619411498860544",
     //        "categoryPid": "root"
     //}
-    //    getBotRoot();
+        getBotRoot();
+        //getBotRoot();
     //    getDimensions();
     //    getChannel();
         //点击 root 的下拉效果
