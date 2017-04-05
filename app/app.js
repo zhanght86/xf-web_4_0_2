@@ -4,6 +4,7 @@
  */
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
+    //'ui.autocomplete',
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
@@ -147,6 +148,25 @@ knowledge_static_web
                 }
             })
             //业务建模
+                    //框架库
+            .state("frameworkLibrary.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                }
+            })
+            .state("frameworkLibrary", {
+                //params:{"userPermission" : null},
+                url: "/frameworkLibrary",
+                templateUrl: 'know_index/businessModeling/frameworkLibrary.html',
+                controller:"frameworkLibraryController"
+            })
+
+
+                    //概念管理
             .state("conceptManage", {
                 //params:{"userPermission" : null},
                 url: "/conceptManage",
@@ -366,6 +386,101 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/channelManage.html',
                         controller: "channelManageController"
+                    },
+                }
+            })
+            //应用信息
+            .state("setting.Infor", {
+                //params:{"userPermission" : null},
+                url: "/Infor",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationInfor/applicationInfor.html',
+                        controller: "applicationInforController"
+                    },
+                }
+            })
+            //应用开发-业务建模
+            .state("relationalCatalog", {
+                //params:{"userPermission" : null},
+                url: "/relationalCatalog",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
+                controller:"relationalCatalogController"
+            })
+            .state("relationalCatalog.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                }
+            })
+            //应用开发-知识管理-客服场景知识总览
+            .state("custServScenaOverview", {
+                //params:{"userPermission" : null},
+                url: "/custServScenaOverview",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/custServScenaOverview.html',
+                controller:"custServScenaOverviewController"
+            })
+            .state("custServScenaOverview.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                }
+            })
+            //应用开发-知识管理-营销场景知识总览
+            .state("markServScenaOverview", {
+                //params:{"userPermission" : null},
+                url: "/markServScenaOverview",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/markServScenaOverview.html',
+                controller:"markServScenaOverviewController"
+            })
+            .state("markServScenaOverview.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                }
+            })
+            //应用开发-知识管理-营销知识预览
+            .state("markKnowledgePreview", {
+                //params:{"userPermission" : null},
+                url: "/markKnowledgePreview",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/markKnowledgePreview.html',
+                controller:"markKnowledgePreviewController"
+            })
+            .state("markKnowledgePreview.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                    },
+                }
+            })
+            //应用开发-知识管理-客服知识预览
+            .state("custKnowledgePreview", {
+                //params:{"userPermission" : null},
+                url: "/custKnowledgePreview",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/custKnowledgePreview.html',
+                controller:"custKnowledgePreviewController"
+            })
+            .state("custKnowledgePreview.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
                     },
                 }
             })

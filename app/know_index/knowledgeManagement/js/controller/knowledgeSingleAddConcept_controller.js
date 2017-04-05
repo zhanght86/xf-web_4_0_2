@@ -34,7 +34,6 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
     //        "categoryPid": "root"
     //}
         getBotRoot();
-        //getBotRoot();
     //    getDimensions();
     //    getChannel();
         //点击 root 的下拉效果
@@ -44,6 +43,7 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
                     $(ele).next().slideToggle();
                 },50)
         }
+
        //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
