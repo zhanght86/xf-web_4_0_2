@@ -660,7 +660,7 @@ knowledge_static_web
             //测试功能
             .state("functionalTest", {
                 url: "/functionalTest",
-                templateUrl: 'know_index/home/homePageNav.html',
+                templateUrl: 'know_index/functionalTesting/functionalTest.html',
                 controller: "functionalTestController"
 
             })
@@ -677,6 +677,20 @@ knowledge_static_web
                     }
                 }
             })
+            .state("functionalTest.sessionTest", {
+                url: "/sessionTest",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/functionalTesting/sessionTest.html',
+                        controller: "sessionTestController"
+                    }
+                }
+            })
+            
             //-----------------------
             //我的应用admin
 
