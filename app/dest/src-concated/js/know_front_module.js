@@ -109,6 +109,16 @@ angular.module('businessModelingModule', [
 
 
 ;
+
+'use strict';
+
+// Define the `phoneDetail` module
+angular.module('functionalTestModule', [
+    'know'
+]);
+
+
+;
 /**
  * Created by Administrator on 2016/6/3.
  */

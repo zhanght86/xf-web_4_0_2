@@ -2102,7 +2102,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
 /**
  * Created by Administrator on 2016/6/17.
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
- */
+ */                           
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"HomeService", "PersonalCenterService","KnowDocService",
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
@@ -2476,6 +2476,87 @@ angular.module('adminModule').controller('adminController', [
     function ($scope,  $state ,$stateParams) {
                 //console.log("state"+$stateParams.userPermission);
         $state.go("admin.manage",{userPermission:$stateParams.userPermission});
+    }
+]);;
+// Source: app/know_index/admin/js/controller/userManage_controller.js
+/**
+ * Created by 41212 on 2017/3/21.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('adminModule').controller('userManageController', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog) {
+
+        $scope.vm = {
+            addUser : addUser,
+            editUser : editUser,
+            deleteUser:deleteUser
+        };
+        function addUser(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/userManageDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function editUser(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/userManageDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+        function deleteUser(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/deleteDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
     }
 ]);;
 ;
@@ -5287,6 +5368,45 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
     }
 ]);;
 ;
+// Source: app/know_index/functionalTesting/js/controller/functionalTest_controller.js
+
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+          
+angular.module('functionalTestModule').controller('functionalTestController', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+        //$state.go("functionalTest.questionTest",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+
+        };
+
+
+    }
+]);;
+// Source: app/know_index/functionalTesting/js/controller/questionTest_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('functionalTestModule').controller('questionTest_Controller', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+
+        };
+
+        
+    }
+]);;
+;
 // Source: app/know_index/home/js/controller/homePageNav_controller.js
 /**
  * Created by 41212 on 2017/3/21.
@@ -5766,7 +5886,7 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
                 $timeout(function(){
                     $(ele).next().slideToggle();
                 },50)
-        }
+        }        
 
        //获取root 数据
         function getBotRoot(){
@@ -7327,19 +7447,46 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
  */
 
 angular.module('knowledgeManagementModule').controller('dimensionManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
+        setCookie("applicationId","1");
+        setCookie("userId","1");
         $scope.vm = {
-            addDimension : addDimension
+            addDimension : addDimension,
+            listData : "",   // table 数据
+            listDataTotal : "",
+            getData : getData,
+            userId:getCookie("userId"),
+            applicationId:getCookie("applicationId"),
+            paginationConf : "" //分页条件
         };
+
+        getData();
+        function getData(){
+            httpRequestPost("/api/application/api/dimension/listDimension",{
+                index:0,
+                pageSize:10,
+                dimensionParentId:0, //页面只展示父级维度，给定父级id
+                userId:$scope.vm.userId,
+                applicationId:$scope.vm.applicationId
+            },function(data){
+              console.log(data);
+                $scope.vm.listData = data.data.dimensionList;
+                $scope.vm.paginationConf = {
+                    currentPage: 0,//当前页
+                    totalItems: Math.ceil(data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply()
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+
         function addDimension(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/dimensionManageDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -7347,6 +7494,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+
                     }
                 }
             });
@@ -7408,8 +7556,90 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
         //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             //editName : editName
-
+            botSelectValue:"",
+            botRoot : "",     //根节点
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botValChange : botValChange,
         };
+////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+
+        //{
+        //    "categoryApplicationId": "360619411498860544",
+        //        "categoryPid": "root"
+        //}
+        getBotRoot();
+        //    getDimensions();
+        //    getChannel();
+        //点击 root 的下拉效果
+        function  knowledgeBot(ev){
+            var ele = ev.target;
+            $timeout(function(){
+                $(ele).next().slideToggle();
+            },50)
+        }
+
+        //获取root 数据
+        function getBotRoot(){
+            httpRequestPost("/api/modeling/category/listbycategorypid",{
+                "categoryApplicationId": "360619411498860544",
+                "categoryPid": "root"
+            },function(data){
+                $scope.vm.botRoot = data.data
+            },function(){
+                alert("err or err")
+            });
+        }
+        // $scope.vm.botRoot = [{categoryName:'dd'},{categoryName:'dddddddddddd'}]
+        //点击更改bot value
+        function botValChange(val){
+            $scope.vm.knowledgeBotVal = val;
+        }
+        $(".aside-navs").on("click","span",function(){
+            $scope.vm.knowledgeBotVal = $(this).html();
+            $scope.$apply()
+        });
+        //点击下一级 bot 下拉数据填充以及下拉效果
+        $(".aside-navs").on("click",'.icon-jj',function(){
+            var id = $(this).attr("data-option");
+            var that = $(this);
+            if(!that.parent().parent().siblings().length){
+                that.css("backgroundPosition","0% 100%")
+                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                    "categoryApplicationId": categoryApplicationId,
+                    "categoryPid": id
+                },function(data){
+                    if(data.data){
+                        var  html = '<ul class="menus">';
+                        for(var i=0;i<data.data.length;i++){
+                            html+= '<li>' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                '<span>'+data.data[i].categoryName+'</span>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
+                        }
+                        html+="</ul>";
+                        $(html).appendTo((that.parent().parent().parent()));
+                        that.parent().parent().next().slideDown()
+                    }
+                },function(err){
+                    alert(err)
+                });
+            }else{
+                if(that.css("backgroundPosition")=="0% 0%"){
+                    that.css("backgroundPosition","0% 100%")
+                    that.parent().parent().next().slideDown()
+                }else{
+                    that.css("backgroundPosition","0% 0%");
+                    that.parent().parent().next().slideUp()
+                }
+            }
+        });
+
+////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 
 
       
