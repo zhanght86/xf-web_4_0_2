@@ -5,8 +5,8 @@
 
 angular.module('materialManagement').controller('chatKnowledgeBasePreController', [
     '$scope',"$state", function ($scope,$state) {
-        alert()
-        $state.go("materialManagement.chatKnowledgeBasePreview");
+
+        //$state.go("materialManagement.chatKnowledgeBasePreview");
         $scope.vm = {
 
         };

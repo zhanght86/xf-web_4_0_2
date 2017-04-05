@@ -6,7 +6,7 @@
 
 angular.module('knowledgeManagementModule').controller('KnowledgePreviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
-        $state.go("KnowledgePreview.manage",{userPermission:$stateParams.userPermission});
+        //$state.go("KnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             //editName : editName
 

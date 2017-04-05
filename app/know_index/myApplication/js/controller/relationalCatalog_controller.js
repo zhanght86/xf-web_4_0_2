@@ -6,7 +6,7 @@
 
 angular.module('knowledgeManagementModule').controller('relationalCatalogController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
-        $state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
+        //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             //editName : editName
 
