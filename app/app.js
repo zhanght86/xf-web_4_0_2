@@ -679,6 +679,20 @@ knowledge_static_web
                 }
 
             })
+            //用户管理
+            .state("admin.userManage", {
+                url: "/userManage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/admin/userManage.html',
+                        controller: "userManageController"
+                    },
+                }
+            })
 
             //我的应用myApplication
 
