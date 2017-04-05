@@ -40,6 +40,8 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'angularFileUpload',
     //测试功能
     'functionalTestModule',
+    //应用分析
+    'applAnalysisModule',
 
     //后台模块
     'backModule',
@@ -675,7 +677,7 @@ knowledge_static_web
             //测试功能
             .state("functionalTest", {
                 url: "/functionalTest",
-                templateUrl: 'know_index/home/homePageNav.html',
+                templateUrl: 'know_index/functionalTesting/functionalTest.html',
                 controller: "functionalTestController"
 
             })
@@ -692,7 +694,56 @@ knowledge_static_web
                     }
                 }
             })
+            .state("functionalTest.sessionTest", {
+                url: "/sessionTest",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/functionalTesting/sessionTest.html',
+                        controller: "sessionTestController"
+                    }
+                }
+            })
             //-----------------------
+            //应用分析
+            .state("applAnalysis", {
+                url: "/applAnalysis",
+                templateUrl: 'know_index/applicationAnalysis/applAnalysis.html',
+                controller: "applAnalysisController"
+
+            })
+            .state("applAnalysis.sessionDetails", {
+                url: "/sessionDetails",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/sessionDetails.html',
+                        controller: "sessionDetailsController"
+                    }
+                }
+            })
+            .state("applAnalysis.satisfactionDegree", {
+                url: "/satisfactionDegree",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/satisfactionDegree.html',
+                        controller: "satisfactionDegreeController"
+                    }
+                }
+            })
+
+            //-----------------------
+
             //我的应用admin
 
             .state("admin", {

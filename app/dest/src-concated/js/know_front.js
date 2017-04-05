@@ -2109,7 +2109,7 @@ knowledge_static_web.controller('ApplicationController',
             $scope.currentUser = null;
             $scope.isAuthorized = AuthService.isAuthorized;
 
-            $scope.currentPage = 1;
+            $scope.currentPage = 1;                      
             $scope.pageSize = 10;
 
             $scope.tipService = TipService;
@@ -2557,6 +2557,84 @@ angular.module('adminModule').controller('userManageController', [
             });
         }
 
+    }
+]);;
+;
+// Source: app/know_index/applicationAnalysis/js/controller/applAnalysis_controller.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+          
+angular.module('applAnalysisModule').controller('applAnalysisController', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+        //$state.go("functionalTest.questionTest",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+
+
+        };
+
+
+    }
+]);;
+// Source: app/know_index/applicationAnalysis/js/controller/satisfactionDegree_controller.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+
+angular.module('applAnalysisModule').controller('satisfactionDegreeController', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+           // addLook:addLook,
+
+        };
+        
+
+        
+    }
+]);;
+// Source: app/know_index/applicationAnalysis/js/controller/sessionDetails_controller.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+
+angular.module('applAnalysisModule').controller('sessionDetailsController', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            addLook:addLook,
+
+        };
+        function addLook(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/applicationAnalysis/sessionDetailsDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+
+        
     }
 ]);;
 ;
@@ -5355,6 +5433,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
+
           
 angular.module('functionalTestModule').controller('functionalTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
@@ -5376,7 +5455,27 @@ angular.module('functionalTestModule').controller('functionalTestController', [
  * 控制器
  */
 
-angular.module('functionalTestModule').controller('questionTest_Controller', [
+angular.module('functionalTestModule').controller('questionTestController', [
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+
+        };
+
+        
+    }
+]);;
+// Source: app/know_index/functionalTesting/js/controller/sessionTest_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('functionalTestModule').controller('sessionTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});

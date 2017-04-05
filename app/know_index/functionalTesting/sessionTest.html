@@ -1,0 +1,74 @@
+<div ui-view="header"></div>
+
+<div class="wrap pr chat_test_wrap">
+    <div class="crumbs-nav bgwhite " style="width:100%;position:absolute;top:20px;left:0;">
+        <span class="cn-lable">你曾经路过此地：</span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+    </div>
+    <div class="p20 cl" style="background:#fff;height:100%;">
+        <div class="L chat_test_l">
+            <div class="mb-20 bd chat_test_ltop p20" id="chat_recommend">
+
+                <div class=" chat_test_ltopr">
+                    <div class="mb-10" style="border-bottom:1px dashed #bdbdbd;" id="ask">
+                        <p class="c-primary bold">测试问法：<span id="question"></span></p>
+
+                        <p>标签：<span id="question_tag"></span></p>
+
+                        <p>分词：<span id="question_segmentation"></span></p>
+                    </div>
+                    <div style="border-bottom:1px dashed #bdbdbd;" id="answer">
+                        <p class="c-primary bold">标准知识：<span id="answer_title"></span></p>
+
+                        <p>标签：<span id="answer_tag"></span></p>
+
+                        <p>相似度：<span id="answer_similarity"></span></p>
+
+                        <p>分词：<span id="answer_segmentation"></span></p>
+
+                        <p>答案：<span id="answer_content"></span></p>
+                    </div>
+                    <div id="recommand">
+                    </div>
+                </div>
+            </div>
+            <div class="bd chat_test_lbot pd-10">
+                <textarea class="chat_text_txta f-14 "  placeholder="请输入测试问题"></textarea>
+
+                <div class="pt-5" style="border-top:1px dashed #eee;">
+                    <div class="pl50 pr mb-10" style="height: 25px;">
+                        <span class="pa" style="left:0;top:0;">渠道：</span>
+                    </div>
+                    <div class="pl50 pr mb-10"  style="min-height: 25px;">
+                        <span class="pa" style="left:0;top:4px;">维度：</span>
+
+                        <div id="dimension_bar"></div>
+                    </div>
+                </div>
+                <div class="text-r mt-10">
+                    <button class="btn1 btn1_blue mr-10" >测试</button>
+                    <button class="btn1 btn_gray" >重置</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="R bd chat_test_r p20">
+            <p>问答流程:</p>
+
+            <div class="flow_chart_wrap">
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+
+
+
+
+
+

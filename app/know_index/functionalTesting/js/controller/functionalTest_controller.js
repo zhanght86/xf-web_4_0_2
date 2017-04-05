@@ -3,6 +3,7 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
+
           
 angular.module('functionalTestModule').controller('functionalTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",

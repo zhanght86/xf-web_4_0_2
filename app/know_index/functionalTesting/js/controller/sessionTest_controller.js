@@ -6,7 +6,7 @@
  * 控制器
  */
 
-angular.module('functionalTestModule').controller('questionTestController', [
+angular.module('functionalTestModule').controller('sessionTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
