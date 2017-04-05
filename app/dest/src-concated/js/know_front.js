@@ -6002,19 +6002,46 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
  */
 
 angular.module('knowledgeManagementModule').controller('dimensionManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
+        setCookie("applicationId","1");
+        setCookie("userId","1");
         $scope.vm = {
-            addDimension : addDimension
+            addDimension : addDimension,
+            listData : "",   // table 数据
+            listDataTotal : "",
+            getData : getData,
+            userId:getCookie("userId"),
+            applicationId:getCookie("applicationId"),
+            paginationConf : "" //分页条件
         };
+
+        getData();
+        function getData(){
+            httpRequestPost("/api/application/api/dimension/listDimension",{
+                index:0,
+                pageSize:10,
+                dimensionParentId:0, //页面只展示父级维度，给定父级id
+                userId:$scope.vm.userId,
+                applicationId:$scope.vm.applicationId
+            },function(data){
+              console.log(data);
+                $scope.vm.listData = data.data.dimensionList;
+                $scope.vm.paginationConf = {
+                    currentPage: 0,//当前页
+                    totalItems: Math.ceil(data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply()
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+
         function addDimension(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/dimensionManageDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -6022,6 +6049,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+
                     }
                 }
             });
