@@ -115,18 +115,6 @@ angular.module('businessModelingModule', [
 'use strict';
 
 // Define the `phoneDetail` module
-angular.module('businessModelingModule', [
-    'know'
-]);
-
-
-;
-/**
- * Created by Administrator on 2016/6/3.
- */
-'use strict';
-
-// Define the `phoneDetail` module
 angular.module('homePage', [
     'know'
 ]);

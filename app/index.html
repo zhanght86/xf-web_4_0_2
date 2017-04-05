@@ -2,7 +2,19 @@
 <html lang="zh-cn" ng-app="knowledge_static_web" ng-controller="ApplicationController">
 <head>
     <script>
-    /*IE8兼容start*/
+//        <!-- 增加数组 remove方法-->
+        Array.prototype.indexOf = function (val) {
+            for(var i = 0; i < this.length; i++){
+                if(this[i] == val){return i;}
+            }
+            return -1;
+        }
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if(index > -1){this.splice(index,1);}
+        }
+
+        /*IE8兼容start*/
         if (!Array.prototype.indexOf) {
         Array.prototype.indexOf = function (item, i) {
         //alert("prototyping...");
@@ -185,7 +197,7 @@
     <script src="js/home/base.js"></script>
     <script src="js/home/autocomplete-0.3.0.js"></script>
 
-
+    <!--<script src="bower_components/ui-autocomplete/autocomplete.js"></script>-->
 
 
 </body>

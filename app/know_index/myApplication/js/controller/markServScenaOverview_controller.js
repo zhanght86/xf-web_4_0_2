@@ -6,7 +6,7 @@
 
 angular.module('knowledgeManagementModule').controller('markServScenaOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
-        $state.go("markServScenaOverview.manage",{userPermission:$stateParams.userPermission});
+        //$state.go("markServScenaOverview.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             //editName : editName
 

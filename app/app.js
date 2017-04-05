@@ -4,6 +4,7 @@
  */
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
+    //'ui.autocomplete',
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
