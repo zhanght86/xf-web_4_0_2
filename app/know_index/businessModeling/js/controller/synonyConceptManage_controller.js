@@ -56,6 +56,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
+
+            console.log(index,$scope.vm.pageSize,$scope.vm.applicationId);
             //size=size?size:5;   //设置pageSize默认是5
             httpRequestPost("/api/modeling/concept/synonym/list",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
