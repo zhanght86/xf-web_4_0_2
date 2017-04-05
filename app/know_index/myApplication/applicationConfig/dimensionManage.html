@@ -1,6 +1,6 @@
 <div class="r-cont pd30">
     <div class="r-cont-hd">
-        <span>纬度管理</span>
+        <span>维度管理</span>
     </div>
     <div class="r-cont-bd oh ">
         <div class="con_box  mb25">
@@ -14,7 +14,7 @@
                         	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addDimension()">创建维度</button>
                         </span>
                         <span class="R">
-                            <span>共有数据：<b >3</b> 条</span>
+                            <span>共有数据：<b ></b> 条</span>
                         </span>
                 </div>
                 <div>
@@ -22,8 +22,7 @@
                         <thead>
                         <tr>
                             <th class="bold" width="5%"><input  type="checkbox" /></th>
-                            <th class="bold" width="12%">ID</th>
-                            <th class="bold" width="15%">纬度名称</th>
+                            <th class="bold" width="15%">维度名称</th>
                             <th class="bold" width="15%">创建时间</th>
                             <th class="bold" width="12%">创建人</th>
                             <th class="bold" width="14%">启用状态</th>
@@ -31,35 +30,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+
+                        <tr ng-repeat="item in vm.listData">
                             <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>地区</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>张琼琼</td>
-                            <td><span class="btn1 btn_green2">已启用</span></td>
+                            <!--<td>地区</td>-->
+                            <td>{{item.dimensionName}}</td>
+                            <!--<td>2016.9.27 12:00:00</td>-->
+                            <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <!--<td>张琼琼</td>-->
+                            <td>{{item.creatorId}}</td>
+                            <!--<td><span class="btn1 btn_green2">已启用</span></td>-->
+                            <td>
+                                <span class="btn1 btn_green2" ng-if="item.dimensionStatusId==10001">已启用</span>
+                                <span class="btn1 btn_red" ng-if="item.dimensionStatusId==10002">未启用</span>
+                            </td>
                             <td>
                                 <a href="javascript:;" class="c-primary mr-10" onclick="add_popup('编辑维度','edit_dimension.html','510','360')">编辑</a>
-                                <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>地区</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>张琼琼</td>
-                            <td><span class="btn1 btn_gray">已停用</span></td>
-                            <td>
-                                <a href="javascript:;" class="c-primary mr-10"  onclick="add_popup('编辑维度','edit_dimension.html','510','360')">编辑</a>
                                 <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="page clearfix" id="page">
-                </div>
+                <!--<div class="page clearfix" id="page">-->
+                <!--</div>-->
+                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+
             </div>
         </div>
     </div>
