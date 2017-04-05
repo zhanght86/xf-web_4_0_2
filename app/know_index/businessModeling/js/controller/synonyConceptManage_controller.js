@@ -56,10 +56,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
-
             console.log(index,$scope.vm.pageSize,$scope.vm.applicationId);
             //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/synonym/list",{
+            httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
@@ -249,18 +248,15 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //編輯事件
         function singleEdit(item){
-            console.log(item);
             httpRequestPost("/api/modeling/concept/synonym/update",{
                 "synonymConceptId":item.synonymConceptId,
                 "synonymConceptApplicationId": $scope.vm.applicationId,
-                "synonymConceptKey":  item.synonymConceptKey,
+                "synonymConceptKey":  $scope.vm.key,
                 "synonymConceptModifier": item.synonymConceptModifier,
-                "synonymConceptTerm": item.synonymConceptTerm,
-                "synonymConceptWeight": item.synonymConceptWeight
+                "synonymConceptTerm": $scope.vm.term,
+                "synonymConceptWeight": $scope.vm.weight
             },function(data){
-                console.log(item);
-                console.log(item.synonymConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
-                console.log(data);
+                //console.log(item.synonymConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 layer.msg("编辑成功");
                 $state.reload()
             },function(){
@@ -305,16 +301,11 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                //$scope.vm.addSingleTermVal += "";
-                //console.log("kkkkkkkkkkkkkkkkkkk"+$scope.vm.addSingleTermVal);
-                alert();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
-                    console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
                     layer.msg("扩展名不能为空")
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
-                    $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
                     console.log(str);

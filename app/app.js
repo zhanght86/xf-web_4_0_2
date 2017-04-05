@@ -158,6 +158,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                 }
             })
@@ -182,6 +183,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/synony/synonyConceptManage.html',
@@ -195,6 +197,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/aggregate/aggregateConceptManage.html',
@@ -208,6 +211,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/business/businessConceptManage.html',
@@ -221,6 +225,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/sensitive/sensitiveConceptManage.html',
@@ -234,6 +239,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/errorCorrection/errorCorrectionConceptManage.html',
@@ -247,6 +253,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/disable/disableConceptManage.html',
@@ -260,6 +267,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/emotion/emotionConceptManage.html',
@@ -273,6 +281,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/intention/intentionConceptManage.html',
@@ -420,6 +429,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                 }
             })
@@ -436,6 +446,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                 }
             })
@@ -452,6 +463,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                 }
             })
@@ -468,6 +480,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                 }
             })
@@ -484,6 +497,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                 }
             })
@@ -523,6 +537,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/NodeManage.html',

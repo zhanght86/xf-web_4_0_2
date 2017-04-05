@@ -215,13 +215,13 @@ angular.module('know.home').factory('HomeService',['$resource',function ($resour
  * 过滤器 用来过滤头按钮的显示状态， 根据浏览器的路径判断当前该加亮哪一个按钮
  */
 angular.
-    module('know').
-    filter('checkclick',['$location', function($location) {
-        return function(item) {
+module('know').
+filter('checkclick',['$location', function($location) {
+    return function(item) {
             item.classtype = $location.absUrl().indexOf(item.url.split('.')[1]) > 0 ? "cur_li1" : "";
             return item.classtype;
-        };
-    }]);
+    };
+}]);
 ;
 ;
 // Source: app/know/index/index_service.js
@@ -453,7 +453,7 @@ angular.module('backModule').controller('backController', [
         //     }
         // }
 
-
+      
 
     }
 ]);
@@ -469,11 +469,11 @@ angular.module('backHomeModule').controller('backHomeController', [
     "HomeService","$sce",
     function ($scope, $location, $routeParams, $interval, $timeout, ngDialog,
               HomeService,$sce) {
-        var self = this;
+       var self = this;
 
         self.initSearch = function (column) {
             if (!$scope.SearchPOJO) {
-                $scope.SearchPOJO = $scope.initSearchPOJO();
+                $scope.SearchPOJO = $scope.initSearchPOJO(); 
             }
             /**
              * 加载分页条
@@ -487,7 +487,7 @@ angular.module('backHomeModule').controller('backHomeController', [
             };
         }
 
-
+        
         self.getMyTask = function(){
             HomeService.queryMyTask.get({page:$scope.SearchPOJO.currentPage,pageSize:$scope.SearchPOJO.pageSize},function(resource){
                 if(resource.status == 200 && resource.data!=null){
@@ -532,12 +532,12 @@ angular.module('knowGatewayModule').controller('adapterController', [
               AdapterService,TipService,TemplateService) {
         var self = this;
         $scope.targetId = '';
-
+        
         self.initSearch = function (column) {
             if (!$scope.SearchPOJO) {
                 $scope.SearchPOJO = $scope.initSearchPOJO();
             }
-
+            
             /**
              * 加载分页条
              * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -793,7 +793,7 @@ angular.module('knowGatewayModule').controller('adapterController', [
         $scope.convertSS2mm = function(time){
             return time/(60*1000);
         }
-
+        
         $scope.deleteAdapter = function(id){
             AdapterService.deleteAdaptor.get({id:id},function(re){
                 if(re.status == 200 && re.data.status == 200){
@@ -804,7 +804,7 @@ angular.module('knowGatewayModule').controller('adapterController', [
                 }
             })
         }
-
+        
         var timeout;
         $scope.$watch('SearchPOJO', function (SearchPOJO) {
             if (timeout) {
@@ -973,7 +973,7 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
 
         $scope.deleteKnowDoc = function(knowDocId){
             KnowDocService.deleteKnowDoc.save({
-                "documentationId": knowDocId,
+                    "documentationId": knowDocId,
             },function(resource){
                 if(resource.status == 200){
                     TipService.setMessage('删除成功!',"success");
@@ -1050,7 +1050,7 @@ angular.module('knowGatewayModule').controller('createTemController', [
                 console.log();
             })
         }
-
+        
         $scope.queryRules = function(){
             TemplateService.queryRules.save({
                 //"index":0,
@@ -1065,7 +1065,7 @@ angular.module('knowGatewayModule').controller('createTemController', [
             })
         }
 
-
+        
         $scope.addRule = function(){
             if($scope.rules){
                 $scope.rules.push({
@@ -1156,7 +1156,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
         $scope.level = $stateParams.level;
         $scope.roleId = $stateParams.roleId;
         $scope.showExtract = false;
-
+        
         $scope.queryRole = function(){
             TemplateService.queryRuleById.save({
                 ruleId: $scope.roleId
@@ -1176,11 +1176,11 @@ angular.module('knowGatewayModule').controller('docSelectController', [
             TemplateService.queryTemplateContent.save({
                 "index": 0,
                 "pageSize": 1,
-                "templateId": $scope.temId
+               "templateId": $scope.temId
             },function(re){
                 if(re.status == 200){
                     if($scope.notEmpty(re.data) && re.data.length > 0){
-                        var  queryTemContent =  $sce.trustAsHtml(re.data);
+                       var  queryTemContent =  $sce.trustAsHtml(re.data);
                         $scope.queryTemContent = queryTemContent;
                     }
                 }
@@ -1332,7 +1332,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
         if($scope.roleId != null && $scope.roleId != ""){
             $scope.queryRole();
         }
-
+        
     }
 ]);
 // Source: app/know_background/know_gateway/js/controller/tem_controller.js
@@ -1374,14 +1374,14 @@ angular.module('knowGatewayModule').controller('temController', [
                     "requestId": "string",
                     "templateName": $scope.SearchPOJO.name,
                 }
-                ,function(resource){
-                    if(resource.status == 200){
-                        $scope.templates = resource.data.objs
-                        $scope.paginationConf.totalItems = resource.data.total;
-                    }
-                })
+               ,function(resource){
+                if(resource.status == 200){
+                    $scope.templates = resource.data.objs
+                    $scope.paginationConf.totalItems = resource.data.total;
+                }
+            })
         }
-
+        
         $scope.deleteTemplate = function(temId){
             TemplateService.deleteTemplate.save({
                 "templateId":temId
@@ -1392,7 +1392,7 @@ angular.module('knowGatewayModule').controller('temController', [
                 }
             })
         }
-
+        
         $scope.temType = function(typeNum){
             if(typeNum == 1){
                 return "WORD"
@@ -2102,7 +2102,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
 /**
  * Created by Administrator on 2016/6/17.
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
- */
+ */                           
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"HomeService", "PersonalCenterService","KnowDocService",
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
@@ -2122,7 +2122,7 @@ knowledge_static_web.controller('ApplicationController',
                     userName: data.name,
                     realName: data.realName,
                     sex: data.sex,
-                    email: data.email,
+                    email: data.email,             
                     protarit: data.protarit,
                     phone: data.phone,
                     identity: data.identity,
@@ -2180,10 +2180,10 @@ knowledge_static_web.controller('ApplicationController',
              * 非空判断
              */
             $scope.notEmpty = function (param) {
-                if(param!=null && param!=undefined && $.trim(param)!=''){
-                    return true;
-                }
-                return false;
+               if(param!=null && param!=undefined && $.trim(param)!=''){
+                   return true;
+               }
+               return false;
             };
 
             /**
@@ -2239,7 +2239,7 @@ knowledge_static_web.controller('ApplicationController',
             /**
              * 格式化时间
              */
-                // 格式化时间
+            // 格式化时间
             $scope.format = function(time, format){
                 var t = new Date(time);
                 var tf = function(i){return (i < 10 ? '0' : '') + i};
@@ -2249,7 +2249,7 @@ knowledge_static_web.controller('ApplicationController',
                             return tf(t.getFullYear());
                             break;
                         case 'MM':
-                            return tf(t.getMonth() + 1);
+                             return tf(t.getMonth() + 1);
                             break;
                         case 'mm':
                             return tf(t.getMinutes());
@@ -2344,7 +2344,7 @@ knowledge_static_web.controller('ApplicationController',
             // });
             $scope.$on(AUTH_EVENTS.notAuthorized, function (event,data) {
                 if(data.fromState.name != null && data.fromState.name!='')
-                //$state.go(data.fromState.name);
+                    //$state.go(data.fromState.name);
                     $state.go($window.location.reload());
             });
 
@@ -2381,18 +2381,18 @@ angular.module('adminModule').controller('adminContentController', [
 
         //setCookie("userId","359873057331875840");
         //$stateParams.userPermission = ['超级管理员','初级管理员'];
-        $scope.vm = {
-            userName : getCookie("userName"),
-            userPermission : $stateParams.userPermission,
-            addApplicationWindow : addApplicationWindow,
-            myApplication : "",
-            selectLicence : "",
+                $scope.vm = {
+                    userName : getCookie("userName"),
+                    userPermission : $stateParams.userPermission,
+                    addApplicationWindow : addApplicationWindow,
+                    myApplication : "",
+                    selectLicence : "",
 
-            newApplicationName : "",
-            newScene : "",
-            newLicence : "",
-            newDescribe : ""
-        };
+                    newApplicationName : "",
+                    newScene : "",
+                    newLicence : "",
+                    newDescribe : ""
+                };
         myApplication();
         selectLicence();
 
@@ -2416,18 +2416,18 @@ angular.module('adminModule').controller('adminContentController', [
         //     $scope.vm.selectLicence = ["d","a","b"]
         //},3000);
         //获取 scene
-        function selectLicence(){
-            httpRequestPost("/api/application/scene/listAllScene",{
+       function selectLicence(){
+           httpRequestPost("/api/application/scene/listAllScene",{
 
-            },function(data){
-                $scope.vm.selectLicence = data.data;
-                $scope.$apply();
-                return data.data
-            },function(err){
+                                    },function(data){
+                                        $scope.vm.selectLicence = data.data;
+                                        $scope.$apply();
+                                        return data.data
+                                    },function(err){
 
-                console.log(err)
-            });
-        }
+                                        console.log(err)
+                                 });
+       }
 
         //打开添加窗口
         function addApplicationWindow() {
@@ -2469,14 +2469,14 @@ angular.module('adminModule').controller('adminContentController', [
 /**
  * Created by Administrator on 2016/6/3.
  * 控制器
- */
+ */    
 
 angular.module('adminModule').controller('adminController', [
     '$scope',  "$state", "$stateParams",
     function ($scope,  $state ,$stateParams) {
-        //console.log("state"+$stateParams.userPermission);
-        $state.go("admin.manage",{userPermission:$stateParams.userPermission});
-    }
+                //console.log("state"+$stateParams.userPermission);  
+        $state.go("admin.manage",{userPermission:$stateParams.userPermission});              
+    }                       
 ]);;
 // Source: app/know_index/admin/js/controller/userManage_controller.js
 /**
@@ -2705,10 +2705,10 @@ angular.module('pagination',[]).directive('pagination',[function(){
                 }else if(scope.$parent.SearchPOJO){
                     scope.$parent.SearchPOJO.currentPage = scope.conf.currentPage;
                 }else if(scope.conf.methodFn){
-                    scope.conf.methodFn(scope.conf);
+                	scope.conf.methodFn(scope.conf);
                 }
             }
-
+            
             //上一页
             scope.prevPage = function(){
                 if(scope.conf.currentPage > 1){
@@ -2743,8 +2743,8 @@ angular.module('pagination',[]).directive('pagination',[function(){
 ;
 // Source: app/know_index/base/repalace/replace.js
 /**
- * Created by 41212 on 2017/3/31.
- */
+* Created by 41212 on 2017/3/31.
+*/
 angular.module('knowledge_static_web').filter('strReplace', function () {
     return function (value) {
         return value.replace(/；/g,'，') ;
@@ -2853,8 +2853,8 @@ knowledge_static_web
     }]);;
 // Source: app/know_index/base/weightFilter/weightFilter.js
 /**
- * Created by 41212 on 2017/3/31.
- */
+* Created by 41212 on 2017/3/31.
+*/
 angular.module('knowledge_static_web').filter('weightFilter', function () {
     return function (value) {
         switch (value){
@@ -2887,16 +2887,16 @@ knowledge_static_web.controller('knowItemDeleteController',
 
 
 
-            $scope.knowItemDelete = function(){
-                var knowItemId = $scope.ngDialogData.selectedKnowItem.id;
-                if(knowItemId ==null || knowItemId ==''){
-                    TipService.setMessage('知识条目ID不能为空', 'warning ');
-                    return;
-                }
-                KnowledgePortalService.deleteKnowItem(knowItemId);
+    $scope.knowItemDelete = function(){
+        var knowItemId = $scope.ngDialogData.selectedKnowItem.id;
+        if(knowItemId ==null || knowItemId ==''){
+            TipService.setMessage('知识条目ID不能为空', 'warning ');
+            return;
+        }
+        KnowledgePortalService.deleteKnowItem(knowItemId);
 
-            }
-        }]);
+    }
+}]);
 // Source: app/know_index/base/window_template/knowItem_share/knowItem_share_controller.js
 /**
  * Created by Administrator on 2016/6/17.
@@ -2906,27 +2906,27 @@ knowledge_static_web.controller('knowItemShareController',
     ['$scope', 'KnowledgeManagementService','TipService','KnowledgePortalService',
         function ($scope, KnowledgeManagementService,TipService,KnowledgePortalService) {
 
+    
+    KnowledgeManagementService.get({}, function (result) {
+        if (result.status == 200 && result.data.list.length > 0) {
+            $scope.knowLibraries = result.data.list;
+        }
+    })
+            
+    $scope.knowItemShare = function(){
+        var knowItemId = $scope.ngDialogData.selectedKnowItem.id;
+        if($scope.selectedKnowLibrary ==null || $scope.selectedKnowLibrary ==''){
+            TipService.setMessage('请选定知识库', 'warning ');
+            return;
+        }
+        if(knowItemId ==null && $knowItemId == ''){
+            TipService.setMessage('请选定知识条目', 'warning ');
+            return;
+        }
+        KnowledgePortalService.share(knowItemId,$scope.selectedKnowLibrary);
 
-            KnowledgeManagementService.get({}, function (result) {
-                if (result.status == 200 && result.data.list.length > 0) {
-                    $scope.knowLibraries = result.data.list;
-                }
-            })
-
-            $scope.knowItemShare = function(){
-                var knowItemId = $scope.ngDialogData.selectedKnowItem.id;
-                if($scope.selectedKnowLibrary ==null || $scope.selectedKnowLibrary ==''){
-                    TipService.setMessage('请选定知识库', 'warning ');
-                    return;
-                }
-                if(knowItemId ==null && $knowItemId == ''){
-                    TipService.setMessage('请选定知识条目', 'warning ');
-                    return;
-                }
-                KnowledgePortalService.share(knowItemId,$scope.selectedKnowLibrary);
-
-            }
-        }]);
+    }
+}]);
 // Source: app/know_index/businessModeling/js/controller/aggregateConceptManage_controller.js
 /**
  * Created by 41212 on 2017/3/23.
@@ -2956,8 +2956,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         ////請求列表
         //function getAggre(index){
         //        //size=size?size:5;   //设置pageSize默认是5
-        //        httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-        //            "businessConceptApplicationId": applicationId,
+        //        httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+        //            "collectiveConceptApplicationId": applicationId,
         //            "index" :index==1?0:index,
         //            "pageSize": $scope.vm.pageSize
         //        },function(data){
@@ -2977,8 +2977,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //$scope.$watch('vm.paginationConf.currentPage', function(current){
         //    if(current){
         //        console.log(current,$scope.vm.pageSize);
-        //        httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-        //            "businessConceptApplicationId": applicationId,
+        //        httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+        //            "collectiveConceptApplicationId": applicationId,
         //            "index" :current*$scope.vm.pageSize,
         //            "pageSize": $scope.vm.pageSize
         //        },function(){
@@ -3052,11 +3052,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
-            list :[{businessConceptKey:'eidtcart',businessConceptWeight:3,businessConceptTerm:'重要',businessConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
-            addBusiness : addBusiness,
-            editBusiness : editBusiness,
-            deleteBusiness:deleteBusiness,
+            addCollective : addCollective,
+            editCollective : editCollective,
+            deleteCollective:deleteCollective,
             listData : "",   // table 数据
             singleDel : singleDel,    //單條刪除
             singleAdd : singleAdd,
@@ -3065,15 +3064,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             //查詢
             search : search,
             searchVal : "",
-            searchType : "businessConceptKey",
+            searchType : "collectiveConceptKey",
             timeStart : "",
             timeEnd : "",
-            //searchTypeList : [{name:"businessConceptKey",value:"概念类名"},{name:"businessConceptWeight",value:"概念类权重"},{name:"businessConceptTerm",value:"业务词"},{name:"businessConceptModifier",value:"创建人"},{name:"businessConceptModifyTime",value:"上传日期"}],
+            //searchTypeList : [{name:"collectiveConceptKey",value:"概念类名"},{name:"collectiveConceptWeight",value:"概念类权重"},{name:"collectiveConceptTerm",value:"业务词"},{name:"collectiveConceptModifier",value:"创建人"},{name:"collectiveConceptModifyTime",value:"上传日期"}],
             //新增
-            "key": "",
-            "modifier": getCookie("userName"),
-            "term": "",
-            "weight": "1" ,   //默認權重
+            key : "",
+            modifier: getCookie("userName"),
+            term : "",
+            weight: "1" ,   //默認權重
 
             dialogTitle : "",
 
@@ -3096,16 +3095,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
         getAggre(1);
-        //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
             //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                //console.log(data);
+                console.log(data);
                 $scope.vm.listData = data.data;
                 //console.log(data)
                 $scope.vm.paginationConf = {
@@ -3122,8 +3120,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                    "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
                 },function(){
@@ -3133,15 +3131,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             }
         });
         //编辑
-        function editBusiness(item){
+        function editCollective(item){
             $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
-            $scope.vm.weight =  item.businessConceptWeight;
+            $scope.vm.key = item.collectiveConceptKey;
+            $scope.vm.term =  item.collectiveConceptTerm;
+            $scope.vm.weight =  item.collectiveConceptWeight;
             addDelDialog(singleEdit,item);
         }
         function search(){
-            if($scope.vm.searchType == "businessConceptModifier"){
+            if($scope.vm.searchType == "collectiveConceptModifier"){
                 searchByUser()
             }else{
                 searchByType()
@@ -3150,9 +3148,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //查询
         function searchByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
-                "businessConceptModifier":$scope.vm.searchVal,
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/collective/listByModifier",{
+                "collectiveConceptModifier":$scope.vm.searchVal,
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "index":0,
                 "pageSize":10
             },function(data){
@@ -3164,11 +3162,11 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         function searchByType(){
             var data;
-            if($scope.vm.searchType != "businessConceptModifyTime"){
+            if($scope.vm.searchType != "collectiveConceptModifyTime"){
                 var key = angular.copy($scope.vm.searchType);
                 var data =  {
                     key: $scope.vm.searchVal,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
@@ -3177,12 +3175,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 data =  {
                     "startTimeRequest": $scope.vm.timeStart,
                     "endTimeRequest": $scope.vm.timeEnd,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
             }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",data,function(data){
+            httpRequestPost("/api/modeling/concept/collective/listByAttribute",data,function(data){
                 $scope.vm.listData = data.data
             },function(){
                 layer.msg("查询没有对应信息")
@@ -3192,7 +3190,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //console.log([key]);
 
         //添加 窗口
-        function addBusiness(){
+        function addCollective(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
                 scope: $scope,
@@ -3203,24 +3201,24 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
+                        httpRequestPost("/api/modeling/concept/collective/repeatCheck",{
+                            "collectiveConceptApplicationId": $scope.vm.applicationId,
+                            "collectiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
+                                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                                    "collectiveConceptApplicationId": $scope.vm.applicationId,
+                                    "collectiveConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
                                     $scope.vm.dialogTitle="修改停用概念";
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
-                                    $scope.vm.weight =  data.data[0].businessConceptWeight;
+                                    $scope.vm.key = data.data[0].collectiveConceptKey;
+                                    $scope.vm.term =  data.data[0].collectiveConceptTerm;
+                                    $scope.vm.weight =  data.data[0].collectiveConceptWeight;
                                 },function(){
                                 });
                             }else{
@@ -3248,9 +3246,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         function addDelDialog(callback,item){
             //編輯
             //if(item){
-            //     $scope.vm.key = item.businessConceptKey;
-            //     $scope.vm.term =  item.businessConceptTerm;
-            //     $scope.vm.weight =  item.businessConceptWeight;
+            //     $scope.vm.key = item.collectiveConceptKey;
+            //     $scope.vm.term =  item.collectiveConceptTerm;
+            //     $scope.vm.weight =  item.collectiveConceptWeight;
             //}
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
@@ -3271,7 +3269,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             });
         }
         //   刪除 彈框
-        function deleteBusiness(id){
+        function deleteCollective(id){
             //console.log(id);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/ConceptManageDialog.html",
@@ -3289,17 +3287,17 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //編輯事件
         function singleEdit(item){
-            console.log(item);
-            httpRequestPost("/api/modeling/concept/business/update",{
-                "businessConceptId":item.businessConceptId,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
-                "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
-                "businessConceptWeight": item.businessConceptWeight
+            //console.log("term============="+$scope.vm.term);
+            httpRequestPost("/api/modeling/concept/collective/update",{
+                "collectiveConceptId":item.collectiveConceptId,
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "collectiveConceptKey": $scope.vm.key,
+                "collectiveConceptModifier": item.collectiveConceptModifier,
+                "collectiveConceptTerm": $scope.vm.term,
+                "collectiveConceptWeight": $scope.vm.weight
             },function(data){
                 console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
+                console.log(item.collectiveConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 console.log(data);
                 layer.msg("编辑成功");
                 $state.reload()
@@ -3310,12 +3308,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //单条新增
         function singleAdd(){
             console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term, $scope.vm.weight)
-            httpRequestPost("/api/modeling/concept/business/add",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": $scope.vm.modifier,
-                "businessConceptTerm": $scope.vm.term,
-                "businessConceptWeight": $scope.vm.weight
+            httpRequestPost("/api/modeling/concept/collective/add",{
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "collectiveConceptKey":  $scope.vm.key,
+                "collectiveConceptModifier": $scope.vm.modifier,
+                "collectiveConceptTerm": $scope.vm.term,
+                "collectiveConceptWeight": $scope.vm.weight
             },function(data){
                 //console.log(data);
                 layer.msg("添加成功");
@@ -3326,8 +3324,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //单条刪除
         function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
-                "businessConceptId":id
+            httpRequestPost("/api/modeling/concept/collective/delete",{
+                "collectiveConceptId":id
             },function(data){
                 //console.log(data)
                 layer.msg("刪除成功");
@@ -3403,9 +3401,8 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             searchType : "businessConceptKey",
             timeStart : "",
             timeEnd : "",
-            //searchTypeList : [{name:"businessConceptKey",value:"概念类名"},{name:"businessConceptWeight",value:"概念类权重"},{name:"businessConceptTerm",value:"业务词"},{name:"businessConceptModifier",value:"创建人"},{name:"businessConceptModifyTime",value:"上传日期"}],
             //新增
-            key: "",
+            key: "" ,
             modifier: getCookie("userName"),
             term: "",
             weight: "1" ,   //默認權重
@@ -3421,9 +3418,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
 
         };
 
-        $scope.$watch("vm.addSingleTermVal",function (val) {
-            console.log(val)
-        },true);
+        //$scope.$watch("vm.addSingleTermVal",function (val) {
+        //    console.log(val)
+        //},true);
 
         /**
          * 加载分页条
@@ -3441,7 +3438,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             },function(data){
                 //console.log(data);
                 $scope.vm.listData = data.data;
-                //console.log(data)
+                    //console.log(data)
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
@@ -3468,11 +3465,11 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         });
         //编辑
         function editBusiness(item){
-            $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
-            $scope.vm.weight =  item.businessConceptWeight;
-            addDelDialog(singleEdit,item);
+             $scope.vm.dialogTitle="编辑停用概念";
+             $scope.vm.key = item.businessConceptKey;
+             $scope.vm.term =  item.businessConceptTerm;
+             $scope.vm.weight =  item.businessConceptWeight;
+             addDelDialog(singleEdit,item);
         }
         function search(){
             if($scope.vm.searchType == "businessConceptModifier"){
@@ -3501,13 +3498,13 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             if($scope.vm.searchType != "businessConceptModifyTime"){
                 var key = angular.copy($scope.vm.searchType);
                 var data =  {
-                    key: $scope.vm.searchVal,
+                     key: $scope.vm.searchVal,
                     "businessConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
             }else{
-                console.log( $scope.vm.timeStart);
+                console.log( "time"+$scope.vm.timeStart,$scope.vm.timeStart);
                 data =  {
                     "startTimeRequest": $scope.vm.timeStart,
                     "endTimeRequest": $scope.vm.timeEnd,
@@ -3522,7 +3519,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 layer.msg("查询没有对应信息")
             });
         }
-        var  key = angular.copy($scope.vm.searchType);
+       var  key = angular.copy($scope.vm.searchType);
         console.log([key]);
 
         //添加 窗口
@@ -3557,14 +3554,14 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                     $scope.vm.weight =  data.data[0].businessConceptWeight;
                                 },function(){
                                 });
-                            }else{
+                             }else{
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加业务概念";
                                 //key: "",
                                 // "modifier": getCookie("userName"),
-                                $scope.vm.term="";
-                                $scope.vm.weight="1" ;   //默認權重
-                                addDelDialog(singleAdd);
+                                    $scope.vm.term="";
+                                    $scope.vm.weight="1" ;   //默認權重
+                                    addDelDialog(singleAdd);
                             }
                         },function(){
                             layer.msg("添加失敗")
@@ -3597,9 +3594,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     if(e === 1){
                         callback(item)
                     }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                         $scope.vm.key = "";
+                         $scope.vm.term = "";
+                         $scope.vm.weight =  1;
                     }
                 }
             });
@@ -3623,18 +3620,17 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
         //編輯事件
         function singleEdit(item){
-            console.log(item);
             httpRequestPost("/api/modeling/concept/business/update",{
                 "businessConceptId":item.businessConceptId,
                 "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
+                "businessConceptKey":  $scope.vm.key,
                 "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
-                "businessConceptWeight": item.businessConceptWeight
+                "businessConceptTerm": $scope.vm.term,
+                "businessConceptWeight": $scope.vm.weight
             },function(data){
-                console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
-                console.log(data);
+                //console.log(item);
+                //console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
+                //console.log(data);
                 layer.msg("编辑成功");
                 $state.reload()
             },function(){
@@ -3664,7 +3660,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 "businessConceptId":id
             },function(data){
                 //console.log(data)
-                layer.msg("刪除成功");
+               layer.msg("刪除成功");
                 $state.reload()
             },function(){
                 layer.msg("刪除失敗")
@@ -3677,30 +3673,26 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             $scope.vm.term = str.join("；");
         }
         function addSingleTerm(e){
-            var keycode = window.event?e.keyCode:e.which;
-            if(keycode==13){
-                //$scope.vm.addSingleTermVal += "";
-                //console.log("kkkkkkkkkkkkkkkkkkk"+$scope.vm.addSingleTermVal);
-                alert();
-                var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
-                if($scope.vm.addSingleTermVal.length==0){
-                    console.log($scope.vm.addSingleTermVal,"second");
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空")
-                }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
-                    $scope.vm.addSingleTermVal = "";
-                    console.log($scope.vm.addSingleTermVal);
-                    str.push($scope.vm.addSingleTermVal);
-                    console.log(str);
-                    $scope.vm.term = str.join("；");
-                    $scope.vm.addSingleTermVal = "";
-                    console.log($scope.vm.term);
-                }else{
-                    console.log($scope.vm.addSingleTermVal );
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写")
-                }
-            }
+                  var keycode = window.event?e.keyCode:e.which;
+                  if(keycode==13){
+                      var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
+                        if($scope.vm.addSingleTermVal.length==0){
+                          console.log($scope.vm.addSingleTermVal,"second");
+                          $scope.vm.addSingleTermVal = "";
+                          layer.msg("扩展名不能为空")
+                      }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
+                          console.log($scope.vm.addSingleTermVal);
+                          str.push($scope.vm.addSingleTermVal);
+                          console.log(str);
+                          $scope.vm.term = str.join("；");
+                          $scope.vm.addSingleTermVal = "";
+                          console.log($scope.vm.term);
+                      }else{
+                          console.log($scope.vm.addSingleTermVal );
+                          $scope.vm.addSingleTermVal = "";
+                          layer.msg("扩展名重复,请重新填写")
+                      }
+                  }
         }
 
     }
@@ -3718,19 +3710,17 @@ angular.module('businessModelingModule').controller('businessModelingController'
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
-        $scope.vm = {
-            isSlide : isSlide,
-        };
-
-        function isSlide(event){
-            var self=event.target;
-            if($(self).hasClass("slideActive")){
-                $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
-            }else{
-                $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
-            }
-
-        }
+        //$scope.vm = {
+        //    isSlide : isSlide,
+        //};
+        //function isSlide(event){
+        //    var self=event.target;
+        //    if($(self).hasClass("slideActive")){
+        //        $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
+        //    }else{
+        //        $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
+        //    }
+        //}
     }
 ]);;
 // Source: app/know_index/businessModeling/js/controller/disableConceptManage_controller.js
@@ -3744,313 +3734,313 @@ angular.module('businessModelingModule').controller('businessModelingController'
 
 angular.module('businessModelingModule').controller('disableConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
-        $scope.vm = {
-            list :[{businessConceptKey:'eidtcart',businessConceptTerm:'重要',businessConceptModifier:'admin'}],
-            applicationId : getCookie("applicationId"),
-            addBusiness : addBusiness,
-            editBusiness : editBusiness,
-            deleteBusiness:deleteBusiness,
-            listData : "",   // table 数据
-            singleDel : singleDel,    //單條刪除
-            singleAdd : singleAdd,
-            paginationConf : ""  ,//分页条件
-            pageSize : 5  , //默认每页数量
-            //查詢
-            search : search,
-            searchVal : "",
-            searchType : "businessConceptKey",
-            timeStart : "",
-            timeEnd : "",
-            //新增
-            "key": "",
-            "modifier": getCookie("userName"),
-            "term": "",
+                    setCookie("applicationId","360619411498860544");
+                    setCookie("userName","admin1");
+                    $scope.vm = {
+                        list :[{stopConceptKey:'eidtcart',stopConceptTerm:'重要',stopConceptModifier:'admin'}],
+                        applicationId : getCookie("applicationId"),
+                        addStop : addStop,
+                        editStop : editStop,
+                        deleteStop:deleteStop,
+                        listData : "",   // table 数据
+                        singleDel : singleDel,    //單條刪除
+                        singleAdd : singleAdd,
+                        paginationConf : ""  ,//分页条件
+                        pageSize : 5  , //默认每页数量
+                        //查詢
+                        search : search,
+                        searchVal : "",
+                        searchType : "stopConceptKey",
+                        timeStart : "",
+                        timeEnd : "",
+                        //新增
+                        "key": "",
+                        "modifier": getCookie("userName"),
+                        "term": "",
 
-            dialogTitle : "",
+                        dialogTitle : "",
 
-            inputSelect : [],
-            inputVal : "",
+                        inputSelect : [],
+                        inputVal : "",
 
-            delSingleTerm : delSingleTerm,      //添加 删除  term
-            addSingleTerm : addSingleTerm,
-            addSingleTermVal : "",
+                        delSingleTerm : delSingleTerm,      //添加 删除  term
+                        addSingleTerm : addSingleTerm,
+                        addSingleTermVal : "",
 
-        };
+                    };
 
-        //$scope.$watch("vm.addSingleTermVal",function (val) {
-        //    console.log(val)
-        //},true);
+                    //$scope.$watch("vm.addSingleTermVal",function (val) {
+                    //    console.log(val)
+                    //},true);
 
 
-        /**
-         * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
-         */
-        getAggre(1);
-        //console.log($scope.vm.applicationId)
-        //请求列表
-        function getAggre(index){
-            //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
-                "pageSize": $scope.vm.pageSize
-            },function(data){
-                //console.log(data);
-                $scope.vm.listData = data.data;
-                //console.log(data)
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
-            },function(){
-                layer.msg("请求失败")
-            })
-        }
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
-                },function(){
-                })
-            }
-        });
-        //编辑
-        function editBusiness(item){
-            $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
-            addDelDialog(singleEdit,item);
-        }
-        function search(){
-            if($scope.vm.searchType == "businessConceptModifier"){
-                searchByUser()
-            }else{
-                searchByType()
-            }
-        }
-        //查询
-        function searchByUser(){
-            console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
-                "businessConceptModifier":$scope.vm.searchVal,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "index":0,
-                "pageSize":10
-            },function(data){
-                console.log(data);
-                $scope.vm.listData = data.data
-            },function(){
-                layer.msg("查询没有对应信息")
-            });
-        }
-        function searchByType(){
-            var data;
-            if($scope.vm.searchType != "businessConceptModifyTime"){
-                var key = angular.copy($scope.vm.searchType);
-                var data =  {
-                    key: $scope.vm.searchVal,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
-            }else{
-                console.log( $scope.vm.timeStart);
-                data =  {
-                    "startTimeRequest": $scope.vm.timeStart,
-                    "endTimeRequest": $scope.vm.timeEnd,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
-            }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",data,function(data){
-                $scope.vm.listData = data.data
-            },function(){
-                layer.msg("查询没有对应信息")
-            });
-        }
-        var  key = angular.copy($scope.vm.searchType);
-        //console.log([key]);
-
-        //添加 窗口
-        function addBusiness(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/disable/disableConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="修改停用概念";
-                                    console.log(data);
-                                    addDelDialog(singleEdit,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加业务概念";
-                                //key: "",
-                                // "modifier": getCookie("userName"),
-                                $scope.vm.term="";
-                                addDelDialog(singleAdd);
-                            }
+                    /**
+                     * 加载分页条
+                     * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+                     */
+                    getAggre(1);
+                    //console.log($scope.vm.applicationId)
+                    //请求列表
+                    function getAggre(index){
+                        //size=size?size:5;   //设置pageSize默认是5
+                        httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
+                            "stopConceptApplicationId": $scope.vm.applicationId,
+                            "index" :index==1?0:index,
+                            "pageSize": $scope.vm.pageSize
+                        },function(data){
+                            //console.log(data);
+                            $scope.vm.listData = data.data;
+                            //console.log(data)
+                            $scope.vm.paginationConf = {
+                                currentPage: index,//当前页
+                                totalItems: Math.ceil(data.total/5), //总条数
+                                pageSize: 1,//第页条目数
+                                pagesLength: 8,//分页框数量
+                            };
+                            $scope.$apply();
                         },function(){
-                            layer.msg("添加失敗")
+                            layer.msg("请求失败")
                         })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
                     }
-                }
-            });
-        }
+                    $scope.$watch('vm.paginationConf.currentPage', function(current){
+                        if(current){
+                            //console.log(current,$scope.vm.pageSize);
+                            httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
+                                "stopConceptApplicationId": $scope.vm.applicationId,
+                                "index" :current*$scope.vm.pageSize,
+                                "pageSize": $scope.vm.pageSize
+                            },function(){
+                                getAggre(current);
+                            },function(){
+                            })
+                        }
+                    });
+                    //编辑
+                    function editStop(item){
+                        $scope.vm.dialogTitle="编辑停用概念";
+                        $scope.vm.key = item.stopConceptKey;
+                        $scope.vm.term =  item.stopConceptTerm;
+                        addDelDialog(singleEdit,item);
+                    }
+                    function search(){
+                        if($scope.vm.searchType == "stopConceptModifier"){
+                            searchByUser()
+                        }else{
+                            searchByType()
+                        }
+                    }
+                    //查询
+                    function searchByUser(){
+                        console.log($scope.vm.searchVal);
+                        httpRequestPost("/api/modeling/concept/stop/listByModifier",{
+                            "stopConceptModifier":$scope.vm.searchVal,
+                            "stopConceptApplicationId": $scope.vm.applicationId,
+                            "index":0,
+                            "pageSize":10
+                        },function(data){
+                            console.log(data);
+                            $scope.vm.listData = data.data
+                        },function(){
+                            layer.msg("查询没有对应信息")
+                        });
+                    }
+                    function searchByType(){
+                        var data;
+                        if($scope.vm.searchType != "stopConceptModifyTime"){
+                            var key = angular.copy($scope.vm.searchType);
+                            var data =  {
+                                key: $scope.vm.searchVal,
+                                "stopConceptApplicationId": $scope.vm.applicationId,
+                                "index":0,
+                                "pageSize":1
+                            }
+                        }else{
+                            console.log( $scope.vm.timeStart);
+                            data =  {
+                                "startTimeRequest": $scope.vm.timeStart,
+                                "endTimeRequest": $scope.vm.timeEnd,
+                                "stopConceptApplicationId": $scope.vm.applicationId,
+                                "index":0,
+                                "pageSize":1
+                            }
+                        }
+                        httpRequestPost("/api/modeling/concept/stop/listByAttribute",data,function(data){
+                            $scope.vm.listData = data.data
+                        },function(){
+                            layer.msg("查询没有对应信息")
+                        });
+                    }
+                    var  key = angular.copy($scope.vm.searchType);
+                    //console.log([key]);
 
-        //編輯彈框   添加公用
-        function addDelDialog(callback,item){
-            //編輯
-            //if(item){
-            //     $scope.vm.key = item.businessConceptKey;
-            //     $scope.vm.term =  item.businessConceptTerm;
-            //}
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item)
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+                    //添加 窗口
+                    function addStop(){
+                        var dialog = ngDialog.openConfirm({
+                            template:"/know_index/businessModeling/disable/disableConceptManageDialog.html",
+                            scope: $scope,
+                            closeByDocument:false,
+                            closeByEscape: true,
+                            showClose : true,
+                            backdrop : 'static',
+                            preCloseCallback:function(e){    //关闭回掉
+                                if(e === 1){
+                                    console.log($scope.vm.key);
+                                    httpRequestPost("/api/modeling/concept/stop/repeatCheck",{
+                                        "stopConceptApplicationId": $scope.vm.applicationId,
+                                        "stopConceptKey": $scope.vm.key
+                                    },function(data){          //类名重複
+                                        if(data.status===10002){
+                                            layer.msg("概念类名重复");
+                                            httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
+                                                "stopConceptApplicationId": $scope.vm.applicationId,
+                                                "stopConceptKey":$scope.vm.key,
+                                                "index":0,
+                                                "pageSize":1
+                                            },function(data){
+                                                $scope.vm.dialogTitle="修改停用概念";
+                                                console.log(data);
+                                                addDelDialog(singleEdit,data.data[0]);
+                                                $scope.vm.key = data.data[0].stopConceptKey;
+                                                $scope.vm.term =  data.data[0].stopConceptTerm;
+                                            },function(){
+                                            });
+                                        }else{
+                                            //类名无冲突
+                                            $scope.vm.dialogTitle="增加业务概念";
+                                            //key: "",
+                                            // "modifier": getCookie("userName"),
+                                            $scope.vm.term="";
+                                            addDelDialog(singleAdd);
+                                        }
+                                    },function(){
+                                        layer.msg("添加失敗")
+                                    })
+                                }else{
+                                    $scope.vm.key = "";
+                                    $scope.vm.term = "";
+                                }
+                            }
+                        });
                     }
-                }
-            });
-        }
-        //   刪除 彈框
-        function deleteBusiness(id){
-            //console.log(id);
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDel(id)
-                    }
-                }
-            });
-        }
-        //編輯事件
-        function singleEdit(item){
-            console.log(item);
-            httpRequestPost("/api/modeling/concept/business/update",{
-                "businessConceptId":item.businessConceptId,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
-                "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
-            },function(data){
-                console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
-                console.log(data);
-                layer.msg("编辑成功");
-                $state.reload()
-            },function(){
-                layer.msg("编辑失败")
-            })
-        }
-        //单条新增
-        function singleAdd(){
-            console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
-            httpRequestPost("/api/modeling/concept/business/add",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": $scope.vm.modifier,
-                "businessConceptTerm": $scope.vm.term,
-            },function(data){
-                //console.log(data);
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
-            })
-        }
-        //单条刪除
-        function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
-                "businessConceptId":id
-            },function(data){
-                //console.log(data)
-                layer.msg("刪除成功");
-                $state.reload()
-            },function(){
-                layer.msg("刪除失敗")
-            })
-        }
 
-        function delSingleTerm(item){
-            var str = angular.copy($scope.vm.term.split("；"));
-            str.remove(item);
-            $scope.vm.term = str.join("；");
-        }
-        function addSingleTerm(e){
-            var keycode = window.event?e.keyCode:e.which;
-            if(keycode==13){
-                var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
-                if($scope.vm.addSingleTermVal.length==0){
-                    //console.log($scope.vm.addSingleTermVal,"second");
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空")
-                }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
-                    console.log($scope.vm.addSingleTermVal);
-                    str.push($scope.vm.addSingleTermVal);
-                    console.log(str);
-                    $scope.vm.term = str.join("；");
-                    $scope.vm.addSingleTermVal = "";
-                    console.log($scope.vm.term);
-                }else{
-                    console.log($scope.vm.addSingleTermVal );
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写")
+                    //編輯彈框   添加公用
+                    function addDelDialog(callback,item){
+                        //編輯
+                        //if(item){
+                        //     $scope.vm.key = item.stopConceptKey;
+                        //     $scope.vm.term =  item.stopConceptTerm;
+                        //}
+                        var dialog = ngDialog.openConfirm({
+                            template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
+                            scope: $scope,
+                            closeByDocument:false,
+                            closeByEscape: true,
+                            showClose : true,
+                            backdrop : 'static',
+                            preCloseCallback:function(e){    //关闭回掉
+                                if(e === 1){
+                                    callback(item)
+                                }else{
+                                    $scope.vm.key = "";
+                                    $scope.vm.term = "";
+                                }
+                            }
+                        });
+                    }
+                    //   刪除 彈框
+                    function deleteStop(id){
+                        //console.log(id);
+                        var dialog = ngDialog.openConfirm({
+                            template:"/know_index/businessModeling/ConceptManageDialog.html",
+                            scope: $scope,
+                            closeByDocument:false,
+                            closeByEscape: true,
+                            showClose : true,
+                            backdrop : 'static',
+                            preCloseCallback:function(e){    //关闭回掉
+                                if(e === 1){
+                                    singleDel(id)
+                                }
+                            }
+                        });
+                    }
+                    //編輯事件
+                    function singleEdit(item){
+                        console.log(item);
+                        httpRequestPost("/api/modeling/concept/stop/update",{
+                            "stopConceptId":item.stopConceptId,
+                            "stopConceptApplicationId": $scope.vm.applicationId,
+                            "stopConceptKey":  $scope.vm.key,
+                            "stopConceptModifier": item.stopConceptModifier,
+                            "stopConceptTerm": $scope.vm.term,
+                        },function(data){
+                            console.log(item);
+                            console.log(item.stopConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
+                            console.log(data);
+                            layer.msg("编辑成功");
+                            $state.reload()
+                        },function(){
+                            layer.msg("编辑失败")
+                        })
+                    }
+                    //单条新增
+                    function singleAdd(){
+                        console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
+                        httpRequestPost("/api/modeling/concept/stop/add",{
+                            "stopConceptApplicationId": $scope.vm.applicationId,
+                            "stopConceptKey":  $scope.vm.key,
+                            "stopConceptModifier": $scope.vm.modifier,
+                            "stopConceptTerm": $scope.vm.term,
+                        },function(data){
+                            //console.log(data);
+                            layer.msg("添加成功");
+                            $state.reload()
+                        },function(){
+                            layer.msg("添加失败")
+                        })
+                    }
+                    //单条刪除
+                    function singleDel(id){
+                        httpRequestPost("/api/modeling/concept/stop/delete",{
+                            "stopConceptId":id
+                        },function(data){
+                            //console.log(data)
+                            layer.msg("刪除成功");
+                            $state.reload()
+                        },function(){
+                            layer.msg("刪除失敗")
+                        })
+                    }
+
+                    function delSingleTerm(item){
+                        var str = angular.copy($scope.vm.term.split("；"));
+                        str.remove(item);
+                        $scope.vm.term = str.join("；");
+                    }
+                    function addSingleTerm(e){
+                        var keycode = window.event?e.keyCode:e.which;
+                        if(keycode==13){
+                            var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
+                            if($scope.vm.addSingleTermVal.length==0){
+                                //console.log($scope.vm.addSingleTermVal,"second");
+                                $scope.vm.addSingleTermVal = "";
+                                layer.msg("扩展名不能为空")
+                            }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
+                                console.log($scope.vm.addSingleTermVal);
+                                str.push($scope.vm.addSingleTermVal);
+                                console.log(str);
+                                $scope.vm.term = str.join("；");
+                                $scope.vm.addSingleTermVal = "";
+                                console.log($scope.vm.term);
+                            }else{
+                                console.log($scope.vm.addSingleTermVal );
+                                $scope.vm.addSingleTermVal = "";
+                                layer.msg("扩展名重复,请重新填写")
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-]);
+            ]);
 ;
 // Source: app/know_index/businessModeling/js/controller/errorCorrectionConceptManage_controller.js
 /**
@@ -4066,11 +4056,11 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
-            list :[{businessConceptKey:'eidtcart',businessConceptTerm:'重要',businessConceptModifier:'admin'}],
+            list :[{correctionConceptKey:'eidtcart',correctionConceptTerm:'重要',correctionConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
-            addBusiness : addBusiness,
-            editBusiness : editBusiness,
-            deleteBusiness:deleteBusiness,
+            addCorrection : addCorrection,
+            editCorrection : editCorrection,
+            deleteCorrection:deleteCorrection,
             listData : "",   // table 数据
             singleDel : singleDel,    //單條刪除
             singleAdd : singleAdd,
@@ -4079,7 +4069,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             //查詢
             search : search,
             searchVal : "",
-            searchType : "businessConceptKey",
+            searchType : "correctionConceptKey",
             timeStart : "",
             timeEnd : "",
             //新增
@@ -4112,8 +4102,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         //请求列表
         function getAggre(index){
             //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
+                "correctionConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
@@ -4134,8 +4124,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
+                    "correctionConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
                 },function(){
@@ -4145,14 +4135,14 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             }
         });
         //编辑
-        function editBusiness(item){
+        function editCorrection(item){
             $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
+            $scope.vm.key = item.correctionConceptKey;
+            $scope.vm.term =  item.correctionConceptTerm;
             addDelDialog(singleEdit,item);
         }
         function search(){
-            if($scope.vm.searchType == "businessConceptModifier"){
+            if($scope.vm.searchType == "correctionConceptModifier"){
                 searchByUser()
             }else{
                 searchByType()
@@ -4161,9 +4151,9 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         //查询
         function searchByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
-                "businessConceptModifier":$scope.vm.searchVal,
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/correction/listByModifier",{
+                "correctionConceptModifier":$scope.vm.searchVal,
+                "correctionConceptApplicationId": $scope.vm.applicationId,
                 "index":0,
                 "pageSize":10
             },function(data){
@@ -4175,11 +4165,11 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
         function searchByType(){
             var data;
-            if($scope.vm.searchType != "businessConceptModifyTime"){
+            if($scope.vm.searchType != "correctionConceptModifyTime"){
                 var key = angular.copy($scope.vm.searchType);
                 var data =  {
                     key: $scope.vm.searchVal,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "correctionConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
@@ -4188,12 +4178,12 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 data =  {
                     "startTimeRequest": $scope.vm.timeStart,
                     "endTimeRequest": $scope.vm.timeEnd,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "correctionConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
             }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",data,function(data){
+            httpRequestPost("/api/modeling/concept/correction/listByAttribute",data,function(data){
                 $scope.vm.listData = data.data
             },function(){
                 layer.msg("查询没有对应信息")
@@ -4203,7 +4193,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         //console.log([key]);
 
         //添加 窗口
-        function addBusiness(){
+        function addCorrection(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
                 scope: $scope,
@@ -4214,23 +4204,23 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
+                        httpRequestPost("/api/modeling/concept/correction/repeatCheck",{
+                            "correctionConceptApplicationId": $scope.vm.applicationId,
+                            "correctionConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
+                                httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
+                                    "correctionConceptApplicationId": $scope.vm.applicationId,
+                                    "correctionConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
                                     $scope.vm.dialogTitle="修改停用概念";
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
+                                    $scope.vm.key = data.data[0].correctionConceptKey;
+                                    $scope.vm.term =  data.data[0].correctionConceptTerm;
                                 },function(){
                                 });
                             }else{
@@ -4256,8 +4246,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         function addDelDialog(callback,item){
             //編輯
             //if(item){
-            //     $scope.vm.key = item.businessConceptKey;
-            //     $scope.vm.term =  item.businessConceptTerm;
+            //     $scope.vm.key = item.correctionConceptKey;
+            //     $scope.vm.term =  item.correctionConceptTerm;
             //}
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
@@ -4277,7 +4267,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             });
         }
         //   刪除 彈框
-        function deleteBusiness(id){
+        function deleteCorrection(id){
             //console.log(id);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/ConceptManageDialog.html",
@@ -4296,15 +4286,15 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         //編輯事件
         function singleEdit(item){
             console.log(item);
-            httpRequestPost("/api/modeling/concept/business/update",{
-                "businessConceptId":item.businessConceptId,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
-                "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
+            httpRequestPost("/api/modeling/concept/correction/update",{
+                "correctionConceptId":item.correctionConceptId,
+                "correctionConceptApplicationId": $scope.vm.applicationId,
+                "correctionConceptKey":  $scope.vm.key,
+                "correctionConceptModifier": item.correctionConceptModifier,
+                "correctionConceptTerm": $scope.vm.term,
             },function(data){
                 console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
+                console.log(item.correctionConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
                 console.log(data);
                 layer.msg("编辑成功");
                 $state.reload()
@@ -4315,11 +4305,11 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         //单条新增
         function singleAdd(){
             console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
-            httpRequestPost("/api/modeling/concept/business/add",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": $scope.vm.modifier,
-                "businessConceptTerm": $scope.vm.term,
+            httpRequestPost("/api/modeling/concept/correction/add",{
+                "correctionConceptApplicationId": $scope.vm.applicationId,
+                "correctionConceptKey":  $scope.vm.key,
+                "correctionConceptModifier": $scope.vm.modifier,
+                "correctionConceptTerm": $scope.vm.term,
             },function(data){
                 //console.log(data);
                 layer.msg("添加成功");
@@ -4330,8 +4320,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
         //单条刪除
         function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
-                "businessConceptId":id
+            httpRequestPost("/api/modeling/concept/correction/delete",{
+                "correctionConceptId":id
             },function(data){
                 //console.log(data)
                 layer.msg("刪除成功");
@@ -4386,12 +4376,12 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
-
+        
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
 
         };
-
+        
 
 
     }
@@ -4407,313 +4397,313 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
 angular.module('businessModelingModule').controller('intentionConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
-        $scope.vm = {
-            list :[{businessConceptKey:'eidtcart',businessConceptTerm:'重要',businessConceptModifier:'admin'}],
-            applicationId : getCookie("applicationId"),
-            addBusiness : addBusiness,
-            editBusiness : editBusiness,
-            deleteBusiness:deleteBusiness,
-            listData : "",   // table 数据
-            singleDel : singleDel,    //單條刪除
-            singleAdd : singleAdd,
-            paginationConf : ""  ,//分页条件
-            pageSize : 5  , //默认每页数量
-            //查詢
-            search : search,
-            searchVal : "",
-            searchType : "businessConceptKey",
-            timeStart : "",
-            timeEnd : "",
-            //新增
-            "key": "",
-            "modifier": getCookie("userName"),
-            "term": "",
+                    setCookie("applicationId","360619411498860544");
+                    setCookie("userName","admin1");
+                    $scope.vm = {
+                        list :[{forceSegmentConceptKey:'eidtcart',forceSegmentConceptTerm:'重要',forceSegmentConceptModifier:'admin'}],
+                        applicationId : getCookie("applicationId"),
+                        addForceSegment : addForceSegment,
+                        editForceSegment : editForceSegment,
+                        deleteForceSegment:deleteForceSegment,
+                        listData : "",   // table 数据
+                        singleDel : singleDel,    //單條刪除
+                        singleAdd : singleAdd,
+                        paginationConf : ""  ,//分页条件
+                        pageSize : 5  , //默认每页数量
+                        //查詢
+                        search : search,
+                        searchVal : "",
+                        searchType : "forceSegmentConceptKey",
+                        timeStart : "",
+                        timeEnd : "",
+                        //新增
+                        key: "",
+                        modifier: getCookie("userName"),
+                        term: "",
 
-            dialogTitle : "",
+                        dialogTitle : "",
 
-            inputSelect : [],
-            inputVal : "",
+                        inputSelect : [],
+                        inputVal : "",
 
-            delSingleTerm : delSingleTerm,      //添加 删除  term
-            addSingleTerm : addSingleTerm,
-            addSingleTermVal : "",
+                        delSingleTerm : delSingleTerm,      //添加 删除  term
+                        addSingleTerm : addSingleTerm,
+                        addSingleTermVal : "",
 
-        };
+                    };
 
-        //$scope.$watch("vm.addSingleTermVal",function (val) {
-        //    console.log(val)
-        //},true);
+                    //$scope.$watch("vm.addSingleTermVal",function (val) {
+                    //    console.log(val)
+                    //},true);
 
 
-        /**
-         * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
-         */
-        getAggre(1);
-        //console.log($scope.vm.applicationId)
-        //请求列表
-        function getAggre(index){
-            //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
-                "pageSize": $scope.vm.pageSize
-            },function(data){
-                //console.log(data);
-                $scope.vm.listData = data.data;
-                //console.log(data)
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
-            },function(){
-                layer.msg("请求失败")
-            })
-        }
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
-                },function(){
-                })
-            }
-        });
-        //编辑
-        function editBusiness(item){
-            $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
-            addDelDialog(singleEdit,item);
-        }
-        function search(){
-            if($scope.vm.searchType == "businessConceptModifier"){
-                searchByUser()
-            }else{
-                searchByType()
-            }
-        }
-        //查询
-        function searchByUser(){
-            console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
-                "businessConceptModifier":$scope.vm.searchVal,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "index":0,
-                "pageSize":10
-            },function(data){
-                console.log(data);
-                $scope.vm.listData = data.data
-            },function(){
-                layer.msg("查询没有对应信息")
-            });
-        }
-        function searchByType(){
-            var data;
-            if($scope.vm.searchType != "businessConceptModifyTime"){
-                var key = angular.copy($scope.vm.searchType);
-                var data =  {
-                    key: $scope.vm.searchVal,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
-            }else{
-                console.log( $scope.vm.timeStart);
-                data =  {
-                    "startTimeRequest": $scope.vm.timeStart,
-                    "endTimeRequest": $scope.vm.timeEnd,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
-            }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",data,function(data){
-                $scope.vm.listData = data.data
-            },function(){
-                layer.msg("查询没有对应信息")
-            });
-        }
-        var  key = angular.copy($scope.vm.searchType);
-        //console.log([key]);
-
-        //添加 窗口
-        function addBusiness(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/intention/intentionConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="修改停用概念";
-                                    console.log(data);
-                                    addDelDialog(singleEdit,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加业务概念";
-                                //key: "",
-                                // "modifier": getCookie("userName"),
-                                $scope.vm.term="";
-                                addDelDialog(singleAdd);
-                            }
+                    /**
+                     * 加载分页条
+                     * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+                     */
+                    getAggre(1);
+                    //console.log($scope.vm.applicationId)
+                    //请求列表
+                    function getAggre(index){
+                        //size=size?size:5;   //设置pageSize默认是5
+                        httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
+                            "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                            "index" :index==1?0:index,
+                            "pageSize": $scope.vm.pageSize
+                        },function(data){
+                            //console.log(data);
+                            $scope.vm.listData = data.data;
+                            //console.log(data)
+                            $scope.vm.paginationConf = {
+                                currentPage: index,//当前页
+                                totalItems: Math.ceil(data.total/5), //总条数
+                                pageSize: 1,//第页条目数
+                                pagesLength: 8,//分页框数量
+                            };
+                            $scope.$apply();
                         },function(){
-                            layer.msg("添加失敗")
+                            layer.msg("请求失败")
                         })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
                     }
-                }
-            });
-        }
+                    $scope.$watch('vm.paginationConf.currentPage', function(current){
+                        if(current){
+                            //console.log(current,$scope.vm.pageSize);
+                            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
+                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                "index" :current*$scope.vm.pageSize,
+                                "pageSize": $scope.vm.pageSize
+                            },function(){
+                                getAggre(current);
+                            },function(){
+                            })
+                        }
+                    });
+                    //编辑
+                    function editForceSegment(item){
+                        $scope.vm.dialogTitle="编辑停用概念";
+                        $scope.vm.key = item.forceSegmentConceptKey;
+                        $scope.vm.term =  item.forceSegmentConceptTerm;
+                        addDelDialog(singleEdit,item);
+                    }
+                    function search(){
+                        if($scope.vm.searchType == "forceSegmentConceptModifier"){
+                            searchByUser()
+                        }else{
+                            searchByType()
+                        }
+                    }
+                    //查询
+                    function searchByUser(){
+                        console.log($scope.vm.searchVal);
+                        httpRequestPost("/api/modeling/concept/forceSegment/listByModifier",{
+                            "forceSegmentConceptModifier":$scope.vm.searchVal,
+                            "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                            "index":0,
+                            "pageSize":10
+                        },function(data){
+                            console.log(data);
+                            $scope.vm.listData = data.data
+                        },function(){
+                            layer.msg("查询没有对应信息")
+                        });
+                    }
+                    function searchByType(){
+                        var data;
+                        if($scope.vm.searchType != "forceSegmentConceptModifyTime"){
+                            var key = angular.copy($scope.vm.searchType);
+                            var data =  {
+                                key: $scope.vm.searchVal,
+                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                "index":0,
+                                "pageSize":1
+                            }
+                        }else{
+                            console.log( $scope.vm.timeStart);
+                            data =  {
+                                "startTimeRequest": $scope.vm.timeStart,
+                                "endTimeRequest": $scope.vm.timeEnd,
+                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                "index":0,
+                                "pageSize":1
+                            }
+                        }
+                        httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",data,function(data){
+                            $scope.vm.listData = data.data
+                        },function(){
+                            layer.msg("查询没有对应信息")
+                        });
+                    }
+                    var  key = angular.copy($scope.vm.searchType);
+                    //console.log([key]);
 
-        //編輯彈框   添加公用
-        function addDelDialog(callback,item){
-            //編輯
-            //if(item){
-            //     $scope.vm.key = item.businessConceptKey;
-            //     $scope.vm.term =  item.businessConceptTerm;
-            //}
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/intention/intentionConceptManageDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item)
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+                    //添加 窗口
+                    function addForceSegment(){
+                        var dialog = ngDialog.openConfirm({
+                            template:"/know_index/businessModeling/intention/intentionConceptManageDialog.html",
+                            scope: $scope,
+                            closeByDocument:false,
+                            closeByEscape: true,
+                            showClose : true,
+                            backdrop : 'static',
+                            preCloseCallback:function(e){    //关闭回掉
+                                if(e === 1){
+                                    console.log($scope.vm.key);
+                                    httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck",{
+                                        "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                        "forceSegmentConceptKey": $scope.vm.key
+                                    },function(data){          //类名重複
+                                        if(data.status===10002){
+                                            layer.msg("概念类名重复");
+                                            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
+                                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                                "forceSegmentConceptKey":$scope.vm.key,
+                                                "index":0,
+                                                "pageSize":1
+                                            },function(data){
+                                                $scope.vm.dialogTitle="修改停用概念";
+                                                console.log(data);
+                                                addDelDialog(singleEdit,data.data[0]);
+                                                $scope.vm.key = data.data[0].forceSegmentConceptKey;
+                                                $scope.vm.term =  data.data[0].forceSegmentConceptTerm;
+                                            },function(){
+                                            });
+                                        }else{
+                                            //类名无冲突
+                                            $scope.vm.dialogTitle="增加业务概念";
+                                            //key: "",
+                                            // "modifier": getCookie("userName"),
+                                            $scope.vm.term="";
+                                            addDelDialog(singleAdd);
+                                        }
+                                    },function(){
+                                        layer.msg("添加失敗")
+                                    })
+                                }else{
+                                    $scope.vm.key = "";
+                                    $scope.vm.term = "";
+                                }
+                            }
+                        });
                     }
-                }
-            });
-        }
-        //   刪除 彈框
-        function deleteBusiness(id){
-            //console.log(id);
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDel(id)
-                    }
-                }
-            });
-        }
-        //編輯事件
-        function singleEdit(item){
-            console.log(item);
-            httpRequestPost("/api/modeling/concept/business/update",{
-                "businessConceptId":item.businessConceptId,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
-                "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
-            },function(data){
-                console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
-                console.log(data);
-                layer.msg("编辑成功");
-                $state.reload()
-            },function(){
-                layer.msg("编辑失败")
-            })
-        }
-        //单条新增
-        function singleAdd(){
-            console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
-            httpRequestPost("/api/modeling/concept/business/add",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": $scope.vm.modifier,
-                "businessConceptTerm": $scope.vm.term,
-            },function(data){
-                //console.log(data);
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
-            })
-        }
-        //单条刪除
-        function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
-                "businessConceptId":id
-            },function(data){
-                //console.log(data)
-                layer.msg("刪除成功");
-                $state.reload()
-            },function(){
-                layer.msg("刪除失敗")
-            })
-        }
 
-        function delSingleTerm(item){
-            var str = angular.copy($scope.vm.term.split("；"));
-            str.remove(item);
-            $scope.vm.term = str.join("；");
-        }
-        function addSingleTerm(e){
-            var keycode = window.event?e.keyCode:e.which;
-            if(keycode==13){
-                var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
-                if($scope.vm.addSingleTermVal.length==0){
-                    //console.log($scope.vm.addSingleTermVal,"second");
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空")
-                }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
-                    console.log($scope.vm.addSingleTermVal);
-                    str.push($scope.vm.addSingleTermVal);
-                    console.log(str);
-                    $scope.vm.term = str.join("；");
-                    $scope.vm.addSingleTermVal = "";
-                    console.log($scope.vm.term);
-                }else{
-                    console.log($scope.vm.addSingleTermVal );
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写")
+                    //編輯彈框   添加公用
+                    function addDelDialog(callback,item){
+                        //編輯
+                        //if(item){
+                        //     $scope.vm.key = item.forceSegmentConceptKey;
+                        //     $scope.vm.term =  item.forceSegmentConceptTerm;
+                        //}
+                        var dialog = ngDialog.openConfirm({
+                            template:"/know_index/businessModeling/intention/intentionConceptManageDialog2.html",
+                            scope: $scope,
+                            closeByDocument:false,
+                            closeByEscape: true,
+                            showClose : true,
+                            backdrop : 'static',
+                            preCloseCallback:function(e){    //关闭回掉
+                                if(e === 1){
+                                    callback(item)
+                                }else{
+                                    $scope.vm.key = "";
+                                    $scope.vm.term = "";
+                                }
+                            }
+                        });
+                    }
+                    //   刪除 彈框
+                    function deleteForceSegment(id){
+                        //console.log(id);
+                        var dialog = ngDialog.openConfirm({
+                            template:"/know_index/businessModeling/ConceptManageDialog.html",
+                            scope: $scope,
+                            closeByDocument:false,
+                            closeByEscape: true,
+                            showClose : true,
+                            backdrop : 'static',
+                            preCloseCallback:function(e){    //关闭回掉
+                                if(e === 1){
+                                    singleDel(id)
+                                }
+                            }
+                        });
+                    }
+                    //編輯事件
+                    function singleEdit(item){
+                        //console.log(item);
+                        httpRequestPost("/api/modeling/concept/forceSegment/update",{
+                            "forceSegmentConceptId":item.forceSegmentConceptId,
+                            "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                            "forceSegmentConceptKey":  $scope.vm.key,
+                            "forceSegmentConceptModifier": item.forceSegmentConceptModifier,
+                            "forceSegmentConceptTerm": $scope.vm.term,
+                        },function(data){
+                            console.log(item);
+                            //console.log(item.forceSegmentConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
+                            //console.log(data);
+                            layer.msg("编辑成功");
+                            $state.reload()
+                        },function(){
+                            layer.msg("编辑失败")
+                        })
+                    }
+                    //单条新增
+                    function singleAdd(){
+                        console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
+                        httpRequestPost("/api/modeling/concept/forceSegment/add",{
+                            "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                            "forceSegmentConceptKey":  $scope.vm.key,
+                            "forceSegmentConceptModifier": $scope.vm.modifier,
+                            "forceSegmentConceptTerm": $scope.vm.term,
+                        },function(data){
+                            //console.log(data);
+                            layer.msg("添加成功");
+                            $state.reload()
+                        },function(){
+                            layer.msg("添加失败")
+                        })
+                    }
+                    //单条刪除
+                    function singleDel(id){
+                        httpRequestPost("/api/modeling/concept/forceSegment/delete",{
+                            "forceSegmentConceptId":id
+                        },function(data){
+                            //console.log(data)
+                            layer.msg("刪除成功");
+                            $state.reload()
+                        },function(){
+                            layer.msg("刪除失敗")
+                        })
+                    }
+
+                    function delSingleTerm(item){
+                        var str = angular.copy($scope.vm.term.split("；"));
+                        str.remove(item);
+                        $scope.vm.term = str.join("；");
+                    }
+                    function addSingleTerm(e){
+                        var keycode = window.event?e.keyCode:e.which;
+                        if(keycode==13){
+                            var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
+                            if($scope.vm.addSingleTermVal.length==0){
+                                //console.log($scope.vm.addSingleTermVal,"second");
+                                $scope.vm.addSingleTermVal = "";
+                                layer.msg("扩展名不能为空")
+                            }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
+                                console.log($scope.vm.addSingleTermVal);
+                                str.push($scope.vm.addSingleTermVal);
+                                console.log(str);
+                                $scope.vm.term = str.join("；");
+                                $scope.vm.addSingleTermVal = "";
+                                console.log($scope.vm.term);
+                            }else{
+                                console.log($scope.vm.addSingleTermVal );
+                                $scope.vm.addSingleTermVal = "";
+                                layer.msg("扩展名重复,请重新填写")
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-]);
+            ]);
 
 ;
 // Source: app/know_index/businessModeling/js/controller/sensitiveConceptManage_controller.js
@@ -4730,11 +4720,10 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
-            list :[{businessConceptKey:'eidtcart',businessConceptTerm:'重要',businessConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
-            addBusiness : addBusiness,
-            editBusiness : editBusiness,
-            deleteBusiness:deleteBusiness,
+            addSensitive : addSensitive,
+            editSensitive : editSensitive,
+            deleteSensitive:deleteSensitive,
             listData : "",   // table 数据
             singleDel : singleDel,    //單條刪除
             singleAdd : singleAdd,
@@ -4743,7 +4732,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             //查詢
             search : search,
             searchVal : "",
-            searchType : "businessConceptKey",
+            searchType : "sensitiveConceptKey",
             timeStart : "",
             timeEnd : "",
             //新增
@@ -4776,14 +4765,13 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //请求列表
         function getAggre(index){
             //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+                "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                //console.log(data);
+                console.log(data);
                 $scope.vm.listData = data.data;
-                //console.log(data)
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
@@ -4798,8 +4786,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
                 },function(){
@@ -4809,14 +4797,14 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             }
         });
         //编辑
-        function editBusiness(item){
+        function editSensitive(item){
             $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
+            $scope.vm.key = item.sensitiveConceptKey;
+            $scope.vm.term =  item.sensitiveConceptTerm;
             addDelDialog(singleEdit,item);
         }
         function search(){
-            if($scope.vm.searchType == "businessConceptModifier"){
+            if($scope.vm.searchType == "sensitiveConceptModifier"){
                 searchByUser()
             }else{
                 searchByType()
@@ -4825,9 +4813,9 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //查询
         function searchByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
-                "businessConceptModifier":$scope.vm.searchVal,
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/sensitive/listByModifier",{
+                "sensitiveConceptModifier":$scope.vm.searchVal,
+                "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index":0,
                 "pageSize":10
             },function(data){
@@ -4839,11 +4827,11 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         function searchByType(){
             var data;
-            if($scope.vm.searchType != "businessConceptModifyTime"){
+            if($scope.vm.searchType != "sensitiveConceptModifyTime"){
                 var key = angular.copy($scope.vm.searchType);
                 var data =  {
                     key: $scope.vm.searchVal,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
@@ -4852,12 +4840,12 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 data =  {
                     "startTimeRequest": $scope.vm.timeStart,
                     "endTimeRequest": $scope.vm.timeEnd,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
             }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",data,function(data){
+            httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",data,function(data){
                 $scope.vm.listData = data.data
             },function(){
                 layer.msg("查询没有对应信息")
@@ -4867,7 +4855,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //console.log([key]);
 
         //添加 窗口
-        function addBusiness(){
+        function addSensitive(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog.html",
                 scope: $scope,
@@ -4878,23 +4866,23 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
+                        httpRequestPost("/api/modeling/concept/sensitive/repeatCheck",{
+                            "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                            "sensitiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
+                                httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+                                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                                    "sensitiveConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
                                     $scope.vm.dialogTitle="修改停用概念";
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
+                                    $scope.vm.key = data.data[0].sensitiveConceptKey;
+                                    $scope.vm.term =  data.data[0].sensitiveConceptTerm;
                                 },function(){
                                 });
                             }else{
@@ -4920,8 +4908,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         function addDelDialog(callback,item){
             //編輯
             //if(item){
-            //     $scope.vm.key = item.businessConceptKey;
-            //     $scope.vm.term =  item.businessConceptTerm;
+            //     $scope.vm.key = item.sensitiveConceptKey;
+            //     $scope.vm.term =  item.sensitiveConceptTerm;
             //}
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
@@ -4941,7 +4929,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             });
         }
         //   刪除 彈框
-        function deleteBusiness(id){
+        function deleteSensitive(id){
             //console.log(id);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/ConceptManageDialog.html",
@@ -4960,15 +4948,15 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //編輯事件
         function singleEdit(item){
             console.log(item);
-            httpRequestPost("/api/modeling/concept/business/update",{
-                "businessConceptId":item.businessConceptId,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
-                "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
+            httpRequestPost("/api/modeling/concept/sensitive/update",{
+                "sensitiveConceptId":item.sensitiveConceptId,
+                "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                "sensitiveConceptKey":  $scope.vm.key,
+                "sensitiveConceptModifier": item.sensitiveConceptModifier,
+                "sensitiveConceptTerm": $scope.vm.term,
             },function(data){
                 console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
+                console.log(item.sensitiveConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
                 console.log(data);
                 layer.msg("编辑成功");
                 $state.reload()
@@ -4979,11 +4967,11 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //单条新增
         function singleAdd(){
             console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
-            httpRequestPost("/api/modeling/concept/business/add",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": $scope.vm.modifier,
-                "businessConceptTerm": $scope.vm.term,
+            httpRequestPost("/api/modeling/concept/sensitive/add",{
+                "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                "sensitiveConceptKey":  $scope.vm.key,
+                "sensitiveConceptModifier": $scope.vm.modifier,
+                "sensitiveConceptTerm": $scope.vm.term,
             },function(data){
                 //console.log(data);
                 layer.msg("添加成功");
@@ -4994,8 +4982,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         //单条刪除
         function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
-                "businessConceptId":id
+            httpRequestPost("/api/modeling/concept/sensitive/delete",{
+                "sensitiveConceptId":id
             },function(data){
                 //console.log(data)
                 layer.msg("刪除成功");
@@ -5017,7 +5005,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 if($scope.vm.addSingleTermVal.length==0){
                     //console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空")
+                    layer.msg("扩展名不能为空");
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
@@ -5094,10 +5082,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
-
             console.log(index,$scope.vm.pageSize,$scope.vm.applicationId);
             //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/synonym/list",{
+            httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
@@ -5287,18 +5274,15 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //編輯事件
         function singleEdit(item){
-            console.log(item);
             httpRequestPost("/api/modeling/concept/synonym/update",{
                 "synonymConceptId":item.synonymConceptId,
                 "synonymConceptApplicationId": $scope.vm.applicationId,
-                "synonymConceptKey":  item.synonymConceptKey,
+                "synonymConceptKey":  $scope.vm.key,
                 "synonymConceptModifier": item.synonymConceptModifier,
-                "synonymConceptTerm": item.synonymConceptTerm,
-                "synonymConceptWeight": item.synonymConceptWeight
+                "synonymConceptTerm": $scope.vm.term,
+                "synonymConceptWeight": $scope.vm.weight
             },function(data){
-                console.log(item);
-                console.log(item.synonymConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
-                console.log(data);
+                //console.log(item.synonymConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 layer.msg("编辑成功");
                 $state.reload()
             },function(){
@@ -5343,16 +5327,11 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                //$scope.vm.addSingleTermVal += "";
-                //console.log("kkkkkkkkkkkkkkkkkkk"+$scope.vm.addSingleTermVal);
-                alert();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
-                    console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
                     layer.msg("扩展名不能为空")
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
-                    $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
                     console.log(str);
@@ -5376,7 +5355,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
+          
 angular.module('functionalTestModule').controller('functionalTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
@@ -5405,7 +5384,7 @@ angular.module('functionalTestModule').controller('questionTest_Controller', [
 
         };
 
-
+        
     }
 ]);;
 ;
@@ -5421,9 +5400,9 @@ angular.module('functionalTestModule').controller('questionTest_Controller', [
 angular.module('homePage').controller('homePageNavController', [
 
     '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", function ($scope, $location, localStorageService, AuthService,$timeout) {
-        $scope.vm = {
-            applicatioinId : true
-        };
+            $scope.vm = {
+                applicatioinId : true
+            };
         //$timeout(function(){
         //    $scope.vm.applicatioinId = false;
         //},1000)
@@ -5488,7 +5467,7 @@ angular.module('indexModule').controller('indexController', [
         //定义退出登录的方法
         $scope.logout = function () {
             AuthService.logout(function (data) {
-
+                
             }, function (errMsg) {
                 $scope.errMsg = errMsg;
             });
@@ -5586,7 +5565,7 @@ angular.module('indexModule').controller('indexController', [
 angular.module('knowledgeManagementModule').controller('NewFactorKnowController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            fagAdd : factorAdd
+          fagAdd : factorAdd
         };
         function listAdd(){
             var dialog = ngDialog.openConfirm({
@@ -5608,7 +5587,7 @@ angular.module('knowledgeManagementModule').controller('NewFactorKnowController'
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -5671,7 +5650,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -5692,7 +5671,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            fagAdd : listAdd
+          fagAdd : listAdd
         };
         function listAdd(){
             var dialog = ngDialog.openConfirm({
@@ -5714,7 +5693,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -5860,7 +5839,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,
+            botValChange : botValChange,            
             knowledgeTitle : "",   //标题
             timeStart : "",      //起始时间
             timeEnd : "",
@@ -5871,26 +5850,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             dimensions : ""    //维度
         };
 
-        setCookie("categoryApplicationId","360619411498860544");
-        var   categoryApplicationId =  getCookie("categoryApplicationId");
+setCookie("categoryApplicationId","360619411498860544");
+var   categoryApplicationId =  getCookie("categoryApplicationId");
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
 
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //        "categoryPid": "root"
-        //}
+      //{
+    //    "categoryApplicationId": "360619411498860544",
+    //        "categoryPid": "root"
+    //}
         getBotRoot();
-        //    getDimensions();
-        //    getChannel();
+    //    getDimensions();
+    //    getChannel();
         //点击 root 的下拉效果
         function  knowledgeBot(ev){
             var ele = ev.target;
-            $timeout(function(){
-                $(ele).next().slideToggle();
-            },50)
-        }
+                $timeout(function(){
+                    $(ele).next().slideToggle();
+                },50)
+        }        
 
-        //获取root 数据
+       //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
                 "categoryApplicationId": "360619411498860544",
@@ -5910,44 +5889,44 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             $scope.$apply()
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'.icon-jj',function(){
-            var id = $(this).attr("data-option");
-            var that = $(this);
-            if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%")
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId": categoryApplicationId,
-                    "categoryPid": id
-                },function(data){
-                    if(data.data){
-                        var  html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                            html+= '<li>' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
-                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span>'+data.data[i].categoryName+'</span>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>'
-                        }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
-                    }
-                },function(err){
-                    alert(err)
-                });
-            }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%")
-                    that.parent().parent().next().slideDown()
-                }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp()
-                }
-            }
-        });
+       $(".aside-navs").on("click",'.icon-jj',function(){
+           var id = $(this).attr("data-option");
+           var that = $(this);
+           if(!that.parent().parent().siblings().length){
+               that.css("backgroundPosition","0% 100%")
+               httpRequestPost("/api/modeling/category/listbycategorypid",{
+                   "categoryApplicationId": categoryApplicationId,
+                   "categoryPid": id
+               },function(data){
+                   if(data.data){
+                       var  html = '<ul class="menus">';
+                       for(var i=0;i<data.data.length;i++){
+                           html+= '<li>' +
+                               '<div class="slide-a">'+
+                               ' <a class="ellipsis" href="javascript:;">'+
+                               '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                               '<span>'+data.data[i].categoryName+'</span>'+
+                               '</a>' +
+                               '</div>' +
+                               '</li>'
+                       }
+                       html+="</ul>";
+                       $(html).appendTo((that.parent().parent().parent()));
+                       that.parent().parent().next().slideDown()
+                   }
+               },function(err){
+                        alert(err)
+               });
+           }else{
+               if(that.css("backgroundPosition")=="0% 0%"){
+                   that.css("backgroundPosition","0% 100%")
+                   that.parent().parent().next().slideDown()
+               }else{
+                   that.css("backgroundPosition","0% 0%");
+                   that.parent().parent().next().slideUp()
+               }
+           }
+       });
 
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 
@@ -5960,26 +5939,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             }
         });
 
-        function KnowledgeAdd(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
-                }
-            });
-        }
+       function KnowledgeAdd(){
+           var dialog = ngDialog.openConfirm({
+               template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+               //controller:function($scope){
+               //    $scope.show = function(){
+               //
+               //        console.log(6688688);
+               //        $scope.closeThisDialog(); //关闭弹窗
+               //    }},
+               scope: $scope,
+               closeByDocument:false,
+               closeByEscape: true,
+               showClose : true,
+               backdrop : 'static',
+               preCloseCallback:function(e){    //关闭回掉
+                   if(e === 1){
+                   }
+               }
+           });
+       }
 
 
 
@@ -6014,8 +5993,8 @@ knowledge_static_web.directive("loginInput", function() {
     return {
         restrict: "AE",
         link: function(scope, elem, attrs) {
-
-            elem.on("focus",function(e){
+            
+           elem.on("focus",function(e){
                 $(this).parents(".login-fItem").addClass("focus");
             }).on("blur",function(){
                 $(this).parents(".login-fItem").removeClass("focus");
@@ -6041,20 +6020,20 @@ angular.module('knowDetailsModule').controller('knowCompareController', [
         var self = this;
 
         $scope.knowItemIds = $stateParams.knowItemIds;
-
+        
         self.queryCompareKnowItem = function(){
             DetailService.queryCompareKnowItem.get({knowItemIds:$scope.knowItemIds},function(resource){
                 if (resource.status == 200 && resource.data.status == 200 && resource.data.data.totalCount ==2) {
                     $scope.knowItem1 = resource.data.data.knowledgeList[0];
                     $scope.knowItem2 = resource.data.data.knowledgeList[1];
                     var result = eq({ value1: $scope.knowItem1.content , value2: $scope.knowItem2.content })
-
+                    
                     $scope.content1 = $sce.trustAsHtml(result.value1+"\r\n")
                     $scope.content2 = $sce.trustAsHtml(result.value2+"\r\n");
 
                 }
             },function(){
-
+                
             })
         }
 
@@ -6112,7 +6091,7 @@ angular.module('knowDetailsModule').controller('knowDetailsController', [
         /**
          * 方法定义
          */
-            //字数限制
+        //字数限制
         $scope.checkText = function (type,index) {
             if(type == 1){
                 if ($scope.comment.length > 500) {
@@ -6126,7 +6105,7 @@ angular.module('knowDetailsModule').controller('knowDetailsController', [
                 }
             }
         };
-
+        
         //查询知识条目详情
         self.getKnowItemById = function(){
             DetailService.getKnowledgeDetail.get({
@@ -6229,7 +6208,7 @@ angular.module('knowDetailsModule').controller('knowDetailsController', [
 
         };
 
-
+        
         //添加评论的方法
         $scope.addComment = function(){
             var comment = $scope.comment;
@@ -6403,12 +6382,12 @@ angular.module('knowDetailsModule').controller('knowDocController', [
                         $scope.knowDoc = resource.data;
                     }
 
-                },function(){
-
-                })
+            },function(){
+                
+            })
         }
 
-
+       
 
 
 
@@ -6454,9 +6433,9 @@ angular.module('knowDetailsModule').controller('knowEditController', [
                 businessKey:$scope.knowItemId
             },function(resource){
                 if(resource.status == 200){
-                    if(resource.data == null){
-                        $scope.pIdFlg = true;
-                    }
+                   if(resource.data == null){
+                       $scope.pIdFlg = true;
+                   }
                 }
             })
         }
@@ -6471,24 +6450,24 @@ angular.module('knowDetailsModule').controller('knowEditController', [
         //审核知识编辑
         $scope.updateKnowItem = function () {
             DetailService.updateKnowItem.save({
-                    knowid:$scope.knowItemId,
-                    title:$scope.knowItem.title,
-                    content:$scope.knowItem.content
-                },function(resource){
-                    if (resource.status == 200)
-                    {
-                        TipService.setMessage('操作成功!',"success");
-                        $scope.editFlg = true;
-                    }else{
-                        TipService.setMessage('操作失败!',"error");
-                    }
+                knowid:$scope.knowItemId,
+                title:$scope.knowItem.title,
+                content:$scope.knowItem.content
+            },function(resource){
+                if (resource.status == 200)
+                {
+                    TipService.setMessage('操作成功!',"success");
+                    $scope.editFlg = true;
+                }else{
+                    TipService.setMessage('操作失败!',"error");
                 }
+            }
             )
         }
 
         $scope.startWorkflow = function(){
             DetailService.startWorkflow.save({
-                    knowItemId:$scope.knowItemId,
+                knowItemId:$scope.knowItemId,
                 },function(resource){
                     if (resource.status == 200)
                     {
@@ -6577,18 +6556,18 @@ angular.module('knowDetailsModule').controller('knowViewController', [
                 {
                     "documentationId": $scope.knowDocId,
                 },function(resource){
-                    if(resource.status == 200 && resource.data.status == 200){
-                        $scope.docItems = resource.data.objs;
-                        $scope.docItems.forEach(function(know){
-                            var titleHtml = $sce.trustAsHtml(know.title);
-                            var contentHtml = $sce.trustAsHtml(know.content);
-                            know.titleHtml = titleHtml;
-                            know.contentHtml = contentHtml
-                        })
-                    }
-                },function(){
+                if(resource.status == 200 && resource.data.status == 200){
+                    $scope.docItems = resource.data.objs;
+                    $scope.docItems.forEach(function(know){
+                        var titleHtml = $sce.trustAsHtml(know.title);
+                        var contentHtml = $sce.trustAsHtml(know.content);
+                        know.titleHtml = titleHtml;
+                        know.contentHtml = contentHtml
+                    })
+                }
+            },function(){
 
-                })
+            })
         }
 
         // self.queryKnowDocByDocId = function(){
@@ -6814,7 +6793,7 @@ angular.module('loginModule').controller('loginController', [
             login: login,
             keyLogin : keyLogin
         };
-        function keyLogin($event){
+       function keyLogin($event){
             if($event.keyCode==13){//回车
                 login();
             }
@@ -6823,7 +6802,7 @@ angular.module('loginModule').controller('loginController', [
         function randomNumberChange(){
             $scope.vm.randomNumber = randomNumber(4)
         }
-        //登陆
+         //登陆
         function login(){
             //$state.go("materialManagement.chatKnowledgeBase",{userPermission : "['超级管理员','初级管理员']"});
             if($scope.vm.randomNumberValue.length==0){
@@ -6858,48 +6837,48 @@ angular.module('loginModule').controller('loginController', [
             return rnd
         }
 
-        //$scope.loginFailed = false;
-        //
-        //  $scope.login = function () {
-        //      //校验表单数据
-        //      var credentials = $scope.credentials;
-        //      // console.log(credentials)
-        //      if(!credentials.loginName){
-        //          loginControllerScope.errMsg = '用户名不能为空';
-        //          return;
-        //      }
-        //      if(!credentials.loginPwd){
-        //          loginControllerScope.errMsg = '密码不能为空';
-        //          return;
-        //      }
-        //      if(!credentials.randCheckCode){
-        //          loginControllerScope.errMsg = '验证码不能为空';
-        //          return;
-        //      }
-        //      AuthService.login($scope.credentials, function (data) {
-        //          // console.log(data);
-        //          loginControllerScope.setCurrentUser(data);
-        //      }, function (errMsg) {
-        //          loginControllerScope.loginFailed = true;
-        //          loginControllerScope.errMsg = errMsg;
-        //          credentials.randCheckCode='';
-        //          $scope.reloadRandCheckCode();
-        //      });
-        //  }
-        //
-        //  $scope.reloadRandCheckCode = function () {
-        //      document.getElementById("CreateCheckCode").src = document.getElementById("CreateCheckCode").src + "?nocache=" + new Date().getTime();
-        //  }
-        //
-        //  $scope.reloadRandCheckCode();
-        //
-        //  $scope.enterEvent = function(e){
-        //      loginControllerScope.errMsg = '';
-        //      var keycode = window.event?e.keyCode:e.which;
-        //      if(keycode==13){
-        //          $scope.login();
-        //      }
-        //  }
+      //$scope.loginFailed = false;
+      //
+      //  $scope.login = function () {
+      //      //校验表单数据
+      //      var credentials = $scope.credentials;
+      //      // console.log(credentials)
+      //      if(!credentials.loginName){
+      //          loginControllerScope.errMsg = '用户名不能为空';
+      //          return;
+      //      }
+      //      if(!credentials.loginPwd){
+      //          loginControllerScope.errMsg = '密码不能为空';
+      //          return;
+      //      }
+      //      if(!credentials.randCheckCode){
+      //          loginControllerScope.errMsg = '验证码不能为空';
+      //          return;
+      //      }
+      //      AuthService.login($scope.credentials, function (data) {
+      //          // console.log(data);
+      //          loginControllerScope.setCurrentUser(data);
+      //      }, function (errMsg) {
+      //          loginControllerScope.loginFailed = true;
+      //          loginControllerScope.errMsg = errMsg;
+      //          credentials.randCheckCode='';
+      //          $scope.reloadRandCheckCode();
+      //      });
+      //  }
+      //
+      //  $scope.reloadRandCheckCode = function () {
+      //      document.getElementById("CreateCheckCode").src = document.getElementById("CreateCheckCode").src + "?nocache=" + new Date().getTime();
+      //  }
+      //
+      //  $scope.reloadRandCheckCode();
+      //
+      //  $scope.enterEvent = function(e){
+      //      loginControllerScope.errMsg = '';
+      //      var keycode = window.event?e.keyCode:e.which;
+      //      if(keycode==13){
+      //          $scope.login();
+      //      }
+      //  }
     }
 ]);
 ;
@@ -6968,11 +6947,11 @@ angular.module('materialManagement').controller('conceptChatController', [
 
 angular.module('materialManagement').controller('faqChatController', [
     '$scope',"$state", function ($scope,$state) {
-        // alert()
+       // alert()
         //$state.go("materialManagement.faqChat");
         $scope.vm = {
 
-
+            
         };
 
     }
@@ -7048,7 +7027,7 @@ angular.module('knowledgeManagementModule').controller('NewServiceReleaseControl
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -7090,7 +7069,7 @@ angular.module('knowledgeManagementModule').controller('NodeManageController', [
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -7126,18 +7105,18 @@ angular.module('myApplicationModule').controller('adminContentController', [
         getCookie("userName");
         //setCookie("userId","359873057331875840");
         //$stateParams.userPermission = ['超级管理员','初级管理员'];
-        $scope.vm = {
-            userName : getCookie("userName"),
-            userPermission : $stateParams.userPermission,
-            addApplicationWindow : addApplicationWindow,
-            myApplication : "",
-            selectLicence : "",
+                $scope.vm = {
+                    userName : getCookie("userName"),
+                    userPermission : $stateParams.userPermission,
+                    addApplicationWindow : addApplicationWindow,
+                    myApplication : "",
+                    selectLicence : "",
 
-            newApplicationName : "",
-            newScene : "",
-            newLicence : "",
-            newDescribe : ""
-        };
+                    newApplicationName : "",
+                    newScene : "",
+                    newLicence : "",
+                    newDescribe : ""
+                };
         myApplication();
         selectLicence();
 
@@ -7161,18 +7140,18 @@ angular.module('myApplicationModule').controller('adminContentController', [
         //     $scope.vm.selectLicence = ["d","a","b"]
         //},3000);
         //获取 scene
-        function selectLicence(){
-            httpRequestPost("/api/application/scene/listAllScene",{
+       function selectLicence(){
+           httpRequestPost("/api/application/scene/listAllScene",{
 
-            },function(data){
-                $scope.vm.selectLicence = data.data;
-                $scope.$apply();
-                return data.data
-            },function(err){
+                                    },function(data){
+                                        $scope.vm.selectLicence = data.data;
+                                        $scope.$apply();
+                                        return data.data
+                                    },function(err){
 
-                console.log(err)
-            });
-        }
+                                        console.log(err)
+                                 });
+       }
 
         //打开添加窗口
         function addApplicationWindow() {
@@ -7220,7 +7199,7 @@ angular.module('myApplicationModule').controller('myApplicationController', [
     '$scope',  "$state", "$stateParams",
     function ($scope,  $state ,$stateParams) {
 
-        //console.log("state"+$stateParams.userPermission);
+                //console.log("state"+$stateParams.userPermission);
         $state.go("myApplication.manage",{userPermission:$stateParams.userPermission});
 
     }
@@ -7285,7 +7264,7 @@ angular.module('knowledgeManagementModule').controller('applicationInforControll
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -7349,7 +7328,7 @@ angular.module('knowledgeManagementModule').controller('channelManageController'
             });
         }
 
-
+      
 
     }
 ]);;
@@ -7391,7 +7370,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 }
             });
         }
-
+      
 
     }
 ]);;
@@ -7411,7 +7390,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
         };
 
 
-
+      
 
     }
 ]);;
@@ -7431,7 +7410,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         };
 
 
-
+      
 
     }
 ]);;
@@ -7471,7 +7450,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 userId:$scope.vm.userId,
                 applicationId:$scope.vm.applicationId
             },function(data){
-                console.log(data);
+              console.log(data);
                 $scope.vm.listData = data.data.dimensionList;
                 $scope.vm.paginationConf = {
                     currentPage: 0,//当前页
@@ -7502,7 +7481,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             });
         }
 
-
+      
 
     }
 ]);;
@@ -7522,7 +7501,7 @@ angular.module('knowledgeManagementModule').controller('KnowledgePreviewControll
         };
 
 
-
+      
 
     }
 ]);;
@@ -7542,7 +7521,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         };
 
 
-
+      
 
     }
 ]);;
@@ -7644,30 +7623,61 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 
 
-
+      
 
     }
 ]);;
 // Source: app/know_index/myApplication/js/controller/sceneManage_controller.js
 /**
- * Created by dinfo on 2017/3/28.
+ * Description:场景管理控制器
+ * Author: chengjianhua@ultrapower.com.cn
+ * Date: 2017/4/5 15:39
  */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('knowledgeManagementModule').controller('sceneManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        setCookie("applicationId","360619411498860544");
+        setCookie("userName","admin1");
         $scope.vm = {
+            applicationId : getCookie("applicationId"),
+            keyword: "",  //检索条件
+            knowledgeTypeData: "", //知识类型列表
+            exchangeModeData: "",  //交互方式列表
+            listKnowledgeType: listKnowledgeType, //查询知识类型
+            listExchangeMode: listExchangeMode,  //查询交互方式
 
         };
 
-
+        //加载知识类型
+        listKnowledgeType();
+        //加载交互方式
+        listExchangeMode();
+        //请求知识类型列表
+        function listKnowledgeType(){
+            httpRequestPost("/api/application/scene/listKnowledgeTypeByApplicationId",{
+                "applicationId": $scope.vm.applicationId,
+                "keyword": $scope.vm.keyword
+            },function(data){
+                $scope.vm.knowledgeTypeData = data.data;
+                //console.log(data)
+                $scope.$apply();
+            },function(err){
+                console.log(err);
+                layer.msg("请求失败")
+            })
+        }
+        //请求交互方式列表
+        function listExchangeMode(){
+            httpRequestPost("/api/application/scene/listExchangeModeByApplicationId",{
+                "applicationId": $scope.vm.applicationId,
+                "keyword": $scope.vm.keyword
+            },function(data){
+                $scope.vm.exchangeModeData = data.data;
+                //console.log(data)
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
 
     }
 ]);;
@@ -7686,7 +7696,7 @@ angular.module('knowledgeManagementModule').controller('sceneManageController', 
 angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
-        // alert();
+       // alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,

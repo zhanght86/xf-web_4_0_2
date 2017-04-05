@@ -26,8 +26,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         ////請求列表
         //function getAggre(index){
         //        //size=size?size:5;   //设置pageSize默认是5
-        //        httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-        //            "businessConceptApplicationId": applicationId,
+        //        httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+        //            "collectiveConceptApplicationId": applicationId,
         //            "index" :index==1?0:index,
         //            "pageSize": $scope.vm.pageSize
         //        },function(data){
@@ -47,8 +47,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //$scope.$watch('vm.paginationConf.currentPage', function(current){
         //    if(current){
         //        console.log(current,$scope.vm.pageSize);
-        //        httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-        //            "businessConceptApplicationId": applicationId,
+        //        httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+        //            "collectiveConceptApplicationId": applicationId,
         //            "index" :current*$scope.vm.pageSize,
         //            "pageSize": $scope.vm.pageSize
         //        },function(){
@@ -122,11 +122,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
-            list :[{businessConceptKey:'eidtcart',businessConceptWeight:3,businessConceptTerm:'重要',businessConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
-            addBusiness : addBusiness,
-            editBusiness : editBusiness,
-            deleteBusiness:deleteBusiness,
+            addCollective : addCollective,
+            editCollective : editCollective,
+            deleteCollective:deleteCollective,
             listData : "",   // table 数据
             singleDel : singleDel,    //單條刪除
             singleAdd : singleAdd,
@@ -135,15 +134,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             //查詢
             search : search,
             searchVal : "",
-            searchType : "businessConceptKey",
+            searchType : "collectiveConceptKey",
             timeStart : "",
             timeEnd : "",
-            //searchTypeList : [{name:"businessConceptKey",value:"概念类名"},{name:"businessConceptWeight",value:"概念类权重"},{name:"businessConceptTerm",value:"业务词"},{name:"businessConceptModifier",value:"创建人"},{name:"businessConceptModifyTime",value:"上传日期"}],
+            //searchTypeList : [{name:"collectiveConceptKey",value:"概念类名"},{name:"collectiveConceptWeight",value:"概念类权重"},{name:"collectiveConceptTerm",value:"业务词"},{name:"collectiveConceptModifier",value:"创建人"},{name:"collectiveConceptModifyTime",value:"上传日期"}],
             //新增
-            "key": "",
-            "modifier": getCookie("userName"),
-            "term": "",
-            "weight": "1" ,   //默認權重
+            key : "",
+            modifier: getCookie("userName"),
+            term : "",
+            weight: "1" ,   //默認權重
 
             dialogTitle : "",
 
@@ -166,16 +165,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
         getAggre(1);
-        //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
             //size=size?size:5;   //设置pageSize默认是5
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                //console.log(data);
+                console.log(data);
                 $scope.vm.listData = data.data;
                 //console.log(data)
                 $scope.vm.paginationConf = {
@@ -192,8 +190,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                    "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
                 },function(){
@@ -203,15 +201,15 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             }
         });
         //编辑
-        function editBusiness(item){
+        function editCollective(item){
             $scope.vm.dialogTitle="编辑停用概念";
-            $scope.vm.key = item.businessConceptKey;
-            $scope.vm.term =  item.businessConceptTerm;
-            $scope.vm.weight =  item.businessConceptWeight;
+            $scope.vm.key = item.collectiveConceptKey;
+            $scope.vm.term =  item.collectiveConceptTerm;
+            $scope.vm.weight =  item.collectiveConceptWeight;
             addDelDialog(singleEdit,item);
         }
         function search(){
-            if($scope.vm.searchType == "businessConceptModifier"){
+            if($scope.vm.searchType == "collectiveConceptModifier"){
                 searchByUser()
             }else{
                 searchByType()
@@ -220,9 +218,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //查询
         function searchByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
-                "businessConceptModifier":$scope.vm.searchVal,
-                "businessConceptApplicationId": $scope.vm.applicationId,
+            httpRequestPost("/api/modeling/concept/collective/listByModifier",{
+                "collectiveConceptModifier":$scope.vm.searchVal,
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "index":0,
                 "pageSize":10
             },function(data){
@@ -234,11 +232,11 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         function searchByType(){
             var data;
-            if($scope.vm.searchType != "businessConceptModifyTime"){
+            if($scope.vm.searchType != "collectiveConceptModifyTime"){
                 var key = angular.copy($scope.vm.searchType);
                 var data =  {
                     key: $scope.vm.searchVal,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
@@ -247,12 +245,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 data =  {
                     "startTimeRequest": $scope.vm.timeStart,
                     "endTimeRequest": $scope.vm.timeEnd,
-                    "businessConceptApplicationId": $scope.vm.applicationId,
+                    "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index":0,
                     "pageSize":1
                 }
             }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",data,function(data){
+            httpRequestPost("/api/modeling/concept/collective/listByAttribute",data,function(data){
                 $scope.vm.listData = data.data
             },function(){
                 layer.msg("查询没有对应信息")
@@ -262,7 +260,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //console.log([key]);
 
         //添加 窗口
-        function addBusiness(){
+        function addCollective(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
                 scope: $scope,
@@ -273,24 +271,24 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
+                        httpRequestPost("/api/modeling/concept/collective/repeatCheck",{
+                            "collectiveConceptApplicationId": $scope.vm.applicationId,
+                            "collectiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
+                                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                                    "collectiveConceptApplicationId": $scope.vm.applicationId,
+                                    "collectiveConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
                                     $scope.vm.dialogTitle="修改停用概念";
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
-                                    $scope.vm.weight =  data.data[0].businessConceptWeight;
+                                    $scope.vm.key = data.data[0].collectiveConceptKey;
+                                    $scope.vm.term =  data.data[0].collectiveConceptTerm;
+                                    $scope.vm.weight =  data.data[0].collectiveConceptWeight;
                                 },function(){
                                 });
                             }else{
@@ -318,9 +316,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         function addDelDialog(callback,item){
             //編輯
             //if(item){
-            //     $scope.vm.key = item.businessConceptKey;
-            //     $scope.vm.term =  item.businessConceptTerm;
-            //     $scope.vm.weight =  item.businessConceptWeight;
+            //     $scope.vm.key = item.collectiveConceptKey;
+            //     $scope.vm.term =  item.collectiveConceptTerm;
+            //     $scope.vm.weight =  item.collectiveConceptWeight;
             //}
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
@@ -341,7 +339,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             });
         }
         //   刪除 彈框
-        function deleteBusiness(id){
+        function deleteCollective(id){
             //console.log(id);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/ConceptManageDialog.html",
@@ -359,17 +357,17 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //編輯事件
         function singleEdit(item){
-            console.log(item);
-            httpRequestPost("/api/modeling/concept/business/update",{
-                "businessConceptId":item.businessConceptId,
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  item.businessConceptKey,
-                "businessConceptModifier": item.businessConceptModifier,
-                "businessConceptTerm": item.businessConceptTerm,
-                "businessConceptWeight": item.businessConceptWeight
+            //console.log("term============="+$scope.vm.term);
+            httpRequestPost("/api/modeling/concept/collective/update",{
+                "collectiveConceptId":item.collectiveConceptId,
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "collectiveConceptKey": $scope.vm.key,
+                "collectiveConceptModifier": item.collectiveConceptModifier,
+                "collectiveConceptTerm": $scope.vm.term,
+                "collectiveConceptWeight": $scope.vm.weight
             },function(data){
                 console.log(item);
-                console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
+                console.log(item.collectiveConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 console.log(data);
                 layer.msg("编辑成功");
                 $state.reload()
@@ -380,12 +378,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //单条新增
         function singleAdd(){
             console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term, $scope.vm.weight)
-            httpRequestPost("/api/modeling/concept/business/add",{
-                "businessConceptApplicationId": $scope.vm.applicationId,
-                "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": $scope.vm.modifier,
-                "businessConceptTerm": $scope.vm.term,
-                "businessConceptWeight": $scope.vm.weight
+            httpRequestPost("/api/modeling/concept/collective/add",{
+                "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "collectiveConceptKey":  $scope.vm.key,
+                "collectiveConceptModifier": $scope.vm.modifier,
+                "collectiveConceptTerm": $scope.vm.term,
+                "collectiveConceptWeight": $scope.vm.weight
             },function(data){
                 //console.log(data);
                 layer.msg("添加成功");
@@ -396,8 +394,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //单条刪除
         function singleDel(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
-                "businessConceptId":id
+            httpRequestPost("/api/modeling/concept/collective/delete",{
+                "collectiveConceptId":id
             },function(data){
                 //console.log(data)
                 layer.msg("刪除成功");
