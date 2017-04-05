@@ -20,7 +20,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //前台模块
     'loginModule',
     'indexModule',
-"adminModule",
+    "adminModule",
 
     //首页 模块
     'homePage',
