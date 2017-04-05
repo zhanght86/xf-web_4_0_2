@@ -1,42 +1,34 @@
 
 <div class="pd-20" >
     <div>
-        <h3 class="mb-20 tc">修改敏感概念</h3>
+        <h3 class="mb-20 tc">{{vm.dialogTitle}}</h3>
         <div class="mb-20 concept_div">
             <span class="concept_s">概念类名：</span>
             <div >
-                <input type="text" class="input_text" value="违禁品"/>
+                <input type="text" ng-model="vm.key" maxlength="20"  class="input_text" value="违禁品"/>
             </div>
         </div>
         <div class="mb-20 concept_div">
-            <span class="concept_s">概念权重：</span>
-            <div >
-                <select class="input_text">
-                    <option>重要</option>
-                    <option>一般</option>
-                    <option>不重要</option>
-                </select>
-            </div>
-        </div>
-        <div class="mb-20 concept_div">
-            <span class="concept_s">新增概念：</span>
-            <div >
-                <textarea class="textarea">
+            <span class="concept_s" >新增概念：</span>
+            <div>
+                <div class="textarea" style="height: auto;width: 260px">
 
-                </textarea>
-            </div>
-        </div>
-        <div class="mb-20 concept_div">
-            <span class="concept_s">同义概念：</span>
-            <div >
-                <textarea class="textarea">
+                    <p class="dib" contenteditable="false"ng-if="vm.term" ng-repeat="term in vm.term.split('；')" style="padding: 5px 15px;height: 30px;border-radius: 2px;border: 0;background: #e1e1e1;margin: 2px;">
+                        <span class="">{{term}}</span>
+                        <i class="Hui-iconfont Hui-iconfont-del" ng-click="vm.delSingleTerm(term)"></i>
+                    </p>
+                    <!-- ng-change="vm.addSingleTermValChange()"-->
+                    <input type="text"  style="" ng-model="vm.addSingleTermVal" oninput="alert()" ng-keydown="vm.addSingleTerm($event)"/>
+                    <!--{{vm.addSingleTermVal}}-->
+                </div>
 
-                </textarea>
+                <!--<input class="textarea" type="text" ng-model="modelObj" ui-autocomplete="myOption">-->
+
             </div>
         </div>
         <div class="concept_div">
-            <input type="submit" class="btn1 btn1_blue mr-15" value="确定"/>
-            <input type="button" class="btn1 btn_gray" value="取消" />
+            <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="确定"/>
+            <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
         </div>
     </div>
 </div>
@@ -44,7 +36,55 @@
     .ngdialog.ngdialog-theme-default .ngdialog-content{
         width:500px;
     }
+
+    .ui-autocomplete {
+        /* will be fixed by options.outHeight */
+        max-height: 300px;
+        min-height: 50px;
+        max-width: 200px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+        /* add padding to account for vertical scrollbar */
+        padding-right: 0;
+        z-index: 9999;
+    }
+    .ui-helper-hidden-accessible {
+        display: none;
+    }
+    .ui-menu-add {
+        text-align: center;
+    }
+    .ui-menu-group {
+        margin-right: 10px;
+        text-align: right;
+        color: red;
+    }
+    .ui-state-hover,
+    .ui-state-focus,
+    .ui-state-active {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    /* Scrollbar Styles */
+    ::-webkit-scrollbar {
+        background-color: transparent;
+        width: 15px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #aaa;
+        min-height: 20px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #ddd;
+    }
+    .text-demo {
+        color: red;
+    }
 </style>
 <script>
+    function alert(){
 
+    }
 </script>

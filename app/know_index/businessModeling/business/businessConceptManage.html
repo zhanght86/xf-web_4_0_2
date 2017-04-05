@@ -13,14 +13,12 @@
                     <option value="businessConceptModifier">创建人</option>
                     <option value="businessConceptModifyTime">上传日期</option>
                 </select>
-                {{vm.timeStart}}
                 <input type="text" ng-if="vm.searchType!='businessConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
                 <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">
                     <input  type="text"  onchange="initTime()"  ng-model="vm.timeStart"  id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="" readonly>
                     -
                     <input type="text" onchange="initTime()" ng-model="vm.timeEnd" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #333!important;" placeholder="" readonly>
                 </div>
-
             </div>
       
             <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
@@ -56,24 +54,12 @@
                         <a href="javascript:;" class="delConcept" ng-click="vm.deleteBusiness(item.businessConceptId)">删除</a>
                     </td>
                 </tr>
-                <tr ng-repeat="item in vm.list">
-                    <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
-                    <td class="color-blue2">{{item.businessConceptKey}}</td>
-
-                    <td class="color-blue2">{{item.businessConceptWeight | weightFilter}}</td>
-                    <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
-                    <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                    <td>{{item.businessConceptModifier}}</td>
-                    <td>
-                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBusiness(item)">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteBusiness(item.businessConceptId)">删除</a>
-                    </td>
-                </tr>
 
             </table>
         </div>
         <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
     </div>
+
 </div>
 <style>
     .pagination {
