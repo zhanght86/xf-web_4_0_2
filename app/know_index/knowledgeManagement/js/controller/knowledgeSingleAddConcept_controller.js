@@ -42,7 +42,7 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
                 $timeout(function(){
                     $(ele).next().slideToggle();
                 },50)
-        }
+        }        
 
        //获取root 数据
         function getBotRoot(){

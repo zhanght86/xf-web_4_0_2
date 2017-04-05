@@ -38,6 +38,9 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'pagination',
     'knowDetailsModule',
     'angularFileUpload',
+    //测试功能
+    'functionalTestModule',
+
     //后台模块
     'backModule',
     'knowGatewayModule'
@@ -653,7 +656,28 @@ knowledge_static_web
                     }
                 }
             })
+            //    -------------------------
+            //测试功能
+            .state("functionalTest", {
+                url: "/functionalTest",
+                templateUrl: 'know_index/home/homePageNav.html',
+                controller: "functionalTestController"
 
+            })
+            .state("functionalTest.questionTest", {
+                url: "/questionTest",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/functionalTesting/questionTest.html',
+                        controller: "questionTestController"
+                    }
+                }
+            })
+            //-----------------------
             //我的应用admin
 
             .state("admin", {
