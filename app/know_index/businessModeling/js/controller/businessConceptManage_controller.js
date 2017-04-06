@@ -44,10 +44,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
 
         };
 
-        //$scope.$watch("vm.addSingleTermVal",function (val) {
-        //    console.log(val)
-        //},true);
-
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}

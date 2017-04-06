@@ -4,12 +4,22 @@
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBasePreController', [
-    '$scope',"$state", function ($scope,$state) {
-
+    '$scope',"$state","$stateParams", function ($scope,$state,$stateParams) {
+        console.log($stateParams.scanData);
         //$state.go("materialManagement.chatKnowledgeBasePreview");
         $scope.vm = {
-
+            scanData : $stateParams.scanData,
+            save : save ,
+            edit : edit ,
         };
+        function save(){
+            $stateParams.scanData.save($stateParams.scanData)
+        }
+        function edit(){
+            console.log($stateParams.scanData);
+            $state.go($stateParams.scanData.editUrl,{scanDataList: $stateParams.scanData});
+
+        }
 
     }
 ]);

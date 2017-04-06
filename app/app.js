@@ -634,7 +634,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.faqChat", {
-                params:{"userPermission" : null},
+                params:{"scanDataList" : null},
                 url: "/faqChat",
                 views: {
                     'header': {
