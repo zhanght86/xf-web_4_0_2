@@ -2104,7 +2104,6 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
  */
 
-
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"HomeService", "PersonalCenterService","KnowDocService",
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
@@ -4444,6 +4443,54 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
 
     }
 ]);;
+// Source: app/know_index/businessModeling/js/controller/factorNewFrame_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('factorNewFrameController', [
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
+        
+        $state.go("factorNewFrame.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            
+
+        };
+
+        
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/faqNewFrame_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('faqNewFrameController', [
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
+        
+        $state.go("faqNewFrame.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            
+
+        };
+
+        
+
+
+    }
+]);;
 // Source: app/know_index/businessModeling/js/controller/frameworkLibrary_controller.js
 /**
  * Created by 41212 on 2017/3/23.
@@ -4454,13 +4501,30 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
  */
 
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope', "$state", "$stateParams",
-    function ($scope,$state, $stateParams) {
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
         
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
+            addFramework: addFramework,
+            
 
         };
+        function addFramework(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/frameworkLibraryDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        singleDel(id)
+                    }
+                }
+            });
+        }
         
 
 
