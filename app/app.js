@@ -558,7 +558,7 @@ knowledge_static_web
 
             .state("materialManagement.chatKnowledgeBase", {
                 params:{"userPermission" : null},
-                url: "/materialManagement/chatKnowledgeBase",
+                url: "/chatKnowledgeBase",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -571,8 +571,8 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.chatKnowledgeBasePreview", {
-                params:{"userPermission" : null},
-                url: "/materialManagement/chatKnowledgeBasePreview",
+                params:{"scanData" : null},
+                url: "/chatKnowledgeBasePreview",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -586,7 +586,7 @@ knowledge_static_web
             })
             .state("materialManagement.faqChat", {
                 params:{"userPermission" : null},
-                url: "/materialManagement/faqChat",
+                url: "/faqChat",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -600,7 +600,7 @@ knowledge_static_web
             })
             .state("materialManagement.conceptChat", {
                 params:{"userPermission" : null},
-                url: "/materialManagement/conceptChat",
+                url: "/conceptChat",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -668,7 +668,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
-                        controller: "NewFactorKnowController"
+                        controller: "knowledgeEssentialController"
 
                     }
                 }

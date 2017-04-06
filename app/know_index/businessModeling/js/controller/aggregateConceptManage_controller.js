@@ -413,11 +413,13 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
+                $(e.target).blur();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
                     //console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空")
+                    layer.msg("扩展名不能为空");
+                    $(e.target).focus();
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
@@ -425,10 +427,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     $scope.vm.term = str.join("；");
                     $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.term);
+                    $(e.target).focus();
                 }else{
                     console.log($scope.vm.addSingleTermVal );
                     $scope.vm.addSingleTermVal = "";
                     layer.msg("扩展名重复,请重新填写")
+                    $(e.target).focus();
                 }
             }
         }
