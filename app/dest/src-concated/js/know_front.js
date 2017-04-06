@@ -4506,8 +4506,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            addFramework: addFramework,
-            
+            addFramework: addFramework,            
 
         };
         function addFramework(){
@@ -4520,7 +4519,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        singleDel(id)
+                        //$state.go("factorNewFrame.manage");    //跳转到要素框架新增
+                         $state.go("faqNewFrame.manage");        //跳转到faq框架新增
                     }
                 }
             });
