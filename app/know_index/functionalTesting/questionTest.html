@@ -25,6 +25,29 @@
 我再网上买卧铺能选择铺位吗在网上买票时能选择铺位吗购买火车票能不能选择铺位</textarea>
             </div>
         </div>
+        <div class="mb-10 cl" style="min-height:25px;">
+            <label class="form-label col-xs-3 col-sm-2 text-r">选择服务：</label>
+            <div class="formControls col-xs-9 col-sm-9">
+                <select class="bd" style="height:30px;">
+                    <option>长沙银行信用卡业务</option>
+                    <option>长沙银行基金营销业务</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-10 cl" style="min-height:25px;">
+            <label class="form-label col-xs-3 col-sm-2 text-r">渠道：</label>
+            <div class="formControls col-xs-9 col-sm-9">
+                <label class="mr-10"><input type="checkbox" /> 微信</label>
+                <label class="mr-10"><input type="checkbox" /> app</label>
+                <label class="mr-10"><input type="checkbox" /> 网页</label>
+            </div>
+        </div>
+        <div class="mb-10 cl" style="min-height:25px;">
+            <label class="form-label col-xs-3 col-sm-2 text-r">维度：</label>
+            <div class="formControls col-xs-9 col-sm-9">
+                <div id="dimension_bar"></div>
+            </div>
+        </div>
         <div class="mb-10 cl" >
             <label class="form-label col-xs-3 col-sm-2 text-r">测试结果：</label>
             <div class="formControls col-xs-9 col-sm-9 pd-10" >
@@ -59,6 +82,10 @@
 <style>
 
 </style>
+<script>
+    //插件
+    var widget = new AutoComplete('dimension_bar', ['Apple', 'Banana', 'Orange']);
+</script>
 
 
 

@@ -23,7 +23,6 @@
                         <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
                         <div class="aside-navs aside-navs2 show" >
                             <ul class="menus show">
-                                <!--//test-->
                                 <li ng-repeat="item in vm.botRoot" data-option="{{item.categoryPid}}">
                                     <div class="slide-a">
                                         <a class="ellipsis" href="javascript:;">
@@ -34,7 +33,6 @@
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -42,7 +40,7 @@
 
         <div class="libraryRth" style="width:730px;">
             <div class="tac mt10" style="margin: 0; text-align: left">
-                <a class="btn btn-blue" href="javascript:;">框架套用</a>
+                <a class="btn btn-blue" ui-sref="botApply.manage">框架套用</a>
                 <a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>
                 <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
             </div>

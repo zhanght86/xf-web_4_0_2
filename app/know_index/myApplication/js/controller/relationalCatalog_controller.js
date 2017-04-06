@@ -51,7 +51,6 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
         }
         $(".aside-navs").on("click","span",function(){
             $scope.vm.knowledgeBotVal = $(this).html();
-            $("#category-parent").val($scope.vm.knowledgeBotVal);
             $scope.vm.botSelectValue = $(this).attr("data-option");
             console.log($scope.vm.botSelectValue);
             $scope.$apply()
@@ -64,8 +63,7 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
         function appendTree(obj){
             var id = $(obj).attr("data-option");
             var that = $(obj);
-            console.log(that.parent().parent().siblings().length+"================");
-            if(!that.parent().parent().siblings("li").length){
+            if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
@@ -118,19 +116,28 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
             },function(data){
                 if(responseView(data)==true){
                     //清空指定pid下所有子分类 重新加载
-                    reloadBot(data);
+                    reloadBot(data,0);
                 }
             },function(err){
                 console.log(err);
             });
         }
-        function reloadBot(data){
-            $.each($(".aside-navs").find("li"),function(index,value){
-                console.log($(value).attr("data-option"));
-                if($(value).attr("data-option")==$scope.vm.botSelectValue){
+        //局部加载 type:0->添加 1:删除 2:修改
+        function reloadBot(data,type){
+            if(type!=0){
+                $.each($(".aside-navs").find("li"),function(index,value){
+                    console.log($(value).child().child().attr("data-option"));
+                    if($(value).child().child().attr("data-option")==$scope.vm.botSelectValue){
+                        //移除指定元素
+                        $(".aside-navs").find("li").remove(index);
+                    }
+                });
+            }
 
-                }
-            });
+            if(type==1){
+                return;
+            }
+
             if($scope.vm.botSelectValue=="root"){
                 initBot();
             }else{
@@ -147,6 +154,29 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                             '</li>';
                         //按照修改时间排序 把数据添加到前面
                         $(value).parent().parent().next().prepend(html);
+                        //$(value).css("backgroundPosition","0% 100%");
+                        //httpRequestPost("/api/modeling/category/listbycategorypid",{
+                        //    "categoryApplicationId": categoryApplicationId,
+                        //    "categoryPid": $(value).attr("data-option")
+                        //},function(data){
+                        //    if(data.data){
+                        //        var html = '';
+                        //        for(var i=0;i<data.data.length;i++){
+                        //            html+= '<li data-option="'+data.data[i].categoryPid+'">' +
+                        //                '<div class="slide-a">'+
+                        //                ' <a class="ellipsis" href="javascript:;">'+
+                        //                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                        //                '<span ng-click="vm.botValChange('+data.data[i].categoryName+')" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        //                '</a>' +
+                        //                '</div>' +
+                        //                '</li>';
+                        //        }
+                        //        $(html).appendTo(($(value).parent().parent().next()));
+                        //        $(value).parent().parent().next().slideDown();
+                        //    }
+                        //},function(err){
+                        //    console.log(err);
+                        //});
                     }
                 });
             }
