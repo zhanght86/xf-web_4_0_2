@@ -97,6 +97,16 @@ angular.module('adminModule', [
 
 
 ;
+
+'use strict';
+
+// Define the `phoneDetail` module
+angular.module('applAnalysisModule', [
+    'know'
+]);
+
+
+;
 /**
  * Created by Administrator on 2016/6/3.
  */
@@ -104,6 +114,16 @@ angular.module('adminModule', [
 
 // Define the `phoneDetail` module
 angular.module('businessModelingModule', [
+    'know'
+]);
+
+
+;
+
+'use strict';
+
+// Define the `phoneDetail` module
+angular.module('functionalTestModule', [
     'know'
 ]);
 

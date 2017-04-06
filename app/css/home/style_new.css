@@ -102,8 +102,8 @@
 .access_amount_table{border-collapse:collapse;}
 .access_amount_table th{font-weight:bold;}
 .access_amount_table td,.access_amount_table th{text-align:center;border:1px solid #e3e3e3;height:40px;}
-.sorting_asc{width:20px;height:19px;display:inline-block;background:url(../images/sort_asc.png) no-repeat;}
-.sorting_asc2{width:20px;height:19px;display:inline-block;background:url(../images/sort_desc.png) no-repeat;}
+.sorting_asc{width:20px;height:19px;display:inline-block;background:url(../../images/sort_asc.png) no-repeat;}
+.sorting_asc2{width:20px;height:19px;display:inline-block;background:url(../../images/sort_desc.png) no-repeat;}
 
 .user_session{padding-top:36px;padding-bottom:50px;height:100%;box-sizing:border-box;position:relative;}
 .user_sessionp{width:100%;position:absolute;left:0;top:0;text-align:center;}
@@ -119,9 +119,9 @@
 .head p span{font-size:12px;color:#75777b;margin-right:5px;}
 .talk_msg{max-width:75%;position:relative;}
 .talk_msg .talk_content{padding:10px 20px;background:#f5f5f7;border-radius:5px;}
-.talk_arrow{width:10px;height:12px;background:url(../images/talk_arrow.jpg) no-repeat;position:absolute;left:-9px;top:10px;}
+.talk_arrow{width:10px;height:12px;background:url(../../images/images/talk_arrow.jpg) no-repeat;position:absolute;left:-9px;top:10px;}
 .talk_ul .li_right .talk_content{background:#2eaeff;color:#fff;}
-.talk_ul .li_right .talk_arrow2{width:10px;height:12px;background:url(../images/talk_arrow2.jpg) no-repeat;position:absolute;right:-10px;top:10px;}
+.talk_ul .li_right .talk_arrow2{width:10px;height:12px;background:url(../../images/images/talk_arrow2.jpg) no-repeat;position:absolute;right:-10px;top:10px;}
 
 .talk_ul_usersession{box-sizing:border-box;height:100%;overflow:auto;}
 .node_ul{width:530px;}

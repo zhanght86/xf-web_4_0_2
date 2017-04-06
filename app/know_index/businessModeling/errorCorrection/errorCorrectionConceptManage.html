@@ -5,18 +5,24 @@
     <div>
         <div class="conceptSearch clearfix">
             <div class=" L bd mr-5">
-                <select>
-                    <option>概念类名</option>
-                    <option>概念类权重</option>
-                    <option>概念词</option>
-                    <option>创建人</option>
-                    <option>上传日期</option>
+
+                <select ng-model="vm.searchType">
+                    <option value="correctionConceptKey" selected>概念类名</option>
+                    <option value="correctionConceptTerm">业务词</option>
+                    <option value="correctionConceptModifier">创建人</option>
+                    <option value="correctionConceptModifyTime">上传日期</option>
                 </select>
-                <input type="text" class="input_text" style="border:0;"/>
+                <input type="text" ng-if="vm.searchType!='correctionConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='correctionConceptModifyTime'">
+                    <input  type="text"  onchange="initTime()"  ng-model="vm.timeStart"  id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="" readonly>
+                    -
+                    <input type="text" onchange="initTime()" ng-model="vm.timeEnd" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #333!important;" placeholder="" readonly>
+                </div>
             </div>
-            <input type="button" value="查找" class="btn1 btn1_blue"/>
+
+            <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
-                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addErrorCorrection()">新增</a>
+                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addCorrection()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
                 <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
@@ -25,77 +31,39 @@
         </div>
         <div class="conceptTab">
             <table border="1">
-                <thead>纠错概念列表</thead>
+                <thead>集合概念表</thead>
                 <tr>
-                    <td><div class="my-checkbox table-checkbox1"><label></label></div></td>
                     <td>概念类名</td>
-                    <td>概念类权重</td>
-                    <td>纠错概念</td>
+                    <td>集合概念</td>
                     <td>更新时间</td>
                     <td>创建人</td>
                     <td>操作</td>
                 </tr>
-                <tr>
-                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
-                    <td class="color-blue2">打</td>
-                    <td class="color-blue2">一般</td>
-                    <td class="color-blue2">打击、<a href="javascript:;">敲打</a></td>
-                    <td>2016-04-29 14:40:54</td>
-                    <td>张三</td>
+                <tr ng-repeat="item in vm.listData">
+                    <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
+                    <td class="color-blue2">{{item.correctionConceptKey}}</td>
+                    <td class="color-blue2">{{item.correctionConceptTerm | strReplace}}</td>
+                    <td>{{item.correctionConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                    <td>{{item.correctionConceptModifier}}</td>
                     <td>
-                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editErrorCorrection()">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteErrorCorrection()">删除</a>
+                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editCorrection(item)">修改</a> &nbsp;
+                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteCorrection(item.correctionConceptId)">删除</a>
                     </td>
-                </tr>
-                <tr>
-                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
-                    <td class="color-blue2">吃</td>
-                    <td class="color-blue2">重要</td>
-                    <td class="color-blue2">吃饭、<a href="javascript:;">食</a></td>
-                    <td>2016-04-29 14:40:54</td>
-                    <td>张三</td>
-                    <td>
-                        <a href="javascript:;" class="color-blue modifyConcept">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
-                    <td class="color-blue2">喝</td>
-                    <td class="color-blue2">不重要</td>
-                    <td class="color-blue2">饮、<a href="javascript:;">喝、</a>灌</td>
-                    <td>2016-04-29 14:40:54</td>
-                    <td>张三</td>
-                    <td><a href="javascript:;" class="color-blue modifyConcept">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
-                </tr>
-                <tr>
-                    <td><div class="my-checkbox table-checkbox"><label></label></div></td>
-                    <td class="color-blue2">喝</td>
-                    <td class="color-blue2">一般</td>
-                    <td class="color-blue2">饮、喝、<a href="javascript:;">灌</a></td>
-                    <td>2016-04-29 14:40:54</td>
-                    <td>张三</td>
-                    <td><a href="javascript:;" class="color-blue modifyConcept">修改</a> &nbsp;<a href="javascript:;" class="delConcept">删除</a></td>
                 </tr>
             </table>
         </div>
-        <div class="paging" style="padding-right: 0">
-            <div class="fr">
-                <ul class="fl">
-                    <li><a class="prev" href="#">上一页</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a class="active" href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">...</a></li>
-                    <li><a href="#">9</a></li>
-                    <li><a href="#">10</a></li>
-                    <li><a class="next" href="#">下一页</a></li>
-                </ul>
-                <span class="paging-tj fl">共<em>67</em>页，跳至<input class="paging-page" type="text">页</span>
-                <a class="btn fl go" href="javascript:;" style="margin-right: 0">GO</a>
-            </div>
-        </div>
+        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
     </div>
+
 </div>
+<style>
+    .pagination {
+        margin: 0 !important;
+    }
+</style>
+<script>
+    function initTime(){
+
+    }
+
+</script>
