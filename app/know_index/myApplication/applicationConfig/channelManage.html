@@ -31,26 +31,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="item in vm.channelData">
                             <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>微信</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td><span class="btn1 btn_green2">已启用</span></td>
+                            <td>$index</td>
+                            <td>{{item.channelName}}</td>
+                            <td>{{item.channelUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>
-                                <a href="javascript:;" class="c-error mr-10" >禁用</a>
-                                <a href="javascript:;" class="c-primary mr-10" >编辑</a>
-                                <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
+                                <span ng-if="item.statusId==50001" class="btn1 btn_green2">未启用</span>
+                                <span ng-if="item.statusId==50002" class="btn1 btn_green2">已启用</span>
                             </td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>微信</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td><span class="btn1 btn_gray">已启用</span></td>
                             <td>
-                                <a href="javascript:;" class="c-error mr-10" >禁用</a>
+                                <a ng-if="item.statusId==50001" href="javascript:;"
+                                   class="c-error mr-10" >启用</a>
+                                <a ng-if="item.statusId==50002" href="javascript:;"
+                                   class="c-error mr-10" >禁用</a>
                                 <a href="javascript:;" class="c-primary mr-10" >编辑</a>
                                 <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
                             </td>
@@ -58,20 +52,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="page clearfix">
-                    <span class="page_span ">上一页</span>
-                    <a href="javascript:;" class="cura">1</a>
-                    <a href="javascript:;">2</a>
-                    <a href="javascript:;">3</a>
-                    <a href="javascript:;">4</a>
-                    <a href="javascript:;">5</a>
-                    <span class="page_span ">下一页</span>
-                    <span>共<b class="page_b">12</b>页</span>
-                    <span>跳转到</span>
-                    <input type="text" class="page_txt">
-                    <span>页</span>
-                    <span class="go_span">GO</span>
-                </div>
+                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
             </div>
         </div>
     </div>
