@@ -4507,20 +4507,134 @@ angular.module('businessModelingModule').controller('faqNewFrameController', [
 /**
  * Created by 41212 on 2017/3/23.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
     '$scope', "$state", "$stateParams","ngDialog",
     function ($scope, $state, $stateParams, ngDialog) {
-        
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            addFramework: addFramework,            
-
+            addFramework: addFramework,
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
+            botSelectValue:"root",
+            botRoot : "",     //根节点
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal:""  //bot 内容
         };
+        setCookie("categoryApplicationId","360619411498860544");
+        setCookie("categoryModifierId","1");
+        setCookie("categorySceneId","10023");
+        var categoryApplicationId = getCookie("categoryApplicationId");
+        var categoryModifierId = getCookie("categoryModifierId");
+        var categorySceneId = getCookie("categorySceneId");
+        //加载业务树
+        initBot();
+        //点击 root 的下拉效果
+        function knowledgeBot(ev){
+            var ele = ev.target;
+            $timeout(function(){
+                $(ele).next().slideToggle();
+            },50)
+        }
+
+        //获取root 数据
+        function initBot(){
+            httpRequestPost("/api/modeling/category/listbycategorypid",{
+                "categoryApplicationId": categoryApplicationId,
+                "categoryPid": "root"
+            },function(data){
+                $scope.vm.botRoot = data.data
+            },function(){
+                console.log("err or err")
+            });
+        }
+        //点击更改bot value
+        function botValChange(val){
+            $scope.vm.knowledgeBotVal = val;
+        }
+        $(".aside-navs").on("click","span",function(){
+            $scope.vm.knowledgeBotVal = $(this).html();
+            $scope.vm.botSelectValue = $(this).attr("data-option");
+            console.log($scope.vm.botSelectValue);
+            //加载对应类目下的框架库
+            loadFrameLibrary();
+            $scope.$apply()
+        });
+        //点击下一级 bot 下拉数据填充以及下拉效果
+        $(".aside-navs").on("click",'.icon-jj',function(){
+            appendTree(this);
+        });
+        //加载子树
+        function appendTree(obj){
+            var id = $(obj).attr("data-option");
+            var that = $(obj);
+            if(!that.parent().parent().siblings().length){
+                that.css("backgroundPosition","0% 100%");
+                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                    "categoryApplicationId": categoryApplicationId,
+                    "categoryPid": id
+                },function(data){
+                    if(data.data){
+                        var html = '<ul class="menus">';
+                        for(var i=0;i<data.data.length;i++){
+                            html+= '<li data-option="'+data.data[i].categoryPid+'">' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                '<span ng-click="vm.botValChange('+data.data[i].categoryName+')" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>';
+                        }
+                        html+="</ul>";
+                        $(html).appendTo((that.parent().parent().parent()));
+                        that.parent().parent().next().slideDown();
+                    }
+                },function(err){
+                    console.log(err);
+                });
+            }else{
+                if(that.css("backgroundPosition")=="0% 0%"){
+                    that.css("backgroundPosition","0% 100%")
+                    that.parent().parent().next().slideDown()
+                }else{
+                    that.css("backgroundPosition","0% 0%");
+                    that.parent().parent().next().slideUp()
+                }
+            }
+        }
+
+        //加载对应类目下的框架库
+        function loadFrameLibrary(){
+            httpRequestPost("/api/modeling/frame/listbyattribute",{
+                "frameCategoryId": $scope.vm.botSelectValue,
+                "frameEnableStatusId": 1,
+                "index": 0,
+                "pageSize": 10
+            },function(data){
+                $("#frame-library").empty();
+                if(data.data){
+                    var html = "";
+                    for(var i=0;i<data.data.length;i++){
+                        if(i%2==0){
+                            html += '<div class="libraryRthCnt" data-option="'+data.data[i].frameId+'">';
+                        }else{
+                            html += '<div class="libraryRthCnt even" data-option="'+data.data[i].frameId+'">';
+                        }
+                        html += '   <img src="../../images/images/libTxt_22.png"/>'+
+                                '   <p>银行邻域业务框架</p>'+
+                                '   <div>' +
+                                '      <a href="javascript:;">'+data.data[i].frameTitle+'</a>' +
+                                '   </div>'+
+                                '</div>';
+                    }
+                    $("#frame-library").append(html);
+                }
+            },function(err){
+                console.log(err);
+            });
+        }
         function addFramework(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/frameworkLibraryDialog.html",
@@ -4529,10 +4643,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
+                preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        //$state.go("factorNewFrame.manage");    //跳转到要素框架新增
-                         $state.go("faqNewFrame.manage");        //跳转到faq框架新增
+                        singleDel(id)
                     }
                 }
             });
@@ -8182,24 +8295,26 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
         //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            //editName : editName
-            botSelectValue:"",
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
+            botSelectValue:"root",
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
-            knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,
+            knowledgeBotVal:"",  //bot 内容
+            addBot:addBot //添加点击时间
         };
-////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //        "categoryPid": "root"
-        //}
-        getBotRoot();
-        //    getDimensions();
-        //    getChannel();
+        setCookie("categoryApplicationId","360619411498860544");
+        setCookie("categoryModifierId","1");
+        setCookie("categorySceneId","10023");
+        var categoryApplicationId = getCookie("categoryApplicationId");
+        var categoryModifierId = getCookie("categoryModifierId");
+        var categorySceneId = getCookie("categorySceneId");
+        //加载业务树
+        initBot();
         //点击 root 的下拉效果
-        function  knowledgeBot(ev){
+        function knowledgeBot(ev){
             var ele = ev.target;
             $timeout(function(){
                 $(ele).next().slideToggle();
@@ -8207,53 +8322,58 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
         }
 
         //获取root 数据
-        function getBotRoot(){
+        function initBot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": "360619411498860544",
+                "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
             },function(data){
                 $scope.vm.botRoot = data.data
             },function(){
-                alert("err or err")
+                console.log("err or err")
             });
         }
-        // $scope.vm.botRoot = [{categoryName:'dd'},{categoryName:'dddddddddddd'}]
         //点击更改bot value
         function botValChange(val){
             $scope.vm.knowledgeBotVal = val;
         }
         $(".aside-navs").on("click","span",function(){
             $scope.vm.knowledgeBotVal = $(this).html();
+            $scope.vm.botSelectValue = $(this).attr("data-option");
+            console.log($scope.vm.botSelectValue);
             $scope.$apply()
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'.icon-jj',function(){
-            var id = $(this).attr("data-option");
-            var that = $(this);
+            appendTree(this);
+        });
+        //加载子树
+        function appendTree(obj){
+            var id = $(obj).attr("data-option");
+            var that = $(obj);
             if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%")
+                that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
-                        var  html = '<ul class="menus">';
+                        var html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
-                            html+= '<li>' +
+                            html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span>'+data.data[i].categoryName+'</span>'+
+                                '<span ng-click="vm.botValChange('+data.data[i].categoryName+')" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '</a>' +
                                 '</div>' +
-                                '</li>'
+                                '</li>';
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
+                        that.parent().parent().next().slideDown();
                     }
                 },function(err){
-                    alert(err)
+                    console.log(err);
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -8264,13 +8384,101 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                     that.parent().parent().next().slideUp()
                 }
             }
-        });
+        }
+        //类目新增
+        function addBot(){
+            //数据校验
+            if($scope.vm.botSelectValue==""){
+                return;
+            }
+            httpRequestPost("/api/modeling/category/add",{
+                "categoryApplicationId": categoryApplicationId,
+                "categoryPid": $scope.vm.botSelectValue,
+                "categoryAttributeName": $("#category-attribute-name").val(),
+                "categoryName": $("#category-name").val(),
+                "categoryTypeId": $("#category-type").val(),
+                "categoryModifierId": categoryModifierId,
+                "categorySceneId": categorySceneId,
+                "categoryLeaf": 0,
+            },function(data){
+                if(responseView(data)==true){
+                    //清空指定pid下所有子分类 重新加载
+                    reloadBot(data,0);
+                }
+            },function(err){
+                console.log(err);
+            });
+        }
+        //局部加载 type:0->添加 1:删除 2:修改
+        function reloadBot(data,type){
+            if(type!=0){
+                $.each($(".aside-navs").find("li"),function(index,value){
+                    console.log($(value).child().child().attr("data-option"));
+                    if($(value).child().child().attr("data-option")==$scope.vm.botSelectValue){
+                        //移除指定元素
+                        $(".aside-navs").find("li").remove(index);
+                    }
+                });
+            }
 
-////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
+            if(type==1){
+                return;
+            }
 
-
-      
-
+            if($scope.vm.botSelectValue=="root"){
+                initBot();
+            }else{
+                $.each($(".aside-navs").find("i"),function(index,value){
+                    console.log($(value).attr("data-option"));
+                    if($(value).attr("data-option")==$scope.vm.botSelectValue){
+                        var html = '<li data-option="'+data.data[0].categoryPid+'">' +
+                            '<div class="slide-a">'+
+                            ' <a class="ellipsis" href="javascript:;">'+
+                            '<i class="icon-jj" data-option="'+data.data[0].categoryId+'"></i>'+
+                            '<span ng-click="vm.botValChange('+data.data[0].categoryName+')" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                            '</a>' +
+                            '</div>' +
+                            '</li>';
+                        //按照修改时间排序 把数据添加到前面
+                        $(value).parent().parent().next().prepend(html);
+                        //$(value).css("backgroundPosition","0% 100%");
+                        //httpRequestPost("/api/modeling/category/listbycategorypid",{
+                        //    "categoryApplicationId": categoryApplicationId,
+                        //    "categoryPid": $(value).attr("data-option")
+                        //},function(data){
+                        //    if(data.data){
+                        //        var html = '';
+                        //        for(var i=0;i<data.data.length;i++){
+                        //            html+= '<li data-option="'+data.data[i].categoryPid+'">' +
+                        //                '<div class="slide-a">'+
+                        //                ' <a class="ellipsis" href="javascript:;">'+
+                        //                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                        //                '<span ng-click="vm.botValChange('+data.data[i].categoryName+')" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        //                '</a>' +
+                        //                '</div>' +
+                        //                '</li>';
+                        //        }
+                        //        $(html).appendTo(($(value).parent().parent().next()));
+                        //        $(value).parent().parent().next().slideDown();
+                        //    }
+                        //},function(err){
+                        //    console.log(err);
+                        //});
+                    }
+                });
+            }
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                return true;
+            }
+            return false;
+        }
     }
 ]);;
 // Source: app/know_index/myApplication/js/controller/sceneManage_controller.js
