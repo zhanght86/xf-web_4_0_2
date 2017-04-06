@@ -2102,7 +2102,8 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
 /**
  * Created by Administrator on 2016/6/17.
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
- */                           
+ */
+
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"HomeService", "PersonalCenterService","KnowDocService",
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
@@ -3421,13 +3422,11 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                $(e.target).blur();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
                     //console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空");
-                    $(e.target).focus();
+                    layer.msg("扩展名不能为空")
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
@@ -3435,12 +3434,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     $scope.vm.term = str.join("；");
                     $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.term);
-                    $(e.target).focus();
                 }else{
                     console.log($scope.vm.addSingleTermVal );
                     $scope.vm.addSingleTermVal = "";
                     layer.msg("扩展名重复,请重新填写")
-                    $(e.target).focus();
                 }
             }
         }
@@ -3757,13 +3754,11 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         function addSingleTerm(e){
                   var keycode = window.event?e.keyCode:e.which;
                   if(keycode==13){
-                      $(e.target).blur();
                       var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                         if($scope.vm.addSingleTermVal.length==0){
                           console.log($scope.vm.addSingleTermVal,"second");
                           $scope.vm.addSingleTermVal = "";
-                          layer.msg("扩展名不能为空");
-                            $(e.target).focus();
+                          layer.msg("扩展名不能为空")
                       }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                           console.log($scope.vm.addSingleTermVal);
                           str.push($scope.vm.addSingleTermVal);
@@ -3771,12 +3766,10 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                           $scope.vm.term = str.join("；");
                           $scope.vm.addSingleTermVal = "";
                           console.log($scope.vm.term);
-                            $(e.target).focus();
                       }else{
                           console.log($scope.vm.addSingleTermVal );
                           $scope.vm.addSingleTermVal = "";
-                          layer.msg("扩展名重复,请重新填写");
-                            $(e.target).focus();
+                          layer.msg("扩展名重复,请重新填写")
                       }
                   }
         }
@@ -4106,13 +4099,11 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                     function addSingleTerm(e){
                         var keycode = window.event?e.keyCode:e.which;
                         if(keycode==13){
-                            $(e.target).blur();
                             var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                             if($scope.vm.addSingleTermVal.length==0){
                                 //console.log($scope.vm.addSingleTermVal,"second");
                                 $scope.vm.addSingleTermVal = "";
-                                layer.msg("扩展名不能为空");
-                                $(e.target).focus();
+                                layer.msg("扩展名不能为空")
                             }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                                 console.log($scope.vm.addSingleTermVal);
                                 str.push($scope.vm.addSingleTermVal);
@@ -4120,12 +4111,10 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                 $scope.vm.term = str.join("；");
                                 $scope.vm.addSingleTermVal = "";
                                 console.log($scope.vm.term);
-                                $(e.target).focus();
                             }else{
                                 console.log($scope.vm.addSingleTermVal );
                                 $scope.vm.addSingleTermVal = "";
-                                layer.msg("扩展名重复,请重新填写");
-                                $(e.target).focus();
+                                layer.msg("扩展名重复,请重新填写")
                             }
                         }
                     }
@@ -4429,13 +4418,11 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                $(e.target).blur();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
                     //console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空");
-                    $(e.target).focus();
+                    layer.msg("扩展名不能为空")
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
@@ -4443,17 +4430,63 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                     $scope.vm.term = str.join("；");
                     $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.term);
-                    $(e.target).focus();
                 }else{
                     console.log($scope.vm.addSingleTermVal );
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写");
-                    $(e.target).focus();
+                    layer.msg("扩展名重复,请重新填写")
                 }
             }
         }
 
 
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/factorNewFrame_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('factorNewFrameController', [
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
+        
+        $state.go("factorNewFrame.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            
+
+        };
+
+        
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/faqNewFrame_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('faqNewFrameController', [
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
+        
+        $state.go("faqNewFrame.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            
+
+        };
+
+        
 
 
     }
@@ -4468,13 +4501,30 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
  */
 
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope', "$state", "$stateParams",
-    function ($scope,$state, $stateParams) {
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
         
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
+            addFramework: addFramework,            
 
         };
+        function addFramework(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/frameworkLibraryDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        //$state.go("factorNewFrame.manage");    //跳转到要素框架新增
+                         $state.go("faqNewFrame.manage");        //跳转到faq框架新增
+                    }
+                }
+            });
+        }
         
 
 
@@ -4777,13 +4827,11 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                     function addSingleTerm(e){
                         var keycode = window.event?e.keyCode:e.which;
                         if(keycode==13){
-                            $(e.target).blur();
                             var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                             if($scope.vm.addSingleTermVal.length==0){
                                 //console.log($scope.vm.addSingleTermVal,"second");
                                 $scope.vm.addSingleTermVal = "";
-                                layer.msg("扩展名不能为空");
-                                $(e.target).focus();
+                                layer.msg("扩展名不能为空")
                             }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                                 console.log($scope.vm.addSingleTermVal);
                                 str.push($scope.vm.addSingleTermVal);
@@ -4791,12 +4839,10 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                 $scope.vm.term = str.join("；");
                                 $scope.vm.addSingleTermVal = "";
                                 console.log($scope.vm.term);
-                                $(e.target).focus();
                             }else{
                                 console.log($scope.vm.addSingleTermVal );
                                 $scope.vm.addSingleTermVal = "";
-                                layer.msg("扩展名重复,请重新填写");
-                                $(e.target).focus();
+                                layer.msg("扩展名重复,请重新填写")
                             }
                         }
                     }
@@ -5099,13 +5145,11 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                $(e.target).blur();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
                     //console.log($scope.vm.addSingleTermVal,"second");
                     $scope.vm.addSingleTermVal = "";
                     layer.msg("扩展名不能为空");
-                    $(e.target).focus();
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
@@ -5113,12 +5157,10 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                     $scope.vm.term = str.join("；");
                     $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.term);
-                    $(e.target).focus();
                 }else{
                     console.log($scope.vm.addSingleTermVal );
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写");
-                    $(e.target).focus();
+                    layer.msg("扩展名重复,请重新填写")
                 }
             }
         }
@@ -5429,12 +5471,10 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         function addSingleTerm(e){
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                $(e.target).blur();
                 var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
                 if($scope.vm.addSingleTermVal.length==0){
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空");
-                    $(e.target).focus();
+                    layer.msg("扩展名不能为空")
                 }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
                     console.log($scope.vm.addSingleTermVal);
                     str.push($scope.vm.addSingleTermVal);
@@ -5442,33 +5482,16 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     $scope.vm.term = str.join("；");
                     $scope.vm.addSingleTermVal = "";
                     console.log($scope.vm.term);
-                    $(e.target).focus();
                 }else{
                     console.log($scope.vm.addSingleTermVal );
                     $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写");
-                    $(e.target).focus();
+                    layer.msg("扩展名重复,请重新填写")
                 }
             }
         }
 
     }
 ]);;
-// Source: app/know_index/businessModeling/js/filter/weight.js
-/**
- * Created by 41212 on 2017/4/6.
- */
-angular.module('knowledge_static_web').filter('faqWeight', function () {
-    return function (val) {
-        var result;
-        if(val == 60){
-            result = "普通"
-        }else{
-            result = "否定"
-        }
-        return result
-    };
-});;
 ;
 // Source: app/know_index/functionalTesting/js/controller/functionalTest_controller.js
 
@@ -5733,170 +5756,113 @@ angular.module('knowledgeManagementModule').controller('NewFactorKnowController'
 
     }
 ]);;
-// Source: app/know_index/knowledgeManagement/js/controller/concept_controller.js
+// Source: app/know_index/knowledgeManagement/js/controller/knowManaFaq_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
 /**
  * Created by 41212 on 2017/3/28.
  */
+
 /**
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
-    '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog",function ($scope,localStorageService,$timeout, $state,ngDialog) {
+
+angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
-            framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
-            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
-            botSelectValue:"",
-            botRoot : "",     //根节点
-            knowledgeBot:knowledgeBot,  //bot点击事件
-            knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,            
-            knowledgeTitle : "",   //标题
-            timeStart : "",      //起始时间
-            timeEnd : "",
-            isTimeTable : false,  //时间表隐藏
-            timeFlag : "启用",
-            titleGroup : "", //点击标题添加内容
-            channels : "",     //渠道
-            dimensions : ""    //维度
+            faqAdd : faqAdd,
+            faqEdit: faqEdit
         };
-
-////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-      //{
-    //    "categoryApplicationId": "360619411498860544",
-    //    "categoryPid": "root"
-      //}
-        getBotRoot();
-    //    getDimensions();
-    //    getChannel();
-        //点击 root 的下拉效果
-        function  knowledgeBot(ev){
-            var ele = ev.target;
-                $timeout(function(){
-                    $(ele).next().slideToggle();
-                },50)
-        }        
-
-       //获取root 数据
-        function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": $scope.vm.applicationId,
-                "categoryPid": "root"
-            },function(data){
-                $scope.vm.botRoot = data.data
-            },function(){
-                alert("err or err")
+        function faqAdd(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
             });
         }
-        //点击更改bot value
-        function botValChange(val){
-            $scope.vm.knowledgeBotVal = val;
-        }
-        $(".aside-navs").on("click","span",function(){
-            $scope.vm.knowledgeBotVal = $(this).html();
-            $scope.$apply()
-        });
-        //点击下一级 bot 下拉数据填充以及下拉效果
-       $(".aside-navs").on("click",'.icon-jj',function(){
-           var id = $(this).attr("data-option");
-           var that = $(this);
-           if(!that.parent().parent().siblings().length){
-               that.css("backgroundPosition","0% 100%")
-               httpRequestPost("/api/modeling/category/listbycategorypid",{
-                   "categoryApplicationId": $scope.vm.applicationId,
-                   "categoryPid": id
-               },function(data){
-                   if(data.data){
-                       var  html = '<ul class="menus">';
-                       for(var i=0;i<data.data.length;i++){
-                           html+= '<li>' +
-                               '<div class="slide-a">'+
-                               ' <a class="ellipsis" href="javascript:;">'+
-                               '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                               '<span>'+data.data[i].categoryName+'</span>'+
-                               '</a>' +
-                               '</div>' +
-                               '</li>'
-                       }
-                       html+="</ul>";
-                       $(html).appendTo((that.parent().parent().parent()));
-                       that.parent().parent().next().slideDown()
-                   }
-               },function(err){
-                        alert(err)
-               });
-           }else{
-               if(that.css("backgroundPosition")=="0% 0%"){
-                   that.css("backgroundPosition","0% 100%");
-                   that.parent().parent().next().slideDown()
-               }else{
-                   that.css("backgroundPosition","0% 0%");
-                   that.parent().parent().next().slideUp()
-               }
-           }
-       });
-
-////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
-
-        //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
-            if(val==true){
-                $scope.vm.timeFlag="禁用"
-            }else{
-                $scope.vm.timeFlag="启用"
-            }
-        });
-
-       function KnowledgeAdd(){
-           var dialog = ngDialog.openConfirm({
-               template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
-               //controller:function($scope){
-               //    $scope.show = function(){
-               //
-               //        console.log(6688688);
-               //        $scope.closeThisDialog(); //关闭弹窗
-               //    }},
-               scope: $scope,
-               closeByDocument:false,
-               closeByEscape: true,
-               showClose : true,
-               backdrop : 'static',
-               preCloseCallback:function(e){    //关闭回掉
-                   if(e === 1){
-                   }
-               }
-           });
-       }
-
-
-
-
-        //維度
-        function  getDimensions(){
-            httpRequestPost("/api/user/userLogin",{
-
-            },function(data){
-
-            },function(err){
-
+        function faqEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
             });
         }
-        //渠道
-        function  getChannel(){
-            httpRequestPost("/api/user/userLogin",{
-
-            },function(data){
-
-            },function(err){
-
-            });
-        }
-
+      
 
     }
 ]);;
-// Source: app/know_index/knowledgeManagement/js/controller/factor_controller.js
+// Source: app/know_index/knowledgeManagement/js/controller/knowManaList_controller.js
+/**
+ * Created by dinfo on 2017/3/28.
+ */
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+
+/**
+ * Created by Administrator on 2016/6/3.
+ *
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('knowManaListController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        $scope.vm = {
+          fagAdd : listAdd
+        };
+        function listAdd(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/knowledgeManagementFaqDialog.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false     ,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
+      
+
+    }
+]);;
+// Source: app/know_index/knowledgeManagement/js/controller/knowledgeEssential_controller.js
 /**
  * Created by 41212 on 2017/3/28.
  */
@@ -6006,112 +5972,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
     }
 ]);;
-// Source: app/know_index/knowledgeManagement/js/controller/knowManaFaq_controller.js
-/**
- * Created by dinfo on 2017/3/28.
- */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
-angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        $scope.vm = {
-            faqAdd : faqAdd,
-            faqEdit: faqEdit
-        };
-        function faqAdd(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
-                }
-            });
-        }
-        function faqEdit(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
-                }
-            });
-        }
-      
-
-    }
-]);;
-// Source: app/know_index/knowledgeManagement/js/controller/knowManaList_controller.js
-/**
- * Created by dinfo on 2017/3/28.
- */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- *
- * 控制器
- */
-
-angular.module('knowledgeManagementModule').controller('knowManaListController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        $scope.vm = {
-          fagAdd : listAdd
-        };
-        function listAdd(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/knowledgeManagementFaqDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
-                scope: $scope,
-                closeByDocument:false     ,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
-                }
-            });
-        }
-      
-
-    }
-]);;
 // Source: app/know_index/knowledgeManagement/js/controller/knowledgeManagement_controller.js
 /**
  * Created by Administrator on 2016/6/3.
@@ -6124,6 +5984,171 @@ angular.module('knowledgeManagementModule').controller('knowledgeManagementContr
             userName: '',
             password: '',
         };
+
+    }
+]);;
+// Source: app/know_index/knowledgeManagement/js/controller/knowledgeSingleAddConcept_controller.js
+/**
+ * Created by 41212 on 2017/3/28.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
+    '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog",function ($scope,localStorageService,$timeout, $state,ngDialog) {
+        $scope.vm = {
+            framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
+            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            botSelectValue:"",
+            botRoot : "",     //根节点
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botValChange : botValChange,            
+            knowledgeTitle : "",   //标题
+            timeStart : "",      //起始时间
+            timeEnd : "",
+            isTimeTable : false,  //时间表隐藏
+            timeFlag : "启用",
+            titleGroup : "", //点击标题添加内容
+            channels : "",     //渠道
+            dimensions : ""    //维度
+        };
+
+setCookie("categoryApplicationId","360619411498860544");
+var   categoryApplicationId =  getCookie("categoryApplicationId");
+////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+
+      //{
+    //    "categoryApplicationId": "360619411498860544",
+    //        "categoryPid": "root"
+    //}
+        getBotRoot();
+    //    getDimensions();
+    //    getChannel();
+        //点击 root 的下拉效果
+        function  knowledgeBot(ev){
+            var ele = ev.target;
+                $timeout(function(){
+                    $(ele).next().slideToggle();
+                },50)
+        }        
+
+       //获取root 数据
+        function getBotRoot(){
+            httpRequestPost("/api/modeling/category/listbycategorypid",{
+                "categoryApplicationId": "360619411498860544",
+                "categoryPid": "root"
+            },function(data){
+                $scope.vm.botRoot = data.data
+            },function(){
+                alert("err or err")
+            });
+        }
+        //点击更改bot value
+        function botValChange(val){
+            $scope.vm.knowledgeBotVal = val;
+        }
+        $(".aside-navs").on("click","span",function(){
+            $scope.vm.knowledgeBotVal = $(this).html();
+            $scope.$apply()
+        });
+        //点击下一级 bot 下拉数据填充以及下拉效果
+       $(".aside-navs").on("click",'.icon-jj',function(){
+           var id = $(this).attr("data-option");
+           var that = $(this);
+           if(!that.parent().parent().siblings().length){
+               that.css("backgroundPosition","0% 100%")
+               httpRequestPost("/api/modeling/category/listbycategorypid",{
+                   "categoryApplicationId": categoryApplicationId,
+                   "categoryPid": id
+               },function(data){
+                   if(data.data){
+                       var  html = '<ul class="menus">';
+                       for(var i=0;i<data.data.length;i++){
+                           html+= '<li>' +
+                               '<div class="slide-a">'+
+                               ' <a class="ellipsis" href="javascript:;">'+
+                               '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                               '<span>'+data.data[i].categoryName+'</span>'+
+                               '</a>' +
+                               '</div>' +
+                               '</li>'
+                       }
+                       html+="</ul>";
+                       $(html).appendTo((that.parent().parent().parent()));
+                       that.parent().parent().next().slideDown()
+                   }
+               },function(err){
+                        alert(err)
+               });
+           }else{
+               if(that.css("backgroundPosition")=="0% 0%"){
+                   that.css("backgroundPosition","0% 100%")
+                   that.parent().parent().next().slideDown()
+               }else{
+                   that.css("backgroundPosition","0% 0%");
+                   that.parent().parent().next().slideUp()
+               }
+           }
+       });
+
+////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
+
+        //检测时间表开关
+        $scope.$watch("vm.isTimeTable",function(val){
+            if(val==true){
+                $scope.vm.timeFlag="禁用"
+            }else{
+                $scope.vm.timeFlag="启用"
+            }
+        });
+
+       function KnowledgeAdd(){
+           var dialog = ngDialog.openConfirm({
+               template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+               //controller:function($scope){
+               //    $scope.show = function(){
+               //
+               //        console.log(6688688);
+               //        $scope.closeThisDialog(); //关闭弹窗
+               //    }},
+               scope: $scope,
+               closeByDocument:false,
+               closeByEscape: true,
+               showClose : true,
+               backdrop : 'static',
+               preCloseCallback:function(e){    //关闭回掉
+                   if(e === 1){
+                   }
+               }
+           });
+       }
+
+
+
+
+        //維度
+        function  getDimensions(){
+            httpRequestPost("/api/user/userLogin",{
+
+            },function(data){
+
+            },function(err){
+
+            });
+        }
+        //渠道
+        function  getChannel(){
+            httpRequestPost("/api/user/userLogin",{
+
+            },function(data){
+
+            },function(err){
+
+            });
+        }
+
 
     }
 ]);;
@@ -7086,160 +7111,16 @@ angular.module('materialManagement').controller('conceptChatController', [
  */
 
 angular.module('materialManagement').controller('faqChatController', [
-    '$scope',"$state","ngDialog", function ($scope,$state,ngDialog) {
-        $state.go("materialManagement.faqChat");
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
+    '$scope',"$state", function ($scope,$state) {
+       // alert()
+        //$state.go("materialManagement.faqChat");
         $scope.vm = {
-            userName : getCookie("userName"),
-            applicationId : getCookie("applicationId"),
-            standardQuestion : "",   //标准问
-            extendedQuestion : "",    //扩展问
-            extendedQuestionArr : [],  //扩展问数组
-            remove : remove ,
-            weight : "60" ,         //  权重
-            addExtension : addExtension ,  //添加扩展
 
-            contentVal : "",
-            contentArr : [] ,
-            addContentDialog : addContentDialog,// 添加知识内容
-            save : save ,
-            scan : scan,
+            
         };
-        //擴展問
-        function addExtension(){
-            if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
-                layer.msg("扩展不能为空");
-            }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
-                layer.msg("扩展问题重复，请重新输入");
-            }else{
-                httpRequestPost("/api/chatKnowledge/checkFAQChatQuestion",{
-                    "chatQuestionContent" : $scope.vm.extendedQuestion
-                },function(data){
-                    console.log(data);
-                    if(data.status == 10000){
-                        var obj = {};
-                        obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion);
-                        obj.chatQuestionType = angular.copy($scope.vm.weight);
-                        $scope.vm.extendedQuestionArr.push(obj);
-                        $scope.vm.extendedQuestion = "";
-                        $scope.$apply();
-                        console.log($scope.vm.extendedQuestionArr)
-                    }else{
-                        layer.msg("扩展问重复")
-                    }
-                },function(err){
-                    layer.msg("连接网路失败")
-                })
-            }
-        }
-        function addContentDialog(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/materialManagement/faq/addContentDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        addContent()
-                    }
-                }
-            });
-        }
-        function addContent(){
-            console.log();
-            if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
-                layer.msg("扩展不能为空");
-            }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
-                layer.msg("扩展问题重复，请重新输入");
-            }else{
-                httpRequestPost("/api/chatKnowledge/checkChatKnowledgeContent",{
-                    "chatKnowledgeContent" : $scope.vm.contentVal
-                },function(data){
-                    console.log(data);
-                    if(data.status == 10000){
-                        var obj = {};
-                        obj.chatKnowledgeContent = angular.copy($scope.vm.contentVal);
-                        $scope.vm.contentArr.push(obj);
-                        $scope.vm.contentVal = "";
-                        $scope.$apply();
-                    }else{
-                        layer.msg("扩展问重复")
-                    }
-                },function(err){
-                    layer.msg("连接网路失败")
-                })
-            }
 
-        }
-       //刪除
-        function remove(item,arr){
-            arr.remove(item);
-        }
-        //预览
-        function scan(){
-            if(check()){
-                //$state.go("materialManagement.chatKnowledgeBasePreview",{"scanData",})
-            }
-        }
-        //保存
-        function save(){
-            httpRequestPost("/api/chatKnowledge/addFAQChatKnowledge",{
-                "applicationId": $scope.vm.applicationId,
-                "chatKnowledgeModifier": $scope.vm.userName,
-                "chatKnowledgeTopic": $scope.vm.standardQuestion,
-                "chatQuestionList" : $scope.vm.extendedQuestionArr,
-                "chatKnowledgeContentList" : $scope.vm.contentArr
-            },function(data){
-                if(data.data==10004){
-                    layer.msg("标准问重复")
-                }else{
-                    $state.go("materialManagement.chatKnowledgeBase");
-                }
-            },function(err){
-
-            })
-        }
-
-
-        //    判断重复
-        function checkRepeat(val , arr ,prop){
-            var result;
-            if(arr.length==0){
-                result = 0;
-            }else{
-                angular.forEach(arr,function(item){
-                    if(item[prop]==val){
-                        result = 1
-                    }else{
-                        result = 0
-                    }
-                })
-            }
-            return result
-        }
-
-        //验证 所有数据是否合格
-        function check(){
-            if($scope.vm.standardQuestion){
-                layer.msg("标准问不能为空");
-                return false
-            }else if($scope.vm.extendedQuestionArr){
-                layer.msg("扩展问不能为空");
-                return false;
-            }else if($scope.vm.contentArr){
-                layer.msg("知识内容不能为空");
-                return false
-            }else{
-                return true
-            }
-        }
     }
-]);
-
-;
+]);;
 // Source: app/know_index/materialManagement/js/controller/materialManagementPre_controller.js
 /**
  * Created by Administrator on 2016/6/3.
@@ -7548,6 +7429,107 @@ angular.module('knowledgeManagementModule').controller('applicationInforControll
                 }
             });
         }
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/botApply.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('botApplyController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+            botSelectValue:"",
+            botRoot : "",     //根节点
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botValChange : botValChange,
+        };
+////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+
+        //{
+        //    "categoryApplicationId": "360619411498860544",
+        //        "categoryPid": "root"
+        //}
+        getBotRoot();
+        //    getDimensions();
+        //    getChannel();
+        //点击 root 的下拉效果
+        function  knowledgeBot(ev){
+            var ele = ev.target;
+            $timeout(function(){
+                $(ele).next().slideToggle();
+            },50)
+        }
+
+        //获取root 数据
+        function getBotRoot(){
+            httpRequestPost("/api/modeling/category/listbycategorypid",{
+                "categoryApplicationId": "360619411498860544",
+                "categoryPid": "root"
+            },function(data){
+                $scope.vm.botRoot = data.data
+            },function(){
+                alert("err or err")
+            });
+        }
+        // $scope.vm.botRoot = [{categoryName:'dd'},{categoryName:'dddddddddddd'}]
+        //点击更改bot value
+        function botValChange(val){
+            $scope.vm.knowledgeBotVal = val;
+        }
+        $(".aside-navs").on("click","span",function(){
+            $scope.vm.knowledgeBotVal = $(this).html();
+            $scope.$apply()
+        });
+        //点击下一级 bot 下拉数据填充以及下拉效果
+        $(".aside-navs").on("click",'.icon-jj',function(){
+            var id = $(this).attr("data-option");
+            var that = $(this);
+            if(!that.parent().parent().siblings().length){
+                that.css("backgroundPosition","0% 100%")
+                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                    "categoryApplicationId": categoryApplicationId,
+                    "categoryPid": id
+                },function(data){
+                    if(data.data){
+                        var  html = '<ul class="menus">';
+                        for(var i=0;i<data.data.length;i++){
+                            html+= '<li>' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                '<span>'+data.data[i].categoryName+'</span>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
+                        }
+                        html+="</ul>";
+                        $(html).appendTo((that.parent().parent().parent()));
+                        that.parent().parent().next().slideDown()
+                    }
+                },function(err){
+                    alert(err)
+                });
+            }else{
+                if(that.css("backgroundPosition")=="0% 0%"){
+                    that.css("backgroundPosition","0% 100%")
+                    that.parent().parent().next().slideDown()
+                }else{
+                    that.css("backgroundPosition","0% 0%");
+                    that.parent().parent().next().slideUp()
+                }
+            }
+        });
+
+////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
+
+
       
 
     }
