@@ -419,12 +419,7 @@ knowledge_static_web
                 }
             })
             //应用开发-业务建模
-            .state("relationalCatalog", {
-                //params:{"userPermission" : null},
-                url: "/relationalCatalog",
-                templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
-                controller:"relationalCatalogController"
-            })
+
             .state("relationalCatalog.manage", {
                 //params:{"userPermission" : null},
                 url: "/manage",
@@ -434,6 +429,28 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                 }
+            })
+            .state("relationalCatalog", {
+                //params:{"userPermission" : null},
+                url: "/relationalCatalog",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
+                controller:"relationalCatalogController"
+            })
+            .state("botApply.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                }
+            })
+            .state("botApply", {
+                //params:{"userPermission" : null},
+                url: "/botApply",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/botApply.html',
+                controller:"botApplyController"
             })
             //应用开发-知识管理-客服场景知识总览
             .state("custServScenaOverview", {
@@ -728,6 +745,7 @@ knowledge_static_web
                     }
                 }
             })
+            
             .state("applAnalysis.satisfactionDegree", {
                 url: "/satisfactionDegree",
                 views: {
