@@ -35,12 +35,11 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
                 $scope.vm.knowledgeTypeData = data.data;
                 //console.log(data)
                 $scope.$apply();
-            },function(){
+            },function(err){
+                console.log(err);
                 layer.msg("请求失败")
             })
         }
-
-
         //请求交互方式列表
         function listExchangeMode(){
             httpRequestPost("/api/application/scene/listExchangeModeByApplicationId",{

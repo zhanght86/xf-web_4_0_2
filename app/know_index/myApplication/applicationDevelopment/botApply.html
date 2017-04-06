@@ -1,0 +1,85 @@
+<div ui-view="header"></div>
+
+<div class="main warp">
+    <div class="crumbs-nav bgwhite mt20">
+        <span class="cn-lable">你曾经路过此地：</span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
+        <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+    </div>
+    <div class="libraryCnt">
+        <div class="libraryFt pd-20 mr-20">
+            <h3 class="tc mb-20">资源BOT</h3>
+            <div class="item-line">
+                <div class="value menu_1Div" id="menu_1Div">
+                    <div class="ipt-txt-box">
+                        <!--<input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>-->
+                        <!--<i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>-->
+                        <div class="aside-navs aside-navs2 show" >
+                            <ul class="menus show">
+                                <!--//test-->
+                                <li ng-repeat="item in vm.botRoot"  >
+                                    <div class="slide-a">
+                                        <a class="ellipsis" href="javascript:;">
+                                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
+                                            <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="library_mid  L mr-20" >
+            <div class="mb-30">
+                <select class="bd sel">
+                    <option>导为根节点</option>
+                    <option>导为子节点</option>
+                </select>
+            </div>
+            <div class="mb-20">
+                <a href="javascript:;" class="right_arrow"> >> >> </a>
+            </div>
+            <div>
+                <a href="javascript:;" class="left_arrow"> << << </a>
+            </div>
+        </div>
+        <div class="libraryFt pd-20">
+            <h3 class="tc mb-20">场景BOT</h3>
+            <!--<div class="item-line">-->
+                <!--<div class="value menu_1Div" id="menu_1Div">-->
+                    <!--<div class="ipt-txt-box">-->
+                        <!--&lt;!&ndash;<input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>&ndash;&gt;-->
+                        <!--<div class="aside-navs aside-navs2 show" >-->
+                            <!--<ul class="menus show">-->
+                                <!--&lt;!&ndash;//test&ndash;&gt;-->
+                                <!--<li ng-repeat="item in vm.botRoot"  >-->
+                                    <!--<div class="slide-a">-->
+                                        <!--<a class="ellipsis" href="javascript:;">-->
+                                            <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
+                                            <!--<span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+
+    </div>
+
+</div>
+<style>
+    .libraryFt{width:480px;}
+    .library_mid{width:200px;height:875px;background:#fff;padding:50px 20px;}
+    .library_mid .sel{width:150px;height:30px;}
+    .right_arrow,.left_arrow{width:150px;height:40px;border-radius:5px;background:#50bbeb;color:#fff;display:block;line-height:40px;text-align:center;}
+</style>

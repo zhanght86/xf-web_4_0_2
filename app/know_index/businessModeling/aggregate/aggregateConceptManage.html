@@ -7,14 +7,14 @@
             <div class=" L bd mr-5">
 
                 <select ng-model="vm.searchType">
-                    <option value="businessConceptKey" selected>概念类名</option>
-                    <option value="businessConceptWeight">概念类权重</option>
-                    <option value="businessConceptTerm">业务词</option>
-                    <option value="businessConceptModifier">创建人</option>
-                    <option value="businessConceptModifyTime">上传日期</option>
+                    <option value="collectiveConceptKey" selected>概念类名</option>
+                    <option value="collectiveConceptWeight">概念类权重</option>
+                    <option value="collectiveConceptTerm">业务词</option>
+                    <option value="collectiveConceptModifier">创建人</option>
+                    <option value="collectiveConceptModifyTime">上传日期</option>
                 </select>
-                <input type="text" ng-if="vm.searchType!='businessConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">
+                <input type="text" ng-if="vm.searchType!='collectiveConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='collectiveConceptModifyTime'">
                     <input  type="text"  onchange="initTime()"  ng-model="vm.timeStart"  id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="" readonly>
                     -
                     <input type="text" onchange="initTime()" ng-model="vm.timeEnd" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #333!important;" placeholder="" readonly>
@@ -23,7 +23,7 @@
 
             <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
-                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBusiness()">新增</a>
+                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addCollective()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
                 <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
@@ -43,29 +43,18 @@
                 </tr>
                 <tr ng-repeat="item in vm.listData">
                     <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
-                    <td class="color-blue2">{{item.businessConceptKey}}</td>
+                    <td class="color-blue2">{{item.collectiveConceptKey}}</td>
 
-                    <td class="color-blue2">{{item.businessConceptWeight | weightFilter}}</td>
-                    <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
-                    <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                    <td>{{item.businessConceptModifier}}</td>
+                    <td class="color-blue2">{{item.collectiveConceptWeight | weightFilter}}</td>
+                    <td class="color-blue2">{{item.collectiveConceptTerm | strReplace}}</td>
+                    <td>{{item.collectiveConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                    <td>{{item.collectiveConceptModifier}}</td>
                     <td>
-                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBusiness(item)">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteBusiness(item.businessConceptId)">删除</a>
+                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editCollective(item)">修改</a> &nbsp;
+                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteCollective(item.collectiveConceptId)">删除</a>
                     </td>
                 </tr>
-                <tr ng-repeat="item in vm.list">
-                    <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
-                    <td class="color-blue2">{{item.businessConceptKey}}</td>
-                    <td class="color-blue2">{{item.businessConceptWeight | weightFilter}}</td>
-                    <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
-                    <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                    <td>{{item.businessConceptModifier}}</td>
-                    <td>
-                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBusiness(item)">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteBusiness(item.businessConceptId)">删除</a>
-                    </td>
-                </tr>
+
 
             </table>
         </div>

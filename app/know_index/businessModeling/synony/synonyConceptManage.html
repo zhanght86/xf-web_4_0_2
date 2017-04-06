@@ -44,7 +44,6 @@
                 <tr ng-repeat="item in vm.listData">
                     <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
                     <td class="color-blue2">{{item.synonymConceptKey}}</td>
-
                     <td class="color-blue2">{{item.synonymConceptWeight | weightFilter}}</td>
                     <td class="color-blue2">{{item.synonymConceptTerm | strReplace}}</td>
                     <td>{{item.synonymConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
