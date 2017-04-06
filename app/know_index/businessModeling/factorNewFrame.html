@@ -1,0 +1,131 @@
+<div class="wrap pt-20">
+    <div class="content_box mb25 ">
+        <div class=" p10 ">
+            <div class="framework mb-10">
+                <span class="framework_s">要素标题：</span>
+                <input  type="text" class="input-text mr-10" placeholder="" style="width:300px;"/>
+            </div>
+            <div class="framework mb-10">
+                <div class="essential_factor_div bd">
+                    <div class="mb-10">
+                        <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"></a>
+                        <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"></a>
+                    </div>
+                    <div>
+                        <table class="essential_factor_tab">
+                            <tbody>
+                            <tr>
+                                <td>要素名称</td>
+                                <td>要素类型</td>
+                                <td>挖掘技术</td>
+                                <td>反问</td>
+                                <td>相关概念</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" placeholder="购买人"/> </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>字符串</option>
+                                        <option>数字</option>
+                                        <option>范围</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>OEC</option>
+                                        <option>GATE</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder=""/></td>
+                                <td><input type="text" placeholder="从概念库中选择"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" placeholder="地区"/> </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>字符串</option>
+                                        <option>数字</option>
+                                        <option>范围</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>OEC</option>
+                                        <option>GATE</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder=""/></td>
+                                <td><input type="text" placeholder="从概念库中选择"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" placeholder="价格"/> </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>字符串</option>
+                                        <option>数字</option>
+                                        <option>范围</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>OEC</option>
+                                        <option>GATE</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder=""/></td>
+                                <td><input type="text" placeholder="从概念库中选择"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" placeholder="期限"/> </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>字符串</option>
+                                        <option>数字</option>
+                                        <option>范围</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="bd">
+                                        <option>OEC</option>
+                                        <option>GATE</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder=""/></td>
+                                <td><input type="text" placeholder="从概念库中选择"/></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="framework mb-10 pt-10">
+                <input type="button" class="btn1 btn1_blue mr-20" value="保存"/>
+                <input type="button" class="btn1 btn_green mr-20" value="返回"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>
+<script>
+    //添加扩展问
+    function add_ques(){
+        var oVal=$('.extended_query_txt').val();
+        var str='<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" value="'+oVal+'" style="width:300px;"><a href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
+        $('.exten_problem').append(str);
+        $('.extended_query_txt').val('');
+    }
+    //删除扩展问
+    function rem_ques(obj){
+        $(obj).parent().parent().remove();
+    }
+</script>
+
+
+
+
+
+

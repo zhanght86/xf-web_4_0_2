@@ -2102,7 +2102,8 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
 /**
  * Created by Administrator on 2016/6/17.
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
- */                           
+ */
+
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"HomeService", "PersonalCenterService","KnowDocService",
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
@@ -4442,6 +4443,54 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
 
     }
 ]);;
+// Source: app/know_index/businessModeling/js/controller/factorNewFrame_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('factorNewFrameController', [
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
+        
+        $state.go("factorNewFrame.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            
+
+        };
+
+        
+
+
+    }
+]);;
+// Source: app/know_index/businessModeling/js/controller/faqNewFrame_controller.js
+/**
+ * Created by 41212 on 2017/3/23.
+ */
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('businessModelingModule').controller('faqNewFrameController', [
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
+        
+        $state.go("faqNewFrame.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            
+
+        };
+
+        
+
+
+    }
+]);;
 // Source: app/know_index/businessModeling/js/controller/frameworkLibrary_controller.js
 /**
  * Created by 41212 on 2017/3/23.
@@ -4452,13 +4501,30 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
  */
 
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope', "$state", "$stateParams",
-    function ($scope,$state, $stateParams) {
+    '$scope', "$state", "$stateParams","ngDialog",
+    function ($scope, $state, $stateParams, ngDialog) {
         
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
+            addFramework: addFramework,            
 
         };
+        function addFramework(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/frameworkLibraryDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        //$state.go("factorNewFrame.manage");    //跳转到要素框架新增
+                         $state.go("faqNewFrame.manage");        //跳转到faq框架新增
+                    }
+                }
+            });
+        }
         
 
 
@@ -7363,6 +7429,107 @@ angular.module('knowledgeManagementModule').controller('applicationInforControll
                 }
             });
         }
+      
+
+    }
+]);;
+// Source: app/know_index/myApplication/js/controller/botApply.js
+/**
+ * Created by Administrator on 2016/6/3.
+ * 控制器
+ */
+
+angular.module('knowledgeManagementModule').controller('botApplyController', [
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+        //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
+        $scope.vm = {
+            //editName : editName
+            botSelectValue:"",
+            botRoot : "",     //根节点
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botValChange : botValChange,
+        };
+////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+
+        //{
+        //    "categoryApplicationId": "360619411498860544",
+        //        "categoryPid": "root"
+        //}
+        getBotRoot();
+        //    getDimensions();
+        //    getChannel();
+        //点击 root 的下拉效果
+        function  knowledgeBot(ev){
+            var ele = ev.target;
+            $timeout(function(){
+                $(ele).next().slideToggle();
+            },50)
+        }
+
+        //获取root 数据
+        function getBotRoot(){
+            httpRequestPost("/api/modeling/category/listbycategorypid",{
+                "categoryApplicationId": "360619411498860544",
+                "categoryPid": "root"
+            },function(data){
+                $scope.vm.botRoot = data.data
+            },function(){
+                alert("err or err")
+            });
+        }
+        // $scope.vm.botRoot = [{categoryName:'dd'},{categoryName:'dddddddddddd'}]
+        //点击更改bot value
+        function botValChange(val){
+            $scope.vm.knowledgeBotVal = val;
+        }
+        $(".aside-navs").on("click","span",function(){
+            $scope.vm.knowledgeBotVal = $(this).html();
+            $scope.$apply()
+        });
+        //点击下一级 bot 下拉数据填充以及下拉效果
+        $(".aside-navs").on("click",'.icon-jj',function(){
+            var id = $(this).attr("data-option");
+            var that = $(this);
+            if(!that.parent().parent().siblings().length){
+                that.css("backgroundPosition","0% 100%")
+                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                    "categoryApplicationId": categoryApplicationId,
+                    "categoryPid": id
+                },function(data){
+                    if(data.data){
+                        var  html = '<ul class="menus">';
+                        for(var i=0;i<data.data.length;i++){
+                            html+= '<li>' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                '<span>'+data.data[i].categoryName+'</span>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
+                        }
+                        html+="</ul>";
+                        $(html).appendTo((that.parent().parent().parent()));
+                        that.parent().parent().next().slideDown()
+                    }
+                },function(err){
+                    alert(err)
+                });
+            }else{
+                if(that.css("backgroundPosition")=="0% 0%"){
+                    that.css("backgroundPosition","0% 100%")
+                    that.parent().parent().next().slideDown()
+                }else{
+                    that.css("backgroundPosition","0% 0%");
+                    that.parent().parent().next().slideUp()
+                }
+            }
+        });
+
+////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
+
+
       
 
     }
