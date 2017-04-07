@@ -51,6 +51,10 @@ angular.module('materialManagement').controller('faqChatController', [
                 },function(err){
                     layer.msg("连接网路失败")
                 })
+
+
+
+
             }
         }
         function addContentDialog(){
@@ -150,8 +154,6 @@ angular.module('materialManagement').controller('faqChatController', [
                     })
                 }
             }
-
-
 
 
         //    判断重复

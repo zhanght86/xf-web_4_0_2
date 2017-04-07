@@ -8,6 +8,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
+    'ngCookies',
     'ngTextTruncate',
     'monospaced.elastic',
     'LocalStorageModule',
@@ -37,6 +38,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
 
     'pagination',
     'knowDetailsModule',
+    //上傳功能
     'angularFileUpload',
     //测试功能
     'functionalTestModule',
