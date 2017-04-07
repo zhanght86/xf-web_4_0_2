@@ -23,9 +23,6 @@
                             <i class="btn-empty"></i>
                             <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
-                        <!--<div class="error-tip">-->
-                            <!--错误提示-->
-                        <!--</div>-->
                     </div>
                 </div>
 
@@ -34,18 +31,12 @@
                         知识有效期：
                     </div>
                     <label>
-                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable">
+                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable">  {{vm.timeFlag}}
                     </label>
-                    {{vm.timeFlag}}
-                    <!--<div class="check-box">-->
-                        <!--<div class="skin-minimal">-->
-                            <!--<label><input type="checkbox" ng-model="vm.isTimeTable">启用</label>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div style="margin: 10px 0 10px  232px;" ng-show="vm.isTimeTable">
-                        <input type="text"  ng-model="vm.timeStart"  id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #3333;" placeholder="" readonly>
-                         -
-                        <input type="text" ng-model="vm.timeEnd" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #3333;" placeholder="" readonly>
+                        <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        -
+                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     </div>
                 </div>
 
@@ -55,7 +46,7 @@
                     </div>
                     <div class="value menu_1Div" id="menu_1Div">
                         <div class="ipt-txt-box">
-                            <input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>
+                            <input class="ipt-txt" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
                             <div class="aside-navs aside-navs2" >
                                 <ul class="menus show">
@@ -67,6 +58,7 @@
                                                 <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
                                             </a>
                                         </div>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -82,6 +74,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="item-line">
                     <div class="row cl mb-10">
@@ -115,8 +109,9 @@
                             <div class="textareaDiv textareaDiv1 textareaDiv2" >
                                 <p contenteditable="true">信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户。
                                 </p>
-                                <span></span><span class="textareClose2"></span>
+
                             </div>
+                            <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
 
                         </div>
                     </div>
@@ -139,7 +134,7 @@
                 <div class="item-line">
                     <div class="left"></div>
                     <div class="textareaDiv">信用卡账户账户和人民币电子现金账户。<span></span></div>
-                    <i class="Hui-iconfont Hui-iconfont-add2" style="font-size: 27px"></i>
+                    <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/add_img.png" alt=""></a>
                 </div>
 
 
@@ -163,7 +158,7 @@
                                 <option value="">概念类</option>
                                 <option value="">概念类</option>
                             </select>
-                            <i class="Hui-iconfont  Hui-iconfont-close" style="font-size: 27px;color: red;"></i>
+                            <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
                         <!--<div class="error-tip hide">-->
                             <!--错误提示-->
@@ -179,6 +174,7 @@
 
         </div>
     </div>
+
 </div>
 <style>
     .container{

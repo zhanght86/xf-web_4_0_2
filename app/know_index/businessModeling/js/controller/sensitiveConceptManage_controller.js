@@ -7,7 +7,7 @@
  */
 
 angular.module('businessModelingModule').controller('sensitiveConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
@@ -27,35 +27,23 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             timeStart : "",
             timeEnd : "",
             //新增
-            "key": "",
-            "modifier": getCookie("userName"),
-            "term": "",
-
+            key: "" ,
+            modifier: getCookie("userName"),
+            term: "",
+            weight: "3" ,   //默認權重
             dialogTitle : "",
-
             inputSelect : [],
             inputVal : "",
-
-            delSingleTerm : delSingleTerm,      //添加 删除  term
-            addSingleTerm : addSingleTerm,
-            addSingleTermVal : "",
-
+            termSpliter: "；"
         };
-
-        //$scope.$watch("vm.addSingleTermVal",function (val) {
-        //    console.log(val)
-        //},true);
-
 
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
         getAggre(1);
-        //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
-            //size=size?size:5;   //设置pageSize默认是5
             httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
@@ -76,20 +64,19 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                //console.log(current,$scope.vm.pageSize);
                 httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
                     "sensitiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
                 },function(){
                 })
             }
         });
         //编辑
         function editSensitive(item){
-            $scope.vm.dialogTitle="编辑停用概念";
+            $scope.vm.dialogTitle="编辑敏感概念";
             $scope.vm.key = item.sensitiveConceptKey;
             $scope.vm.term =  item.sensitiveConceptTerm;
             addDelDialog(singleEdit,item);
@@ -142,8 +129,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 layer.msg("查询没有对应信息")
             });
         }
-        var  key = angular.copy($scope.vm.searchType);
-        //console.log([key]);
+        var key = angular.copy($scope.vm.searchType);
 
         //添加 窗口
         function addSensitive(){
@@ -169,7 +155,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
-                                    $scope.vm.dialogTitle="修改停用概念";
+                                    $scope.vm.dialogTitle="修改敏感概念";
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
                                     $scope.vm.key = data.data[0].sensitiveConceptKey;
@@ -178,9 +164,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                                 });
                             }else{
                                 //类名无冲突
-                                $scope.vm.dialogTitle="增加业务概念";
-                                //key: "",
-                                // "modifier": getCookie("userName"),
+                                $scope.vm.dialogTitle="增加敏感概念";
                                 $scope.vm.term="";
                                 addDelDialog(singleAdd);
                             }
@@ -197,11 +181,6 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
 
         //編輯彈框   添加公用
         function addDelDialog(callback,item){
-            //編輯
-            //if(item){
-            //     $scope.vm.key = item.sensitiveConceptKey;
-            //     $scope.vm.term =  item.sensitiveConceptTerm;
-            //}
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
                 scope: $scope,
@@ -218,10 +197,14 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                     }
                 }
             });
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor();
+                }, 100);
+            }
         }
         //   刪除 彈框
         function deleteSensitive(id){
-            //console.log(id);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/ConceptManageDialog.html",
                 scope: $scope,
@@ -231,14 +214,14 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        singleDel(id)
+                        singleDel(id);
                     }
                 }
             });
         }
         //編輯事件
         function singleEdit(item){
-            console.log(item);
+            assembleTerm();
             httpRequestPost("/api/modeling/concept/sensitive/update",{
                 "sensitiveConceptId":item.sensitiveConceptId,
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
@@ -246,27 +229,23 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 "sensitiveConceptModifier": item.sensitiveConceptModifier,
                 "sensitiveConceptTerm": $scope.vm.term,
             },function(data){
-                console.log(item);
-                console.log(item.sensitiveConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
-                console.log(data);
                 layer.msg("编辑成功");
-                $state.reload()
+                $state.reload();
             },function(){
                 layer.msg("编辑失败")
             })
         }
         //单条新增
         function singleAdd(){
-            console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term)
+            assembleTerm();
             httpRequestPost("/api/modeling/concept/sensitive/add",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "sensitiveConceptKey":  $scope.vm.key,
                 "sensitiveConceptModifier": $scope.vm.modifier,
                 "sensitiveConceptTerm": $scope.vm.term,
             },function(data){
-                //console.log(data);
                 layer.msg("添加成功");
-                $state.reload()
+                $state.reload();
             },function(){
                 layer.msg("添加失败")
             })
@@ -276,41 +255,44 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             httpRequestPost("/api/modeling/concept/sensitive/delete",{
                 "sensitiveConceptId":id
             },function(data){
-                //console.log(data)
                 layer.msg("刪除成功");
-                $state.reload()
+                $state.reload();
             },function(){
                 layer.msg("刪除失敗")
             })
         }
-
-        function delSingleTerm(item){
-            var str = angular.copy($scope.vm.term.split("；"));
-            str.remove(item);
-            $scope.vm.term = str.join("；");
-        }
-        function addSingleTerm(e){
-            var keycode = window.event?e.keyCode:e.which;
-            if(keycode==13){
-                var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
-                if($scope.vm.addSingleTermVal.length==0){
-                    //console.log($scope.vm.addSingleTermVal,"second");
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名不能为空");
-                }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
-                    console.log($scope.vm.addSingleTermVal);
-                    str.push($scope.vm.addSingleTermVal);
-                    console.log(str);
-                    $scope.vm.term = str.join("；");
-                    $scope.vm.addSingleTermVal = "";
-                    console.log($scope.vm.term);
-                }else{
-                    console.log($scope.vm.addSingleTermVal );
-                    $scope.vm.addSingleTermVal = "";
-                    layer.msg("扩展名重复,请重新填写")
-                }
+        //初始化tagEditor插件
+        function termSpliterTagEditor() {
+            var term = $scope.vm.term;
+            if(term==""){
+                $("#term").tagEditor({
+                    forceLowercase: false
+                });
+            }else{
+                var terms = term.split($scope.vm.termSpliter);
+                console.log(terms);
+                $("#term").tagEditor({
+                    initialTags:terms,
+                    autocomplete: {delay: 0, position: {collision: 'flip'}, source: terms},
+                    forceLowercase: false
+                });
             }
         }
-
+        //组装term数据
+        function assembleTerm(){
+            var obj = $("#term").next();
+            var term = "";
+            $.each(obj.find("li"),function(index,value){
+                if(index>0){
+                    $.each($(value).find("div"),function(index1,value1){
+                        if(index1==1){
+                            term+=$(value1).html()+$scope.vm.termSpliter;
+                        }
+                    });
+                }
+            });
+            term=term.substring(0,term.length-1);
+            $scope.vm.term=term;
+        }
     }
 ]);

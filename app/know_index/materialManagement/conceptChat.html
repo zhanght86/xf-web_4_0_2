@@ -14,24 +14,35 @@
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">标准问题：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                            <input  type="text" class="bk-gray input-text mr-10" placeholder="请输入标题" style="width:250px;"/>
-
+                            <input  type="text" ng-model="vm.standardQuestion" class="bk-gray input-text mr-10" placeholder="请输入标题" style="width:250px;"/>
                             <div class="c-red " style="display:none;" ></div>
                         </div>
                     </div>
-
                     <div class="exten_problem" >
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="L input-text extended_query_txt" placeholder="请输入问题"
-                                       style="width:279px;" >
-                                <select class="sel bd L mr-10" style="margin-left:-1px;">
-                                    <option >普通</option>
-                                    <option >否定</option>
+                                <input type="text" ng-model="vm.extendedQuestion" class="L input-text extended_query_txt" placeholder="请输入问题"
+                                       style="width:279px;">
+                                <select class="sel bd L mr-10" ng-model="vm.weight" style="margin-left:-1px;text-indent: 22px">
+                                    <option value="60">普通</option>
+                                    <option value="61">否定</option>
                                 </select>
-                                <a href="javascript:;" class="create_a" onclick="add_ques();">
+                                <a href="javascript:;" class="create_a" ng-click="vm.addExtension()">
                                     <img src="../../images/images/add_img.png" >
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row cl mb-10" ng-repeat="item in vm.extendedQuestionArr">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">new扩展问题：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" ng-model="item.chatQuestionContent" readonly class="L input-text extended_query_txt"
+                                       style="width:279px;" >
+                                <span class="sel bd L mr-10" style="margin-left:-1px;text-indent: 26px">
+                                    {{item.chatQuestionType | faqWeight}}
+                                </span>
+                                <a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
+                                    <img src="../../images/images/delete_img.png" >
                                 </a>
                             </div>
                         </div>
@@ -39,18 +50,17 @@
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
                         <div class="formControls col-xs-8 col-sm-9" >
-                            <button class="btn1 btn_green2 mb-10"  ng-click="vm.addKnow()">新增</button>
+                            <button class="btn1 btn_green2 mb-10"  ng-click="vm.addContentDialog()">新增</button>
                             <div class="c-red " style="display:inline;" id="knowledge_add_msg"></div>
                         </div>
                     </div>
-                    <div class="row cl mb-50">
+                    <div class="row cl" ng-repeat="item in vm.contentArr">
                         <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                         <div class="formControls col-xs-8 col-sm-9">
                             <div class="clearfix mb-10">
-                                <div class="L word_div bd mr-10">信用卡年费没有</div>
+                                <p class="L word_div bd mr-10" style="height: auto;padding: 2px;text-indent: 4px;">{{item.chatKnowledgeContent}}</p>
                                 <div class="L word_div_r">
-                                    <a href="javascript:;" class="delete_a mb-20"></a>
-                                    <a href="javascript:;" class="edit_a" ng-click="vm.editKnow()"></a>
+                                    <a href="javascript:;" class="delete_a mb-20" style="margin-top: 5px;" ng-click="vm.remove(item,vm.contentArr)"></a>
                                 </div>
                             </div>
 
@@ -59,8 +69,8 @@
                     <div class="row cl mb-10 ">
                         <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                         <div class="formControls col-xs-8 col-sm-9">
-                            <input type="button" class="btn1 btn1_blue mr-20" value="预览"/>
-                            <input type="button" class="btn1 btn_green" value="保存"/>
+                            <input type="button" class="btn1 btn1_blue mr-20" ng-click="vm.scan()" value="预览"/>
+                            <input type="button" class="btn1 btn_green" ng-click="vm.save()" value="保存"/>
                         </div>
                     </div>
                 </div>

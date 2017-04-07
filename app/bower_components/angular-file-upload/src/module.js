@@ -13,8 +13,6 @@
  */
 
 module
-
-
     .value('fileUploaderOptions', {
         url: '/',
         alias: 'file',

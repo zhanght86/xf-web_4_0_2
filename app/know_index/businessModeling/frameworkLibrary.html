@@ -20,190 +20,40 @@
                 <img src="../../images/images/bank_16.png"/>
                 <h3>银行领域</h3>
             </div>
-            <div class="aside-navs bank-navs">
-                <div class="aside-navs-cont">
-                    <ul class="menus show">
-                        <li>
-                            <div class="slide-a">
-                                <a class="ellipsis" href="javascript:;">
-                                    <i class="icon-jj"></i>
-                                    <span>分属性展开</span>
-                                </a>
-                            </div>
-                            <ul class="menus">
-                                <li>
+            <div class="item-line">
+                <div class="value menu_1Div" id="menu_1Div">
+                    <div class="ipt-txt-box">
+                        <input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>
+                        <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
+                        <div class="aside-navs aside-navs2 show" >
+                            <ul class="menus show">
+                                <li ng-repeat="item in vm.botRoot" data-option="{{item.categoryPid}}">
                                     <div class="slide-a">
                                         <a class="ellipsis" href="javascript:;">
-                                            <span>分属性展开1</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <span>分属性展开2</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <span>分属性展开3</span>
+                                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
+                                            <span ng-click="vm.botValChange(item.categoryName)" data-option="{{item.categoryId}}">{{item.categoryName}}</span>
                                         </a>
                                     </div>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <div class="slide-a">
-                                <a class="ellipsis" href="javascript:;">
-                                    <i class="icon-jj"></i>
-                                    <span>分业务展开</span>
-                                </a>
-                            </div>
-                            <ul class="menus">
-                                <li>
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj"></i>
-                                            <span>个人业务</span>
-                                        </a>
-                                    </div>
-                                    <ul class="menus">
-                                        <li>
-                                            <div class="slide-a">
-                                                <a class="ellipsis" href="javascript:;">
-                                                    <i class="icon-jj"></i>
-                                                    <span>存款业务</span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="slide-a">
-                                                <a class="ellipsis" href="javascript:;">
-                                                    <i class="icon-jj"></i>
-                                                    <span>理财业务</span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="slide-a">
-                                                <a class="ellipsis" href="javascript:;">
-                                                    <i class="icon-jj"></i>
-                                                    <span>信用卡业务</span>
-                                                </a>
-                                            </div>
-                                            <ul class="menus">
-                                                <li>
-                                                    <div class="slide-a">
-                                                        <a class="ellipsis" href="javascript:;">
-                                                            <i class="icon-jj"></i>
-                                                            <img src="images/pic-navs-dy.png"/>
-                                                            <span>按地域展开</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="slide-a">
-                                                        <a class="ellipsis" href="javascript:;">
-                                                            <i class="icon-jj"></i>
-                                                            <img src="images/pic-navs-lc.png"/>
-                                                            <span>按办理流程展开</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="slide-a">
-                                                        <a class="ellipsis" href="javascript:;">
-                                                            <i class="icon-jj"></i>
-                                                            <img src="images/pic-navs-sx.png"/>
-                                                            <span>按属性展开</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="slide-a">
-                                                        <a class="ellipsis" href="javascript:;">
-                                                            <i class="icon-jj"></i>
-                                                            <img src="images/pic-navs-rq.png"/>
-                                                            <span>按人群卡类展开</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="menus">
-                                                        <li>
-                                                            <div class="slide-a">
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>白领卡</span>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="slide-a">
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>农民卡</span>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="slide-a">
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>学生卡</span>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj"></i>
-                                            <span>个公业务</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj"></i>
-                                            <span>其他业务</span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="libraryRth">
             <div class="tac mt10" style="margin: 0; text-align: left">
-                <a class="btn btn-blue" href="javascript:;">新增框架</a>
+                <a class="btn btn-blue" href="javascript:;" ng-click="vm.addFramework()">新增框架</a>
                 <a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>
                 <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
             </div>
-            <div>
-                <div class="libraryRthCnt">
-                    <img src="../../images/images/libTxt_22.png"/>
-                    <p>银行邻域业务框架</p>
-                    <div><a href="javascript:;">银行是什么?</a></div>
-                </div>
-                <div class="libraryRthCnt even">
-                    <img src="../../images/images/libTxt_22.png"/>
-                    <p>银行邻域业务框架</p>
-                    <div><a href="javascript:;">银行是什么?</a></div>
-                </div>
-            </div>
+            <div id="frame-library"></div>
         </div>
     </div>
-
 </div>
 <style>
-
+    .libraryRth{width:720px;}
 </style>
 
 

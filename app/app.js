@@ -8,6 +8,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
+    'ngCookies',
     'ngTextTruncate',
     'monospaced.elastic',
     'LocalStorageModule',
@@ -37,6 +38,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
 
     'pagination',
     'knowDetailsModule',
+    //上傳功能
     'angularFileUpload',
     //测试功能
     'functionalTestModule',
@@ -152,8 +154,7 @@ knowledge_static_web
                     }
                 }
             })
-            //业务建模
-                    //框架库
+            //业务建模---框架库
             .state("frameworkLibrary.manage", {
                 //params:{"userPermission" : null},
                 url: "/manage",
@@ -170,9 +171,42 @@ knowledge_static_web
                 templateUrl: 'know_index/businessModeling/frameworkLibrary.html',
                 controller:"frameworkLibraryController"
             })
+            //业务建模---框架库--faq框架新增
+            .state("faqNewFrame.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                }
+            })
+            .state("faqNewFrame", {
+                //params:{"userPermission" : null},
+                url: "/faqNewFrame",
+                templateUrl: 'know_index/businessModeling/faqNewFrame.html',
+                controller:"faqNewFrameController"
+            })
+            //业务建模---框架库--要素框架新增
+            .state("factorNewFrame.manage", {
+                //params:{"userPermission" : null},
+                url: "/manage",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                }
+            })
+            .state("factorNewFrame", {
+                //params:{"userPermission" : null},
+                url: "/factorNewFrame",
+                templateUrl: 'know_index/businessModeling/factorNewFrame.html',
+                controller:"factorNewFrameController"
+            })
 
-
-                    //概念管理
+            //业务建模---概念管理
             .state("conceptManage", {
                 //params:{"userPermission" : null},
                 url: "/conceptManage",
@@ -575,7 +609,7 @@ knowledge_static_web
 
             .state("materialManagement.chatKnowledgeBase", {
                 params:{"userPermission" : null},
-                url: "/materialManagement/chatKnowledgeBase",
+                url: "/chatKnowledgeBase",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -588,8 +622,8 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.chatKnowledgeBasePreview", {
-                params:{"userPermission" : null},
-                url: "/materialManagement/chatKnowledgeBasePreview",
+                params:{"scanData" : null},
+                url: "/chatKnowledgeBasePreview",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -602,8 +636,8 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.faqChat", {
-                params:{"userPermission" : null},
-                url: "/materialManagement/faqChat",
+                params:{"scanDataList" : null},
+                url: "/faqChat",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -617,7 +651,7 @@ knowledge_static_web
             })
             .state("materialManagement.conceptChat", {
                 params:{"userPermission" : null},
-                url: "/materialManagement/conceptChat",
+                url: "/conceptChat",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -685,7 +719,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
-                        controller: "NewFactorKnowController"
+                        controller: "knowledgeEssentialController"
 
                     }
                 }
