@@ -44,9 +44,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
 
         };
 
-        $scope.$watch("vm.addSingleTermVal",function (val) {
-            console.log(val)
-        },true);
+        //$scope.$watch("vm.addSingleTermVal",function (val) {
+        //    console.log(val)
+        //},true);
 
         /**
          * 加载分页条
@@ -85,8 +85,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     "synonymConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }

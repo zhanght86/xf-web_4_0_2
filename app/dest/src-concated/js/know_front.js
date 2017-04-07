@@ -3373,8 +3373,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    console.log(data);
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -3502,6 +3504,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
                 scope: $scope,
+                Returns : {a:1},
                 closeByDocument:false,
                 closeByEscape: true,
                 showClose : true,
@@ -3668,6 +3671,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             delSingleTerm : delSingleTerm,      //添加 删除  term
             addSingleTerm : addSingleTerm,
             addSingleTermVal : "",
+            termSpliter: "；"
 
         };
 
@@ -3706,19 +3710,21 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     "businessConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
         });
         //编辑
         function editBusiness(item){
-             $scope.vm.dialogTitle="编辑停用概念";
-             $scope.vm.key = item.businessConceptKey;
-             $scope.vm.term =  item.businessConceptTerm;
-             $scope.vm.weight =  item.businessConceptWeight;
-             addDelDialog(singleEdit,item);
+            $scope.vm.dialogTitle="编辑停用概念";
+            $scope.vm.key = item.businessConceptKey;
+            $scope.vm.term =  item.businessConceptTerm;
+            console.log($scope.vm.term);
+            $scope.vm.weight =  item.businessConceptWeight;
+            addDelDialog(singleEdit,item);
         }
         function search(){
             if($scope.vm.searchType == "businessConceptModifier"){
@@ -3769,7 +3775,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
         }
        var  key = angular.copy($scope.vm.searchType);
-        console.log([key]);
+        //console.log([key]);
 
         //添加 窗口
         function addBusiness(){
@@ -3826,6 +3832,8 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
 
         //編輯彈框   添加公用
         function addDelDialog(callback,item){
+
+            console.log(addDelDialog);
             //編輯
             //if(item){
             //     $scope.vm.key = item.businessConceptKey;
@@ -3841,14 +3849,20 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        callback(item)
+                        callback(item);
                     }else{
                          $scope.vm.key = "";
                          $scope.vm.term = "";
                          $scope.vm.weight =  1;
                     }
                 }
-            });
+            })
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor()
+                }, 100);
+
+            }
         }
         //   刪除 彈框
         function deleteBusiness(id){
@@ -3881,9 +3895,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 //console.log(item.businessConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 //console.log(data);
                 layer.msg("编辑成功");
-                $state.reload()
+                $state.reload();
             },function(){
-                layer.msg("编辑失败")
+                layer.msg("编辑失败");
             })
         }
         //单条新增
@@ -3947,7 +3961,26 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                       }
                   }
         }
-
+        function termSpliterTagEditor() {
+            console.log("termSpliterTagEditor");
+            var term = $scope.vm.term;
+            if(term==""){
+                $("#term").tagEditor({
+                    autocomplete: {delay: 0, position: {collision: 'flip'}},
+                    forceLowercase: false
+                });
+                console.log("789456");
+            }else{
+                var terms = term.split($scope.vm.termSpliter);
+                console.log(terms);
+                $("#term").tagEditor({
+                    initialTags:terms,
+                    autocomplete: {delay: 0, position: {collision: 'flip'}, source: terms},
+                    forceLowercase: false
+                });
+                console.log("123456");
+            }
+        }
     }
 ]);;
 // Source: app/know_index/businessModeling/js/controller/businessModeling_controller.js
@@ -4062,8 +4095,9 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                 "stopConceptApplicationId": $scope.vm.applicationId,
                                 "index" :current*$scope.vm.pageSize,
                                 "pageSize": $scope.vm.pageSize
-                            },function(){
-                                getAggre(current);
+                            },function(data){
+                                $scope.listData = data.data;
+                                //getAggre(current);
                             },function(){
                             })
                         }
@@ -4385,8 +4419,9 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                     "correctionConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -5233,8 +5268,9 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                     "sensitiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -5517,9 +5553,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
 
         };
 
-        $scope.$watch("vm.addSingleTermVal",function (val) {
-            console.log(val)
-        },true);
+        //$scope.$watch("vm.addSingleTermVal",function (val) {
+        //    console.log(val)
+        //},true);
 
         /**
          * 加载分页条
@@ -5558,8 +5594,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     "synonymConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }

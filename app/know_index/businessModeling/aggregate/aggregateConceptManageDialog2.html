@@ -1,11 +1,15 @@
 
-<div class="pd-20" >
+<div class="pd-20">
     <div>
         <h3 class="mb-20 tc">{{vm.dialogTitle}}</h3>
         <div class="mb-20 concept_div">
             <span class="concept_s">概念类名：</span>
-            <div >
+            <div>
+
+            <form name="title">
                 <input type="text" ng-model="vm.key" maxlength="20"  class="input_text" value="违禁品"/>
+            </form>
+
             </div>
         </div>
         <div class="mb-20 concept_div">
@@ -31,7 +35,6 @@
                     </p>
                     <!-- ng-change="vm.addSingleTermValChange()"-->
                     <input type="text"  style="" ng-model="vm.addSingleTermVal" ng-change="" ng-keydown="vm.addSingleTerm($event)"/>
-                    {{vm.addSingleTermVal}}
                 </div>
 
                 <!--<input class="textarea" type="text" ng-model="modelObj" ui-autocomplete="myOption">-->

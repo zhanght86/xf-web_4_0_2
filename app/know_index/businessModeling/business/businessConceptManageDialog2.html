@@ -23,20 +23,19 @@
         <div class="mb-20 concept_div">
             <span class="concept_s" >新增概念：</span>
             <div>
-                <div class="textarea" style="height: auto;width: 260px">
-
-                    <p class="dib" contenteditable="false"ng-if="vm.term" ng-repeat="term in vm.term.split('；')" style="padding: 5px 15px;height: 30px;border-radius: 2px;border: 0;background: #e1e1e1;margin: 2px;">
+                <div class="textarea" style="height: auto;width: 260px ;border: 0;padding: 0;">
+                    <textarea id="term" ></textarea>
+<!--                    <p class="dib" contenteditable="false"ng-if="vm.term" ng-repeat="term in vm.term.split('；')" style="padding: 5px 15px;height: 30px;border-radius: 2px;border: 0;background: #e1e1e1;margin: 2px;">
                         <span class="">{{term}}</span>
                         <i class="Hui-iconfont Hui-iconfont-del" ng-click="vm.delSingleTerm(term)"></i>
                     </p>
-                    <!-- ng-change="vm.addSingleTermValChange()"-->
+                    &lt;!&ndash; ng-change="vm.addSingleTermValChange()"&ndash;&gt;
                     <input type="text"  ng-model="vm.addSingleTermVal" oninput="alert()" ng-keydown="vm.addSingleTerm($event)"/>
-                    <!--<p><span></span></p>-->
-                    <!--{{vm.addSingleTermVal}}-->
+                    &lt;!&ndash;{{vm.addSingleTermVal}}&ndash;&gt;-->
                 </div>
-               
+
                 <!--<input class="textarea" type="text" ng-model="modelObj" ui-autocomplete="myOption">-->
-                
+
             </div>
         </div>
         <div class="concept_div">
@@ -96,8 +95,24 @@
         color: red;
     }
 </style>
-<script>
-function alert(){
 
-}
+<script>
+//    $('#term').tagEditor({
+//
+//        autocomplete: {
+//
+//            delay: 0, // show suggestions immediately
+//
+//            position: { collision: 'flip' }, // automatic menu position up/down
+//
+//            source: ['ActionScript', 'AppleScript', 'Asp','Python', 'Ruby']
+//
+//        },
+//
+//        forceLowercase: false,
+//
+//        placeholder: 'Programming languages ...'
+//
+//    });
+
 </script>

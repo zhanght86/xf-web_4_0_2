@@ -194,8 +194,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    console.log(data);
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -323,6 +325,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
                 scope: $scope,
+                Returns : {a:1},
                 closeByDocument:false,
                 closeByEscape: true,
                 showClose : true,
