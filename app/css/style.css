@@ -172,8 +172,8 @@ margin-top:-30px; left:15%; z-index:1; width:40px; height:60px;  cursor:pointer;
 /*分页*/
 .paging{overflow: hidden; line-height: 26px; text-align: right; padding: 20px;}
 .paging li{float: left; }
-.paging a{ font-size: 14px; width:26px; height: 26px; line-height: 26px; text-align: center; display: block; *display: inline-block; *zoom: 1; }
-.paging a:hover,.paging a.active{ background-color: #d8f1ff; border-radius: 50%; color: #03a3ff;}
+.paging a{ font-size: 14px;  height: 26px; line-height: 26px; text-align: center; display: block; *display: inline-block; *zoom: 1; }
+.paging a:hover,.paging a.active{ background-color: #d8f1ff;  color: #03a3ff;}
 .paging .prev{background: url(../images/paging-Prev.png) no-repeat center;}
 .paging .next{background: url(../images/paging-next.png) no-repeat center;}
 .paging .prev:hover,.paging .next:hover{background-color:#FFF;}

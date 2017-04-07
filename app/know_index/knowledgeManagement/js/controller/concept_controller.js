@@ -8,6 +8,7 @@
 angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog",function ($scope,localStorageService,$timeout, $state,ngDialog) {
         $scope.vm = {
+            applicationId : getCookie("applicationId"),
             framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
             botSelectValue:"",
@@ -25,14 +26,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             dimensions : ""    //维度
         };
 
-setCookie("categoryApplicationId","360619411498860544");
-var   categoryApplicationId =  getCookie("categoryApplicationId");
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-
       //{
     //    "categoryApplicationId": "360619411498860544",
-    //        "categoryPid": "root"
-    //}
+    //    "categoryPid": "root"
+      //}
         getBotRoot();
     //    getDimensions();
     //    getChannel();
@@ -47,7 +45,7 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
        //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": "360619411498860544",
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 $scope.vm.botRoot = data.data
@@ -70,7 +68,7 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
            if(!that.parent().parent().siblings().length){
                that.css("backgroundPosition","0% 100%")
                httpRequestPost("/api/modeling/category/listbycategorypid",{
-                   "categoryApplicationId": categoryApplicationId,
+                   "categoryApplicationId": $scope.vm.applicationId,
                    "categoryPid": id
                },function(data){
                    if(data.data){
@@ -94,7 +92,7 @@ var   categoryApplicationId =  getCookie("categoryApplicationId");
                });
            }else{
                if(that.css("backgroundPosition")=="0% 0%"){
-                   that.css("backgroundPosition","0% 100%")
+                   that.css("backgroundPosition","0% 100%");
                    that.parent().parent().next().slideDown()
                }else{
                    that.css("backgroundPosition","0% 0%");

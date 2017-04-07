@@ -23,9 +23,6 @@
                             <i class="btn-empty"></i>
                             <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
-                        <!--<div class="error-tip">-->
-                            <!--错误提示-->
-                        <!--</div>-->
                     </div>
                 </div>
 
@@ -34,18 +31,12 @@
                         知识有效期：
                     </div>
                     <label>
-                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable">
+                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable">  {{vm.timeFlag}}
                     </label>
-                    {{vm.timeFlag}}
-                    <!--<div class="check-box">-->
-                        <!--<div class="skin-minimal">-->
-                            <!--<label><input type="checkbox" ng-model="vm.isTimeTable">启用</label>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div style="margin: 10px 0 10px  232px;" ng-show="vm.isTimeTable">
-                        <input type="text"  ng-model="vm.timeStart"  id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #3333;" placeholder="" readonly>
-                         -
-                        <input type="text" ng-model="vm.timeEnd" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #3333;" placeholder="" readonly>
+                        <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        -
+                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     </div>
                 </div>
 
@@ -67,6 +58,7 @@
                                                 <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
                                             </a>
                                         </div>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -82,6 +74,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="item-line">
                     <div class="row cl mb-10">

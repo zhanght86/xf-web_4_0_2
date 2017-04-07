@@ -10,18 +10,16 @@ angular.module('businessModelingModule').controller('businessModelingController'
     '$scope', "$state", "$stateParams",
     function ($scope,$state, $stateParams) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
-        $scope.vm = {
-            isSlide : isSlide,
-        };
-
-        function isSlide(event){
-            var self=event.target;
-            if($(self).hasClass("slideActive")){
-                $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
-            }else{
-                $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
-            }
-
-        }
+        //$scope.vm = {
+        //    isSlide : isSlide,
+        //};
+        //function isSlide(event){
+        //    var self=event.target;
+        //    if($(self).hasClass("slideActive")){
+        //        $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
+        //    }else{
+        //        $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
+        //    }
+        //}
     }
 ]);
