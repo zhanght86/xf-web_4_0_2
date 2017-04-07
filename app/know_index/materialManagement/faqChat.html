@@ -9,73 +9,68 @@
                 <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
             </div>
             <div class="content_box mb25 ">
-                <h3 class="f22 pl-10 mb15">FAQ型聊天新增</h3>
+                <h3 class="f22 pl-10 mb15">FAQ聊天新增</h3>
                 <div class=" p10 ">
                     <div class="row cl mb-10">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">标准问法：</label>
+                        <label class="form-label col-xs-4 col-sm-2 text-r">标准问题：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                            <input  type="text" class="bk-gray input-text mr-10" placeholder="请输入标准问法" style="width:250px;"/>
+                            <input  type="text" ng-model="vm.standardQuestion" class="bk-gray input-text mr-10" placeholder="请输入标题" style="width:250px;"/>
                             <div class="c-red " style="display:none;" ></div>
                         </div>
                     </div>
-                    <!--<div class="row cl mb-10">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 text-r">知识分类：</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">-->
-                    <!--<input  type="text" class="bk-gray input-text mr-10" placeholder="" style="width:250px;"/>-->
-                    <!--<div class="c-red " style="display:none;" ></div>-->
-                    <!--</div>-->
-                    <!--</div>-->
                     <div class="exten_problem" >
                         <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">扩展问法：</label>
+                            <label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="L input-text extended_query_txt" placeholder="请输入问题"
-                                       style="width:279px;" >
-                                <select class="sel bd L mr-10" style="margin-left:-1px;">
-                                    <option >普通</option>
-                                    <option >否定</option>
+                                <input type="text" ng-model="vm.extendedQuestion" class="L input-text extended_query_txt" placeholder="请输入问题"
+                                       style="width:279px;">
+                                <select class="sel bd L mr-10" ng-model="vm.weight" style="margin-left:-1px;text-indent: 22px">
+                                    <option value="60">普通</option>
+                                    <option value="61">否定</option>
                                 </select>
-                                <a href="javascript:;" class="create_a" onclick="add_ques();">
+                                <a href="javascript:;" class="create_a" ng-click="vm.addExtension()">
                                     <img src="../../images/images/add_img.png" >
                                 </a>
                             </div>
                         </div>
+                        <div class="row cl mb-10" ng-repeat="item in vm.extendedQuestionArr">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">new扩展问题：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" ng-model="item.chatQuestionContent" readonly class="L input-text extended_query_txt"
+                                       style="width:279px;" >
+                                <span class="sel bd L mr-10" style="margin-left:-1px;text-indent: 26px">
+                                    {{item.chatQuestionType | faqWeight}}
+                                </span>
+                                <a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
+                                    <img src="../../images/images/delete_img.png" >
+                                </a>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="row cl mb-50">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容:</label>
+                    <div class="row cl mb-10">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
+                        <div class="formControls col-xs-8 col-sm-9" >
+                            <button class="btn1 btn_green2 mb-10"  ng-click="vm.addContentDialog()">新增</button>
+                            <div class="c-red " style="display:inline;" id="knowledge_add_msg"></div>
+                        </div>
+                    </div>
+                    <div class="row cl" ng-repeat="item in vm.contentArr">
+                        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                         <div class="formControls col-xs-8 col-sm-9">
                             <div class="clearfix mb-10">
-                                <p class="mb-10 f-16">肯定回答:</p>
-                                <div class="word_div bd">
-                                    <span>#违禁品#是违禁物品，不可以带上飞机</span>
+                                <p class="L word_div bd mr-10" style="height: auto;padding: 2px;text-indent: 4px;">{{item.chatKnowledgeContent}}</p>
+                                <div class="L word_div_r">
+                                    <a href="javascript:;" class="delete_a mb-20" style="margin-top: 5px;" ng-click="vm.remove(item,vm.contentArr)"></a>
                                 </div>
                             </div>
-                            <div class="clearfix mb-10">
-                                <p class="mb-10 f-16">否定回答:</p>
-                                <div class="word_div bd">
-                                    <span>不是违禁物品，可以带上飞机</span>
-                                </div>
-                            </div>
-                            <div class="channel_div  mb-10">
-                                <span class="channel_s">渠道：</span>
-                                <div>
-                                    <label class="mr-10"><input type="checkbox">Web </label>
-                                    <label class="mr-10"><input type="checkbox">微信 </label>
-                                    <label class="mr-10"><input type="checkbox">app </label>
-                                </div>
-                            </div>
-                            <div class="channel_div mb-10">
-                                <span class="channel_s">维度：</span>
-                                <div id="dimension_bar"><div class="autocomplete-container-7a26d"><div class="placeholder-d722a" style="display: none;"></div><div class="tokens-6a7a0"><div class="token-group-c7334" data-token-group-index="0"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="1"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="2"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="3"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="4"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="5"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="6"><span class="remove-token-group-53474">×</span><span class="token-75233">Apple</span></div><div class="token-group-c7334" data-token-group-index="7"><span class="remove-token-group-53474">×</span><span class="token-75233">Banana</span></div></div><input type="text" class="input-8f2fe"><div class="clear-53545"></div><ul class="dropdown-a3d44" style="top: 23px; left: 604px; display: none;"></ul></div><span class="input-width-proxy-1c13e" style="position:absolute; top:-9999px;"></span></div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="row cl mb-10 ">
                         <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                         <div class="formControls col-xs-8 col-sm-9">
-                            <input type="button" class="btn1 btn1_blue mr-20" value="预览"/>
-                            <input type="button" class="btn1 btn_green" value="保存"/>
+                            <input type="button" class="btn1 btn1_blue mr-20" ng-click="vm.scan()" value="预览"/>
+                            <input type="button" class="btn1 btn_green" ng-click="vm.save()" value="保存"/>
                         </div>
                     </div>
                 </div>
