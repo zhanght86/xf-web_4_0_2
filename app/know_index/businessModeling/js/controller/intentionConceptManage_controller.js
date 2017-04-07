@@ -83,9 +83,8 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                                 "index" :current*$scope.vm.pageSize,
                                 "pageSize": $scope.vm.pageSize
-                            },function(data){
-                                $scope.listData = data.data;
-                                //getAggre(current);
+                            },function(){
+                                getAggre(current);
                             },function(){
                             })
                         }

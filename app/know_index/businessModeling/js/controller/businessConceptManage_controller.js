@@ -145,7 +145,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
         }
        var  key = angular.copy($scope.vm.searchType);
-        console.log([key]);
+        //console.log([key]);
 
         //添加 窗口
         function addBusiness(){
@@ -202,6 +202,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
 
         //編輯彈框   添加公用
         function addDelDialog(callback,item){
+
             console.log(addDelDialog);
             //編輯
             //if(item){
@@ -225,8 +226,13 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                          $scope.vm.weight =  1;
                     }
                 }
-            });
-            termSpliterTagEditor();
+            })
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor()
+                }, 100);
+
+            }
         }
         //   刪除 彈框
         function deleteBusiness(id){
