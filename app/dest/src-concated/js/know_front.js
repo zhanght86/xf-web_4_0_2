@@ -3313,8 +3313,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     "collectiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    console.log(data);
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -3442,6 +3444,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
                 scope: $scope,
+                Returns : {a:1},
                 closeByDocument:false,
                 closeByEscape: true,
                 showClose : true,
@@ -3647,8 +3650,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     "businessConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -4026,8 +4030,9 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                 "stopConceptApplicationId": $scope.vm.applicationId,
                                 "index" :current*$scope.vm.pageSize,
                                 "pageSize": $scope.vm.pageSize
-                            },function(){
-                                getAggre(current);
+                            },function(data){
+                                $scope.listData = data.data;
+                                //getAggre(current);
                             },function(){
                             })
                         }
@@ -4349,8 +4354,9 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                     "correctionConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -4875,8 +4881,9 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                                 "index" :current*$scope.vm.pageSize,
                                 "pageSize": $scope.vm.pageSize
-                            },function(){
-                                getAggre(current);
+                            },function(data){
+                                $scope.listData = data.data;
+                                //getAggre(current);
                             },function(){
                             })
                         }
@@ -5197,8 +5204,9 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                     "sensitiveConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
@@ -5481,9 +5489,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
 
         };
 
-        $scope.$watch("vm.addSingleTermVal",function (val) {
-            console.log(val)
-        },true);
+        //$scope.$watch("vm.addSingleTermVal",function (val) {
+        //    console.log(val)
+        //},true);
 
         /**
          * 加载分页条
@@ -5522,8 +5530,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     "synonymConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
