@@ -324,7 +324,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                             $(e.target).focus();
                       }
                   }
-            }
         }
         function termSpliterTagEditor() {
             console.log("termSpliterTagEditor");
