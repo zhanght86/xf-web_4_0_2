@@ -79,8 +79,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     "businessConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
-                },function(){
-                    getAggre(current);
+                },function(data){
+                    $scope.listData = data.data;
+                    //getAggre(current);
                 },function(){
                 })
             }
