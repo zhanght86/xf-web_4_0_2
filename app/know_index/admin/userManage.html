@@ -57,7 +57,7 @@
                             <span ng-if="item.statusId==10001"><a href="javascript:;" title="停用" class="mr-10 c-primary" ng-click="vm.stop(item.userId,item.statusId)">停用</a></span>
                             <span ng-if="item.statusId==10002"><a href="javascript:;" title="启用" class="mr-10 c-primary" ng-click="vm.stop(item.userId,item.statusId)">启用</a></span>
 
-                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser(item.userId)">编辑</a>
+                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser(item)">编辑</a>
                             <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser(item.userId)">删除</a>
                         </td>
                     </tr>
