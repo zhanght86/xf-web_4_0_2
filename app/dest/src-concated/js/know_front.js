@@ -7483,21 +7483,138 @@ angular.module('knowledgeManagementModule').controller('botApplyController', [
  * 控制器
  */
 
-angular.module('knowledgeManagementModule').controller('channelManageController', [
+angular.module('myApplicationSettingModule').controller('channelManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+        setCookie("applicationId","360619411498860544");
+        setCookie("userName","admin1");
+        setCookie("userId","359873057331875840");
         $scope.vm = {
-            addChannel : addChannel,
-            addBlacklist: addBlacklist
+            applicationId: getCookie("applicationId"),
+            channelData : "",   // 渠道数据
+            paginationConf : ""  ,//分页条件
+            pageSize : 2 , //默认每页数量
+            channelDataTotal: "", //渠道数据记录总数
+            addChannel : addChannel,  //添加渠道
+            editChannel : editChannel, //编辑渠道
+            delChannel : delChannel, //删除渠道
+            changeChannel : changeChannel, //修改渠道状态
+            channelName : "",  //渠道名称
+            statusId : "",  //状态
+            userId : getCookie("userId"),   //用户id
+            channelStatus : "",
+            dialogTitle : "", //对话框标题
         };
+
+        $scope.vmo = {
+            applicationId: getCookie("applicationId"),
+            blackListData : "",  //黑名单数据
+            paginationConf : ""  ,//分页条件
+            pageSize : 2 , //默认每页数量
+            blackListDataTotal : "", //黑名单数据记录总数
+            addBlacklist : addBlacklist, //添加黑名单
+            delBlacklist : delBlacklist, //移除黑名单
+            batchDelBlacklist : batchDelBlacklist, //批量移除黑名单
+            channelList : "", //渠道列表
+            blackListIdentify : "",  //黑名单标识
+            blackListRemark : "", //黑名单备注
+            channelId : "", //渠道id
+            blackListUpdateId : getCookie("userId"),   //用户id
+        };
+
+        //获取渠道列表
+        getChannelList();
+        //获取状态列表
+        getStatusList();
+        /**
+         * 加载分页条
+         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         */
+        listChannelData(1);
+        //请求渠道列表
+        function listChannelData(index){
+            httpRequestPost("/api/application/channel/listChannelByPage",{
+                "applicationId": $scope.vm.applicationId,
+                "index" : (index-1)*$scope.vm.pageSize,
+                "pageSize": $scope.vm.pageSize
+            },function(data){
+                $scope.vm.channelData = data.data;
+                $scope.vm.channelDataTotal =data.total;
+                console.log(Math.ceil(data.total/$scope.vm.pageSize))
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
+                    pageSize: 1,//分页框的分组单位
+                    pagesLength: 8,//分页框显示数量
+                };
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                listChannelData(current);
+            }
+        });
+
+
+        /**
+         * 加载分页条
+         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         */
+        listBlackListData(1);
+        //请求黑名单列表
+        function listBlackListData(index){
+            httpRequestPost("/api/application/channel/listBlackListByPage",{
+                "applicationId": $scope.vmo.applicationId,
+                "index" : (index-1)*$scope.vmo.pageSize,
+                "pageSize": $scope.vmo.pageSize
+            },function(data){
+                $scope.vmo.blackListData = data.data;
+                $scope.vmo.blackListDataTotal =data.total;
+                $scope.vmo.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.total/$scope.vmo.pageSize), //总页数
+                    pageSize: 1,//分页框的分组单位
+                    pagesLength: 8,//分页框显示数量
+                };
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+        $scope.$watch('vmo.paginationConf.currentPage', function(current){
+            if(current){
+                listBlackListData(current);
+            }
+        });
+
+        //获取状态列表
+        function getStatusList(){
+            httpRequestPost("/api/application/channel/listStatus",{
+                "applicationId": $scope.vm.applicationId
+            },function(data){
+                $scope.vm.channelStatus = data.data;
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //获取所有的渠道
+        function getChannelList(){
+            httpRequestPost("api/application/channel/listChannels",{
+                "applicationId": $scope.vmo.applicationId
+            },function(data){
+                $scope.vmo.channelList = data.data;
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //添加渠道窗口
         function addChannel(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/channelManageDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -7505,32 +7622,274 @@ angular.module('knowledgeManagementModule').controller('channelManageController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                    }
-                }
-            });
-        }
-        function addBlacklist(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/myApplication/applicationConfig/blacklistManageDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
+                        httpRequestPost("/api/application/channel/addChannel",{
+                            "applicationId": $scope.vm.applicationId,
+                            "channelName": $scope.vm.channelName,
+                            "statusId": $scope.vm.statusId.statusId,
+                            "channelUpdateId": $scope.vm.userId
+                        },function(data){          //类名重複
+                            if(data.data===10002){
+                                layer.msg("渠道重复！");
+                                $scope.vm.channelName = "";
+                            }else{
+                                if(data.data===10001){
+                                    layer.msg("添加出错了！");
+                                }else{
+                                    layer.msg("添加成功");
+                                    $state.reload()
+                                }
+                            }
+                        },function(){
+                            layer.msg("添加失敗");
+                            $scope.vm.channelName = "";
+                        })
+                    }else{
+                        $scope.vm.channelName = "";
                     }
                 }
             });
         }
 
-      
+
+        //修改渠道
+        function editChannel(item){
+            $scope.vm.dialogTitle="编辑渠道";
+            $scope.vm.channelName = item.channelName;
+            console.log($scope.vm.channelStatus);
+            for(var i in $scope.vm.channelStatus){
+                if($scope.vm.channelStatus[i].statusId==item.statusId){//获取选中项.
+                    $scope.vm.statusId =$scope.vm.channelStatus[i];
+                    break;
+                }
+            }
+            addDialog(singleEdit,item);
+        }
+
+        //编辑弹窗，添加公用
+        function addDialog(callback,item){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/channelManageDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        callback(item)
+                    }else{
+                        $scope.vm.channelName = "";
+                    }
+                }
+            });
+        }
+
+        //编辑事件
+        function singleEdit(item){
+            httpRequestPost("/api/application/channel/editChannel",{
+                "channelId": item.channelId,
+                "applicationId": $scope.vm.applicationId,
+                "channelName": $scope.vm.channelName,
+                "statusId": $scope.vm.statusId.statusId,
+                "channelUpdateId": $scope.vm.userId
+            },function(data){
+                if(data.data==10002){
+                    layer.msg("渠道名称重复");
+                }else{
+                    if(data.data==10000){
+                        layer.msg("编辑成功");
+                        $state.reload()
+                    }else{
+                        layer.msg("编辑失败")
+                    }
+                }
+            },function(){
+                layer.msg("编辑失败")
+            })
+        }
+
+        //删除渠道
+        function delChannel(channelId){
+            httpRequestPost("/api/application/channel/delChannel",{
+                "channelId": channelId
+            },function(data){
+                if(data.data==10000){
+                    layer.msg("删除成功");
+                    $state.reload()
+                }else{
+                    layer.msg("删除失败")
+                }
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //修改渠道状态
+        function changeChannel(channelId){
+            httpRequestPost("/api/application/channel/changeStatus",{
+                "channelId": channelId
+            },function(data){
+                if(data.data===10000){
+                    layer.msg("状态修改成功");
+                    $state.reload()
+                }else{
+                    layer.msg("状态修改失败")
+                }
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //添加黑名单
+        function addBlacklist(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/blacklistManageDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        httpRequestPost("/api/application/channel/checkBlackList",{
+                            "applicationId": $scope.vmo.applicationId,
+                            "blackListIdentify": $scope.vmo.blackListIdentify,
+                            "channelId": $scope.vmo.channelId.channelId
+                        },function(data){          //类名重複
+                            if(data.data===10002){
+                                layer.msg("黑名单重复！");
+                                $scope.vmo.blackListIdentify = "";
+                                $scope.vmo.blackListRemark = "";
+                            }else{
+                                if(data.data===10003){
+                                    layer.msg("黑名单IP不合法！");
+                                    $scope.vmo.blackListIdentify = "";
+                                    $scope.vmo.blackListRemark = "";
+                                }else{
+                                    httpRequestPost("/api/application/channel/addBlackList",{
+                                        "applicationId": $scope.vmo.applicationId,
+                                        "blackListIdentify": $scope.vmo.blackListIdentify,
+                                        "blackListRemark": $scope.vmo.blackListRemark,
+                                        "blackListUpdateId": $scope.vmo.blackListUpdateId,
+                                        "channelId": $scope.vmo.channelId.channelId
+                                    },function(data){
+                                        layer.msg("添加成功");
+                                        $state.reload()
+                                    },function(){
+                                        layer.msg("添加失敗");
+                                        $scope.vmo.blackListIdentify = "";
+                                        $scope.vmo.blackListRemark = "";
+                                    })
+                                }
+                            }
+                        },function(){
+                            layer.msg("添加失敗");
+                            $scope.vmo.blackListIdentify = "";
+                            $scope.vmo.blackListRemark = "";
+                        })
+                    }else{
+                        $scope.vmo.blackListIdentify = "";
+                        $scope.vmo.blackListRemark = "";
+                    }
+                }
+            });
+        }
+
+
+        //移除黑名单
+        function delBlacklist(blackListId){
+            httpRequestPost("/api/application/channel/deleteBlackList",{
+                "blackListId": blackListId
+            },function(data){
+                layer.msg("移除成功");
+                $state.reload()
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //批量移除黑名单
+        function batchDelBlacklist(){
+            httpRequestPost("/api/application/channel/batchDelBlackList",{
+                "blackListIds": $scope.selected
+            },function(data){
+                if(data.data===10000){
+                    layer.msg("移除成功");
+                    $state.reload()
+                }else{
+                    layer.msg("移除失败");
+                }
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+
+
+
+        //创建变量用来保存选中结果
+        $scope.selectedList = [];
+        $scope.updateSelection= updateSelection; //更新某一列数据的选择
+        $scope.selectAll = selectAll; //全选
+        $scope.isSelected = isSelected; //判断某一列是否已被选中
+        $scope.isSelectedAll = isSelectedAll;  //判断是否已经全部选中
+        function updateSelected(action, id){
+            if (action == 'add' && $scope.selectedList.indexOf(id) == -1) $scope.selectedList.push(id);
+            if (action == 'remove' && $scope.selectedList.indexOf(id) != -1) $scope.selectedList.splice($scope.selectedList.indexOf(id), 1);
+        }
+
+        //更新某一列数据的选择
+        function updateSelection($event, id){
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id);
+        }
+
+        //判断某一列是否已被选中
+        function isSelected(id) {
+            return $scope.selectedList.indexOf(id) >= 0;
+        };
+
+
+        //全选
+        function selectAll ($event){
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            for (var i = 0; i < $scope.vmo.blackListData.length; i++) {
+                var contact = $scope.vmo.blackListData[i];
+                updateSelected(action, contact.blackListId);
+            }
+        }
+        //判断是否已经全部选中
+        function isSelectedAll() {
+            return $scope.selectedList.length === $scope.vmo.blackListData.length;
+        };
+
+        //var updateSelected = function (action, id) {
+        //    if (action == 'add' && $scope.selected.indexOf(id) == -1) $scope.selected.push(id);
+        //    if (action == 'remove' && $scope.selected.indexOf(id) != -1) $scope.selected.splice($scope.selected.indexOf(id), 1);
+        //};
+        ////更新某一列数据的选择
+        //$scope.updateSelection = function ($event, id) {
+        //    var checkbox = $event.target;
+        //    var action = (checkbox.checked ? 'add' : 'remove');
+        //    updateSelected(action, id);
+        //};
+        ////全选操作
+        //$scope.selectAll = function ($event) {
+        //    var checkbox = $event.target;
+        //    var action = (checkbox.checked ? 'add' : 'remove');
+        //    for (var i = 0; i < $scope.vmo.blackListData.length; i++) {
+        //        var contact = $scope.vmo.blackListData[i];
+        //        updateSelected(action, contact.blackListId);
+        //    }
+        //};
+        //$scope.isSelected = function (id) {
+        //    return $scope.selected.indexOf(id) >= 0;
+        //};
+        //$scope.isSelectedAll = function () {
+        //    return $scope.selected.length === $scope.vmo.blackListData.length;
+        //};
 
     }
 ]);;
@@ -7835,17 +8194,22 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
  * Author: chengjianhua@ultrapower.com.cn
  * Date: 2017/4/5 15:39
  */
-angular.module('knowledgeManagementModule').controller('sceneManageController', [
+angular.module('myApplicationSettingModule').controller('sceneManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
             keyword: "",  //检索条件
+            exchangeModeId: "", //交互方式的Id
+            knowledgeTypeId: "", //知识类型的Id
+            statusId: "", //状态
             knowledgeTypeData: "", //知识类型列表
             exchangeModeData: "",  //交互方式列表
             listKnowledgeType: listKnowledgeType, //查询知识类型
             listExchangeMode: listExchangeMode,  //查询交互方式
+            updateKnowledgeType:  updateKnowledgeType, //禁用或者启用知识类型
+            updateExchangeMode: updateExchangeMode, //禁用或者启用交互方式
 
         };
 
@@ -7881,6 +8245,33 @@ angular.module('knowledgeManagementModule').controller('sceneManageController', 
             })
         }
 
+
+        function updateKnowledgeType(item){
+            httpRequestPost("/api/application/scene/updateKnowledgeTypeByApplicationId",{
+                "applicationId": $scope.vm.applicationId,
+                "statusId": item.statusId,
+                "knowledgeTypeId": item.knowledgeTypeId
+            },function(data){
+                $state.reload();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        function updateExchangeMode(item){
+            httpRequestPost("/api/application/scene/updateExchangeModeByApplicationId",{
+                "applicationId": $scope.vm.applicationId,
+                "statusId": item.statusId,
+                "exchangeModeId": item.exchangeModeId
+            },function(data){
+                //$state.reload();
+                listExchangeMode();
+                listKnowledgeType();
+                $("#exchangeMode").click();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
     }
 ]);;
 // Source: app/know_index/myApplication/js/controller/setting_cotroller.js

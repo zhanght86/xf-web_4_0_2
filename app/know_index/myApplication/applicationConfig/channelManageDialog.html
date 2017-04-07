@@ -4,35 +4,35 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">渠道名称：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text"  class="input-text"/>
+                <input type="text"  class="input-text" ng-model="vm.channelName"/>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">渠道状态：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text">
-                    <option>已启用</option>
-                    <option>已停用</option>
+            <div class="formControls col-xs-9 col-sm-9" >
+                <select class="input-text" value="x.statusId"
+                        ng-model="vm.statusId"
+                        ng-options="x.statusName for x in vm.channelStatus">
                 </select>
             </div>
         </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2">发布地址：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <input type="text"  class="input-text" placeholder="192.168.0.1"/>
-            </div>
-        </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2">参数设置：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <input type="text"  class="input-text" placeholder="192.168.0.1"/>
-            </div>
-        </div>
+        <!--<div class="mb-10 cl">-->
+            <!--<label class="form-label col-xs-3 col-sm-2">发布地址：</label>-->
+            <!--<div class="formControls col-xs-9 col-sm-9">-->
+                <!--<input type="text"  class="input-text" placeholder="192.168.0.1"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="mb-10 cl">-->
+            <!--<label class="form-label col-xs-3 col-sm-2">参数设置：</label>-->
+            <!--<div class="formControls col-xs-9 col-sm-9">-->
+                <!--<input type="text"  class="input-text" placeholder="192.168.0.1"/>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="row cl">
             <label class="form-label col-xs-3 col-sm-2"></label>
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <input type="submit" class="btn1 btn1_blue mr-15 ml-10" value="确认"/>
-                <input type="button" class="btn1 btn_gray" value="取消" />
+                <input type="submit" class="btn1 btn1_blue mr-15 ml-10" ng-click="closeThisDialog(1)" value="确认"/>
+                <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
             </div>
         </div>
     </form>

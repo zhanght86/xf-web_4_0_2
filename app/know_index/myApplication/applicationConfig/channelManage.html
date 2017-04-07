@@ -11,18 +11,18 @@
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
                     	<span class="L">
-                            <button class="L btn1 btn_delete mr-10" >删除渠道</button>
+                            <!--<button class="L btn1 btn_delete mr-10" >删除渠道</button>-->
                         	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addChannel()">添加渠道</button>
                         </span>
                         <span class="R">
-                            <span>共有数据：<b >3</b> 条</span>
+                            <span>共有数据：<b >{{vm.channelDataTotal}}</b> 条</span>
                         </span>
                 </div>
                 <div>
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="6%"><input  type="checkbox" /></th>
+                            <!--<th class="bold" width="6%"><input  type="checkbox" /></th>-->
                             <th class="bold" width="14%">ID</th>
                             <th class="bold" width="15%">渠道名称</th>
                             <th class="bold" width="19%">创建时间</th>
@@ -32,8 +32,8 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="item in vm.channelData">
-                            <td><input  type="checkbox" /></td>
-                            <td>$index</td>
+                            <!--<td><input  type="checkbox" /></td>-->
+                            <td>{{item.channelId}}</td>
                             <td>{{item.channelName}}</td>
                             <td>{{item.channelUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>
@@ -41,12 +41,12 @@
                                 <span ng-if="item.statusId==50002" class="btn1 btn_green2">已启用</span>
                             </td>
                             <td>
-                                <a ng-if="item.statusId==50001" href="javascript:;"
-                                   class="c-error mr-10" >启用</a>
-                                <a ng-if="item.statusId==50002" href="javascript:;"
-                                   class="c-error mr-10" >禁用</a>
-                                <a href="javascript:;" class="c-primary mr-10" >编辑</a>
-                                <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
+                                <a ng-if="item.statusId==50001"
+                                   class="c-error mr-10" ng-click="vm.changeChannel(item.channelId)">启用</a>
+                                <a ng-if="item.statusId==50002"
+                                   class="c-error mr-10" ng-click="vm.changeChannel(item.channelId)">禁用</a>
+                                <a href="javascript:;" class="c-primary mr-10" ng-click="vm.editChannel(item)">编辑</a>
+                                <a href="javascript:;" class="c-error" ng-click="vm.delChannel(item.channelId)">删除</a>
                             </td>
                         </tr>
                         </tbody>
@@ -64,18 +64,20 @@
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
                     	<span class="L">
-                            <button class="L btn1 btn_delete mr-10" >批量移除黑名单</button>
-                        	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addBlacklist()">添加黑名单</button>
+                            <button class="L btn1 btn_delete mr-10" ng-click="vmo.batchDelBlacklist()">批量移除黑名单</button>
+                        	<button class="L btn1 btn1_blue mr-10" ng-click="vmo.addBlacklist()">添加黑名单</button>
                         </span>
                         <span class="R">
-                            <span>共有数据：<b >3</b> 条</span>
+                            <span>共有数据：<b >{{vmo.blackListDataTotal}}</b> 条</span>
                         </span>
                 </div>
                 <div>
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="6%"><input  type="checkbox" /></th>
+                            <th class="bold" width="6%">
+                                <input  type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/>
+                            </th>
                             <th class="bold" width="14%">ID</th>
                             <th class="bold" width="15%">标识</th>
                             <th class="bold" width="19%">加入黑名单时间</th>
@@ -84,43 +86,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>124.42.103.131</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>乱发消息</td>
+                        <tr ng-repeat="item in vmo.blackListData">
                             <td>
-                                <a href="javascript:;" class="c-error" >移除</a>
+                                <input  type="checkbox" name="selected" ng-checked="isSelected(item.blackListId)"
+                                        ng-click="updateSelection($event,item.blackListId)"/>
                             </td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>124.42.103.131</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>乱发消息</td>
+                            <td>{{item.blackListId}}</td>
+                            <td>{{item.blackListIdentify}}</td>
+                            <td>{{item.blackListUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{item.blackListRemark}}</td>
                             <td>
-                                <a href="javascript:;" class="c-error" >移除</a>
+                                <a class="c-error" ng-click="vmo.delBlacklist(item.blackListId)">移除</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="page clearfix">
-                    <span class="page_span ">上一页</span>
-                    <a href="javascript:;" class="cura">1</a>
-                    <a href="javascript:;">2</a>
-                    <a href="javascript:;">3</a>
-                    <a href="javascript:;">4</a>
-                    <a href="javascript:;">5</a>
-                    <span class="page_span ">下一页</span>
-                    <span>共<b class="page_b">12</b>页</span>
-                    <span>跳转到</span>
-                    <input type="text" class="page_txt">
-                    <span>页</span>
-                    <span class="go_span">GO</span>
-                </div>
+                <pagination ng-if="vmo.paginationConf.totalItems && vmo.paginationConf.totalItems>0" conf="vmo.paginationConf"></pagination>
             </div>
         </div>
     </div>
