@@ -41,34 +41,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr ng-repeat="item in vm.listData">
                         <td><input type="checkbox"   /></td>
-                        <td>张琼琼</td>
-                        <td>13801136304</td>
-                        <td>admin@mail.com</td>
-                        <td>系统管理员</td>
-                        <td>2016.9.27 12:00:00</td>
-                        <td>客服，营销</td>
-                        <td><button class="btn btn-success radius">已启用</button></td>
+                        <td>{{item.userName}}</td>
+                        <td>{{item.userPhoneNumber}}</td>
+                        <td>{{item.userEmail}}</td>
+                        <td>{{item.roleId}}</td>
+                        <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                        <td><span ng-repeat="val in item.applicationName[0].data">{{val}}<i ng-if="$index!=item.applicationName[0].data.length-1">,</i></span></td>
                         <td>
-                            <a href="javascript:;" title="停用" class="mr-10 c-primary" >停用</a>
-                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser()">编辑</a>
-                            <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser()">删除</a>
+                            <span class="btn1 btn_green2" ng-if="item.statusId==10001">已启用</span>
+                            <span class="btn1 btn_red" ng-if="item.statusId==10002">未启用</span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"   /></td>
-                        <td>张琼琼</td>
-                        <td>13801136304</td>
-                        <td>admin@mail.com</td>
-                        <td>系统管理员</td>
-                        <td>2016.9.27 12:00:00</td>
-                        <td>客服，营销</td>
-                        <td><button class="btn btn-gray radius">已停用</button></td>
                         <td>
-                            <a href="javascript:;" title="启用" class="mr-10 c-primary" >启用</a>
-                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser()">编辑</a>
-                            <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser()">删除</a>
+                            <span ng-if="item.statusId==10001"><a href="javascript:;" title="停用" class="mr-10 c-primary" ng-click="vm.stop(item.userId,item.statusId)">停用</a></span>
+                            <span ng-if="item.statusId==10002"><a href="javascript:;" title="启用" class="mr-10 c-primary" ng-click="vm.stop(item.userId,item.statusId)">启用</a></span>
+
+                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser(item.userId)">编辑</a>
+                            <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser(item.userId)">删除</a>
                         </td>
                     </tr>
                     </tbody>
