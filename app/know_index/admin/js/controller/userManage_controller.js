@@ -221,12 +221,9 @@ angular.module('adminModule').controller('userManageController', [
                 $scope.vm.prop.remove(id)
             }
         }
-
         function filter(val,arr) {
-            console.log(typeof val);
-            console.log(typeof arr[0]);
             var len = arr.length;
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < arr.length; i++) {
                 if (val != arr[i]) {
                     len -= 1
                 }
