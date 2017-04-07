@@ -2517,8 +2517,8 @@ angular.module('adminModule').controller('userManageController', [
             listRole:"",
             roleId :"",
             prop :[],
-            savaProp : savaProp
-
+            savaProp : savaProp,
+            filter : filter
         };
 
         getData();
@@ -2579,7 +2579,26 @@ angular.module('adminModule').controller('userManageController', [
             });
         }
         //编辑用户
-        function editUser(){
+        function editUser(data){
+
+                //userName : "",
+            //    userLonginName :  "",
+            //    userPassword :  "",
+            //    userPhoneNumber  :  "",
+            //    userEmail :"",
+            //    remark:"",
+            $scope.vm.userId = data.userId;
+            $scope.vm.userName = data.userName;
+            $scope.vm.userLoginName = data.userLoginName;
+            $scope.vm.userPassword = data.userPassword;
+            $scope.vm.userPhoneNumber = data.userPhoneNumber;
+            $scope.vm.userEmail = data.userEmail;
+            $scope.vm.remark = data.remark;
+            $scope.vm.roleId = data.roleId;
+            $scope.vm.prop = data.applicationName;
+            console.log(data);
+            //$scope.$apply()
+
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/userManageDialog2.html",
                 //controller:function($scope){
@@ -2595,6 +2614,22 @@ angular.module('adminModule').controller('userManageController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        httpRequestPost("/api/user/updateUserById",{
+                            userId:data.userId,
+                            userName:$scope.vm.userName,
+                            userLoginName:$scope.vm.userLoginName,
+                            userPassword:$scope.vm.userPassword,
+                            userPhoneNumber:$scope.vm.userPhoneNumber,
+                            userEmail:$scope.vm.userEmail,
+                            roleId:$scope.vm.roleId,
+                            applicationIds:$scope.vm.prop,
+                            remark:$scope.vm.remark
+                        },function(data){
+                            //刷新页面
+                            $state.reload()
+                        },function(){
+                            layer.msg("请求失败")
+                        })
                     }
                 }
             });
@@ -2668,6 +2703,31 @@ angular.module('adminModule').controller('userManageController', [
                 $scope.vm.prop.remove(id)
             }
         }
+
+        function filter(val,arr) {
+            console.log(typeof val);
+            console.log(typeof arr[0]);
+            var len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if (val != arr[i]) {
+                    len -= 1
+                }
+            }
+            if(len == 0){
+                return false
+            }else{
+                return true
+            }
+        }
+            //angular.forEach(arr,function(item){
+            //    if(val == item){
+            //        console.log(val+"ddddddddddd");
+            //        return true;
+            //    }else{
+            //        return false;
+            //    }
+            //})
+
     }
 ]);;
 ;
@@ -6026,9 +6086,10 @@ angular.module('knowledgeManagementModule').controller('NewFactorKnowController'
  * 控制器
  */
 angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
-    '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog",function ($scope,localStorageService,$timeout, $state,ngDialog) {
+    '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
+    function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
             botSelectValue:"",
@@ -6154,28 +6215,59 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
        }
 
 
-
-
+        //
+        //{
+        //    "accessToken": "string",
+        //    "applicationDescription": "string",
+        //    "applicationId": "string",
+        //    "applicationLisence": "string",
+        //    "applicationName": "string",
+        //    "requestId": "string",
+        //    "sceneId": "string",
+        //    "statusId": 0,
+        //    "userId": "string"
+        //}
         //維度
+        //getDimensions();
         function  getDimensions(){
-            httpRequestPost("/api/user/userLogin",{
-
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
             },function(data){
-
+                if(data.data){
+                    $scope.vm.dimensions = data.data
+                }
+                console.log(data)
             },function(err){
-
+                layer.msg("获取维度失败，请刷新页面")
             });
         }
         //渠道
+        getChannel();
         function  getChannel(){
-            httpRequestPost("/api/user/userLogin",{
-
+            //console.log($scope.vm.applicationId);
+            //
+            //httpRequestPost("/api/elementKnowledgeAdd/loadChannel",{
+            //    "applicationId" :"360619411498860540"
+            //},function(data){
+            //    console.log(data);
+            //},function(err){
+            //    layer.msg("连接网路失败")
+            //}) /api/applicationannelstChannels
+            httpRequestPost("/api/application/channel/dimension/list",{
+                //"applicationId": "360619411498860544"
+                "applicationId" : $scope.vm.applicationId
             },function(data){
-
+                if(data.data){
+                    $scope.vm.channels = data.data
+                }
+                 console.log(data)
             },function(err){
-
+                layer.msg("获取渠道失败，请刷新页面")
             });
         }
+
+
+
 
 
     }
@@ -7544,6 +7636,10 @@ angular.module('materialManagement').controller('faqChatController', [
                 },function(err){
                     layer.msg("连接网路失败")
                 })
+
+
+
+
             }
         }
         function addContentDialog(){
@@ -7643,8 +7739,6 @@ angular.module('materialManagement').controller('faqChatController', [
                     })
                 }
             }
-
-
 
 
         //    判断重复

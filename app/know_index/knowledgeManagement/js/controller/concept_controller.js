@@ -6,9 +6,10 @@
  * 控制器
  */
 angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
-    '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog",function ($scope,localStorageService,$timeout, $state,ngDialog) {
+    '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
+    function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
             botSelectValue:"",
@@ -134,28 +135,59 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
        }
 
 
-
-
+        //
+        //{
+        //    "accessToken": "string",
+        //    "applicationDescription": "string",
+        //    "applicationId": "string",
+        //    "applicationLisence": "string",
+        //    "applicationName": "string",
+        //    "requestId": "string",
+        //    "sceneId": "string",
+        //    "statusId": 0,
+        //    "userId": "string"
+        //}
         //維度
+        //getDimensions();
         function  getDimensions(){
-            httpRequestPost("/api/user/userLogin",{
-
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
             },function(data){
-
+                if(data.data){
+                    $scope.vm.dimensions = data.data
+                }
+                console.log(data)
             },function(err){
-
+                layer.msg("获取维度失败，请刷新页面")
             });
         }
         //渠道
+        getChannel();
         function  getChannel(){
-            httpRequestPost("/api/user/userLogin",{
-
+            //console.log($scope.vm.applicationId);
+            //
+            //httpRequestPost("/api/elementKnowledgeAdd/loadChannel",{
+            //    "applicationId" :"360619411498860540"
+            //},function(data){
+            //    console.log(data);
+            //},function(err){
+            //    layer.msg("连接网路失败")
+            //}) /api/applicationannelstChannels
+            httpRequestPost("/api/application/channel/dimension/list",{
+                //"applicationId": "360619411498860544"
+                "applicationId" : $scope.vm.applicationId
             },function(data){
-
+                if(data.data){
+                    $scope.vm.channels = data.data
+                }
+                 console.log(data)
             },function(err){
-
+                layer.msg("获取渠道失败，请刷新页面")
             });
         }
+
+
+
 
 
     }

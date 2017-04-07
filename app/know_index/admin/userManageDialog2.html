@@ -4,69 +4,66 @@
             <label class="form-label col-xs-3 col-sm-2">用户名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder=" zhangsan" value="" class="input-text" id="username">
+                <input type="text" placeholder=" zhangsan" ng-model="vm.userName" class="input-text" id="username">
             </div>
         </div>
         <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2">姓名：</label>
+            <label class="form-label col-xs-3 col-sm-2">登录名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder=" zhangsan" value="" class="input-text" id="name">
+                <input type="text" placeholder=" zhangsan" ng-model="vm.userLoginName" class="input-text" id="name">
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="password" value="" class="input-text" />
+                <input type="password" ng-model="vm.userPassword" class="input-text" />
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">确认密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="password"  value="" class="input-text">
+                <input type="password"  ng-model="vm.rePassword" class="input-text">
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">手机：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder="123456356578" value="" class="input-text" id="phone_number">
+                <input type="text" placeholder="123456356578" ng-model="vm.userPhoneNumber" class="input-text" id="phone_number">
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">邮箱：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder="123456@163.com" value="" class="input-text" id="email">
+                <input type="text" placeholder="123456@163.com" ng-model="vm.userEmail" class="input-text" id="email">
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">角色：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" id="role_id">
-                    <option value="">超级管理员</option>
-                    <option value="">普通管理员</option>
+                <select class="input-text"  id="role_id" ng-model="vm.roleId" ng-init="vm.roleId=vm.listRole[0].roleId">
+                    <option  ng-repeat="item in vm.listRole" ng-value="item.roleId" ng-selected="$index==0">{{item.roleName}}</option>
                 </select>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">所属应用：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10"><input type="checkbox" /> 长沙银行客服机器人</label>
-                <label><input type="checkbox" /> 湖南流量营销机器人</label>
+                <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="margin-left: 5px;"><input type="checkbox" ng-checked="vm.filter(item.applicationName,vm.prop[0].data)"  ng-click="vm.savaProp($event,item.applicationId)"   />{{item.applicationName}}</label>
             </div>
+            {{vm.prop[0].data}}
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">备注：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <textarea class="textarea bd">
-
-                </textarea>
+                <textarea class="textarea bd" ng-model="vm.remark"></textarea>
             </div>
         </div>
         <div class="tc">
-            <button  class="btn btn-primary radius mr-10" type="button">保存</button>
-            <button  class="btn btn-default radius" type="button">取消</button>
+            <button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>
+            <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
         </div>
     </form>
 </div>

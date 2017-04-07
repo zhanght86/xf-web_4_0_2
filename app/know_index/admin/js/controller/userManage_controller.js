@@ -35,8 +35,8 @@ angular.module('adminModule').controller('userManageController', [
             listRole:"",
             roleId :"",
             prop :[],
-            savaProp : savaProp
-
+            savaProp : savaProp,
+            filter : filter
         };
 
         getData();
@@ -97,7 +97,26 @@ angular.module('adminModule').controller('userManageController', [
             });
         }
         //编辑用户
-        function editUser(){
+        function editUser(data){
+
+                //userName : "",
+            //    userLonginName :  "",
+            //    userPassword :  "",
+            //    userPhoneNumber  :  "",
+            //    userEmail :"",
+            //    remark:"",
+            $scope.vm.userId = data.userId;
+            $scope.vm.userName = data.userName;
+            $scope.vm.userLoginName = data.userLoginName;
+            $scope.vm.userPassword = data.userPassword;
+            $scope.vm.userPhoneNumber = data.userPhoneNumber;
+            $scope.vm.userEmail = data.userEmail;
+            $scope.vm.remark = data.remark;
+            $scope.vm.roleId = data.roleId;
+            $scope.vm.prop = data.applicationName;
+            console.log(data);
+            //$scope.$apply()
+
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/userManageDialog2.html",
                 //controller:function($scope){
@@ -113,6 +132,22 @@ angular.module('adminModule').controller('userManageController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        httpRequestPost("/api/user/updateUserById",{
+                            userId:data.userId,
+                            userName:$scope.vm.userName,
+                            userLoginName:$scope.vm.userLoginName,
+                            userPassword:$scope.vm.userPassword,
+                            userPhoneNumber:$scope.vm.userPhoneNumber,
+                            userEmail:$scope.vm.userEmail,
+                            roleId:$scope.vm.roleId,
+                            applicationIds:$scope.vm.prop,
+                            remark:$scope.vm.remark
+                        },function(data){
+                            //刷新页面
+                            $state.reload()
+                        },function(){
+                            layer.msg("请求失败")
+                        })
                     }
                 }
             });
@@ -186,5 +221,30 @@ angular.module('adminModule').controller('userManageController', [
                 $scope.vm.prop.remove(id)
             }
         }
+
+        function filter(val,arr) {
+            console.log(typeof val);
+            console.log(typeof arr[0]);
+            var len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if (val != arr[i]) {
+                    len -= 1
+                }
+            }
+            if(len == 0){
+                return false
+            }else{
+                return true
+            }
+        }
+            //angular.forEach(arr,function(item){
+            //    if(val == item){
+            //        console.log(val+"ddddddddddd");
+            //        return true;
+            //    }else{
+            //        return false;
+            //    }
+            //})
+
     }
 ]);
