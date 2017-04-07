@@ -36,7 +36,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             inputSelect : [],
             inputVal : "",
             termSpliter: "；"
-
         };
 
         /**
@@ -46,7 +45,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         init(1);
         //请求列表
         function init(index){
-            //size=size?size:5;   //设置pageSize默认是5
             httpRequestPost("/api/modeling/concept/business/listByAttribute",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
@@ -61,12 +59,11 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败")
+                layer.msg("请求失败");
             })
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                //console.log(current,$scope.vm.pageSize);
                 httpRequestPost("/api/modeling/concept/business/listByAttribute",{
                     "businessConceptApplicationId": $scope.vm.applicationId,
                     "index" :current*$scope.vm.pageSize,
@@ -95,16 +92,14 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
         //查询
         function searchByUser(){
-            console.log($scope.vm.searchVal);
             httpRequestPost("/api/modeling/concept/business/listByModifier",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "index":0,
                 "pageSize":10
             },function(data){
-                console.log(data);
-                $scope.vm.listData = data.data
+                $scope.vm.listData = data.data;
             },function(){
-                layer.msg("查询没有对应信息")
+                layer.msg("查询没有对应信息");
             });
         }
         function searchByType(){
@@ -133,7 +128,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 layer.msg("查询没有对应信息")
             });
         }
-       var  key = angular.copy($scope.vm.searchType);
+       var key = angular.copy($scope.vm.searchType);
 
         //添加 窗口
         function addBusiness(){
@@ -204,7 +199,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                          $scope.vm.weight =  1;
                     }
                 }
-            })
+            });
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()
