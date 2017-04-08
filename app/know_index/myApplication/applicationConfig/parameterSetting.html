@@ -115,3 +115,20 @@
 <style>
     .jqrsz-item2{border-top:0;padding:0;margin-top:0;}
 </style>
+<script>
+    //开关
+    function turn_on(obj){
+        if($(obj).parent().hasClass('close1')){
+            $(obj).parent().attr('class','b_box open1');
+
+        }else{
+            $(obj).parent().attr('class','b_box close1');
+        }
+        if($(obj).hasClass('close2')){
+            $(obj).attr('class','s_box open2');
+        }else{
+            $(obj).attr('class','s_box close2');
+        }
+
+    }
+</script>
