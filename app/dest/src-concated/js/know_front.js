@@ -5820,6 +5820,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
     function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
         $scope.vm = {
+            conEdit: conEdit,
             applicationId : $cookieStore.get("applicationId"),
             framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
@@ -5833,10 +5834,31 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
-            titleGroup : "", //点击标题添加内容
+            titleGroup : "", //点击标题添加内容SSSS
             channels : "",     //渠道
             dimensions : ""    //维度
         };
+
+        function conEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
 
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
       //{
