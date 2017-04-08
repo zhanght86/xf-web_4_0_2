@@ -58,7 +58,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败")
+                layer.msg("请求失败");
             })
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -132,7 +132,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //添加 窗口
         function addSynonym(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog.html",
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -183,7 +183,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //編輯彈框   添加公用
         function addDelDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog2.html",
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -208,7 +208,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //   刪除 彈框
         function deleteSynonym(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

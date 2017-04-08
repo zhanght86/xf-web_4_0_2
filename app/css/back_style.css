@@ -1172,8 +1172,103 @@
 	height:156px;
 	resize: none;
 }
+/* 树形图编辑*/
+.ellipsis:hover > p:last-child{
+	display: inline-block;
+}
+.treeEdit{
+	z-index: 9999999999;
+	display: none;
+}
+.treeEdit img{
+	margin-top: -3px;
+}
+.namePopupBG{
+	position: fixed;
+	display: none;
+	z-index: 1050;
+	background: #000;
+	background: rgba(0,0,0,.1);
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+}
+.namePopup{
+	position: absolute;
+	background: #fff;
+	width: 510px;
+	height: 250px;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+.namePopup > p{
+	padding: 0 18px;
+	background: #f8f8f8;
+	height: 44px;
+	color: #333;
+	line-height: 44px;
+	margin: 0;
+}
+.namePopup > p > span{
+	display: inline-block;
+	float: right;
+}
+.namePopup i{
+	display: inline-block;
+	width: 16px;
+	height: 12px;
+	cursor: pointer;
+	transition: .3s;
+	background: url("../images/icon-pop.png") no-repeat bottom;
+}
+.namePopup i:hover{
+	transform: rotate(90deg);
+}
 
-
+.addPopupCnt{
+	width: 420px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+.addPopupCnt textarea {
+	width: 100%;
+	height: 100px;
+	border: 1px solid #e1e1e1;
+	padding: 5px;
+}
+.checkboxAddress{
+	height: 34px;
+	line-height: 34px;
+}
+.checkboxAddress > div{
+	display: inline-block;
+}
+.checkboxAddress .my-select{
+	width: 80px;
+}
+.namePopupCnt > input{
+	width: 380px;
+	height: 36px;
+	border: #e5e5e5 solid 1px;
+	margin: 44px auto 0 64px;
+	padding: 5px;
+}
+.namePopupCnt p{
+	margin-left: 64px;
+	padding: 10px;
+	color: #e44242;
+	font-size: 12px;
+}
+.namePopupCnt .namePopupCntTxt{
+	font-size: 16px;
+	color: #333;
+	margin: 35px 0;
+	text-align: center;
+}
 
 
 

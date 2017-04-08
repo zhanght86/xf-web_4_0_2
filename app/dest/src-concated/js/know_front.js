@@ -3494,7 +3494,6 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('businessModelingModule').controller('businessConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
         setCookie("applicationId","360619411498860544");
@@ -3795,6 +3794,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        function test(){
+
         }
     }
 ]);;
@@ -5287,7 +5289,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败")
+                layer.msg("请求失败");
             })
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -5361,7 +5363,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //添加 窗口
         function addSynonym(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog.html",
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -5412,7 +5414,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //編輯彈框   添加公用
         function addDelDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog2.html",
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -5437,7 +5439,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //   刪除 彈框
         function deleteSynonym(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -8227,7 +8229,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
  */
 
 angular.module('knowledgeManagementModule').controller('relationalCatalogController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout",function ($scope,$timeout,localStorageService, $state,$stateParams,ngDialog) {
         //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -8238,7 +8240,10 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal:"",  //bot 内容
-            addBot:addBot //添加点击时间
+            botInfo:null,  //bot信息
+            addBot:addBot, //添加点击时间
+            editBot:editBot,
+            deleteBot:deleteBot
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -8251,9 +8256,9 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
         //点击 root 的下拉效果
         function knowledgeBot(ev){
             var ele = ev.target;
-            $timeout(function(){
+            //$timeout(function(){
                 $(ele).next().slideToggle();
-            },50)
+            //},50);
         }
 
         //获取root 数据
@@ -8264,12 +8269,8 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
             },function(data){
                 $scope.vm.botRoot = data.data
             },function(){
-                console.log("err or err")
+                console.log("err or err");
             });
-        }
-        //点击更改bot value
-        function botValChange(val){
-            $scope.vm.knowledgeBotVal = val;
         }
         $(".aside-navs").on("click","span",function(){
             $scope.vm.knowledgeBotVal = $(this).html();
@@ -8277,6 +8278,51 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
             console.log($scope.vm.botSelectValue);
             $scope.$apply()
         });
+        $(".aside-navs").on("click",".edit",function(){
+            console.log("edit");
+            $scope.vm.botInfo = $(this).parent().attr("bot-info");
+            console.log($scope.vm.botInfo);
+            editBot();
+        });
+        function editBot(){
+            alert()
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationDevelopment/editCategory.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回调
+                    if(e === 1){
+                    }else{
+                    }
+                }
+            });
+        }
+        $(".aside-navs").on("click",".delete",function(){
+            console.log("delete");
+            $scope.vm.botInfo = $(this).parent().attr("bot-info");
+            console.log($scope.vm.botInfo);
+            var category = eval('(' + $scope.vm.botInfo + ')');
+            console.log(category.categoryId);
+            deleteBot();
+        });
+        function deleteBot(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationDevelopment/deleteCategory.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回调
+                    if(e === 1){
+                    }else{
+                    }
+                }
+            });
+        }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'.icon-jj',function(){
             appendTree(this);
@@ -8296,9 +8342,10 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                         for(var i=0;i<data.data.length;i++){
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<a class="ellipsis" href="javascript:;">'+
                                 '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span ng-click="vm.botValChange('+data.data[i].categoryName+')" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -8312,11 +8359,11 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%")
-                    that.parent().parent().next().slideDown()
+                    that.css("backgroundPosition","0% 100%");
+                    that.parent().parent().next().slideDown();
                 }else{
                     that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp()
+                    that.parent().parent().next().slideUp();
                 }
             }
         }
@@ -8370,7 +8417,8 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                             '<div class="slide-a">'+
                             ' <a class="ellipsis" href="javascript:;">'+
                             '<i class="icon-jj" data-option="'+data.data[0].categoryId+'"></i>'+
-                            '<span ng-click="vm.botValChange('+data.data[0].categoryName+')" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                            '<span data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                            '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                             '</a>' +
                             '</div>' +
                             '</li>';
@@ -8388,7 +8436,8 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                         //                '<div class="slide-a">'+
                         //                ' <a class="ellipsis" href="javascript:;">'+
                         //                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                        //                '<span ng-click="vm.botValChange('+data.data[i].categoryName+')" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        //                '<span bot-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        //                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         //                '</a>' +
                         //                '</div>' +
                         //                '</li>';
