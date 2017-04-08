@@ -6,7 +6,6 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('businessModelingModule').controller('businessConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
         setCookie("applicationId","360619411498860544");
@@ -359,5 +358,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 console.log("123456");
             }
         }
+    }
     }
 ]);

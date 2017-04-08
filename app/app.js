@@ -363,7 +363,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/settingContent.html',
-                        //controller: "adminContentController"
+                        controller: "robotSettingController"
                     },
                 }
             })        
@@ -377,7 +377,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationConfig/parameterSetting.html',
-                        //controller: "adminContentController"
+                        controller: "robotSettingController"
                     },
                 }
             })

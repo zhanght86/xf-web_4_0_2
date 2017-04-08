@@ -7,7 +7,7 @@
  */
 
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
@@ -26,12 +26,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             searchType : "synonymConceptKey",
             timeStart : "",
             timeEnd : "",
-            //searchTypeList : [{name:"synonymConceptKey",value:"概念类名"},{name:"synonymConceptWeight",value:"概念类权重"},{name:"synonymConceptTerm",value:"业务词"},{name:"synonymConceptModifier",value:"创建人"},{name:"synonymConceptModifyTime",value:"上传日期"}],
+        
             //新增
-            "key": "",
-            "modifier": getCookie("userName"),
-            "term": "",
-            "weight": "1" ,   //默認權重
+   
 
             dialogTitle : "",
 
@@ -74,12 +71,11 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 };
                 $scope.$apply();
             },function(){
-
-                layer.msg("请求失败")
-            })
+                layer.msg("请求失败")            })
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+               
                 getAggre(current);
                 //console.log(current,$scope.vm.pageSize);
                 //httpRequestPost("/api/modeling/concept/business/listByAttribute",{
@@ -155,7 +151,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //添加 窗口
         function addSynonym(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
+            
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -170,13 +166,14 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.msg("概念类名重复");
+                              
                                 httpRequestPost("/api/modeling/concept/business/listByAttribute",{
                                     "synonymConceptApplicationId": $scope.vm.applicationId,
                                     "synonymConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
-                                    $scope.vm.dialogTitle="修改停用概念";
+                              
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
                                     $scope.vm.key = data.data[0].synonymConceptKey;
@@ -186,6 +183,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                 });
                             }else{
                                 //类名无冲突
+                              
                                 $scope.vm.dialogTitle="增加业务概念";
                                 //key: "",
                                 // "modifier": getCookie("userName"),
@@ -214,6 +212,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             //     $scope.vm.weight =  item.synonymConceptWeight;
             //}
             var dialog = ngDialog.openConfirm({
+          
                 template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
