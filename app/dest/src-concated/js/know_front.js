@@ -3365,17 +3365,18 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    console.log(data);
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                getAggre(current);
+                ////console.log(current,$scope.vm.pageSize);
+                //httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                //    "collectiveConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    console.log(data);
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑
@@ -3702,16 +3703,24 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+                getAggre(current);
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                //httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                //    "businessConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    console.log(data);
+                //    //$scope.vm.paginationConf = {
+                //    //    currentPage: current,//当前页
+                //    //    totalItems: Math.ceil(data.total/5), //总条数
+                //    //    pageSize: 1,//第页条目数
+                //    //    pagesLength: 8,//分页框数量
+                //    //};
+                //    //$scope.listData = data.data;
+                //    getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑
@@ -4051,12 +4060,6 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                         addSingleTermVal : "",
 
                     };
-
-                    //$scope.$watch("vm.addSingleTermVal",function (val) {
-                    //    console.log(val)
-                    //},true);
-
-
                     /**
                      * 加载分页条
                      * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -4087,16 +4090,17 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                     }
                     $scope.$watch('vm.paginationConf.currentPage', function(current){
                         if(current){
+                            getAggre(current);
                             //console.log(current,$scope.vm.pageSize);
-                            httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
-                                "stopConceptApplicationId": $scope.vm.applicationId,
-                                "index" :current*$scope.vm.pageSize,
-                                "pageSize": $scope.vm.pageSize
-                            },function(data){
-                                $scope.listData = data.data;
-                                //getAggre(current);
-                            },function(){
-                            })
+                            //httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
+                            //    "stopConceptApplicationId": $scope.vm.applicationId,
+                            //    "index" :current*$scope.vm.pageSize,
+                            //    "pageSize": $scope.vm.pageSize
+                            //},function(data){
+                            //    $scope.listData = data.data;
+                            //    //getAggre(current);
+                            //},function(){
+                            //})
                         }
                     });
                     //编辑
@@ -4411,16 +4415,17 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+                getAggre(current);
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
-                    "correctionConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                //httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
+                //    "correctionConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑
@@ -4938,15 +4943,16 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                     }
                     $scope.$watch('vm.paginationConf.currentPage', function(current){
                         if(current){
+                            getAggre(current);
                             //console.log(current,$scope.vm.pageSize);
-                            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
-                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                                "index" :current*$scope.vm.pageSize,
-                                "pageSize": $scope.vm.pageSize
-                            },function(){
-                                getAggre(current);
-                            },function(){
-                            })
+                            //httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
+                            //    "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                            //    "index" :current*$scope.vm.pageSize,
+                            //    "pageSize": $scope.vm.pageSize
+                            //},function(){
+                            //    getAggre(current);
+                            //},function(){
+                            //})
                         }
                     });
                     //编辑
@@ -5260,16 +5266,17 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
-                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                getAggre(current);
+                ////console.log(current,$scope.vm.pageSize);
+                //httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+                //    "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑
@@ -5586,16 +5593,17 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+                getAggre(current);
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "synonymConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                //httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                //    "synonymConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑
@@ -6124,6 +6132,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
     function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
         $scope.vm = {
+//主页面
             applicationId : $cookieStore.get("applicationId"),
             framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
@@ -6131,15 +6140,34 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,            
-            knowledgeTitle : "",   //标题
+            botValChange : botValChange,
+
+            title : "",   //标题
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
-            titleGroup : "", //点击标题添加内容
+            getTitleGroup : getTitleGroup,   //点击获取添加标题
+            titleGroup : ["ddd"], //点击标题添加内容
+
+            //展示内容
+            scantitle : "",
+            scanChannels : "",
+            scanDimensions : "",
+ //弹框相关
+            newTitle: "",
             channels : "",     //渠道
-            dimensions : ""    //维度
+            dimensions : ""  ,  //维度
+                            //高级选项内容
+            slideDown : slideDown,
+            slideFlag : false,
+            question : "",
+            tip : "",
+            tail : "" ,
+            appointRelative : "",
+            getAppointRelative : getAppointRelative ,
+            appointRelativeGroup : ['储蓄卡办理方式','储ddd蓄卡办理方式'],
+            removeAppointRelative : removeAppointRelative,
         };
 
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
@@ -6231,12 +6259,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
        function KnowledgeAdd(){
            var dialog = ngDialog.openConfirm({
                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
-               //controller:function($scope){
-               //    $scope.show = function(){
-               //
-               //        console.log(6688688);
-               //        $scope.closeThisDialog(); //关闭弹窗
-               //    }},
                scope: $scope,
                closeByDocument:false,
                closeByEscape: true,
@@ -6244,26 +6266,59 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                backdrop : 'static',
                preCloseCallback:function(e){    //关闭回掉
                    if(e === 1){
+                       saveNew()
                    }
                }
            });
+           $timeout(function(){
+               var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
+           },500);
+           //}
        }
 
+        function slideDown(){
+            $scope.vm.slideFlag = ! $scope.vm.slideFlag;
+            $(".senior_div").slideToggle();
+        }
 
-        //
-        //{
-        //    "accessToken": "string",
-        //    "applicationDescription": "string",
-        //    "applicationId": "string",
-        //    "applicationLisence": "string",
-        //    "applicationName": "string",
-        //    "requestId": "string",
-        //    "sceneId": "string",
-        //    "statusId": 0,
-        //    "userId": "string"
-        //}
+        //新增保存
+        function saveNew(){
+            httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                "title" : $scope.vm.title,
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                console.log(data)
+            },function(err){
+                layer.msg("数据请求失败")
+            });
+        }
+
+        function getTitleGroup(){
+            httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                "title" : $scope.vm.title,
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                if(data.data){
+                    $scope.vm.dimensions = data.data
+                }
+                console.log(data)
+            },function(err){
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        }
+
+
+        /* ****************************************** //
+        *
+        *               弹框相关
+        *
+        */ // ****************************************** //
+
+        function getAppointRelative(){
+
+        }
         //維度
-        //getDimensions();
+        getDimensions();
         function  getDimensions(){
             httpRequestPost("/api/application/dimension/list",{
                 "applicationId" : $scope.vm.applicationId
@@ -6279,16 +6334,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         //渠道
         getChannel();
         function  getChannel(){
-            //console.log($scope.vm.applicationId);
-            //
-            //httpRequestPost("/api/elementKnowledgeAdd/loadChannel",{
-            //    "applicationId" :"360619411498860540"
-            //},function(data){
-            //    console.log(data);
-            //},function(err){
-            //    layer.msg("连接网路失败")
-            //}) /api/applicationannelstChannels
-            httpRequestPost("/api/application/channel/dimension/list",{
+            httpRequestPost("/api/application/channel/listChannels",{
                 //"applicationId": "360619411498860544"
                 "applicationId" : $scope.vm.applicationId
             },function(data){
@@ -6300,8 +6346,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 layer.msg("获取渠道失败，请刷新页面")
             });
         }
-
-
 
 
 
@@ -6544,7 +6588,7 @@ knowledge_static_web.directive("loginInput", function() {
     return {
         restrict: "AE",
         link: function(scope, elem, attrs) {
-            
+
            elem.on("focus",function(e){
                 $(this).parents(".login-fItem").addClass("focus");
             }).on("blur",function(){
@@ -6552,7 +6596,26 @@ knowledge_static_web.directive("loginInput", function() {
             });
         }
     }
-});;
+})
+.directive('switch',function(){
+    return{
+        restrict:'EA',
+        scope:{
+            title:'=expanderTitle'
+        },
+
+        template: '<div class="b_box" ng-click="toggle()" ng-class="flag?\'open1\':\'close1\'" style="float:left;margin-right:10px;">'+
+                            '<div class="s_box"  ng-class="flag?\'open2\':\'close2\'"></div>'+
+                   '</div>',
+        link:function(scope,element,attrs){
+            scope.flag=true;
+            scope.toggle=function toggle(){
+                scope.flag = !scope.flag;
+            }
+        }
+    }
+});
+;
 ;
 // Source: app/know_index/knowledge_details/js/controller/know_compare_controller.js
 /**
@@ -7671,9 +7734,6 @@ angular.module('materialManagement').controller('faqChatController', [
                 },function(err){
                     layer.msg("连接网路失败")
                 })
-
-
-
 
             }
         }

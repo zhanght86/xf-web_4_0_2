@@ -80,16 +80,17 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+                getAggre(current);
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "synonymConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                //httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                //    "synonymConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑

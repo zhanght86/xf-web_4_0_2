@@ -42,12 +42,6 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                         addSingleTermVal : "",
 
                     };
-
-                    //$scope.$watch("vm.addSingleTermVal",function (val) {
-                    //    console.log(val)
-                    //},true);
-
-
                     /**
                      * 加载分页条
                      * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -78,16 +72,17 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                     }
                     $scope.$watch('vm.paginationConf.currentPage', function(current){
                         if(current){
+                            getAggre(current);
                             //console.log(current,$scope.vm.pageSize);
-                            httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
-                                "stopConceptApplicationId": $scope.vm.applicationId,
-                                "index" :current*$scope.vm.pageSize,
-                                "pageSize": $scope.vm.pageSize
-                            },function(data){
-                                $scope.listData = data.data;
-                                //getAggre(current);
-                            },function(){
-                            })
+                            //httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
+                            //    "stopConceptApplicationId": $scope.vm.applicationId,
+                            //    "index" :current*$scope.vm.pageSize,
+                            //    "pageSize": $scope.vm.pageSize
+                            //},function(data){
+                            //    $scope.listData = data.data;
+                            //    //getAggre(current);
+                            //},function(){
+                            //})
                         }
                     });
                     //编辑

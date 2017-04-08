@@ -52,9 +52,6 @@ angular.module('materialManagement').controller('faqChatController', [
                     layer.msg("连接网路失败")
                 })
 
-
-
-
             }
         }
         function addContentDialog(){

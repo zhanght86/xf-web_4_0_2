@@ -189,17 +189,18 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    console.log(data);
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                getAggre(current);
+                ////console.log(current,$scope.vm.pageSize);
+                //httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                //    "collectiveConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    console.log(data);
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑

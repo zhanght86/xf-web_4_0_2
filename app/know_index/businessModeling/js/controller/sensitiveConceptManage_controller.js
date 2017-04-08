@@ -76,16 +76,17 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
-                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                getAggre(current);
+                ////console.log(current,$scope.vm.pageSize);
+                //httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+                //    "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑

@@ -75,16 +75,24 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+                getAggre(current);
                 //console.log(current,$scope.vm.pageSize);
-                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                    "businessConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                    //getAggre(current);
-                },function(){
-                })
+                //httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                //    "businessConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    console.log(data);
+                //    //$scope.vm.paginationConf = {
+                //    //    currentPage: current,//当前页
+                //    //    totalItems: Math.ceil(data.total/5), //总条数
+                //    //    pageSize: 1,//第页条目数
+                //    //    pagesLength: 8,//分页框数量
+                //    //};
+                //    //$scope.listData = data.data;
+                //    getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑

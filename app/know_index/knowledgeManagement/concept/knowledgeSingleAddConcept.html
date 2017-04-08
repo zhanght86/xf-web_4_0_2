@@ -6,6 +6,10 @@
         <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
         <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
     </div>
+
+
+
+
     <div class="addContent pd30">
         <div class="r-cont-hd">
             <span>概念知识新增</span>
@@ -19,9 +23,9 @@
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
-                            <input ng-model="vm.knowledgeTitle" class="ipt-txt" type="text" />
+                            <input ng-model="vm.title" class="ipt-txt" type="text" />
                             <i class="btn-empty"></i>
-                            <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class=" mr-15" ng-click="vm.getTitleGroup()"><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -42,9 +46,9 @@
 
                 <div class="item-line">
                     <div class="lable">
-                        知识BOT：
+                        BOT分类：
                     </div>
-                    <div class="value menu_1Div" id="menu_1Div">
+                    <div class="value Div" id="Div">
                         <div class="ipt-txt-box">
                             <input class="ipt-txt" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
@@ -68,14 +72,12 @@
 
                 <div class="item-line" ng-repeat="item in vm.titleGroup">
                     <div class="lable"></div>
-                    <div class="value menu_1Div" id="menu_1Div">
+                    <div class="value Div" id="Div">
                         <div class="ipt-txt-box">
-                            <div class="ipt-txt" ng-text="item"></div>
+                            <div class="ipt-txt">{{item}}</div>
                         </div>
                     </div>
                 </div>
-
-
 
                 <div class="item-line">
                     <div class="row cl mb-10">
@@ -183,6 +185,7 @@
     .ipt-txt{
         border: 1px  solid #e1e1e1;
     }
+
 </style>
 <script>
 //    $(function(){
@@ -200,14 +203,14 @@
 //        $("#ipt-txt").focus(function () {
 //            $(".aside-navs2").slideDown()
 //        });
-//        $(".btn-menu_1").click(function () {
+//        $(".btn-").click(function () {
 //            $(".aside-navs2").slideDown();
 //        });
 //        $(document).click(function () {
 //            $(".aside-navs2").slideUp()
 //        });
 //
-//        $("#ipt-txt,.btn-menu_1,.aside-navs2").click(function(e){//自己要阻止
+//        $("#ipt-txt,.btn-,.aside-navs2").click(function(e){//自己要阻止
 //
 //            e.stopPropagation();//阻止冒泡到body
 //        });

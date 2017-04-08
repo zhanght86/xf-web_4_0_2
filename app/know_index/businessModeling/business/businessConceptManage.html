@@ -42,10 +42,9 @@
                     <td>创建人</td>
                     <td>操作</td>
                 </tr>
-                <tr ng-repeat="item in vm.listData">
+                <tr ng-repeat="item in vm.listData" ng-class=vm.listData.length<=3?'resetH70':''">
                     <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
                     <td class="color-blue2">{{item.businessConceptKey}}</td>
-        
                     <td class="color-blue2">{{item.businessConceptWeight | weightFilter}}</td>
                     <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
                     <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
