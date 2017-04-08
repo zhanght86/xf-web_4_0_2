@@ -2471,6 +2471,10 @@ angular.module('adminModule').controller('adminContentController', [
  * 控制器
  */    
 
+
+
+
+
 angular.module('adminModule').controller('adminController', [
     '$scope',  "$state", "$stateParams",
     function ($scope,  $state ,$stateParams) {
@@ -7165,12 +7169,14 @@ angular.module('materialManagement').controller('conceptChatController', [
                 layer.msg("扩展问题重复，请重新输入");
             }else{
                 httpRequestPost("/api/chatKnowledge/checkConceCptChatQuestion",{
-                    "chatQuestionContent" : $scope.vm.extendedQuestion
+                    "chatQuestionContent" : $scope.vm.extendedQuestion,
+                    "applicationId" : 1
                 },function(data){
                     console.log(data);
-                    if(data.status == 10000){
+                    //$scope.vm.extendedQuestionArr = data.data;
+                    if(data.status == 200){
                         var obj = {};
-                        obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion);
+                        obj.chatQuestionContent = data.data;
                         obj.chatQuestionType = angular.copy($scope.vm.weight);
                         $scope.vm.extendedQuestionArr.push(obj);
                         $scope.vm.extendedQuestion = "";
