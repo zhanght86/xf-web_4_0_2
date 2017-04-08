@@ -12,12 +12,13 @@
 
 angular.module('knowledgeManagementModule').controller('dimensionManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
-        setCookie("applicationId","1");
-        setCookie("userId","1");
+        setCookie("applicationId","360619411498860544");
+        setCookie("userId","368191545326702592");
         $scope.vm = {
             addDimension : addDimension,
             listData : "",   // table 数据
             listDataTotal : "",
+            deleteDimension:deleteDimension,
             getData : getData,
             userId:getCookie("userId"),
             applicationId:getCookie("applicationId"),
@@ -26,10 +27,9 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
 
         getData();
         function getData(){
-            httpRequestPost("/api/application/api/dimension/listDimension",{
+            httpRequestPost("/api/application/dimension/listDimension",{
                 index:0,
                 pageSize:10,
-                dimensionParentId:0, //页面只展示父级维度，给定父级id
                 userId:$scope.vm.userId,
                 applicationId:$scope.vm.applicationId
             },function(data){
@@ -47,6 +47,29 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             })
         }
 
+        //删除维度
+        function deleteDimension(dimensionId){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/deleteDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        httpRequestPost("/api/application/dimension/deleteById",{
+                            applicationId:$scope.vm.applicationId,
+                            dimensionId:dimensionId
+                        },function(data){
+                            $state.reload()
+                        },function(){
+                            layer.msg("请求失败")
+                        })
+                    }
+                }
+            });
+        }
 
         function addDimension(){
             var dialog = ngDialog.openConfirm({
