@@ -9,17 +9,18 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
     function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
         $scope.vm = {
-//主页面
+//主页
             applicationId : $cookieStore.get("applicationId"),
-            framework : ['信用卡办理','金葵花卡办理流程','黑金卡办理流程'],      //业务框架
+            frames : [],      //业务框架
+            frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
-            botSelectValue:"",
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
-            botValChange : botValChange,
-
+            frameCategoryId : "",
             title : "",   //标题
+            titleTip :  "",
+            hideTip : hideTip,
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
@@ -38,14 +39,47 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                             //高级选项内容
             slideDown : slideDown,
             slideFlag : false,
+
             question : "",
             tip : "",
             tail : "" ,
+
             appointRelative : "",
             getAppointRelative : getAppointRelative ,
             appointRelativeGroup : ['储蓄卡办理方式','储ddd蓄卡办理方式'],
             removeAppointRelative : removeAppointRelative,
         };
+
+        setCookie("categoryApplicationId","360619411498860544");
+        //setCookie("categoryModifierId","1");
+        //setCookie("categorySceneId","10023");
+        var applicationId = getCookie("categoryApplicationId");
+
+        function getFrame(){
+            //angular.forEach($scope.vm.knowledgeBotVal,function(item){
+            //
+            //});
+            httpRequestPost("/api/modeling/frame/listbyattribute",{
+                "frameCategoryId": $scope.vm.frameCategoryId,
+                "frameEnableStatusId": 1,
+                "frameTypeId":10012,
+                "index": 0,
+                "pageSize":999999
+            },function(data){
+                $scope.vm.frames = data.data;
+                $scope.vm.frameId=$scope.vm.frames[0].frameId;
+                $scope.$apply();
+                console.log( data);
+            },function(){
+                alert("err or err")
+            });
+        }
+        $scope.$watch("vm.frameCategoryId",function(val,old){
+            console.log(val);
+            if(val&&val!=old){
+                getFrame()
+            }
+        });
 
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
       //{
@@ -66,21 +100,24 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
        //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": $scope.vm.applicationId,
+                "categoryApplicationId": applicationId,
                 "categoryPid": "root"
             },function(data){
-                $scope.vm.botRoot = data.data
+               $scope.vm.botRoot = data.data;
+               //console.log( $scope.vm.applicationId);
             },function(){
                 alert("err or err")
             });
         }
         //点击更改bot value
-        function botValChange(val){
-            $scope.vm.knowledgeBotVal = val;
-        }
         $(".aside-navs").on("click","span",function(){
-            $scope.vm.knowledgeBotVal = $(this).html();
-            $scope.$apply()
+            var value = $(this).html();
+            $scope.vm.frameCategoryId = $(this).prev().attr("data-option");
+            $scope.vm.knowledgeBotVal = value;
+            //if($scope.vm.knowledgeBotVal.indexOf(value)){
+            //    $scope.vm.knowledgeBotVal.push($(this).html());
+                $scope.$apply();
+            //}
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
        $(".aside-navs").on("click",'.icon-jj',function(){
@@ -89,7 +126,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
            if(!that.parent().parent().siblings().length){
                that.css("backgroundPosition","0% 100%")
                httpRequestPost("/api/modeling/category/listbycategorypid",{
-                   "categoryApplicationId": $scope.vm.applicationId,
+                   "categoryApplicationId":applicationId,
                    "categoryPid": id
                },function(data){
                    if(data.data){
@@ -148,6 +185,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                }
            });
            $timeout(function(){
+               var dimensions = angular.copy($scope.vm.dimensions);
+               var source = [];
+               angular.forEach(srouce,function(item){
+                   source.push(item.dimensionName)
+               });
+                console.log(source);
                var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
            },500);
            //}
@@ -158,6 +201,43 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             $(".senior_div").slideToggle();
         }
 
+        function getTitleGroup(){
+            if( $scope.vm.title){
+                httpRequestPost("/api/ConceptKnowledge/checkExtensionQuestion", {
+                    "title" : $scope.vm.title,
+                },function(data){
+                    if(data.status == 500){
+                        alert()
+                        $scope.vm.titleTip = data.info;
+                        $scope.$apply()
+                    }else{
+                        $scope.vm.titleGroup = data.data
+                    }
+                    console.log(data);
+                },function(err){
+                    layer.msg("打标失败，请重新打标")
+                });
+            }else{
+                $scope.vm.titleTip = "知识标题不能为空"
+            }
+
+        }
+
+        function hideTip(){
+            $scope.vm.titleTip = ""
+        }
+        /* ****************************************** //
+        *
+        *               弹框相关
+        *
+        */ // ****************************************** //
+
+        function getAppointRelative(){
+
+        }
+        function removeAppointRelative(){
+
+        }
         //新增保存
         function saveNew(){
             httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
@@ -170,32 +250,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             });
         }
 
-        function getTitleGroup(){
-            httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
-                "title" : $scope.vm.title,
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data
-                }
-                console.log(data)
-            },function(err){
-                layer.msg("获取维度失败，请刷新页面")
-            });
-        }
 
-
-        /* ****************************************** //
-        *
-        *               弹框相关
-        *
-        */ // ****************************************** //
-
-        function getAppointRelative(){
-
+        //初始化頁面數據
+        init();
+        function  init(){
+            getDimensions();
+            getChannel();
         }
         //維度
-        getDimensions();
         function  getDimensions(){
             httpRequestPost("/api/application/dimension/list",{
                 "applicationId" : $scope.vm.applicationId
@@ -209,7 +271,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             });
         }
         //渠道
-        getChannel();
         function  getChannel(){
             httpRequestPost("/api/application/channel/listChannels",{
                 //"applicationId": "360619411498860544"

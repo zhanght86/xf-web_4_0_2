@@ -5,25 +5,15 @@
         <div class="mb-20 concept_div">
             <span class="concept_s">概念类名：</span>
             <div >
-                <input type="text" ng-model="vm.key" maxlength="20"  class="input_text" value="违禁品"/>
+                <input type="text" ng-model="vm.key" maxlength="20"  class="input_text" placeholder="违禁品"/>
             </div>
         </div>
         <div class="mb-20 concept_div">
-            <span class="concept_s" >新增概念：</span>
+            <span class="concept_s" >编辑概念：</span>
             <div>
                 <div class="textarea" style="height: auto;width: 260px">
-
-                    <p class="dib" contenteditable="false"ng-if="vm.term" ng-repeat="term in vm.term.split('；')" style="padding: 5px 15px;height: 30px;border-radius: 2px;border: 0;background: #e1e1e1;margin: 2px;">
-                        <span class="">{{term}}</span>
-                        <i class="Hui-iconfont Hui-iconfont-del" ng-click="vm.delSingleTerm(term)"></i>
-                    </p>
-                    <!-- ng-change="vm.addSingleTermValChange()"-->
-                    <input type="text"  style="" ng-model="vm.addSingleTermVal" oninput="alert()" ng-keydown="vm.addSingleTerm($event)"/>
-                    <!--{{vm.addSingleTermVal}}-->
+                    <textarea id="term"></textarea>
                 </div>
-
-                <!--<input class="textarea" type="text" ng-model="modelObj" ui-autocomplete="myOption">-->
-
             </div>
         </div>
         <div class="concept_div">
@@ -83,8 +73,4 @@
         color: red;
     }
 </style>
-<script>
-    function alert(){
-
-    }
-</script>
+<script></script>

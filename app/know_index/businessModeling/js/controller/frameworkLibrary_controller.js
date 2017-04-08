@@ -38,6 +38,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
             },function(data){
+                console.log(data)
                 $scope.vm.botRoot = data.data
             },function(){
                 console.log("err or err")
@@ -144,8 +145,5 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }
             });
         }
-        
-
-
     }
 ]);

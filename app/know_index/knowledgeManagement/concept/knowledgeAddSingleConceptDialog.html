@@ -35,15 +35,15 @@
             <div class=" mb-10">
                 <span >知识配置：</span>
                 <div class="dib pt-5 mr-15">
-                    <switch></switch>
+                    <switch ng-click="vm.question = !vm.question"></switch>
                     <span>不显示相关问题</span>
                 </div>
                 <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
-                    <switch></switch>
+                    <switch ng-click="vm.tip = !vm.tip"></switch>
                     <span>不在相关问题内提示</span>
                 </div>
                 <div class="dib pt-5 mr-15" style="margin-left: 81px;">
-                    <switch></switch>
+                    <switch ng-click="vm.tail = !vm.tail"></switch>
                     <span>不弹出评价小尾巴</span>
                 </div>
             </div>
@@ -54,11 +54,14 @@
                     <a href="javascript:;"  onclick="">
                         <img src="../../../images/images/add_img.png">
                     </a>
+                    <ul>
+                        <li ng-if="vm.appointOptions" ng-repeat="item in vm.appointOptions"></li>
+                    </ul>
                 </div>
                 <div class="channel_div mb-20">
                     <span class="channel_s c-primary">已添加</span>
                     <ul>
-                        <li ng-repeat="item in vm.appointRelativeGroup">{{$index}}、{{item}}  <span class="delete_a R "></span></li>
+                        <li ng-repeat="item in vm.appointRelativeGroup">{{$index}}、{{item}}  <span class="delete_a R" ng-click="vm.removeAppointRelative()"></span></li>
                     </ul>
                 </div>
             </div>

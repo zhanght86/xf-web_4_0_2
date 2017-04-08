@@ -11,7 +11,7 @@
                     <option value="businessConceptWeight">概念类权重</option>
                     <option value="businessConceptTerm">业务词</option>
                     <option value="businessConceptModifier">创建人</option>
-                    <option value="businessConceptModifyTime">上传日期</option>
+                    <option value="businessConceptModifyTime">修改日期</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='businessConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
                 <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">
@@ -65,8 +65,8 @@
     .pagination {
         margin: 0 !important;
     }
+    .ngdialog{
+        z-index: 5!important;
+    }
 </style>
-<script>
-
-
-</script>
+<script></script>
