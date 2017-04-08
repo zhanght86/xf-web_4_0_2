@@ -2500,6 +2500,7 @@ angular.module('adminModule').controller('userManageController', [
             addUser : addUser,
             editUser : editUser,
             deleteUser:deleteUser,
+            search:search,
             stop:stop,
             userId:getCookie("userId"),
 
@@ -2510,13 +2511,17 @@ angular.module('adminModule').controller('userManageController', [
             userPhoneNumber  :  "",
             userEmail :"",
             remark:"",
+            //查询所需数据
+            searchName:"",
             //查询当前所有应用
             listApplication : "",
             //查询当前所有角色
             listRole:"",
             roleId :"",
             prop :[],
+            applicationIds:[],
             savaProp : savaProp,
+            saveProp : saveProp ,
             filter : filter
         };
 
@@ -2547,6 +2552,9 @@ angular.module('adminModule').controller('userManageController', [
                 //controller:function($scope){
                 //    $scope.show = function(){
                 //
+                //
+                //
+                //
                 //        console.log(6688688);
                 //        $scope.closeThisDialog(); //关闭弹窗
                 //    }},
@@ -2566,7 +2574,7 @@ angular.module('adminModule').controller('userManageController', [
                             userEmail:$scope.vm.userEmail,
                             roleId:$scope.vm.roleId,
                             applicationIds:$scope.vm.prop,
-                            remark:$scope.vm.remark
+                            remark:$scope.vm.remark,
                         },function(data){
                             //刷新页面
                             $state.reload()
@@ -2579,13 +2587,6 @@ angular.module('adminModule').controller('userManageController', [
         }
         //编辑用户
         function editUser(data){
-
-                //userName : "",
-            //    userLonginName :  "",
-            //    userPassword :  "",
-            //    userPhoneNumber  :  "",
-            //    userEmail :"",
-            //    remark:"",
             $scope.vm.userId = data.userId;
             $scope.vm.userName = data.userName;
             $scope.vm.userLoginName = data.userLoginName;
@@ -2595,9 +2596,9 @@ angular.module('adminModule').controller('userManageController', [
             $scope.vm.remark = data.remark;
             $scope.vm.roleId = data.roleId;
             $scope.vm.prop = data.applicationName;
-            console.log(data);
+            $scope.vm.applicationIds = data.applicationIds;
+            console.log(data.applicationIds);
             //$scope.$apply()
-
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/userManageDialog2.html",
                 //controller:function($scope){
@@ -2621,17 +2622,27 @@ angular.module('adminModule').controller('userManageController', [
                             userPhoneNumber:$scope.vm.userPhoneNumber,
                             userEmail:$scope.vm.userEmail,
                             roleId:$scope.vm.roleId,
-                            applicationIds:$scope.vm.prop,
+                            applicationIds:$scope.vm.applicationIds,
                             remark:$scope.vm.remark
                         },function(data){
                             //刷新页面
-                            $state.reload()
+                            $state.reload();
                         },function(){
                             layer.msg("请求失败")
                         })
                     }
                 }
             });
+        }
+        //查询用户
+        function search(){
+            httpRequestPost("/api/user/queryUserByUserName",{
+                userName:$scope.vm.searchName,
+            },function(data){
+
+            },function(){
+                layer.msg("请求失败")
+            })
         }
         //删除用户
         function deleteUser(userId){
@@ -2694,14 +2705,24 @@ angular.module('adminModule').controller('userManageController', [
                 layer.msg("请求失败")
             })
         }
-        function savaProp(ev,id){
 
+        function savaProp(ev,id){
+            console.log(id)
             if($(ev.target).prop("checked")){
                 $scope.vm.prop.push(id)
             }else{
                 $scope.vm.prop.remove(id)
             }
+        };
+
+        function saveProp(ev,id){
+            if($(ev.target).prop("checked")){
+                $scope.vm.applicationIds.push(id)
+            }else{
+                $scope.vm.applicationIds.remove(id)
+            }
         }
+
         function filter(val,arr) {
             var len = arr.length;
             for (var i = 0; i < arr.length; i++) {
@@ -2715,15 +2736,6 @@ angular.module('adminModule').controller('userManageController', [
                 return true
             }
         }
-            //angular.forEach(arr,function(item){
-            //    if(val == item){
-            //        console.log(val+"ddddddddddd");
-            //        return true;
-            //    }else{
-            //        return false;
-            //    }
-            //})
-
     }
 ]);;
 ;
