@@ -8,8 +8,8 @@
     </div>
     <div class="p20" style="background:#fff;">
         <div class="text-c mb-20">
-            <input type="text" placeholder="用户名称"  style="width:250px" class="input-text">
-            <button class="btn1 btn1_blue" type="button"  >搜用户</button>
+            <input type="text" placeholder="用户名称" ng-model="vm.searchName" style="width:250px" class="input-text">
+            <button class="btn1 btn1_blue" type="button"  ng-click="vm.search()">搜用户</button>
         </div>
         <div class="bd p20" style="background:#fcfdfd;">
             <div class="mb-10 cl">
@@ -42,11 +42,12 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in vm.listData">
+                        <!--<td>    {{item}}</td>-->
                         <td><input type="checkbox"   /></td>
                         <td>{{item.userName}}</td>
                         <td>{{item.userPhoneNumber}}</td>
                         <td>{{item.userEmail}}</td>
-                        <td>{{item.roleId}}</td>
+                        <td>{{item.roleName}}</td>
                         <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                         <td><span ng-repeat="val in item.applicationName[0].data">{{val}}<i ng-if="$index!=item.applicationName[0].data.length-1">,</i></span></td>
                         <td>

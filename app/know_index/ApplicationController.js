@@ -8,8 +8,7 @@ knowledge_static_web.controller('ApplicationController',
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
             $scope.currentUser = null;
             $scope.isAuthorized = AuthService.isAuthorized;
-
-            $scope.currentPage = 1;                      
+            $scope.currentPage = 1;
             $scope.pageSize = 10;
 
             $scope.tipService = TipService;

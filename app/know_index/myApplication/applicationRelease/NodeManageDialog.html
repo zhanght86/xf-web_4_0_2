@@ -1,36 +1,47 @@
-<div class="pt-20" >
-    <form  method="post" class="form form-horizontal" >
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2 " style="text-align: right;">访问地址：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <input type="text"  class="input-text" placeholder="" />
-            </div>
+<div class="pd-20" >
+    <div class="framework mb-10">
+        <span class="framework_s">访问地址：</span>
+        <div>
+            <input type="text"  class="input-text" placeholder="" />
         </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2 " style="text-align: right;">节点类型：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10"><input type="radio" name="style"/> 单机</label>
-                <label><input type="radio" name="style"/> 集群</label>
-            </div>
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">状态：</span>
+        <div>
+            <label class="mr-10"><input type="radio" name="status"/> 启用</label>
+            <label><input type="radio" name="status"/> 禁用</label>
         </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2 " style="text-align: right;">状态：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10"><input type="radio" name="status"/> 启用</label>
-                <label><input type="radio" name="status"/> 禁用</label>
-            </div>
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">节点类型：</span>
+        <div>
+            <label class="mr-10"><input type="radio" name="style"/> 单机</label>
+            <label><input type="radio" name="style"/> 集群</label>
         </div>
-
-        <div class="row cl">
-            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <input type="submit" class="btn1 btn1_blue mr-15" value="确认"/>
-                <input type="button" class="btn1 btn_gray" value="取消" />
-            </div>
+    </div>
+    <div class="mb-20">
+        <div class="mb-10">
+            <span class="mr-10">节点ID:</span>
+            <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/>
+            <span class="mr-10">节点IP:</span>
+            <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/>
+            <a href="javascript:;"><img src="../../images/images/add_img.png " /></a>
         </div>
-    </form>
+        <div class="mb-10">
+            <span class="mr-10">节点ID:</span>
+            <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/>
+            <span class="mr-10">节点IP:</span>
+            <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/>
+            <a href="javascript:;"><img src="../../images/images/delete_img.png " /></a>
+        </div>
+    </div>
+    <div class="text-c">
+        <input type="submit" class="btn1 btn1_blue mr-15" value="确认"/>
+        <input type="button" class="btn1 btn_gray" value="取消" />
+    </div>
 </div>
 <style>
     .ngdialog.ngdialog-theme-default .ngdialog-content {
-        width: 635px;
+        width: 550px;
     }
 </style>

@@ -61,7 +61,6 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
             editBot();
         });
         function editBot(){
-            alert()
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationDevelopment/editCategory.html",
                 scope: $scope,
