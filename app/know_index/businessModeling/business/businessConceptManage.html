@@ -11,19 +11,13 @@
                     <option value="businessConceptWeight">概念类权重</option>
                     <option value="businessConceptTerm">业务词</option>
                     <option value="businessConceptModifier">创建人</option>
-                    <option value="businessConceptModifyTime">上传日期</option>
+                    <option value="businessConceptModifyTime">修改日期</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='businessConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
                 <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">
-                    <!--<input  type="text"  onchange="initTime()"  ng-model="vm.timeStart"    id="startTime"   onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #333!important;" placeholder="" readonly>-->
-                    <!-&#45;&#45;-->
-                    <!--<input  type="text"  onchange="initTime()"  ng-model="vm.timeEnd"  id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="" readonly>-->
-
-
-                    <input type="text" id="startTime" onchange="initTime()"  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
-                    <input type="text" id="endTime"   ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
-<!--{{vm.timeStart}}-->
-                {{vm.timeEnd}}
+                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    -
+                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                 </div>
 
             </div>
@@ -72,10 +66,8 @@
     .pagination {
         margin: 0 !important;
     }
-</style>
-<script>
-    function initTime(){
-
+    .ngdialog{
+        z-index: 5!important;
     }
-
-</script>
+</style>
+<script></script>

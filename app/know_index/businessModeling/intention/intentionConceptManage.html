@@ -1,70 +1,69 @@
 
-        <div class="r-cont pd30 L">
-            <div class="r-cont-hd">
-                <span>强制分词概念管理</span>
-            </div>
-            <div>
-                <div class="conceptSearch clearfix">
-                    <div class=" L bd mr-5">
+<div class="r-cont pd30 L">
+    <div class="r-cont-hd">
+        <span>强制分词概念管理</span>
+    </div>
+    <div>
+        <div class="conceptSearch clearfix">
+            <div class=" L bd mr-5">
 
-                        <select ng-model="vm.searchType">
-                            <option value="forceSegmentConceptKey" selected>概念类名</option>
-                            <option value="forceSegmentConceptTerm">业务词</option>
-                            <option value="forceSegmentConceptModifier">创建人</option>
-                            <option value="forceSegmentConceptModifyTime">上传日期</option>
-                        </select>
-                        <input type="text" ng-if="vm.searchType!='forceSegmentConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                        <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='forceSegmentConceptModifyTime'">
-                            <input  type="text"  onchange="initTime()"  ng-model="vm.timeStart"  id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="" readonly>
-                            -
-                            <input type="text" onchange="initTime()" ng-model="vm.timeEnd" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;font-size: 15px;color: #333!important;" placeholder="" readonly>
-                        </div>
-                    </div>
-
-                    <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
-                    <div class=" conceptSearchRt">
-                        <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addForceSegment()">新增</a>
-                        <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
-                        <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
-                        <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
-                        <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
-                    </div>
+                <select ng-model="vm.searchType">
+                    <option value="forceSegmentConceptKey" selected>概念类名</option>
+                    <option value="forceSegmentConceptTerm">业务词</option>
+                    <option value="forceSegmentConceptModifier">创建人</option>
+                    <option value="forceSegmentConceptModifyTime">上传日期</option>
+                </select>
+                <input type="text" ng-if="vm.searchType!='forceSegmentConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='forceSegmentConceptModifyTime'">
+                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    -
+                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                 </div>
-                <div class="conceptTab">
-                    <table border="1">
-                        <thead>集合概念表</thead>
-                        <tr>
-                            <td>概念类名</td>
-                            <td>集合概念</td>
-                            <td>更新时间</td>
-                            <td>创建人</td>
-                            <td>操作</td>
-                        </tr>
-                        <tr ng-repeat="item in vm.listData">
-                            <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
-                            <td class="color-blue2">{{item.forceSegmentConceptKey}}</td>
-                            <td class="color-blue2">{{item.forceSegmentConceptTerm | strReplace}}</td>
-                            <td>{{item.forceSegmentConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                            <td>{{item.forceSegmentConceptModifier}}</td>
-                            <td>
-                                <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editForceSegment(item)">修改</a> &nbsp;
-                                <a href="javascript:;" class="delConcept" ng-click="vm.deleteForceSegment(item.forceSegmentConceptId)">删除</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
             </div>
 
+            <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
+            <div class=" conceptSearchRt">
+                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addForceSegment()">新增</a>
+                <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
+                <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
+                <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
+                <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
+            </div>
         </div>
-        <style>
-            .pagination {
-                margin: 0 !important;
-            }
-        </style>
-        <script>
-            function initTime(){
+        <div class="conceptTab">
+            <table border="1">
+                <thead>集合概念表</thead>
+                <tr>
+                    <td>概念类名</td>
+                    <td>集合概念</td>
+                    <td>更新时间</td>
+                    <td>创建人</td>
+                    <td>操作</td>
+                </tr>
+                <tr ng-repeat="item in vm.listData">
+                    <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
+                    <td class="color-blue2">{{item.forceSegmentConceptKey}}</td>
+                    <td class="color-blue2">{{item.forceSegmentConceptTerm | strReplace}}</td>
+                    <td>{{item.forceSegmentConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                    <td>{{item.forceSegmentConceptModifier}}</td>
+                    <td>
+                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editForceSegment(item)">修改</a> &nbsp;
+                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteForceSegment(item.forceSegmentConceptId)">删除</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+    </div>
 
-            }
+</div>
+<style>
+    .pagination {
+        margin: 0 !important;
+    }
 
-        </script>
+    .ngdialog {
+        z-index: 5 !important;
+    }
+</style>
+<script></script>
