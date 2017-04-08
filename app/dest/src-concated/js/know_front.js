@@ -8519,6 +8519,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         setCookie("userId","1");
         $scope.vm = {
             addDimension : addDimension,
+            editDimension : editDimension,
             listData : "",   // table 数据
             listDataTotal : "",
             getData : getData,
@@ -8554,6 +8555,21 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         function addDimension(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/dimensionManageDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
+        function editDimension(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/dimensionManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
