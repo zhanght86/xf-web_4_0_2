@@ -30,9 +30,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
 
             //展示内容
             scanContent : [],
-            //scantitle : "",
-            //scanChannels : "",
-            //scanDimensions : "",
+            //title : "",
+            //channels : "",
+            //dimensions : "",
             save : save ,
             scan :scan ,
  //弹框相关
