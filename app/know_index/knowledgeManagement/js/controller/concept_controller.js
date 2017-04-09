@@ -29,12 +29,17 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             titleGroup : ["ddd"], //点击标题添加内容
 
             //展示内容
-            scantitle : "",
-            scanChannels : "",
-            scanDimensions : "",
+            scanContent : [],
+            //scantitle : "",
+            //scanChannels : "",
+            //scanDimensions : "",
+            save : save ,
+            scan :scan ,
  //弹框相关
             newTitle: "",
+            channel : "",
             channels : "",     //渠道
+            dimension  : "",
             dimensions : ""  ,  //维度
                             //高级选项内容
             slideDown : slideDown,
@@ -180,7 +185,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                backdrop : 'static',
                preCloseCallback:function(e){    //关闭回掉
                    if(e === 1){
-                       saveNew()
+                       saveAddNew()
                    }
                }
            });
@@ -226,6 +231,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         function hideTip(){
             $scope.vm.titleTip = ""
         }
+
+        function save(){
+                //httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                //    "title" : $scope.vm.title,
+                //    "applicationId" : $scope.vm.applicationId
+                //},function(data){
+                //    console.log(data)
+                //},function(err){
+                //    layer.msg("数据请求失败")
+                //});
+            }
+        function scan(){
+
+        };
         /* ****************************************** //
         *
         *               弹框相关
@@ -238,16 +257,13 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         function removeAppointRelative(item){
             $scope.vm.appointRelativeGroup.remove(item);
         }
-        //新增保存
-        function saveNew(){
-            httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
-                "title" : $scope.vm.title,
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                console.log(data)
-            },function(err){
-                layer.msg("数据请求失败")
-            });
+
+        function saveAddNew(){
+            var obj = {};
+                obj.title = $scope.vm.newTitle;
+                obj.channel =  $scope.vm.channel;
+                obj.channel =  $scope.vm.dimension;
+            $scope.vm.dimension.push(obj);
         }
 
 
@@ -284,8 +300,5 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 layer.msg("获取渠道失败，请刷新页面")
             });
         }
-
-
-
     }
 ]);
