@@ -5,7 +5,7 @@
 
     <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
     <div class="addPopupCnt">
-        <textarea></textarea>
+        <textarea ng-model="vm.newTitle"></textarea>
         <div class="checkboxStr">
             <div>渠道：</div>
             <label ng-repeat="channel in vm.channels">
@@ -61,7 +61,7 @@
                 <div class="channel_div mb-20">
                     <span class="channel_s c-primary">已添加</span>
                     <ul>
-                        <li ng-repeat="item in vm.appointRelativeGroup">{{$index}}、{{item}}  <span class="delete_a R" ng-click="vm.removeAppointRelative()"></span></li>
+                        <li ng-repeat="item in vm.appointRelativeGroup">{{$index}}、{{item}}  <span class="delete_a R" ng-click="vm.removeAppointRelative(item)"></span></li>
                     </ul>
                 </div>
             </div>

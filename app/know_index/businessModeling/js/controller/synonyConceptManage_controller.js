@@ -7,6 +7,7 @@
  */
 
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
 
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
@@ -28,7 +29,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             timeEnd : "",
         
             //新增
-   
+
 
             dialogTitle : "",
 

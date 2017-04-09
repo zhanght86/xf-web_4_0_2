@@ -358,6 +358,6 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 console.log("123456");
             }
         }
-    }
+
     }
 ]);

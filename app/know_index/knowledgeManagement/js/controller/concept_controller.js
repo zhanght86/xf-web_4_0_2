@@ -235,8 +235,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         function getAppointRelative(){
 
         }
-        function removeAppointRelative(){
-
+        function removeAppointRelative(item){
+            $scope.vm.appointRelativeGroup.remove(item);
         }
         //新增保存
         function saveNew(){
