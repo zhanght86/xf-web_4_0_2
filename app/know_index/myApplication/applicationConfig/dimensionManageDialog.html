@@ -5,7 +5,7 @@
                 <div class="mb-10 clearfix">
                     <span class="add_ele_span L">维度名称：</span>
                     <div class="dib L pl-5">
-                        <input type="text"  class="input-text " placeholder="维度名称" />
+                        <input type="text"  class="input-text " placeholder="维度名称" ng-model="vm.dimensionName"/>
                     </div>
                     <div class="dib ml-15 pt-5 L mr-15">
                         <span class="L mr-10">状态：</span>
@@ -17,7 +17,7 @@
                 <div class="mb-10 ">
                     <span class="add_ele_span">维度表示：</span>
                     <div class="dib">
-                        <input type="text" placeholder="请输入纬度表示" class="input-text  latitude"/>
+                        <input type="text" placeholder="请输入维度表示" class="input-text  latitude"/>
                     </div>
                     <a href="javascript:;" class="create_a" onclick="add_pro();"><img src="../../../images/images/add_img.png" alt=""></a>
                 </div>
@@ -25,8 +25,8 @@
 
         </div>
         <div class="tc">
-            <input type="button" class="btn1 btn1_blue mr-15" value="保存" />
-            <input type="button" class="btn1 btn_gray" value="取消" />
+            <input type="button" value="确定" ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
+            <input type="button" value="取消" ng-click="closeThisDialog(0)"  class="btn1 btn_gray"/>
         </div>
     </form>
 </div>

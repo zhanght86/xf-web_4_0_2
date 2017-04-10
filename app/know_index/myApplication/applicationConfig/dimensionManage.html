@@ -30,23 +30,18 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <tr ng-repeat="item in vm.listData">
                             <td><input  type="checkbox" /></td>
-                            <!--<td>地区</td>-->
                             <td>{{item.dimensionName}}</td>
-                            <!--<td>2016.9.27 12:00:00</td>-->
                             <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                            <!--<td>张琼琼</td>-->
                             <td>{{item.creatorId}}</td>
-                            <!--<td><span class="btn1 btn_green2">已启用</span></td>-->
                             <td>
                                 <span class="btn1 btn_green2" ng-if="item.dimensionStatusId==10001">已启用</span>
                                 <span class="btn1 btn_red" ng-if="item.dimensionStatusId==10002">未启用</span>
                             </td>
                             <td>
-                                <a href="javascript:;" class="c-primary mr-10" ng-click="vm.editDimension()">编辑</a>
-                                <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
+                                <a href="javascript:;" class="c-primary mr-10" onclick="add_popup('编辑维度','edit_dimension.html','510','360')">编辑</a>
+                                <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteDimension(item.dimensionId)">删除</a>
                             </td>
                         </tr>
                         </tbody>
