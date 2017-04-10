@@ -10,8 +10,9 @@
                 </div>
                 <div class="value">
                     <div class="dib pt-5 mr-15">
-                        <div  class="open1 b_box" style="float:left;margin-right:10px;">
-                            <div  class="open2 s_box" onclick="turn_on(this);"></div>
+                        <div ng-class="app.settingCommentOn?'open1 b_box': 'close1 b_box'"
+                             ng-click="app.turnOn(app.settingCommentOn,'settingCommentOn')" style="float:left;margin-right:10px;">
+                            <div  ng-class="app.settingCommentOn?'open2 s_box': 'close2 s_box'"></div>
                         </div>
                     </div>
                 </div>
@@ -24,8 +25,9 @@
                 </div>
                 <div class="value">
                     <div class="dib pt-5 mr-15">
-                        <div  class="open1 b_box" style="float:left;margin-right:10px;">
-                            <div  class="open2 s_box" onclick="turn_on(this);"></div>
+                        <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[app.settingGreetingOn]"
+                             ng-click="app.turnOn(app.settingGreetingOn,'settingGreetingOn')" style="float:left;margin-right:10px;">
+                            <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[app.settingGreetingOn]"></div>
                         </div>
                     </div>
                 </div>
@@ -38,8 +40,10 @@
                 </div>
                 <div class="value">
                     <div class="dib pt-5 mr-15">
-                        <div  class="open1 b_box" style="float:left;margin-right:10px;">
-                            <div  class="open2 s_box" onclick="turn_on(this);"></div>
+                        <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[app.settingTurnRoundOn]"
+                             ng-click="app.turnOn(app.settingTurnRoundOn,'settingTurnRoundOn')"
+                             style="float:left;margin-right:10px;">
+                            <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[app.settingTurnRoundOn]"></div>
                         </div>
                     </div>
                 </div>
@@ -51,7 +55,8 @@
                     关联个数：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="text" placeholder="配置关联问题的个数，标准格式为数字型" style="width: 350px;">
+                    <input class="input-text" type="text" ng-model="app.settingRelateNumber"
+                           placeholder="配置关联问题的个数，标准格式为数字型" style="width: 350px;">
                 </div>
             </div>
         </div>
@@ -61,7 +66,8 @@
                     推荐个数：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="text" placeholder="配置推荐问题个数，标准格式为数字型" style="width: 350px;">
+                    <input class="input-text" type="text" ng-model="app.settingRecommendNumber"
+                           placeholder="配置推荐问题个数，标准格式为数字型" style="width: 350px;">
                 </div>
             </div>
         </div>
@@ -71,7 +77,8 @@
                     获取数据时间：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="text" placeholder="配置关联问题的个数，标准格式为数字型" style="width: 350px;">
+                    <input class="input-text" type="text" ng-model="app.settingDataTimeoutLimit"
+                           placeholder="获取数据时间限制，标准格式为数字型" style="width: 350px;">
                 </div>
             </div>
         </div>
@@ -81,7 +88,8 @@
                     上限阈值：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="text" placeholder="配置上限阈值，标准格式为float型" style="width: 350px;">
+                    <input class="input-text" type="text" ng-model="app.settingUpperLimit"
+                           placeholder="配置上限阈值，标准格式为float型" style="width: 350px;">
                 </div>
             </div>
         </div>
@@ -91,7 +99,8 @@
                     下限阈值：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="text" placeholder="配置下线阈值，标准格式为float型" style="width: 350px;">
+                    <input class="input-text" type="text" ng-model="app.settingLowerLimit"
+                           placeholder="配置下线阈值，标准格式为float型" style="width: 350px;">
                 </div>
             </div>
         </div>
@@ -101,13 +110,14 @@
                     寒暄阈值：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="text" placeholder="配置寒暄阈值，标准格式为float型" style="width: 350px;">
+                    <input class="input-text" type="text" ng-model="app.settingGreetingThreshold"
+                           placeholder="配置寒暄阈值，标准格式为float型" style="width: 350px;">
                 </div>
             </div>
         </div>
         <div class="jqrsz-btn-box">
-            <a class="btn btn-blue mr10" href="javascript:;">保存</a>
-            <a class="btn btn-gray" href="javascript:;">取消</a>
+            <a class="btn btn-blue mr10" ng-click="app.editApplication()">保存</a>
+            <a class="btn btn-gray" ng-click="$state.reload()">取消</a>
         </div>
 
     </div>
@@ -115,20 +125,3 @@
 <style>
     .jqrsz-item2{border-top:0;padding:0;margin-top:0;}
 </style>
-<script>
-    //开关
-    function turn_on(obj){
-        if($(obj).parent().hasClass('close1')){
-            $(obj).parent().attr('class','b_box open1');
-
-        }else{
-            $(obj).parent().attr('class','b_box close1');
-        }
-        if($(obj).hasClass('close2')){
-            $(obj).attr('class','s_box open2');
-        }else{
-            $(obj).attr('class','s_box close2');
-        }
-
-    }
-</script>

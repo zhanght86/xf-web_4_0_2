@@ -40,7 +40,9 @@ angular.module('materialManagement').controller('conceptChatController', [
                     //$scope.vm.extendedQuestionArr = data.data;
                     if(data.status == 200){
                         var obj = {};
-                        obj.chatQuestionContent = data.data;
+                        //检验标签重复
+                        obj.tagList = data.data;
+                        obj.chatQuestionContent=$scope.vm.extendedQuestion;
                         obj.chatQuestionType = angular.copy($scope.vm.weight);
                         $scope.vm.extendedQuestionArr.push(obj);
                         $scope.vm.extendedQuestion = "";
