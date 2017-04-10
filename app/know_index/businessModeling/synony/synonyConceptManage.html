@@ -11,7 +11,7 @@
                     <option value="synonymConceptWeight">概念类权重</option>
                     <option value="synonymConceptTerm">业务词</option>
                     <option value="synonymConceptModifier">创建人</option>
-                    <option value="synonymConceptModifyTime">上传日期</option>
+                    <option value="synonymConceptModifyTime">修改日期</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='synonymConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
                 <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='synonymConceptModifyTime'">
