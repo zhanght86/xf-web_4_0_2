@@ -566,7 +566,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/ReleaseManage.html',
-                        //controller: "adminContentController"
+                        controller: "serviceReleaseController"
                     },
                 }
             })
@@ -580,7 +580,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/NewServiceRelease.html',
-                        controller: "NewServiceReleaseController"
+                        controller: "newServiceReleaseController"
                     },
                 }
             })
@@ -594,7 +594,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/myApplication/applicationRelease/NodeManage.html',
-                        controller: "NodeManageController"
+                        controller: "nodeManageController"
                     },
                 }
             })

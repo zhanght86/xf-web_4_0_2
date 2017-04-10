@@ -36,8 +36,8 @@
                         <div class="row cl mb-10" ng-repeat="item in vm.extendedQuestionArr">
                             <label class="form-label col-xs-4 col-sm-2 text-r">new扩展问题：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L">
-                                    <span ng-repeat="val in item.chatQuestionContent">{{val}}</span>
+                                <div class="L" style="width:279px;border:1px solid #eee;height:30px;overflow-x: auto;">
+                                    <span class="kz_span" ng-repeat="val in item.chatQuestionContent">{{val}}</span>
                                 </div>
                                 <!--<input type="text" ng-model="item" readonly class="L input-text extended_query_txt"-->
                                        <!--style="width:279px;" >-->
@@ -81,3 +81,6 @@
         </div>
     </div>
 </div>
+<style>
+    .kz_span{border:1px solid #eee;height:25px;display:inline-block;margin-right:10px;padding:0 10px;}
+</style>
