@@ -21,3 +21,4 @@ logs/
 app/dest/release/js/know_front.min.js
 app/dest/release/js/know_front.js
 app/dest/release/js/know_front_module.min.js
+/app/dest/

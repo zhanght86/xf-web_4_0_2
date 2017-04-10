@@ -9325,7 +9325,7 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
  * 控制器
  */
 
-angular.module('myApplicationSettingModule').controller('channelManageController', [
+angular.module('myApplicationSettingModule').controller('robotSettingController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
@@ -9335,14 +9335,14 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             userId : getCookie("userId"),   //用户id
             robotExpire : "", //时间到期回复
             robotHead : "",//头像
-            robotHotQuestionTimeout : 0,//热点问题更新频率
+            robotHotQuestionTimeout : "",//热点问题更新频率
             robotLearned : "",//学到新知识回答
             robotName : "", //名称
             robotRepeat : "",//重复问答回复
-            robotRepeatNumber : 0,//重复问答次数
+            robotRepeatNumber : "",//重复问答次数
             robotSensitive : "",// 敏感问答回复
             robotTimeout : "",//超时提示回复
-            robotTimeoutLimit : 0,//超时时长
+            robotTimeoutLimit : "",//超时时长
             robotUnknown : "",//未知问答回复
             robotUpdateId : getCookie("userId"),//更新人员id
             robotWelcome : "",//欢迎语
@@ -9354,21 +9354,25 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         $scope.app = {
             applicationId: getCookie("applicationId"),
             userId : getCookie("userId"),   //用户id
-            settingCommentOn : 0,   //评价开关
-            settingDataTimeoutLimit : 0,//获取数据时间
-            settingGreetingOn : 0,//寒暄开关
-            settingGreetingThreshold : 0,//寒暄阈值
+            settingCommentOn : 1,   //评价开关
+            settingDataTimeoutLimit : "",//获取数据时间
+            settingGreetingOn : 1,//寒暄开关
+            settingGreetingThreshold : "",//寒暄阈值
             settingId : "",//应用参数id
-            settingLowerLimit : 0,//下限阈值
-            settingRecommendNumber : 0,//推荐问题数量
-            settingRelateNumber : 0,//关联问题数量
-            settingTurnRoundOn : 0,//话轮识别开关
-            settingUpperLimit : 0,//上限阈值
+            settingLowerLimit : "",//下限阈值
+            settingRecommendNumber : "",//推荐问题数量
+            settingRelateNumber : "",//关联问题数量
+            settingTurnRoundOn : 1,//话轮识别开关
+            settingUpperLimit : "",//上限阈值
             settingUpdateId : getCookie("userId"),//更新人员
             editApplication : editApplication,  //编辑应用参数
             findApplicationSetting : findApplicationSetting, //查询应用参数
+            turnOn : turnOn,//开关函数
         };
-
+        //查看应用参数设置
+        findApplicationSetting();
+        //查看机器人设置
+        findRobotSetting();
 
         //查看机器人参数
         function findRobotSetting(){
@@ -9378,14 +9382,14 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 if(data.data===10005){
                     $scope.robot.robotExpire=""; //过期知识回答
                     $scope.robot.robotHead= "";//头像
-                    $scope.robot.robotHotQuestionTimeout = 0;//热点问题更新频率
+                    $scope.robot.robotHotQuestionTimeout = "";//热点问题更新频率
                     $scope.robot.robotLearned = "";//学到新知识回答
                     $scope.robot.robotName = ""; //名称
                     $scope.robot.robotRepeat = "";//重复问答回复
-                    $scope.robot.robotRepeatNumber = 0;//重复问答次数
+                    $scope.robot.robotRepeatNumber = "";//重复问答次数
                     $scope.robot.robotSensitive = "";// 敏感问答回复
                     $scope.robot.robotTimeout = "";//超时提示回复
-                    $scope.robot.robotTimeoutLimit = 0;//超时时长
+                    $scope.robot.robotTimeoutLimit = "";//超时时长
                     $scope.robot.robotUnknown = "";//未知问答回复
                     $scope.robot.robotWelcome = "";//欢迎语
                     $scope.robot.settingId = "" ;  //机器人参数ID
@@ -9403,7 +9407,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                     $scope.robot.robotUnknown = data.data.robotUnknown;//未知问答回复
                     $scope.robot.robotWelcome = data.data.robotWelcome;//欢迎语
                     $scope.robot.settingId = data.data.settingId;//机器人参数ID
-                    $state.reload();
+                    $scope.$apply();
                 }
             },function(){
                 layer.msg("查询失敗");
@@ -9414,18 +9418,18 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         function findApplicationSetting(){
             httpRequestPost("/api/application/application/findApplicationSetting",{
                 "applicationId": $scope.app.applicationId
-            },function(data){          //类名重複
+            },function(data){
                 if(data.data===10005){
-                    $scope.app.settingCommentOn = 0;   //评价开关
-                    $scope.app.settingDataTimeoutLimit = 0;//获取数据时间
-                    $scope.app.settingGreetingOn = 0;//寒暄开关
-                    $scope.app.settingGreetingThreshold = 0;//寒暄阈值
+                    $scope.app.settingCommentOn = 1;   //评价开关
+                    $scope.app.settingDataTimeoutLimit = "";//获取数据时间
+                    $scope.app.settingGreetingOn = 1;//寒暄开关
+                    $scope.app.settingGreetingThreshold = "";//寒暄阈值
                     $scope.app.settingId = "";//应用参数id
-                    $scope.app.settingLowerLimit = 0;//下限阈值
-                    $scope.app.settingRecommendNumber = 0;//推荐问题数量
-                    $scope.app.settingRelateNumber = 0;//关联问题数量
-                    $scope.app.settingTurnRoundOn = 0;//话轮识别开关
-                    $scope.app.settingUpperLimit = 0 ;//上限阈值
+                    $scope.app.settingLowerLimit = "";//下限阈值
+                    $scope.app.settingRecommendNumber = "";//推荐问题数量
+                    $scope.app.settingRelateNumber = "";//关联问题数量
+                    $scope.app.settingTurnRoundOn = 1;//话轮识别开关
+                    $scope.app.settingUpperLimit = "";//上限阈值
                 }else{
                     $scope.app.settingCommentOn = data.data.settingCommentOn;   //评价开关
                     $scope.app.settingDataTimeoutLimit = data.data.settingDataTimeoutLimit;//获取数据时间
@@ -9437,7 +9441,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                     $scope.app.settingRelateNumber = data.data.settingRelateNumber;//关联问题数量
                     $scope.app.settingTurnRoundOn = data.data.settingTurnRoundOn;//话轮识别开关
                     $scope.app.settingUpperLimit = data.data.settingUpperLimit ;//上限阈值
-                    $state.reload();
+                    $scope.$apply();
                 }
             },function(){
                 layer.msg("查询失敗");
@@ -9476,12 +9480,21 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             })
         }
 
-
         //编辑应用参数
         function editApplication(){
             httpRequestPost("/api/application/application/saveApplicationSetting",{
-
-
+                "applicationId": $scope.app.applicationId,
+                "settingCommentOn": $scope.app.settingCommentOn,
+                "settingDataTimeoutLimit": $scope.app.settingDataTimeoutLimit,
+                "settingGreetingOn": $scope.app.settingGreetingOn,
+                "settingGreetingThreshold": $scope.app.settingGreetingThreshold,
+                "settingId": $scope.app.settingId,
+                "settingLowerLimit": $scope.app.settingLowerLimit,
+                "settingRecommendNumber": $scope.app.settingRecommendNumber,
+                "settingRelateNumber": $scope.app.settingRelateNumber,
+                "settingTurnRoundOn": $scope.app.settingTurnRoundOn,
+                "settingUpdateId": $scope.app.settingUpdateId,
+                "settingUpperLimit": $scope.app.settingUpperLimit
             },function(data){
                 if(data.status===200){
                     layer.msg("保存成功");
@@ -9494,13 +9507,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             })
         }
 
-
-
-
-
-
-
-
+        //开关
+        function turnOn(targetValue,targetName){
+            $scope.app[targetName] = targetValue ? 0 : 1 ;
+        }
     }
 ]);;
 // Source: app/know_index/myApplication/js/controller/sceneManage_controller.js
