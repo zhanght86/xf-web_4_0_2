@@ -3,6 +3,10 @@
  * 控制器
  */    
 
+
+
+
+
 angular.module('adminModule').controller('adminController', [
     '$scope',  "$state", "$stateParams",
     function ($scope,  $state ,$stateParams) {

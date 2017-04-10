@@ -10,7 +10,7 @@
                     <option value="correctionConceptKey" selected>概念类名</option>
                     <option value="correctionConceptTerm">业务词</option>
                     <option value="correctionConceptModifier">创建人</option>
-                    <option value="correctionConceptModifyTime">上传日期</option>
+                    <option value="correctionConceptModifyTime">修改日期</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='correctionConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
                 <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='correctionConceptModifyTime'">

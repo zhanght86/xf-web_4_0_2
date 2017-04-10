@@ -5,8 +5,10 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
+
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
+
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
@@ -25,31 +27,43 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             searchType : "synonymConceptKey",
             timeStart : "",
             timeEnd : "",
-            //searchTypeList : [{name:"synonymConceptKey",value:"概念类名"},{name:"synonymConceptWeight",value:"概念类权重"},{name:"synonymConceptTerm",value:"同义词"},{name:"synonymConceptModifier",value:"创建人"},{name:"synonymConceptModifyTime",value:"上传日期"}],
+        
             //新增
-            key: "" ,
-            modifier: getCookie("userName"),
-            term: "",
-            weight: "3" ,   //默認權重
+
+
             dialogTitle : "",
+
             inputSelect : [],
             inputVal : "",
-            termSpliter: "；"
+
+            delSingleTerm : delSingleTerm,      //添加 删除  term
+            addSingleTerm : addSingleTerm,
+            addSingleTermVal : "",
+
         };
+
+        //$scope.$watch("vm.addSingleTermVal",function (val) {
+        //    console.log(val)
+        //},true);
 
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
         getAggre(1);
+        //console.log($scope.vm.applicationId)
         //请求列表
         function getAggre(index){
+            console.log(index,$scope.vm.pageSize,$scope.vm.applicationId);
+            //size=size?size:5;   //设置pageSize默认是5
             httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
+                console.log(data);
                 $scope.vm.listData = data.data;
+                //console.log(data)
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
@@ -58,19 +72,22 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败")
-            })
+                layer.msg("请求失败")            })
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
-                    "synonymConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                },function(){
-                })
+               
+                getAggre(current);
+                //console.log(current,$scope.vm.pageSize);
+                //httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                //    "synonymConceptApplicationId": $scope.vm.applicationId,
+                //    "index" :current*$scope.vm.pageSize,
+                //    "pageSize": $scope.vm.pageSize
+                //},function(data){
+                //    $scope.listData = data.data;
+                //    //getAggre(current);
+                //},function(){
+                //})
             }
         });
         //编辑
@@ -90,12 +107,14 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //查询
         function searchByUser(){
+            console.log($scope.vm.searchVal);
             httpRequestPost("/api/modeling/concept/synonym/listByModifier",{
                 "synonymConceptModifier":$scope.vm.searchVal,
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index":0,
                 "pageSize":10
             },function(data){
+                console.log(data);
                 $scope.vm.listData = data.data
             },function(){
                 layer.msg("查询没有对应信息")
@@ -127,12 +146,13 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 layer.msg("查询没有对应信息")
             });
         }
-        var key = angular.copy($scope.vm.searchType);
+        var  key = angular.copy($scope.vm.searchType);
+        console.log([key]);
 
         //添加 窗口
         function addSynonym(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog.html",
+            
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -147,13 +167,14 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.msg("概念类名重复");
-                                httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
+                              
+                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
                                     "synonymConceptApplicationId": $scope.vm.applicationId,
                                     "synonymConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
-                                    $scope.vm.dialogTitle="修改同义概念";
+                              
                                     console.log(data);
                                     addDelDialog(singleEdit,data.data[0]);
                                     $scope.vm.key = data.data[0].synonymConceptKey;
@@ -163,7 +184,10 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                 });
                             }else{
                                 //类名无冲突
-                                $scope.vm.dialogTitle="增加同义概念";
+                              
+                                $scope.vm.dialogTitle="增加业务概念";
+                                //key: "",
+                                // "modifier": getCookie("userName"),
                                 $scope.vm.term="";
                                 $scope.vm.weight="1" ;   //默認權重
                                 addDelDialog(singleAdd);
@@ -182,8 +206,15 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
 
         //編輯彈框   添加公用
         function addDelDialog(callback,item){
+            //編輯
+            //if(item){
+            //     $scope.vm.key = item.synonymConceptKey;
+            //     $scope.vm.term =  item.synonymConceptTerm;
+            //     $scope.vm.weight =  item.synonymConceptWeight;
+            //}
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog2.html",
+          
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -199,16 +230,12 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }
                 }
             });
-            if(dialog){
-                $timeout(function () {
-                    termSpliterTagEditor()
-                }, 100);
-            }
         }
         //   刪除 彈框
         function deleteSynonym(id){
+            //console.log(id);
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -223,7 +250,6 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //編輯事件
         function singleEdit(item){
-            assembleTerm();
             httpRequestPost("/api/modeling/concept/synonym/update",{
                 "synonymConceptId":item.synonymConceptId,
                 "synonymConceptApplicationId": $scope.vm.applicationId,
@@ -232,6 +258,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 "synonymConceptTerm": $scope.vm.term,
                 "synonymConceptWeight": $scope.vm.weight
             },function(data){
+                //console.log(item.synonymConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term, $scope.vm.weight);
                 layer.msg("编辑成功");
                 $state.reload()
             },function(){
@@ -240,7 +267,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //单条新增
         function singleAdd(){
-            assembleTerm();
+            console.log( $scope.vm.applicationId,$scope.vm.key,$scope.vm.modifier,$scope.vm.term, $scope.vm.weight)
             httpRequestPost("/api/modeling/concept/synonym/add",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "synonymConceptKey":  $scope.vm.key,
@@ -260,44 +287,44 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             httpRequestPost("/api/modeling/concept/synonym/delete",{
                 "synonymConceptId":id
             },function(data){
+                //console.log(data)
                 layer.msg("刪除成功");
                 $state.reload()
             },function(){
                 layer.msg("刪除失敗")
             })
         }
-        //初始化tagEditor插件
-        function termSpliterTagEditor() {
-            var term = $scope.vm.term;
-            if(term==""){
-                $("#term").tagEditor({
-                    forceLowercase: false
-                });
-            }else{
-                var terms = term.split($scope.vm.termSpliter);
-                console.log(terms);
-                $("#term").tagEditor({
-                    initialTags:terms,
-                    autocomplete: {delay: 0, position: {collision: 'flip'}, source: terms},
-                    forceLowercase: false
-                });
+
+        function delSingleTerm(item){
+            var str = angular.copy($scope.vm.term.split("；"));
+            str.remove(item);
+            $scope.vm.term = str.join("；");
+        }
+        function addSingleTerm(e){
+            var keycode = window.event?e.keyCode:e.which;
+            if(keycode==13){
+                $(e.target).blur();
+                var str = $scope.vm.term?angular.copy($scope.vm.term.split("；")):new Array()
+                if($scope.vm.addSingleTermVal.length==0){
+                    $scope.vm.addSingleTermVal = "";
+                    layer.msg("扩展名不能为空");
+                    $(e.target).focus();
+                }else if($.inArray($scope.vm.addSingleTermVal, str)==-1){
+                    console.log($scope.vm.addSingleTermVal);
+                    str.push($scope.vm.addSingleTermVal);
+                    console.log(str);
+                    $scope.vm.term = str.join("；");
+                    $scope.vm.addSingleTermVal = "";
+                    console.log($scope.vm.term);
+                    $(e.target).focus();
+                }else{
+                    console.log($scope.vm.addSingleTermVal );
+                    $scope.vm.addSingleTermVal = "";
+                    layer.msg("扩展名重复,请重新填写");
+                    $(e.target).focus();
+                }
             }
         }
-        //组装term数据
-        function assembleTerm(){
-            var obj = $("#term").next();
-            var term = "";
-            $.each(obj.find("li"),function(index,value){
-                if(index>0){
-                    $.each($(value).find("div"),function(index1,value1){
-                        if(index1==1){
-                            term+=$(value1).html()+$scope.vm.termSpliter;
-                        }
-                    });
-                }
-            });
-            term=term.substring(0,term.length-1);
-            $scope.vm.term=term;
-        }
+
     }
 ]);

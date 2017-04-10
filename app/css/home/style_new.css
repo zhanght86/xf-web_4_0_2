@@ -157,3 +157,9 @@
 .framework{position: relative;padding-left:110px;min-height:25px;}
 .framework_s{position:absolute;left:0;top:0;}
 .framework_sel{height:30px;}
+
+/**/
+.modifi_title{}
+.modifi_title button{width:180px;height:40px;background:#ccc;font-size:15px;cursor:pointer;color:#fff;}
+.modifi_title button.current{background:#529ff6;}
+.tag_div{width:120px;border:1px solid #bdbdbd;padding:10px;}

@@ -11,7 +11,7 @@
                     <option value="collectiveConceptWeight">概念类权重</option>
                     <option value="collectiveConceptTerm">业务词</option>
                     <option value="collectiveConceptModifier">创建人</option>
-                    <option value="collectiveConceptModifyTime">上传日期</option>
+                    <option value="collectiveConceptModifyTime">修改日期</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='collectiveConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
                 <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='collectiveConceptModifyTime'">

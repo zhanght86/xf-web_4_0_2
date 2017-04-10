@@ -1,0 +1,124 @@
+<div class="pd-20">
+    <h3 class="tc f16 mb-20">概念扩展修饰</h3>
+    <div class="modifi_title mb-20">
+        <button class="current">整体修饰</button>
+        <button >单独修饰</button>
+    </div>
+    <div class="modifi_con">
+        <div class="db">
+            <div class="framework mb-10">
+                <span class="framework_s">非必要:</span>
+                <div>
+                    <!--<input type="text" class="input_text"/>-->
+                    <select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">
+                        <option value="">111</option>
+                        <option value="">222</option>
+                        <option value="">333</option>
+                    </select>
+                </div>
+            </div>
+            <div class="framework mb-10">
+                <span class="framework_s">必要:</span>
+                <div>
+                    <!--<input type="text" class="input_text"/>-->
+                    <select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">
+                        <option value="">111</option>
+                        <option value="">222</option>
+                        <option value="">333</option>
+                    </select>
+                </div>
+            </div>
+            <div class="framework mb-10">
+                <span class="framework_s">非:</span>
+                <div>
+                    <!--<input type="text" class="input_text"/>-->
+                    <select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">
+                        <option value="">111</option>
+                        <option value="">222</option>
+                        <option value="">333</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tc mt-20">
+                <input type="button" class="btn1 btn1_blue" value="保存"/>
+            </div>
+        </div>
+        <div class="dn">
+            <p class="mb-10">*用户可以修饰单个标签的权重</p>
+            <div class="cl">
+                <div class="tag_div mr-10 L">
+                    <p class="mb-5">信用卡_业务词</p>
+                    <select class="sel bd">
+                        <option>极重要</option>
+                        <option>重要</option>
+                        <option>一般</option>
+                        <option>不重要</option>
+                        <option>极不重要</option>
+                    </select>
+                </div>
+                <div class="tag_div mr-10 L">
+                    <p class="mb-5">信用卡_业务词</p>
+                    <select class="sel bd">
+                        <option>极重要</option>
+                        <option>重要</option>
+                        <option>一般</option>
+                        <option>不重要</option>
+                        <option>极不重要</option>
+                    </select>
+                </div>
+                <div class="tag_div mr-10 L">
+                    <p class="mb-5">信用卡_业务词</p>
+                    <select class="sel bd">
+                        <option>极重要</option>
+                        <option>重要</option>
+                        <option>一般</option>
+                        <option>不重要</option>
+                        <option>极不重要</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tc mt-20">
+                <input type="button" class="btn1 btn1_blue" value="保存"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tag_div p{font-size:14px;}
+    .tag_div select{font-size:12px;}
+    .ngdialog.ngdialog-theme-default .ngdialog-content{
+        width:520px;
+    }
+</style>
+<script>
+    //tab
+    $('.modifi_title button').click(function(){
+        $(this).addClass('current').siblings().removeClass();
+        $('.modifi_con').children('div').eq($(this).index()).attr('class','db').siblings().attr('class','dn');
+    });
+
+    //插件
+    var select_Group_user = '';
+    var select_Group_classifiy = '';
+    $(function() {
+        //loadClassifyZtree();//ztree
+        // queryGroupUserByName();
+        $('.chosen-select').chosen();//加载 amazeui Chosen
+        $('.chosen-select').on('change', function(e, params,param) {
+//            console.log("我被触发了-->>",params);
+            if(params!=null &&params!=undefined &&$.trim(params)!=''){
+                select_Group_user = '';
+                select_Group_user = params.selected;
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
