@@ -19,9 +19,7 @@
             <div class="item-line">
                 <div class="value menu_1Div" id="menu_1Div">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>
-                        <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
-                        <div class="aside-navs aside-navs2 show" >
+                        <div class="aside-navs aside-navs-v show" >
                             <ul class="menus show">
                                 <li ng-repeat="item in vm.botRoot" data-option="{{item.categoryPid}}">
                                     <div class="slide-a">
@@ -46,9 +44,9 @@
                 <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
             </div>
             <div class="HierarchyCnt">
-                <p>新建子类</p>
+                <p>新建类目</p>
                 <div>
-                    <span>分支类型: </span>
+                    <span>类目类型: </span>
                     <select id="category-type">
                         <option value=10009>默认</option>
                         <option value=10008>流程</option>
@@ -57,11 +55,11 @@
                     </select>
                 </div>
                 <div>
-                    <span>分支属性: </span>
+                    <span>类目属性: </span>
                     <input id="category-attribute-name" type="text"/>
                 </div>
                 <div>
-                    <span>分支名称: </span>
+                    <span>类目名称: </span>
                     <input id="category-name" type="text"/>
                 </div>
                 <div class="tac mt10" style="text-align: left;padding-left: 105px;">
