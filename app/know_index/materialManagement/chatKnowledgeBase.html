@@ -29,16 +29,19 @@
 
                 <div class="clearfix csso-bd bd pl-20 pr-20 mt-30">
                     <ul class="csso-lsit">
-                        <li ng-if="vm.searchList" ng-repeat="item in vm.searchList">
-                            <div class="mb-10"><a  class="c-primary f-16" ui-sref="materialManagement.chatKnowledgeBasePreview">聊天主题：{{item.}}</a></div>
-                            <div class="f-14 mb-10">聊天问法个数：10个</div>
+                        <li ng-if="vm.listData" ng-repeat="item in vm.listData">
+                            <div class="mb-10"><a  class="c-primary f-16" ui-sref="materialManagement.chatKnowledgeBasePreview">聊天主题：{{item.chatKnowledgeTopic}}</a></div>
+                            <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>
                             <div class="cl">
                                 <div class="L">
-                                    <span>知识类型：FAQ知识</span>
-                                    <span>作者：张正</span>
+                                    <span   >知识类型：
+
+                                        {{item.chatKnowledgeSource |typeFilter }}
+                                    </span>
+                                    <span>作者：{{item.chatKnowledgeModifier}}</span>
                                 </div>
                                 <div class="R">
-                                    <span>更新时间：2016-06-12  16：58</span>
+                                    <span>更新时间：{{item.chatKnowledgeModifyTime | date : 'yyyy-MM-dd hh:mm:ss' }}</span>
                                 </div>
                             </div>
                         </li>

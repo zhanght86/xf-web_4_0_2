@@ -16,6 +16,7 @@ angular.module('adminModule').controller('userManageController', [
             listData : "",   // table 数据
             getData : getData,
             paginationConf : "", //分页条件
+            userDataTotal:"",   //用户总数
             addUser : addUser,
             editUser : editUser,
             deleteUser:deleteUser,
@@ -53,6 +54,7 @@ angular.module('adminModule').controller('userManageController', [
             },function(data){
                 console.log(data);
                 $scope.vm.listData = data.data.userManageList;
+                $scope.vm.userDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: 0,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
@@ -158,7 +160,8 @@ angular.module('adminModule').controller('userManageController', [
             httpRequestPost("/api/user/queryUserByUserName",{
                 userName:$scope.vm.searchName,
             },function(data){
-
+                $scope.vm.listData = data.data.userManageList;
+                $scope.vm.userDataTotal = data.data.total;
             },function(){
                 layer.msg("请求失败")
             })

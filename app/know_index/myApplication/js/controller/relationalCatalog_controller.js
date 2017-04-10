@@ -33,7 +33,7 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
         function knowledgeBot(ev){
             var ele = ev.target;
             //$timeout(function(){
-                $(ele).next().slideToggle();
+            $(ele).next().slideToggle();
             //},50);
         }
 
