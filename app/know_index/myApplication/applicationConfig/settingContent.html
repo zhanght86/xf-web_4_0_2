@@ -3,7 +3,7 @@
         <span>机器人设置</span>
     </div>
     <div class="r-cont-bd oh">
-
+        <form name="angularForm" novalidate>
         <div class="jqrsz-item">
             <div class="item-line">
                 <div class="lable">
@@ -11,11 +11,12 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" />
+                        <input name="robotName" class="ipt-txt" type="text"
+                               ng-model="robot.robotName" ng-maxlength="8" ng-pattern="/[\u4e00-\u9fa5]/"/>
                         <i class="btn-empty"></i>
                     </div>
-                    <div class="error-tip">
-                        错误提示
+                    <div class="error-tip" ng-show="angularForm.robotName.$error.maxlength">
+                        昵称输入不能超过8个汉字，请重新输入
                     </div>
                 </div>
             </div>
@@ -41,7 +42,7 @@
                     欢迎语：
                 </div>
                 <div class="value">
-                    <textarea class="textarea">小富机器人欢迎您！</textarea>
+                    <textarea class="textarea" ng-model="robot.robotWelcome">小富机器人欢迎您！</textarea>
                     <div class="error-tip">
                         错误提示
                     </div>
@@ -56,7 +57,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" style="width: 190px;" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotHotQuestionTimeout" style="width: 190px;" />
                         <i class="btn-empty"></i>
                     </div>
                     &nbsp;<span>分钟</span>
@@ -71,7 +72,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotUnknown"/>
                         <i class="btn-empty"></i>
                     </div>
                     <div class="error-tip">
@@ -85,7 +86,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotSensitive"/>
                         <i class="btn-empty"></i>
                     </div>
                     <div class="error-tip">
@@ -99,7 +100,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotExpire"/>
                         <i class="btn-empty"></i>
                     </div>
                     <div class="error-tip">
@@ -116,7 +117,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" style="width: 190px;" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotRepeatNumber" style="width: 190px;" />
                         <i class="btn-empty"></i>
                     </div>
                     &nbsp;<span>次</span>
@@ -131,7 +132,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotRepeat"/>
                         <i class="btn-empty"></i>
                     </div>
                     <div class="error-tip hide">
@@ -145,7 +146,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" style="width: 190px;" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotTimeoutLimit" style="width: 190px;" />
                         <i class="btn-empty"></i>
                     </div>
                     &nbsp;<span>分钟</span>
@@ -160,7 +161,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" />
+                        <input class="ipt-txt" type="text" ng-model="robot.robotTimeout"/>
                         <i class="btn-empty"></i>
                     </div>
                     <div class="error-tip hide">
@@ -169,12 +170,14 @@
                 </div>
             </div>
         </div>
-
+        </form>
         <div class="jqrsz-btn-box">
-            <a class="btn btn-blue mr10" href="javascript:;">保存</a>
-            <a class="btn btn-gray" href="javascript:;">取消</a>
+            <a class="btn btn-blue mr10" ng-click="robot.editRobot()">保存</a>
+            <a class="btn btn-gray" ng-click="$state.reload()">取消</a>
         </div>
+
     </div>
+
 </div>
 <style>
     .ipt-txt-box .ipt-txt{

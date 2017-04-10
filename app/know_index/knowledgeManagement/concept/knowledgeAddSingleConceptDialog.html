@@ -2,30 +2,70 @@
 <script type="text/ng-template" >
 </script>
 <div class="page-container" style="width: 550px" >
-
-    <p>修改应用名称<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
+    <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
     <div class="addPopupCnt">
-        <textarea></textarea>
+        <textarea ng-model="vm.newTitle"></textarea>
         <div class="checkboxStr">
             <div>渠道：</div>
             <label ng-repeat="channel in vm.channels">
                 <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" >
-                {{channel}}
+                <!-- channelId-->
+                {{channel.channelName}}
             </label>
         </div>
         <div class="checkboxAddress" >
             维度：
             <div id="search_bar">
-
             </div>
         </div>
-        <!--<p class="Concept-p " style="margin-top: 20px;">概念扩展：</p>-->
-        <!--<div class="Concept-Ipt"><input type="text"/><span></span></div>-->
-        <!--<div class="Concept-Ipt Concept-Ipt2"><input type="text"/><span></span></div>-->
         <div class="Concept-Ipt-nxtDiv" style="margin-top: 50px;">
             <span class="Concept-Ipt-nxt-ico"></span>
             <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
         </div>
+
+        <div class="channel_div mb-10" style="padding-left:80px;">
+            <span class="channel_s" >高级选项：</span>
+            <a href="javascript:;" class="c-primary unfold_fit" ng-click="vm.slideDown()">
+                <span ng-if="!vm.slideFlag">展开</span>
+                <span ng-if="vm.slideFlag">隐藏</span>
+            </a>
+        </div>
+        <div class="senior_div"  style="display: none">
+            <div class=" mb-10">
+                <span >知识配置：</span>
+                <div class="dib pt-5 mr-15">
+                    <switch ng-click="vm.question = !vm.question"></switch>
+                    <span>不显示相关问题</span>
+                </div>
+                <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
+                    <switch ng-click="vm.tip = !vm.tip"></switch>
+                    <span>不在相关问题内提示</span>
+                </div>
+                <div class="dib pt-5 mr-15" style="margin-left: 81px;">
+                    <switch ng-click="vm.tail = !vm.tail"></switch>
+                    <span>不弹出评价小尾巴</span>
+                </div>
+            </div>
+            <div>
+                <div class="mb-10">
+                    <span>指定相关知识:</span>
+                    <input type="text" class="input-text extended_query_txt" placeholder="" style="width:279px;">
+                    <a href="javascript:;"  onclick="">
+                        <img src="../../../images/images/add_img.png">
+                    </a>
+                    <ul>
+                        <li ng-if="vm.appointOptions" ng-repeat="item in vm.appointOptions"></li>
+                    </ul>
+                </div>
+                <div class="channel_div mb-20" ng-if="vm.appointRelativeGroup.length">
+                    <span class="channel_s c-primary">已添加</span>
+                    <ul>
+                        <li ng-repeat="item in vm.appointRelativeGroup">{{$index}}、{{item}}  <span class="delete_a R" ng-click="vm.removeAppointRelative(item)"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="jqrsz-btn-box" style="padding-left: 0px;">
             <a class="btn btn-blue mr10" ng-click="closeThisDialog(1)" href="javascript:;">保存</a>
             <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
@@ -50,15 +90,13 @@
     }
 </style>
 <script>
-    //    $(function(){
-    //        $('.skin-minimal input').iCheck({
-    //            checkboxClass: 'icheckbox-blue',
-    //            radioClass: 'iradio-blue',
-    //            increaseArea: '20%'
-    //        })});
 
-    var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
 </script>
+
+
+
+
+
 
 
 
