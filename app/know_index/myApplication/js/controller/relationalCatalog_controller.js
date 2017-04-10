@@ -5,7 +5,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('relationalCatalogController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout",function ($scope,$timeout,localStorageService, $state,$stateParams,ngDialog) {
+               "$scope","$state" ,"$stateParams","ngDialog","$timeout",
+     function ($scope, $state,$stateParams,ngDialog,$timeout) {
         //$state.go("relationalCatalog.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -61,7 +62,8 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
             editBot();
         });
         function editBot(){
-            var dialog = ngDialog.openConfirm({
+
+            var dialog =ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationDevelopment/editCategory.html",
                 scope: $scope,
                 closeByDocument:false,
@@ -70,6 +72,7 @@ angular.module('knowledgeManagementModule').controller('relationalCatalogControl
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
+
                     }else{
                     }
                 }

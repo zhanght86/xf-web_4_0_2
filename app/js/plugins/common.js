@@ -123,7 +123,21 @@ function delCookie(name)
         document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 }
 
-
+    //tianjia   type
+function milesAdd(item,arr,type){
+    alert();
+    //验证  0  验证重复    1  不验证重复
+    if(type){
+        arr.push(item)
+    }else{
+        if(arr.indexOf(item)==-1){
+            arr.push(item)
+        }
+    }
+};
+function milesRemove(item,arr){
+    arr.remove(item)
+}
 
 
 	

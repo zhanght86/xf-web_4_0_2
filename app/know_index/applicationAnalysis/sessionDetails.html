@@ -13,27 +13,28 @@
             </div>
             <div class="con_box mb25 p30" style="min-height:500px;">
                 <div class="data_time_statis_top pt-10" style="width:780px;">
-                    <select class="sel bd L mr-5" id="request_time_type">
+                    <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
                         <option value="0">全部时间</option>
                         <option value="1">今日</option>
                         <option value="2">昨日</option>
                         <option value="3">过去7天</option>
                         <option value="4">过去30天</option>
                     </select>
-                    <select class="sel bd L mr-5" id="channel_id">
-                        <option>Web</option>
-                        <option>App</option>
-                        <option>微信</option>
+                    <select class="sel bd L mr-5" id="channel_id"  ng-model="vm.channelId">
+                        <option ng-if="vm.channels.length" ng-repeat="item in vm.channels" ng-value="item.channelUpdateId"  ng-selected="$index==0">{{item.channelName}}</option>
                     </select>
-                    <select class="sel bd L mr-5" id="dimension_id">
-                        <option>选择维度</option>
+                    <select class="sel bd L mr-5" id="dimension_id" placeholder="选择维度"  ng-model="vm.dimensionId">
+                        <option ng-if="vm.dimensions.length" ng-repeat="item in vm.dimensions" ng-value="item.dimensionId" ng-selected="$index==0">{{item.dimensionName}}</option>
                     </select>
                     <span>
                         日期范围:
-                        <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
-                        <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
+                        <!--<div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">-->
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                            -
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        <!--</div>-->
                     </span>
-                    <input type="button" class="btn1 btn1_blue" value="查找" />
+                    <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找" />
                 </div>
                 <div class="cl mb-10">
                     <b class="l f-14">用户会话明细</b>
@@ -44,37 +45,28 @@
                         <thead>
                         <tr>
                             <th width="25%">用户名</th>
-                            <th width="25%" id="sessionCountOrder">会话数量 <a href="javascript:;" class="sorting_asc" ></a></th>
-                            <th width="25%" id="sessionTimeOrder">会话时间 <a href="javascript:;" class="sorting_asc2" ></a></th>
+                            <th width="25%" id="sessionCountOrder">会话数量 <a href="javascript:;" class="sorting_asc" ng-click="vm.orderForSessionNumber=vm.orderForSessionNumber?0:1"></a></th>
+                            <th width="25%" id="sessionTimeOrder">会话时间 <a href="javascript:;" class="sorting_asc2" ng-click="vm.orderForSessionTime=vm.orderForSessionTime?0:1"></a></th>
                             <th width="25%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr role="row" class="odd">
-                            <td>winton</td>
-                            <td>140</td>
-                            <td>2017-03-24 14:28:05</td>
-                            <td><a href="javascript:;" class="c-green" ng-click="vm.addLook()">查看</a></td>
+
+                        <tr role="row" class="odd" ng-repeat="item in vm.listData">
+                            <td>{{item.userName}}</td>
+                            <td>{{item.sessionNumber}}</td>
+                            <td>{{item.sessionTime}}</td>
+                            <td><a href="javascript:;" class="c-green" ng-click="vm.scan(item.userId)">查看</a></td>
                         </tr>
+
                         </tbody>
                     </table>
-                    <div class="text-r pt-10">
-                        <a href="javascript:;" class=" c-primary" >导出</a>
-                    </div>
-                    <div class="page clearfix">
-                        <span class="page_span ">上一页</span>
-                        <a href="javascript:;" class="cura">1</a>
-                        <a href="javascript:;">2</a>
-                        <a href="javascript:;">3</a>
-                        <a href="javascript:;">4</a>
-                        <a href="javascript:;">5</a>
-                        <span class="page_span ">下一页</span>
-                        <span>共<b class="page_b">12</b>页</span>
-                        <span>跳转到</span>
-                        <input type="text" class="page_txt">
-                        <span>页</span>
-                        <span class="go_span">GO</span>
-                    </div>
+                    <!--<div class="text-r pt-10">-->
+                        <!--<a href="javascript:;" class=" c-primary" >导出</a>-->
+                    <!--</div>-->
+
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+
                 </div>
             </div>
         </div>
