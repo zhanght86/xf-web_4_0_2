@@ -12,12 +12,12 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             searchList : "",   //查询数据结果
             paginationConf : "",
         };
-        //$scope.vm.paginationConf = {
-        //    currentPage: index,//当前页
-        //    totalItems: Math.ceil(data.total/5), //总条数
-        //    pageSize: 1,//第页条目数
-        //    pagesLength: 8,//分页框数量
-        //};
+        $scope.vm.paginationConf = {
+            currentPage: index,//当前页
+           totalItems: Math.ceil(data.total/5), //总条数
+           pageSize: 1,//第页条目数
+          pagesLength: 8,//分页框数量
+        };
 
         //$scope.$watch('vm.paginationConf.currentPage', function(current){
         //    if(current){

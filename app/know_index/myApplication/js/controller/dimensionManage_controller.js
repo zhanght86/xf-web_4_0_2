@@ -36,6 +36,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             },function(data){
               console.log(data);
                 $scope.vm.listData = data.data.dimensionList;
+                $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: 0,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
