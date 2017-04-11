@@ -3,11 +3,12 @@
  * 控制器
  */
 angular.module('materialManagement').controller('conceptChatController', [
-    '$scope',"$state","ngDialog","$stateParams", function ($scope,$state,ngDialog,$stateParams) {
-        $state.go("materialManagement.conceptChat");
+    '$scope',"$state","ngDialog","$stateParams",
+    function ($scope,$state,ngDialog,$stateParams) {
+        //$state.go("materialManagement.conceptChat");
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
-        console.log("d",$stateParams.scanDataList);
+        console.log( $stateParams.scanDataList.extendedQuestionArr[0].chatQuestionTag);
         $scope.vm = {
             userName : getCookie("userName"),
             applicationId : getCookie("applicationId"),
@@ -17,8 +18,6 @@ angular.module('materialManagement').controller('conceptChatController', [
             remove : remove ,
             weight : "60" ,         //  权重
             addExtension : addExtension ,  //添加扩展
-
-
             contentVal : "",
             contentArr : $stateParams.scanDataList?$stateParams.scanDataList.contentArr:[] ,
             addContentDialog : addContentDialog,// 添加知识内容
@@ -164,7 +163,8 @@ angular.module('materialManagement').controller('conceptChatController', [
                 applicationId: $scope.vm.applicationId,
                 chatKnowledgeModifier : $scope.vm.userName,
                 save : saveScan,
-                editUrl : "materialManagement.faqChat",
+                editUrl : "materialManagement.conceptChat",
+                type : 1
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
         }
@@ -172,7 +172,7 @@ angular.module('materialManagement').controller('conceptChatController', [
 
         function save(){
             if(check()){
-                console.log($scope.vm.extendedQuestionArr)
+                console.log($scope.vm.extendedQuestionArr);
                 httpRequestPost("/api/chatKnowledge/addConceCptChatKnowledge",{
                     "applicationId": $scope.vm.applicationId,
                     "chatKnowledgeModifier": $scope.vm.userName,

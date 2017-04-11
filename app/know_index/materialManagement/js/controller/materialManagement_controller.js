@@ -14,12 +14,14 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             searchList : "",   //查询数据结果
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
-
         };
 
-        init(1);
+        init();
+        function init(){
+            getData(1)
+        }
         //请求列表
-        function init(index){
+        function getData(index){
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
                 "index" :index==1?0:index,
@@ -61,26 +63,18 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
 
         //点击标题查看
         function seeDtails(data){
-
             console.log(data);
             var params = {
                 standardQuestion : data.chatKnowledgeTopic,
                 extendedQuestionArr :data.chatQuestionList,
-                contentArr : data.chatKnowledgeContent,
+                contentArr : data.chatKnowledgeContentList,
                 applicationId: data.chatKnowledgeApplicationId,
                 chatKnowledgeModifier : data.chatKnowledgeModifier,
                 chatKnowledgeId : data.chatKnowledgeId,
-                chatKnowledgeSource:data.chatKnowledgeSource,   //类型 100  概念      101 faq
-
-
-                //chatKnowledgeApplicationId:data.chatKnowledgeApplicationId,
-                //chatKnowledgeContentList:data.chatKnowledgeContentList,
-                //chatKnowledgeModifier:data.chatKnowledgeModifier,
-                //chatKnowledgeSource:data.chatKnowledgeSource,
-                //chatKnowledgeTopic:data.chatKnowledgeTopic,
-                //chatQuestionList:data.chatQuestionList,
+                chatKnowledgeSource:data.chatKnowledgeSource,   //类型 101  概念      100 faq
+                editUrl : data.chatKnowledgeSource==100?"materialManagement.faqChat":"materialManagement.conceptChat",
+                type : 0
             };
-            console.log(params);
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
 
         }

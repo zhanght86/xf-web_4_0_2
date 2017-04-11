@@ -664,7 +664,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.conceptChat", {
-                params:{"userPermission" : null},
+                params:{"scanDataList" : null},
                 url: "/conceptChat",
                 views: {
                     'header': {
