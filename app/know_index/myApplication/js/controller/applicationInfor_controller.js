@@ -18,13 +18,17 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
 
             sceneId : "", //场景id
             applicationName : "", //应用名称
+            applicationNewName : "", //应用新名称
             applicationDescription : "", //应用描述
             applicationCreateTime : "",//创建时间
+            applicationLisence : "", //应用序列号
             statusId : "", //应用状态
 
-            knowledgeTypeNum : knowledgeTypeNum,//知识类型数量
-            exchangeModeNum : exchangeModeNum, //交互方式数量
-            businessFrameNum : businessFrameNum, //业务框架数量
+            knowledgeTypeNum : "",//知识类型数量
+            exchangeModeNum : "", //交互方式数量
+            businessFrameNum : "", //业务框架数量
+
+            allowSubmit : 1, //是否允许提交
 
 
             findApplicationInfo : findApplicationInfo, //查找应用信息
@@ -36,11 +40,13 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             restartService : restartService, //重启服务
 
             editName : editName,    //编辑应用
-            deleteName: deleteName, //删除应用
+            deleteApplication: deleteApplication, //删除应用
+            stopAllServices : stopAllServices, //下线应用的所有服务
 
         };
         findApplicationInfo(); //查看应用的基本信息
 
+        findSceneInfo(); //查看场景信息
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -126,7 +132,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(data){
                 if(data.status==200){
                     layer.msg("重启服务成功");
-                    $state.reload()
+                    $state.reload();
                 }else{
                     layer.msg("重启服务失败");
                 }
@@ -146,6 +152,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                     $scope.vm.applicationDescription =data.data.applicationDescription;//应用描述
                     $scope.vm.applicationCreateTime =data.data.applicationCreateTime;//创建时间
                     $scope.vm.statusId =data.data.statusId; //应用状态
+                    $scope.vm.applicationLisence = data.data.applicationLisence;  //应用序列号
                     $scope.$apply();
                 }else{
                     layer.msg("查询失败");
@@ -158,7 +165,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
 
             //查看场景信息
         function findSceneInfo(){
-            httpRequestPost("/api/application/application/findApplication",{
+            httpRequestPost("/api/application/application/findSceneInfo",{
                 "applicationId": $scope.vm.applicationId
             },function(data){
                 if(data.status==200){
@@ -175,6 +182,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         }
 
 
+        //编辑应用的名称
         function editName(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationInfor/applicationInforDialog.html",
@@ -185,11 +193,49 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        if ($scope.vm.allowSubmit){
+                            httpRequestPost("/api/application/application/updateApplication",{
+                                "applicationId": $scope.vm.applicationId,
+                                "sceneId" : $scope.vm.sceneId,
+                                "applicationName" : $scope.vm.applicationNewName,
+                                "applicationDescription" : $scope.vm.applicationDescription,
+                                "applicationLisence" : $scope.vm.applicationLisence ,
+                                "userId" : $scope.vm.userId
+                            },function(data){
+                                if(data.status==200){
+                                    findApplicationInfo();
+                                }else{
+                                    layer.msg("修改失败");
+                                }
+                            },function(){
+                                layer.msg("请求失败");
+                            })
+                        }
+                    }else{
+                        $scope.vm.applicationNewName="";
                     }
                 }
             });
         }
-        function deleteName(){
+
+        //下线应用的所有服务
+        function stopAllServices(){
+            httpRequestPost("/api/application/service/stopAllService",{
+                "applicationId": $scope.vm.applicationId
+            },function(data){
+                if(data.status==200){
+                    layer.msg("下线所有服务成功");
+                    $state.reload();
+                }else{
+                    layer.msg("下线所有服务失败")
+                }
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //删除应用
+        function deleteApplication(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationInfor/applicationInforDialog2.html",
                 scope: $scope,
@@ -199,6 +245,18 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        httpRequestPost("/api/application/service/deleteAllServices",{
+                            "applicationId": $scope.vm.applicationId
+                        },function(data){
+                            if(data.status==200){
+                                layer.msg("删除成功");
+
+                            }else{
+                                layer.msg("删除失败");
+                            }
+                        },function(){
+                            layer.msg("请求失败");
+                        })
                     }
                 }
             });
@@ -206,4 +264,32 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
       
 
     }
-]);
+]).directive('checkName', function($http){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attrs, c){
+            scope.$watch(attrs.ngModel, function(n){
+                if(!n) return;
+                $http({
+                    method: 'POST',
+                    url: '/api/application/application/checkName',
+                    data:{
+                        applicationId: scope.vm.applicationId,
+                        applicationName: scope.vm.applicationNewName
+                    }
+                }).success(function(data){
+                    if(data.data){
+                        c.$setValidity('unique', true);
+                        scope.vm.allowSubmit=1;
+                    }else{
+                        c.$setValidity('unique', false);
+                        scope.vm.allowSubmit=0;
+                    }
+                }).error(function(data){
+                    c.$setValidity('unique', false);
+                    scope.vm.allowSubmit=0;
+                })
+            });
+        }
+    }
+});
