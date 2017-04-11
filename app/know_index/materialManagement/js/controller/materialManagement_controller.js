@@ -10,9 +10,11 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             applicationId : getCookie("applicationId"),
             title : "" ,           //知识标题
             search : search,  //查询
+            seeDtails:seeDtails,//标题预览
             searchList : "",   //查询数据结果
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
+
         };
 
         init(1);
@@ -57,5 +59,25 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             },function(err){})
         }
 
+        //点击标题查看
+        function seeDtails(data){
+            console.log(data)
+            var params = {
+                chatKnowledgeId : data.chatKnowledgeId,
+                chatKnowledgeApplicationId:data.chatKnowledgeApplicationId,
+                chatKnowledgeContentList:data.chatKnowledgeContentList,
+                chatKnowledgeModifier:data.chatKnowledgeModifier,
+                chatKnowledgeSource:data.chatKnowledgeSource,
+                chatKnowledgeTopic:data.chatKnowledgeTopic,
+                chatQuestionList:data.chatKnowledgeTopic,
+            };
+            $state.go("materialManagement.chatKnowledgeScan",{scanList:params});
+
+        }
+
     }
+
+
+
+
 ]);
