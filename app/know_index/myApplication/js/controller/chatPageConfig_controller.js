@@ -22,6 +22,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             paginationConf : "", //分页条件
             deleteIds : [],
             selectAllCheck : false,
+            hotQuestionTitle : "",
+            listDataLength : "",
             //========================方法=========================
             getData : getData, //返回知识列表数据
             addHotIssues : addHotIssues,  //添加方法
@@ -30,7 +32,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             down : down,  //知识下移
             deleteKnowledge : deleteKnowledge, //删除知识
             selectAll : selectAll,
-            selectSingle : selectSingle
+            selectSingle : selectSingle,
+            findHotQuestion : findHotQuestion
 
         };
 
@@ -73,6 +76,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 console.log(data);
                 $scope.vm.listData = data.data.hotQuestionList;
                 $scope.vm.listDataTotal = data.data.total;
+                $scope.vm.listDataLength = data.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: 0,//当前页
                     totalItems: Math.ceil(data.total/5), //总条数
@@ -91,6 +95,20 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 ids :  $scope.vm.deleteIds
             },function(data){
                 $state.reload();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        //查找知识
+        function findHotQuestion(){
+            httpRequestPost("/api/application/hotQuestion/findHotQuestion",{
+                hotQuestionTitle:$scope.vm.hotQuestionTitle,
+                applicationId:$scope.vm.applicationId,
+            },function(data){
+                $scope.vm.listData = data.data.hotQuestionList;
+                $scope.vm.listDataTotal = data.data.total;
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })
