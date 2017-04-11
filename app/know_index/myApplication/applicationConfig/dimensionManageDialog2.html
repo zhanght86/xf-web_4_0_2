@@ -5,28 +5,45 @@
                 <div class="mb-10 clearfix">
                     <span class="add_ele_span L">维度名称：</span>
                     <div class="dib L pl-5">
-                        <input type="text"  class="input-text " placeholder="维度名称" />
+                        <input type="text"  class="input-text " placeholder="维度名称" ng-model="vm.dimensionName"/>
                     </div>
                     <div class="dib ml-15 pt-5 L mr-15">
                         <span class="L mr-10">状态：</span>
                         <div  class="open1 b_box" style="display:inline-block;float:left;">
-                            <div  class="open2 s_box" onclick="turn_on(this);"></div>
+                            <switch ng-click="vm.switchTurn=(vm.switchTurn?10002:10001)"></switch>
                         </div>
                     </div>
                 </div>
                 <div class="mb-10 ">
                     <span class="add_ele_span">维度表示：</span>
                     <div class="dib">
-                        <input type="text" placeholder="请输入纬度表示" class="input-text  latitude"/>
+                        <input type="text" placeholder="请输入维度表示" ng-model="vm.dimensionVal" class="input-text  latitude"/>
                     </div>
-                    <a href="javascript:;" class="create_a" onclick="add_pro();"><img src="../../../images/images/add_img.png" alt=""></a>
+                    <a href="javascript:;" class="create_a"  ng-click="vm.savePro(vm.dimensionVal,vm.newDimensions)"><img src="../../../images/images/add_img.png" alt=""></a>
+                </div>
+                <!--{{vm.dimensionUpdateNameArray}}-->
+                <!--{{vm.oldDimension}}-->
+                <div class="mb-10" ng-repeat="item in vm.oldDimension">
+                    <span class="add_ele_span"></span>
+                    <div class="dib">
+                        <p class="input-text" style="width: 174px;">{{item.dimensionName}}</p>
+                    </div>
+                    <a href="javascript:;" class="create_a"  ng-click="vm.deleteItem(item)"><img src="../../../images/images/delete_img.png" alt=""></a>
+                </div>
+            <!--new -->
+                <div class="mb-10" ng-repeat="item in vm.newDimensions">
+                    <span class="add_ele_span"></span>
+                    <div class="dib">
+                        <p class="input-text" style="width: 174px;">{{item}}</p>
+                    </div>
+                    <a href="javascript:;" class="create_a"  ng-click="vm.newDimensions.remove(item)"><img src="../../../images/images/delete_img.png" alt=""></a>
                 </div>
             </div>
 
         </div>
         <div class="tc">
-            <input type="button" class="btn1 btn1_blue mr-15" value="保存" />
-            <input type="button" class="btn1 btn_gray" value="取消" />
+            <input type="button" value="确定" ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
+            <input type="button" value="取消" ng-click="closeThisDialog(0)"  class="btn1 btn_gray"/>
         </div>
     </form>
 </div>

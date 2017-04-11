@@ -30,7 +30,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in vm.listData">
+                        <tr ng-repeat="item in vm.listData" ng-if="item.dimensionParentId == 0">
                             <td><input  type="checkbox" /></td>
                             <td>{{item.dimensionName}}</td>
                             <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>

@@ -53,7 +53,7 @@
         <div class="mb-10 cl">
 
             <label class="form-label col-xs-3 col-sm-2">所属应用：</label>
-            {{vm.applicationIds}}
+            <!--{{vm.applicationIds}}-->
             <div class="formControls col-xs-9 col-sm-9">
                 <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="margin-left: 5px;"><input type="checkbox" ng-checked="vm.filter(item.applicationId,vm.applicationIds)"  ng-click="vm.saveProp($event,item.applicationId)"   />{{item.applicationName}}</label>
             </div>
