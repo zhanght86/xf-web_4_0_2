@@ -12,14 +12,17 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             save : save ,
             edit : edit ,
         };
+
         function save(){
             $stateParams.scanData.save($stateParams.scanData)
         }
         function edit(){
-            console.log($stateParams.scanData);
+            console.log($stateParams.chatKnowledgeId);
             $state.go($stateParams.scanData.editUrl,{scanDataList: $stateParams.scanData});
-
         }
+
+
+
 
     }
 ]);
