@@ -14,21 +14,7 @@
             <div class="item-line">
                 <div class="value menu_1Div" id="menu_1Div">
                     <div class="ipt-txt-box">
-                        <!--<input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>-->
-                        <!--<i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>-->
-                        <div class="aside-navs aside-navs2 show" >
-                            <ul class="menus show">
-                                <!--//test-->
-                                <li ng-repeat="item in vm.botRoot"  >
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                            <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <div id="library" class="aside-navs show"></div>
                     </div>
                 </div>
             </div>
@@ -49,28 +35,13 @@
         </div>
         <div class="libraryFt pd-20">
             <h3 class="tc mb-20">场景BOT</h3>
-            <!--<div class="item-line">-->
-                <!--<div class="value menu_1Div" id="menu_1Div">-->
-                    <!--<div class="ipt-txt-box">-->
-                        <!--&lt;!&ndash;<input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>&ndash;&gt;-->
-                        <!--<div class="aside-navs aside-navs2 show" >-->
-                            <!--<ul class="menus show">-->
-                                <!--&lt;!&ndash;//test&ndash;&gt;-->
-                                <!--<li ng-repeat="item in vm.botRoot"  >-->
-                                    <!--<div class="slide-a">-->
-                                        <!--<a class="ellipsis" href="javascript:;">-->
-                                            <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                                            <!--<span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>-->
-                                        <!--</a>-->
-                                    <!--</div>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="item-line">
+                <div class="value menu_1Div">
+                    <div class="ipt-txt-box">
+                        <div id="category" class="aside-navs show" ></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

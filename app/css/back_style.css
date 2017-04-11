@@ -207,7 +207,7 @@
 .answer_div_btn{position:absolute;right:0px;bottom:0;width:60px;height:27px;background:#f2b808;color:#fff;cursor:pointer;}
 .txta{width:100%;height:79px;box-sizing:border-box;padding:5px;outline:none;}
 
-	/**/
+/**/
 .popup_wrap{width:100%;height:100%;position:fixed;left:0;top:0;z-index:9000;display:none;}
 .popup_span{width:100%;height:100%;position:fixed;left:0;top:0;background:#000;opacity:0.6;filter:alpha(opacity=60);z-index:100;}
 .popup{width:740px;height:266px;position:fixed;left:50%;top:50%;margin:-133px 0 0 -370px;background:#fff;z-index:102;border-radius:5px;overflow:hidden;}
@@ -255,7 +255,7 @@
 #modelSelect .refresh{right:3px;top:-3px;}
 /*个人中心*/
 .column_manage{background:#fff;padding:40px;}
-.c_orange{color:#f4a344;} 
+.c_orange{color:#f4a344;}
 .column_manage_div{width:245px;height:250px;border-radius:2px;background:#fbfbfb;margin:0 60px;box-sizing:border-box;padding:20px 30px;}
 .pers_infor_man{height:350px;}
 .pers_infor_manl{width:510px;}
@@ -310,18 +310,18 @@
 .upload{width:484px;}
 .sel{width:93px;height:28px;line-height:28px}
 
-	/*upload*/
+/*upload*/
 
 .upload_btn{width:70px;
-			height:30px;
-			background:none;
-			border-radius:3px;
-			color:#4ea8f7;
-			cursor:pointer;
-			border:1px solid #e5e5e5;
-			border-radius:17px;
-			outline:none;
-		}
+	height:30px;
+	background:none;
+	border-radius:3px;
+	color:#4ea8f7;
+	cursor:pointer;
+	border:1px solid #e5e5e5;
+	border-radius:17px;
+	outline:none;
+}
 #filelist{background:#fff; width:100%;}
 #console{color:red;	width:31%; margin:10px auto;}
 #container{width:31%;margin:10px auto 100px;}
@@ -332,24 +332,24 @@
 .size{float:right; position:relative; right:100px}
 .file_title{overflow: hidden; background:#f5f5f5; padding:10px;}
 .file_con{padding:10px;}
-      /*upload-end*/
-	  
+/*upload-end*/
+
 .upload_attach{width:88px;color:#4ea8f7;font-size:13px;height:28px;display:block;border-radius:15px;line-height:28px;text-align:center;}
 .advan_search{display:block;line-height:31px;background:url(../images/arrow.png) no-repeat right center;padding-right:15px;}
 .advan_search.on{background-image:url(../images/arrow2.png);}
 .advan_search_div{width:400px;height:200px;position:absolute;left:-308px;top:38px;background:#fff;box-sizing:border-box;padding:20px;display:none;}
 .advan_search_div .riqi_txt{width:110px;height:28px;line-height:28px;padding:0 0 0 5px;border:1px solid #e3e3e3;}
-.create_temp_a {background:url(../images/create_temp.png) no-repeat left center;padding-left:25px;}	  
-.txta{width:880px;height:116px;display:block;}	  
-	  
-.btn3{padding:0 15px;height:30px;background:#f3f3f3;color:#333;border:1px solid #e7e7e7;border-radius:2px;cursor:pointer;}	  
-.doc_sample_s{width:240px;height:30px;background:#f3f3f3;line-height:30px;outline:none;}	  
-.rule_div{width:885px;display:inline-block;}  
-.catalog_txt{width:550px;height:30px;box-sizing:border-box;}	  
-	
-.selec_art_l{background:#fff;width:820px;height:500px;box-sizing:border-box;} 	  
+.create_temp_a {background:url(../images/create_temp.png) no-repeat left center;padding-left:25px;}
+.txta{width:880px;height:116px;display:block;}
+
+.btn3{padding:0 15px;height:30px;background:#f3f3f3;color:#333;border:1px solid #e7e7e7;border-radius:2px;cursor:pointer;}
+.doc_sample_s{width:240px;height:30px;background:#f3f3f3;line-height:30px;outline:none;}
+.rule_div{width:885px;display:inline-block;}
+.catalog_txt{width:550px;height:30px;box-sizing:border-box;}
+
+.selec_art_l{background:#fff;width:820px;height:500px;box-sizing:border-box;}
 .selec_art_l .txta{width:100%;height:100%;outline:none;}
-.selec_art_r{width:350px;box-sizing:border-box;}  
+.selec_art_r{width:350px;box-sizing:border-box;}
 
 /*从文件导入知识 弹框*/
 .import_knowledge_popup{
@@ -497,12 +497,12 @@
 	height:416px;
 	padding-top:210px;
 	box-sizing:border-box;
-}	
+}
 .assessor_transform p{
 	text-align:center;
 	margin-bottom:30px;
 	cursor:pointer;
-}  
+}
 .per_sq{
 	cursor:pointer;
 }
@@ -582,7 +582,7 @@
 .system_set{
 	width:600px;
 	margin:24px auto 0;
-} 
+}
 .set_con{
 	margin:24px 0;
 	padding-left:65px;
@@ -735,13 +735,13 @@
 }
 .p_con_set{
 	margin-top:20px;
-}	
+}
 .p_con_set input[type="text"]{
 	width:48px;
 	height:24px;
 	border:1px solid #d9d9d9;
 	padding-left:5px;
-}   
+}
 .p_con_set .set_style{
 	display:inline-block;
 	width:50px;
@@ -1161,7 +1161,7 @@
 	line-height: 52px;
 }
 
-      /*应用管理*/
+/*应用管理*/
 .popup_app{
 	width: 480px;
 	height:340px;
@@ -1185,7 +1185,6 @@
 }
 .namePopupBG{
 	position: fixed;
-	display: none;
 	z-index: 1050;
 	background: #000;
 	background: rgba(0,0,0,.1);

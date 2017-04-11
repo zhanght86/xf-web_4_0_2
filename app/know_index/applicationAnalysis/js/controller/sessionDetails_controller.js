@@ -37,6 +37,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
         };
         // 点击查看
         function scan(id){
+            console.log(id)
             getScanData(id,1);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/sessionDetailsDialog.html",

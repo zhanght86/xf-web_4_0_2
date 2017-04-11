@@ -5,7 +5,7 @@
     <div>
         <div class="conceptSearch clearfix">
             <div class=" L bd mr-5">
-               
+
                 <select ng-model="vm.searchType">
                     <option value="businessConceptKey" selected>概念类名</option>
                     <option value="businessConceptWeight">概念类权重</option>
@@ -21,7 +21,7 @@
                 </div>
 
             </div>
-      
+
             <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBusiness()">新增</a>
@@ -42,9 +42,10 @@
                     <td>创建人</td>
                     <td>操作</td>
                 </tr>
-                <tr ng-repeat="item in vm.listData" ng-class=vm.listData.length<=3?'resetH70':''">
+                <tr ng-repeat="item in vm.listData">
                     <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
                     <td class="color-blue2">{{item.businessConceptKey}}</td>
+
                     <td class="color-blue2">{{item.businessConceptWeight | weightFilter}}</td>
                     <td class="color-blue2">{{item.businessConceptTerm | strReplace}}</td>
                     <td>{{item.businessConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
