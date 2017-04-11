@@ -7,33 +7,50 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
     '$scope',"$state", function ($scope,$state) {
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
+            applicationId : getCookie("applicationId"),
             title : "" ,           //知识标题
             search : search,  //查询
+            seeDtails:seeDtails,//标题预览
             searchList : "",   //查询数据结果
-            paginationConf : "",
-        };
-        $scope.vm.paginationConf = {
-            currentPage: index,//当前页
-           totalItems: Math.ceil(data.total/5), //总条数
-           pageSize: 1,//第页条目数
-          pagesLength: 8,//分页框数量
+            paginationConf : ""  ,//分页条件
+            pageSize : 5  , //默认每页数量
+
         };
 
-        //$scope.$watch('vm.paginationConf.currentPage', function(current){
-        //    if(current){
-        //        //console.log(current,$scope.vm.pageSize);
-        //        httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-        //            "collectiveConceptApplicationId": $scope.vm.applicationId,
-        //            "index" :current*$scope.vm.pageSize,
-        //            "pageSize": $scope.vm.pageSize
-        //        },function(){
-        //            getAggre(current);
-        //        },function(){
-        //        })
-        //    }
-        //});
-
-        //$scope.$apply();
+        init(1);
+        //请求列表
+        function init(index){
+            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+                "applicationId": $scope.vm.applicationId,
+                "index" :index==1?0:index,
+                "pageSize": $scope.vm.pageSize
+            },function(data){
+                console.log(data.data.objs);
+              $scope.vm.listData = data.data.objs;
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败");
+            })
+        }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+                    "applicationId": $scope.vm.applicationId,
+                    "index" :current*$scope.vm.pageSize,
+                    "pageSize": $scope.vm.pageSize
+                },function(data){
+                    console.log( data.data.objs);
+                    $scope.vm.listData= data.data.objs;
+                },function(){
+                })
+            }
+        });
         function search(){
             httpRequestPost("",{
 
@@ -42,5 +59,25 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             },function(err){})
         }
 
+        //点击标题查看
+        function seeDtails(data){
+            console.log(data)
+            var params = {
+                chatKnowledgeId : data.chatKnowledgeId,
+                chatKnowledgeApplicationId:data.chatKnowledgeApplicationId,
+                chatKnowledgeContentList:data.chatKnowledgeContentList,
+                chatKnowledgeModifier:data.chatKnowledgeModifier,
+                chatKnowledgeSource:data.chatKnowledgeSource,
+                chatKnowledgeTopic:data.chatKnowledgeTopic,
+                chatQuestionList:data.chatKnowledgeTopic,
+            };
+            $state.go("materialManagement.chatKnowledgeScan",{scanList:params});
+
+        }
+
     }
+
+
+
+
 ]);

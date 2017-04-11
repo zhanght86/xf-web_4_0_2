@@ -293,6 +293,10 @@
     background: #fbfbfb;
     display: none;
 }
+.aside-navs-v{
+    margin: 0px;
+    background: #fbfbfb;
+}
 .ipt-txt-box .btn-menu_1{
     cursor: pointer;
     width: 17px;
@@ -421,7 +425,7 @@
 .Concept-Ipt{
     width: 100%;
     height: 34px;
-    margin-bottom: 15px;
+    margin-bottom: 26px;
     position: relative;
 }
 .Concept-Ipt span,.textareaDiv2 span{
@@ -598,72 +602,6 @@
 .msgR-table-2 span{
     color: #529ff6;
 }
-/*-------�û����޸ĵ���----------*/
-.namePopupBG{
-    position: fixed;
-    display: none;
-    z-index: 1050;
-    background: #000;
-    background: rgba(0,0,0,.1);
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-}
-.namePopup{
-    position: absolute;
-    background: #fff;
-    width: 510px;
-    height: 250px;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-}
-.namePopup > p{
-    padding: 0 18px;
-    background: #f8f8f8;
-    height: 44px;
-    color: #333;
-    line-height: 44px;
-    margin: 0;
-}
-.namePopup > p > span{
-    display: inline-block;
-    float: right;
-}
-.namePopup i{
-    display: inline-block;
-    width: 16px;
-    height: 12px;
-    cursor: pointer;
-    transition: .3s;
-    background: url("../../images/images/icon-pop.png") no-repeat bottom;
-}
-.namePopup i:hover{
-    transform: rotate(90deg);
-}
-.namePopupCnt > input{
-    width: 380px;
-    height: 36px;
-    border: #e5e5e5 solid 1px;
-    margin: 44px auto 0 64px;
-    padding: 5px;
-}
-.namePopupCnt p{
-    margin-left: 64px;
-    padding: 10px;
-    color: #e44242;
-    font-size: 12px;
-}
-.namePopupCnt .namePopupCntTxt{
-    font-size: 16px;
-    color: #333;
-    margin: 35px 0;
-    text-align: center;
-}
-
 /*-------��ܿ�---------*/
 .libraryCnt{
     margin-top: 10px;
@@ -671,6 +609,7 @@
 .libraryFt{
     width: 450px;
     height: 875px;
+    overflow-y: auto;
     background: #fff;
     float: left;
 }

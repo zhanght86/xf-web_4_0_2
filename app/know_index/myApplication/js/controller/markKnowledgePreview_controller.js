@@ -12,8 +12,5 @@ angular.module('knowledgeManagementModule').controller('KnowledgePreviewControll
 
         };
 
-
-      
-
     }
 ]);

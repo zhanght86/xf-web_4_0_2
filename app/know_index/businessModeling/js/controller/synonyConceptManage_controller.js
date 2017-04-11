@@ -132,7 +132,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //添加 窗口
         function addSynonym(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/synony/synonyConceptManageDialog.html",
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -208,7 +208,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //   刪除 彈框
         function deleteSynonym(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/synonymModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/ConceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

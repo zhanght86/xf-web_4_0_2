@@ -1185,7 +1185,6 @@
 }
 .namePopupBG{
 	position: fixed;
-	display: none;
 	z-index: 1050;
 	background: #000;
 	background: rgba(0,0,0,.1);

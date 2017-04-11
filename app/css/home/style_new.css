@@ -163,3 +163,6 @@
 .modifi_title button{width:180px;height:40px;background:#ccc;font-size:15px;cursor:pointer;color:#fff;}
 .modifi_title button.current{background:#529ff6;}
 .tag_div{width:120px;border:1px solid #bdbdbd;padding:10px;}
+
+/*知识总览弹窗*/
+.advanced_search{position:absolute;left:0;top:30px;display:none;width:480px;background:#e3e8e7;z-index:100;padding:20px;box-sizing:border-box;}
