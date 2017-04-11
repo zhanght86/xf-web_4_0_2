@@ -14,25 +14,35 @@
     </div>
     <div class="framework mb-10">
         <span class="framework_s">节点类型：</span>
-        <div>
+        <div class="node_div">
             <label class="mr-10"><input type="radio" name="style"/> 单机</label>
             <label><input type="radio" name="style"/> 集群</label>
         </div>
     </div>
-    <div class="mb-20">
-        <div class="mb-10">
-            <span class="mr-10">节点ID:</span>
-            <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/>
-            <span class="mr-10">节点IP:</span>
-            <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/>
-            <a href="javascript:;"><img src="../../images/images/add_img.png " /></a>
+    <div class="mb-20 node_style_div">
+        <div style="display:block;" >
+            <div class="framework mb-10">
+                <span class="framework_s">节点ID：</span>
+                <div>
+                    <input type="text"  class="input-text" placeholder=""/>
+                </div>
+            </div>
         </div>
-        <div class="mb-10">
-            <span class="mr-10">节点ID:</span>
-            <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/>
-            <span class="mr-10">节点IP:</span>
-            <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/>
-            <a href="javascript:;"><img src="../../images/images/delete_img.png " /></a>
+        <div  style="display: none;" class="node_style_div2" >
+            <div class="mb-10">
+                <span class="mr-10">节点ID:</span>
+                <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/>
+                <span class="mr-10">节点IP:</span>
+                <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/>
+                <a href="javascript:;" onclick="addNode();"><img src="../images/add_img.png " /></a>
+            </div>
+            <!--<div class="mb-10">-->
+            <!--<span class="mr-10">节点ID:</span>-->
+            <!--<input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/>-->
+            <!--<span class="mr-10">节点IP:</span>-->
+            <!--<input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/>-->
+            <!--<a href="javascript:;" onclick="deleteNode()"><img src="../images/delete_img.png " /></a>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="text-c">
@@ -45,3 +55,16 @@
         width: 550px;
     }
 </style>
+<script>
+    $('.node_div label').click(function(){
+        $('.node_style_div').children('div').eq($(this).index()).css('display','block').siblings().css('display','none');
+    });
+
+    function addNode(){
+        var str='<div class="mb-10"><span class="mr-10">节点ID:</span> <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/> <span class="mr-10">节点IP:</span> <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/> <a href="javascript:;" onclick="deleteNode(this)"><img src="../images/delete_img.png " /></a></div>'
+        $('.node_style_div2').append(str);
+    }
+    function deleteNode(obj){
+        $(obj).parent().remove();
+    }
+</script>

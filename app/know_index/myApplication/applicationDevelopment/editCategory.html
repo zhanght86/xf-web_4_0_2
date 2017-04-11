@@ -1,29 +1,47 @@
-<div class="namePopupBG" id="namePopupBG">
-    <div class="namePopup" style="height: 240px;">
-        <p>编辑业务类目<span><i class="namePopupClose"></i></span></p>
-        <div class="addPopupCnt">
-            <div class="checkboxAddress">
-                划分规则：
-                <div class="my-select" style="min-width: 90px">
-                    <div class="my-value">
-                        <label>划分</label><em></em>
-                    </div>
-                    <div class="my-option" style="display: none;">
-                        <select id="category-edit-type" value="{{vm.botInfo.categoryTypeId}}">
-                            <option value=10009>默认</option>
-                            <option value=10008>流程</option>
-                            <option value=10007>划分</option>
-                            <option value=10006>属性</option>
-                        </select>
-                    </div>
-                </div>
+<div class="pd-20">
+    <div>
+        <p class="tc bold mb-10">编辑类目</p>
+        <div>
+            <div class="mb-10">
+                <span class="mr-10">类目类型: </span>
+                <select id="categoryTypeId" ng-model="vm.categoryTypeId" class="sel bd">
+                    <option value=10009>默认</option>
+                    <option value=10008>流程</option>
+                    <option value=10007>划分</option>
+                    <option value=10006>属性</option>
+                </select>
             </div>
-            <div class="Concept-Ipt" style="margin-top: 20px">分支属性：<input  style="width: 350px" type="text" value="{{vm.botInfo.categoryAttributeName}}"/></div>
-            <div class="Concept-Ipt" style="margin-top: 20px">分支名称：<input  style="width: 350px" type="text" value="{{vm.botInfo.categoryName}}"/></div>
-            <div class="jqrsz-btn-box" style="padding-left: 118px;">
-                <a class="btn btn-blue mr10 namePopupClose" href="javascript:;" ng-click="closeThisDialog(1)">确认修改</a>
-                <a class="btn btn-gray namePopupClose" href="javascript:;" style="padding: 4px 30px" ng-click="closeThisDialog(0)">取消</a>
+            <div class="mb-10">
+                <span class="mr-10">类目属性: </span>
+                <input type="text" class="input_text" id="categoryAttributeName" ng-model="vm.categoryAttributeName"/>
             </div>
-        </div>
+            <div class="mb-20">
+                <span class="mr-10">类目名称: </span>
+                <input type="text" class="input_text"  id="categoryName" ng-model="vm.categoryName"/>
+            </div>
+            <div class="tc mt10" >
+                <a class="btn btn-blue mr-10" href="javascript:;" ng-click="closeThisDialog(1)">确认修改</a>
+                <a class="btn btn-gray " href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
+            </div>
+
     </div>
 </div>
+<style>
+    .ngdialog.ngdialog-theme-default .ngdialog-content{
+        width:500px;
+    }
+    /* Scrollbar Styles */
+    ::-webkit-scrollbar {
+        background-color: transparent;
+        width: 15px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #aaa;
+        min-height: 20px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #ddd;
+    }
+</style>
+
+<script></script>

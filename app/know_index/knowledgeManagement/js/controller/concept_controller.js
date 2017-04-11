@@ -26,7 +26,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
             getTitleGroup : getTitleGroup,   //点击获取添加标题
-            titleGroup : ["ddd"], //点击标题添加内容
+            titleGroup : [], //点击标题添加内容
+
+
+            //扩展问
+            extensionTitle : [],
+            extensionWeight :"",
+            getExtension : getExtension,
+            extensions : [],
+
 
             //展示内容
             scanContent : [],
@@ -41,6 +49,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             channels : "",     //渠道
             dimension  : "",
             dimensions : ""  ,  //维度
+            dimensionArr : [],
+            channelArr : [] ,
                             //高级选项内容
             slideDown : slideDown,
             slideFlag : false,
@@ -50,11 +60,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             tail : "" ,
 
             appointRelative : "",
-            getAppointRelative : getAppointRelative ,
-            appointRelativeGroup : ['储蓄卡办理方式','储ddd蓄卡办理方式'],
+            appointRelativeList :[],
+            addAppoint  : addAppoint,
+            //vm.appointRelativeGroup.push(item)
+            appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
         };
-
+        function alert(e){
+            console.log($(e.target).val())
+//        console.log(55)
+        }
         setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
         //setCookie("categorySceneId","10023");
@@ -71,21 +86,37 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 "index": 0,
                 "pageSize":999999
             },function(data){
-                $scope.vm.frames = data.data;
-                $scope.vm.frameId=$scope.vm.frames[0].frameId;
-                $scope.$apply();
-                console.log( data);
+                if(data.status!=10005){
+                    $scope.vm.frames = data.data;
+                    $scope.vm.frameId=$scope.vm.frames[0].frameId;
+                    $scope.$apply();
+                }
             },function(){
                 alert("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
-            console.log(val);
+            //console.log(val);
             if(val&&val!=old){
                 getFrame()
             }
         });
 
+        function getExtension(title,weight){
+            //$scope.vm.extensionTitle = [];
+            //$scope.vm. extensionTitle.push(title);
+            //httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+            //
+            //},function(data){
+            //    if(data.status!=10005){
+            //        $scope.vm.frames = data.data;
+            //        $scope.vm.frameId=$scope.vm.frames[0].frameId;
+            //        $scope.$apply();
+            //    }
+            //},function(){
+            //    alert("err or err")
+            //});
+        }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
       //{
     //    "categoryApplicationId": "360619411498860544",
@@ -190,12 +221,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                }
            });
            $timeout(function(){
-               var dimensions = angular.copy($scope.vm.dimensions);
-               var source = [];
-               angular.forEach(srouce,function(item){
-                   source.push(item.dimensionName)
-               });
-                console.log(source);
+               //var dimensions = angular.copy($scope.vm.dimensions);
+               //var source = [];
+               //angular.forEach(srouce,function(item){
+               //    source.push(item.dimensionName)
+               //});
+               // console.log(source);
                var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
            },500);
            //}
@@ -208,15 +239,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
 
         function getTitleGroup(){
             if( $scope.vm.title){
-                httpRequestPost("/api/ConceptKnowledge/checkExtensionQuestion", {
-                    "title" : $scope.vm.title,
+                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+                    "title" : $scope.vm.title
                 },function(data){
                     if(data.status == 500){
-                        alert()
+                        alert();
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     }else{
-                        $scope.vm.titleGroup = data.data
+                        $scope.vm.titleGroup = data.data[0].knowledgeTitleTag;
+                        $scope.$apply()
                     }
                     console.log(data);
                 },function(err){
@@ -251,22 +283,96 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         *
         */ // ****************************************** //
 
-        function getAppointRelative(){
-
-        }
         function removeAppointRelative(item){
             $scope.vm.appointRelativeGroup.remove(item);
         }
 
+
         function saveAddNew(){
-            var obj = {};
+            if(checkTitle($scope.vm.newTitle,type)){
+                var obj = {};
                 obj.title = $scope.vm.newTitle;
                 obj.channel =  $scope.vm.channel;
                 obj.channel =  $scope.vm.dimension;
-            $scope.vm.dimension.push(obj);
+                $scope.vm.scanContent.push(obj);
+            }
         }
 
+        // 检验标题是否符合
+        function checkTitle(title){
+            if(!title){
+                layer.msg("标题不能为空")
+                return false
+            }else{
+                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+                    "title" : title
+                },function(data){
+                    console.log(data);
+                    return true;
+                    //if(data.status == 500){
+                    //    alert();
+                    //    $scope.vm.titleTip = data.info;
+                    //    $scope.$apply()
+                    //}else{
+                    //    $scope.vm.titleGroup = data.data[0].knowledgeTitleTag;
+                    //    $scope.$apply()
+                    //}
+                },function(err){
+                    layer.msg("打标失败，请重新打标");
+                    return false
+                });
+            }
 
+        }
+        //function termSpliterTagEditor() {
+        //    console.log("termSpliterTagEditor");
+        //    var term = $scope.vm.term;
+        //    if(term==""){
+        //        $("#term").tagEditor({
+        //            autocomplete: {delay: 0, position: {collision: 'flip'}},
+        //            forceLowercase: false
+        //        });
+        //        console.log("789456");
+        //    }else{
+        //        var terms = term.split($scope.vm.termSpliter);
+        //        console.log(terms);
+        //        $("#term").tagEditor({
+        //            initialTags:terms,
+        //            autocomplete: {delay: 0, position: {collision: 'flip'}, source: terms},
+        //            forceLowercase: false
+        //        });
+        //        console.log("123456");
+        //    }
+        //}
+        function addAppoint(item,arr){
+            if(arr.indexOf(item)==-1){
+                arr.push(item)
+            }
+        }
+        // 動態加載 title
+        $scope.$watch("vm.appointRelative",function(title){
+            console.log(title);
+            if(title){
+                getAppointRelative(title)
+            }
+        });
+
+        function getAppointRelative(title){
+            httpRequestPost("/api/conceptKnowledge/get_knowledge_title",{
+                "title" : title
+            },function(data){
+                if(data.status == 500){
+                    //$scope.vm.titleTip = data.info;
+                    //$scope.$apply()
+                }else{
+                    //$scope.vm.appointRelativeGroup = data.data[0].knowledgeTitleTag;
+                    //$scope.$apply()
+                }
+                console.log(data);
+            },function(err){
+                layer.msg("获取指定相关知识失败")
+            });
+        }
         //初始化頁面數據
         init();
         function  init(){
