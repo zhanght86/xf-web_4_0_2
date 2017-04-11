@@ -608,7 +608,8 @@
 }
 .libraryFt{
     width: 450px;
-    /*height: 875px;*/min-height:875px;
+    height: 875px;
+    overflow-y: auto;
     background: #fff;
     float: left;
 }
