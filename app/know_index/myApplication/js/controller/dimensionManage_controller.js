@@ -21,8 +21,9 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             listDataTotal : "",
             deleteDimension:deleteDimension,
             deleteItem : deleteItem,
+            findDimension : findDimension,
             getData : getData, //返回维度列表
-            savePro : savePro,
+            savePro : savePro, //x向数组中添加数据
             userId:getCookie("userId"),
             applicationId:getCookie("applicationId"),
             paginationConf : "", //分页条件
@@ -94,6 +95,20 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 dimensionId:item.dimensionId
             },function(data){
                 $scope.vm.oldDimension.remove(item);
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
+        function findDimension(){
+            httpRequestPost("/api/application/dimension/findByDimensionName",{
+                dimensionName:$scope.vm.dimensionName,
+                applicationId:$scope.vm.applicationId,
+                dimensionParentId : 0
+            },function(data){
+                $scope.vm.listData = data.data.dimensionList;
+                $scope.vm.listDataTotal = data.data.total;
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })
