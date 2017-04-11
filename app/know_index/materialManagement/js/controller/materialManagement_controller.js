@@ -25,7 +25,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                console.log(data.data.objs);
+                //console.log(data.data.objs);
               $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
@@ -45,7 +45,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     "index" :current*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
                 },function(data){
-                    console.log( data.data.objs);
+                    //console.log( data.data.objs);
                     $scope.vm.listData= data.data.objs;
                 },function(){
                 })
@@ -61,17 +61,27 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
 
         //点击标题查看
         function seeDtails(data){
-            console.log(data)
+
+            console.log(data);
             var params = {
+                standardQuestion : data.chatKnowledgeTopic,
+                extendedQuestionArr :data.chatQuestionList,
+                contentArr : data.chatKnowledgeContent,
+                applicationId: data.chatKnowledgeApplicationId,
+                chatKnowledgeModifier : data.chatKnowledgeModifier,
                 chatKnowledgeId : data.chatKnowledgeId,
-                chatKnowledgeApplicationId:data.chatKnowledgeApplicationId,
-                chatKnowledgeContentList:data.chatKnowledgeContentList,
-                chatKnowledgeModifier:data.chatKnowledgeModifier,
-                chatKnowledgeSource:data.chatKnowledgeSource,
-                chatKnowledgeTopic:data.chatKnowledgeTopic,
-                chatQuestionList:data.chatKnowledgeTopic,
+                chatKnowledgeSource:data.chatKnowledgeSource,   //类型 100  概念      101 faq
+
+
+                //chatKnowledgeApplicationId:data.chatKnowledgeApplicationId,
+                //chatKnowledgeContentList:data.chatKnowledgeContentList,
+                //chatKnowledgeModifier:data.chatKnowledgeModifier,
+                //chatKnowledgeSource:data.chatKnowledgeSource,
+                //chatKnowledgeTopic:data.chatKnowledgeTopic,
+                //chatQuestionList:data.chatQuestionList,
             };
-            $state.go("materialManagement.chatKnowledgeScan",{scanList:params});
+            console.log(params);
+            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
 
         }
 
