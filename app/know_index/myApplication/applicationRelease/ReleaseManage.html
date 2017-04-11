@@ -12,62 +12,48 @@
                             </a>
                         </span>
                         <span class="R">
-                            <span>共有数据：<b >3</b> 条</span>
+                            <span>共有数据：<b >{{vm.dataTotal}}</b> 条</span>
                         </span>
                 </div>
                 <div>
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="5%"><input  type="checkbox" /></th>
+                            <!--<th class="bold" width="5%"><input  type="checkbox" /></th>-->
                             <th class="bold" width="20%">名称</th>
+                            <th class="bold" width="20%">服务类型</th>
                             <th class="bold" width="20%">发布时间</th>
                             <th class="bold" width="20%">状态</th>
                             <th class="bold" width="20%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>长沙银行知识</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>已发布</td>
+                        <tr ng-repeat="item in vm.serviceData">
+                            <!--<td><input  type="checkbox" /></td>-->
+                            <td>{{item.serviceName}}</td>
+                            <td ng-if="item.serviceType==10">生产服务</td>
+                            <td ng-if="item.serviceType==11">测试服务</td>
+                            <td>{{item.serviceCreateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td ng-if="item.serviceStatus==30001">未发布</td>
+                            <td ng-if="item.serviceStatus==30002">已发布</td>
+                            <td ng-if="item.serviceStatus==30003">已下线</td>
                             <td>
-                                <a href="javascript:;" class="mr-10 c-orange">下线</a>
-                                <a href="javascript:;" class="mr-10 c-green">重启</a>
+                                <a ng-if="item.serviceStatus==30001"
+                                   ng-click="vm.publishService(item.serviceId)" class="mr-10 c-orange">发布</a>
+                                <a ng-if="item.serviceStatus==30002"
+                                   ng-click="vm.stopService(item.serviceId)" class="mr-10 c-orange">下线</a>
+                                <a ng-if="item.serviceStatus==30003"
+                                   ng-click="vm.startService(item.serviceId)" class="mr-10 c-orange">上线</a>
+                                <a ng-if="item.serviceStatus==30002"
+                                   ng-click="vm.restartService(item.serviceId)" class="mr-10 c-orange">重启</a>
                                 <a href="javascript:;" class="c-primary mr-10" >编辑</a>
-                                <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>长沙银行知识</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>已发布</td>
-                            <td>
-                                <a href="javascript:;" class="mr-10 c-orange">下线</a>
-                                <a href="javascript:;" class="mr-10 c-green">重启</a>
-                                <a href="javascript:;" class="c-primary mr-10" >编辑</a>
-                                <a href="javascript:;" class="c-error" onclick="remove_del();">删除</a>
+                                <a ng-click="vm.deleteService(item.serviceId)" class="c-error">删除</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="page clearfix">
-                    <span class="page_span ">上一页</span>
-                    <a href="javascript:;" class="cura">1</a>
-                    <a href="javascript:;">2</a>
-                    <a href="javascript:;">3</a>
-                    <a href="javascript:;">4</a>
-                    <a href="javascript:;">5</a>
-                    <span class="page_span ">下一页</span>
-                    <span>共<b class="page_b">12</b>页</span>
-                    <span>跳转到</span>
-                    <input type="text" class="page_txt">
-                    <span>页</span>
-                    <span class="go_span">GO</span>
-                </div>
+                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
             </div>
         </div>
     </div>
