@@ -72,10 +72,6 @@ angular.module('adminModule').controller('userManageController', [
                 template:"/know_index/admin/userManageDialog.html",
                 //controller:function($scope){
                 //    $scope.show = function(){
-                //
-                //
-                //
-                //
                 //        console.log(6688688);
                 //        $scope.closeThisDialog(); //关闭弹窗
                 //    }},
