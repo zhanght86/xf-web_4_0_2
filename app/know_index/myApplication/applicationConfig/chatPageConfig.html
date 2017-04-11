@@ -11,62 +11,43 @@
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
                     	<span class="L">
-                            <button class="L btn1 btn_delete mr-10">批量删除</button>
+                            <button class="L btn1 btn_delete mr-10" ng-click="vm.deleteKnowledge()">删除</button>
                         	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addHotIssues()">添加</button>
                             <button class="btn1 btn_green">手动设置</button>
                         </span>
                         <span class="R">
                             <!--<span>共有数据：<b >3</b> 条</span>-->
+                             <span class="c-999 pl-10">共有数据：<b >{{vm.listDataTotal}}</b> 条</span>
                         </span>
                 </div>
                 <div>
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="5%"><input  type="checkbox" /></th>
-                            <th class="bold" width="6%">ID</th>
+                            <th class="bold" width="5%"><input  class="selectAllBtn" type="checkbox" ng-click="vm.selectAll($event)" ng-checked="vm.selectAllCheck"/></th>
                             <th class="bold" width="15%">热点知识</th>
-                            <th class="bold" width="15%">被问次数</th>
                             <th class="bold" width="12%">排序</th>
                             <th class="bold" width="18%">最终问及时间</th>
                             <th class="bold" width="17%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>员工请假相关知识</td>
-                            <td>1234</td>
-                            <td>1</td>
-                            <td>2016.9.27 12:00:00</td>
+                        <tr ng-repeat="item in vm.listData">
+                            <!--{{vm.listData}}-->
+                            <td><input  type="checkbox" ng-checked="vm.selectAllCheck" ng-click="vm.selectSingle($event,item.hotQuestionId)"/></td>
+                            <td>{{item.hotQuestionTitle}}</td>
+                            <td>{{item.hotQuestionOrder}}</td>
+                            <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>
-                                <a href="javascript:;" class="c-primary ">下移</a>
+                                <a  class="c-primary mr-10" href="javascript:;"   ng-click="vm.toTop(item)"  ng-if="$index!=0">置顶</a>
+
+                                <a  class="c-primary mr-10" href="javascript:;"   ng-click="vm.move(item)"  ng-if="$index!=0">上移</a>
+
+                                <a  class="c-primary" href="javascript:;"   ng-click="vm.down(item)"  ng-if="$index!=vm.listData.length-1">下移</a>
+
                             </td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>员工请假相关知识</td>
-                            <td>1234</td>
-                            <td>1</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>
-                                <a href="javascript:;" class="c-primary mr-10">置顶</a>
-                                <a href="javascript:;" class="c-primary mr-10">上移</a>
-                                <a href="javascript:;" class="c-primary ">下移</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" /></td>
-                            <td>1</td>
-                            <td>员工请假相关知识</td>
-                            <td>1234</td>
-                            <td>1</td>
-                            <td>2016.9.27 12:00:00</td>
-                            <td>
-                                <a href="javascript:;" class="c-primary mr-10">置顶</a>
-                                <a href="javascript:;" class="c-primary mr-10">上移</a>
+                            <td ng-if="">
+
                             </td>
                         </tr>
                         </tbody>
