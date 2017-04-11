@@ -139,24 +139,76 @@
             <div class="r-cont-bd">
 
                 <div class="csso-cz-box clearfix mt30 ">
-                    <div class="fl">
-                        <div class="search-box">
-                            <input class="ipt-txt" type="text" placeholder="请输入知识标题" style="width: 280px;" />
-                        </div>
-                        <a class="btn se-search-btn ml10" href="#">高级查找</a>
-                        <div class="my-select ml10" style="width: 112px;">
-                            <div class="my-value">
-                                <label>新增知识</label><em></em>
+                    <div class="L pr mr-20">
+                        <div>
+                            <div class="search-box">
+                                <input class="input-text" type="text" placeholder="请输入知识标题" style="width: 280px;" />
                             </div>
-                            <div class="my-option" style="display: none;">
-                                <dl>
-                                    <dd value="1">新增知识</dd>
-                                    <dd value="2">新增知识</dd>
-                                    <dd value="3">新增知识</dd>
-                                </dl>
+                            <button class="btn1 btn1_blue advanced_sear_btn">高级查找</button>
+                        </div>
+                        <div class="advanced_search bd" >
+                            <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">知识内容:</span>
+                                <input type="text" class="input_text"/>
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">知识有效期：</span>
+                                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;"  readonly="">
+                                -
+                                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;"  readonly="">
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">作者:</span>
+                                <input type="text" class="input_text"/>
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">匹配方式:</span>
+                                <div>
+                                    <label class="mr-10"><input type="radio"/>完全匹配</label>
+                                    <label><input type="radio"/>智能匹配</label>
+                                </div>
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">知识来源:</span>
+                                <div>
+                                    <label class="mr-10"><input type="radio"/>全部</label>
+                                    <label class="mr-10"><input type="radio"/>单条新增</label>
+                                    <label class="mr-10"><input type="radio"/>批量导入</label>
+                                    <label class="mr-10"><input type="radio"/>文档加工</label>
+                                </div>
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">更新时间:</span>
+                                <div>
+                                    <label class="mr-10"><input type="radio"/>不限</label>
+                                    <label class="mr-10"><input type="radio"/>近三天</label>
+                                    <label class="mr-10"><input type="radio"/>近七天</label>
+                                    <label class="mr-10"><input type="radio"/>近一月</label>
+                                </div>
+                            </div>
+                            <div class="tc">
+                                <input type="button" class="btn1 btn1_blue" value="搜索" style="width:100px;"/>
                             </div>
                         </div>
                     </div>
+                    <!--<div class="my-select ml10 L" style="width: 112px;">-->
+                        <!--<div class="my-value">-->
+                            <!--<label style="height:31px;line-height:31px;">新增知识</label><em></em>-->
+                        <!--</div>-->
+                        <!--<div class="my-option" style="display: none;">-->
+                            <!--<dl>-->
+                                <!--<dd value="1">新增知识</dd>-->
+                                <!--<dd value="2">新增知识</dd>-->
+                                <!--<dd value="3">新增知识</dd>-->
+                            <!--</dl>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <select class="sel bd L">
+                        <option>新增知识</option>
+                        <option>新增知识</option>
+                        <option>新增知识</option>
+                    </select>
+
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;">批量导入</a>
                         <a class="btn btn-green" href="javascript:;">知识加工</a>
@@ -197,10 +249,10 @@
                                         <div class="value oh">
                                             <ul class="">
                                                 <li>
-                                                    <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
+                                                    <a href="#" title="信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....">信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</a>
                                                 </li>
                                                 <li>
-                                                    <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
+                                                    <a href="#" title="信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....">信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -325,3 +377,8 @@
 <style>
 
 </style>
+<script>
+    $('.advanced_sear_btn').click(function(){
+        $('.advanced_search').slideToggle();
+    });
+</script>
