@@ -165,4 +165,4 @@
 .tag_div{width:120px;border:1px solid #bdbdbd;padding:10px;}
 
 /*知识总览弹窗*/
-.advanced_search{position:absolute;left:0;top:30px;display:none;width:460px;background:#e3e8e7;z-index:100;padding:10px;box-sizing:border-box;}
+.advanced_search{position:absolute;left:0;top:30px;display:none;width:480px;background:#e3e8e7;z-index:100;padding:20px;box-sizing:border-box;}
