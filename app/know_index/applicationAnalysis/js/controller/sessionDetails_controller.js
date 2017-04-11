@@ -26,18 +26,30 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             timeEnd : null,
 
             orderForSessionNumber : null,
-            orderForSessionTime : null,
+            orderForSessionTime : 0,
 
             timeList : [],
             getdetail : getdetail,
             currentPage : 1,
             total : null,
-            talkDetail : null
+            talkDetail : null,
+            userId : null,
+            prePage : prePage ,
+            nextPage : nextPage
 
         };
+        function remove(item){
+
+            $scope.vm.arr.remove(item)
+
+
+        }
+
+
         // 点击查看
         function scan(id){
-            console.log(id)
+            $scope.vm.userId = id;
+            console.log(id);
             getScanData(id,1);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/sessionDetailsDialog.html",
@@ -54,25 +66,25 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
         }
         //获取对应user 的 对话列表
         function getScanData(id,index){
-            console.log(index);
+            console.log(id);
             httpRequestPost("/api/analysis/userSession/searchTimeBar",{
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
 
                 "requestTimeType":$scope.vm.timeType,
+
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeStart,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
 
-                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
-                "orderForSessionTime": $scope.vm.orderForSessionTime,
                 "userId" : id
             },function(data){
-                console.log(id);
+                console.log(data.data.total);
                 $scope.vm.total = data.data.total/$scope.vm.pageSize;
                 $scope.vm.timeList = data.data.objs;
+                $scope.vm.getdetail( $scope.vm.timeList[0].sessionId);
                 $scope.$apply();
                 console.log(data.data)
             },function(){
@@ -88,17 +100,18 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
 
         //排序  按会话数量
         $scope.$watch('vm.orderForSessionNumber', function(current){
-           console.log(current);
-            if(current){
-                getList(1)
-            }
+           console.log(current+"ddd");
+                getList(1);
         });
         //排序 按时间
         $scope.$watch('vm.orderForSessionTime', function(current,old){
-            if(current!=old){
-                getList(1)
-            }
+            $scope.vm.orderForSessionNumber=null;
+            console.log(current);
+            //if(current!=old){
+                getList(1);
+            //}
         });
+
      //表格列表
         function getList(index){
             //console.log((index-1)*$scope.vm.pageSize );
@@ -112,6 +125,8 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
+                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
+                "orderForSessionTime": $scope.vm.orderForSessionTime,
 
             },function(data){
                 $scope.vm.listData = data.data.objs;
@@ -133,17 +148,30 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             httpRequestPost("/api/analysis/userSession/searchTimeBarContent",{
                "sessionId" : sessionId
             },function(data){
+                $scope.vm.talkDetail = data.data.objs
                 console.log(data)
             },function(err){
                 console.log(err)
             })
         }
-
-        $scope.$watch('vm.currentPage', function(current,oldVal){
-            if(current!=oldVal){
-                getScanData(current);
+        function nextPage(){
+            if($scope.vm.currentPage<$scope.vm.total){
+                $scope.vm.currentPage+=1;
+                getScanData($scope.vm.userId,$scope.vm.currentPage);
+                $scope.vm.getdetail( $scope.vm.timeList[0].sessionId);
+            }else if($scope.vm.currentPage=$scope.vm.total){
+                $scope.vm.currentPage=$scope.vm.total
             }
-        });
+        }
+        function prePage(){
+            if($scope.vm.currentPage=1){
+                $scope.vm.currentPage=1;
+            }else{
+                getScanData($scope.vm.userId,$scope.vm.currentPage);
+                $scope.vm.getdetail( $scope.vm.timeList[0].sessionId);
+            }
+        }
+
 
         init();
         function init(){
