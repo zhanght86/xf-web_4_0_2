@@ -23,63 +23,41 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             timeStart : null,
             timeEnd : null,
 
-            orderForSessionNumber : null,
-            orderForSessionTime : null,
+            "orderForSessionNumber": null,
 
-            timeList : [],
-            getdetail : getdetail,
-            currentPage : 1,
-            total : null,
-            talkDetail : null
+            "orderForUnsatisfiedNumber": null,
+
+            "orderForSatisfactionRate": null,
+
+            sotrBySe : sotrBySe ,
+            sotrBySa : sotrBySa ,
+            sotrBySaRa : sotrBySaRa
+
         };
+        function sotrBySe(){
 
-        var myChart = echarts.init(document.getElementById('statistics'));
-        // 指定图表的配置项和数据
-        var option = {
-            title : {
-                text: '某站点用户访问来源',
-                subtext: '纯属虚构',
-                x:'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-            },
-            series : [
-                {
-                    name: '访问来源',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '60%'],
-                    data:[
-                        {value:335, name:'直接访问'},
-                        {value:310, name:'邮件营销'},
-                        {value:234, name:'联盟广告'},
-                        {value:135, name:'视频广告'},
-                        {value:1548, name:'搜索引擎'}
-                    ],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-
+            $scope.vm.orderForSessionNumber=($scope.vm.orderForSessionNumber?0:1),
+            $scope.vm.orderForUnsatisfiedNumber=null,
+            $scope.vm.orderForSatisfactionRate=null,
+                //console.log($scope.vm.orderForSessionNumber)
+            getList(1)
+        }
+        function sotrBySa(){
+            $scope.vm.orderForUnsatisfiedNumber=($scope.vm.orderForUnsatisfiedNumber?0:1),
+            $scope.vm.orderForSessionNumber=null,
+            $scope.vm.orderForSatisfactionRate=null,
+            getList(1)
+        }
+        function sotrBySaRa(){
+            $scope.vm.orderForSatisfactionRate=($scope.vm.orderForSatisfactionRate?0:1),
+            $scope.vm.orderForUnsatisfiedNumber=null,
+            $scope.vm.orderForSessionNumber=null,
+            getList(1)
+        }
         //表格列表
         function getList(index){
             //console.log((index-1)*$scope.vm.pageSize );
-            httpRequestPost("/api/analysis/userSession/searchList",{
+            httpRequestPost("/api/analysis/satisfaction/searchList",{
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
 
@@ -90,7 +68,13 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
 
+                "orderForSatisfactionRate": $scope.vm.orderForSatisfactionRate,
+
+                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
+
+                "orderForUnsatisfiedNumber": $scope.vm.orderForUnsatisfiedNumber,
             },function(data){
+                console.log(data.data);
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
@@ -111,11 +95,67 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             }
         });
 
+        function getPieData(){
+            httpRequestPost("/api/analysis/satisfaction/chartAndTotal",{
+                "channelId": $scope.vm.channelId,
+                "dimensionId": $scope.vm.dimensionId,
+
+                "requestTimeType":$scope.vm.timeType,
+                "startTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeStart,
+
+            },function(data){
+                if(data.data){
+                    var params = data.data.objs[0];
+                    var myChart = echarts.init(document.getElementById('statistics'));
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title : {
+                            text: '满意率统计',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['满意率','不满意率']
+                        },
+                        series : [
+                            {
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:params.satisfiedNumber, name:'满意率'},
+                                    {value:params.unsatisfiedNumber, name:'不满意率'},
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                }
+            },function(err){
+                layer.msg("获取满意度失败，请刷新页面")
+            });
+        }
+
         init();
         function init(){
             getDimensions();
             getChannel();
             getList(1);
+            getPieData()
         }
         //維度
 
