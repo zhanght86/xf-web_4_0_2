@@ -10,7 +10,7 @@
     </div>
     <div class="libraryCnt">
         <div class="libraryFt pd-20 mr-20">
-            <h3 class="tc mb-20">资源BOT</h3>
+            <h3 class="tc mb-20">资源BOT<i ng-click="vm.addBotLibrary()" style="display: inline-block;margin-left: 20px;cursor: pointer;">+</i></h3>
             <div class="item-line">
                 <div class="value menu_1Div" id="menu_1Div">
                     <div class="ipt-txt-box">
@@ -20,17 +20,8 @@
             </div>
         </div>
         <div class="library_mid  L mr-20" >
-            <div class="mb-30">
-                <select class="bd sel">
-                    <option>导为根节点</option>
-                    <option>导为子节点</option>
-                </select>
-            </div>
             <div class="mb-20">
-                <a href="javascript:;" class="right_arrow"> >> >> </a>
-            </div>
-            <div>
-                <a href="javascript:;" class="left_arrow"> << << </a>
+                <a href="javascript:;" class="right_arrow" ng-click="vm.applyCategory()"> >> >> </a>
             </div>
         </div>
         <div class="libraryFt pd-20">
@@ -43,7 +34,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>

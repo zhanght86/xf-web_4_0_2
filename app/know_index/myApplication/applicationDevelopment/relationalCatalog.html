@@ -11,27 +11,13 @@
 
     <div class="libraryCnt">
         <div class="libraryFt pd-20">
-            <!--<input class="libSearch" type="text">-->
             <div class="mb-30">
-                <input type="text" class="input_text"/>
-                <input type="button" value="查找" class="btn1 btn1_blue"/>
+                <input id="category-autocomplete" type="text" class="input_text"/>
             </div>
             <div class="item-line">
                 <div class="value menu_1Div" id="menu_1Div">
                     <div class="ipt-txt-box">
-                        <div class="aside-navs aside-navs-v show" >
-                            <ul class="menus show">
-                                <li ng-repeat="item in vm.botRoot" data-option="{{item.categoryPid}}">
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                            <span data-option="{{item.categoryId}}">{{item.categoryName}}</span>
-                                            &nbsp;<p class='treeEdit' bot-info={{item}}><img class="edit" src='images/bot-edit.png'/><img class="delete" style='width: 12px;' src='images/detel.png'/></p>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <div class="aside-navs aside-navs-v show"></div>
                     </div>
                 </div>
             </div>
