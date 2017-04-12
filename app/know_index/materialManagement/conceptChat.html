@@ -37,7 +37,9 @@
                             <label class="form-label col-xs-4 col-sm-2 text-r">new扩展问题：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="L" style="width:279px;border:1px solid #eee;height:30px;overflow-x: auto;">
-                                    <span class="kz_span" ng-repeat="val in item.tagList">{{val}}</span>
+                                   <!--{{typeOf item.chatQuestionTag}}-->
+                                    <span class="kz_span" ng-if="item.chatQuestionTag" ng-repeat="value in item.chatQuestionTag">{{value}}</span>
+                                    <span class="kz_span" ng-if="item.tagList" ng-repeat="val in item.tagList">{{val}}</span>
                                 </div>
                                 <!--<input type="text" ng-model="item" readonly class="L input-text extended_query_txt"-->
                                        <!--style="width:279px;" >-->
