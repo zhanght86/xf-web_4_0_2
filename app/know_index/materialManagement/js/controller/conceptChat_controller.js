@@ -3,28 +3,29 @@
  * 控制器
  */
 angular.module('materialManagement').controller('conceptChatController', [
-    '$scope',"$state","ngDialog","$stateParams", function ($scope,$state,ngDialog,$stateParams) {
+    '$scope',"$state","ngDialog","$stateParams",
+    function ($scope,$state,ngDialog,$stateParams) {
         $state.go("materialManagement.conceptChat");
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
-        console.log("d",$stateParams.scanDataList);
+        //console.log( $stateParams.scanDataList.extendedQuestionArr[0]);    //edit    -----taglist
         $scope.vm = {
-            userName : getCookie("userName"),
             applicationId : getCookie("applicationId"),
+            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:getCookie("userName"),
             standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
             extendedQuestionArr : $stateParams.scanDataList?$stateParams.scanDataList.extendedQuestionArr:[],  //扩展问数组
+            chatKnowledgeId : $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeId:null,
             remove : remove ,
             weight : "60" ,         //  权重
             addExtension : addExtension ,  //添加扩展
-
-
             contentVal : "",
             contentArr : $stateParams.scanDataList?$stateParams.scanDataList.contentArr:[] ,
             addContentDialog : addContentDialog,// 添加知识内容
-            save : save ,
+            save : save,
             scan : scan,
-            scanData : $stateParams.scanData
+            scanData : $stateParams.scanData,
+            type : $stateParams.scanData?$stateParams.scanData.type:1
         };
         //擴展問
         function addExtension(){
@@ -139,12 +140,14 @@ angular.module('materialManagement').controller('conceptChatController', [
             arr.remove(item);
         }
         function saveScan(params){
+
             httpRequestPost("/api/chatKnowledge/addConceCptChatKnowledge",{
                 "applicationId": params.applicationId,
                 "chatKnowledgeModifier": params.chatKnowledgeModifier,
                 "chatKnowledgeTopic": params.standardQuestion,
                 "chatQuestionList" : params.extendedQuestionArr,
-                "chatKnowledgeContentList" : params.contentArr
+                "chatKnowledgeContentList" : params.contentArr,
+                "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null
             },function(data){
                 if(data.data==10004){
                     layer.msg("标准问重复")
@@ -156,24 +159,27 @@ angular.module('materialManagement').controller('conceptChatController', [
         };
         //预览
         function scan(){
-            //if(check()){
+            if(check()){
             var params = {
+                chatKnowledgeId : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                 standardQuestion : $scope.vm.standardQuestion,
                 extendedQuestionArr : $scope.vm.extendedQuestionArr,
                 contentArr : $scope.vm.contentArr,
                 applicationId: $scope.vm.applicationId,
                 chatKnowledgeModifier : $scope.vm.userName,
                 save : saveScan,
-                editUrl : "materialManagement.faqChat",
+                editUrl : "materialManagement.conceptChat",
+                type : 1
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
         }
+        }
         //保存  0 无验证   1  需要验证
-
         function save(){
             if(check()){
-                console.log($scope.vm.extendedQuestionArr)
+                console.log($scope.vm.extendedQuestionArr);
                 httpRequestPost("/api/chatKnowledge/addConceCptChatKnowledge",{
+                    "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     "applicationId": $scope.vm.applicationId,
                     "chatKnowledgeModifier": $scope.vm.userName,
                     "chatKnowledgeTopic": $scope.vm.standardQuestion,
@@ -186,7 +192,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                         $state.go("materialManagement.chatKnowledgeBase");
                     }
                 },function(err){
-
+                    layer.msg("保存失败");
                 })
             }
         }

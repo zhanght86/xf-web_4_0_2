@@ -1,26 +1,23 @@
 <div class="pd-20">
-    <h3 class="mb-20 tc f16">添加业务框架至白领卡内</h3>
+    <h3 class="mb-20 tc f16">添加业务框架至{{vm.knowledgeBotVal}}</h3>
     <div class="framework mb-20">
         <span class="framework_s">业务框架类型：</span>
-        <select class="framework_sel bd">
-            <option>FAQ</option>
-            <option>概念扩展</option>
-            <option>要素</option>
+        <select id="frameTypeId" class="framework_sel bd">
+            <option value=10011>FAQ</option>
+            <option value=10012>概念扩展</option>
+            <option value=10013>要素</option>
         </select>
     </div>
     <div class="framework mb-20">
         <span class="framework_s">框架名称：</span>
-        <input type="text" class="input_text"/>
+        <input id="frameTitle" type="text" class="input_text" required/>
     </div>
     <div class="tc">
-        <!--<input type="button" class="btn1 btn1_blue mr-10" ui-sref="faqNewFrame.manage" value="添加"/>-->
         <input type="button" class="btn1 btn1_blue mr-10"  ng-click="closeThisDialog(1)" value="添加"/>
         <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消"/>
     </div>
-
 </div>
 <style>
-
 </style>
 
 
