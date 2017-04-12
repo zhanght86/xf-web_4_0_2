@@ -42,7 +42,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                console.log(data);
               $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
@@ -55,9 +54,30 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 layer.msg("请求失败");
             })
         }
+        setTimeout(function(){
+            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+                "applicationId": $scope.vm.applicationId,
+                "index" : 5 ,
+                "pageSize": $scope.vm.pageSize
+            },function(data){
+                $scope.vm.listData = data.data.objs;
+                $scope.vm.paginationConf = {
+                    currentPage: 2,//当前页
+                    totalItems: Math.ceil(data.data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败");
+            })
+        },1000)
         //分页 查询
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
+                console.log(current);
+                var index = (current-1)*($scope.vm.pageSize);
+                console.log(index);
                 getData(current);
             }
         });
