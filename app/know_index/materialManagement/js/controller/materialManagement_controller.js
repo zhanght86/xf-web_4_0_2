@@ -14,7 +14,29 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             searchList : "",   //查询数据结果
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
+//刪除知识
+            getDel : getDel,
+            delKnowledge : delKnowledge,
+            delArr : []
         };
+
+        function getDel(ev,id){
+            var  self =$(ev.target);
+            if(self.prop("checked")){
+                $scope.vm.delArr.push(id)
+            }else{
+                $scope.vm.delArr.remove(id)
+            }
+        }
+        function delKnowledge(){
+            httpRequestPost("/api/chatKnowledge/deleteConceCptChatKnowledge",{
+                "ids":$scope.vm.delArr
+            },function(data){
+               console.log(data);
+            },function(err){
+                layer.msg("删除失败")
+            })
+        }
 
         function search(){
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
@@ -39,7 +61,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         function getData(index){
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
+                "index" :index==1?0:$scope.vm.pageSize*index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
               $scope.vm.listData = data.data.objs;
@@ -54,30 +76,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 layer.msg("请求失败");
             })
         }
-        setTimeout(function(){
-            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
-                "applicationId": $scope.vm.applicationId,
-                "index" : 5 ,
-                "pageSize": $scope.vm.pageSize
-            },function(data){
-                $scope.vm.listData = data.data.objs;
-                $scope.vm.paginationConf = {
-                    currentPage: 2,//当前页
-                    totalItems: Math.ceil(data.data.total/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
-            },function(){
-                layer.msg("请求失败");
-            })
-        },1000)
         //分页 查询
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 console.log(current);
-                var index = (current-1)*($scope.vm.pageSize);
-                console.log(index);
                 getData(current);
             }
         });
