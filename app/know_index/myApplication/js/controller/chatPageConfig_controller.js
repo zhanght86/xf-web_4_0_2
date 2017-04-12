@@ -86,7 +86,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         if(id==item.chatKnowledgeId){
                             $scope.vm.seleceAddAll.splice(index,1)
                         }
-                    })
+                    });
                 //$scope.vm.seleceAddAll.remove(obj);
                 $(".selectAllBtnDialog").prop("checked",false)
             }else{
@@ -144,7 +144,6 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
-
         //从聊天知识库查询知识
         function findKnowledge(){
             httpRequestPost("/api/chatKnowledge/findChatKnowledgeByApplicationId",{
