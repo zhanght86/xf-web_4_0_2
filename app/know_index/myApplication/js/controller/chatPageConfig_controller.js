@@ -44,7 +44,9 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             findKnowledge : findKnowledge,
             selectAllDialog : selectAllDialog,
             selectSingleDialog : selectSingleDialog,
-            deleteDialog : deleteDialog
+            deleteDialog : deleteDialog,
+
+            setFlag : false   // 设置手动设置开关
         };
 
         function selectAllDialog(ev){
