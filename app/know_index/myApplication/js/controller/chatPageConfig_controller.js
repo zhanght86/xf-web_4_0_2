@@ -111,7 +111,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
         }
        function selectSingle(ev,id){
            var self = $(ev.target);
-           if(self.attr('checked')){
+           if(self.attr('checked')){   
                self.attr('checked',false);
                $scope.vm.deleteIds.remove(id);
                $(".selectAllBtn").attr("checked",false)
@@ -239,9 +239,12 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             applicationId : $scope.vm.applicationId,
                             userId :  $scope.vm.userId,
                             hotKnowledgeList : $scope.vm.seleceAddAll
-
                         },function(data){
+                            console.log(data);
                             $state.reload();
+                            if(data.status == 10012){
+                                layer.msg("数据重复!")
+                            }
                         },function(){
                             layer.msg("请求失败")
                         })
