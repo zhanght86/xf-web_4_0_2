@@ -153,9 +153,11 @@
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
-                                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;"  readonly="">
-                                -
-                                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;"  readonly="">
+                                <span>
+                                    <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;" placeholder="" readonly="">
+                                    -
+                                    <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate" style="width:165px;" placeholder="" readonly="">
+                                </span>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">作者:</span>
@@ -375,7 +377,7 @@
 
 </div>
 <style>
-
+    .advanced_search{background:#fff;}
 </style>
 <script>
     $('.advanced_sear_btn').click(function(){
