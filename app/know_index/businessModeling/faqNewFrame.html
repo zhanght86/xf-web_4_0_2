@@ -2,55 +2,69 @@
     <div class="content_box mb25 ">
         <h3 class="f22 pl-10 mb15">白领卡办理</h3>
         <div class=" p10 ">
-            <div class="row cl mb-10">
-                <label class="form-label col-xs-4 col-sm-2 text-r">标准问题：</label>
-                <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                    <input  type="text" class="input-text mr-10" placeholder="我想办理信用卡，给我说说流程" style="width:300px;"/>
-                </div>
+            <div class="framework mb-10">
+                <span class="framework_s">标准问题：</span>
+                <input  type="text" class="input-text mr-10" placeholder="我想办理信用卡，给我说说流程" style="width:400px;"/>
             </div>
+            <div class="exten_problem mb-10" >
+                <div class="framework mb-10">
+                    <span class="framework_s">扩展问题：</span>
+                    <input type="text" class="L input-text mr-10 extended_query_txt" placeholder="请输入扩展问题" style="width:400px;"/>
+                    <a href="javascript:;" class="create_a" onclick="add_ques();">
+                        <img src="../../images/images/add_img.png" >
+                    </a>
+                </div>
+                <div class="framework mb-10 clearfix" >
+                    <span class="framework_s">扩展问题：</span>
+                    <div class="L tag_box bd mr-10">
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
+                        <span class="tag_s">tag1</span>
 
-            <div class="exten_problem" >
-                <div class="row cl mb-10">
-                    <label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        <input type="text" class="L input-text mr-10 extended_query_txt" placeholder="请输入扩展问题" style="width:300px;"/>
-                        <a href="javascript:;" class="create_a" onclick="add_ques();">
-                            <img src="../../images/images/add_img.png" >
-                        </a>
                     </div>
+                    <a href="javascript:;" class="L" onclick="rem_ques()" ><img src="../../images/images/delete_img.png"></a>
                 </div>
             </div>
-
-            <div class="row cl mb-10 pt-10">
-                <label class="form-label col-xs-4 col-sm-2 text-r"></label>
-                <div class="formControls col-xs-8 col-sm-9">
+            <div class="framework">
+                <span class="framework_s"></span>
+                <div >
                     <input type="button" class="btn1 btn1_blue mr-20" value="保存"/>
                     <input type="button" class="btn1 btn_green" value="返回"/>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
 <style>
     .ngdialog.ngdialog-theme-default .ngdialog-content {
-        min-width: 1000px;
+        min-width: 640px;
     }
     .content_box{
-        width: 970px;
+        width: 600px;
     }
+    .framework{min-height:31px;}
+    .tag_box{width:400px;height:150px;overflow-y:auto;padding:5px;box-sizing:border-box;}
+
+    .tag_s{margin-bottom:5px;display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:28px;line-height:28px;padding:0 10px;margin-right:6px;}
 </style>
 <script>
     //添加扩展问
     function add_ques(){
         var oVal=$('.extended_query_txt').val();
-        var str='<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" value="'+oVal+'" style="width:300px;"><a href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
-        $('.exten_problem').append(str);
+        var str='<span class="tag_s">'+oVal+'</span>';
+        $('.tag_box').append(str);
         $('.extended_query_txt').val('');
     }
     //删除扩展问
-    function rem_ques(obj){
-        $(obj).parent().parent().remove();
+    function rem_ques(){
+        $('.tag_box').children('span:last-child').remove();
     }
 </script>
 
