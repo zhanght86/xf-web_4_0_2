@@ -126,6 +126,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     chatKnowledgeModifier : $scope.vm.userName,
                     save : saveScan,
                     editUrl : "materialManagement.faqChat",
+                    type : 1
                 };
                 $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
             //}
