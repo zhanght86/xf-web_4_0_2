@@ -34,48 +34,25 @@
                                 <input type="text" class="input_text"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">知识有效期：</span>
-                                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;"  readonly="">
-                                -
-                                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;"  readonly="">
+                                <span class="framework_s">更新时间:</span>
+                                <div>
+                                    <label class="mr-10"><input type="radio"/>近三天</label>
+                                    <label><input type="radio"/>近七天</label>
+                                    <label><input type="radio"/>近一月</label>
+                                </div>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">作者:</span>
                                 <input type="text" class="input_text"/>
                             </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">匹配方式:</span>
-                                <div>
-                                    <label class="mr-10"><input type="radio"/>完全匹配</label>
-                                    <label><input type="radio"/>智能匹配</label>
-                                </div>
-                            </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">知识来源:</span>
-                                <div>
-                                    <label class="mr-10"><input type="radio"/>全部</label>
-                                    <label class="mr-10"><input type="radio"/>单条新增</label>
-                                    <label class="mr-10"><input type="radio"/>批量导入</label>
-                                    <label class="mr-10"><input type="radio"/>文档加工</label>
-                                </div>
-                            </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">更新时间:</span>
-                                <div>
-                                    <label class="mr-10"><input type="radio"/>不限</label>
-                                    <label class="mr-10"><input type="radio"/>近三天</label>
-                                    <label class="mr-10"><input type="radio"/>近七天</label>
-                                    <label class="mr-10"><input type="radio"/>近一月</label>
-                                </div>
-                            </div>
                             <div class="tc">
-                                <input type="button" class="btn1 btn1_blue" value="搜索" style="width:100px;"/>
+                                <input type="button" class="btn1 btn1_blue" value="高级搜索" style="width:100px;"/>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="clearfix csso-bd bd pl-20 pr-20 mt-30">
+                <div class="clearfix csso-bd bd pl-20 pr-20 mt-30" style="min-height:400px;">
                     <ul class="csso-lsit">
                         <li ng-if="vm.listData" ng-repeat="item in vm.listData">
                             <div class="mb-10"><input type="checkbox" ng-click="vm.getDel($event,item.chatKnowledgeId)"/><a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.chatKnowledgeTopic}}</a></div>
@@ -101,7 +78,8 @@
 
 </div>
 <style>
-
+    
+    .advanced_search {width:400px;background:#fff;}
 </style>
 <script>
     //
