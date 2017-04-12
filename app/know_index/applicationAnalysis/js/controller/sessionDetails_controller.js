@@ -68,7 +68,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 "requestTimeType":$scope.vm.timeType,
 
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
