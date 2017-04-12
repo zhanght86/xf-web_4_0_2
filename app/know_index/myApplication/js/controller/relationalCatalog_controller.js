@@ -19,13 +19,15 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             deleteBot:deleteBot,
             categoryId: "",
             categoryTypeId: 10009,
+            botSelectType:10009,
             categorySceneId: 0,
             categoryAttributeName: "",
             categoryName: "",
             categoryPid: "",
             categoryApplicationId: "",
             categoryLeaf: 1,
-            botInfoToCategoryAttribute:botInfoToCategoryAttribute
+            botInfoToCategoryAttribute:botInfoToCategoryAttribute,
+            clearColor:clearColor
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -33,6 +35,36 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         var categoryApplicationId = getCookie("categoryApplicationId");
         var categoryModifierId = getCookie("categoryModifierId");
         var categorySceneId = getCookie("categorySceneId");
+
+        var params = {
+            "categoryName":$("#categoryName").val(),
+            "categoryApplicationId":categoryApplicationId
+        }
+        //类目查找自动补全
+        $('#category-autocomplete').autocomplete({
+            serviceUrl: "/api/modeling/category/searchbycategoryname",
+            type:'POST',
+            params:params,
+            paramName:'categoryName',
+            dataType:'json',
+            transformResult:function(data){
+                var result = new Object();
+                var array = [];
+                if(data.data){
+                    for(var i=0;i<data.data.length;i++){
+                        array[i]={
+                            data:data.data[i].categoryId,
+                            value:data.data[i].categoryName
+                        }
+                    }
+                }
+                result.suggestions = array;
+                return result;
+            },
+            onSelect: function(suggestion) {
+                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+            }
+        });
         //加载业务树
         initBot();
 
@@ -47,8 +79,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
-                        '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
+                        '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -60,9 +93,13 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             });
         }
         $(".aside-navs").on("click","span",function(){
+            clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
+            $scope.vm.botSelectType = $(this).attr("type-option");
+            $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
+            disableAttribyteType();
             $scope.$apply()
         });
         $(".aside-navs").on("click",".edit",function(){
@@ -95,7 +132,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 "categoryLeaf": $scope.vm.categoryLeaf
                             },function(data){
                                 if(responseView(data)==true){
-                                    //清空指定pid下所有子分类 重新加载
+                                    //重新加载
                                     reloadBot(data,2);
                                 }
                             },function(err){
@@ -131,7 +168,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             "categoryLeaf": $scope.vm.categoryLeaf
                         },function(data){
                             if(responseView(data)==true){
-                                //清空指定pid下所有子分类 重新加载
+                                //重新加载
                                 reloadBot(data,1);
                             }
                         },function(err){
@@ -143,7 +180,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             });
         }
         //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'.icon-jj',function(){
+        $(".aside-navs").on("click",'i',function(){
             appendTree(this);
         });
         //加载子树
@@ -162,8 +199,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
-                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
+                                '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -203,7 +240,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 "categoryLeaf": 0,
             },function(data){
                 if(responseView(data)==true){
-                    //清空指定pid下所有子分类 重新加载
+                    //重新加载
                     reloadBot(data,0);
                 }
             },function(err){
@@ -235,8 +272,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
-                                '<i class="icon-jj" data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
+                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -250,8 +287,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
-                                '<i class="icon-jj" data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
+                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -288,6 +325,40 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.categoryApplicationId=category.categoryApplicationId;
                 $scope.vm.categoryLeaf=category.categoryLeaf;
             }
+        }
+        //禁用指定属性类型
+        function disableAttribyteType(){
+            $.each($("#category-type").find("option"),function(index,value){
+                if(($(value).val()==$scope.vm.botSelectType & $scope.vm.botSelectType!=10009)>0){
+                    $(value).attr("disabled","disabled");
+                    $(value).attr("style","background-color: lightgrey");
+                }else{
+                    $(value).attr("disabled");
+                    $(value).attr("style");
+                }
+            });
+        }
+        //清除已选颜色
+        function clearColor(){
+            $.each($(".aside-navs").find("span"),function(index,value){
+                $(value).attr("style","");
+            });
+        }
+        //自动转换图标类型
+        function styleSwitch(type,leaf){
+            if(leaf==0){
+                return "";
+            }
+            var style ='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+            switch (type){
+                case 10008:
+                    style='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                case 10007:
+                    style='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                case 10006:
+                    style='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+            }
+            return style;
         }
     }
 ]);
