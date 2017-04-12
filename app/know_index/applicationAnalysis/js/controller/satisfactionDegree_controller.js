@@ -35,7 +35,6 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
 
         };
         function sotrBySe(){
-
             $scope.vm.orderForSessionNumber=($scope.vm.orderForSessionNumber?0:1),
             $scope.vm.orderForUnsatisfiedNumber=null,
             $scope.vm.orderForSatisfactionRate=null,
@@ -63,7 +62,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
 
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
@@ -102,7 +101,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
 
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
             },function(data){
                 if(data.data){
