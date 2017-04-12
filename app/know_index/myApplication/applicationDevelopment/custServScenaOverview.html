@@ -9,6 +9,32 @@
         <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
     </div>
 
+<!--test-->
+    <!--<div class="value Div" id="Div">-->
+        <!--{{vm.botRoot}}-->
+        <!--<div class="ipt-txt-box">-->
+            <!--<input class="ipt-txt" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>-->
+            <!--<i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>-->
+            <!--&lt;!&ndash;<div class="aside-navs aside-navs2" >&ndash;&gt;-->
+                <!--<div class="aside-navs aside-navs2 aside-nav aside-navn">-->
+                <!--<ul class="menus show">-->
+                    <!--&lt;!&ndash;//test&ndash;&gt;-->
+                    <!--<li ng-repeat="item in vm.botRoot">-->
+                        <!--<div class="slide-a">-->
+                            <!--<a class="ellipsis" href="javascript:;">-->
+                                <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
+                                <!--<span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--test -->
+
     <div class="page-lrcont210 clearfix bgwhite mt10">
         <div class="l-aside fl">
             <div class="aside-hd tac">
@@ -17,23 +43,10 @@
             </div>
             <div class="aside-nav aside-navn">
                 <ul>
-                    <li>
+                    <li ng-repeat="item in vm.botRoot">
                         <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj"></i>
-                            <span>分属性展开</span>
-                        </a>
-                        <ul class="menu_1">
-                            <li>
-                                <a class="ellipsis" href="javascript:;">
-                                    <span>挂失</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj"></i>
-                            <span>分业务展开</span>
+                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
+                            <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
                         </a>
                         <ul class="menu_1">
                             <li>
@@ -50,16 +63,6 @@
                                         <ul class="menu_1">
                                             <li>
                                                 <a class="ellipsis" href="javascript:;">
-                                                    <span>存款业务</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="ellipsis" href="javascript:;">
-                                                    <span>理财业务</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="ellipsis" href="javascript:;">
                                                     <span>信用卡业务</span>
                                                     <i class="icon-r icon-jt"></i>
                                                 </a>
@@ -70,16 +73,6 @@
                                                             <span>按地域展开</span>
                                                         </a>
                                                         <ul class="menu_1">
-                                                            <li>
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>魔都卡业务</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>省会卡业务</span>
-                                                                </a>
-                                                            </li>
                                                             <li>
                                                                 <a class="ellipsis" href="javascript:;">
                                                                     <span>信用卡业务</span>
@@ -96,16 +89,6 @@
                                                             <li>
                                                                 <a class="ellipsis" href="javascript:;">
                                                                     <span>魔都卡业务</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>省会卡业务</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>信用卡业务</span>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -128,7 +111,6 @@
                             </li>
                         </ul>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -193,23 +175,13 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="my-select ml10 L" style="width: 112px;">-->
-                        <!--<div class="my-value">-->
-                            <!--<label style="height:31px;line-height:31px;">新增知识</label><em></em>-->
-                        <!--</div>-->
-                        <!--<div class="my-option" style="display: none;">-->
-                            <!--<dl>-->
-                                <!--<dd value="1">新增知识</dd>-->
-                                <!--<dd value="2">新增知识</dd>-->
-                                <!--<dd value="3">新增知识</dd>-->
-                            <!--</dl>-->
-                        <!--</div>-->
-                    <!--</div>-->
+
                     <select class="sel bd L">
                         <option>新增知识</option>
                         <option>新增知识</option>
                         <option>新增知识</option>
                     </select>
+
 
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;">批量导入</a>
@@ -232,84 +204,6 @@
                     </div>
                     <div class="clearfix csso-bd">
                         <ul class="csso-lsit">
-                            <li>
-                                <div class="title">
-                                    <div class="my-checkbox">
-                                        <label></label>
-                                    </div>
-                                    <a href="javascript:;" ui-sref="custKnowledgePreview.manage">知识标题: 我怎么办信用卡呢？</a>
-                                </div>
-                                <div class="txt-cont mt10">
-                                    <div class="txt-item oh">
-                                        <div class="lable fl">概念扩展个数：</div>
-                                        <div class="value oh">
-                                            4个
-                                        </div>
-                                    </div>
-                                    <div class="txt-item oh">
-                                        <div class="lable fl">知识内容：</div>
-                                        <div class="value oh">
-                                            <ul class="">
-                                                <li>
-                                                    <a href="#" title="信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....">信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....">信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="csso-info oh">
-                                    <div class="fl">
-                                        <span>知识类型：FAQ知识</span>
-                                        <span>知识类目：银行/卡类知识</span>
-                                    </div>
-                                    <div class="fr">
-                                        <span>作者：张正</span>
-                                        <span>跟新时间：2016-06-12  16：58</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="title">
-                                    <div class="my-checkbox">
-                                        <label></label>
-                                    </div>
-                                    <a href="javascript:;">知识标题: 我怎么办信用卡呢？</a>
-                                </div>
-                                <div class="txt-cont mt10">
-                                    <div class="txt-item oh">
-                                        <div class="lable fl">概念扩展个数：</div>
-                                        <div class="value oh">
-                                            4个
-                                        </div>
-                                    </div>
-                                    <div class="txt-item oh">
-                                        <div class="lable fl">知识内容：</div>
-                                        <div class="value oh">
-                                            <ul class="">
-                                                <li>
-                                                    <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
-                                                </li>
-                                                <li>
-                                                    <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="csso-info oh">
-                                    <div class="fl">
-                                        <span>知识类型：FAQ知识</span>
-                                        <span>知识类目：银行/卡类知识</span>
-                                    </div>
-                                    <div class="fr">
-                                        <span>作者：张正</span>
-                                        <span>跟新时间：2016-06-12  16：58</span>
-                                    </div>
-                                </div>
-                            </li>
                             <li>
                                 <div class="title">
                                     <div class="my-checkbox">
@@ -350,24 +244,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="paging">
-                            <div class="fr">
-                                <ul class="fl">
-                                    <li><a class="prev" href="#">上一页</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a class="active" href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">...</a></li>
-                                    <li><a href="#">9</a></li>
-                                    <li><a href="#">10</a></li>
-                                    <li><a class="next" href="#">下一页</a></li>
-                                </ul>
-                                <span class="paging-tj fl">共<em>67</em>页，跳至<input class="paging-page" type="text">页</span>
-                                <a class="btn fl go" href="javascript:;">GO</a>
-                            </div>
-                        </div>
+        <!-- page-->
                     </div>
                 </div>
 
@@ -382,5 +259,14 @@
 <script>
     $('.advanced_sear_btn').click(function(){
         $('.advanced_search').slideToggle();
+    });
+
+    //asdie N级菜单
+    $(".aside-navn .slide-a").on("click",function(){
+        if($(this).hasClass("slideActive")){
+            $(this).removeClass("slideActive").next(".menu_1").stop().slideToggle();
+        }else{
+            $(this).addClass("slideActive").next(".menu_1").stop().slideToggle();
+        }
     });
 </script>
