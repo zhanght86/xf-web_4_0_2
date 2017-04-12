@@ -39,7 +39,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         var params = {
             "categoryName":$("#categoryName").val(),
             "categoryApplicationId":categoryApplicationId
-        }
+        };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
             serviceUrl: "/api/modeling/category/searchbycategoryname",
@@ -70,6 +70,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
 
         //获取root 数据
         function initBot(){
+            $(".aside-navs").empty();
             httpRequestPost("/api/modeling/category/listbycategorypid",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
@@ -99,7 +100,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             $scope.vm.botSelectType = $(this).attr("type-option");
             $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
-            disableAttribyteType();
+            disableAttributeType();
             $scope.$apply()
         });
         $(".aside-navs").on("click",".edit",function(){
@@ -124,7 +125,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 "categoryId": $scope.vm.categoryId,
                                 "categoryApplicationId": $scope.vm.categoryApplicationId,
                                 "categoryPid": $scope.vm.categoryPid,
-                                "categoryAttributeName": $("#categoryAttributeName").val(),
+                                "categoryAttributeName": $("#categoryName").val(),
                                 "categoryName": $("#categoryName").val(),
                                 "categoryTypeId": $("#categoryTypeId").val(),
                                 "categoryModifierId": categoryModifierId,
@@ -232,7 +233,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             httpRequestPost("/api/modeling/category/add",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": $scope.vm.botSelectValue,
-                "categoryAttributeName": $("#category-attribute-name").val(),
+                "categoryAttributeName": $("#category-name").val(),
                 "categoryName": $("#category-name").val(),
                 "categoryTypeId": $("#category-type").val(),
                 "categoryModifierId": categoryModifierId,
@@ -251,8 +252,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         function reloadBot(data,type){
             if(type!=0){
                 $.each($(".aside-navs").find("li"),function(index,value){
-                    if($(value).find(".icon-jj").attr("data-option")==$scope.vm.botSelectValue){
-                        console.log($(value).find(".icon-jj").attr("data-option"));
+                    if($(value).find("i").attr("data-option")==$scope.vm.botSelectValue){
                         //移除指定元素
                         $(value).remove();
                     }
@@ -267,21 +267,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 initBot();
             }else{
                 $.each($(".aside-navs").find("i"),function(index,value){
-                    if(type==0){
-                        if($(value).attr("data-option")==$scope.vm.botSelectValue){
-                            var html = '<li data-option="'+data.data[0].categoryPid+'">' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>';
-                            //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
-                        }
-                    }
                     if(type==2){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
@@ -295,6 +280,26 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
                             $(value).parent().parent().next().prepend(html);
+                        }
+                    }
+                    if(type==0){
+                        if($(value).attr("data-option")==data.data[0].categoryPid){
+                            var html = '<li data-option="'+data.data[0].categoryPid+'">' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
+                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>';
+                            //按照修改时间排序 把数据添加到前面
+                            if($(value).parent().parent().next()){
+                                $(value).parent().parent().next().prepend(html);
+                            }else{
+                                var htmlAppend='<ul class="menus show">'+html+'</ul>';
+                                $(value).parent().parent().parent().append(htmlAppend);
+                            }
                         }
                     }
                 });
@@ -327,7 +332,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
         }
         //禁用指定属性类型
-        function disableAttribyteType(){
+        function disableAttributeType(){
             $.each($("#category-type").find("option"),function(index,value){
                 if(($(value).val()==$scope.vm.botSelectType & $scope.vm.botSelectType!=10009)>0){
                     $(value).attr("disabled","disabled");

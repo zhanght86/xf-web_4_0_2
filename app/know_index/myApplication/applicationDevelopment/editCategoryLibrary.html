@@ -1,27 +1,23 @@
 <div class="pd-20">
     <div>
-        <p>编辑类目</p>
+        <p class="tc bold mb-10">编辑类目</p>
         <div>
-            <div>
-                <span>类目类型: </span>
-                <select id="categoryLibraryTypeId" ng-model="vm.categoryLibraryTypeId">
+            <div class="mb-10">
+                <span class="mr-10">类目类型: </span>
+                    <select id="categoryLibraryTypeId" ng-model="vm.categoryLibraryTypeId" class="sel bd">
                     <option value=10009>默认</option>
                     <option value=10008>流程</option>
                     <option value=10007>划分</option>
                     <option value=10006>属性</option>
                 </select>
             </div>
-            <div>
-                <span>类目属性: </span>
-                <input type="text" id="categoryLibraryAttributeName" ng-model="vm.categoryLibraryAttributeName"/>
+            <div class="mb-20">
+                <span class="mr-10">类目名称: </span>
+                <input type="text" class="input_text" id="categoryLibraryName" ng-model="vm.categoryLibraryName"/>
             </div>
-            <div>
-                <span>类目名称: </span>
-                <input type="text" id="categoryLibraryName" ng-model="vm.categoryLibraryName"/>
-            </div>
-            <div class="tac mt10" style="text-align: left;padding-left: 105px;">
-                <a class="btn btn-blue" href="javascript:;" ng-click="closeThisDialog(1)">确认修改</a>
-                <a class="btn btn-gray ml15" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
+            <div class="tac mt10">
+                <a class="btn btn-blue mr-10" href="javascript:;" ng-click="closeThisDialog(1)">确认修改</a>
+                <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
             </div>
         </div>
     </div>
