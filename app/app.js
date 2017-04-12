@@ -621,8 +621,22 @@ knowledge_static_web
                     }
                 }
             })
+            .state("materialManagement.chatKnowledgeScan", {
+                params:{"chatKnowledgeId" : null},
+                url: "/chatKnowledgeScan",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
+                        controller: "chatKnowledgeScanController"
+                    }
+                }
+            })
             .state("materialManagement.chatKnowledgeBasePreview", {
-                params:{"scanData" : null},
+                params:{"scanData" : null,"id":null},
                 url: "/chatKnowledgeBasePreview",
                 views: {
                     'header': {
@@ -650,7 +664,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.conceptChat", {
-                params:{"userPermission" : null},
+                params:{"scanDataList" : null},
                 url: "/conceptChat",
                 views: {
                     'header': {

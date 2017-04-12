@@ -3,11 +3,12 @@
  * 控制器
  */
 angular.module('materialManagement').controller('conceptChatController', [
-    '$scope',"$state","ngDialog","$stateParams", function ($scope,$state,ngDialog,$stateParams) {
-        $state.go("materialManagement.conceptChat");
+    '$scope',"$state","ngDialog","$stateParams",
+    function ($scope,$state,ngDialog,$stateParams) {
+        //$state.go("materialManagement.conceptChat");
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
-        console.log("d",$stateParams.scanDataList);
+        console.log( $stateParams.scanDataList.extendedQuestionArr[0].chatQuestionTag);
         $scope.vm = {
             userName : getCookie("userName"),
             applicationId : getCookie("applicationId"),
@@ -17,7 +18,6 @@ angular.module('materialManagement').controller('conceptChatController', [
             remove : remove ,
             weight : "60" ,         //  权重
             addExtension : addExtension ,  //添加扩展
-
             contentVal : "",
             contentArr : $stateParams.scanDataList?$stateParams.scanDataList.contentArr:[] ,
             addContentDialog : addContentDialog,// 添加知识内容
@@ -41,13 +41,49 @@ angular.module('materialManagement').controller('conceptChatController', [
                     if(data.status == 200){
                         var obj = {};
                         //检验标签重复
-                        obj.tagList = data.data;
-                        obj.chatQuestionContent=$scope.vm.extendedQuestion;
-                        obj.chatQuestionType = angular.copy($scope.vm.weight);
-                        $scope.vm.extendedQuestionArr.push(obj);
-                        $scope.vm.extendedQuestion = "";
-                        $scope.$apply();
-                        console.log($scope.vm.extendedQuestionArr)
+                        if($scope.vm.extendedQuestionArr.length){
+                            var len = data.data.length;
+                            var lenArr = $scope.vm.extendedQuestionArr.length;
+                            angular.forEach(data.data,function(input){
+                                angular.forEach($scope.vm.extendedQuestionArr,function(item){
+                                    angular.forEach(item.tagList,function(val){
+                                        if(val == input) {
+                                            len -= 1;
+                                        }
+                                    });
+                                    if(len!=data.data.length){
+                                        lenArr -= 1;
+                                        return false
+                                    };
+                                });
+                                if(lenArr != $scope.vm.extendedQuestionArr.length){
+                                    return false
+                                }else{
+                                    obj.chatQuestionContent = data.data;
+                                    console.log(data);
+                                    obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion)
+                                    obj.tagList = data.data;
+                                    obj.chatQuestionType = angular.copy($scope.vm.weight);
+                                    $scope.vm.extendedQuestionArr.push(obj);
+                                    console.log( $scope.vm.extendedQuestionArr)
+                                    $scope.vm.extendedQuestion = "";
+                                    $scope.$apply();
+                                    console.log($scope.vm.extendedQuestionArr)
+                                }
+                            });
+                        }else{
+                            obj.chatQuestionContent = data.data;
+                            console.log(data);
+                            obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion)
+                            obj.tagList = data.data;
+                            obj.chatQuestionType = angular.copy($scope.vm.weight);
+                            $scope.vm.extendedQuestionArr.push(obj);
+                            console.log( $scope.vm.extendedQuestionArr)
+                            $scope.vm.extendedQuestion = "";
+                            $scope.$apply();
+                            console.log($scope.vm.extendedQuestionArr)
+                        }
+
                     }else{
                         layer.msg("扩展问重复")
                     }
@@ -127,7 +163,8 @@ angular.module('materialManagement').controller('conceptChatController', [
                 applicationId: $scope.vm.applicationId,
                 chatKnowledgeModifier : $scope.vm.userName,
                 save : saveScan,
-                editUrl : "materialManagement.faqChat",
+                editUrl : "materialManagement.conceptChat",
+                type : 1
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
         }
@@ -135,6 +172,7 @@ angular.module('materialManagement').controller('conceptChatController', [
 
         function save(){
             if(check()){
+                console.log($scope.vm.extendedQuestionArr);
                 httpRequestPost("/api/chatKnowledge/addConceCptChatKnowledge",{
                     "applicationId": $scope.vm.applicationId,
                     "chatKnowledgeModifier": $scope.vm.userName,

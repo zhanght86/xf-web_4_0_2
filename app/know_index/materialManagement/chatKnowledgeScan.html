@@ -9,33 +9,31 @@
     <div class="addContent pd-30" >
         <div class="r-cont-hd">
             <span>知识预览</span>
-            {{vm.scanData}}
         </div>
         <div class="pd-20 f-14">
             <div class="row cl mb-20">
                 <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
                 <div class="formControls col-xs-8 col-sm-9" >
-                    <span ng-if="vm.scanData.standardQuestion">{{vm.scanData.standardQuestion}}</span>
+                    <span>{{vm.chatKnowledgeTopic}}</span>
                 </div>
             </div>
             <div class="row cl mb-20">
                 <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                 <div class="formControls col-xs-8 col-sm-9" >
-                    <span ng-if="vm.scanData.extendedQuestionArr.length!=0" ng-repeat="item in vm.scanData.extendedQuestionArr">{{item.chatQuestionContent}}<i ng-if="$index!=0">,</i></span>
+                    <span ng-if="vm.chatQuestionList.length!=0" ng-repeat="item in vm.chatQuestionList">{{item.chatQuestionContent}}<i ng-if="$index!=0">,</i></span>
                 </div>
             </div>
             <div class="row cl mb-30">
                 <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
-                <div class="formControls col-xs-8 col-sm-9" ng-if="vm.scanData.contentArr.length!=0" ng-repeat="item in vm.scanData.contentArr" >
+                <div class="formControls col-xs-8 col-sm-9" ng-if="vm.chatKnowledgeContentList.length!=0" ng-repeat="item in vm.chatKnowledgeContentList" >
                     <span>{{item.chatKnowledgeContent}}</span>
                 </div>
             </div>
             <div class="row cl mb-10 ">
                 <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                 <div class="formControls col-xs-8 col-sm-9" >
-                    <input type="button" value="保存" ng-if="vm.type" ng-click="vm.save()" class="btn1 btn1_blue mr-10"/>
+                    <input type="button" value="返回" ng-click="vm.save()" class="btn1 btn1_blue mr-10"/>
                     <input type="button" value="修改" ng-click="vm.edit()" class="btn1 btn_green"/>
-                    <a ng-if="!vm.type" ui-sref="materialManagement.chatKnowledgeBase"><input type="button" value="返回"   class="btn1 btn1_blue mr-10"/></a>
                 </div>
             </div>
         </div>
