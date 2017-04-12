@@ -175,6 +175,12 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionTitle:$scope.vm.hotQuestionTitle,
                 applicationId:$scope.vm.applicationId,
             },function(data){
+                if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    $scope.$apply()
+                    layer.msg("没有查询到记录!")
+                }
                 $scope.vm.listData = data.data.hotQuestionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.$apply()
