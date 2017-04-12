@@ -18,6 +18,8 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             channels : [] ,
             channelId  : null ,
             dimensionId : null ,
+            sendDimensions : [] ,
+            sendChannels : [],
 
             timeType : 0,
             timeStart : null,
@@ -73,7 +75,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
 
                 "orderForUnsatisfiedNumber": $scope.vm.orderForUnsatisfiedNumber,
             },function(data){
-                console.log(data.data);
+                //console.log(data.data);
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
