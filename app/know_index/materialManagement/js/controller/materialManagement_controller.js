@@ -16,6 +16,21 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             pageSize : 5  , //默认每页数量
         };
 
+        function search(){
+            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+                "title":$scope.vm.title
+            },function(data){
+                $scope.vm.searchList = data.data.objs,
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.vm.title = null;
+            },function(err){})
+        }
+
         init();
         function init(){
             getData(1)
@@ -27,7 +42,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index" :index==1?0:index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                //console.log(data.data.objs);
+                console.log(data);
               $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
@@ -40,28 +55,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 layer.msg("请求失败");
             })
         }
+        //分页 查询
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
-                    "applicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    //console.log( data.data.objs);
-                    $scope.vm.listData= data.data.objs;
-                },function(){
-                })
+                getData(current);
             }
         });
-        function search(){
-            httpRequestPost("",{
-
-            },function(data){
-
-            },function(err){})
-        }
-
-        //点击标题查看
+        //点击标题预览内容
         function seeDtails(data){
             console.log(data);
             var params = {
@@ -76,12 +76,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 type : 0
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
-
         }
-
     }
-
-
-
-
 ]);

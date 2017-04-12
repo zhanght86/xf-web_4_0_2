@@ -38,7 +38,7 @@
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="L" style="width:279px;border:1px solid #eee;height:30px;overflow-x: auto;">
                                    <!--{{typeOf item.chatQuestionTag}}-->
-                                    <span class="kz_span" ng-if="item.chatQuestionTag" ng-repeat="value in item.chatQuestionTag">{{value}}</span>
+                                    <!--<span class="kz_span" ng-if="item.chatQuestionTag" ng-repeat="value in item.chatQuestionTag">{{value}}</span>-->
                                     <span class="kz_span" ng-if="item.tagList" ng-repeat="val in item.tagList">{{val}}</span>
                                 </div>
                                 <!--<input type="text" ng-model="item" readonly class="L input-text extended_query_txt"-->
@@ -68,7 +68,6 @@
                                     <a href="javascript:;" class="delete_a mb-20" style="margin-top: 5px;" ng-click="vm.remove(item,vm.contentArr)"></a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="row cl mb-10 ">
