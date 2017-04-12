@@ -192,8 +192,15 @@ angular.module('adminModule').controller('userManageController', [
             httpRequestPost("/api/user/queryUserByUserName",{
                 userName:$scope.vm.searchName,
             },function(data){
+                if(data.status == 10016){
+                    $scope.vm.listData = "";
+                    $scope.vm.userDataTotal = 0;
+                    $scope.$apply()
+                    layer.msg("没有查询到记录!")
+                }
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })

@@ -106,6 +106,12 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 applicationId:$scope.vm.applicationId,
                 dimensionParentId : 0
             },function(data){
+                if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    layer.msg("没有查询到记录!")
+                    $scope.$apply()
+                }
                 $scope.vm.listData = data.data.dimensionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.$apply()
