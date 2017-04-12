@@ -12,7 +12,7 @@
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
                     	<span class="L">
-                            <button class="L btn1 btn_delete mr-10" ng-click="vm.deleteKnowledge()">删除</button>
+                            <button class="L btn1 btn_delete mr-10" ng-click="vm.deleteKnowledge()">批量删除</button>
                         	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addHotIssues()">添加</button>
                             <button class="btn1 btn_green" ng-click="vm.setFlag=!vm.setFlag"><span ng-if="vm.setFlag">手动设置</span><span  ng-if="!vm.setFlag">自动设置</span></button>
                         </span>
@@ -25,7 +25,7 @@
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="5%"><input  class="selectAllBtn" type="checkbox" ng-click="vm.selectAll($event)" ng-checked="vm.selectAllCheck"/></th>
+                            <th class="bold" width="5%"><input class="selectAllBtn" type="checkbox" ng-click="vm.selectAll($event)" ng-checked="vm.selectAllCheck"/></th>
                             <th class="bold" width="15%">热点知识</th>
                             <th class="bold" width="12%">排序</th>
                             <th class="bold" width="18%">最终问及时间</th>
@@ -35,7 +35,7 @@
                         <tbody>
                         <tr ng-repeat="item in vm.listData">
                             <!--{{vm.listData}}-->
-                            <td><input  type="checkbox" ng-checked="vm.selectAllCheck" ng-click="vm.selectSingle($event,item.hotQuestionId)"/></td>
+                            <td><input type="checkbox" ng-checked="vm.selectAllCheck" ng-click="vm.selectSingle($event,item.hotQuestionId)"/></td>
                             <td>{{item.hotQuestionTitle}}</td>
                             <td>{{item.hotQuestionOrder}}</td>
                             <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
