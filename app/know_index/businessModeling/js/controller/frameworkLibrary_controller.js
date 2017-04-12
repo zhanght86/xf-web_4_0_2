@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/23.
  */
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope', "$state", "$stateParams","ngDialog",
-    function ($scope, $state, $stateParams, ngDialog) {
+    '$scope','$timeout',"$state", "$stateParams","ngDialog",
+    function ($scope,$timeout,$state, $stateParams, ngDialog) {
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -24,11 +24,30 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 pagesLength: 8,//分页框数量
             },
             pageSize:6,
+            frameInfo:null,
             addFaq:addFaq,
             addConcept:addConcept,
             addElement:addElement,
+            updateFaq:updateFaq,
+            updateConcept:updateConcept,
+            updateElement:updateElement,
             frameTitle:"",
-            frameTypeId:0
+            frameTypeId:0,
+            elementAskContentArray: [],
+            elementAttributeIdArray: [],
+            elementContentArray: [],
+            elementFrameIdArray: [],
+            elementMiningTypeIdArray: [],
+            elementRelateConceptArray: [],
+            elementTypeIdArray: [],
+            frameCategoryId: "",
+            frameEnableStatusId: 1,
+            frameModifierId: "",
+            defaultString: "null",
+            defaultInt: 0,
+            responseView:responseView,
+            turnOn:turnOn,
+            elementIdArray:[]
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -194,7 +213,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         html += '   <img src="../../images/images/libTxt_22.png"/>'+
                                 '   <p>银行邻域业务框架</p>'+
                                 '   <div>' +
-                                '      <a href="javascript:;">'+data.data[i].frameTitle+'</a>' +
+                                '      <a type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' href="javascript:;">'+data.data[i].frameTitle+'</a>' +
                                 '   </div>'+
                                 '</div>';
                     }
@@ -204,6 +223,26 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log(err);
             });
         }
+        //修改框架
+        $("#frame-library").on("click",'a',function(){
+            $scope.vm.frameTypeId=$(this).attr("type-option");
+            console.log("======frameTypeId======"+$scope.vm.frameTypeId);
+            $scope.vm.frameInfo=$(this).attr("frame-info");
+            var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
+            console.log(frameInfo);
+            //赋值
+            assembleFrame();
+
+            if($scope.vm.frameTypeId==10011){
+                updateFaq();
+            }
+            if($scope.vm.frameTypeId==10012){
+                updateConcept();
+            }
+            if($scope.vm.frameTypeId==10013){
+                updateElement();
+            }
+        });
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 loadFrameLibrary(current);
@@ -224,6 +263,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
+                        $scope.vm.frameTitle=$("#frameTitle").val();
+                        if($("#frameTitle").val()==""){
+                            layer.msg("请添加框架标题");
+                            return;
+                        }
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
                         console.log($scope.vm.frameTypeId);
                         if($scope.vm.frameTypeId==10011){
@@ -244,7 +288,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("addFaq");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/faqNewFrame.html",
-                className: 'ngdialog-theme-default',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -252,8 +295,162 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
+                        if(faqValidata()==true){
+                            faqAssemble(0);
+                            faqRequestAdd();
+                        }
                     }
                 }
+            });
+        }
+        //修改表达式
+        function updateFaq(){
+            console.log("updateFaq");
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/updateFaqFrame.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回调
+                    if(e === 1){
+                        if(faqValidata()==true){
+                            faqAssemble(1);
+                            faqRequestUpdate();
+                        }
+                    }
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    fillFaqUpdatePage();
+                }, 100);
+            }
+        }
+        function fillFaqUpdatePage(){
+            for(var i=0;i<$scope.vm.elementIdArray.length;i++){
+                if($scope.vm.elementAttributeIdArray[i]==10025){
+                    $("#standard_question").val($scope.vm.elementContentArray[i]);
+                    $("#standard_question").attr("element-id",$scope.vm.elementIdArray[i]);
+                }else{
+                    var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
+                    $(".exten_problem").append(html);
+                }
+            }
+        }
+        //单个删除元素
+        $(".exten_problem").on("click",'a',function(){
+            var elementId=$(this).attr("element-id");
+            console.log("======elementId======"+elementId);
+            httpRequestPost("/api/modeling/frame/deleteelementbyid",{
+                "elementId":elementId
+            },function(data){
+                if(data){
+                    responseView(data);
+                }
+            },function(err){
+                console.log(err);
+            });
+        });
+        //表达式类型数据组装 0:新增 1:修改
+        function faqAssemble(type){
+            $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
+            $scope.vm.elementAttributeIdArray[0]=10025;
+            $scope.vm.elementContentArray[0]=$("#standard_question").val();
+            $scope.vm.elementFrameIdArray[0]=$scope.vm.defaultString;
+            $scope.vm.elementMiningTypeIdArray[0]=$scope.vm.defaultInt;
+            $scope.vm.elementRelateConceptArray[0]=$scope.vm.defaultString;
+            $scope.vm.elementTypeIdArray[0]=$scope.vm.defaultInt;
+            if(type==1){
+                $scope.vm.elementIdArray[0]=$("#standard_question").attr("element-id");
+            }
+            $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index,value){
+                $scope.vm.elementAskContentArray[index+1]=$scope.vm.defaultString;
+                $scope.vm.elementAttributeIdArray[index+1]=10026;
+                $scope.vm.elementContentArray[index+1]=$(value).val();
+                $scope.vm.elementFrameIdArray[index+1]=$scope.vm.defaultString;
+                $scope.vm.elementMiningTypeIdArray[index+1]=$scope.vm.defaultInt;
+                $scope.vm.elementRelateConceptArray[index+1]=$scope.vm.defaultString;
+                $scope.vm.elementTypeIdArray[index+1]=$scope.vm.defaultInt;
+                if(type==1){
+                    $scope.vm.elementIdArray[index+1]=$(value).attr("element-id");
+                }
+            });
+        }
+        //组装框架数据
+        function assembleFrame(){
+            var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
+            $scope.vm.frameId=frameInfo.frameId;
+            $scope.vm.frameTypeId=frameInfo.frameTypeId;
+            $scope.vm.frameTitle=frameInfo.frameTitle;
+            $scope.vm.frameModifierId=frameInfo.frameModifierId;
+            $scope.vm.frameCategoryId=frameInfo.frameCategoryId;
+            $scope.vm.frameEnableStatusId=frameInfo.frameEnableStatusId;
+            for(var i=0;i<frameInfo.elements.length;i++){
+                $scope.vm.elementAskContentArray[i]=frameInfo.elements[i].elementAskContent;
+                $scope.vm.elementAttributeIdArray[i]=frameInfo.elements[i].elementAttributeId;
+                $scope.vm.elementContentArray[i]=frameInfo.elements[i].elementContent;
+                $scope.vm.elementFrameIdArray[i]=frameInfo.elements[i].elementFrameId;
+                $scope.vm.elementMiningTypeIdArray[i]=frameInfo.elements[i].elementMiningTypeId;
+                $scope.vm.elementRelateConceptArray[i]=frameInfo.elements[i].elementRelateConcept;
+                $scope.vm.elementTypeIdArray[i]=frameInfo.elements[i].elementTypeId;
+                $scope.vm.elementIdArray[i]=frameInfo.elements[i].elementId;
+            }
+        }
+        //
+        //表达式类型数据校验
+        function faqValidata(){
+            return true;
+        }
+        function faqRequestAdd(){
+            httpRequestPost("/api/modeling/frame/add",{
+                "elementAskContentArray":$scope.vm.elementAskContentArray,
+                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
+                "elementContentArray":$scope.vm.elementContentArray,
+                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
+                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
+                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
+                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
+                "frameCategoryId":$scope.vm.botSelectValue,
+                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
+                "frameModifierId":categoryModifierId,
+                "frameTitle":$scope.vm.frameTitle,
+                "frameTypeId":$scope.vm.frameTypeId
+            },function(data){
+                if(data){
+                    if(responseView(data)==true){
+                        loadFrameLibrary(1);
+                    }
+                }
+            },function(err){
+                console.log(err);
+            });
+        }
+        function faqRequestUpdate(){
+            httpRequestPost("/api/modeling/frame/update",{
+                "elementAskContentArray":$scope.vm.elementAskContentArray,
+                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
+                "elementContentArray":$scope.vm.elementContentArray,
+                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
+                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
+                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
+                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
+                "elementIdArray":$scope.vm.elementIdArray,
+                "frameCategoryId":$scope.vm.botSelectValue,
+                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
+                "frameModifierId":categoryModifierId,
+                "frameTitle":$scope.vm.frameTitle,
+                "frameTypeId":$scope.vm.frameTypeId,
+                "frameId":$scope.vm.frameId
+            },function(data){
+                if(data){
+                    if(responseView(data)==true){
+                        loadFrameLibrary(1);
+                    }
+                }
+            },function(err){
+                console.log(err);
             });
         }
         //添加概念表达式
@@ -272,6 +469,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }
             });
         }
+        //修改概念表达式
+        function updateConcept(){
+
+        }
         //添加要素
         function addElement(){
             console.log("addElement");
@@ -287,6 +488,25 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             });
+        }
+        //修改要素
+        function updateElement(){
+
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                return true;
+            }
+            return false;
+        }
+        //开关
+        function turnOn(targetValue,targetName){
+            $scope.vm[targetName] = targetValue ? 0 : 1 ;
         }
     }
 ]);

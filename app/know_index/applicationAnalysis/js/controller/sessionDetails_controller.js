@@ -36,16 +36,10 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             userId : null,
             prePage : prePage ,
             nextPage : nextPage
-
         };
-        function remove(item){
-
-            $scope.vm.arr.remove(item)
-
-
-        }
-
-
+        //function remove(item){
+        //    $scope.vm.arr.remove(item)
+        //}
         // 点击查看
         function scan(id){
             $scope.vm.userId = id;
@@ -74,7 +68,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 "requestTimeType":$scope.vm.timeType,
 
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
@@ -121,7 +115,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
 
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
