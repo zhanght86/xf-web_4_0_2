@@ -14,7 +14,7 @@
                     	<span class="L">
                             <button class="L btn1 btn_delete mr-10" ng-click="vm.deleteKnowledge()">删除</button>
                         	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addHotIssues()">添加</button>
-                            <button class="btn1 btn_green">手动设置</button>
+                            <button class="btn1 btn_green" ng-click="vm.setFlag=!vm.setFlag"><span ng-if="vm.setFlag">手动设置</span><span  ng-if="!vm.setFlag">自动设置</span></button>
                         </span>
                         <span class="R">
                             <!--<span>共有数据：<b >3</b> 条</span>-->
@@ -40,9 +40,11 @@
                             <td>{{item.hotQuestionOrder}}</td>
                             <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>
-                                <a  class="c-primary mr-10" href="javascript:;" ng-click="vm.toTop(item)"  ng-if="item.hotQuestionOrder!=1">置顶</a>
-                                <a  class="c-primary mr-10" href="javascript:;" ng-click="vm.move(item)"  ng-if="item.hotQuestionOrder!=1">上移</a>
-                                <a  class="c-primary" href="javascript:;" ng-click="vm.down(item)"  ng-if="item.hotQuestionOrder!=vm.listDataLength || item.hotQuestionOrder == 1">下移</a>
+                                <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary mr-10"  ng-click="vm.toTop(item)"  ng-if="item.hotQuestionOrder!=1" value="置顶">
+                                <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary mr-10"  ng-click="vm.move(item)"  ng-if="item.hotQuestionOrder!=1" value="上移">
+                                <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary"  ng-click="vm.down(item)"  ng-if="item.hotQuestionOrder!=vm.listDataLength || item.hotQuestionOrder == 1" value="下移">
+                                <!--<input class="c-primary mr-10" href="javascript:;" ng-click="vm.move(item)"  ng-if="item.hotQuestionOrder!=1">上移</a>-->
+                                <!--<a  class="c-primary" href="javascript:;" ng-click="vm.down(item)"  ng-if="item.hotQuestionOrder!=vm.listDataLength || item.hotQuestionOrder == 1">下移</a>-->
                             </td>
                         </tr>
                         </tbody>
