@@ -638,6 +638,7 @@ knowledge_static_web
             .state("materialManagement.chatKnowledgeBasePreview", {
                 params:{"scanData" : null,"id":null},
                 url: "/chatKnowledgeBasePreview",
+                //cache:'true',
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',

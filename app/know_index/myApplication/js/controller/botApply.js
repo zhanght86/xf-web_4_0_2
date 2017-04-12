@@ -3,7 +3,7 @@
  * 控制器
  */
 angular.module('myApplicationModule').controller('botApplyController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService, $state,$stateParams,ngDialog) {
+    '$scope', 'localStorageService','$timeout',"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -42,7 +42,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
             categoryLibraryPid: "",
             categoryLibraryLeaf: 1,
             reloadBotLibrary:reloadBotLibrary,
-            reloadBot:reloadBot
+            reloadBot:reloadBot,
+            disableAttributeType:disableAttributeType
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -55,6 +56,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         initBotLibrary();
         //获取root 数据
         function initBot(){
+            $("#category").empty();
             httpRequestPost("/api/modeling/category/listbycategorypid",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
@@ -65,7 +67,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -78,6 +80,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             });
         }
         function initBotLibrary(){
+            $("#library").empty();
             httpRequestPost("/api/modeling/categorylibrary/listbycategorypid",{
                 "categoryPid": "root"
             },function(data){
@@ -87,7 +90,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -111,6 +114,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             clearColorLibrary();
             $scope.vm.knowledgeBotLibraryVal = $(this).html();
             $scope.vm.botLibrarySelectValue = $(this).attr("data-option");
+            $scope.vm.botSelectType = $(this).attr("type-option");
             $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botLibrarySelectValue);
             $scope.$apply()
@@ -139,7 +143,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -177,7 +181,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -326,7 +330,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
         function reloadBot(data){
             $.each($("#category").find("li"),function(index,value){
                 if($(value).find("i").attr("data-option")==$scope.vm.botSelectValue){
-                    console.log($(value).find("i").attr("data-option"));
                     //移除指定元素
                     $(value).remove();
                 }
@@ -343,9 +346,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 preCloseCallback:function(e){    //关闭回调
                     if(e===1){
                         if($("#categoryLibraryNameAdd").val()){
+                            console.log("=========="+$("#categoryLibraryNameAdd").val());
                             httpRequestPost("/api/modeling/categorylibrary/add",{
                                 "categoryPid": $scope.vm.botLibrarySelectValue,
-                                "categoryAttributeName": $("#categoryLibraryAttributeNameAdd").val(),
+                                "categoryAttributeName": $("#categoryLibraryNameAdd").val(),
                                 "categoryName": $("#categoryLibraryNameAdd").val(),
                                 "categoryTypeId": $("#categoryLibraryTypeIdAdd").val(),
                                 "categoryModifierId": categoryModifierId,
@@ -354,7 +358,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             },function(data){
                                 if(responseView(data)==true){
                                     //重新加载
-                                    reloadBotLibrary(data,2);
+                                    reloadBotLibrary(data,0);
                                 }
                             },function(err){
                                 console.log(err);
@@ -364,6 +368,13 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     }
                 }
             });
+            console.log("123456===123");
+            if(dialog){
+                console.log("123456===");
+                $timeout(function () {
+                    disableAttributeType();
+                }, 100);
+            }
         }
         function editBotLibrary(){
             var dialog = ngDialog.openConfirm({
@@ -379,7 +390,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             httpRequestPost("/api/modeling/categorylibrary/updatebycategoryid",{
                                 "categoryId": $scope.vm.categoryLibraryId,
                                 "categoryPid": $scope.vm.categoryLibraryPid,
-                                "categoryAttributeName": $("#categoryLibraryAttributeName").val(),
+                                "categoryAttributeName": $("#categoryLibraryName").val(),
                                 "categoryName": $("#categoryLibraryName").val(),
                                 "categoryTypeId": $("#categoryLibraryTypeId").val(),
                                 "categoryModifierId": categoryModifierId,
@@ -442,7 +453,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
             if(type!=0){
                 $.each($("#library").find("li"),function(index,value){
                     if($(value).find("i").attr("data-option")==$scope.vm.botLibrarySelectValue){
-                        console.log($(value).find("i").attr("data-option"));
                         //移除指定元素
                         $(value).remove();
                     }
@@ -457,21 +467,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 initBot();
             }else{
                 $.each($("#library").find("i"),function(index,value){
-                    if(type==0){
-                        if($(value).attr("data-option")==$scope.vm.botLibrarySelectValue){
-                            var html = '<li data-option="'+data.data[0].categoryPid+'">' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>';
-                            //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
-                        }
-                    }
                     if(type==2){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
@@ -487,8 +482,46 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             $(value).parent().parent().next().prepend(html);
                         }
                     }
+                    if(type==0){
+                        if($(value).attr("data-option")==data.data[0].categoryPid){
+                            var html = '<li data-option="'+data.data[0].categoryPid+'">' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
+                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>';
+                            //按照修改时间排序 把数据添加到前面
+                            if($(value).parent().parent().next()){
+                                $(value).parent().parent().next().prepend(html);
+                            }else{
+                                var htmlAppend='<ul class="menus show">'+html+'</ul>';
+                                $(value).parent().parent().parent().append(htmlAppend);
+                            }
+                        }
+                    }
                 });
             }
         }
+        //禁用指定属性类型
+        function disableAttributeType(){
+            $("#categoryLibraryTypeIdAdd").empty();
+            var attrArr = [];
+            attrArr[0]={name:"默认",value:10009};
+            attrArr[1]={name:"流程",value:10008};
+            attrArr[2]={name:"划分",value:10007};
+            attrArr[3]={name:"属性",value:10006};
+            for(var index=0;index<attrArr.length;index++){
+                if((attrArr[index].value==$scope.vm.botSelectType & $scope.vm.botSelectType!=10009)>0){
+                    console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                    $("#categoryLibraryTypeIdAdd").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                }else{
+                    console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                    $("#categoryLibraryTypeIdAdd").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                }
+            }
+        }
     }
-]);
+]);89

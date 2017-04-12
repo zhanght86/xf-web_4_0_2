@@ -13,7 +13,7 @@
         <div class="libraryFt">
             <div class="tac libSearch">
                 <div class="search-box">
-                    <input class="bd ipt-txt" type="text"  style="width: 280px;">
+                    <input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;">
                 </div>
             </div>
             <div class="libraryPtoDiv">
@@ -23,20 +23,7 @@
             <div class="item-line">
                 <div class="value menu_1Div" id="menu_1Div">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text" ng-disabled/>
-                        <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
-                        <div class="aside-navs aside-navs2 show" >
-                            <ul class="menus show">
-                                <li ng-repeat="item in vm.botRoot" data-option="{{item.categoryPid}}">
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                            <span ng-click="vm.botValChange(item.categoryName)" data-option="{{item.categoryId}}">{{item.categoryName}}</span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <div class="aside-navs aside-navs-v show"></div>
                     </div>
                 </div>
             </div>
@@ -44,16 +31,17 @@
 
         <div class="libraryRth">
             <div class="tac mt10" style="margin: 0; text-align: left">
-                <a class="btn btn-blue" href="javascript:;" ng-click="vm.addFramework()">新增框架</a>
+                <a class="btn btn-blue" href="javascript:;" ng-click="vm.addFrame()">新增框架</a>
                 <a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>
                 <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
             </div>
             <div id="frame-library"></div>
+            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
         </div>
     </div>
 </div>
 <style>
-    .libraryRth{width:720px;}
+    .libraryRth{min-width:720px;}
 </style>
 
 
