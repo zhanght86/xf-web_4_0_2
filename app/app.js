@@ -694,7 +694,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
-                        controller: "knowledgeSingleAddConceptController"
+                        controller: "conceptController"
                     }
                 }
             })
