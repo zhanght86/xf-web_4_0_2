@@ -11,9 +11,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             title : "" ,           //知识标题
             search : search,  //查询
             seeDtails:seeDtails,//标题预览
-            searchList : "",   //查询数据结果
+            //searchList : "",   //查询数据结果
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
+            getType : 0 ,    // 默认请求 0    查找 1
 //刪除知识
             getDel : getDel,
             delKnowledge : delKnowledge,
@@ -53,22 +54,25 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             }
         });
 // 时间   1   仅三天   2  近七天   3  近一个月
-        function search(){
+        function search(index){
+            $scope.vm.getType = 1;
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
                 "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
                 "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
-                "index": 0,
+                "index": index==1?0:$scope.vm.pageSize*index,
                 "pageSize":$scope.vm.pageSize,
             },function(data){
-                $scope.vm.searchList = data.data.objs,
+                console.log(data)
+                $scope.vm.listData = data.data.objs,
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: Math.ceil(data.data.total/5), //总条数
                     pageSize: 1,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
+                $scope.$apply()
                 $scope.vm.title = null;
             },function(err){})
         }
@@ -83,6 +87,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         }
         //请求列表
         function getData(index){
+            $scope.vm.getType = 0 ;
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
                 "index" :index==1?0:$scope.vm.pageSize*index,
@@ -102,7 +107,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         }
         //分页 查询
         $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+            if(current&&$scope.vm.getType==1){
+               search(current)
+            }else if(current&&$scope.vm.getType==0){
                 console.log(current);
                 getData(current);
             }
