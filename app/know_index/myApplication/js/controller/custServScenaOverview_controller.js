@@ -110,7 +110,7 @@ var n = 1;
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                        '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                        '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
                                     '<span>'+item.categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -168,7 +168,7 @@ var n = 1;
                             //无叶节点
                             // 加号 跟 箭头 区别开
                             if($scope.vm.type){
-                                console.log($scope.vm.type)
+                                console.log($scope.vm.type);
                                 var  html = '<ul class="pas-menu_1 leaf'+n+'">';
                                 angular.forEach(data.data,function(item){
                                     //1  存在叶节点
@@ -200,7 +200,7 @@ var n = 1;
                                     html+= '<li>' +
                                         '<div class="slide-a">'+
                                         ' <a class="ellipsis" href="javascript:;">'+
-                                        '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                        '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
                                         '<span>'+item.categoryName+'</span>'+
                                         '</a>' +
                                         '</div>' +
