@@ -5,7 +5,7 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
+angular.module('knowledgeManagementModule').controller('conceptController', [
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
     function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
 
@@ -15,6 +15,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit: KnowledgeEdit,  //
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -206,7 +207,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 $scope.vm.timeFlag="启用"
             }
         });
-
+        function KnowledgeEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
        function KnowledgeAdd(){
            var dialog = ngDialog.openConfirm({
                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
