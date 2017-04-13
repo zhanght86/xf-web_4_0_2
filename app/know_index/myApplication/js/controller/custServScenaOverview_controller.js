@@ -69,7 +69,7 @@ var n = 1;
             var id = $(this).attr("data-option");
             var that = $(this);
             if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%");
+                //that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId":applicationId,
                     "categoryPid": id
@@ -129,7 +129,11 @@ var n = 1;
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
+                        $timeout(function(){
+                            that.parent().parent().next().slideDown()
+                        },2000)
+                        $scope.vm.type = !$scope.vm.type;
+
                     }
                 },function(err){
                     alert(err)
@@ -164,14 +168,16 @@ var n = 1;
                             //无叶节点
                             // 加号 跟 箭头 区别开
                             if($scope.vm.type){
-                                var  html = '<ul class="pas-menu_1 leaf'+n+'">'
+                                console.log($scope.vm.type)
+                                var  html = '<ul class="pas-menu_1 leaf'+n+'">';
                                 angular.forEach(data.data,function(item){
                                     //1  存在叶节点
                                     if(item.categoryLeaf){
+                                        console.log(1111);
                                         html+= '<li data-option="'+item.categoryId+'">' +
                                             '<div class="slide-a">'+
                                             ' <a class="ellipsis" href="javascript:;">'+
-                                            '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
+                                                '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
                                             '<span>'+item.categoryName+'</span></i>'+
                                             '</a>' +
                                             '</div>' +
@@ -181,7 +187,7 @@ var n = 1;
                                         html+= '<li data-option="'+item.categoryId+'">' +
                                             '<div class="slide-a">'+
                                             ' <a class="ellipsis" href="javascript:;">'+
-                                                //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                                //'<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
                                             '<span>'+item.categoryName+'</span>'+
                                             '</a>' +
                                             '</div>' +
