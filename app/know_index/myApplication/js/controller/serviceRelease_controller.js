@@ -14,11 +14,30 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             paginationConf : ""  ,//分页条件
             pageSize : 2 , //默认每页数量
             dataTotal: "", //发布服务数据记录总数
+
+            appName : "", //应用名称
+            categoryIds : "", //分类id列表
+            channels : "", //渠道id列表
+            dimensions : "", //维度id列表
+            nodeCode : "", //节点编号
+            serviceId : "", //服务id
+            serviceName: "", //服务平常
+            serviceStatus : 0, //服务状态
+            serviceType : 0, //服务类型
+            userId : getCookie("userId"), //获取用户id
+
+            categoryData : "", //分类数据
+            channelData : "", //渠道数据
+            dimensionData : "", //维度数据
+            typeData : "", //类型数据
+            nodeData : "", //节点数据
+
             publishService : publishService,  //发布服务
             startService : startService, //上线服务
             stopService : stopService, //下线服务
             restartService : restartService, //重启服务
             deleteService : deleteService, //删除服务
+            editService : editService, //编辑服务
 
         };
 
@@ -36,7 +55,6 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 "pageSize": $scope.vm.pageSize
             },function(data){
                 $scope.vm.serviceData = data.data;
-                console.log($scope.vm.serviceData)
                 $scope.vm.dataTotal =data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
@@ -54,6 +72,12 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 listServiceData(current);
             }
         });
+
+
+        //编辑服务
+        function editService(serviceId){
+            $state.go("setting.newService",{serviceId: serviceId});
+        }
 
         //发布服务
         function publishService(serviceId){
