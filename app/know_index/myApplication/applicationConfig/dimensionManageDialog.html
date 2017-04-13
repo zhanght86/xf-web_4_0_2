@@ -5,7 +5,7 @@
                 <div class="mb-10 clearfix">
                     <span class="add_ele_span L">维度名称：</span>
                     <div class="dib L pl-5">
-                        <input type="text"  class="input-text " placeholder="维度名称" ng-model="vm.dimensionName"/>
+                        <input type="text"  class="input-text " placeholder="维度名称" ng-model="vm.dimension"/>
                     </div>
                     <div class="dib ml-15 pt-5 L mr-15">
                         <span class="L mr-30">状态：</span>
@@ -15,9 +15,9 @@
                 <div class="mb-10 ">
                     <span class="add_ele_span">维度表示：</span>
                     <div class="dib">
-                        <input type="text" placeholder="请输入维度表示" ng-model="vm.dimensionVal" class="input-text  latitude"/>
+                        <input type="text" placeholder="请输入维度表示" ng-model="vm.getDimensionVal" class="input-text  latitude"/>
                     </div>
-                    <a href="javascript:;" class="create_a"  ng-click="vm.savePro(vm.dimensionVal,vm.newDimensions)"><img src="../../../images/images/add_img.png" alt=""></a>
+                    <a href="javascript:;" class="create_a"  ng-click="vm.savePro(vm.getDimensionVal,vm.newDimensions)"><img src="../../../images/images/add_img.png" alt=""></a>
                 </div>
                 <!--{{vm.newDimensions}}-->
                 <div class="mb-10" ng-repeat="item in vm.newDimensions">
