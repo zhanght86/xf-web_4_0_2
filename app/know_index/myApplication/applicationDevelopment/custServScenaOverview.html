@@ -7,7 +7,7 @@
         <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
         <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
     </div>
-    <div class="page-lrcont210 clearfix bgwhite mt10">
+    <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
                 <img class="hd-img" src="../../../images/images/poto.png"/>
@@ -36,7 +36,7 @@
                             <div class="search-box">
                                 <input class="input-text" type="text" ng-model="vm.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)" style="width: 280px;" />
                             </div>
-                            <button class="btn1 btn1_blue advanced_sear_btn">高级查找</button>
+                            <button class="btn1 btn1_blue advanced_sear_btn" ng-click="vm.heighSarch=!vm.heighSarch">高级查找</button>
                         </div>
                         <div class="advanced_search bd" >
                             <div class="framework mb-10" style="padding-left: 85px;">
@@ -92,7 +92,7 @@
                 <div class="csso-cont mt30">
                     <div class="clearfix csso-hd">
                         <div class="fl">
-                            <span>总计<em>10000</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
+                            <span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
                         </div>
                         <div class="fr" style="margin-right: 80px;" ng-click="vm.delData()">
                             <a class="ljtClose-btn" href="javascript:;" style="width: 50px;">
@@ -106,7 +106,7 @@
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
                                     <checkbox ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)"></checkbox>
-                                    <a href="javascript:;">知识标题: {{item.knowledgeTitle}}</a>
+                                    <a href="javascript:;" ng-click="vm.scan(item)">知识标题: {{item.knowledgeTitle}}</a>
                                 </div>
                                 <div class="txt-cont mt10">
                                     <div class="txt-item oh">
@@ -120,13 +120,11 @@
                                         <!--{{item.knowledgeContent}}-->
                                         <div class="value oh">
                                             <ul class="">
-                                                <li ng-if="item.knowledgeType!=105">
+                                                <li ng-if="item.knowledgeType!=103">
                                                     <p>{{item.knowledgeContent}}</p>
                                                 </li>
-                                                {{item.knowledgeContent}}
-                                                <li ng-if="item.knowledgeType==105">
-                                                    新添加要素型知识 ; {{}} 条
-                                                    <p>{{item.knowledgeContent}}</p>
+                                                <li ng-if="item.knowledgeType==103">
+                                                    <!--<p>该要素知识包含条数 ; {{item.}} 条包含要素数{{item.}}</p>-->
                                                 </li>
                                             </ul>
                                         </div>
@@ -144,10 +142,9 @@
                                 </div>
                             </li>
                         </ul>
-        <!-- page-->
+                        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -157,9 +154,9 @@
     .advanced_search{background:#fff;}
 </style>
 <script>
-    $('.advanced_sear_btn').click(function(){
-        $('.advanced_search').slideToggle();
-    });
+//    $('.advanced_sear_btn').click(function(){
+//        $('.advanced_search').slideToggle();
+//    });
 
     //asdie N级菜单
 //    $(".aside-navn .slide-a").on("click",function(){
