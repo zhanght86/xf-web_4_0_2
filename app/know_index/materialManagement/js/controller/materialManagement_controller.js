@@ -8,6 +8,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
+
             title : "" ,           //知识标题
             search : search,  //查询
             seeDtails:seeDtails,//标题预览
