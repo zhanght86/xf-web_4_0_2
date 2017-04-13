@@ -5,16 +5,15 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout ) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore ) {
         $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
-        var applicationId = getCookie("applicationId");
-
+        var applicationId = $cookieStore.get("applicationId");
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             //editName : editName
             //getCreatBot : getCreatBot,
             creatBot : [],
@@ -45,6 +44,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             "updateTimeType": 0 ,  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
 
             keySearch : keySearch,
+            napSearch : napSearch ,
             getSourceType : getSourceType,
             getUpdateTimeType : getUpdateTimeType,
 
@@ -60,9 +60,17 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 angular.element(".advanced_search").slideUp()
             }
         });
+        function napSearch(){
+            getData(1);
+            getNewNumber();
 
+        }
         function scan(item){
-            $state.go("custKnowledgePreview.manage",{})
+            var obj = {};
+            obj.applicationId = $scope.vm.applicationId ;
+            obj.knowledgeId = item.knowledgeId;
+            obj.knowledgeType = item.knowledgeType;
+            $state.go("custKnowledgePreview.manage",{scanKnowledge:obj})
         }
         function getSourceType(val){
             $scope.vm.sourceType = val
@@ -70,10 +78,11 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         function getUpdateTimeType(val){
             $scope.vm.updateTimeType = val
         }
-        getData();
+        getData(1);
         function getData(index){
             console.log((index-1)*$scope.vm.pageSize);
             httpRequestPost("/api/knowledgeManage/overView/searchList",{
+                "applicationId" : $scope.vm.applicationId,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
@@ -123,7 +132,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
             $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
             $scope.vm.sourceType = null,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-            $scope.vm.updateTimeType = null   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            $scope.vm.updateTimeType = null  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
         }
         function delData(){
             console.log($scope.vm.knowledgeIds);
@@ -146,6 +155,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         getNewNumber();
         function getNewNumber(){
             httpRequestPost(" /api/knowledgeManage/overView/searchTotalAndToday",{
+                "applicationId" : $scope.vm.applicationId,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
                 "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null

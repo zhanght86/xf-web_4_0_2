@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="tc">
-                                <input type="button" class="btn1 btn1_blue" value="搜索" ng-click="vm.getData(1)" style="width:100px;"/>
+                                <input type="button" class="btn1 btn1_blue" value="搜索" ng-click="vm.napSearch()" style="width:100px;"/>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,8 @@
                                                     <p>{{item.knowledgeContent}}</p>
                                                 </li>
                                                 <li ng-if="item.knowledgeType==103">
-                                                    <!--<p>该要素知识包含条数 ; {{item.}} 条包含要素数{{item.}}</p>-->
+                                                    <p><strong>该要素知识包含条数：</strong> {{item.elementsCount}}条</p>
+                                                    <p><strong>条包含要素数：</strong> {{item.extensionCount}}条</p>
                                                 </li>
                                             </ul>
                                         </div>
