@@ -2,6 +2,15 @@
 <html lang="zh-cn" ng-app="knowledge_static_web" ng-controller="ApplicationController">
 <head>
     <script>
+
+//        <!-- chongfu -->
+        Array.prototype.S=String.fromCharCode(2);
+        Array.prototype.inArray=function(e){
+            var r=new RegExp(this.S+e+this.S);
+            return (r.test(this.S+this.join(this.S)+this.S));
+        };
+
+
 //        <!-- 增加数组 remove方法-->
         Array.prototype.indexOf = function (val) {
             for(var i = 0; i < this.length; i++){
