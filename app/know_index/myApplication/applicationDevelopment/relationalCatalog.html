@@ -11,27 +11,19 @@
 
     <div class="libraryCnt">
         <div class="libraryFt pd-20">
-            <!--<input class="libSearch" type="text">-->
-            <div class="mb-30">
-                <input type="text" class="input_text"/>
-                <input type="button" value="查找" class="btn1 btn1_blue"/>
+            <div class="tac libSearch">
+                <div class="search-box">
+                    <input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;">
+                </div>
+            </div>
+            <div class="libraryPtoDiv">
+                <img src="../../images/images/bank_16.png">
+                <h3>银行领域</h3>
             </div>
             <div class="item-line">
                 <div class="value menu_1Div" id="menu_1Div">
                     <div class="ipt-txt-box">
-                        <div class="aside-navs aside-navs-v show" >
-                            <ul class="menus show">
-                                <li ng-repeat="item in vm.botRoot" data-option="{{item.categoryPid}}">
-                                    <div class="slide-a">
-                                        <a class="ellipsis" href="javascript:;">
-                                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                            <span data-option="{{item.categoryId}}">{{item.categoryName}}</span>
-                                            &nbsp;<p class='treeEdit' bot-info={{item}}><img class="edit" src='images/bot-edit.png'/><img class="delete" style='width: 12px;' src='images/detel.png'/></p>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <div class="aside-navs aside-navs-v show"></div>
                     </div>
                 </div>
             </div>
@@ -39,9 +31,9 @@
 
         <div class="libraryRth" style="width:730px;">
             <div class="tac mt10" style="margin: 0; text-align: left">
-                <a class="btn btn-blue" ui-sref="botApply.manage">框架套用</a>
-                <a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>
-                <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
+                <a class="btn btn-blue" ui-sref="botApply.manage">类目库套用</a>
+                <a class="btn btn-green ml15" href="javascript:;">批量导入类目库</a>
+                <a class="btn btn-green2 ml15" href="javascript:;">导出类目库</a>
             </div>
             <div class="HierarchyCnt">
                 <p>新建类目</p>
@@ -53,10 +45,6 @@
                         <option value=10007>划分</option>
                         <option value=10006>属性</option>
                     </select>
-                </div>
-                <div>
-                    <span>类目属性: </span>
-                    <input id="category-attribute-name" type="text"/>
                 </div>
                 <div>
                     <span>类目名称: </span>

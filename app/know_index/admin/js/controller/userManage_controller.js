@@ -42,8 +42,41 @@ angular.module('adminModule').controller('userManageController', [
             applicationIds:[],
             savaProp : savaProp,
             saveProp : saveProp ,
-            filter : filter
+            filter : filter,
+            selectAll : selectAll,
+            selectSingle : selectSingle,
+            deleteIds : [],
+            selectAllCheck : false,
+            deleteUsers : deleteUsers
         };
+
+        function selectAll(ev){
+            //var self = $(ev.target);
+            if(!$scope.vm.selectAllCheck){
+                $scope.vm.selectAllCheck = true;
+                $scope.vm.deleteIds = [];
+                angular.forEach($scope.vm.listData,function(item){
+                    $scope.vm.deleteIds.push(item.userId);
+                });
+            }else{
+                $scope.vm.selectAllCheck = false
+                $scope.vm.deleteIds = [];
+            }
+            console.log( $scope.vm.deleteIds)
+        }
+        function selectSingle(ev,id){
+            var self = $(ev.target);
+            if(self.attr('checked')){
+                self.attr('checked',false);
+                $scope.vm.deleteIds.remove(id);
+                $(".selectAllBtn").attr("checked",false)
+            }else{
+                $(".selectAllBtn").attr("checked",false)
+                $scope.vm.deleteIds.push(id)
+            }
+            console.log( $scope.vm.deleteIds)
+        }
+
 
         getData();
         //查询列表
@@ -95,6 +128,9 @@ angular.module('adminModule').controller('userManageController', [
                         },function(data){
                             //刷新页面
                             $state.reload()
+                            if(data.status == 10009){
+                                layer.msg("数据重复!")
+                            }
                         },function(){
                             layer.msg("请求失败")
                         })
@@ -156,8 +192,15 @@ angular.module('adminModule').controller('userManageController', [
             httpRequestPost("/api/user/queryUserByUserName",{
                 userName:$scope.vm.searchName,
             },function(data){
+                if(data.status == 10016){
+                    $scope.vm.listData = "";
+                    $scope.vm.userDataTotal = 0;
+                    $scope.$apply()
+                    layer.msg("没有查询到记录!")
+                }
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })
@@ -190,6 +233,18 @@ angular.module('adminModule').controller('userManageController', [
                 }
             });
         }
+
+        //批量删除用户
+        function deleteUsers(){
+            httpRequestPost("/api/user/deleteUserByIds",{
+                ids :  $scope.vm.deleteIds
+            },function(data){
+                $state.reload();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
         //改变用户状态
         function stop(userId,statusId){
             httpRequestPost("/api/user/updateStatus",{

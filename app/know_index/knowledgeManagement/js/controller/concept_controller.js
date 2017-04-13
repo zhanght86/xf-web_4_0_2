@@ -5,15 +5,17 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
+angular.module('knowledgeManagementModule').controller('conceptController', [
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
     function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
+
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit: KnowledgeEdit,  //
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -25,9 +27,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
-            getTitleGroup : getTitleGroup,   //点击获取添加标题
-            titleGroup : [], //点击标题添加内容
 
+                        //生成  BOT
+            getCreatBot : getCreatBot,
+            creatBot : [],
 
             //扩展问
             extensionTitle : [],
@@ -66,10 +69,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
         };
-        function alert(e){
-            console.log($(e.target).val())
-//        console.log(55)
-        }
+
         setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
         //setCookie("categorySceneId","10023");
@@ -103,19 +103,21 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         });
 
         function getExtension(title,weight){
-            //$scope.vm.extensionTitle = [];
-            //$scope.vm. extensionTitle.push(title);
-            //httpRequestPost("/api/conceptKnowledge/checkDistribute",{
-            //
-            //},function(data){
-            //    if(data.status!=10005){
-            //        $scope.vm.frames = data.data;
-            //        $scope.vm.frameId=$scope.vm.frames[0].frameId;
-            //        $scope.$apply();
-            //    }
-            //},function(){
-            //    alert("err or err")
-            //});
+            $scope.vm.extensionTitle = [];
+            $scope.vm.extensionTitle.push(title);
+            console.log($scope.vm.extensionTitle);
+            httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+                extendQuestionList : $scope.vm.extensionTitle,
+                applicationId : 100
+            },function(data){
+                console.log(data);
+                if(data.status!=200){
+
+                    $scope.$apply();
+                }
+            },function(){
+                alert("err or err")
+            });
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
       //{
@@ -205,7 +207,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 $scope.vm.timeFlag="启用"
             }
         });
-
+        function KnowledgeEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
        function KnowledgeAdd(){
            var dialog = ngDialog.openConfirm({
                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
@@ -237,19 +258,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             $(".senior_div").slideToggle();
         }
 
-        function getTitleGroup(){
-            if( $scope.vm.title){
-                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
-                    "title" : $scope.vm.title
+        function getCreatBot(){
+            if($scope.vm.title){
+                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                    "title" :  $scope.vm.title,
+                    "applicationId" : "100"
                 },function(data){
-                    if(data.status == 500){
-                        alert();
-                        $scope.vm.titleTip = data.info;
-                        $scope.$apply()
-                    }else{
-                        $scope.vm.titleGroup = data.data[0].knowledgeTitleTag;
-                        $scope.$apply()
-                    }
+                    //if(data.status == 500){
+                    //    alert();
+                    //    $scope.vm.titleTip = data.info;
+                    //    $scope.$apply()
+                    //}else{
+                    //    $scope.vm.creatBot = data.data[0].knowledgeTitleTag;
+                    //    $scope.$apply()
+                    //}
                     console.log(data);
                 },function(err){
                     layer.msg("打标失败，请重新打标")
@@ -314,7 +336,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                     //    $scope.vm.titleTip = data.info;
                     //    $scope.$apply()
                     //}else{
-                    //    $scope.vm.titleGroup = data.data[0].knowledgeTitleTag;
+                    //    $scope.vm.creatBot = data.data[0].knowledgeTitleTag;
                     //    $scope.$apply()
                     //}
                 },function(err){
