@@ -22,8 +22,8 @@
                     </div>
                     <div class="L mr-10 pr">
                         <div class="clearfix">
-                            <input class="input_text L mr-10" ng-model="vm.title" type="text" placeholder="请输入知识标题" >
-                            <button class="btn1 btn1_blue L mr-10" ng-click="vm.search()">查找</button>
+                            <input class="input_text L mr-10" ng-model="vm.chatKnowledgeTopic" type="text" placeholder="请输入知识标题" >
+                            <button class="btn1 btn1_blue L mr-10" ng-click="vm.search(1)">查找</button>
                             <button class="L btn se-search-btn advanced_sear_btn" style="border: 1px solid #3ea9fb;" ng-click="vm.searchHeighFlag=!vm.searchHeighFlag">高级查找</button>
                         </div>
 
@@ -52,7 +52,6 @@
                     </div>
                     <button class="btn1 R btn_delete  mr-20" ng-click="vm.delKnowledge()">刪除</button>
                 </div>
-
                 <div class="clearfix csso-bd bd pl-20 pr-20 mt-30" style="min-height:400px;">
                     <ul class="csso-lsit">
                         <li ng-if="vm.listData" ng-repeat="item in vm.listData">

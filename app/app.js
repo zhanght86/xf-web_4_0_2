@@ -621,20 +621,20 @@ knowledge_static_web
                     }
                 }
             })
-            .state("materialManagement.chatKnowledgeScan", {
-                params:{"chatKnowledgeId" : null},
-                url: "/chatKnowledgeScan",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
-                        controller: "chatKnowledgeScanController"
-                    }
-                }
-            })
+            //.state("materialManagement.chatKnowledgeScan", {
+            //    params:{"chatKnowledgeId" : null},
+            //    url: "/chatKnowledgeScan",
+            //    views: {
+            //        'header': {
+            //            templateUrl: 'know_index/home/homePageNav.html',
+            //            controller: "homePageNavController"
+            //        },
+            //        'content': {
+            //            templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
+            //            controller: "chatKnowledgeScanController"
+            //        }
+            //    }
+            //})
             .state("materialManagement.chatKnowledgeBasePreview", {
                 params:{"scanData" : null,"id":null},
                 url: "/chatKnowledgeBasePreview",
@@ -694,7 +694,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
-                        controller: "knowledgeSingleAddConceptController"
+                        controller: "conceptController"
                     }
                 }
             })
