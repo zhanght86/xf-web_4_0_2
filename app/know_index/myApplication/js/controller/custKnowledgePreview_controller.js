@@ -8,11 +8,11 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
-        "364180924750893056"
+        //"364180924750893056"
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
             //knowledgeId : $stateParams.knowledgeId,
-            knowledgeId : 364180924750893056,        //del
+            knowledgeId : "364180924750893056",        //del
             knowledgeType : $stateParams.knowledgeType,
             listData : null,
             //editName : editName
@@ -32,6 +32,8 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 "knowledgeId" : $scope.vm.knowledgeId,
                 "applicationId" : $scope.vm.applicationId
             },function(data){
+                $scope.vm.listData = data.data;
+                $scope.$apply()
                 console.log(data);
             },function(){
                 layer.msg("获取失败")

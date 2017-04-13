@@ -12,12 +12,13 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
+        {{vm.listData}}
         <ul class="Preview">
             <li>
-                <p><span>知识类目：</span>{{item.sceneName}}</p>
-                <p><span>知识有效期：</span>{{vm.knowledgeExpDateStart}} 至 {{vm.knowledgeExpDateEnd}}</p>
+                <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
+                <p><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
                 <p><span>业务框架：</span>卡类/信用卡/北京</p>
-                <p><span>知识标题： {{vm.knowledgeTitle}}</span></p>
+                <p><span>知识标题： {{vm.listData.knowledgeBase.knowledgeTitle}}</span></p>
             </li>
             <li>
                 <div class="knowContent">
