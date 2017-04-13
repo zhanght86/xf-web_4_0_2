@@ -207,7 +207,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $scope.vm.timeFlag="启用"
             }
         });
-        function knowledgeEdit(){
+        function KnowledgeEdit(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
                 //controller:function($scope){
