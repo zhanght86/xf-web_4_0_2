@@ -250,7 +250,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                         },function(data){
                             if(data.status==200){
                                 layer.msg("删除成功");
-
+                                $state.go("myApplication.manage");
                             }else{
                                 layer.msg("删除失败");
                             }

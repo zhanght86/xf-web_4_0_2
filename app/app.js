@@ -539,13 +539,13 @@ knowledge_static_web
             })
             //应用开发-知识管理-客服知识预览
             .state("custKnowledgePreview", {
-                //params:{"userPermission" : null},
+                params:{"scanKnowledge" : null},
                 url: "/custKnowledgePreview",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/custKnowledgePreview.html',
                 controller:"custKnowledgePreviewController"
             })
             .state("custKnowledgePreview.manage", {
-                //params:{"userPermission" : null},
+                params:{"scanKnowledge" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -571,7 +571,7 @@ knowledge_static_web
                 }
             })
             .state("setting.newService", {
-                //params:{"userPermission" : null},
+                params:{"serviceId" : null},
                 url: "/newService",
                 views: {
                     'header': {

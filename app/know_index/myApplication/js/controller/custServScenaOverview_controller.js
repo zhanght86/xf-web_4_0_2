@@ -5,13 +5,15 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout ) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore ) {
         $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
-        var applicationId = getCookie("applicationId")
-
+        var applicationId = $cookieStore.get("applicationId");
+        //******************************************** //
+        var n = 1;   // 定義淚目數  類別
+        //********************************************//
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             //editName : editName
             //getCreatBot : getCreatBot,
             creatBot : [],
@@ -19,10 +21,155 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             knowledgeBotVal: "",
             knowledgeBot : knowledgeBot,
             botRoot : null,
+            type : true,
+            listData : [],                  //页面展示内容
+            //fn
+            getData : getData ,             //数据获取
+            delData : delData ,             //删除
+            knowledgeTotal : null,         //知识总条数
+            newNumber : null ,              //更新条数
+            getNewNumber : getNewNumber ,  //获取更新条数
 
-            type : true
+            knowledgeIds : [], //刪除 id ，
+            addDelIds : addDelIds ,
+            // params set
+            "pageSize": 5,
+            sceneIds : [] ,
+            "knowledgeTitle": null,         //知识标题默认值null
+            "knowledgeContent": null,        //知识内容默认值null
+            "knowledgeCreator": null,        //作者默认值null
+            "knowledgeExpDateEnd": null,        //知识有效期开始值默认值null
+            "knowledgeExpDateStart": null,        //知识有效期结束值默认值null
+            "sourceType": 0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            "updateTimeType": 0 ,  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+
+            keySearch : keySearch,
+            napSearch : napSearch ,
+            getSourceType : getSourceType,
+            getUpdateTimeType : getUpdateTimeType,
+
+            scan : scan ,   // 点击标题预览
+
+            heighSarch : false
         };
-var n = 1;
+        //高级搜索 开关
+        $scope.$watch("vm.heighSarch",function(val){
+            if(val){
+                angular.element(".advanced_search").slideDown()
+            }else{
+                angular.element(".advanced_search").slideUp()
+            }
+        });
+        function napSearch(){
+            getData(1);
+            getNewNumber();
+
+        }
+        function scan(item){
+            var obj = {};
+            obj.applicationId = $scope.vm.applicationId ;
+            obj.knowledgeId = item.knowledgeId;
+            obj.knowledgeType = item.knowledgeType;
+            $state.go("custKnowledgePreview.manage",{scanKnowledge:obj})
+        }
+        function getSourceType(val){
+            $scope.vm.sourceType = val
+        }
+        function getUpdateTimeType(val){
+            $scope.vm.updateTimeType = val
+        }
+        getData(1);
+        function getData(index){
+            console.log((index-1)*$scope.vm.pageSize);
+            httpRequestPost("/api/knowledgeManage/overView/searchList",{
+                "applicationId" : $scope.vm.applicationId,
+                "index": (index-1)*$scope.vm.pageSize,
+                "pageSize": $scope.vm.pageSize,
+                "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+                "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            },function(data){
+                console.log(data);
+                $scope.vm.listData = data.data.objs;
+                $scope.vm.knowledgeTotal = data.data.total;
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/5), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 10,//分页框数量
+                    numberOfPages  : Math.ceil(data.data.total/5)
+                };
+                //setParams();
+                $scope.$apply();
+            },function(){
+                alert("err or err")
+            });
+        }
+
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
+        function keySearch(e){
+                var keycode = window.event?e.keyCode:e.which;
+                if(keycode==13){
+                    $scope.vm.getData(1);
+                }
+        }
+
+        function setParams(){
+            //重置 参数 问题
+            $scope.vm.sceneIds = [],						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+            $scope.vm.knowledgeTitle = null,         //知识标题默认值null
+            $scope.vm.knowledgeContent = null,        //知识内容默认值null
+            $scope.vm.knowledgeCreator = null,        //作者默认值null
+            $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
+            $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
+            $scope.vm.sourceType = null,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            $scope.vm.updateTimeType = null  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+        }
+        function delData(){
+            console.log($scope.vm.knowledgeIds);
+            httpRequestPost("/api/knowledgeManage/overView/deleteKnowledge",{
+                "knowledgeIds":$scope.vm.knowledgeIds
+            },function(data){
+                $state.reload();
+              layer.msg("刪除成功")
+            },function(){
+                layer.msg("刪除失败")
+            });
+        }
+        function addDelIds(id,arr){
+            if(arr.inArray(id)){
+                arr.remove(id)
+            }else{
+                arr.push(id)
+            }
+        }
+        getNewNumber();
+        function getNewNumber(){
+            httpRequestPost(" /api/knowledgeManage/overView/searchTotalAndToday",{
+                "applicationId" : $scope.vm.applicationId,
+                "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+                "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            },function(data){
+                $scope.vm.newNumber = data.data.total;
+                console.log(data)
+            },function(){
+                layer.msg("查找今日新增条数失败")
+            });
+        }
 
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
         //{
@@ -55,21 +202,26 @@ var n = 1;
         }
         //点击更改bot value
         $(".aside-nav").on("click","span",function(){
-            alert()
-            var value = $(this).html();
-            $scope.vm.frameCategoryId = $(this).prev().attr("data-option");
-            $scope.vm.knowledgeBotVal = value;
-            //if($scope.vm.knowledgeBotVal.indexOf(value)){
-            //    $scope.vm.knowledgeBotVal.push($(this).html());
+            var id = angular.element(this).attr("data-option-id");
+            $scope.vm.sceneIds.push(id);
+            httpRequestPost("/api/modeling/category/listbycategorypid",{
+                "categoryApplicationId":applicationId,
+                "categoryPid": id
+            },function(data){
+                console.log(data);
+                    angular.forEach(data.data,function(item){
+                        $scope.vm.sceneIds.push(item.categoryId)
+                    })
+            },function(){});
             $scope.$apply();
-            //}
+
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-nav").on("click",'.icon-jj',function(){
             var id = $(this).attr("data-option");
             var that = $(this);
             if(!that.parent().parent().siblings().length){
-                //that.css("backgroundPosition","0% 100%");
+                that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId":applicationId,
                     "categoryPid": id
@@ -88,7 +240,7 @@ var n = 1;
                                         '<div class="slide-a">'+
                                         ' <a class="ellipsis" href="javascript:;">'+
                                         //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                        '<span>'+item.categoryName+'</span><i class="icon-r icon-jt"></i>'+
+                                        '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span><i class="icon-r icon-jt"></i>'+
                                         '</a>' +
                                         '</div>' +
                                         '</li>'
@@ -98,7 +250,7 @@ var n = 1;
                                         '<div class="slide-a">'+
                                         ' <a class="ellipsis" href="javascript:;">'+
                                         //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                        '<span>'+item.categoryName+'</span>'+
+                                        '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                         '</a>' +
                                         '</div>' +
                                         '</li>'
@@ -106,34 +258,33 @@ var n = 1;
                             });
                         }else{
                             //1  存在叶节点
-                            if(item.categoryLeaf){
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                        '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
-                                    '<span>'+item.categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
-                            }else{
-                                //不存在叶节点
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                        //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<span>'+item.categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
-                            }
+                            //if(item.categoryLeaf){
+                            //    html+= '<li>' +
+                            //        '<div class="slide-a">'+
+                            //        ' <a class="ellipsis" href="javascript:;">'+
+                            //            '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
+                            //        '<span>'+item.categoryName+'</span>'+
+                            //        '</a>' +
+                            //        '</div>' +
+                            //        '</li>'
+                            //}else{
+                            //    //不存在叶节点
+                            //    html+= '<li>' +
+                            //        '<div class="slide-a">'+
+                            //        ' <a class="ellipsis" href="javascript:;">'+
+                            //            //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                            //        '<span>'+item.categoryName+'</span>'+
+                            //        '</a>' +
+                            //        '</div>' +
+                            //        '</li>'
+                            //}
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
-                        $timeout(function(){
-                            that.parent().parent().next().slideDown()
-                        },2000)
+                        //$timeout(function(){
+                        //    that.parent().parent().next().slideDown()
+                        //},2000);
                         $scope.vm.type = !$scope.vm.type;
-
                     }
                 },function(err){
                     alert(err)
@@ -152,7 +303,7 @@ var n = 1;
         //第二种  箭头添加 hover
         $(".aside-nav").on("mouseenter",'.leafHover',function(){
             var id = $(this).attr("data-option");
-            //alert(id);
+            //console.log(id)
             var that = $(this);
             //if(!that.parent().parent().siblings().length){
             //    that.css("backgroundPosition","0% 100%");
@@ -161,14 +312,11 @@ var n = 1;
                     "categoryApplicationId":applicationId,
                     "categoryPid": id
                 },function(data){
-                    //console.log(data)
+                    console.log(data);
                     if(data.data){
+                        console.log(data);
                             n+=1;
-                            //type true +   false 》
-                            //无叶节点
-                            // 加号 跟 箭头 区别开
-                            if($scope.vm.type){
-                                console.log($scope.vm.type);
+                            if(!$scope.vm.type){
                                 var  html = '<ul class="pas-menu_1 leaf'+n+'">';
                                 angular.forEach(data.data,function(item){
                                     //1  存在叶节点
@@ -177,8 +325,8 @@ var n = 1;
                                         html+= '<li data-option="'+item.categoryId+'">' +
                                             '<div class="slide-a">'+
                                             ' <a class="ellipsis" href="javascript:;">'+
-                                                '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
-                                            '<span>'+item.categoryName+'</span></i>'+
+                                             '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
+                                            '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span></i>'+
                                             '</a>' +
                                             '</div>' +
                                             '</li>'
@@ -188,49 +336,52 @@ var n = 1;
                                             '<div class="slide-a">'+
                                             ' <a class="ellipsis" href="javascript:;">'+
                                                 //'<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
-                                            '<span>'+item.categoryName+'</span>'+
+                                            '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                             '</a>' +
                                             '</div>' +
                                             '</li>'
                                     }
                                 });
                             }else{
-                                //1  存在叶节点
-                                if(item.categoryLeaf){
-                                    html+= '<li>' +
-                                        '<div class="slide-a">'+
-                                        ' <a class="ellipsis" href="javascript:;">'+
-                                        '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
-                                        '<span>'+item.categoryName+'</span>'+
-                                        '</a>' +
-                                        '</div>' +
-                                        '</li>'
-                                }else{
-                                    //不存在叶节点
-                                    html+= '<li>' +
-                                        '<div class="slide-a">'+
-                                        ' <a class="ellipsis" href="javascript:;">'+
-                                            //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                        '<span>'+item.categoryName+'</span>'+
-                                        '</a>' +
-                                        '</div>' +
-                                        '</li>'
-                                }
+                            //    console.log($scope.vm.type　+"sss");
+                            //    var  html = '<ul class="pas-menu_1 leaf'+n+'">';
+                            //    angular.forEach(data.data,function(item){
+                            //    //1  存在叶节点
+                            //    if(item.categoryLeaf){
+                            //        html+= '<li>' +
+                            //            '<div class="slide-a">'+
+                            //            ' <a class="ellipsis" href="javascript:;">'+
+                            //            '<i class="icon-jj" data-option="'+item.categoryId+'"></i>'+
+                            //            '<span>'+item.categoryName+'</span>'+
+                            //            '</a>' +
+                            //            '</div>' +
+                            //            '</li>'
+                            //    }else{
+                            //        //不存在叶节点
+                            //        html+= '<li>' +
+                            //            '<div class="slide-a">'+
+                            //            ' <a class="ellipsis" href="javascript:;">'+
+                            //                //'<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                            //            '<span>'+item.categoryName+'</span>'+
+                            //            '</a>' +
+                            //            '</div>' +
+                            //            '</li>'
+                            //    }
+                            //})
                             }
                             html+="</ul>";
                             $(html).appendTo((that));
-                            console.log( $(html).css("display"));
-                            console.log(  $(".leaf"+n));
                             $(".leaf"+n).show();
-                        }
-
+                    }
                 },function(err){
                     alert(err)
                 });
 
         }else{
-             $(that).children().eq(1).show()}
+             $(that).children().eq(1).show()
+            }
         });
+
         $(".aside-nav").on("mouseleave",'.leafHover',function(){
             var that = $(this);
             if($(that).children().length==2){
@@ -240,10 +391,4 @@ var n = 1;
         });
 
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
-
-
-
-
-
-    }
-]);
+    }]);

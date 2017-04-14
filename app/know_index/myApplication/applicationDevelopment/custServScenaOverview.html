@@ -1,5 +1,4 @@
 <div ui-view="header"></div>
-
 <div class="main warp">
     <div class="crumbs-nav bgwhite mt20">
         <span class="cn-lable">你曾经路过此地：</span>
@@ -8,37 +7,10 @@
         <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
         <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
     </div>
-
-<!--test-->
-    <!--<div class="value Div" id="Div">-->
-        <!--{{vm.botRoot}}-->
-        <!--<div class="ipt-txt-box">-->
-            <!--<input class="ipt-txt" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>-->
-            <!--<i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>-->
-            <!--&lt;!&ndash;<div class="aside-navs aside-navs2" >&ndash;&gt;-->
-                <!--<div class="aside-navs aside-navs2 aside-nav aside-navn">-->
-                <!--<ul class="menus show">-->
-                    <!--&lt;!&ndash;//test&ndash;&gt;-->
-                    <!--<li ng-repeat="item in vm.botRoot">-->
-                        <!--<div class="slide-a">-->
-                            <!--<a class="ellipsis" href="javascript:;">-->
-                                <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                                <!--<span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>-->
-                            <!--</a>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--test -->
-
-    <div class="page-lrcont210 clearfix bgwhite mt10">
+    <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                <img class="hd-img" src="../../images/images/poto.png"/>
+                <img class="hd-img" src="../../../images/images/poto.png"/>
                 <span class="hd-name ellipsis">长沙银行机器人</span>
             </div>
             <div class="aside-nav aside-navn">
@@ -46,70 +18,8 @@
                     <li ng-repeat="item in vm.botRoot">
                         <a class="slide-a ellipsis" href="javascript:;">
                             <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                            <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
+                            <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
                         </a>
-                        <ul class="menu_1">
-                            <li>
-                                <a class="ellipsis" href="javascript:;">
-                                    <span>个人业务</span>
-                                    <i class="icon-r icon-jt"></i>
-                                </a>
-                                <ul class="pas-menu_1">
-                                    <li>
-                                        <a class="slide-a ellipsis" href="javascript:;">
-                                            <i class="icon-jj"></i>
-                                            <span>分业务展开</span>
-                                        </a>
-                                        <ul class="menu_1">
-                                            <li>
-                                                <a class="ellipsis" href="javascript:;">
-                                                    <span>信用卡业务</span>
-                                                    <i class="icon-r icon-jt"></i>
-                                                </a>
-                                                <ul class="pas-menu_1">
-                                                    <li>
-                                                        <a class="slide-a ellipsis" href="javascript:;">
-                                                            <i class="icon-jj"></i>
-                                                            <span>按地域展开</span>
-                                                        </a>
-                                                        <ul class="menu_1">
-                                                            <li>
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>信用卡业务</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a class="slide-a ellipsis" href="javascript:;">
-                                                            <i class="icon-jj"></i>
-                                                            <span>按办理流程展开</span>
-                                                        </a>
-                                                        <ul class="menu_1">
-                                                            <li>
-                                                                <a class="ellipsis" href="javascript:;">
-                                                                    <span>魔都卡业务</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="ellipsis" href="javascript:;">
-                                    <span>对外业务</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="ellipsis" href="javascript:;">
-                                    <span>其他业务</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -124,9 +34,9 @@
                     <div class="L pr mr-20">
                         <div>
                             <div class="search-box">
-                                <input class="input-text" type="text" placeholder="请输入知识标题" style="width: 280px;" />
+                                <input class="input-text" type="text" ng-model="vm.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)" style="width: 280px;" />
                             </div>
-                            <button class="btn1 btn1_blue advanced_sear_btn">高级查找</button>
+                            <button class="btn1 btn1_blue advanced_sear_btn" ng-click="vm.heighSarch=!vm.heighSarch">高级查找</button>
                         </div>
                         <div class="advanced_search bd" >
                             <div class="framework mb-10" style="padding-left: 85px;">
@@ -136,97 +46,86 @@
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
                                 <span>
-                                    <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate WdateFmtErr" style="width:165px;" placeholder="" readonly="">
+                                    <input type="text" id="startTime" onchange=""  ng-model="vm.knowledgeExpDateStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                                     -
-                                    <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate" style="width:165px;" placeholder="" readonly="">
+                                    <input type="text" id="endTime"   onchange="" ng-model="vm.knowledgeExpDateEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                                 </span>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">作者:</span>
-                                <input type="text" class="input_text"/>
-                            </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">匹配方式:</span>
-                                <div>
-                                    <label class="mr-10"><input type="radio" name="matching"/>完全匹配</label>
-                                    <label><input type="radio" name="matching"/>智能匹配</label>
-                                </div>
+                                <input type="text" class="input_text" ng-model="vm."/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources"/>全部</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources"/>单条新增</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources"/>批量导入</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources"/>文档加工</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(0)"/>全部</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(1)"/>单条新增</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(2)"/>批量导入</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(3)"/>文档加工</label>
                                 </div>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">更新时间:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="time"/>不限</label>
-                                    <label class="mr-10"><input type="radio" name="time"/>近三天</label>
-                                    <label class="mr-10"><input type="radio" name="time"/>近七天</label>
-                                    <label class="mr-10"><input type="radio" name="time"/>近一月</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(0)"/>不限</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(1)"/>近三天</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(2)"/>近七天</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(3)"/>近一月</label>
                                 </div>
                             </div>
                             <div class="tc">
-                                <input type="button" class="btn1 btn1_blue" value="搜索" style="width:100px;"/>
+                                <input type="button" class="btn1 btn1_blue" value="搜索" ng-click="vm.napSearch()" style="width:100px;"/>
                             </div>
                         </div>
                     </div>
-
                     <select class="sel bd L">
                         <option>新增知识</option>
                         <option>新增知识</option>
                         <option>新增知识</option>
                     </select>
-
-
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;">批量导入</a>
                         <a class="btn btn-green" href="javascript:;">知识加工</a>
                         <a class="btn btn-green2" href="javascript:;">导出知识</a>
                     </div>
                 </div>
-
                 <div class="csso-cont mt30">
                     <div class="clearfix csso-hd">
                         <div class="fl">
-                            <span>总计<em>10000</em>条数据，今日新增<em>300</em>条</span>
+                            <span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
                         </div>
-                        <div class="fr">
-                            <a class="ljtClose-btn" href="javascript:;">
+                        <div class="fr" style="margin-right: 80px;" ng-click="vm.delData()">
+                            <a class="ljtClose-btn" href="javascript:;" style="width: 50px;">
                                 <i class="icon-ljtClose"></i>
-                                <span class="txt">删除</span>
+                                <span class="txt" >删除</span>
                             </a>
                         </div>
                     </div>
-                    <div class="clearfix csso-bd">
+                    <div class="clearfix csso-bd" style="min-height:300px;">
                         <ul class="csso-lsit">
-                            <li>
+                            <li ng-repeat="item in vm.listData">
                                 <div class="title">
-                                    <div class="my-checkbox">
-                                        <label></label>
-                                    </div>
-                                    <a href="javascript:;">知识标题: 我怎么办信用卡呢？</a>
+                                    <checkbox ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)"></checkbox>
+                                    <a href="javascript:;" ng-click="vm.scan(item)">知识标题: {{item.knowledgeTitle}}</a>
                                 </div>
                                 <div class="txt-cont mt10">
                                     <div class="txt-item oh">
                                         <div class="lable fl">概念扩展个数：</div>
                                         <div class="value oh">
-                                            4个
+                                            {{item.extensionCount}} 个
                                         </div>
                                     </div>
                                     <div class="txt-item oh">
                                         <div class="lable fl">知识内容：</div>
+                                        <!--{{item.knowledgeContent}}-->
                                         <div class="value oh">
                                             <ul class="">
-                                                <li>
-                                                    <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
+                                                <li ng-if="item.knowledgeType!=103">
+                                                    <p>{{item.knowledgeContent}}</p>
                                                 </li>
-                                                <li>
-                                                    <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
+                                                <li ng-if="item.knowledgeType==103">
+                                                    <p><strong>该要素知识包含条数：</strong> {{item.tableCount}}条</p>
+                                                    <p><strong>新添加要素数：</strong> {{item.elementsCount}}条</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -234,39 +133,38 @@
                                 </div>
                                 <div class="csso-info oh">
                                     <div class="fl">
-                                        <span>知识类型：FAQ知识</span>
-                                        <span>知识类目：银行/卡类知识</span>
+                                        <span>知识类型：{{item.knowledgeTypeDetail}}</span>
+                                        <span>知识类目：{{item.sceneName}}</span>
                                     </div>
                                     <div class="fr">
-                                        <span>作者：张正</span>
-                                        <span>跟新时间：2016-06-12  16：58</span>
+                                        <span>作者：{{item.knowledgeCreator}}</span>
+                                        <span>跟新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd hh:mm:ss'}}</span>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-        <!-- page-->
+                        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
 </div>
 <style>
-    .advanced_search{background:#fff;}
+    .advanced_search{background:#fff;width:540px;}
 </style>
 <script>
-    $('.advanced_sear_btn').click(function(){
-        $('.advanced_search').slideToggle();
-    });
+//    $('.advanced_sear_btn').click(function(){
+//        $('.advanced_search').slideToggle();
+//    });
 
     //asdie N级菜单
-    $(".aside-navn .slide-a").on("click",function(){
-        if($(this).hasClass("slideActive")){
-            $(this).removeClass("slideActive").next(".menu_1").stop().slideToggle();
-        }else{
-            $(this).addClass("slideActive").next(".menu_1").stop().slideToggle();
-        }
-    });
+//    $(".aside-navn .slide-a").on("click",function(){
+//        if($(this).hasClass("slideActive")){
+//            $(this).removeClass("slideActive").next(".menu_1").stop().slideToggle();
+//        }else{
+//            $(this).addClass("slideActive").next(".menu_1").stop().slideToggle();
+//        }
+//    });
 </script>

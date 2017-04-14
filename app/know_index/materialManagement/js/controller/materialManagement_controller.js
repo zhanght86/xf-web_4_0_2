@@ -8,6 +8,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
+
             title : "" ,           //知识标题
             search : search,  //查询
             seeDtails:seeDtails,//标题预览
@@ -64,16 +65,21 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index": index==1?0:$scope.vm.pageSize*index,
                 "pageSize":$scope.vm.pageSize,
             },function(data){
-                console.log(data)
-                $scope.vm.listData = data.data.objs,
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: Math.ceil(data.data.total/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply()
-                $scope.vm.title = null;
+                if(data.data==10005){
+                    layer.msg("查询无次相关知识")
+                }else{
+                    console.log(data);
+                    $scope.vm.listData = data.data.objs,
+                        $scope.vm.paginationConf = {
+                            currentPage: index,//当前页
+                            totalItems: Math.ceil(data.data.total/5), //总条数
+                            pageSize: 1,//第页条目数
+                            pagesLength: 8,//分页框数量
+                        };
+                    $scope.$apply();
+                    $scope.vm.title = null;
+                }
+
             },function(err){})
         }
         function selectTimeType(type){

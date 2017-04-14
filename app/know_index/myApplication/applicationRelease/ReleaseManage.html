@@ -46,7 +46,7 @@
                                    ng-click="vm.startService(item.serviceId)" class="mr-10 c-orange">上线</a>
                                 <a ng-if="item.serviceStatus==30002"
                                    ng-click="vm.restartService(item.serviceId)" class="mr-10 c-orange">重启</a>
-                                <a href="javascript:;" class="c-primary mr-10" >编辑</a>
+                                <a ng-click="vm.editService(item.serviceId)" class="c-primary mr-10" >编辑</a>
                                 <a ng-click="vm.deleteService(item.serviceId)" class="c-error">删除</a>
                             </td>
                         </tr>
