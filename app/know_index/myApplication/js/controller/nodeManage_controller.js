@@ -20,7 +20,6 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             statusId : "", //父级节点状态
             nodeType : "", //父级节点类型
             nodes : [], //新增子集节点集合
-            newNodes : [], //新增子集节点集合
             subNode : "", //子节点的id
             subNodeAccessIp : "" , //子节点的访问地址
             nodeCreateId : getCookie("userId"), //用户id
@@ -33,6 +32,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             editNode : editNode, //编辑节点
             disabledAndEnabledNode : disabledAndEnabledNode, //禁用或者启用节点
             deleteNode : deleteNode, //删除节点
+            findNodeInfo : findNodeInfo, //查找节点信息
 
             listTypeData : listTypeData, //查询节点类型数据
             listStatusData : listStatusData, //查询状态数据
@@ -80,7 +80,29 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             }
         });
 
-        function editNode(){
+        //查询节点的基本信息
+        function findNodeInfo(nodeCode){
+            httpRequestPost("/api/application/node/findNodeInfo",{
+                "nodeCode" : nodeCode
+            },function(data){
+                if(data.status==200){
+                    $scope.vm.nodeId = data.data.nodeId;//父级节点id
+                    $scope.vm.nodeAccessIp = data.data.nodeAccessIp;//父级节点访问地址
+                    $scope.vm.statusId = data.data.statusId; //父级节点状态
+                    $scope.vm.nodeType = data.data.nodeType; //父级节点类型
+                    $scope.vm.nodes = data.data.nodes; //新增子集节点集合
+                    $scope.$apply();
+                }else{
+                    layer.msg("查询节点信息失败");
+                }
+            },function(){
+                layer.msg("请求失败");
+            })
+        }
+
+        //编辑节点弹出框
+        function editNode(nodeCode){
+            findNodeInfo(nodeCode);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
                 scope: $scope,
