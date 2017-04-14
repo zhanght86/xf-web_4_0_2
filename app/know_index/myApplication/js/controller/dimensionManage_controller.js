@@ -17,6 +17,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         $scope.vm = {
             addDimension : addDimension,
             editDimension : editDimension,
+            pageSize : 5,
             listData : "",   // table 数据
             listDataTotal : "",
             deleteDimension:deleteDimension,
@@ -44,11 +45,11 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             oldDimension : [],
         };
 
-        getData();
-        function getData(){
+        getData(1);
+        function getData(index){
             httpRequestPost("/api/application/dimension/listDimension",{
-                index:0,
-                pageSize:10,
+                index:(index - 1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
                 userId:$scope.vm.userId,
                 applicationId:$scope.vm.applicationId
             },function(data){
@@ -56,16 +57,21 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 $scope.vm.listData = data.data.dimensionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
-                    currentPage: 0,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/$scope.vm.pageSize), //总条数
                     pageSize: 1,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
-                $scope.$apply()
+                $scope.$apply();
             },function(){
                 layer.msg("请求失败")
             })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
 
         //删除维度
         function deleteDimension(dimensionId){
