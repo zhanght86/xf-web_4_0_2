@@ -12,7 +12,8 @@
                         <div class="slide-a">
                             <a class="ellipsis" href="javascript:;">
                                 <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                <input type="checkbox" class="botSelect" data-option="{{item.categoryId}}"/>
+                                <input type="checkbox" class="botSelect" data-option="{{item.categoryId}}"
+                                       ng-checked="vm.categoryIds.inArray(item.categoryId)"/>
                                 <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
                             </a>
                         </div>
@@ -23,8 +24,8 @@
     </div>
     <div class="row cl">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-            <input type="submit" class="btn1 btn1_blue mr-15" value="确认"/>
-            <input type="button" class="btn1 btn_gray" value="取消" />
+            <input type="submit" ng-click="closeThisDialog(1)" class="btn1 btn1_blue mr-15" value="确认"/>
+            <input type="button" ng-click="closeThisDialog(0)" class="btn1 btn_gray" value="取消" />
         </div>
     </div>
 </div>
