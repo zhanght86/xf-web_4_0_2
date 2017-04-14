@@ -1,72 +1,107 @@
 
-<div class="pd-30" style="background:#fff;">
-    <p class="f-16">知识内容新增</p>
-    <div>
-        <textarea class="textarea bd"></textarea>
-    </div>
-    <div class="channel_div  mb-10"  >
-        <span class="channel_s" >渠道：</span>
-        <div>
-            <label class="mr-10"><input type="checkbox"/>Web </label>
-            <label class="mr-10"><input type="checkbox"/>微信 </label>
-            <label class="mr-10"><input type="checkbox"/>app </label>
+<script type="text/ng-template" >
+</script>
+<div class="page-container" style="width: 550px" >
+    <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
+    <div class="addPopupCnt">
+        <textarea ng-model="vm.newTitle"></textarea>
+        <div class="checkboxStr">
+            <div>渠道：</div>
+            <label ng-repeat="channel in vm.channels">
+                <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" >
+                <!-- channelId-->
+                {{channel.channelName}}
+            </label>
         </div>
-    </div>
-    <div class="channel_div mb-10" >
-        <span class="channel_s" >维度：</span>
-        <div id="dimension_bar"></div>
-    </div>
-    <div class="channel_div mb-10" style="padding-left:80px;">
-        <span class="channel_s" >高级选项：</span>
-        <a href="javascript:;" class="c-primary unfold_fit">展开</a>
-    </div>
-    <div class="senior_div">
-        <div class=" mb-10" >
-            <span >知识配置：</span>
-            <div class="dib pt-5 mr-15">
-                <div class="open1 b_box" style="float:left;margin-right:10px;">
-                    <div class="open2 s_box" onclick="turn_on(this);"></div>
-                </div>
-                <span>不显示相关问题</span>
-            </div>
-            <div class="dib pt-5 mr-15">
-                <div class="open1 b_box" style="float:left;margin-right:10px;">
-                    <div class="open2 s_box" onclick="turn_on(this);"></div>
-                </div>
-                <span>不在相关问题内提示</span>
-            </div>
-            <div class="dib pt-5 mr-15">
-                <div class="open1 b_box" style="float:left;margin-right:10px;">
-                    <div class="open2 s_box" onclick="turn_on(this);"></div>
-                </div>
-                <span>不弹出评价小尾巴</span>
+        <div class="checkboxAddress"  style="height: auto;">
+            维度：
+            <div id="search_bar">
             </div>
         </div>
-        <div>
-            <div class="mb-10">
-                <span>指定相关知识:</span>
-                <input type="text" class="input-text extended_query_txt" placeholder="" style="width:279px;">
-                <a href="javascript:;"  onclick="">
-                    <img src="../../../images/images/add_img.png">
-                </a>
+        <div class="Concept-Ipt-nxtDiv">
+            <span class="Concept-Ipt-nxt-ico"></span>
+            <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
+        </div>
+
+        <div class="channel_div mb-10" style="padding-left:80px;">
+            <span class="channel_s" >高级选项：</span>
+            <a href="javascript:;" class="c-primary unfold_fit" ng-click="vm.slideDown()">
+                <span ng-if="!vm.slideFlag">展开</span>
+                <span ng-if="vm.slideFlag">隐藏</span>
+            </a>
+        </div>
+        <div class="senior_div"  style="display: none">
+            <div class=" mb-10">
+                <span >知识配置：</span>
+                <div class="dib pt-5 mr-15">
+
+                    <switch ng-click="vm.question = !vm.question"></switch>
+                    <span>不显示相关问题</span>
+                </div>
+                <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
+                    <switch ng-click="vm.tip = !vm.tip"></switch>
+                    <span>不在相关问题内提示</span>
+                </div>
+                <div class="dib pt-5 mr-15" style="margin-left: 81px;">
+                    <switch ng-click="vm.tail = !vm.tail"></switch>
+                    <span>不弹出评价小尾巴</span>
+                </div>
             </div>
-            <div class="channel_div mb-20">
-                <span class="channel_s c-primary">已添加</span>
-                <ul>
-                    <li>1、储蓄卡办理方式  <span class="delete_a R "></span></li>
-                    <li>1、储蓄卡办理方式  <span class="delete_a R "></span></li>
-                </ul>
+            <div>
+                <div class="mb-10" style="position: relative;">
+                    <span>指定相关知识:</span>
+                    <input type="text" class="input-text extended_query_txt" ng-model="vm.appointRelative" placeholder="" ng-blur="vm.appointRelativeList=[];vm.appointRelative=''" style="width:279px;">
+                    <ul ng-if="vm.appointRelativeList.length" style="position: absolute;left: 100px;z-index: 2">
+                        <li ng-repeat="item in vm.appointRelativeList" style="border: 1px solid #b3b3b3;min-width: 280px;background: #e0eaf1;text-indent: 1em"
+                            ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
+                    </ul>
+                </div>
+                <!-- -->
+                <div class="channel_div mb-20" ng-if="vm.appointRelativeGroup.length">
+                    <span class="channel_s c-primary">已添加</span>
+                    <ul>
+                        <li ng-repeat="item in vm.appointRelativeGroup">{{$index}}、{{item}}  <span class="delete_a R" ng-click="vm.removeAppointRelative(item)"></span></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row cl mb-30">
-        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="button" class="btn1 btn1_blue" value="保存"/>
+
+        <div class="jqrsz-btn-box" style="padding-left: 0px;">
+            <a class="btn btn-blue mr10" ng-click="closeThisDialog(1)" href="javascript:;">保存</a>
+            <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
         </div>
     </div>
 </div>
 
-<style>
 
+<style>
+    #search_bar{
+        width: 421px;
+    }
+    .addPopup {
+        height: 500px
+    }
+    .ngdialog.ngdialog-theme-default .ngdialog-content {
+
+        width: 500px;
+    }
+    .addPopupCnt{
+        margin-left: 22px;
+    }
 </style>
+<script>
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

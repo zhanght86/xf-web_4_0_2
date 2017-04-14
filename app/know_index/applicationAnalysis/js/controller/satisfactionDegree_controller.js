@@ -3,11 +3,11 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('satisfactionDegreeController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            applicationId :getCookie("applicationId"),
+            applicationId :$cookieStore.get("applicationId"),
             getList : getList ,
             listData : null ,   // table 数据
 
@@ -61,7 +61,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             httpRequestPost("/api/analysis/satisfaction/searchList",{
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
-
+                "applicationId" : $scope.vm.applicationId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
@@ -98,6 +98,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
 
         function getPieData(){
             httpRequestPost("/api/analysis/satisfaction/chartAndTotal",{
+                "applicationId" : $scope.vm.applicationId,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
 
@@ -176,7 +177,6 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
 
         function  getChannel(){
             httpRequestPost("/api/application/channel/listChannels",{
-                //"applicationId": "360619411498860544"
                 "applicationId" : $scope.vm.applicationId
             },function(data){
                 if(data.data){

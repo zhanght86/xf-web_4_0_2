@@ -1,72 +1,124 @@
-
-<div class="pd-30" style="background:#fff;">
-    <p class="f-16">知识内容新增</p>
-    <div>
-        <textarea class="textarea bd">信用卡年费没有</textarea>
+<div class="pd-20">
+    <h3 class="tc f16 mb-20">概念扩展修饰</h3>
+    <div class="modifi_title mb-20">
+        <button class="current">整体修饰</button>
+        <button >单独修饰</button>
     </div>
-    <div class="channel_div  mb-10"  >
-        <span class="channel_s" >渠道：</span>
-        <div>
-            <label class="mr-10"><input type="checkbox"/>Web </label>
-            <label class="mr-10"><input type="checkbox"/>微信 </label>
-            <label class="mr-10"><input type="checkbox"/>app </label>
-        </div>
-    </div>
-    <div class="channel_div mb-10" >
-        <span class="channel_s" >维度：</span>
-        <div id="dimension_bar"></div>
-    </div>
-    <div class="channel_div mb-10" style="padding-left:80px;">
-        <span class="channel_s" >高级选项：</span>
-        <a href="javascript:;" class="c-primary unfold_fit">展开</a>
-    </div>
-    <div class="senior_div hide">
-        <div class=" mb-10" >
-            <span >知识配置：</span>
-            <div class="dib pt-5 mr-15">
-                <div class="open1 b_box" style="float:left;margin-right:10px;">
-                    <div class="open2 s_box" onclick="turn_on(this);"></div>
+    <div class="modifi_con">
+        <div class="db">
+            <div class="framework mb-10">
+                <span class="framework_s">非必要:</span>
+                <div>
+                    <!--<input type="text" class="input_text"/>-->
+                    <select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">
+                        <option value="">111</option>
+                        <option value="">222</option>
+                        <option value="">333</option>
+                    </select>
                 </div>
-                <span>不显示相关问题</span>
             </div>
-            <div class="dib pt-5 mr-15">
-                <div class="open1 b_box" style="float:left;margin-right:10px;">
-                    <div class="open2 s_box" onclick="turn_on(this);"></div>
+            <div class="framework mb-10">
+                <span class="framework_s">必要:</span>
+                <div>
+                    <!--<input type="text" class="input_text"/>-->
+                    <select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">
+                        <option value="">111</option>
+                        <option value="">222</option>
+                        <option value="">333</option>
+                    </select>
                 </div>
-                <span>不在相关问题内提示</span>
             </div>
-            <div class="dib pt-5 mr-15">
-                <div class="open1 b_box" style="float:left;margin-right:10px;">
-                    <div class="open2 s_box" onclick="turn_on(this);"></div>
+            <div class="framework mb-10">
+                <span class="framework_s">非:</span>
+                <div>
+                    <!--<input type="text" class="input_text"/>-->
+                    <select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">
+                        <option value="">111</option>
+                        <option value="">222</option>
+                        <option value="">333</option>
+                    </select>
                 </div>
-                <span>不弹出评价小尾巴</span>
             </div>
-        </div>
-        <div>
-            <div class="mb-10">
-                <span>指定相关知识:</span>
-                <input type="text" class="input-text extended_query_txt" placeholder="" style="width:279px;">
-                <a href="javascript:;"  onclick="">
-                    <img src="../../../images/images/add_img.png">
-                </a>
-            </div>
-            <div class="channel_div mb-20">
-                <span class="channel_s c-primary">已添加</span>
-                <ul>
-                    <li>1、储蓄卡办理方式  <span class="delete_a R "></span></li>
-                    <li>1、储蓄卡办理方式  <span class="delete_a R "></span></li>
-                </ul>
+            <div class="tc mt-20">
+                <input type="button" class="btn1 btn1_blue" value="保存"/>
             </div>
         </div>
-    </div>
-    <div class="row cl mb-30">
-        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <input type="button" class="btn1 btn1_blue" value="保存"/>
+        <div class="dn">
+            <p class="mb-10">*用户可以修饰单个标签的权重</p>
+            <div class="cl">
+                <div class="tag_div mr-10 L">
+                    <p class="mb-5">信用卡_业务词</p>
+                    <select class="sel bd">
+                        <option>极重要</option>
+                        <option>重要</option>
+                        <option>一般</option>
+                        <option>不重要</option>
+                        <option>极不重要</option>
+                    </select>
+                </div>
+                <div class="tag_div mr-10 L">
+                    <p class="mb-5">信用卡_业务词</p>
+                    <select class="sel bd">
+                        <option>极重要</option>
+                        <option>重要</option>
+                        <option>一般</option>
+                        <option>不重要</option>
+                        <option>极不重要</option>
+                    </select>
+                </div>
+                <div class="tag_div mr-10 L">
+                    <p class="mb-5">信用卡_业务词</p>
+                    <select class="sel bd">
+                        <option>极重要</option>
+                        <option>重要</option>
+                        <option>一般</option>
+                        <option>不重要</option>
+                        <option>极不重要</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tc mt-20">
+                <input type="button" class="btn1 btn1_blue" value="保存"/>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-
+    .tag_div p{font-size:14px;}
+    .tag_div select{font-size:12px;}
+    .ngdialog.ngdialog-theme-default .ngdialog-content{
+        width:520px;
+    }
 </style>
+<script>
+    //tab
+    $('.modifi_title button').click(function(){
+        $(this).addClass('current').siblings().removeClass();
+        $('.modifi_con').children('div').eq($(this).index()).attr('class','db').siblings().attr('class','dn');
+    });
+
+    //插件
+    var select_Group_user = '';
+    var select_Group_classifiy = '';
+    $(function() {
+        //loadClassifyZtree();//ztree
+        // queryGroupUserByName();
+        $('.chosen-select').chosen();//加载 amazeui Chosen
+        $('.chosen-select').on('change', function(e, params,param) {
+//            console.log("我被触发了-->>",params);
+            if(params!=null &&params!=undefined &&$.trim(params)!=''){
+                select_Group_user = '';
+                select_Group_user = params.selected;
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
