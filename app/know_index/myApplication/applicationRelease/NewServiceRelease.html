@@ -21,7 +21,8 @@
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布渠道：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <label class="mr-10" ng-repeat="channel in vm.channelData">
-                        <input type="checkbox" ng-checked="vm.channels.inArray(channel.channelId)" ng-click="vm.selectChannel(channel.channelId)"/> {{channel.channelName}}
+                        <input type="checkbox" ng-checked="vm.channels.inArray(channel.channelId)"
+                               ng-click="vm.selectChannel(channel.channelId)"/> {{channel.channelName}}
                     </label>
                 </div>
             </div>
@@ -42,14 +43,18 @@
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布类型：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <label ng-repeat="serviceType in vm.typeData" class="mr-10"><input type="radio" name="style" ng-click="vm.selectType(serviceType.statusId)"> {{serviceType.statusName}}</label>
+                    <label ng-repeat="serviceType in vm.typeData" class="mr-10">
+                        <input type="radio" name="style" ng-checked="vm.serviceType==serviceType.statusId"
+                               ng-click="vm.selectType(serviceType.statusId)"> {{serviceType.statusName}}
+                    </label>
                 </div>
             </div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布节点：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <ul class="bd pd-10 node_ul L mr-10" >
-                        <li ng-repeat="node in vm.nodeData"  ng-click="vm.selectNode(node.nodeCode)">{{node.nodeAccessIp}}</li>
+                        <li ng-repeat="node in vm.nodeData"  ng-class="{'btn1_blue':vm.nodeCode==node.nodeCode}"
+                        ng-click="vm.selectNode(node.nodeCode)">{{node.nodeAccessIp}}</li>
                     </ul>
                     <a ui-sref="setting.nodeMan" class="c-primary">不在列表内，去创建新节点</a>
                 </div>
