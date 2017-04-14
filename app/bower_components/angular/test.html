@@ -16,15 +16,63 @@
         }
     </style>
 </head>
-<body>
-<h2>AngularJS Sample Application</h2>
-<div ng-app="" ng-controller="studentController">
-    <form name="studentForm" novalidate>
 
-        <input type="text" name="type" required ng-minlength="5"/>
-        {{studentForm.type}}
-        <!--<p ng-class="{ 'has-error' : studentForm.type.$invalid && !studentForm.type.$pristine }">ddddddddddddddd</p>-->
-        <p ng-if="studentForm.type.$invalid && !studentForm.type.$pristine ">ddddddddddddddd</p>
+
+<body ng-app="validationApp" ng-controller="mainController">
+<div class="container">
+    <div class="col-sm-8 col-sm-offset-2">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header"><h1>AngularJS Form Validation</h1></div>
+
+        <!-- FORM -->
+        <!-- pass in the variable if our form is valid or invalid -->
+        <form name="userForm"  novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+            <!-- NAME -->
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" ng-model="name" required>
+            </div>
+
+            <!-- USERNAME -->
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+            </div>
+{{userForm.username.$pristine}}{{userForm.username.$valid}}
+            <!-- EMAIL -->
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" ng-model="email">
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+
+    </div><!-- col-sm-8 -->
+</div><!-- /container -->
+
+
+
+
+
+
+
+
+
+
+
+<!--<h2>AngularJS Sample Application</h2>-->
+<!--<div ng-app="myTest" ng-controller="studentController">-->
+    <!--<form name="studentForm" novalidate>-->
+
+        <!--<input type="text" name="type" required ng-minlength="5"/>-->
+        <!--{{studentForm.type}}-->
+        <!--&lt;!&ndash;<p ng-class="{ 'has-error' : studentForm.type.$invalid && !studentForm.type.$pristine }">ddddddddddddddd</p>&ndash;&gt;-->
+        <!--<p ng-if="studentForm.type.$invalid">ddddddddddddddd</p>-->
 
         <!--<table border="0">-->
             <!--<tr><td>Enter first name:</td><td><input name="firstname" type="text" ng-model="firstName" required>-->
@@ -49,19 +97,48 @@
              <!--studentForm.email.$dirty && studentForm.email.$invalid"-->
                     <!--ng-click="submit()">Submit</button></td></tr>-->
         <!--</table>-->
-    </form>
-</div>
-<script>
-    function studentController($scope) {
-        $scope.reset = function(){
-            $scope.firstName = "Mahesh";
-            $scope.lastName = "Parashar";
-            $scope.email = "MaheshParashar@yiibai.com";
-        };
-        $scope.reset();
-    }
-</script>
+    <!--</form>-->
+<!--</div>-->
 <script src="angular.min.js"></script>
+<script>
+//  angular.module('myTest', [])
+//       .controller('studentController', function($scope) {
+//              $scope.submitForm = function(isValid) {
+//                  if (!isValid) {
+//                      alert('验证失败');
+//                       }
+//                   };
+//                });
+// app.js
+// create angular app
+var validationApp = angular.module('validationApp', []);
+
+// create angular controller
+validationApp.controller('mainController', function($scope) {
+
+    // function to submit the form after all validation has occurred
+    $scope.submitForm = function(isValid) {
+
+        // check to make sure the form is completely valid
+        if (isValid) {
+            alert('our form is amazing');
+        }
+
+    };
+
+});
+
+
+//    function studentController($scope) {
+//        $scope.reset = function(){
+//            $scope.firstName = "Mahesh";
+//            $scope.lastName = "Parashar";
+//            $scope.email = "MaheshParashar@yiibai.com";
+//        };
+//        $scope.reset();
+//    }
+</script>
+
 </body>
 </html>
 
