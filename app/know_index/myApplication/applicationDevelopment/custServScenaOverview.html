@@ -15,12 +15,44 @@
             </div>
             <div class="aside-nav aside-navn">
                 <ul>
-                    <li ng-repeat="item in vm.botRoot">
+                    <li class="type1">
                         <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                            <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
+                            <i class="icon-jj  ngBotAdd"></i>
+                            <!--<i class="icon-ngJj"></i>-->
+                            <span>分属性展开</span>
                         </a>
+                        <ul class="menu_1">
+                            <li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
+                                <a class="slide-a ellipsis" href="javascript:;">
+                                    <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
+                                    <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
+                                    <i class="icon-r icon-jt"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
+                    <li class="type2">
+                        <a class="slide-a ellipsis" href="javascript:;">
+                            <i class="icon-jj  ngBotAdd"></i>
+                            <span>分业务展开</span>
+                        </a>
+                        <ul class="menu_1">
+                            <li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
+                                <a class="slide-a ellipsis" href="javascript:;">
+                                    <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
+                                    <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
+                                    <i class="icon-r icon-jt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li ng-repeat="item in vm.botRoot">-->
+                        <!--<a class="slide-a ellipsis" href="javascript:;">-->
+                            <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
+                            <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </div>
@@ -41,7 +73,7 @@
                         <div class="advanced_search bd" >
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识内容:</span>
-                                <input type="text" class="input_text"/>
+                                <input type="text" class="input_text" ng-model="vm.knowledgeContent"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
@@ -53,21 +85,20 @@
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">作者:</span>
-                                <input type="text" class="input_text" ng-model="vm."/>
+                                <input type="text" class="input_text" ng-model="vm.knowledgeCreator"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(0)"/>全部</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-checked="vm.sourceType==0" ng-click="vm.getSourceType(0)"/>全部</label>
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(1)"/>单条新增</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(2)"/>批量导入</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(3)"/>文档加工</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(2)"/>文档加工</label>
                                 </div>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">更新时间:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(0)"/>不限</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-checked="vm.updateTimeType==0" ng-click="vm.getUpdateTimeType(0)"/>不限</label>
                                     <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(1)"/>近三天</label>
                                     <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(2)"/>近七天</label>
                                     <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(3)"/>近一月</label>
@@ -138,7 +169,7 @@
                                     </div>
                                     <div class="fr">
                                         <span>作者：{{item.knowledgeCreator}}</span>
-                                        <span>跟新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd hh:mm:ss'}}</span>
+                                        <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd hh:mm:ss'}}</span>
                                     </div>
                                 </div>
                             </li>
