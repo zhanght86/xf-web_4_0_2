@@ -18,6 +18,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             listData : "",   // table 数据
             listKnoData : "", //知识数据
             listDataTotal : "", //总数
+            pageSize : 5,
             listKnoDataTotal : "", //聊天知识库知识总数
             chatKnowledgeId : "",
             chatKnowledgeTopic : "",
@@ -27,6 +28,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             deleteIds : [],
             selectAllCheck : false,
             hotQuestionTitle : "",
+            knowledge : "",
             listDataLength : "",
             selectAllCheckDialog : false,
             seleceAddAll : [],
@@ -122,11 +124,11 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
            console.log( $scope.vm.deleteIds)
        }
         //加载列表
-        getData();
-        function getData(){
+        getData(1);
+        function getData(index){
             httpRequestPost("/api/application/hotQuestion/getHotQuestionList",{
-                index:0,
-                pageSize:10,
+                index:(index - 1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
                 applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
@@ -134,8 +136,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.listDataLength = data.data.total;
                 $scope.vm.paginationConf = {
-                    currentPage: 0,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/$scope.vm.pageSize), //总条数
                     pageSize: 1,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
@@ -144,13 +146,29 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
+
+
         //从聊天知识库查询知识
-        function findKnowledge(){
+        function findKnowledge(index){
             httpRequestPost("/api/chatKnowledge/findChatKnowledgeByApplicationId",{
                 applicationId:$scope.vm.applicationId,
+                title : $scope.vm.knowledge,
+                pageSize : $scope.vm.pageSize,
+                index : (index - 1)* $scope.vm.pageSize,
             },function(data){
                 $scope.vm.listKnoData = data.data.objs;
                 $scope.vm.listKnoDataTotal = data.data.total;
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/$scope.vm.pageSize), //总条数
+                    pageSize: 1,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
                 $scope.$apply()
             },function(){
                 layer.msg("请求失败")
@@ -197,7 +215,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-             $state.reload();
+                $state.reload();
             },function(){
                 layer.msg("请求失败")
             })
@@ -255,7 +273,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             layer.msg("请求失败")
                         })
                     }else{
-                        $scope.vm.listKnoData = [],
+                        $scope.vm.listKnoData = [];
+                        $scope.vm.knowledge = "";
                         $scope.vm.listKnoDataTotal = 0
                     }
                 }

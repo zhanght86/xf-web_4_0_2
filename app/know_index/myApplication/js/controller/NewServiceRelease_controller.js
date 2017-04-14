@@ -4,13 +4,13 @@
  * Date: 2017/4/12 15:46
  */
 angular.module('myApplicationSettingModule').controller('newServiceReleaseController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$stateParams","$cookieStore","$timeout",
-    function ($scope,localStorageService, $state,ngDialog,$stateParams,$cookieStore,$timeout) {
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","359873057331875840");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$stateParams",function ($scope,localStorageService, $state,ngDialog,$stateParams) {
+        setCookie("applicationId","360619411498860544");
+        setCookie("userName","admin1");
+        setCookie("userId","359873057331875840");
         $scope.vm = {
-            applicationId: $cookieStore.get("applicationId"),
+            applicationId: getCookie("applicationId"),
+
             appName : "", //应用名称
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
@@ -20,7 +20,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             serviceName: "", //服务名称
             serviceStatus : 0, //服务状态
             serviceType : 0, //服务类型
-            userId : $cookieStore.get("userId"), //获取用户id
+            userId : getCookie("userId"), //获取用户id
 
             categoryData : "", //分类数据
             channelData : "", //渠道数据
@@ -46,9 +46,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             publish : publish, //发布服务
             cancelPublish : cancelPublish, //取消发布服务
             findServiceByServiceId : findServiceByServiceId, //根据服务id查询服务信息
-
-            botRoot : "",     //根节点
-            serverIds : []
 
         };
 
@@ -180,7 +177,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //弹出分类对话框
         function listCategory(){
-
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NewServiceReleaseDialog.html",
                 scope: $scope,
@@ -193,9 +189,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                     }
                 }
             });
-            $timeout(function(){
-                relationBot()
-            },200)
         }
 
         //选择渠道
@@ -216,96 +209,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             $scope.vm.nodeCode=nodeCode;
         }
 
-
-
-
-////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        function relationBot(){
-            //{
-            //    "categoryApplicationId": "360619411498860544",
-            //    "categoryPid": "root"
-            //}
-            getBotRoot();
-            //    getDimensions();
-            //    getChannel();
-            //点击 root 的下拉效果
-            function  knowledgeBot(ev){
-                var ele = ev.target;
-                $timeout(function(){
-                    $(ele).next().slideToggle();
-                },200)
-            }
-
-            //获取root 数据
-            function getBotRoot(){
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId": $scope.vm.applicationId,
-                    "categoryPid": "root"
-                },function(data){
-                    //console.log(data);
-                    $scope.vm.botRoot = data.data;
-                    $scope.$apply()
-                },function(){
-                   layer.msg("获取BOT分类失败")
-                });
-            }
-            //点击更改bot ids
-            $(".aside-navs-cont").on("click",".botSelect",function(){
-                var self = angular.element(this);
-                var id = self.attr("data-option");
-                if(self.prop("checked")){
-                   $scope.vm.serverIds.push(id)
-                    $scope.$apply()
-                }else{
-                    $scope.vm.serverIds.remove(id)
-                    $scope.$apply()
-                }
-            });
-            //点击下一级 bot 下拉数据填充以及下拉效果
-            $(".aside-navs-cont").on("click",'.icon-jj',function(){
-                var id = $(this).attr("data-option");
-                console.log(id);
-                var that = $(this);
-                if(!that.parent().parent().siblings().length){
-                    that.css("backgroundPosition","0% 100%");
-                    httpRequestPost("/api/modeling/category/listbycategorypid",{
-                        "categoryApplicationId": $scope.vm.applicationId,
-                        "categoryPid": id
-                    },function(data){
-                        if(data.data){
-                            var  html = '<ul class="menus">';
-                            for(var i=0;i<data.data.length;i++){
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<input type="checkbox" class="botSelect" data-option="'+data.data[i].categoryId+'"/>'+
-                                '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
-                            }
-                            html+="</ul>";
-                            $(html).appendTo((that.parent().parent().parent()));
-                            that.parent().parent().next().slideDown()
-                        }
-                    },function(err){
-                        alert(err)
-                    });
-                }else{
-                    if(that.css("backgroundPosition")=="0% 0%"){
-                        that.css("backgroundPosition","0% 100%");
-                        that.parent().parent().next().slideDown()
-                    }else{
-                        that.css("backgroundPosition","0% 0%");
-                        that.parent().parent().next().slideUp()
-                    }
-                }
-            });
-        }
-////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
     }
- 
 ]).directive('checkServiceName', function($http){
     return {
         require: 'ngModel',
