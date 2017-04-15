@@ -1,17 +1,10 @@
 /**
  * Created by dinfo on 2017/3/28.
  */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -73,13 +66,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             removeAppointRelative : removeAppointRelative,
         };
 
-        setCookie("categoryApplicationId","360619411498860544");
+        $cookieStore.put("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
         //setCookie("categorySceneId","10023");
-        var applicationId = getCookie("categoryApplicationId");
+        var applicationId = $cookieStore.get("categoryApplicationId");
 
         function getFrame(){
-            //angular.forEach($scope.vm.knowledgeBotVal,function(item){
+            //angular.forEach($scope.vm.knoledgeBotVal,function(item){
             //
             //});
             httpRequestPost("/api/modeling/frame/listbyattribute",{

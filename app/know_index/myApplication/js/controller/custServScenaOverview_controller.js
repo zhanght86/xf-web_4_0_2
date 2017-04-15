@@ -40,7 +40,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             "knowledgeCreator": null,        //作者默认值null
             "knowledgeExpDateEnd": null,        //知识有效期开始值默认值null
             "knowledgeExpDateStart": null,        //知识有效期结束值默认值null
-            "sourceType": 0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            sourceType: 0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
             "updateTimeType": 0 ,  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
 
             keySearch : keySearch,
@@ -132,8 +132,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             $scope.vm.knowledgeCreator = null,        //作者默认值null
             $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
             $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
-            $scope.vm.sourceType = null,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-            $scope.vm.updateTimeType = null , //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            $scope.vm.updateTimeType = 0 , //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             $scope.vm.heighSarch = false
         }
         function delData(){
