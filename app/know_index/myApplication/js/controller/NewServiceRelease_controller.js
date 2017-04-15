@@ -48,7 +48,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             findServiceByServiceId : findServiceByServiceId, //根据服务id查询服务信息
 
             botRoot : "",     //根节点
-            serverIds : []
+            newCategoryIds : [],  //选中的分类节点
 
         };
 
@@ -180,7 +180,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //弹出分类对话框
         function listCategory(){
-
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NewServiceReleaseDialog.html",
                 scope: $scope,
@@ -190,6 +189,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        $scope.vm.categoryIds=$scope.vm.newCategoryIds;
                     }
                 }
             });
@@ -215,6 +215,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         function selectNode(nodeCode){
             $scope.vm.nodeCode=nodeCode;
         }
+
 
 
 
@@ -254,10 +255,10 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                 var self = angular.element(this);
                 var id = self.attr("data-option");
                 if(self.prop("checked")){
-                   $scope.vm.serverIds.push(id)
+                   $scope.vm.newCategoryIds.push(id)
                     $scope.$apply()
                 }else{
-                    $scope.vm.serverIds.remove(id)
+                    $scope.vm.newCategoryIds.remove(id)
                     $scope.$apply()
                 }
             });
