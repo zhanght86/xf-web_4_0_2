@@ -64,11 +64,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
+
+            source : ['Apple', 'Banana', 'Orange'],
         };
+        $scope.name = true;
 
         $cookieStore.put("categoryApplicationId","360619411498860544");
-        //setCookie("categoryModifierId","1");
-        //setCookie("categorySceneId","10023");
+
         var applicationId = $cookieStore.get("categoryApplicationId");
 
         function getFrame(){
@@ -381,7 +383,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             },function(data){
                 if(data.status == 500){
                     //$scope.vm.titleTip = data.info;
-                    //$scope.$apply()
+                      //$scope.$apply()
                 }else{
                     //$scope.vm.appointRelativeGroup = data.data[0].knowledgeTitleTag;
                     //$scope.$apply()
@@ -424,6 +426,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 layer.msg("获取渠道失败，请刷新页面")
             });
         }
+
+
+
+
+
+
 
     }
 ]);
