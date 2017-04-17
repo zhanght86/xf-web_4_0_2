@@ -70,7 +70,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
 
-
             //
             source : ['Apple', 'Banana', 'Orange'],
             keyEvent : keyEvent

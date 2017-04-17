@@ -50,7 +50,7 @@ return {
                      '<input class="miles-autoInput L" type="text"/>' +
                 '</div>' +
                 '<ul ng-if="source&&source.length" class="miles-dropDown" ng-show="flag">' +
-                        '<li class="miles-item" ng-repeat="item in source">{{item}}</li>'+
+                        '<li class="miles-item" ng-repeat="item in source">{{item.dimensionName}}</li>'+
                 '</ul>' +
             '</div>',
     replace: true,
@@ -63,9 +63,11 @@ return {
             $scope.$apply(function () {
             });
         });
-        angular.element(elem).find("input").bind('blur', function () {
-            $scope.flag = false;
-        });
+        //angular.element("document").on("click",function(){
+        //    if($(this.))
+        //    $scope.flag = false;
+        //    $scope.$apply()
+        //})
         angular.element(elem).bind('click', function () {
             $scope.flag = true;
             angular.element(this).find(".miles-autoInput").focus()
