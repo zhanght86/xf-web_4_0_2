@@ -84,8 +84,7 @@
                         <div class="lable">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
                         <div class="formControls col-xs-8 col-sm-9">
-                            <select class="input-text" style="width:407px;"  ng-model="vm.frameId" >
-                                <option  ng-if="vm.frames"  ng-repeat="item in vm.frames" ng-value="item.frameId"ng-selected="$index==0">{{item.frameTitle}}</option>
+                            <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
                             </select>
                         </div>
                     </div>

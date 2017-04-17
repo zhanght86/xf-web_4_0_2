@@ -672,11 +672,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
                 // $("#treeDemo_1_switch").bind("click", {type:"toggle"}, expandNode);
                 // $("#collapseBtn").bind("click", {type:"collapse"}, expandNode);
             });
-
-
         }
-
-
     }
 });
 

@@ -1,17 +1,10 @@
 /**
  * Created by dinfo on 2017/3/28.
  */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -71,15 +64,17 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
-        };
 
-        setCookie("categoryApplicationId","360619411498860544");
-        //setCookie("categoryModifierId","1");
-        //setCookie("categorySceneId","10023");
-        var applicationId = getCookie("categoryApplicationId");
+            source : ['Apple', 'Banana', 'Orange'],
+        };
+        $scope.name = true;
+
+        $cookieStore.put("categoryApplicationId","360619411498860544");
+
+        var applicationId = $cookieStore.get("categoryApplicationId");
 
         function getFrame(){
-            //angular.forEach($scope.vm.knowledgeBotVal,function(item){
+            //angular.forEach($scope.vm.knoledgeBotVal,function(item){
             //
             //});
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -388,7 +383,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             },function(data){
                 if(data.status == 500){
                     //$scope.vm.titleTip = data.info;
-                    //$scope.$apply()
+                      //$scope.$apply()
                 }else{
                     //$scope.vm.appointRelativeGroup = data.data[0].knowledgeTitleTag;
                     //$scope.$apply()
@@ -431,6 +426,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 layer.msg("获取渠道失败，请刷新页面")
             });
         }
+
+
+
+
+
+
 
     }
 ]);

@@ -32,6 +32,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             getCreatBot : getCreatBot,
             creatBot : [],
 
+
             //扩展问
             extensionTitle : [],
             extensionWeight :"",
@@ -68,17 +69,21 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
-        };
 
-        setCookie("categoryApplicationId","360619411498860544");
-        //setCookie("categoryModifierId","1");
-        //setCookie("categorySceneId","10023");
-        var applicationId = getCookie("categoryApplicationId");
 
-        function getFrame(){
-            //angular.forEach($scope.vm.knowledgeBotVal,function(item){
             //
-            //});
+            source : ['Apple', 'Banana', 'Orange'],
+            keyEvent : keyEvent
+        };
+        function keyEvent(e,callback){
+                var keycode = window.event?e.keyCode:e.which;
+                if(keycode==13){
+                    callback()
+                }
+        }
+        setCookie("categoryApplicationId","360619411498860544");
+        var applicationId = getCookie("categoryApplicationId");
+        function getFrame(){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": $scope.vm.frameCategoryId,
                 "frameEnableStatusId": 1,
@@ -105,11 +110,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function getExtension(title,weight){
             $scope.vm.extensionTitle = [];
             $scope.vm.extensionTitle.push(title);
+            console.log($scope.vm.extensionTitle)
             console.log($scope.vm.extensionTitle);
             httpRequestPost("/api/conceptKnowledge/checkDistribute",{
                 extendQuestionList : $scope.vm.extensionTitle,
-                applicationId : 100
+                applicationId : "100"
             },function(data){
+                $scope.vm.extensions = data.data;
                 console.log(data);
                 if(data.status!=200){
 
@@ -133,8 +140,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $timeout(function(){
                     $(ele).next().slideToggle();
                 },50)
-        }        
-
+        }
        //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
@@ -241,15 +247,15 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                    }
                }
            });
-           $timeout(function(){
-               //var dimensions = angular.copy($scope.vm.dimensions);
-               //var source = [];
-               //angular.forEach(srouce,function(item){
-               //    source.push(item.dimensionName)
-               //});
-               // console.log(source);
-               var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
-           },500);
+           //$timeout(function(){
+           //    //var dimensions = angular.copy($scope.vm.dimensions);
+           //    //var source = [];
+           //    //angular.forEach(srouce,function(item){
+           //    //    source.push(item.dimensionName)
+           //    //});
+           //    // console.log(source);
+           //    var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
+           //},500);
            //}
        }
 
@@ -264,6 +270,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     "title" :  $scope.vm.title,
                     "applicationId" : "100"
                 },function(data){
+                    console.log(data);
                     //if(data.status == 500){
                     //    alert();
                     //    $scope.vm.titleTip = data.info;
