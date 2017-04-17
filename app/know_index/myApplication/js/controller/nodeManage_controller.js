@@ -97,8 +97,6 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                     $scope.vm.nodeType = data.data.nodeType; //父级节点类型
                     $scope.vm.nodeCode = data.data.nodeCode; //父级节点编号
                     $scope.vm.nodes = data.data.nodes; //新增子集节点集合
-                    console.log("查询");
-                    console.log(JSON.stringify($scope.vm.nodes));
                     $scope.$apply();
                 }else{
                     layer.msg("查询节点信息失败");
