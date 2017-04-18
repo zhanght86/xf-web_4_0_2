@@ -62,7 +62,7 @@ knowledge_static_web.directive("autoComplete", function($compile) {
         //require: 'ngModel',
         link: function ($scope, elem, attr, ctrl) {
             $scope.flag = false;
-            $scope.$apply(function(){
+            //$scope.$apply(function(){
                 var result = {};
                 result.id = [];
                 result.name = [];
@@ -83,7 +83,7 @@ knowledge_static_web.directive("autoComplete", function($compile) {
                     });
                     $scope.result = result
                 }
-            });
+            //});
             $scope.addItem = function(index,item){
                 $scope.result.name.push(item);
                 $scope.result.id.push($scope.source.id[index]);
