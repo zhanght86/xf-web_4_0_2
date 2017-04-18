@@ -104,46 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="jqrsz-item">
-                <!--预览内容-->
-                <div ng-repeat="item in vm.scanContent">
-                    <div class="item-line">
-                        <div class="lable"></div>
-                        <div class="value">
-                            <div class="ipt-txt-box">
-                                <div class="textareaDiv textareaDiv1 textareaDiv2" >
-                                <textarea   ng-model="item.knowledgeContent" readonly style="width: 100%;">
-                                </textarea>
-                                </div>
-                                <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item-line" id="item-line">
-                        <div class="left"></div>
-                        <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.dimensionId">{{val}}</span>
-                        </div>
-                    </div>
-                    <div class="item-line" id="item-line">
-                        <div class="left"></div>
-                        <div class="optionDiv">维度:
-                            <span ng-repeat="val in item.channelId">{{val}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-line" style="margin-top: 10px">
-                    <div class="lable">
-                        知识内容：
-                    </div>
-                    <div class="value">
-                        <div class="ipt-txt-box">
-                            <input class="addBth" ng-click="vm.KnowledgeAdd()" type="button" value="+ 新增"/>
-                            <i class="btn-empty"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="jqrsz-item" style="overflow: visible">
                 <div class="item-line"  style="overflow: visible">
                     <div class="lable" style="padding-top: 15px;">
@@ -197,7 +158,46 @@
                 </div>
 
             </div>
-
+            <div class="jqrsz-item">
+                <!--预览内容-->
+                <div ng-repeat="item in vm.scanContent">
+                    <div class="item-line">
+                        <div class="lable"></div>
+                        <div class="value">
+                            <div class="ipt-txt-box">
+                                <div class="textareaDiv textareaDiv1 textareaDiv2" >
+                                <textarea   ng-model="item.knowledgeContent" readonly style="width: 100%;">
+                                </textarea>
+                                </div>
+                                <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-line" id="item-line">
+                        <div class="left"></div>
+                        <div class="optionDiv">渠道：
+                            <span ng-repeat="val in item.dimensionId">{{val}}</span>
+                        </div>
+                    </div>
+                    <div class="item-line" id="item-line">
+                        <div class="left"></div>
+                        <div class="optionDiv">维度:
+                            <span ng-repeat="val in item.channelId">{{val}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-line" style="margin-top: 10px">
+                    <div class="lable">
+                        知识内容：
+                    </div>
+                    <div class="value">
+                        <div class="ipt-txt-box">
+                            <input class="addBth" ng-click="vm.KnowledgeAdd()" type="button" value="+ 新增"/>
+                            <i class="btn-empty"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="jqrsz-btn-box">
                 <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.save()">保存</a>
                 <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>
