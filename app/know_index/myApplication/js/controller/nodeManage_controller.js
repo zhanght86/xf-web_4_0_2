@@ -91,12 +91,14 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 "nodeCode" : nodeCode
             },function(data){
                 if(data.status==200){
+
                     $scope.vm.nodeId = data.data.nodeId;//父级节点id
                     $scope.vm.nodeAccessIp = data.data.nodeAccessIp;//父级节点访问地址
                     $scope.vm.statusId = data.data.statusId; //父级节点状态
                     $scope.vm.nodeType = data.data.nodeType; //父级节点类型
                     $scope.vm.nodeCode = data.data.nodeCode; //父级节点编号
                     $scope.vm.nodes = data.data.nodes; //新增子集节点集合
+
                     $scope.$apply();
                 }else{
                     layer.msg("查询节点信息失败");
