@@ -1,0 +1,46 @@
+<div class="pd-30">
+    <form class="form form-horizontal" >
+        <div>
+            <ul class="classic_head_ul clearfix">
+                <li class="active"><img id="touxiang1.png" src="../../images/touxiang1.png"></li>
+                <li class=""><img id="touxiang2.png" src="../../images/touxiang2.png"></li>
+                <li class=""><img id="touxiang3.png" src="../../images/touxiang3.png"></li>
+                <li class=""><img id="touxiang4.png" src="../../images/touxiang4.png"></li>
+                <li class=""><img id="touxiang5.png" src="../../images/touxiang5.png"></li>
+                <li class=""><img id="touxiang6.png" src="../../images/touxiang6.png"></li>
+                <li class=""><img id="touxiang7.png" src="../../images/touxiang7.png"></li>
+                <li class=""><img id="touxiang8.png" src="../../images/touxiang8.png"></li>
+            </ul>
+        </div>
+        <div class="row cl">
+            <div class="text-c">
+                <button  class="btn1 btn1_blue mr-20" type="button" > 保存</button>
+                <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+    .ipt-txt-box .ipt-txt{
+        border:1px solid gray
+    }
+    .classic_head_ul li {
+        width: 23%;
+        height: 85px;
+        margin-right: 2%;
+        margin-bottom: 10px;
+        float: left;
+        box-sizing: border-box;
+        border: 2px solid #fff;
+        overflow:hidden;
+    }
+    .classic_head_ul li.active {
+        border-color: red;
+    }
+</style>
+<script>
+    $('.classic_head_ul li').click(function(){
+        $(this).addClass('active').siblings().removeClass();
+    });
+
+</script>
