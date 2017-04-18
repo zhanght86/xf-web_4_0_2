@@ -56,5 +56,5 @@ knowledge_static_web
         //
         //     }
         // };
-    }]);
+    //}]);
 
