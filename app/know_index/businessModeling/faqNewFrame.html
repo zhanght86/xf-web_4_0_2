@@ -16,7 +16,7 @@
                     <input id="standard_question" type="text" class="input-text mr-10" style="width:300px;"/>
                 </div>
             </div>
-            <div class="exten_problem">
+            <div class="exten_problem" id="faq_extension">
                 <div class="row cl mb-10">
                     <label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -53,9 +53,11 @@
     //添加扩展问
     function add_ques(){
         var oVal=$('.extended_query_txt').val();
-        var str='<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" value="'+oVal+'" style="width:300px;"><a href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
-        $('.exten_problem').append(str);
-        $('.extended_query_txt').val('');
+        if(oVal!=null && oVal !=''){
+            var str='<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" value="'+oVal+'" style="width:300px;"><a href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
+            $('.exten_problem').append(str);
+            $('.extended_query_txt').val('');
+        }
     }
     //删除扩展问
     function rem_ques(obj){

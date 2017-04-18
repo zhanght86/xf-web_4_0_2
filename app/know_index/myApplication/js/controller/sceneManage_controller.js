@@ -20,7 +20,24 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
             updateKnowledgeType:  updateKnowledgeType, //禁用或者启用知识类型
             updateExchangeMode: updateExchangeMode, //禁用或者启用交互方式
 
+            addDialog : addDialog,
+
         };
+        function addDialog(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/sceneManageDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
 
         //加载知识类型
         listKnowledgeType();
