@@ -17,6 +17,7 @@ angular.module('adminModule').controller('userManageController', [
             getData : getData,
             paginationConf : "", //分页条件
             userDataTotal:"",   //用户总数
+            pageSize : 5,
             addUser : addUser,
             editUser : editUser,
             deleteUser:deleteUser,
@@ -78,19 +79,19 @@ angular.module('adminModule').controller('userManageController', [
         }
 
 
-        getData();
+        getData(1);
         //查询列表
-        function getData(){
+        function getData(index){
             httpRequestPost("/api/user/listUser",{
-                index:0,
-                pageSize:10,
+                index:(index -1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
             },function(data){
                 console.log(data);
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
-                    currentPage: 0,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/$scope.vm.pageSize), //总条数
                     pageSize: 1,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
@@ -99,6 +100,11 @@ angular.module('adminModule').controller('userManageController', [
                 layer.msg("请求失败")
             })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
         //添加用户
         function addUser(){
             var dialog = ngDialog.openConfirm({
@@ -192,8 +198,15 @@ angular.module('adminModule').controller('userManageController', [
             httpRequestPost("/api/user/queryUserByUserName",{
                 userName:$scope.vm.searchName,
             },function(data){
+                if(data.status == 10016){
+                    $scope.vm.listData = "";
+                    $scope.vm.userDataTotal = 0;
+                    $scope.$apply()
+                    layer.msg("没有查询到记录!")
+                }
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })

@@ -1,22 +1,29 @@
 <div class="main warp">
     <div class="addContent pd30">
         <div class="r-cont-hd mb-20">
-            <span>发布新服务</span>
+            <span>{{vm.dialogTitle}}</span>
         </div>
         <div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input  type="text" class="bk-gray input-text" placeholder="" style="width:392px;" >
-                    <div class="c-red " style="display:block;" >错误提示</div>
+                    <form name="myService" class="css-form" novalidate>
+                    <input  type="text" class="bk-gray input-text"
+                            ng-model="vm.serviceName"
+                            name="serviceName" check-service-name="serviceName"
+                            placeholder="" style="width:392px;" >
+                    <div class="c-red " style="display:block;"
+                         ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</div>
+                    </form>
                 </div>
             </div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布渠道：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <label class="mr-10"><input type="checkbox" /> Web</label>
-                    <label class="mr-10"><input type="checkbox" /> 微信</label>
-                    <label class="mr-10"><input type="checkbox" /> app</label>
+                    <label class="mr-10" ng-repeat="channel in vm.channelData">
+                        <input type="checkbox" ng-checked="vm.channels.inArray(channel.channelId)"
+                               ng-click="vm.selectChannel(channel.channelId)"/> {{channel.channelName}}
+                    </label>
                 </div>
             </div>
             <div class="row cl mb-10">
@@ -30,33 +37,33 @@
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布内容：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input class="addBth" type="button" value="选择分类" ng-click="vm.newService()"/>
+                    <input class="addBth" type="button" value="选择分类" ng-click="vm.listCategory()"/>
                 </div>
             </div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布类型：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <label class="mr-10"><input type="radio" name="style"> 生产</label>
-                    <label class="mr-10"><input type="radio" name="style"> 测试</label>
+                    <label ng-repeat="serviceType in vm.typeData" class="mr-10">
+                        <input type="radio" name="style" ng-checked="vm.serviceType==serviceType.statusId"
+                               ng-click="vm.selectType(serviceType.statusId)"> {{serviceType.statusName}}
+                    </label>
                 </div>
             </div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布节点：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <ul class="bd pd-10 node_ul L mr-10" >
-                        <li>192.168.0.1:8031</li>
-                        <li>192.168.0.1:8031</li>
-                        <li>192.168.0.1:8031</li>
-                        <li>192.168.0.1:8031</li>
-                        <li>192.168.0.1:8031</li>
+                        <li ng-repeat="node in vm.nodeData"  ng-class="{'btn1_blue':vm.nodeCode==node.nodeCode}"
+                        ng-click="vm.selectNode(node.nodeCode)">{{node.nodeAccessIp}}</li>
                     </ul>
-                    <a href="#" class="c-primary">不在列表内，去创建新节点</a>
+                    <a ui-sref="setting.nodeMan" class="c-primary">不在列表内，去创建新节点</a>
                 </div>
             </div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <button class="btn1 btn1_blue"  >发布</button>
+                    <button class="btn1 btn1_blue"  ng-click="vm.publish()">发布</button>
+                    <button class="btn1 btn_gray"  ng-click="vm.cancelPublish()">取消</button>
                 </div>
             </div>
         </div>

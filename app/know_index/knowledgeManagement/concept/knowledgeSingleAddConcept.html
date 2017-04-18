@@ -19,7 +19,7 @@
                     </div>
                     <div class="value">
                             <div class="ipt-txt-box">
-                                <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.hideTip()" ng-minlength="1" ng-maxlength="1000" required />
+                                <input class="ipt-txt" type="text"  ng-model="vm.title" ng-keypress="vm.keyEvent($event,vm.getCreatBot())" name="title" ng-focus="vm.hideTip()" ng-minlength="1" ng-maxlength="1000" required />
                                 <i class="btn-empty"></i>
                                 <a href="javascript:;" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/images/add_img.png" alt=""></a>
                                 <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
@@ -65,21 +65,20 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-                <div class="item-line" ng-if="vm.creatBot.length">
-                    <div class="lable"></div>
-                    <div class="value Div" id="Div">
-                        <div class="ipt-txt-box">
-                            <div class="ipt-txt">
-                                <span  ng-repeat="item in  vm.titleGroup">{{item}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- 根据   标题  点击生成bot-->
+                <!--<div class="item-line" ng-if="vm.creatBot.length">-->
+                    <!--<div class="lable"></div>-->
+                    <!--<div class="value Div" id="Div">-->
+                        <!--<div class="ipt-txt-box">-->
+                            <!--<div class="ipt-txt">-->
+                                <!--<span  ng-repeat="item in  vm.creatBot">{{item}}</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="item-line">
                     <div class="row cl mb-10">
                         <div class="lable">业务框架：</div>
@@ -152,27 +151,53 @@
                     <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
                 </div>
 
-
-                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
+                <!--<div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">-->
+                    <!--<div class="lable">-->
+                        <!--概念扩展：-->
+                    <!--</div>-->
+                    <!--<div class="value" style="overflow: visible">-->
+                        <!--<div style="width: 500px;height: 38px;">-->
+                            <!--&lt;!&ndash;<span ng-repeat="val in item.obj"  style="display: inline-block;margin: 2px;background:#f0f0f0;padding: 3px;border: 1px solid #e1e1e1;"></span>&ndash;&gt;-->
+                            <!--<select disabled style="display: inline-block;margin: 2px;background:#f0f0f0;padding: 4px;border: 1px solid #e1e1e1;margin-left: 10px;width: 50px;">-->
+                                 <!--<option value="" selected>{{}}</option>-->
+                             <!--</select>-->
+                            <!--<a href="javascript:;" class=" mr-15" ng-click="vm.getExtension()"><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="error-tip hide">&ndash;&gt;-->
+                        <!--&lt;!&ndash;错误提示&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="item-line" ng-if="vm.extensions" ng-repeat="item in vm.extensions">
                     <div class="lable">
                         概念扩展：
                     </div>
-                    <div class="value" style="overflow: visible">
-                        <div style="width: 500px;height: 38px;">
-
-                            <!--<span ng-repeat="val in item.obj"  style="display: inline-block;margin: 2px;background:#f0f0f0;padding: 3px;border: 1px solid #e1e1e1;"></span>-->
-
-                            <select disabled style="display: inline-block;margin: 2px;background:#f0f0f0;padding: 4px;border: 1px solid #e1e1e1;margin-left: 10px;width: 50px;">
-                                 <option value="" selected>{{}}</option>
-                             </select>
-                            <a href="javascript:;" class=" mr-15" ng-click="vm.getExtension()"><img src="../../../images/images/delete_img.png" alt=""></a>
+                    <div class="value clearfix">
+                        <div class="bd tag_box L mr-10">
+                            <span class="tag_s" ng-repeat="tag in item[0].extensionQuestionTagList">{{val}}</span>
                         </div>
-                        <!--<div class="error-tip hide">-->
-                        <!--错误提示-->
-                        <!--</div>-->
+                        <span class="tag_s mr-10 L">普通</span>
+                        <a href="javascript:;" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>
+                        <span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>
                     </div>
                 </div>
 
+                <div class="item-line">
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value clearfix" >
+                        <div class="bd tag_box L mr-10" >
+                            <span class="tag_s">tag1</span>
+                            <span class="tag_s">tag1</span>
+                        </div>
+                        <span class="tag_s mr-10 L">普通</span>
+                        <a href="javascript:;" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>
+                        <span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>
+                    </div>
+                </div>
             </div>
 
             <div class="jqrsz-btn-box">
@@ -191,6 +216,9 @@
     .ipt-txt{
         border: 1px  solid #e1e1e1;
     }
+    .tag_box{width:356px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
+
+    .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
 
 </style>
 <script>

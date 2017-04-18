@@ -17,6 +17,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         $scope.vm = {
             addDimension : addDimension,
             editDimension : editDimension,
+            pageSize : 5,
             listData : "",   // table 数据
             listDataTotal : "",
             deleteDimension:deleteDimension,
@@ -29,6 +30,9 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             paginationConf : "", //分页条件
             switchTurn :10001,
             newDimensions : [],
+            getDimensionVal : "",
+            getDimension : "",
+            dimension : "",
             dimensionVal : "",
             dimensionName : "",
             dimensionStatusId: "",
@@ -41,11 +45,11 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             oldDimension : [],
         };
 
-        getData();
-        function getData(){
+        getData(1);
+        function getData(index){
             httpRequestPost("/api/application/dimension/listDimension",{
-                index:0,
-                pageSize:10,
+                index:(index - 1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
                 userId:$scope.vm.userId,
                 applicationId:$scope.vm.applicationId
             },function(data){
@@ -53,16 +57,21 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 $scope.vm.listData = data.data.dimensionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
-                    currentPage: 0,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
+                    currentPage: index,//当前页
+                    totalItems: Math.ceil(data.data.total/$scope.vm.pageSize), //总条数
                     pageSize: 1,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
-                $scope.$apply()
+                $scope.$apply();
             },function(){
                 layer.msg("请求失败")
             })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
 
         //删除维度
         function deleteDimension(dimensionId){
@@ -102,10 +111,16 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
 
         function findDimension(){
             httpRequestPost("/api/application/dimension/findByDimensionName",{
-                dimensionName:$scope.vm.dimensionName,
+                dimensionName:$scope.vm.getDimension,
                 applicationId:$scope.vm.applicationId,
                 dimensionParentId : 0
             },function(data){
+                if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    layer.msg("没有查询到记录!")
+                    $scope.$apply()
+                }
                 $scope.vm.listData = data.data.dimensionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.$apply()
@@ -127,7 +142,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                         httpRequestPost("/api/application/dimension/addDimension",{
                             applicationId:$scope.vm.applicationId,
                             userId:$scope.vm.userId,
-                            dimensionName : $scope.vm.dimensionName,
+                            dimensionName : $scope.vm.dimension,
                             dimensionStatusId : $scope.vm.switchTurn,
                             dimensionParentId : 0,
                             dimensionNameArray : $scope.vm.newDimensions
@@ -136,6 +151,10 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                         },function(){
                             layer.msg("请求失败")
                         })
+                    }else{
+                        $scope.vm.newDimensions = [];
+                        $scope.vm.dimension = "";
+                        $scope.vm.getDimensionVal = "";
                     }
                 }
             });
@@ -174,7 +193,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             layer.msg("请求失败")
                         })
                     }else{
-                        $scope.vm.oldDimension = []
+                        $scope.vm.oldDimension = [];
+                        $scope.vm.newDimensions = [];
                     }
                 }
             });
@@ -183,6 +203,10 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         function savePro(vm,arr){
             if(arr.indexOf(vm)){
                 arr.push(vm)
+                //添加
+                $scope.vm.getDimensionVal = "";
+                //编辑
+                $scope.vm.dimensionVal = "";
             }
             console.log(arr)
         }

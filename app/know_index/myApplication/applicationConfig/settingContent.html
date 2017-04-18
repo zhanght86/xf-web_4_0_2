@@ -3,7 +3,6 @@
         <span>机器人设置</span>
     </div>
     <div class="r-cont-bd oh">
-        <form name="angularForm" novalidate>
         <div class="jqrsz-item">
             <div class="item-line">
                 <div class="lable">
@@ -12,10 +11,10 @@
                 <div class="value">
                     <div class="ipt-txt-box">
                         <input name="robotName" class="ipt-txt" type="text"
-                               ng-model="robot.robotName" ng-maxlength="8" ng-pattern="/[\u4e00-\u9fa5]/"/>
+                               ng-model="robot.robotName" />
                         <i class="btn-empty"></i>
                     </div>
-                    <div class="error-tip" ng-show="angularForm.robotName.$error.maxlength">
+                    <div class="error-tip">
                         昵称输入不能超过8个汉字，请重新输入
                     </div>
                 </div>
@@ -170,7 +169,6 @@
                 </div>
             </div>
         </div>
-        </form>
         <div class="jqrsz-btn-box">
             <a class="btn btn-blue mr10" ng-click="robot.editRobot()">保存</a>
             <a class="btn btn-gray" ng-click="$state.reload()">取消</a>

@@ -215,7 +215,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         }else{
                             html += '<div class="libraryRthCnt even" data-option="'+data.data[i].frameId+'">';
                         }
-                        html += '   <img src="../../images/images/libTxt_22.png"/>'+
+                        html += '   <a href="javascript:;" class="pa delete_a"></a>'+
+                                '   <img src="../../images/images/libTxt_22.png"/>'+
                                 '   <p>银行邻域业务框架</p>'+
                                 '   <div>' +
                                 '      <a type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' href="javascript:;">'+data.data[i].frameTitle+'</a>' +

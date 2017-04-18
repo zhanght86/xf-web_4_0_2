@@ -5,7 +5,7 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConceptController', [
+angular.module('knowledgeManagementModule').controller('conceptController', [
     '$scope', 'localStorageService' ,'$timeout',"$state" ,"ngDialog","$cookieStore","FileUploader",
     function ($scope,localStorageService,$timeout, $state,ngDialog,$cookieStore,FileUploader) {
 
@@ -15,6 +15,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit: KnowledgeEdit,  //
             botRoot : "",     //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -30,6 +31,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                         //生成  BOT
             getCreatBot : getCreatBot,
             creatBot : [],
+
 
             //扩展问
             extensionTitle : [],
@@ -67,17 +69,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
-        };
 
-        setCookie("categoryApplicationId","360619411498860544");
-        //setCookie("categoryModifierId","1");
-        //setCookie("categorySceneId","10023");
-        var applicationId = getCookie("categoryApplicationId");
-
-        function getFrame(){
-            //angular.forEach($scope.vm.knowledgeBotVal,function(item){
             //
-            //});
+            source : ['Apple', 'Banana', 'Orange'],
+            keyEvent : keyEvent
+        };
+        function keyEvent(e,callback){
+                var keycode = window.event?e.keyCode:e.which;
+                if(keycode==13){
+                    callback()
+                }
+        }
+        setCookie("categoryApplicationId","360619411498860544");
+        var applicationId = getCookie("categoryApplicationId");
+        function getFrame(){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": $scope.vm.frameCategoryId,
                 "frameEnableStatusId": 1,
@@ -104,11 +109,13 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
         function getExtension(title,weight){
             $scope.vm.extensionTitle = [];
             $scope.vm.extensionTitle.push(title);
+            console.log($scope.vm.extensionTitle)
             console.log($scope.vm.extensionTitle);
             httpRequestPost("/api/conceptKnowledge/checkDistribute",{
                 extendQuestionList : $scope.vm.extensionTitle,
-                applicationId : 100
+                applicationId : "100"
             },function(data){
+                $scope.vm.extensions = data.data;
                 console.log(data);
                 if(data.status!=200){
 
@@ -132,8 +139,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 $timeout(function(){
                     $(ele).next().slideToggle();
                 },50)
-        }        
-
+        }
        //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
@@ -206,7 +212,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                 $scope.vm.timeFlag="启用"
             }
         });
-
+        function KnowledgeEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                //controller:function($scope){
+                //    $scope.show = function(){
+                //
+                //        console.log(6688688);
+                //        $scope.closeThisDialog(); //关闭弹窗
+                //    }},
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
+        }
        function KnowledgeAdd(){
            var dialog = ngDialog.openConfirm({
                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
@@ -221,15 +246,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                    }
                }
            });
-           $timeout(function(){
-               //var dimensions = angular.copy($scope.vm.dimensions);
-               //var source = [];
-               //angular.forEach(srouce,function(item){
-               //    source.push(item.dimensionName)
-               //});
-               // console.log(source);
-               var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
-           },500);
+           //$timeout(function(){
+           //    //var dimensions = angular.copy($scope.vm.dimensions);
+           //    //var source = [];
+           //    //angular.forEach(srouce,function(item){
+           //    //    source.push(item.dimensionName)
+           //    //});
+           //    // console.log(source);
+           //    var widget = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
+           //},500);
            //}
        }
 
@@ -244,6 +269,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeSingleAddConcep
                     "title" :  $scope.vm.title,
                     "applicationId" : "100"
                 },function(data){
+                    console.log(data);
                     //if(data.status == 500){
                     //    alert();
                     //    $scope.vm.titleTip = data.info;

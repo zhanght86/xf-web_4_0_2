@@ -132,7 +132,8 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
             var uploader = new plupload.Uploader({
                 runtimes: 'html4,html5,flash,silverlight',
                 browse_button: 'tempickfile',
-                url:'/template/createTemplate',
+                url:'/api/template/createTemplate',
+
                 //container: 'temcontainer',
                 max_file_count: 1,
                 multi_selection: false,
@@ -672,11 +673,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
                 // $("#treeDemo_1_switch").bind("click", {type:"toggle"}, expandNode);
                 // $("#collapseBtn").bind("click", {type:"collapse"}, expandNode);
             });
-
-
         }
-
-
     }
 });
 

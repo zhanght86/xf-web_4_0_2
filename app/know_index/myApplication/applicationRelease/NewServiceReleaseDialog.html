@@ -1,13 +1,31 @@
 <div class="pt-10 pb-10" style="background:#fff;" >
-    <div class="bd " style="width:80%;min-height:150px;overflow:auto;margin:10px auto 20px;">
-        <ul id="treeDemo" class="ztree" style="width:100%;">
+    <!--<div class="bd " style="width:80%;min-height:150px;overflow:auto;margin:10px auto 20px;">-->
+        <!--<ul id="treeDemo" class="ztree" style="width:100%;">-->
 
-        </ul>
+        <!--</ul>-->
+    <!--</div>-->
+    <div class="bd " style="width:80%;min-height:150px;overflow:auto;margin:10px auto 20px;">
+        <div class="aside-navs bank-navs">
+            <div class="aside-navs-cont" style="width: 100%;">
+                <ul class="menus show">
+                    <li ng-repeat="item in vm.botRoot">
+                        <div class="slide-a">
+                            <a class="ellipsis" href="javascript:;">
+                                <i class="icon-jj" data-option="{{item.categoryId}}"></i>
+                                <input type="checkbox" class="botSelect" data-option="{{item.categoryId}}"
+                                       ng-checked="vm.categoryIds.inArray(item.categoryId)"/>
+                                <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+         </div>
     </div>
     <div class="row cl">
         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-            <input type="submit" class="btn1 btn1_blue mr-15" value="确认"/>
-            <input type="button" class="btn1 btn_gray" value="取消" />
+            <input type="submit" ng-click="closeThisDialog(1)" class="btn1 btn1_blue mr-15" value="确认"/>
+            <input type="button" ng-click="closeThisDialog(0)" class="btn1 btn_gray" value="取消" />
         </div>
     </div>
 </div>
@@ -16,57 +34,57 @@
 </style>
 <script>
     // tree
-    var setting = {
-        view: {
-            dblClickExpand: false,
-            showLine: false,
-            selectedMulti: false
-        },
-        data: {
-            simpleData: {
-                enable:true,
-                idKey: "id",
-                pIdKey: "pId",
-                rootPId: ""
-            }
-        },
-        callback: {
-            beforeClick: function(treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("tree");
-                if (treeNode.isParent) {
-                    zTree.expandNode(treeNode);
-                    return false;
-                } else {
-                    demoIframe.attr("src",treeNode.file + ".html");
-                    return true;
-                }
-            }
-        }
-    };
-    var zNodes =[
-        { id:1, pId:0, name:"一级分类", open:true},
-        { id:11, pId:1, name:"二级分类"},
-        { id:111, pId:11, name:"三级分类"},
-        { id:112, pId:11, name:"三级分类"},
-        { id:113, pId:11, name:"三级分类"},
-        { id:114, pId:11, name:"三级分类"},
-        { id:115, pId:11, name:"三级分类"},
-        { id:12, pId:1, name:"二级分类 1-2"},
-        { id:121, pId:12, name:"三级分类 1-2-1"},
-        { id:122, pId:12, name:"三级分类 1-2-2"},
-    ];
+//    var setting = {
+//        view: {
+//            dblClickExpand: false,
+//            showLine: false,
+//            selectedMulti: false
+//        },
+//        data: {
+//            simpleData: {
+//                enable:true,
+//                idKey: "id",
+//                pIdKey: "pId",
+//                rootPId: ""
+//            }
+//        },
+//        callback: {
+//            beforeClick: function(treeId, treeNode) {
+//                var zTree = $.fn.zTree.getZTreeObj("tree");
+//                if (treeNode.isParent) {
+//                    zTree.expandNode(treeNode);
+//                    return false;
+//                } else {
+//                    demoIframe.attr("src",treeNode.file + ".html");
+//                    return true;
+//                }
+//            }
+//        }
+//    };
+//    var zNodes =[
+//        { id:1, pId:0, name:"一级分类", open:true},
+//        { id:11, pId:1, name:"二级分类"},
+//        { id:111, pId:11, name:"三级分类"},
+//        { id:112, pId:11, name:"三级分类"},
+//        { id:113, pId:11, name:"三级分类"},
+//        { id:114, pId:11, name:"三级分类"},
+//        { id:115, pId:11, name:"三级分类"},
+//        { id:12, pId:1, name:"二级分类 1-2"},
+//        { id:121, pId:12, name:"三级分类 1-2-1"},
+//        { id:122, pId:12, name:"三级分类 1-2-2"},
+//    ];
     //    var code;
     //    function showCode(str) {
     //        if (!code) code = $("#code");
     //        code.empty();
     //        code.append("<li>"+str+"</li>");
     //    }
-    $(document).ready(function(){
-        var t = $("#treeDemo");
-        t = $.fn.zTree.init(t, setting, zNodes);
-        // demoIframe = $("#testIframe");
-        // demoIframe.bind("load", loadReady);
-        // var zTree = $.fn.zTree.getZTreeObj("tree");
-        // zTree.selectNode(zTree.getNodeByParam("id",'11'));
-    });
+//    $(document).ready(function(){
+//        var t = $("#treeDemo");
+//        t = $.fn.zTree.init(t, setting, zNodes);
+//        // demoIframe = $("#testIframe");
+//        // demoIframe.bind("load", loadReady);
+//        // var zTree = $.fn.zTree.getZTreeObj("tree");
+//        // zTree.selectNode(zTree.getNodeByParam("id",'11'));
+//    });
 </script>

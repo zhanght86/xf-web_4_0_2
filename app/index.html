@@ -2,17 +2,24 @@
 <html lang="zh-cn" ng-app="knowledge_static_web" ng-controller="ApplicationController">
 <head>
     <script>
+
+//        <!-- 数组重复判断 -->
+        Array.prototype.S=String.fromCharCode(2);
+        Array.prototype.inArray=function(e){
+            var r=new RegExp(this.S+e+this.S);
+            return (r.test(this.S+this.join(this.S)+this.S));
+        };
 //        <!-- 增加数组 remove方法-->
         Array.prototype.indexOf = function (val) {
             for(var i = 0; i < this.length; i++){
                 if(this[i] == val){return i;}
             }
             return -1;
-        }
+        };
         Array.prototype.remove = function (val) {
             var index = this.indexOf(val);
             if(index > -1){this.splice(index,1);}
-        }
+        };
 
         /*IE8兼容start*/
         if (!Array.prototype.indexOf) {
@@ -115,6 +122,8 @@
 
     <!--下拉搜索框4.8add-->
     <link rel="stylesheet" href="css/amazeui.chosen.css"/>
+
+    <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>-->
 </head>
 <body>
 
@@ -203,12 +212,12 @@
     <script  src="js/home/jquery.plugIn.min.js"></script>
     <script src="js/home/base.js"></script>
     <script src="js/home/autocomplete-0.3.0.js"></script>
-
+    <!--<script src="bower_components/ui-autocomplete/autocomplete.js"></script>-->
     <!--tagEditorJs-->
     <script src="libs/tagEditor/js/jquery.caret.min.js"></script>
     <script src="libs/tagEditor/js/jquery.tag-editor.js"></script>
     <!--autocomplete-->
-    <script src="libs/autocomplete/jquery.autocomplete.js"></script>
-    <script src="libs/autocomplete/jquery.mockjax.js"></script>
+    <!--<script src="libs/autocomplete/jquery.autocomplete.js"></script>-->
+    <!--<script src="libs/autocomplete/jquery.mockjax.js"></script>-->
 </body>
 </html>
