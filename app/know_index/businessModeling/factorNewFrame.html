@@ -2,19 +2,22 @@
     <div class="content_box mb25 ">
         <h3 class="f22 pl-10 mb15">{{vm.frameTitle}}</h3>
         <div class=" p10 ">
-            <div class="framework mb-10">
-                <span class="framework_s">要素标题：</span>
-                <input  type="text" class="input-text mr-10" placeholder="" style="width:300px;"/>
+            <div class="enable-bar mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">启用：</label>
+                <div class="mb-10">
+                    <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[vm.frameEnableStatusId]" ng-click="vm.turnOn(vm.frameEnableStatusId,'frameEnableStatusId')" style="float:left;margin-right:10px;" class="b_box open1">
+                        <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[vm.frameEnableStatusId]" class="s_box open2"></div>
+                    </div>
+                </div>
             </div>
             <div class="framework mb-10">
                 <div class="essential_factor_div bd">
                     <div class="mb-10">
-                        <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"></a>
-                        <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"></a>
+                        <a href="javascript:;" class="add_line mr-10" ng-click="vm.addEle()"><img src="../images/ys_img1.png"></a>
+                        <a href="javascript:;" class="delete_line mr-10" ng-click="vm.delEle()"><img src="../images/ys_img2.png"></a>
                     </div>
                     <div>
                         <table class="essential_factor_tab">
-                            <tbody>
                             <tr>
                                 <td>要素名称</td>
                                 <td>要素类型</td>
@@ -22,25 +25,26 @@
                                 <td>反问</td>
                                 <td>相关概念</td>
                             </tr>
-                            <tr>
-                                <td><input type="text" placeholder="购买人"/> </td>
+                            <tr id="add-bar">
+                                <td><input type="text" class="ele-name"/></td>
                                 <td>
-                                    <select class="bd">
-                                        <option>字符串</option>
-                                        <option>数字</option>
-                                        <option>范围</option>
+                                    <select class="ele-type bd">
+                                        <option value=10014>字符串</option>
+                                        <option value=10015>数字</option>
+                                        <option value=10016>范围</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="bd">
-                                        <option>OEC</option>
-                                        <option>GATE</option>
+                                    <select class="mining-type bd">
+                                        <option value=10017>OEC</option>
+                                        <option value=10018>GATE</option>
                                     </select>
                                 </td>
-                                <td><input type="text" placeholder=""/></td>
-                                <td><input type="text" placeholder="从概念库中选择"/></td>
+                                <td><input type="text" id="ele-concept-autocomplete" class="ele-asked"/></td>
+                                <td><input type="text" class="ele-concept" placeholder="从概念库中选择"/></td>
                             </tr>
-                            <tr>
+                            <tbody id="add-item">
+                            <!--<tr>
                                 <td><input type="text" placeholder="地区"/> </td>
                                 <td>
                                     <select class="bd">
@@ -57,52 +61,14 @@
                                 </td>
                                 <td><input type="text" placeholder=""/></td>
                                 <td><input type="text" placeholder="从概念库中选择"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" placeholder="价格"/> </td>
-                                <td>
-                                    <select class="bd">
-                                        <option>字符串</option>
-                                        <option>数字</option>
-                                        <option>范围</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="bd">
-                                        <option>OEC</option>
-                                        <option>GATE</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" placeholder=""/></td>
-                                <td><input type="text" placeholder="从概念库中选择"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" placeholder="期限"/> </td>
-                                <td>
-                                    <select class="bd">
-                                        <option>字符串</option>
-                                        <option>数字</option>
-                                        <option>范围</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="bd">
-                                        <option>OEC</option>
-                                        <option>GATE</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" placeholder=""/></td>
-                                <td><input type="text" placeholder="从概念库中选择"/></td>
-                            </tr>
-
-                            </tbody>
+                            </tr>--></tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="framework mb-10 pt-10">
-                <input type="button" class="btn1 btn1_blue mr-20" value="保存"/>
-                <input type="button" class="btn1 btn_green mr-20" value="返回"/>
+                <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
+                <input type="button" class="btn1 btn_green mr-20" ng-click="closeThisDialog(0)" value="返回"/>
             </div>
         </div>
     </div>
@@ -115,20 +81,13 @@
     .content_box{
         width: 970px;
     }
+    .enable-bar{
+        position: relative;
+        padding-left: 19px;
+        min-height: 25px;
+    }
 </style>
-<script>
-    //添加扩展问
-    function add_ques(){
-        var oVal=$('.extended_query_txt').val();
-        var str='<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" value="'+oVal+'" style="width:300px;"><a href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
-        $('.exten_problem').append(str);
-        $('.extended_query_txt').val('');
-    }
-    //删除扩展问
-    function rem_ques(obj){
-        $(obj).parent().parent().remove();
-    }
-</script>
+<script></script>
 
 
 

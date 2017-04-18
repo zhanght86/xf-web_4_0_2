@@ -44,10 +44,15 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             frameEnableStatusId: 1,
             frameModifierId: "",
             defaultString: "null",
+            textAndTagSplit: "#",
+            conceptSplit: "；",
             defaultInt: 0,
             responseView:responseView,
             turnOn:turnOn,
-            elementIdArray:[]
+            elementIdArray:[],
+            concept_marking:concept_marking,
+            addEle:addEle,
+            delEle:delEle
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -119,7 +124,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
             loadFrameLibrary(1);
-            $scope.$apply()
+            $scope.$apply();
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'i',function(){
@@ -244,6 +249,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 updateElement();
             }
         });
+
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 loadFrameLibrary(current);
@@ -326,6 +332,23 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if(dialog){
                 $timeout(function () {
                     fillFaqUpdatePage();
+                    //单个删除元素
+                    $("#faq_extension").on("click",'.del',function(){
+                        console.log("======deletebyelementId======");
+                        if($(this).attr("element-id")==null){
+                            return;
+                        }
+                        var elementId=$(this).attr("element-id");
+                        console.log("======elementId======"+elementId);
+                        $(this).parent().parent().remove();
+                        httpRequestPost("/api/modeling/frame/deleteelementbyid",{
+                            "elementId":elementId
+                        },function(data){
+                            responseView(data);
+                        },function(err){
+                            console.log(err);
+                        });
+                    });
                 }, 100);
             }
         }
@@ -335,25 +358,47 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $("#standard_question").val($scope.vm.elementContentArray[i]);
                     $("#standard_question").attr("element-id",$scope.vm.elementIdArray[i]);
                 }else{
-                    var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
+                    var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
                     $(".exten_problem").append(html);
                 }
             }
         }
-        //单个删除元素
-        $(".exten_problem").on("click",'a',function(){
-            var elementId=$(this).attr("element-id");
-            console.log("======elementId======"+elementId);
-            httpRequestPost("/api/modeling/frame/deleteelementbyid",{
-                "elementId":elementId
-            },function(data){
-                if(data){
-                    responseView(data);
+        function fillConceptUpdatePage(){
+            for(var i=0;i<$scope.vm.elementIdArray.length;i++){
+                if($scope.vm.elementAttributeIdArray[i]==10025){
+                    $("#concept_title").val($scope.vm.elementContentArray[i]);
+                    $("#concept_title").attr("element-id",$scope.vm.elementIdArray[i]);
+                }else{
+                    var originStr = $scope.vm.elementContentArray[i];
+                    console.log("===="+originStr);
+                    var idx1 = originStr.indexOf($scope.vm.textAndTagSplit);
+                    if(idx1<=0){
+                        return;
+                    }
+                    var originalText = originStr.substring(0,idx1);
+                    console.log("===="+originalText);
+                    var tagStr = originStr.substring(idx1+1,originStr.length);
+                    var tagArr = tagStr.split($scope.vm.conceptSplit);
+                    console.log("===="+tagArr);
+                    var tagHtml = '<div class="tag_box">';
+                    for(var i=0;i<tagArr.length;i++){
+                        tagHtml+='<span class="tag_s">'+tagArr[i]+'</span>';
+                    }
+                    tagHtml+='</div>';
+                    var html =  '<div class="row cl mb-10" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                        '   <label class="form-label col-xs-4 col-sm-2 text-r mt-7">概念扩展：</label>' +
+                        '   <div class="formControls col-xs-8 col-sm-9">'+
+                        '       <input type="hidden" value="'+originalText+'"/>'+
+                        tagHtml+
+                        '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button">'+
+                        '           <img src="../../images/images/delete_img.png">'+
+                        '       </a>'+
+                        '   </div>'+
+                        '</div>';
+                    $("#concept_extension").append(html);
                 }
-            },function(err){
-                console.log(err);
-            });
-        });
+            }
+        }
         //表达式类型数据组装 0:新增 1:修改
         function faqAssemble(type){
             $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
@@ -375,7 +420,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $scope.vm.elementRelateConceptArray[index+1]=$scope.vm.defaultString;
                 $scope.vm.elementTypeIdArray[index+1]=$scope.vm.defaultInt;
                 if(type==1){
-                    $scope.vm.elementIdArray[index+1]=$(value).attr("element-id");
+                    if($(value).attr("element-id")){
+                        $scope.vm.elementIdArray[index+1]=$(value).attr("element-id");
+                    }else{
+                        $scope.vm.elementIdArray[index+1]=$scope.vm.defaultString;
+                    }
                 }
             });
         }
@@ -466,13 +515,151 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
+                        if(conceptValidate(0)==true){
+                            conceptAssemble(0);
+                            conceptRequestAdd();
+                        }
                     }
                 }
             });
         }
+        //概念框架验证 0:添加 1:修改
+        function conceptValidate(type){
+            if(type==0){
+
+            }else{
+
+            }
+            return true;
+        }
+        //组装概念数据 0:添加 1:修改
+        function conceptAssemble(type){
+            $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
+            $scope.vm.elementAttributeIdArray[0]=10025;
+            $scope.vm.elementContentArray[0]=$("#concept_title").val();
+            $scope.vm.elementFrameIdArray[0]=$scope.vm.defaultString;
+            $scope.vm.elementMiningTypeIdArray[0]=$scope.vm.defaultInt;
+            $scope.vm.elementRelateConceptArray[0]=$scope.vm.defaultString;
+            $scope.vm.elementTypeIdArray[0]=$scope.vm.defaultInt;
+            if(type==1){
+                $scope.vm.elementIdArray[0]=$("#concept_title").attr("element-id");
+            }
+            $.each($("#concept_extension").find(".formControls").filter(":gt(0)"),function(index,value){
+                var contentInfo = $(value).find("input").val()+$scope.vm.textAndTagSplit;
+                $.each($(value).find("span"),function(index1,value1){
+                    contentInfo+=$(value1).html()+$scope.vm.conceptSplit;
+                });
+                if(contentInfo.indexOf($scope.vm.conceptSplit)>0){
+                    contentInfo=contentInfo.substring(0,contentInfo.length-1);
+                }
+                console.log("==="+contentInfo);
+                $scope.vm.elementAskContentArray[index+1]=$scope.vm.defaultString;
+                $scope.vm.elementAttributeIdArray[index+1]=10026;
+                $scope.vm.elementContentArray[index+1]=contentInfo;
+                $scope.vm.elementFrameIdArray[index+1]=$scope.vm.defaultString;
+                $scope.vm.elementMiningTypeIdArray[index+1]=$scope.vm.defaultInt;
+                $scope.vm.elementRelateConceptArray[index+1]=$scope.vm.defaultString;
+                $scope.vm.elementTypeIdArray[index+1]=$scope.vm.defaultInt;
+                if(type==1){
+                    if($(value).attr("element-id")){
+                        $scope.vm.elementIdArray[index+1]=$(value).attr("element-id");
+                    }else{
+                        $scope.vm.elementIdArray[index+1]=$scope.vm.defaultString;
+                    }
+                }
+            });
+        }
+        //概念添加请求
+        function conceptRequestAdd(){
+            httpRequestPost("/api/modeling/frame/add",{
+                "elementAskContentArray":$scope.vm.elementAskContentArray,
+                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
+                "elementContentArray":$scope.vm.elementContentArray,
+                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
+                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
+                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
+                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
+                "frameCategoryId":$scope.vm.botSelectValue,
+                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
+                "frameModifierId":categoryModifierId,
+                "frameTitle":$scope.vm.frameTitle,
+                "frameTypeId":$scope.vm.frameTypeId
+            },function(data){
+                if(data){
+                    if(responseView(data)==true){
+                        loadFrameLibrary(1);
+                    }
+                }
+            },function(err){
+                console.log(err);
+            });
+        }
         //修改概念表达式
         function updateConcept(){
-
+            console.log("updateConcept");
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/updateConceptFrame.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回调
+                    if(e === 1){
+                        if(faqValidata()==true){
+                            conceptAssemble(1);
+                            conceptRequestUpdate();
+                        }
+                    }
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    fillConceptUpdatePage();
+                    //单个删除元素
+                    $("#concept_extension").on("click",'.del',function(){
+                        console.log("======deletebyelementId======");
+                        if($(this).attr("element-id")==null){
+                            return;
+                        }
+                        var elementId=$(this).attr("element-id");
+                        console.log("======elementId======"+elementId);
+                        $(this).parent().parent().remove();
+                        httpRequestPost("/api/modeling/frame/deleteelementbyid",{
+                            "elementId":elementId
+                        },function(data){
+                            responseView(data);
+                        },function(err){
+                            console.log(err);
+                        });
+                    });
+                }, 100);
+            }
+        }
+        //概念添加请求
+        function conceptRequestUpdate(){
+            httpRequestPost("/api/modeling/frame/update",{
+                "elementAskContentArray":$scope.vm.elementAskContentArray,
+                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
+                "elementContentArray":$scope.vm.elementContentArray,
+                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
+                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
+                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
+                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
+                "elementIdArray":$scope.vm.elementIdArray,
+                "frameCategoryId":$scope.vm.botSelectValue,
+                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
+                "frameModifierId":categoryModifierId,
+                "frameTitle":$scope.vm.frameTitle,
+                "frameTypeId":$scope.vm.frameTypeId,
+                "frameId":$scope.vm.frameId
+            },function(data){
+                if(responseView(data)==true){
+                    loadFrameLibrary(1);
+                }
+            },function(err){
+                console.log(err);
+            });
         }
         //添加要素
         function addElement(){
@@ -501,6 +688,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             layer.msg(data.info);
             if(data.status==$scope.vm.success){
+                console.log("===success===");
                 return true;
             }
             return false;
@@ -508,6 +696,58 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //开关
         function turnOn(targetValue,targetName){
             $scope.vm[targetName] = targetValue ? 0 : 1 ;
+        }
+        //概念打标
+        function concept_marking(){
+            $.each($(".exten_problem").find("input").filter(":eq(0)"),function(index,value){
+                console.log("==========="+$(value).val());
+                if($(value).val()){
+                    var arr = [];
+                    arr[0]=$(value).val();
+                    httpRequestPost("/api/modeling/frame/batchtag",{
+                        "extendQuestionList":arr,
+                        "applicationId":"1"
+                    },function(data){
+                        if(data){
+                            if(data.status==200){
+                                if(data.data.length>0){
+                                    if(data.data[0][0]!=null){
+                                        appendTag(data.data[0][0])
+                                    }
+                                }
+                            }
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+                }
+            });
+        }
+        function appendTag(data){
+            var tagHtml = '<div class="tag_box">';
+            for(var i=0;i<data.tagList.length;i++){
+                tagHtml+='<span class="tag_s">'+data.tagList[i]+'</span>';
+            }
+            tagHtml+='</div>';
+            var html =  '<div class="row cl mb-10">'+
+                        '   <label class="form-label col-xs-4 col-sm-2 text-r mt-7">概念扩展：</label>' +
+                        '   <div class="formControls col-xs-8 col-sm-9">'+
+                        '       <input type="hidden" value="'+data.word+'"/>'+
+                        tagHtml+
+                        '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+
+                        '           <img src="../../images/images/delete_img.png">'+
+                        '       </a>'+
+                        '   </div>'+
+                        '</div>';
+            $("#concept_extension").append(html);
+        }
+        //添加表格子元素
+        function addEle(){
+
+        }
+        //删除表格子元素
+        function delEle(){
+
         }
     }
 ]);

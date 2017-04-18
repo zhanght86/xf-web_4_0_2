@@ -6,8 +6,9 @@
             <span class="framework_s">是否支持：</span>
             <div>
                 <div class="dib pt-5 mr-15">
-                    <div class="open1 b_box" >
-                        <div class="open2 s_box" onclick="turn_on(this);"></div>
+                    <div ng-class="vm.categoryFuzzyOn?'open1 b_box': 'close1 b_box'"
+                         ng-click="vm.turnOn(vm.categoryFuzzyOn,'categoryFuzzyOn')" style="float:left;margin-right:10px;">
+                        <div  ng-class="vm.categoryFuzzyOn?'open2 s_box': 'close2 s_box'"></div>
                     </div>
                 </div>
             </div>
@@ -15,7 +16,7 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">推荐问题相似度：</span>
             <div>
-                <input type="text" class="bd" placeholder="3.1"/>
+                <input type="text" class="bd" placeholder="3.1" ng-model="vm.recommendedSimilarity"/>
             </div>
         </div>
     </div>
@@ -25,8 +26,9 @@
             <span class="framework_s">是否支持：</span>
             <div>
                 <div class="dib pt-5 mr-15">
-                    <div class="open1 b_box">
-                        <div class="open2 s_box" onclick="turn_on(this);"></div>
+                    <div ng-class="vm.subjectMissingOn?'open1 b_box': 'close1 b_box'"
+                         ng-click="vm.turnOn(vm.subjectMissingOn,'subjectMissingOn')" style="float:left;margin-right:10px;">
+                        <div  ng-class="vm.subjectMissingOn?'open2 s_box': 'close2 s_box'"></div>
                     </div>
                 </div>
             </div>
@@ -34,15 +36,15 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">主题记忆轮数：</span>
             <div>
-                <input type="text" class="bd" placeholder="3.1"/>
+                <input type="text" class="bd" placeholder="3.1" ng-model="vm.subjectMemoryRounds"/>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">记忆方法：</span>
             <div>
-                <select class="sel bd">
-                    <option>衰减</option>
-                    <option>恒定</option>
+                <select class="sel bd" ng-model="vm.memoryMethod">
+                    <option value="0">衰减</option>
+                    <option value="1">恒定</option>
                 </select>
             </div>
         </div>
@@ -53,8 +55,9 @@
             <span class="framework_s">是否支持：</span>
             <div>
                 <div class="dib pt-5 mr-15">
-                    <div class="open1 b_box" >
-                        <div class="open2 s_box" onclick="turn_on(this);"></div>
+                    <div ng-class="vm.elementMissingOn?'open1 b_box': 'close1 b_box'"
+                         ng-click="vm.turnOn(vm.elementMissingOn,'elementMissingOn')" style="float:left;margin-right:10px;">
+                        <div  ng-class="vm.elementMissingOn?'open2 s_box': 'close2 s_box'"></div>
                     </div>
                 </div>
             </div>
@@ -62,39 +65,40 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">要素推荐顺序：</span>
             <div>
-                <input type="text" class="bd" placeholder="3"/>
+                <input type="number" class="bd" placeholder="3" ng-model="vm.elementRecommendationOrder"/>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">支持非零点启动：</span>
             <div>
-                <select class="sel bd">
-                    <option>支持</option>
-                    <option>不支持</option>
+                <select class="sel bd" ng-model="vm.nonZeroStartOn">
+                    <option value="1">支持</option>
+                    <option value="0">不支持</option>
                 </select>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">是否完全匹配：</span>
             <div>
-                <select class="sel bd">
-                    <option>是</option>
-                    <option>否</option>
+                <select class="sel bd" ng-model="vm.matchCompleteOn">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
                 </select>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">是否作为标签匹配：</span>
             <div>
-                <select class="sel bd">
-                    <option>是</option>
-                    <option>否</option>
+                <select class="sel bd" ng-model="vm.matchTagOn">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
                 </select>
             </div>
         </div>
     </div>
     <div class="text-c">
-        <input type="submit" class="btn1 btn1_blue mr-15" value="保存"/>
+        <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="保存"/>
+        <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
     </div>
 
 </div>

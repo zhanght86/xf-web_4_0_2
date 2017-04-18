@@ -69,8 +69,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 console.log(Math.ceil(data.total/$scope.vm.pageSize))
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vm.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
@@ -101,8 +101,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 $scope.vmo.blackListDataTotal =data.total;
                 $scope.vmo.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vmo.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vmo.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
