@@ -15,12 +15,9 @@
         </div>
         <div class="checkboxAddress"  style="height: auto;">
             维度：
-            <!--<div id="search_bar">-->
-            <!--</div>-->
+            {{vm.dimensions}}
             <auto-complete  source="vm.dimensions" result="vm.dimensionArr"  scanAttr="'dimensionName'" saveAttr="'dimensionId'"></auto-complete>
-            <!--<div id="search_bar">-->
-                <!--<input type="text" ng-focus="vm.addDimensions()"/>-->
-            <!--</div>-->
+
         </div>
         <div class="Concept-Ipt-nxtDiv">
             <span class="Concept-Ipt-nxt-ico"></span>
