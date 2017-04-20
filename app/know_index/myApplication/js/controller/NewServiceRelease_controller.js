@@ -14,8 +14,10 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             appName : "", //应用名称
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
-            dimensions : [], //维度id列表
-            dimensionAll : "",//所有的维度列表
+            dimensionSelected : $stateParams.dimensionSelected, //选中的维度列表
+            dimensionAll : $stateParams.dimensionAll,//所有的维度列表
+            dimensions: [], //选中的维度id
+            //dimensionAll : "",//所有的维度列表
             nodeCode : "", //节点编号
             serviceId : "", //服务id
             serviceName: "", //服务名称
@@ -52,13 +54,13 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             newCategoryIds : [],  //选中的分类节点
 
         };
-
+        listDimensionData(); //获取维度数据
         findServiceByServiceId(); //根据服务id查询服务信息
 
         listNodeData(); //获取可用节点数据
         listChannelData();  //获取渠道数据
         listTypeData();//获取发布类型数据
-        listDimensionData(); //获取维度数据
+
 
         //根据服务id查询服务信息
         function findServiceByServiceId(){
@@ -72,7 +74,8 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                         $scope.vm.appName=data.data.appName;//应用名称
                         $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
                         $scope.vm.channels=data.data.channels;//渠道id列表
-                        $scope.vm.dimensions=data.data.dimensions;//维度id列表
+                        //$scope.vm.dimensions=data.data.dimensions;//维度id列表
+
                         $scope.vm.nodeCode=data.data.nodeCode;//节点编号
                         $scope.vm.serviceName=data.data.serviceName;//服务名称
                         $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
@@ -95,6 +98,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         function publish(){
             console.log($scope.vm.allowSubmit);
             if($scope.vm.allowSubmit){  //服务名称验证没有错误
+                $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
                 httpRequestPost("/api/application/service/addAndPublishService",{
                     "applicationId": $scope.vm.applicationId,
                     "categoryIds" : $scope.vm.categoryIds, //分类id列表
@@ -211,19 +215,19 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //获取维度
         function  listDimensionData(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensionAll = data.data;
-                    //$scope.$apply();
+            if($scope.vm.dimensionAll==null||$scope.vm.dimensionAll==""){
+                httpRequestPost("/api/application/dimension/list",{
+                    "applicationId" : $scope.vm.applicationId
+                },function(data){
+                    if(data.data){
+                        $scope.vm.dimensionAll = data.data;
+                        $scope.$apply();
+                    }
+                },function(err){
+                    layer.msg("获取维度失败，请刷新页面")
+                });
+            }
 
-
-                    console.log(data)
-                }
-            },function(err){
-                layer.msg("获取维度失败，请刷新页面")
-            });
         }
 
 

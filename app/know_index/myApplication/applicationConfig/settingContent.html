@@ -25,14 +25,14 @@
                 </div>
                 <div class="value">
                     <div class="poto-box">
-                        <img src=""/>
+                        <img ng-src="../images/{{robot.robotHead}}"/>
                     </div>
                     <div class="up-tip">
                         网页聊天中左上角展示的圆形头像，<br />设置像素为70*70
                     </div>
                     <div class="up-btn">
-                        <a class="js-jdbtn" href="javascript:;" ng-click="robot.addClassic()">经典</a>
-                        <a class="js-zdybtn" href="javascript:;" ng-click="robot.addCustom()">自定义</a>
+                        <a class="js-jdbtn" ng-click="robot.addClassic()">经典</a>
+                        <a class="js-zdybtn" ng-click="robot.addCustom()">自定义</a>
                     </div>
                 </div>
             </div>

@@ -39,7 +39,24 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             deleteService : deleteService, //删除服务
             editService : editService, //编辑服务
 
+            dimensionAll : "",//所有的维度列表
+
         };
+        listDimensionData();  //获取维度
+
+        //获取维度
+        function  listDimensionData(){
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                if(data.data){
+                    $scope.vm.dimensionAll = data.data;
+                    $scope.$apply();
+                }
+            },function(err){
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        }
 
 
         /**
@@ -76,7 +93,10 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
         //编辑服务
         function editService(serviceId){
-            $state.go("setting.newService",{serviceId: serviceId});
+
+            var dimensionSelected=[{"dimensionId":"369243445367144448","dimensionName":"国家-中国"}];
+            $state.go("setting.newService",{serviceId: serviceId,
+                dimensionAll: $scope.vm.dimensionAll,dimensionSelected: dimensionSelected});
         }
 
         //发布服务
