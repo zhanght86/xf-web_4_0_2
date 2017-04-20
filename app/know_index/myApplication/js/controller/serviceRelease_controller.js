@@ -102,7 +102,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                         angular.forEach($scope.vm.dimensionAll,function(dimension){
                             if(dimensionId==dimension.dimensionId){
                                 dimensionSelected.push(dimension);
-                                $scope.vm.dimensionAll.remove(dimension);
+                                //$scope.vm.dimensionAll.remove(dimension);
                             }
                         });
                     });
