@@ -29,7 +29,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout) {
             //    console.log($scope.source)
             //},2000);
             $scope.flag = false;
-            $scope.$apply(function(){
+            //$scope.$apply(function(){
             var result = {};
             result.id = [];
             result.name = [];
@@ -54,7 +54,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout) {
                 });
                 $scope.result = result
             }
-            });
+            //});
             $scope.addItem = function(index,item){
                 $scope.result.name.push(item);
                 $scope.result.id.push($scope.source.id[index]);

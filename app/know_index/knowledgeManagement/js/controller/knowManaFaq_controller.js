@@ -137,7 +137,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    //console.log(data);
+                    console.log(data);
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item){
                             var obj = {} ;
@@ -223,10 +223,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //    getDimensions();
         //    getChannel();
         //点击 root 的下拉效果
-        function  knowledgeBot(ev){
-            var ele = ev.target;
+        function  knowledgeBot(){
             $timeout(function(){
-                $(ele).next().slideToggle();
+                angular.element(".rootClassfy").slideToggle();
+                //angular.element(".menus").slideUp()
             },50)
         }
 
@@ -248,6 +248,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
             $scope.vm.frameCategoryId = id;
+            angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
         });

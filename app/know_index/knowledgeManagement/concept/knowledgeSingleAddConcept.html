@@ -48,11 +48,11 @@
                     </div>
                     <div class="value Div" id="Div">
                         <div class="ipt-txt-box">
-                            <input class="ipt-txt" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
+                            <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <!--<p class="ipt-txt" id="ipt-txt" >-->
                             <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
                             <!--</p>-->
-                            <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
+                            <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
                             <div class="aside-navs aside-navs2" >
                                 <ul class="menus show">
                                     <!--//test-->
@@ -154,7 +154,7 @@
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
-                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                         <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
                     </div>
                 </div>
