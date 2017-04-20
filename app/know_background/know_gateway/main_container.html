@@ -29,6 +29,14 @@
                         <td width="10%">任务状态</td>
                         <td width="10%">操作</td>
                     </tr>
+                    <tr>
+                        <td>1</td>
+                        <td><a href="javascript:;" ui-sref="back.doc_results_view">软硬件环境模板-小富.docx</a></td>
+                        <td>张晓琴</td>
+                        <td>2017.02.15</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     <tr ng-repeat="knowDoc in knowDocs">
                         <td>{{$index+1}}</td>
                         <td class="c_blue cp" ng-if="knowDoc.documentationStatus == 9" ui-sref="back.know_view({knowDocId:knowDoc.documentationId})" ng-bind="knowDoc.documentationName"></td>

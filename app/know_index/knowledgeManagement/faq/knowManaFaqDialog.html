@@ -15,12 +15,9 @@
         </div>
         <div class="checkboxAddress"  style="height: auto;">
             维度：
-            <!--<div id="search_bar">-->
-            <!--</div>-->
+            {{vm.dimensions}}
             <auto-complete  source="vm.dimensions" result="vm.dimensionArr"  scanAttr="'dimensionName'" saveAttr="'dimensionId'"></auto-complete>
-            <!--<div id="search_bar">-->
-                <!--<input type="text" ng-focus="vm.addDimensions()"/>-->
-            <!--</div>-->
+
         </div>
         <div class="Concept-Ipt-nxtDiv">
             <span class="Concept-Ipt-nxt-ico"></span>
@@ -38,15 +35,15 @@
             <div class=" mb-10">
                 <span >知识配置：</span>
                 <div class="dib pt-5 mr-15">
-                    <switch ng-click="vm.question = vm.question?0:1"></switch>
+                    <switch value="vm.question"></switch>
                     <span>显示相关问题</span>
                 </div>
                 <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
-                    <switch ng-click="vm.tip = vm.tip?0:1"></switch>
+                    <switch value="vm.tip"></switch>
                     <span>在相关问题内提示</span>
                 </div>
                 <div class="dib pt-5 mr-15" style="margin-left: 81px;">
-                    <switch ng-click="vm.tail = vm.tail?0:1"></switch>
+                    <switch value="vm.tail"></switch>
                     <span>弹出评价小尾巴</span>
                 </div>
             </div>

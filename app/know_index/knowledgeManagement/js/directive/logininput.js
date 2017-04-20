@@ -16,17 +16,20 @@ knowledge_static_web.directive("loginInput", function() {
     return{
         restrict:'EA',
         scope:{
-            title:'=expanderTitle'
+            title:'=expanderTitle',
+            value : '='      // 1  true   0  false
         },
 
-        template: '<div class="b_box" ng-click="toggle()" ng-class="flag?\'open1\':\'close1\'" style="float:left;margin-right:10px;">'+
-                            '<div class="s_box"  ng-class="flag?\'open2\':\'close2\'"></div>'+
+        template: '<div class="b_box" ng-click="toggle()" ng-class="value?\'open1\':\'close1\'" style="float:left;margin-right:10px;">'+
+                            '<div class="s_box"  ng-class="value?\'open2\':\'close2\'"></div>'+
                    '</div>',
         link:function(scope,element,attrs){
-            scope.flag=true;
-            scope.toggle=function toggle(){
-                scope.flag = !scope.flag;
-            }
+            scope.$apply(function () {
+                scope.toggle=function toggle(){
+                    scope.value = scope.value?0:1;
+                };
+            });
+
         }
     }
 });

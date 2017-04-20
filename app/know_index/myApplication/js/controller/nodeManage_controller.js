@@ -12,7 +12,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             applicationId : getCookie("applicationId"),
             nodeData : "",   // 节点列表数据
             paginationConf : ""  ,//分页条件
-            pageSize : 2 , //默认每页数量
+            pageSize : 5 , //默认每页数量
             dataTotal: "", //节点数据记录总数
 
             nodeCode : "", //节点编号
@@ -70,8 +70,8 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 $scope.vm.dataTotal =data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vm.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();

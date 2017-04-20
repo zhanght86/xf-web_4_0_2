@@ -34,8 +34,39 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             settingId : "",//机器人参数ID
             editRobot : editRobot,  //编辑机器人参数
             findRobotSetting : findRobotSetting, //查询机器人参数
+            addClassic : addClassic,
+            addCustom : addCustom,
         };
+        function addClassic(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/settingContentDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
 
+                    }
+                }
+            });
+        }
+        function addCustom(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/settingContentDialog2.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
         $scope.app = {
             applicationId: getCookie("applicationId"),
             userId : getCookie("userId"),   //用户id

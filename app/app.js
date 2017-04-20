@@ -911,6 +911,22 @@ knowledge_static_web
                     }
                 }
             })
+            .state("back.doc_results_view", {
+                url: "/doc_results_view",
+                params: {
+                    isGo: null
+                },
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'main_container': {
+                        templateUrl: 'know_background/know_gateway/doc_results_view.html',
+                        controller: "doc_results_viewController"
+                    }
+                }
+            })
             //文档列表
             .state("back.doclist", {
                 url: "/gateway/doclist",

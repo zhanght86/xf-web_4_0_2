@@ -15,6 +15,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
             dimensions : [], //维度id列表
+            dimensionAll : "",//所有的维度列表
             nodeCode : "", //节点编号
             serviceId : "", //服务id
             serviceName: "", //服务名称
@@ -39,8 +40,8 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             listNodeData : listNodeData, //获取可用节点数据
             listChannelData : listChannelData, //获取渠道数据
             listTypeData : listTypeData,//获取发布类型数据
-            listCategoryData : listCategoryData, //获取分类数据
             listDimensionData : listDimensionData, //获取维度数据
+
 
 
             publish : publish, //发布服务
@@ -57,6 +58,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         listNodeData(); //获取可用节点数据
         listChannelData();  //获取渠道数据
         listTypeData();//获取发布类型数据
+        listDimensionData(); //获取维度数据
 
         //根据服务id查询服务信息
         function findServiceByServiceId(){
@@ -117,16 +119,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         //取消发布服务
         function cancelPublish(){
             $state.go("setting.releaseMan");
-        }
-
-        //获取分类数据
-        function listCategoryData(){
-
-        }
-
-        //获取维度数据
-        function listDimensionData(){
-
         }
 
         //获取渠道数据
@@ -214,6 +206,24 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         //选择节点
         function selectNode(nodeCode){
             $scope.vm.nodeCode=nodeCode;
+        }
+
+
+        //获取维度
+        function  listDimensionData(){
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                if(data.data){
+                    $scope.vm.dimensionAll = data.data;
+                    //$scope.$apply();
+
+
+                    console.log(data)
+                }
+            },function(err){
+                layer.msg("获取维度失败，请刷新页面")
+            });
         }
 
 
