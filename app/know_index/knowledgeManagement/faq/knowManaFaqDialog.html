@@ -4,19 +4,23 @@
 <div class="page-container" style="width: 550px" >
     <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
     <div class="addPopupCnt">
-        <textarea ng-model="vm.newTitle"></textarea>
+        <form action="" name="form" novalidate>
+            <textarea name="title" ng-model="vm.newTitle" required></textarea>
+            <span class="c_red" ng-if="form.title.$dirty&&vm.newTitle==''">请添加知识标题</span>
+        </form>
+
         <div class="checkboxStr">
             <div>渠道：</div>
+            {{vm.channel}}
             <label ng-repeat="channel in vm.channels">
-                <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" >
-                <!-- channelId-->
-                {{channel.channelName}}
+                <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
+                    {{channel.channelName}}
             </label>
         </div>
         <div class="checkboxAddress"  style="height: auto;">
             维度：
-            {{vm.dimensions}}
-            <auto-complete  source="vm.dimensions" result="vm.dimensionArr"  scanAttr="'dimensionName'" saveAttr="'dimensionId'"></auto-complete>
+            {{vm.dimensionArr.id}}
+            <auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>
 
         </div>
         <div class="Concept-Ipt-nxtDiv">
@@ -69,7 +73,7 @@
         </div>
 
         <div class="jqrsz-btn-box" style="padding-left: 0px;">
-            <a class="btn btn-blue mr10" ng-click="closeThisDialog(1)" href="javascript:;">保存</a>
+            <input ng-disabled="(!vm.newTitle)&&vm.channel" value="保存" type="button" class="btn btn-blue mr10" ng-click="closeThisDialog(1)" >
             <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
         </div>
     </div>

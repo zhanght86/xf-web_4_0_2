@@ -56,6 +56,50 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
         }
     })
 }
+function httpRequestPostAsync(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
+    ajaxType == "POST"? "POST" :ajaxType;
+    //if(ajaxType === "post"){
+    //阻塞线程  ie8 不支持
+    //    jQuery.support.cors = true;
+    //}
+    //转换字符
+
+    //if (typeof(data) == 'string') {
+    //    data = JSON.parse(data);
+    //}
+    data = JSON.stringify(data);
+
+    //验证是否需要加token
+    var header = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    //设置默认需要  tooken
+    if (!needToken) {
+        //header.Authorization = getToken();
+    }
+    $.ajax(url, {
+        dataType: 'json', //服务器返回json格式数据
+        async:false,
+        type: "POST", //HTTP请求类型
+        timeout: 10000, //超时时间设置为10秒；
+        headers: header,
+        data: data,
+        success: function(data) {
+            sucCallBack(data);
+        },
+        error: function(xhr, type, errorThrown) {
+            falCallback(xhr, type, errorThrown);
+        },
+        complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+            if(status=='timeout'){//超时,status还有success,error等值的情况
+                //ajaxTimeoutTest.abort();
+                //layer.msg("请求超时");
+                console.log("请求超时");
+            }
+        }
+    })
+}
 
 //// tooken 获取
 //function getToken() {

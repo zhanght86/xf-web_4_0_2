@@ -97,7 +97,7 @@ knowledge_static_web.directive('myUpload', function (FileUploader) {
                     } else {
                         callback && callback(true);
                     }
-                }
+                };
                 if (f)
                     reader.readAsDataURL(f);
             } else {
@@ -138,8 +138,8 @@ knowledge_static_web.directive('myUpload', function (FileUploader) {
         },
         controller: function ($scope) {
             var uploader = $scope.uploader = new FileUploader({
-                url: '/Handler/Upload.ashx',
-                autoUpload: false,//自动上传
+                url: '/api/application/application/uploadHead',
+                autoUpload: true,//自动上传
                 removeAfterUpload: true,//文件上传成功之后从队列移除，默认是false
                 queueLimit: 1// 最大上传文件数量
             });
