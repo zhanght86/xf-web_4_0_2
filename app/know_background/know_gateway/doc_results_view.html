@@ -1,55 +1,25 @@
 <div class="warp " style="margin:20px auto;">
     <h3 class="f16 mb-20">文档结果查看</h3>
-    <button class="btn1 btn_delete mb-10" ng-click="vm.addDocView()">全部忽略</button>
+    <button class="btn1 btn_delete mb-10" ng-click="vm.knowIgnoreAllConfirm()">全部忽略</button>
+    <button class="btn1 btn_green mb-10" ng-click="vm.refreshFn()">刷新</button>
     <div style="background:#fff;">
         <ul class="doc_listul bd">
-            <li>
-                <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>怎么办信用卡呢？</a></p>
-                <p class="mb-10"><b>知识内容：</b>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
+            <li ng-repeat="knowDoc in  knowItems" on-render-finish="">
+                <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>{{knowDoc.knowledgeTitle}}</a></p>
+                <p class="mb-10"><b>知识内容：</b>{{knowDoc.knowledgeContent}}</p>
                 <div class="clearfix">
                     <div class="L">
-                        <span class="mr-20"><span>类型：</span>银行/卡类知识  </span>
-                        <span class="mr-20"><span>作者：</span>zhangzheng  </span>
-                        <span class="mr-20"><span>加工时间：</span>2016-06-12 16:58</span>
+                        <span class="mr-20"><span>作者：</span>{{docDetail.documentationCreater}}</span>
+                        <span class="mr-20"><span>加工时间：</span>{{docDetail.documentationCreateTime}}</span>
                     </div>
                     <div class="R">
-                        <button class="btn1 btn_delete mr-20" ng-click="vm.addDocView2()">忽略该条知识</button>
-                        <button class="btn1 btn1_blue" ng-click="vm.addDocViewAdd()">添加该条知识</button>
+                        <button class="btn1 btn_delete mr-20" ng-click="vm.knowIgnoreConfirm(knowDoc.knowledgeId)">忽略该条知识</button>
+                        <button class="btn1 btn1_blue" ng-click="vm.addKnowClass(knowDoc.knowledgeTitle, knowDoc.knowledgeContent)">添加该条知识</button>
                     </div>
                 </div>
             </li>
-            <li>
-                <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>怎么办信用卡呢？</a></p>
-                <p class="mb-10"><b>知识内容：</b>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
-                <div class="clearfix">
-                    <div class="L">
-                        <span class="mr-20"><span>类型：</span>银行/卡类知识  </span>
-                        <span class="mr-20"><span>作者：</span>zhangzheng  </span>
-                        <span class="mr-20"><span>加工时间：</span>2016-06-12 16:58</span>
-                    </div>
-                    <div class="R">
-                        <button class="btn1 btn_delete mr-20" ng-click="vm.addDocView2()">忽略该条知识</button>
-                        <button class="btn1 btn1_blue" ng-click="vm.addDocViewAdd()">添加该条知识</button>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>怎么办信用卡呢？</a></p>
-                <p class="mb-10"><b>知识内容：</b>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户.....</p>
-                <div class="clearfix">
-                    <div class="L">
-                        <span class="mr-20"><span>类型：</span>银行/卡类知识  </span>
-                        <span class="mr-20"><span>作者：</span>zhangzheng  </span>
-                        <span class="mr-20"><span>加工时间：</span>2016-06-12 16:58</span>
-                    </div>
-                    <div class="R">
-                        <button class="btn1 btn_delete mr-20" ng-click="vm.addDocView2()">忽略该条知识</button>
-                        <button class="btn1 btn1_blue" ng-click="vm.addDocViewAdd()">添加该条知识</button>
-                    </div>
-                </div>
-            </li>
-
         </ul>
+        <pagination ng-if="paginationConf.totalItems && paginationConf.totalItems>0" conf="paginationConf"></pagination>
     </div>
 </div>
 <style>

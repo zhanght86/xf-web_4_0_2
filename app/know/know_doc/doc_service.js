@@ -3,7 +3,7 @@
  */
 angular.module('know.knowdoc').factory('KnowDocService',['$resource',function ($resource) {
     var knowDocService = {};
-    knowDocService.queryKnowDocList = $resource('/api/knowledgeDocumentation/queryDocumentation', {}, {});
+    knowDocService.queryKnowDocList = $resource('/api/knowledgeDocumentation/queryDocumentationAnalyze', {}, {});
     knowDocService.queryDetailByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
     knowDocService.deleteKnowDoc = $resource('/api/knowledgeDocumentation/deleteDocumentation', {}, {});
     //knowDocService.singleImport = $resource('/back/knowaccess/docimport/docmanager/singleImport', {}, {});
