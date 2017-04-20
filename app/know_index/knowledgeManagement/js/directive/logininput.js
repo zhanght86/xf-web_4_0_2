@@ -24,11 +24,11 @@ knowledge_static_web.directive("loginInput", function() {
                             '<div class="s_box"  ng-class="value?\'open2\':\'close2\'"></div>'+
                    '</div>',
         link:function(scope,element,attrs){
-            scope.$apply(function () {
+            //scope.$apply(function () {
                 scope.toggle=function toggle(){
                     scope.value = scope.value?0:1;
                 };
-            });
+            //});
 
         }
     }

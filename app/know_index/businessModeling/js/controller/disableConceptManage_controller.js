@@ -53,8 +53,8 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 $scope.vm.listData = data.data;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
-                    pageSize: 1,//第页条目数
+                    totalItems: data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply();

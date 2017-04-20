@@ -216,7 +216,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             },function(data){
                 if(data.data){
                     $scope.vm.dimensionAll = data.data;
-                    //$scope.$apply();
+                    $scope.$apply();
 
 
                     console.log(data)
