@@ -93,10 +93,28 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
         //编辑服务
         function editService(serviceId){
-
-            var dimensionSelected=[{"dimensionId":"369243445367144448","dimensionName":"国家-中国"}];
-            $state.go("setting.newService",{serviceId: serviceId,
-                dimensionAll: $scope.vm.dimensionAll,dimensionSelected: dimensionSelected});
+            httpRequestPost("/api/application/service/listDimensionByServiceId",{
+                "serviceId": serviceId
+            },function(data){
+                if(data.status==200){
+                    var dimensionSelected=[];
+                    angular.forEach(data.data,function(dimensionId){
+                        angular.forEach($scope.vm.dimensionAll,function(dimension){
+                            if(dimensionId==dimension.dimensionId){
+                                dimensionSelected.push(dimension);
+                                $scope.vm.dimensionAll.remove(dimension);
+                            }
+                        });
+                    });
+                    //var dimensionSelected=[{"dimensionId":"369243445367144448","dimensionName":"国家-中国"}];
+                    $state.go("setting.newService",{serviceId: serviceId,
+                        dimensionAll: $scope.vm.dimensionAll,dimensionSelected: dimensionSelected});
+                }else{
+                    layer.msg("查询失败");
+                }
+            },function(){
+                layer.msg("请求失败");
+            })
         }
 
         //发布服务
