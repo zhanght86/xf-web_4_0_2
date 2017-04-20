@@ -39,7 +39,24 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             deleteService : deleteService, //删除服务
             editService : editService, //编辑服务
 
+            dimensionAll : "",//所有的维度列表
+
         };
+        listDimensionData();  //获取维度
+
+        //获取维度
+        function  listDimensionData(){
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                if(data.data){
+                    $scope.vm.dimensionAll = data.data;
+                    $scope.$apply();
+                }
+            },function(err){
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        }
 
 
         /**
@@ -76,7 +93,28 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
         //编辑服务
         function editService(serviceId){
-            $state.go("setting.newService",{serviceId: serviceId});
+            httpRequestPost("/api/application/service/listDimensionByServiceId",{
+                "serviceId": serviceId
+            },function(data){
+                if(data.status==200){
+                    var dimensionSelected=[];
+                    angular.forEach(data.data,function(dimensionId){
+                        angular.forEach($scope.vm.dimensionAll,function(dimension){
+                            if(dimensionId==dimension.dimensionId){
+                                dimensionSelected.push(dimension);
+                                //$scope.vm.dimensionAll.remove(dimension);
+                            }
+                        });
+                    });
+                    //var dimensionSelected=[{"dimensionId":"369243445367144448","dimensionName":"国家-中国"}];
+                    $state.go("setting.newService",{serviceId: serviceId,
+                        dimensionAll: $scope.vm.dimensionAll,dimensionSelected: dimensionSelected});
+                }else{
+                    layer.msg("查询失败");
+                }
+            },function(){
+                layer.msg("请求失败");
+            })
         }
 
         //发布服务

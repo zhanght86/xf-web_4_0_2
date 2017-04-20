@@ -8,9 +8,16 @@ angular.module('know.detail').factory('DetailService',['$resource',function ($re
     detailService.queryRequireByComment = $resource('pre/Comment/queryComment', {}, {});
     detailService.queryVersionByIdentity = $resource('pre/KnowledgeDetail/queryVersionByIdentity', {}, {});
     detailService.queryCompareKnowItem = $resource('pre/KnowledgeDetail/queryCompareKnowItem', {}, {});
-    detailService.queryKnowItemsByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
-    detailService.queryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
-    detailService.queryLinkKnowItems = $resource('pre/KnowledgeDetail/queryLinkKnowItems', {}, {});
+    //知识文档
+    //查询文档知识详情
+    detailService.queryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationById', {}, {});
+    //查询文档知识点
+    detailService.queryDocKnowItems = $resource('api/knowledgeDocumentation/selectDocumentationKnowledgeList', {}, {});
+    //忽略文档全部知识点
+    detailService.ignoreDocKnowAll = $resource('api/knowledgeDocumentation/ignoreDocumentationKnowledgeAll', {}, {});
+    //忽略文档单个知识点
+    detailService.ignoreDocKnow = $resource('api/knowledgeDocumentation/ignoreDocumentationKnowledge', {}, {});
+
     //查询知识条目
     detailService.queryKnowItem = $resource('pre/KnowledgeDetail/getKnowledgeDetail', {}, {});
     detailService.updateKnowItem = $resource('pre/KnowledgeDetail/editKnowItem', {}, {});

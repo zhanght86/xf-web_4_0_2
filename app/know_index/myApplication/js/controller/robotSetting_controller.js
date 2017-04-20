@@ -11,15 +11,17 @@
  */
 
 angular.module('myApplicationSettingModule').controller('robotSettingController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",'$http',function ($scope,localStorageService, $state,ngDialog,$http) {
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         setCookie("userId","359873057331875840");
         $scope.robot = {
+            classicHead:['touxiang1.png','touxiang2.png','touxiang3.png','touxiang4.png', 'touxiang5.png','touxiang6.png','touxiang7.png','touxiang8.png'], //经典头像列表
             applicationId: getCookie("applicationId"),
             userId : getCookie("userId"),   //用户id
             robotExpire : "", //时间到期回复
             robotHead : "",//头像
+            newRobotHead : "", //新的头像
             robotHotQuestionTimeout : "",//热点问题更新频率
             robotLearned : "",//学到新知识回答
             robotName : "", //名称
@@ -34,9 +36,18 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             settingId : "",//机器人参数ID
             editRobot : editRobot,  //编辑机器人参数
             findRobotSetting : findRobotSetting, //查询机器人参数
-            addClassic : addClassic,
-            addCustom : addCustom,
+            addClassic : addClassic,  //弹出经典头像对话框
+            addCustom : addCustom,  //弹出自定义头像对话框
+            selectClassic : selectClassic, //选择经典头像
+
+            myFile : "", //上传的图片
+            //x : "", //坐标x
+            //y : "", //坐标y
+            //w : "", //截取的宽度
+            //h : "", //截取的高度
         };
+
+        //弹出经典头像对话框
         function addClassic(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/settingContentDialog.html",
@@ -47,11 +58,32 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-
+                        $scope.robot.robotHead=$scope.robot.newRobotHead;
+                        httpRequestPost("/api/application/application/saveClassicHead",{
+                            "robotHead": $scope.robot.robotHead,
+                            "settingId": $scope.robot.settingId
+                        },function(data){
+                            if(data.status===200){
+                                layer.msg("修改头像成功");
+                                $state.reload();
+                            }else{
+                                layer.msg("修改头像失敗");
+                            }
+                        },function(){
+                            layer.msg("修改头像请求失败");
+                        })
                     }
                 }
             });
         }
+
+        //选择经典头像
+        function selectClassic(item){
+            console.log("点击"+item);
+            $scope.robot.newRobotHead=item;
+        }
+
+        //弹出自定义头像对话框
         function addCustom(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/settingContentDialog2.html",
@@ -62,11 +94,36 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-
+                        console.log($scope.robot.settingId);
+                        var fd = new FormData();
+                        //var file =$scope.robot.myFile
+                        var file = document.querySelector('input[type=file]').files[0];
+                        fd.append('file', file);
+                        fd.append('settingId',$scope.robot.settingId);
+                        fd.append('x',$('#x').val())
+                        fd.append('y',$('#y').val());
+                        fd.append('w',$('#w').val());
+                        fd.append('h',$('#h').val());
+                        $http({
+                            method:'POST',
+                            url:"/api/application/application/uploadHead",
+                            data: fd,
+                            headers: {'Content-Type':undefined},
+                            transformRequest: angular.identity
+                        }).success( function (response){
+                            if(response.status==200){
+                                layer.msg("修改头像成功");
+                                //$state.go("setting.robot");
+                                $state.reload();
+                            }else{
+                                layer.msg("上传头像失敗");
+                            }
+                        });
                     }
                 }
             });
         }
+
         $scope.app = {
             applicationId: getCookie("applicationId"),
             userId : getCookie("userId"),   //用户id
@@ -109,6 +166,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                     $scope.robot.robotUnknown = "";//未知问答回复
                     $scope.robot.robotWelcome = "";//欢迎语
                     $scope.robot.settingId = "" ;  //机器人参数ID
+                    $scope.robot.newRobotHead =""; //新的头像
                 }else{
                     $scope.robot.robotExpire= data.data.robotExpire; //过期知识回答
                     $scope.robot.robotHead= data.data.robotHead;//头像
@@ -123,6 +181,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                     $scope.robot.robotUnknown = data.data.robotUnknown;//未知问答回复
                     $scope.robot.robotWelcome = data.data.robotWelcome;//欢迎语
                     $scope.robot.settingId = data.data.settingId;//机器人参数ID
+                    $scope.robot.newRobotHead = data.data.robotHead; //新的头像
                     $scope.$apply();
                 }
             },function(){
@@ -227,5 +286,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
         function turnOn(targetValue,targetName){
             $scope.app[targetName] = targetValue ? 0 : 1 ;
         }
+
+
     }
 ]);

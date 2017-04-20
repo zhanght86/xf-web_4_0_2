@@ -12,8 +12,8 @@ angular.module('knowDetailsModule').controller('knowViewController', [
         $scope.knowDocId = $stateParams.knowDocId;
 
         //根据知识文档id查询相关知识条目
-        self.queryKnowItemsByDocId = function(){
-            DetailService.queryKnowItemsByDocId.save(
+        self.queryKnowDocByDocId = function(){
+            DetailService.queryKnowDocByDocId.save(
                 {
                     "documentationId": $scope.knowDocId,
                 },function(resource){
@@ -56,7 +56,7 @@ angular.module('knowDetailsModule').controller('knowViewController', [
             }
         }
 
-        self.queryKnowItemsByDocId();
+        self.queryKnowDocByDocId();
         //self.queryKnowDocByDocId();
 
         $scope.jumper = function (key) {

@@ -70,7 +70,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }else{
                     console.log(data);
                     $scope.vm.listData = data.data.objs,
-                        $scope.vm.paginationConf = {
+                            $scope.vm.paginationConf = {
                             currentPage: index,//当前页
                             totalItems: Math.ceil(data.data.total/5), //总条数
                             pageSize: 1,//第页条目数

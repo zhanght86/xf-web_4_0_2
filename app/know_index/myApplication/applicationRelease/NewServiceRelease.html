@@ -26,8 +26,7 @@
                     </label>
                 </div>
             </div>
-            <!--{{vm.dimensions}}-->
-            <auto-complete  source="vm.dimensionAll" result="vm.dimensions"></auto-complete>
+
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布纬度：</label>
                 <div class="formControls col-xs-8 col-sm-9">
@@ -35,6 +34,7 @@
                     <!--{{vm.dimensions}}-->
                      <!--<auto-complete  source="vm.dimensionAll" result="vm.dimensions"></auto-complete>-->
                     <!--</div>-->
+                    <auto-complete  source="vm.dimensionAll" result="vm.dimensionSelected"  scanAttr="'dimensionName'" saveAttr="'dimensionId'"></auto-complete>
                 </div>
             </div>
             <div class="row cl mb-10">
