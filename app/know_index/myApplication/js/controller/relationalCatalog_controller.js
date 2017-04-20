@@ -37,9 +37,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         var categorySceneId = getCookie("categorySceneId");
 
         var params = {
-            "categoryName":$("#categoryName").val(),
+            "categoryName":$("#category-autocomplete").val(),
             "categoryApplicationId":categoryApplicationId
         };
+        console.log("========"+JSON.stringify(params));
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
             serviceUrl: "/api/modeling/category/searchbycategoryname",
