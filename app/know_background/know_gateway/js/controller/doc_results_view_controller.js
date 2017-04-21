@@ -9,6 +9,8 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
         if($scope.knowDocId === null)
             return false;
         $scope.knowDocId = $stateParams.knowDocId;
+        $scope.knowDocCreateTime = $stateParams.knowDocCreateTime;
+        $scope.knowDocUserName = $stateParams.knowDocUserName;
 
         $scope.vm={
             knowIgnoreAllConfirm : knowIgnoreAllConfirm, //忽略全部
@@ -130,23 +132,6 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
         }
         self.initSearch();
 
-        //根据知识文档id查询详情
-        $scope.queryKnowDocByDocId = function(){
-            if(!$scope.knowDocId)
-                return ;
-            DetailService.queryKnowDocByDocId.save(
-                {
-                    "documentationId": $scope.knowDocId,
-                    "requestId": "string"
-                },function(resource){
-                    if(resource.status == 200 && resource.data.status == 200){
-                        $scope.docDetail = resource.data;
-                    }
-                },function(){
-                    console.info("文档详情查询失败");
-                })
-        }
-
         //根据知识文档id查询相关知识条目
         $scope.queryDocKnowItems = function(){
             if(!$scope.knowDocId)
@@ -168,9 +153,6 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
                     console.info("文档详情查询失败");
                 })
         }
-
-        $scope.queryKnowDocByDocId();
-
 
         //监听分页菜单的变化
         var timeout3;

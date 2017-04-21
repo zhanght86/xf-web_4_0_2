@@ -2,15 +2,15 @@
     <h3 class="f16 mb-20">文档结果查看</h3>
     <button class="btn1 btn_delete mb-10" ng-click="vm.knowIgnoreAllConfirm()">全部忽略</button>
     <button class="btn1 btn_green mb-10" ng-click="vm.refreshFn()">刷新</button>
-    <div style="background:#fff;">
+    <div style="background:#fff;" ng-model="docDetail">
         <ul class="doc_listul bd">
             <li ng-repeat="knowDoc in  knowItems" on-render-finish="">
                 <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>{{knowDoc.knowledgeTitle}}</a></p>
                 <p class="mb-10" style=" overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;-webkit-box-orient: vertical; word-break: break-all;"><b>知识内容：</b>{{knowDoc.knowledgeContent}}</p>
                 <div class="clearfix">
                     <div class="L">
-                        <span class="mr-20"><span>作者：</span>{{docDetail.documentationCreater}}</span>
-                        <span class="mr-20"><span>加工时间：</span>{{docDetail.documentationCreateTime}}</span>
+                        <span class="mr-20"><span>作者：</span>{{knowDocUserName}}</span>
+                        <span class="mr-20"><span>加工时间：</span>{{knowDocCreateTime|date:'yyyy-MM-dd'}}</span>
                     </div>
                     <div class="R">
                         <button class="btn1 btn_delete mr-20" ng-click="vm.knowIgnoreConfirm(knowDoc.knowledgeId)">忽略该条知识</button>
