@@ -915,7 +915,9 @@ knowledge_static_web
                 url: "/doc_results_view",
                 params: {
                     isGo: null,
-                    knowDocId: null
+                    knowDocId: null,
+                    knowDocCreateTime: null,
+                    knowDocUserName: null
                 },
                 views: {
                     'header': {

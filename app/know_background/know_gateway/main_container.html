@@ -32,7 +32,8 @@
                     </tr>
                     <tr ng-repeat="knowDoc in knowDocs">
                         <td>{{$index+1}}</td>
-                        <td class="c_blue cp" ng-if="knowDoc.documentationStatus == 9" ui-sref="back.doc_results_view({knowDocId:knowDoc.documentationId})" ng-bind="knowDoc.documentationName"></td>
+                        <td class="c_blue cp" ng-if="knowDoc.documentationStatus == 9" ui-sref="back.doc_results_view({knowDocId:knowDoc.documentationId,knowDocCreateTime: knowDoc.documentationCreateTime,
+                    knowDocUserName: knowDoc.documentationCreater})" ng-bind="knowDoc.documentationName"></td>
                         <td  ng-if="knowDoc.documentationStatus == 0 ||knowDoc.documentationStatus == 1||knowDoc.documentationStatus == 2 ||knowDoc.documentationStatus ==3" ng-bind="knowDoc.documentationName"></td>
                         <td  ng-if="knowDoc.documentationStatus == undefine"></td>
                         <td>{{knowDoc.documentationCreater}}</td>
