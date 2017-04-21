@@ -45,8 +45,8 @@
                         <td ng-if="knowDoc.documentationStatus == 9">分析完成</td>-->
                         <td ng-if="knowDoc.knowledgeRepetition == null">0</td>
                         <td ng-if="knowDoc.knowledgeRepetition != null">{{knowDoc.knowledgeRepetition}}</td>
-                        <td ng-if="knowDoc.knowledgeCount == null">0</td>
-                        <td ng-if="knowDoc.knowledgeCount != null">{{knowDoc.knowledgeCount}}</td>
+                        <td ng-if="knowDoc.knowledgeSum == null">0</td>
+                        <td ng-if="knowDoc.knowledgeSum != null">{{knowDoc.knowledgeSum}}</td>
                         <td><a href="javascript:;" ng-click="deleteKnowDoc(knowDoc.documentationId)" class="c_red" alertBar ng-confirm="确认删除?">删除</a></td>
                     </tr>
                     </tbody>
