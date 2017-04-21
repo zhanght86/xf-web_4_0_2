@@ -6,7 +6,7 @@
         <ul class="doc_listul bd">
             <li ng-repeat="knowDoc in  knowItems" on-render-finish="">
                 <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>{{knowDoc.knowledgeTitle}}</a></p>
-                <p class="mb-10"><b>知识内容：</b>{{knowDoc.knowledgeContent}}</p>
+                <p class="mb-10" style=" overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;-webkit-box-orient: vertical; word-break: break-all;"><b>知识内容：</b>{{knowDoc.knowledgeContent}}</p>
                 <div class="clearfix">
                     <div class="L">
                         <span class="mr-20"><span>作者：</span>{{docDetail.documentationCreater}}</span>
