@@ -16,7 +16,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout) {
             '<i class="miles-remove" ng-click="removeItem($index,val)">x</i>' +
             '<span>{{val}}</span>' +
         '</div>' +
-        '<input class="miles-autoInput L" id="input" name="input" ng-focus="flag=true" type="text"/>' +
+        '<input class="miles-autoInput L"  id="input" name="input" ng-focus="flag=true" type="text"/>' +
         '</div>' +
         '<label for="input"><ul ng-if="source.name&&source.name.length" class="miles-dropDown" ng-show="flag">' +
         '<li class="miles-item" ng-repeat="item in source.name track by $index" ng-click="addItem($index,item)">{{item}}</li>'+
@@ -26,8 +26,15 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout) {
         //require: 'ngModel',
         link: function ($scope, elem, attr, ctrl) {
             //$timeout(function(){
-            //    console.log($scope.source)
+            //    $scope.search = "";
             //},2000);
+            //$scope.search = "";
+            //$scope.$on( $("#input").val(),function(val){
+            //    if(val){
+            //        $("#input").val("")
+            //    }
+            //});
+            $scope.search = " ";
             $scope.flag = false;
             //$scope.$apply(function(){
             var result = {};
@@ -60,12 +67,14 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout) {
                 $scope.result.id.push($scope.source.id[index]);
                 $scope.source.name.splice(index,1);
                 $scope.source.id.splice(index,1);
+                $("#input").val("")
             };
             $scope.removeItem = function(index,item){
                 $scope.source.name.push(item);
                 $scope.source.id.push($scope.result.id[index]);
                 $scope.result.name.splice(index,1);
                 $scope.result.id.splice(index,1);
+                $("#input").val("")
             };
             $(document).on("click",function(event){
                 var event = event || window.event;
@@ -76,7 +85,9 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout) {
                     $scope.flag = true;
                     angular.element(elem).find(".miles-autoInput").focus();
                 }
+                $("#input").val("")
             });
+
             console.debug($scope);
         }
     };

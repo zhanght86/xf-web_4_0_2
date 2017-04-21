@@ -33,7 +33,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 "applicationId" : $scope.vm.applicationId
             },function(data){
                 $scope.vm.listData = data.data;
-                $scope.$apply()
+                $scope.$apply();
                 console.log(data);
             },function(){
                 layer.msg("获取失败")
