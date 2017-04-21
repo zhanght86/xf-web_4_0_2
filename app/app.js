@@ -914,7 +914,8 @@ knowledge_static_web
             .state("back.doc_results_view", {
                 url: "/doc_results_view",
                 params: {
-                    isGo: null
+                    isGo: null,
+                    knowDocId: null
                 },
                 views: {
                     'header': {
