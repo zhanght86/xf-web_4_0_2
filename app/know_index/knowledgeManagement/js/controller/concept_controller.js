@@ -11,7 +11,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页
-
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
             frames : [],      //业务框架
@@ -79,8 +78,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             addAppoint  : addAppoint,
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
-            removeAppointRelative : removeAppointRelative,
-
             replaceType : 0
         };
 
@@ -319,7 +316,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         function KnowledgeAdd(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -422,24 +419,17 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function scan(){
 
         };
-        /* ****************************************** //
-         *
-         *               弹框相关
-         *
-         */ // ****************************************** //
 
-        function removeAppointRelative(item){
-            $scope.vm.appointRelativeGroup.remove(item);
-        }
+ /* *********************              弹框相关           **************************/ //
 //重置参数
         function setDialog(){
             $scope.vm.newTitle = "";
             $scope.vm.channel = [];
             $scope.vm.dimension = [];
             $scope.vm.question = 1,    //显示相关问
-                $scope.vm.tip = 1,    //在提示
-                $scope.vm.tail =1,    //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = [] ;//业务扩展问
+            $scope.vm.tip = 1,    //在提示
+            $scope.vm.tail =1,    //弹出评价小尾巴
+            $scope.vm.appointRelativeGroup = [] ;//业务扩展问
             $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
             $scope.vm.dimensionArr = []
         }
@@ -457,13 +447,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
                 obj.knowledgeContentType = 0,  // 答案类型
-                    obj.channelId =  $scope.vm.channel;
+                obj.channelId =  $scope.vm.channel;
                 obj.dimensionId =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                    obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
-                    obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
-                    obj.knowledgeRelevantContent = $scope.vm.appointRelativeGroup  //业务扩展问
-                //高級 選項
+                obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
+                obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
+                obj.knowledgeRelevantContent = $scope.vm.appointRelativeGroup  //业务扩展问
+            //高級 選項
                 $scope.vm.scanContent.push(obj);
                 setDialog()
             }else{
@@ -486,9 +476,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     return false
                 });
             }
-
         }
-//***************************    save check channel dimension  **********************************************
+//***************************    save  / check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
             if(val.id && $scope.vm.channel.length){
                 checkChannelDimension($scope.vm.channel,val.id)
@@ -538,7 +527,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function saveScan(){
 
         }
-//*************************************************************************
 
         function addAppoint(item,arr){
             if(arr.indexOf(item)==-1){
@@ -604,5 +592,22 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("获取渠道失败，请刷新页面")
             });
         }
+
+
+        //***************========================== 文档加工  =========================***************//
+        //文档加工  分类回调
+        function docSuc(id,status){
+            //knowledgeStatus(FAQ:2|概念：3)
+            httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",{
+                "knowledgeId" : id,
+                "knowledgeStatus" : status
+            },function(data){
+                //成功 跳转 doc
+                $state.go("back.gateway")
+            },function(err){
+                layer.msg("文档分类失败");
+            });
+        }
+        //*************************************************************************
     }
 ]);

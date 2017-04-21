@@ -3,12 +3,13 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
+        console.log($stateParams.data)
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -48,7 +49,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             saveContent : [],
 
             save : save ,   //保存
-            scan :scan ,   //预览
+            scan :scan ,    //预览
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel

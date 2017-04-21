@@ -688,6 +688,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.singleAddConcept", {
                 url: "/singleAddConcept",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -701,6 +702,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.faqAdd", {
                 url: "/faqAdd",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -898,7 +900,8 @@ knowledge_static_web
             .state("back.gateway", {
                 url: "/gateway",
                 params: {
-                    isGo: null
+                    isGo: null,
+                    knowDocId: null
                 },
                 views: {
                     'header': {
