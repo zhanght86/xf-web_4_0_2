@@ -151,7 +151,7 @@ knowledge_static_web.directive('myUpload', function (FileUploader) {
                 }
                 $scope.size = itemSize;
                 return true;
-            }
+            };
             // FILTERS
             uploader.filters.push({
                     name: 'imageFilter',

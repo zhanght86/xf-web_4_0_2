@@ -80,7 +80,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             appointRelativeGroup : [],
             replaceType : 0
         };
-
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -98,7 +97,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                 }
             },function(){
-                alert("err or err")
+                //alert("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
