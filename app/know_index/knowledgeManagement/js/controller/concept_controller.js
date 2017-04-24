@@ -3,8 +3,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('conceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
@@ -80,6 +80,26 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             appointRelativeGroup : [],
             replaceType : 0
         };
+        //獲取渠道
+        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.dimensions = data.data;
+                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+                }
+            }, function(error) {
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        //获取维度
+        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.channels = data.data
+                }
+            }, function(error) {
+                layer.msg("获取渠道失败，请刷新页面")
+            });
+
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -557,41 +577,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("获取指定相关知识失败")
             });
         }
-        //初始化頁面數據
-        init();
-        function  init(){
-            getDimensions();
-            getChannel();
-        }
-        //維度
-        function  getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions)
-                }
-                //console.log(data)
-            },function(err){
-                layer.msg("获取维度失败，请刷新页面")
-            });
-        }
-        //渠道
-        function  getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                //"applicationId": "360619411498860544"
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data
-                }
-                //console.log(data)
-            },function(err){
-                layer.msg("获取渠道失败，请刷新页面")
-            });
-        }
-
 
         //***************========================== 文档加工  =========================***************//
         //文档加工  分类回调
