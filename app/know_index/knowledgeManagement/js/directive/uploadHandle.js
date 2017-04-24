@@ -1,11 +1,14 @@
+/**
+ * Created by 41212 on 2017/4/24.
+ */
 
 /**
  * Created by miles on 2017/4/11.
  *
  * webuploader  ====》》  指令
  */
-//<div uploader server="'/api/application/application/uploadHead'"></div>
-knowledge_static_web.directive("uploader", ["$parse", function($parse) {
+
+knowledge_static_web.directive("uploaderHandle", ["$parse", function($parse) {
     return {
         restrict:'EA',
         scope:{
@@ -16,12 +19,12 @@ knowledge_static_web.directive("uploader", ["$parse", function($parse) {
         },
         template:'<div id="uploader" class="wu-example upWrapper">'+
             //<!--用来存放文件信息-->
-                        '<div id="thelist" class="uploader-list upList"></div>'+
-                        '<div class="btns">'+
-                            '<div id="picker">选择文件</div>' +
-                            //'<button id="ctlBtn" class="btn btn-default">开始上传</button>'+
-                        '</div>'+
-                   '</div>'
+        '<div id="thelist" class="uploader-list upList"></div>'+
+        '<div class="btns">'+
+        '<div id="picker">选择文件</div>' +
+        '<button id="ctlBtn" class="btn btn-default">开始上传</button>'+
+        '</div>'+
+        '</div>'
         ,
         link:function(scope,element,attrs){
             console.log(scope.server);
@@ -33,8 +36,6 @@ knowledge_static_web.directive("uploader", ["$parse", function($parse) {
                 formData : {title:"is Image  ====   uploader"}  ,   // 上传参数
                 // 文件接收服务端。
                 server: scope.server,
-                //server : 'fileupload.php',
-                //type : scope.type,
                 accept: {
                     title: 'file',
                     extensions: 'xls,xlsx',
@@ -69,8 +70,8 @@ knowledge_static_web.directive("uploader", ["$parse", function($parse) {
                     $percent = $li.find('.progress .progress-bar');
                 // 避免重复创建
                 if ( !$percent.length ) {
-                    $percent = $('<div class="progress progress-striped active miles-progress" style="height: 50px;background: red; width: 200px;">' +
-                        '<div class="progress-bar miles-progressBar" role="progressbar" style="width: 0%">' +
+                    $percent = $('<div class="progress progress-striped active" style="height: 50px;background: red; width: 200px;">' +
+                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
                         '</div>' +
                         '</div>').appendTo( $li ).find('.progress-bar');
                 }
@@ -85,45 +86,64 @@ knowledge_static_web.directive("uploader", ["$parse", function($parse) {
             //文件上传失败
             uploader.on('uploadError', function (file) {
                 $('#' + file.id).find('p.state').text('上传失败');
-                $('#' + file.id).find('.progress').fadeOut();
             });
             //文件上传完成
             uploader.on('uploadComplete', function (file) {
                 $('#' + file.id).find('.progress').fadeOut();
                 //$("#editModal").fadeOut(2000, window.location.reload());
             });
+
+            $('#btnSave').bind('click', function () {
+                var  name = $("#txtName").val();
+                var  id = $("#txtId").val();
+
+                if (!name || name.length == 0) {
+                    alert("请填写名称");
+                    return false;
+                }
+                var obj = new Object();
+                obj.name = name;
+                obj.id = id;
+                uploader.options.formData = obj;
+                //  uploader.options.formData = { "name": name, "id": id, };
+                if (state === 'uploading') {
+                    uploader.stop();
+                } else {
+                    uploader.upload();
+                }
+            });
         }
     }
 }]);
 
 /*
-$scope.accept = {
-    //图片
-    image: {
-        title : 'Images',//标题
-        extensions : 'gif,jpg,jpeg,bmp,png,ico',//允许上传文件的后缀
-        mimeTypes : 'image/*'//允许的mimetype
-    },
-    //音视频
-    video: {
-        title : 'Videos',
-        extensions : 'wmv,asf,asx,rm,rmvb,ram,avi,mpg,dat,mp4,mpeg,divx,m4v,mov,qt,flv,f4v,mp3,wav,aac,m4a,wma,ra,3gp,3g2,dv,vob,mkv,ts',
-        mimeTypes : 'video/*,audio/*'
-    },
-    //flash
-    flash: {
-        title : 'Flashs',
-        extensions : 'swf,fla',
-        mimeTypes : 'application/x-shockwave-flash'
-    },
-    //办公文档，压缩文件等等
-    file: {
-        title : 'Files',
-        extensions : 'zip,rar,ppt,pptx,doc,docx,xls,xlsx,pdf',
-        mimeTypes : 'application/zip,application/x-rar-compressed,application/vnd.ms-powerpoint,application/vnd.openxmlformats-             officedocument.presentationml.presentation,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-   excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf'
-    }
-};
-*/
+ $scope.accept = {
+ //图片
+ image: {
+ title : 'Images',//标题
+ extensions : 'gif,jpg,jpeg,bmp,png,ico',//允许上传文件的后缀
+ mimeTypes : 'image/*'//允许的mimetype
+ },
+ //音视频
+ video: {
+ title : 'Videos',
+ extensions : 'wmv,asf,asx,rm,rmvb,ram,avi,mpg,dat,mp4,mpeg,divx,m4v,mov,qt,flv,f4v,mp3,wav,aac,m4a,wma,ra,3gp,3g2,dv,vob,mkv,ts',
+ mimeTypes : 'video/*,audio/*'
+ },
+ //flash
+ flash: {
+ title : 'Flashs',
+ extensions : 'swf,fla',
+ mimeTypes : 'application/x-shockwave-flash'
+ },
+ //办公文档，压缩文件等等
+ file: {
+ title : 'Files',
+ extensions : 'zip,rar,ppt,pptx,doc,docx,xls,xlsx,pdf',
+ mimeTypes : 'application/zip,application/x-rar-compressed,application/vnd.ms-powerpoint,application/vnd.openxmlformats-             officedocument.presentationml.presentation,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-   excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf'
+ }
+ };
+ */
 
 
 
