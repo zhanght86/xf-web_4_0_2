@@ -14,12 +14,12 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             appName : "", //应用名称
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
-            dimensionSelected : $stateParams.dimensionSelected, //选中的维度列表
-            dimensionAll : $stateParams.dimensionAll,//所有的维度列表
+            dimensionSelected : [], //选中的维度列表
+            dimensionAll : [],//所有的维度列表
             dimensions: [], //选中的维度id
             //dimensionAll : "",//所有的维度列表
             nodeCode : "", //节点编号
-            serviceId : "", //服务id
+            serviceId : $stateParams.serviceId, //服务id
             serviceName: "", //服务名称
             serviceStatus : 0, //服务状态
             serviceType : 0, //服务类型
@@ -71,18 +71,37 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                     "serviceId": $stateParams.serviceId
                 },function(data){
                     if(data.status==200){
-                        $scope.vm.appName=data.data.appName;//应用名称
-                        $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
-                        $scope.vm.channels=data.data.channels;//渠道id列表
-                        //$scope.vm.dimensions=data.data.dimensions;//维度id列表
-
-                        $scope.vm.nodeCode=data.data.nodeCode;//节点编号
-                        $scope.vm.serviceName=data.data.serviceName;//服务名称
-                        $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
-                        $scope.vm.serviceType=data.data.serviceType;//服务类型
-                        $scope.vm.userId=data.data.userId;//操作用户id
-                        $scope.vm.serviceId=data.data.serviceId;//服务id
-                        $scope.$apply();
+                        httpRequestPost("/api/application/service/listDimensionByServiceId",{
+                            "serviceId": $stateParams.serviceId
+                        },function(data){
+                            if(data.status==200){
+                                var dimensionSelected=[];
+                                angular.forEach(data.data,function(dimensionId){
+                                    angular.forEach($scope.vm.dimensionAll,function(dimension){
+                                        if(dimensionId==dimension.dimensionId){
+                                            dimensionSelected.push(dimension);
+                                            //$scope.vm.dimensionAll.remove(dimension);
+                                        }
+                                    });
+                                });
+                                $scope.vm.dimensionSelected=dimensionSelected;
+                                $scope.vm.appName=data.data.appName;//应用名称
+                                $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
+                                $scope.vm.channels=data.data.channels;//渠道id列表
+                                //$scope.vm.dimensions=data.data.dimensions;//维度id列表
+                                $scope.vm.nodeCode=data.data.nodeCode;//节点编号
+                                $scope.vm.serviceName=data.data.serviceName;//服务名称
+                                $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
+                                $scope.vm.serviceType=data.data.serviceType;//服务类型
+                                $scope.vm.userId=data.data.userId;//操作用户id
+                                $scope.vm.serviceId=data.data.serviceId;//服务id
+                                $scope.$apply();
+                            }else{
+                                layer.msg("查询失败");
+                            }
+                        },function(){
+                            layer.msg("请求失败");
+                        })
                     }else{
                         layer.msg("查询服务失败");
                     }
@@ -215,18 +234,17 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //获取维度
         function  listDimensionData(){
-            if($scope.vm.dimensionAll==null||$scope.vm.dimensionAll==""){
-                httpRequestPost("/api/application/dimension/list",{
-                    "applicationId" : $scope.vm.applicationId
-                },function(data){
-                    if(data.data){
-                        $scope.vm.dimensionAll = data.data;
-                        $scope.$apply();
-                    }
-                },function(err){
-                    layer.msg("获取维度失败，请刷新页面")
-                });
-            }
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                if(data.data){
+                    $scope.vm.dimensionAll = data.data;
+                    $scope.$apply();
+
+                }
+            },function(err){
+                layer.msg("获取维度失败，请刷新页面")
+            });
 
         }
 
