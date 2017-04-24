@@ -572,7 +572,7 @@ knowledge_static_web
                 }
             })
             .state("setting.newService", {
-                params:{"serviceId" : null,"dimensionAll" : null,"dimensionSelected" :null},
+                params:{"serviceId" : null},
                 url: "/newService",
                 views: {
                     'header': {
