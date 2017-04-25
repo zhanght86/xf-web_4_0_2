@@ -138,6 +138,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 showClose : true,
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
+
                     if(e === 1){
                         httpRequestPost("/api/application/dimension/addDimension",{
                             applicationId:$scope.vm.applicationId,
@@ -145,7 +146,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             dimensionName : $scope.vm.dimension,
                             dimensionStatusId : $scope.vm.switchTurn,
                             dimensionParentId : 0,
-                            dimensionNameArray : $scope.vm.newDimensions
+                            dimensionNameArray : $scope.vm.newDimensions,
+
                         },function(data){
                             $state.reload()
                         },function(){
