@@ -12,6 +12,7 @@ angular.module('know.template').factory('TemplateService',['$resource',function 
     templateService.optimizeText = $resource('/api/templateRule/optimizeText', {}, {});
     templateService.queryTemplateContent = $resource('/api/template/previewKnowDoc', {}, {});
     templateService.addWordRule = $resource('/api/templateRule/addWordRule', {}, {});
+    templateService.updateWordRule = $resource('/api/templateRule/updateWordRule', {}, {});
     templateService.checkTemName = $resource('/api/template/searchByTemplateName', {}, {});
     templateService.deleteRule = $resource('/api/templateRule/deleteWordRule', {}, {});
     templateService.queryRuleById = $resource('/api/templateRule/queryRuleById', {}, {});
