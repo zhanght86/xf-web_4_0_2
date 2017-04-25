@@ -34,7 +34,7 @@ angular.module('knowGatewayModule').controller('temController', [
                     "index": ($scope.SearchPOJO.currentPage-1)*$scope.SearchPOJO.pageSize,
                     "pageSize": $scope.SearchPOJO.pageSize,
                     "requestId": "string",
-                    "templateName": $scope.SearchPOJO.name,
+                    "templateName": $scope.SearchPOJO.name
                 }
                ,function(resource){
                 if(resource.status == 200){

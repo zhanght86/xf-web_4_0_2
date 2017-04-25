@@ -190,9 +190,76 @@ function milesAdd(item,arr,type){
 function milesRemove(item,arr){
     arr.remove(item)
 }
-
-
-	
+/**
+ * 为空判断 包括空字符串及回车换行符
+ * @param value
+ */
+function nullCheck(value){
+    if(value==null){
+        return false;
+    }
+    if(value==""){
+        return false;
+    }
+    if(value==undefined){
+        return false;
+    }
+    var result = value.replace(/[ \r\n]/g,"");
+    if(result==""){
+        return false;
+    }
+    return true;
+}
+/**
+ * 长度检测 包括边界
+ * @param value
+ * @param min
+ * @param max
+ */
+function lengthCheck(value,min,max){
+    if(nullCheck(value)==false){
+        return false;
+    }
+    if(value.length<min){
+        return false;
+    }
+    if(value.length>max){
+        return false;
+    }
+    return true;
+}
+/**
+ * 字符串截取
+ * @param value
+ * @param limit
+ * @param tail
+ * @returns {*}
+ */
+function subStringWithTail(value,limit,tail){
+    if(nullCheck(value)==false){
+        return "";
+    }
+    if(value.length<=limit){
+        return value;
+    }
+    if(value.length>limit){
+        return value.substring(0,limit)+tail;
+    }
+}
+/**
+ * 数组内容重复检测
+ * @param arr
+ * @returns {boolean}
+ */
+function arrayRepeatCheck(arr){
+    var hash = {};
+    for(var i in arr) {
+        if(hash[arr[i]])
+            return false;
+        hash[arr[i]] = false;
+    }
+    return true;
+}
 
 	
 	

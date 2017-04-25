@@ -16,6 +16,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
         $scope.level = $stateParams.level;
         $scope.roleId = $stateParams.roleId;
         $scope.showExtract = false;
+        $scope.checkModel = 1;
         
         $scope.queryRole = function(){
             TemplateService.queryRuleById.save({
@@ -129,7 +130,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
             })
         }
 
-        $scope.addWordRule = function(){
+        $scope.saveWordRule = function(){
             if($scope.rules != undefined && $scope.checkedRuleIndex != undefined && $scope.rules[$scope.checkedRuleIndex] != undefined){
                 $scope.checkedRule = $scope.rules[$scope.checkedRuleIndex];
             }else{
@@ -140,7 +141,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
                 alert("请选择要保存的规则");
                 return;
             }
-            TemplateService.addWordRule.save({
+            var params = {
                 "lineWord":$scope.checkedRule.lineWord,
                 "firstLineIndent":$scope.checkedRule.firstLineIndent,
                 "fontAlignment":$scope.checkedRule.fontAlignment,
@@ -153,12 +154,24 @@ angular.module('knowGatewayModule').controller('docSelectController', [
                 "extractReg":$scope.extractRegTxt,
                 "inputText":$scope.titleText,
                 "selectText":$scope.checkedRule.lineWord,
-                "requestId":"String",
-            },function(re){
-                if(re.status == 200){
-                    history.back();
-                }
-            })
+                "ruleId":$scope.roleId,
+                "requestId":"String"
+            };
+            if($scope.roleId != null)
+                TemplateService.updateWordRule.save(params, function(re){
+                    if(re.status == 200){
+                        history.back();
+                    }
+                });
+            else
+            {
+                TemplateService.addWordRule.save(params, function(re){
+                    if(re.status == 200){
+                        history.back();
+                    }
+                });
+            }
+
         }
 
         // var timeout;
