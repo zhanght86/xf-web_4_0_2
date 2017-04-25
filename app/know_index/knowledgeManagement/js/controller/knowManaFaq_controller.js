@@ -99,7 +99,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     }
                 }
             },function(){
-                alert("err or err")
+                layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){

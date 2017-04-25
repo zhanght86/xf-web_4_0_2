@@ -1,6 +1,12 @@
 .resetH70 {
   height: 70px;
 }
+.ng-red {
+  color: red !important;
+}
+.ng-blue {
+  color: blue!important;
+}
 .type1 .icon-ngJj {
   position: relative;
   top: -1px;
@@ -25,6 +31,28 @@
   background-repeat: no-repeat;
   background-image: url(../../images/pic-navs-dy.png);
 }
+/*************************      uploader  **************************************/
+.upWrapper {
+  width: 400px;
+}
+.miles-progress {
+  width: 256px;
+  height: 26px;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #e1e1e1;
+  border-radius: 100px;
+  z-index: 9999;
+}
+.miles-progress .miles-progressBar {
+  height: 100%;
+  background: url("../../images/ng/progress.png") repeat;
+}
+/*************************      uploader  **************************************/
 /*************************      autocomplete  **************************************/
 .miles-autoBar {
   width: 421px;

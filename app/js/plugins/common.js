@@ -169,7 +169,6 @@ function delCookie(name)
 
     //tianjia   type
 function milesAdd(item,arr,type){
-    alert();
     //验证  0  验证重复    1  不验证重复
     if(type){
         arr.push(item)

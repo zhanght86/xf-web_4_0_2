@@ -572,7 +572,7 @@ knowledge_static_web
                 }
             })
             .state("setting.newService", {
-                params:{"serviceId" : null,"dimensionAll" : null,"dimensionSelected" :null},
+                params:{"serviceId" : null},
                 url: "/newService",
                 views: {
                     'header': {
@@ -736,8 +736,9 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
+
 
                     }
                 }
