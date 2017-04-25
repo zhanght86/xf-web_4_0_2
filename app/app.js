@@ -5,6 +5,7 @@
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
     //'ui.autocomplete',
+
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
@@ -437,6 +438,20 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.association", {
+                //params:{"userPermission" : null},
+                url: "/association",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/AssociationManage.html',
+                        controller: "AssociationManageController"
+                    },
+                }
+            })
             //应用信息
             .state("setting.Infor", {
                 //params:{"userPermission" : null},
@@ -687,6 +702,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.singleAddConcept", {
                 url: "/singleAddConcept",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -700,6 +716,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.faqAdd", {
                 url: "/faqAdd",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -733,8 +750,9 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
+
 
                     }
                 }
@@ -897,7 +915,8 @@ knowledge_static_web
             .state("back.gateway", {
                 url: "/gateway",
                 params: {
-                    isGo: null
+                    isGo: null,
+                    knowDocId: null
                 },
                 views: {
                     'header': {
@@ -907,6 +926,25 @@ knowledge_static_web
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_container.html',
                         controller: "analyseTaskController"
+                    }
+                }
+            })
+            .state("back.doc_results_view", {
+                url: "/doc_results_view",
+                params: {
+                    isGo: null,
+                    knowDocId: null,
+                    knowDocCreateTime: null,
+                    knowDocUserName: null
+                },
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'main_container': {
+                        templateUrl: 'know_background/know_gateway/doc_results_view.html',
+                        controller: "doc_results_viewController"
                     }
                 }
             })

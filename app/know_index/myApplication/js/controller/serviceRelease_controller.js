@@ -39,6 +39,8 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             deleteService : deleteService, //删除服务
             editService : editService, //编辑服务
 
+
+
         };
 
 
@@ -58,8 +60,8 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 $scope.vm.dataTotal =data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vm.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
@@ -77,6 +79,25 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
         //编辑服务
         function editService(serviceId){
             $state.go("setting.newService",{serviceId: serviceId});
+            //httpRequestPost("/api/application/service/listDimensionByServiceId",{
+            //    "serviceId": serviceId
+            //},function(data){
+            //    if(data.status==200){
+            //        var dimensionSelected=[];
+            //        angular.forEach(data.data,function(dimensionId){
+            //            angular.forEach($scope.vm.dimensionAll,function(dimension){
+            //                if(dimensionId==dimension.dimensionId){
+            //                    dimensionSelected.push(dimension);
+            //                    //$scope.vm.dimensionAll.remove(dimension);
+            //                }
+            //            });
+            //        });
+            //    }else{
+            //        layer.msg("查询失败");
+            //    }
+            //},function(){
+            //    layer.msg("请求失败");
+            //})
         }
 
         //发布服务

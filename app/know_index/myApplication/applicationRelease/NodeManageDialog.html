@@ -10,7 +10,7 @@
              ng-show="myNode.accessIp.$error.unique">{{vm.errorTip}}</div>
         </form>
     </div>
-    <div class="framework mb-10">
+    <div class="framework mb-10" ng-if="vm.statusId!=60002">
         <span class="framework_s">状态：</span>
         <div>
             <label class="mr-10" ng-repeat="statusItem in vm.statusData" ng-init="vm.statusId=vm.statusData[0].statusId">
@@ -57,7 +57,7 @@
                 <input type="number" value="{{node.nodeId}}" class="input-text bd mr-10" style="width:140px;"/>
                 <span class="mr-10">节点IP:</span>
                 <input type="text" value="{{node.nodeAccessIp}}" class="input-text bd mr-10" style="width:140px;"/>
-                <a href="javascript:;" ng-click="vm.nodes.remove(node)"><img src="../../images/images/delete_img.png " /></a>
+                <a href="javascript:;" ng-click="vm.nodes.remove(node);vm.removeOldSubNode(node)"><img src="../../images/images/delete_img.png " /></a>
             </div>
         </div>
     </div>

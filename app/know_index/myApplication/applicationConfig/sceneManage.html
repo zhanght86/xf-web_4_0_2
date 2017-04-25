@@ -42,11 +42,11 @@
                             <dd>
                                 <a ng-click="vm.updateExchangeMode(item);" ng-if="item.statusId==20001">禁用</a>
                                 <a ng-click="vm.updateExchangeMode(item);" ng-if="item.statusId==20002">启用</a>
+                                <a ng-if="item.exchangeModeId==13&&item.statusId==20001" ng-click="vm.saveMultiInteractive()">配置</a>
                             </dd>
                         </dl>
                         <p class="c-999">{{item.exchangeDescription}}</p>
                     </div>
-
                 </div>
             </div>
         </div>

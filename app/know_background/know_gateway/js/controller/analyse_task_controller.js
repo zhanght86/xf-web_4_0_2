@@ -158,11 +158,7 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
             }, 350)
         }, true)
 
-
         self.initSearch();
-
-
-
 
         var timeout3;
         $scope.$watch('TemSearchPOJO', function (SearchPOJO) {

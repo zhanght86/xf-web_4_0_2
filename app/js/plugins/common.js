@@ -56,6 +56,50 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
         }
     })
 }
+function httpRequestPostAsync(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
+    ajaxType == "POST"? "POST" :ajaxType;
+    //if(ajaxType === "post"){
+    //阻塞线程  ie8 不支持
+    //    jQuery.support.cors = true;
+    //}
+    //转换字符
+
+    //if (typeof(data) == 'string') {
+    //    data = JSON.parse(data);
+    //}
+    data = JSON.stringify(data);
+
+    //验证是否需要加token
+    var header = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    //设置默认需要  tooken
+    if (!needToken) {
+        //header.Authorization = getToken();
+    }
+    $.ajax(url, {
+        dataType: 'json', //服务器返回json格式数据
+        async:false,
+        type: "POST", //HTTP请求类型
+        timeout: 10000, //超时时间设置为10秒；
+        headers: header,
+        data: data,
+        success: function(data) {
+            sucCallBack(data);
+        },
+        error: function(xhr, type, errorThrown) {
+            falCallback(xhr, type, errorThrown);
+        },
+        complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+            if(status=='timeout'){//超时,status还有success,error等值的情况
+                //ajaxTimeoutTest.abort();
+                //layer.msg("请求超时");
+                console.log("请求超时");
+            }
+        }
+    })
+}
 
 //// tooken 获取
 //function getToken() {
@@ -125,7 +169,6 @@ function delCookie(name)
 
     //tianjia   type
 function milesAdd(item,arr,type){
-    alert();
     //验证  0  验证重复    1  不验证重复
     if(type){
         arr.push(item)
@@ -138,9 +181,76 @@ function milesAdd(item,arr,type){
 function milesRemove(item,arr){
     arr.remove(item)
 }
-
-
-	
+/**
+ * 为空判断 包括空字符串及回车换行符
+ * @param value
+ */
+function nullCheck(value){
+    if(value==null){
+        return false;
+    }
+    if(value==""){
+        return false;
+    }
+    if(value==undefined){
+        return false;
+    }
+    var result = value.replace(/[ \r\n]/g,"");
+    if(result==""){
+        return false;
+    }
+    return true;
+}
+/**
+ * 长度检测 包括边界
+ * @param value
+ * @param min
+ * @param max
+ */
+function lengthCheck(value,min,max){
+    if(nullCheck(value)==false){
+        return false;
+    }
+    if(value.length<min){
+        return false;
+    }
+    if(value.length>max){
+        return false;
+    }
+    return true;
+}
+/**
+ * 字符串截取
+ * @param value
+ * @param limit
+ * @param tail
+ * @returns {*}
+ */
+function subStringWithTail(value,limit,tail){
+    if(nullCheck(value)==false){
+        return "";
+    }
+    if(value.length<=limit){
+        return value;
+    }
+    if(value.length>limit){
+        return value.substring(0,limit)+tail;
+    }
+}
+/**
+ * 数组内容重复检测
+ * @param arr
+ * @returns {boolean}
+ */
+function arrayRepeatCheck(arr){
+    var hash = {};
+    for(var i in arr) {
+        if(hash[arr[i]])
+            return false;
+        hash[arr[i]] = false;
+    }
+    return true;
+}
 
 	
 	

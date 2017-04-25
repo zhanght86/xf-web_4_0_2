@@ -14,9 +14,12 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             appName : "", //应用名称
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
-            dimensions : [], //维度id列表
+            dimensionSelected : [], //选中的维度列表
+            dimensionAll : [],//所有的维度列表
+            dimensions: [], //选中的维度id
+            //dimensionAll : "",//所有的维度列表
             nodeCode : "", //节点编号
-            serviceId : "", //服务id
+            serviceId : $stateParams.serviceId, //服务id
             serviceName: "", //服务名称
             serviceStatus : 0, //服务状态
             serviceType : 0, //服务类型
@@ -39,8 +42,8 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             listNodeData : listNodeData, //获取可用节点数据
             listChannelData : listChannelData, //获取渠道数据
             listTypeData : listTypeData,//获取发布类型数据
-            listCategoryData : listCategoryData, //获取分类数据
             listDimensionData : listDimensionData, //获取维度数据
+
 
 
             publish : publish, //发布服务
@@ -48,15 +51,16 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             findServiceByServiceId : findServiceByServiceId, //根据服务id查询服务信息
 
             botRoot : "",     //根节点
-            serverIds : []
+            newCategoryIds : [],  //选中的分类节点
 
         };
-
+        listDimensionData(); //获取维度数据
         findServiceByServiceId(); //根据服务id查询服务信息
 
         listNodeData(); //获取可用节点数据
         listChannelData();  //获取渠道数据
         listTypeData();//获取发布类型数据
+
 
         //根据服务id查询服务信息
         function findServiceByServiceId(){
@@ -67,17 +71,37 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                     "serviceId": $stateParams.serviceId
                 },function(data){
                     if(data.status==200){
-                        $scope.vm.appName=data.data.appName;//应用名称
-                        $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
-                        $scope.vm.channels=data.data.channels;//渠道id列表
-                        $scope.vm.dimensions=data.data.dimensions;//维度id列表
-                        $scope.vm.nodeCode=data.data.nodeCode;//节点编号
-                        $scope.vm.serviceName=data.data.serviceName;//服务名称
-                        $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
-                        $scope.vm.serviceType=data.data.serviceType;//服务类型
-                        $scope.vm.userId=data.data.userId;//操作用户id
-                        $scope.vm.serviceId=data.data.serviceId;//服务id
-                        $scope.$apply();
+                        httpRequestPost("/api/application/service/listDimensionByServiceId",{
+                            "serviceId": $stateParams.serviceId
+                        },function(data){
+                            if(data.status==200){
+                                var dimensionSelected=[];
+                                angular.forEach(data.data,function(dimensionId){
+                                    angular.forEach($scope.vm.dimensionAll,function(dimension){
+                                        if(dimensionId==dimension.dimensionId){
+                                            dimensionSelected.push(dimension);
+                                            //$scope.vm.dimensionAll.remove(dimension);
+                                        }
+                                    });
+                                });
+                                $scope.vm.dimensionSelected=dimensionSelected;
+                                $scope.vm.appName=data.data.appName;//应用名称
+                                $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
+                                $scope.vm.channels=data.data.channels;//渠道id列表
+                                //$scope.vm.dimensions=data.data.dimensions;//维度id列表
+                                $scope.vm.nodeCode=data.data.nodeCode;//节点编号
+                                $scope.vm.serviceName=data.data.serviceName;//服务名称
+                                $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
+                                $scope.vm.serviceType=data.data.serviceType;//服务类型
+                                $scope.vm.userId=data.data.userId;//操作用户id
+                                $scope.vm.serviceId=data.data.serviceId;//服务id
+                                $scope.$apply();
+                            }else{
+                                layer.msg("查询失败");
+                            }
+                        },function(){
+                            layer.msg("请求失败");
+                        })
                     }else{
                         layer.msg("查询服务失败");
                     }
@@ -93,6 +117,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         function publish(){
             console.log($scope.vm.allowSubmit);
             if($scope.vm.allowSubmit){  //服务名称验证没有错误
+                $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
                 httpRequestPost("/api/application/service/addAndPublishService",{
                     "applicationId": $scope.vm.applicationId,
                     "categoryIds" : $scope.vm.categoryIds, //分类id列表
@@ -117,16 +142,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         //取消发布服务
         function cancelPublish(){
             $state.go("setting.releaseMan");
-        }
-
-        //获取分类数据
-        function listCategoryData(){
-
-        }
-
-        //获取维度数据
-        function listDimensionData(){
-
         }
 
         //获取渠道数据
@@ -180,7 +195,6 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //弹出分类对话框
         function listCategory(){
-
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NewServiceReleaseDialog.html",
                 scope: $scope,
@@ -190,6 +204,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        $scope.vm.categoryIds=$scope.vm.newCategoryIds;
                     }
                 }
             });
@@ -215,6 +230,24 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         function selectNode(nodeCode){
             $scope.vm.nodeCode=nodeCode;
         }
+
+
+        //获取维度
+        function  listDimensionData(){
+            httpRequestPost("/api/application/dimension/list",{
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+                if(data.data){
+                    $scope.vm.dimensionAll = data.data;
+                    $scope.$apply();
+
+                }
+            },function(err){
+                layer.msg("获取维度失败，请刷新页面")
+            });
+
+        }
+
 
 
 
@@ -254,10 +287,10 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                 var self = angular.element(this);
                 var id = self.attr("data-option");
                 if(self.prop("checked")){
-                   $scope.vm.serverIds.push(id)
+                   $scope.vm.newCategoryIds.push(id)
                     $scope.$apply()
                 }else{
-                    $scope.vm.serverIds.remove(id)
+                    $scope.vm.newCategoryIds.remove(id)
                     $scope.$apply()
                 }
             });
@@ -305,7 +338,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         }
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
     }
- 
+
 ]).directive('checkServiceName', function($http){
     return {
         require: 'ngModel',

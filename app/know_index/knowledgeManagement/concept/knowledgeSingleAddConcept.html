@@ -10,6 +10,7 @@
         <div class="r-cont-hd">
             <span>概念知识新增</span>
         </div>
+        <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
             <!--<form novalidate="novalidate" name="form">-->
             <div class="jqrsz-item">
@@ -18,12 +19,12 @@
                         知识标题：
                     </div>
                     <div class="value">
-                            <div class="ipt-txt-box">
-                                <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.hideTip()" ng-minlength="1" ng-maxlength="1000" required />
-                                <i class="btn-empty"></i>
-                                <a href="javascript:;" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/images/add_img.png" alt=""></a>
-                                <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
-                            </div>
+                        <div class="ipt-txt-box">
+                            <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
+                            <i class="btn-empty"></i>
+                            <a href="javascript:;" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -32,7 +33,7 @@
                         知识有效期：
                     </div>
                     <label>
-                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable">  {{vm.timeFlag}}
+                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
                     </label>
                     <div style="margin: 10px 0 10px  232px;" ng-show="vm.isTimeTable">
                         <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -47,11 +48,11 @@
                     </div>
                     <div class="value Div" id="Div">
                         <div class="ipt-txt-box">
-                            <input class="ipt-txt" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
+                            <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <!--<p class="ipt-txt" id="ipt-txt" >-->
-                                <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
+                            <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
                             <!--</p>-->
-                            <i class="btn-menu_1" ng-click="vm.knowledgeBot($event,0)"></i>
+                            <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
                             <div class="aside-navs aside-navs2" >
                                 <ul class="menus show">
                                     <!--//test-->
@@ -59,7 +60,7 @@
                                         <div class="slide-a">
                                             <a class="ellipsis" href="javascript:;">
                                                 <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                                <span ng-click="vm.botValChange(item.categoryName)">{{item.categoryName}}</span>
+                                                <span>{{item.categoryName}}</span>
                                             </a>
                                         </div>
                                     </li>
@@ -69,30 +70,125 @@
                         </div>
                     </div>
                 </div>
-                <div class="item-line" ng-if="vm.creatBot.length">
-                    <div class="lable"></div>
+                <!--bot  标题 点击生成  -->
+                <div class="item-line" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
+                    <div class="lable"> BOT分类：</div>
                     <div class="value Div" id="Div">
                         <div class="ipt-txt-box">
                             <div class="ipt-txt">
-                                <span  ng-repeat="item in  vm.titleGroup">{{item}}</span>
+                                <span>{{item.classificationName.join("/")}}</span>
                             </div>
                         </div>
+                        <a href="javascript:;" class=" mr-10" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                     </div>
                 </div>
+                <!-- 手选生成-->
+                <!--<div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">-->
+                <!--<div class="lable"> BOT分类：</div>-->
+                <!--<div class="value Div" id="Div">-->
+                <!--<div class="ipt-txt-box">-->
+                <!--<div class="ipt-txt">-->
+                <!--<span>{{item}}</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.botClassfy.splice($index,1)" alt=""></a>-->
+                <!--</div>-->
+                <!--</div>-->
                 <div class="item-line">
                     <div class="row cl mb-10">
                         <div class="lable">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
                         <div class="formControls col-xs-8 col-sm-9">
-                            <select class="input-text" style="width:407px;"  ng-model="vm.frameId" >
-                                <option  ng-if="vm.frames"  ng-repeat="item in vm.frames" ng-value="item.frameId"ng-selected="$index==0">{{item.frameTitle}}</option>
+                            <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
+                                <option value="" ng-if="vm.frames.length">--业务框架为空--</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="jqrsz-item" style="overflow: visible">
+                <div class="item-line"  style="overflow: visible">
+                    <div class="lable" style="padding-top: 15px;">
+                        概念扩展：
+                    </div>
+                    <div class="value" style="overflow: visible">
+                        <div style="width: 500px;height: 38px;">
+                            <input type="text"  placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
+                            <select  ng-model="vm.extensionWeight"  class="input-text" style="display: inline-block;width: 20%;margin-top: 10px;height: 100%;">
+                                <option value="1">普通</option>
+                                <option value="0">否定</option>
+                            </select>
+                            <a href="javascript:;" class=" mr-15" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight)"><img src="../../../images/images/add_img.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="Concept-Ipt-nxtDiv Concept-Ipt-nxtDivOut" style="margin-top: 20px;margin-bottom: 0;">
+                    <span class="Concept-Ipt-nxt-ico"></span>
+                    <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
+                </div>
+
+                <!--sshoudong  tinajia -->
+                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value clearfix" >
+                        <div class="bd tag_box L mr-10" >
+                            {{item.extensionQuestionTitle}}
+                        </div>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <!--<span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>-->
+                    </div>
+                </div>
+
+                <!-- 業務框架 生成 -->
+                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value clearfix" >
+                        <div class="bd tag_box L mr-10" >
+                            {{item.extensionQuestionTitle}}
+                        </div>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                        <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
+                    </div>
+                </div>
+            </div>
             <div class="jqrsz-item">
-                <div class="item-line">
+                <!--预览内容-->
+                <div ng-repeat="item in vm.scanContent">
+                    <div class="item-line">
+                        <div class="lable"></div>
+                        <div class="value">
+                            <div class="ipt-txt-box">
+                                <div class="textareaDiv textareaDiv1 textareaDiv2" >
+                                <!--<textarea   readonly style="width: 100%;">-->
+                                    {{item.knowledgeContent}}
+                                <!--</textarea>-->
+                                </div>
+                                <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-line" id="item-line">
+                        <div class="left"></div>
+                        <div class="optionDiv">渠道：
+                            <span ng-repeat="val in item.channelId">{{val | channel:vm.channels}}</span>
+                        </div>
+                    </div>
+                    <div class="item-line" id="item-line">
+                        <div class="left"></div>
+                        <div class="optionDiv">维度:
+                            <span ng-repeat="val in item.dimensionId">{{val | dimension:vm.dimensions}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-line" style="margin-top: 15px">
                     <div class="lable">
                         知识内容：
                     </div>
@@ -103,97 +199,13 @@
                         </div>
                     </div>
                 </div>
-                 <!--预览内容-->
-                <div class="item-line" ng-if="vm.scanContent.title">
-                    <div class="lable"></div>
-                    <div class="value">
-                        <div class="ipt-txt-box">
-                            <div class="textareaDiv textareaDiv1 textareaDiv2" >
-                                <textarea   ng-model="vm.scanContent.title" readonly>
-                                </textarea>
-                            </div>
-                            <a href="javascript:;" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-line" id="item-line" ng-if="vm.scanContent.dimensions.length">
-                    <div class="left"></div>
-                    <div class="optionDiv">渠道：
-                        <span ng-repeat="item in vm.scanContent.dimensions.length">{{item}}</span>
-                    </div>
-                </div>
-                <div class="item-line" id="item-line" ng-if="vm.scanContent.channels.length">
-                    <div class="left"></div>
-                    <div class="optionDiv">维度:
-                        <span ng-repeat="item in vm.scanContent.channels">{{item}}</span>
-                    </div>
-                </div>
-
             </div>
-            <div class="jqrsz-item" style="overflow: visible">
-                <div class="item-line"  style="overflow: visible">
-                     <div class="lable" style="padding-top: 15px;">
-                        概念扩展：
-                    </div>
-                    <div class="value" style="overflow: visible">
-                        <div style="width: 500px;height: 38px;">
-                            <input type="text"  placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text" style="display: inline-block;width: 20%;margin-top: 10px;height: 100%;">
-                                <option value="1">普通</option>
-                                <option value="">否定</option>
-                            </select>
-                            <a href="javascript:;" class=" mr-15" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight)"><img src="../../../images/images/add_img.png" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="Concept-Ipt-nxtDiv Concept-Ipt-nxtDivOut" style="margin-top: 5px;">
-                    <span class="Concept-Ipt-nxt-ico"></span>
-                    <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
-                </div>
-
-
-                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
-                    <div class="lable">
-                        概念扩展：
-                    </div>
-                    <div class="value" style="overflow: visible">
-                        <div style="width: 500px;height: 38px;">
-                            <!--<span ng-repeat="val in item.obj"  style="display: inline-block;margin: 2px;background:#f0f0f0;padding: 3px;border: 1px solid #e1e1e1;"></span>-->
-
-                            <select disabled style="display: inline-block;margin: 2px;background:#f0f0f0;padding: 4px;border: 1px solid #e1e1e1;margin-left: 10px;width: 50px;">
-                                 <option value="" selected>{{}}</option>
-                             </select>
-                            <a href="javascript:;" class=" mr-15" ng-click="vm.getExtension()"><img src="../../../images/images/delete_img.png" alt=""></a>
-                        </div>
-                        <!--<div class="error-tip hide">-->
-                        <!--错误提示-->
-                        <!--</div>-->
-                    </div>
-                </div>
-                <div class="item-line"   >
-                    <div class="lable">
-                        概念扩展：
-                    </div>
-                    <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10" >
-                            <span class="tag_s">tag1</span>
-                            <span class="tag_s">tag1</span>
-                        </div>
-                        <span class="tag_s mr-10 L">普通</span>
-                        <a href="javascript:;" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt=""></a>
-                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>
-                        <span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="jqrsz-btn-box">
                 <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.save()">保存</a>
                 <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>
             </div>
         </div>
-     </div>
+    </div>
 </div>
 
 
@@ -210,40 +222,5 @@
 
 </style>
 <script>
-//    $(function(){
-//        $(".checkboxAddress .my-select").hover(function () {
-//            $(this).find("[class='deleteAddress']").css("display","block");
-//            $(this).find("em").css("display","none")
-//        },function () {
-//            $(this).find("[class='deleteAddress']").css("display","none");
-//            $(this).find("em").css("display","block")
-//        });
-//        $(".deleteAddress").click(function () {
-//            $(this).parents("[class='my-select']").remove();
-//        });
-
-//        $("#ipt-txt").focus(function () {
-//            $(".aside-navs2").slideDown()
-//        });
-//        $(".btn-").click(function () {
-//            $(".aside-navs2").slideDown();
-//        });
-//        $(document).click(function () {
-//            $(".aside-navs2").slideUp()
-
-//        });
-//
-//        $("#ipt-txt,.btn-,.aside-navs2").click(function(e){//自己要阻止
-//
-//            e.stopPropagation();//阻止冒泡到body
-//        });
-//    });
-//   hui  checkbox
-//    $(function(){
-//        $('.skin-minimal input').iCheck({
-//            checkboxClass: 'icheckbox-blue',
-//            radioClass: 'iradio-blue',
-//            increaseArea: '20%'
-//        })});
 
 </script>
