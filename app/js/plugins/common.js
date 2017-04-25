@@ -13,6 +13,15 @@
 //
 ////var Authorization = getCookie("Authorization");
 //
+function enterEvent(e,callback) {
+    srcObj = e.srcElement ? e.srcElement : e.target;
+    var keycode = window.event?e.keyCode:e.which;
+    if(keycode==13){
+        srcObj.blur();
+        callback();
+        //srcObj.focus()
+    }
+}
 function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
     ajaxType == "POST"? "POST" :ajaxType;
     //if(ajaxType === "post"){

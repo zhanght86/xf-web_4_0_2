@@ -286,14 +286,25 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     if(data.data){
                         var  html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
-                            html+= '<li>' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
-                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span>'+data.data[i].categoryName+'</span>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>'
+                            if(data.data[i].categoryLeaf){
+                                html+= '<li>' +
+                                    '<div class="slide-a">'+
+                                    ' <a class="ellipsis" href="javascript:;">'+
+                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                    '<span>'+data.data[i].categoryName+'</span>'+
+                                    '</a>' +
+                                    '</div>' +
+                                    '</li>'
+                            }else{
+                                html+= '<li>' +
+                                    '<div class="slide-a">'+
+                                    ' <a class="ellipsis" href="javascript:;">'+
+                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
+                                    '<span>'+data.data[i].categoryName+'</span>'+
+                                    '</a>' +
+                                    '</div>' +
+                                    '</li>'
+                            }
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));

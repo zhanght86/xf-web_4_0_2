@@ -19,14 +19,13 @@
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
-                            <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
+                            <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-keypress="vm.enterEvent($event,vm.getCreatBot)" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
                             <a href="javascript:;" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/images/add_img.png" alt=""></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="item-line">
                     <div class="lable">
                         知识有效期：
@@ -75,7 +74,7 @@
                     <div class="value Div" id="Div">
                         <div class="ipt-txt-box">
                             <div class="ipt-txt">
-                                <span>{{item.classificationName.join("/")}}</span>
+                                <span>{{item.className.join("/")}}</span>
                             </div>
                         </div>
                         <a href="javascript:;" class=" mr-10" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
@@ -113,7 +112,7 @@
                     </div>
                     <div class="value" style="overflow: visible">
                         <div style="width: 500px;height: 38px;">
-                            <input type="text"  placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
+                            <input type="text"  placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
                             <select  ng-model="vm.extensionWeight"  class="input-text" style="display: inline-block;width: 20%;margin-top: 10px;height: 100%;">
                                 <option value="1">普通</option>
                                 <option value="0">否定</option>
@@ -177,13 +176,13 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelId">{{val | channel:vm.channels}}</span>
+                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">维度:
-                            <span ng-repeat="val in item.dimensionId">{{val | dimension:vm.dimensions}}</span>
+                            <span ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
 
         <div class="checkboxStr">
             <div>渠道：</div>
-            {{vm.channel}}
+            <!--{{vm.channel}}-->
             <label ng-repeat="channel in vm.channels">
                 <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
                     {{channel.channelName}}
@@ -19,7 +19,7 @@
         </div>
         <div class="checkboxAddress"  style="height: auto;">
             维度：
-            {{vm.dimensionArr.id}}
+            <!--{{vm.dimensionArr.id}}-->
             <auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>
 
         </div>
