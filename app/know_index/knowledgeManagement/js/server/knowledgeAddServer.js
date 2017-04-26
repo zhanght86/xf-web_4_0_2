@@ -9,8 +9,8 @@
         var services = {
             getDimensions: getDimensions,  //获取  渠道
             getChannels : getChannels ,    //獲取維度
-                                          //    獲取bot
-
+            getFrame : getFrame    ,        //    獲取框架
+            faqSave : faqSave
         };
         return services;
         function getDimensions(params, onSuccess, onError) {
@@ -32,6 +32,23 @@
                 }
             });
             return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);
+        }
+        //function faqSave(params, onSuccess, onError) {
+        //    return $resource('/api/faqKnowledge/addFAQKnowledge', {}, {});
+        //}
+        function faqSave(params, onSuccess, onError) {
+            var url = '/api/faqKnowledge/addFAQKnowledge';
+            var _resource = $resource(url, {}, {
+                create: {
+                    method: 'POST',
+                    params: {}
+                }
+            });
+            return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);
+        }
+
+        function getFrame(id){
+            return $resource("/api/modeling/frame/listbyattribute", {}, {}).save();
         }
         //functtionqueryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationById', {}, {});
     }

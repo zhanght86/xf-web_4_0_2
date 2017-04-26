@@ -3,13 +3,13 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
-        console.log($stateParams.data)
+        //console.log($stateParams.data)
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -28,18 +28,16 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
-
             //生成  BOT
             getCreatBot : getCreatBot,
             //creatBot : [],
 
             botClassfy : [],   //类目
             //creatSelectBot : [], //手选生成 bot
-
             //扩展问
+            getExtension : getExtension , //获取扩展问
             extensionTitle : "",
             extensionWeight :1,
-            getExtension : getExtension,  //獲取擴展問
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
 
@@ -65,7 +63,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             checkChannelDimension : checkChannelDimension ,
             //高级选项内容
-            slideDown : slideDown,
+            slideDown : slideDown ,
             slideFlag : false,
 
             question : 1,
@@ -78,10 +76,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
+            replaceType : 0,
 
-            replaceType : 0
+            enterEvent : enterEvent
         };
-
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -175,7 +173,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         });
                         if(len==0){
                             var obj = {};
-                            obj.classificationName = data.categoryFullName.split("/");
+                            obj.className = data.categoryFullName.split("/");
                             obj.classificationId = id ;
                             obj.classificationType = 1;
                             $scope.vm.botClassfy.push(obj);
@@ -185,7 +183,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         }
                     }else{
                         var obj = {};
-                        obj.classificationName = data.categoryFullName.split("/");
+                        obj.className = data.categoryFullName.split("/");
                         obj.classificationId = id ;
                         obj.classificationType = 1;
                         $scope.vm.botClassfy.push(obj);
@@ -198,22 +196,31 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //添加扩展问
         function getExtension(title,weight){
-            httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
-                title : title
-            },function(data){
-                if(data.data = 10008){
-                    layer.msg("扩展问重复")
-                }else{
-                    var obj = {};
-                    obj.extensionQuestionTitle = title;
-                    obj.extensionQuestionType = weight;
-                    $scope.vm.extensions.push(obj);
+            var obj = {} ;
+            obj.extensionQuestionTitle = $scope.vm.extensionTitle;
+            obj.extensionQuestionType = $scope.vm.extensionWeight;
+            console.log(checkExtension(obj , $scope.vm.extensions));
+            if(!$scope.vm.extensionTitle){
+                layer.msg("扩展问不能为空")
+            }else if(!checkExtension(obj , $scope.vm.extensions)){
+                layer.msg("扩展问重复");
+                return false
+            }else{
+                httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
+                    title : $scope.vm.extensionTitle
+                },function(data){
+                    if(data.status == 500){
+                        layer.msg("扩展问重复")
+                    }else if(data.status==200){
+                        $scope.vm.extensions.push(obj);
+                        console.log(obj);
+                        $scope.$apply()
+                    }
                     console.log(data);
-                }
-                console.log(data);
-            },function(){
-               layer.msg("添加扩展问失败")
-            });
+                },function(){
+                   layer.msg("添加扩展问失败")
+                });
+            }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
         //{
@@ -227,7 +234,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         function  knowledgeBot(){
             $timeout(function(){
                 angular.element(".rootClassfy").slideToggle();
-                //angular.element(".menus").slideUp()
             },50)
         }
 
@@ -267,17 +273,29 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     "categoryApplicationId":applicationId,
                     "categoryPid": id
                 },function(data){
+                    //console.log(data)
                     if(data.data){
                         var  html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
-                            html+= '<li>' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
-                                '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span>'+data.data[i].categoryName+'</span>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>'
+                            if(data.data[i].categoryLeaf){
+                                html+= '<li>' +
+                                    '<div class="slide-a">'+
+                                    ' <a class="ellipsis" href="javascript:;">'+
+                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                    '<span>'+data.data[i].categoryName+'</span>'+
+                                    '</a>' +
+                                    '</div>' +
+                                    '</li>'
+                            }else{
+                                html+= '<li>' +
+                                    '<div class="slide-a">'+
+                                    ' <a class="ellipsis" href="javascript:;">'+
+                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
+                                    '<span>'+data.data[i].categoryName+'</span>'+
+                                    '</a>' +
+                                    '</div>' +
+                                    '</li>'
+                            }
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
@@ -334,7 +352,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     }
                 }
             });
-
         }
 
         function slideDown(){
@@ -357,7 +374,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $scope.vm.botClassfy = [] ;
                         angular.forEach(data.data,function(item){
                             var obj = {};
-                            obj.classificationName = item.fullPath;
+                            obj.className = item.fullPath;
                             obj.classificationId = item.id ;
                             obj.classificationType = 0;
                             $scope.vm.botClassfy.push(obj);
@@ -378,7 +395,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //  主页保存 获取参数
         function getParams(){
             var params = {};
-            params.knowledgeBase =  {
+            params =  {
                 "applicationId": $scope.vm.applicationId,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
@@ -389,22 +406,42 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             };
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions ;
-            params.classificationAndKnowledge = $scope.vm.botClassfy;
+            params.classificationAndKnowledgeList = $scope.vm.botClassfy;
             return params
         }
-
         function save(){
-            console.log(getParams())
-            httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",
-                getParams(),
-            function(data){
-                console.log(data)
-            },function(err){
-                layer.msg("保存失败")
-            });
+            //console.log(getParams());
+           if(!checkSave()){
+               alert()
+               return false
+           }else{
+                httpRequestPost("/api/faqKnowledge/addFAQKnowledge",getParams(),function(data){
+                    console.log(data)
+                    if(data.status == 200){
+                        //open
+                        //$state.go("custServScenaOverview.manage")
+                    }
+                },function(err){
+                    console.log(err)
+                });
+                //knowledgeAddServer.faqSave(getParams(),
+                //    function(data){
+                //        if(data.status == 200){
+                //            //open
+                //            //$state.go("custServScenaOverview.manage")
+                //        }
+                //    //console.log(data)
+                //},function(err) {
+                //    layer.msg("保存失败")
+                //})
+            }
         }
         function scan(){
-
+            if(!checkSave()){
+                return false
+            }else{
+              $state.go()
+            }
         };
         /* ****************************************** //
          *
@@ -424,10 +461,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
              $scope.vm.tip = 1,    //在提示
              $scope.vm.tail =1,    //弹出评价小尾巴
              $scope.vm.appointRelativeGroup = [] ;//业务扩展问
+             $scope.vm.appointRelative = ""
              $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
              $scope.vm.dimensionArr = []
         }
-
         //选择渠道
         function selectChannel(channelId){
             if($scope.vm.channel.inArray(channelId)){
@@ -441,12 +478,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
                 obj.knowledgeContentType = 0,  // 答案类型
-                obj.channelId =  $scope.vm.channel;
-                obj.dimensionId =  $scope.vm.dimensionArr.id;
+                obj.channelIdList =  $scope.vm.channel;
+                obj.dimensionIdList =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
                 obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
                 obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
-                obj.knowledgeRelevantContent = $scope.vm.appointRelativeGroup  //业务扩展问
+                obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                 //高級 選項
                 $scope.vm.scanContent.push(obj);
                 setDialog()
@@ -470,7 +507,35 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     return false
                 });
             }
-
+        }
+        //检验扩展问是否重复
+        function checkExtension(item,arr){
+            if(!arr.length){
+                return true ;
+            }else{
+                angular.forEach(arr,function(val){
+                    if(val.extensionQuestionTitle == item.extensionQuestionTitle && val.extensionQuestionType == item.extensionQuestionType){
+                        console.log(val.extensionQuestionTitle == item.extensionQuestionTitle)
+                        return false
+                    }
+                })
+            }
+        }
+//        提交 检验参数
+        function checkSave(){
+            var params = getParams();
+            if(!params.knowledgeTitle){
+                layer.msg("知识标题不能为空，请填写");
+                return false
+            }else if(!params.classificationAndKnowledgeList.length){
+                layer.msg("知识类目不能为空，请选择分类");
+                return false
+            }else if(!params.knowledgeContents.length){
+                layer.msg("知识内容不能为空，请点击新增填写");
+                return false
+            }else{
+                return true
+            }
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
