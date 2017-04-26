@@ -1,14 +1,14 @@
 
 <script type="text/ng-template" >
 </script>
-<div class="page-container" style="width: 550px" >
+<div class="pd-10" style="width: 100%;" >
     <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
-    <div class="addPopupCnt">
+    <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
         <form action="" name="myForm" novalidate>
             <textarea name="title" ng-model="vm.newTitle" required></textarea>
             <span class="c_red" ng-if="myForm.title.$dirty && myForm.title.$invalid">请添加知识标题</span>
         </form>
-        <div class="checkboxStr">
+        <div class="checkboxStr mb-10">
             <div>渠道：</div>
             {{vm.channel}}
             <label ng-repeat="channel in vm.channels">
@@ -16,8 +16,8 @@
                 {{channel.channelName}}
             </label>
         </div>
-        <div class="checkboxAddress"  style="height: auto;">
-            维度：
+        <div class="checkboxAddress pr"  style="padding-left:50px;height: auto;">
+            <span class="pa" style="left:0;top:0;">维度：</span>
             {{vm.dimensionArr.id}}
             <auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>
 
@@ -89,7 +89,7 @@
     }
     .ngdialog.ngdialog-theme-default .ngdialog-content {
 
-        width: 500px;
+        width:650px;
     }
     .addPopupCnt{
         margin-left: 22px;

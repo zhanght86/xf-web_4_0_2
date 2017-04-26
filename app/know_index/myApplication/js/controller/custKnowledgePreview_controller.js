@@ -9,6 +9,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         //"364180924750893056"
+        console.log();
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
             //knowledgeId : $stateParams.knowledgeId,
@@ -32,6 +33,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 "knowledgeId" : $scope.vm.knowledgeId,
                 "applicationId" : $scope.vm.applicationId
             },function(data){
+            console.log(data)
                 $scope.vm.listData = data.data;
                 $scope.$apply();
                 console.log(data);
