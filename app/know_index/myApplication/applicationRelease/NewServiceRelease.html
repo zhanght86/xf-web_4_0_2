@@ -1,7 +1,7 @@
-<div class="main warp">
-    <div class="addContent pd30">
-        <div class="r-cont-hd mb-20">
-            <span>{{vm.dialogTitle}}</span>
+<div class="">
+    <div class="addContent pd10">
+        <div class="mb-20">
+            <p>{{vm.dialogTitle}}</p>
         </div>
         <div>
             <div class="row cl mb-10">
@@ -65,7 +65,7 @@
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <button class="btn1 btn1_blue"  ng-click="vm.publish()">发布</button>
+                    <button class="btn1 btn1_blue mr-10"  ng-click="vm.publish()">发布</button>
                     <button class="btn1 btn_gray"  ng-click="vm.cancelPublish()">取消</button>
                 </div>
             </div>
@@ -74,5 +74,7 @@
 </div>
 
 <style>
-
+    .ngdialog.ngdialog-theme-default .ngdialog-content{
+        width:700px;
+    }
 </style>
