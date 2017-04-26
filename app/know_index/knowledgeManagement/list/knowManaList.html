@@ -86,7 +86,40 @@
                             </div>
                         </div>
                     </div>
-
+                    <!--sshoudong  tinajia -->
+                    <div class="exten_problem"  ng-repeat="item in vm.extensions">
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <div class="L input-text extended_query_txt" style="width:279px;" >
+                                    <!--{{item.extensionQuestionTitle}}-->
+                                    <span>ddddd</span>
+                                </div>
+                                <span class="sel bd L mr-10" style="padding-left:2px;">
+                                    {{item.extensionQuestionType==1?'普通':'否定'}}
+                                </span>
+                                <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="create_a" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 業務框架 生成 -->
+                    <div class="exten_problem"  ng-repeat="item in vm.extensionsByFrame">
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <div class="L input-text extended_query_txt" style="width:279px;" >
+                                    <!--{{item.extensionQuestionTitle}}-->
+                                    <span>ddddd</span>
+                                </div>
+                                <span class="sel bd L mr-10" style="padding-left:2px;">
+                                    {{item.extensionQuestionType==1?'普通':'否定'}}
+                                </span>
+                                <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                                <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row cl mb-50">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容:</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">
