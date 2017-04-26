@@ -132,6 +132,7 @@
                             </a>
                         </div>
                     </div>
+
                     <div class="clearfix csso-bd" style="min-height:300px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
@@ -151,7 +152,7 @@
                                         <!--{{item.knowledgeContent}}-->
                                         <div class="value oh">
                                             <ul class="">
-                                                <li ng-if="item.knowledgeType!=103">
+                                                <li ng-if="item.knowledgeType!=103" title="{{item.knowledgeContent}}">
                                                     <p>{{item.knowledgeContent}}</p>
                                                 </li>
                                                 <li ng-if="item.knowledgeType==103">
@@ -176,6 +177,9 @@
                         </ul>
                         <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
                     </div>
+
+
+
                 </div>
             </div>
         </div>

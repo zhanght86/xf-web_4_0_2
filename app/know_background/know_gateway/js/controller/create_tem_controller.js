@@ -12,19 +12,25 @@ angular.module('knowGatewayModule').controller('createTemController', [
         $scope.temType = 'WORD';
         $scope.temNameChecked = false;
         $scope.fileName = "未选择文件";
+        $scope.temuptools={
+            show: false
+        };
 
         if($stateParams.isGo !=true && localStorageService.get($state.current.name)){
             $scope.temId = localStorageService.get($state.current.name);
         }else if($stateParams.temId){
             $scope.storeParams($stateParams.temId);
             $scope.temId = $stateParams.temId
+            $scope.temuptools.show = false;
+        }else if(!$stateParams.temId) {
+            $scope.temuptools.show = true;
         }
 
         $scope.queryTemplateById = function(){
             TemplateService.queryTemplateById.save({
                 "index":0,
                 "pageSize":1,
-                "templateId":$scope.temId
+                "templateId":$stateParams.temId
             },function(resource){
                 if(resource.status == 200 && resource.data){
                     $scope.temName = resource.data.objs[0].templateName;
@@ -54,8 +60,17 @@ angular.module('knowGatewayModule').controller('createTemController', [
         
         $scope.addRule = function(){
             if($scope.rules){
-                $scope.rules.push({
-                    sort:$scope.rules.length+1});
+                if($scope.rules.length == 0)//判断是否存在模板规则
+                {
+                    $scope.rules.push({
+                        level:0
+                    });
+                }
+                else{
+                    $scope.rules.push({
+                        level:$scope.rules[$scope.rules.length-1].level+1
+                    });
+                }
                 $('.proce_result ').trigger('click');
             }else{
                 alert("请先上传模板或选定模板");
@@ -69,9 +84,9 @@ angular.module('knowGatewayModule').controller('createTemController', [
             TemplateService.deleteRule.save({
                 "ruleId":ruleId
             },function(resource){
-                if(resource.status == 200 && resource.data){
+                if(resource.status == 200){
                     TipService.setMessage('删除成功!',"success");
-                    $scope.queryTemplateById();
+                    $scope.queryRules();//重新查询规则
                 }else{
                     TipService.setMessage('删除失败!',"err");
                 }
@@ -96,6 +111,7 @@ angular.module('knowGatewayModule').controller('createTemController', [
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
+                    $scope.temuptools.show = false;//隐藏保持相关按钮
                     $scope.queryTemplateById();
                     $scope.queryRules();
                 }, 350)

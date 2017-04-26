@@ -4061,7 +4061,7 @@ function displaynavbar(obj){
 } (window.jQuery);
 $(function() {
 	/*****表单*****/
-	$.Huifocusblur(".input-text,.textarea");
+	//$.Huifocusblur(".input-text,.textarea");
 });
 
 /* =======================================================================
@@ -4363,7 +4363,7 @@ $(function() {
  * ========================================================================*/
 !function($) {
 	$.Huialert = function() {
-		$.Huihover('.Huialert i');
+		//$.Huihover('.Huialert i');
 		$(".Huialert i").on("click",
 		function() {
 			var Huialert = $(this).parents(".Huialert");

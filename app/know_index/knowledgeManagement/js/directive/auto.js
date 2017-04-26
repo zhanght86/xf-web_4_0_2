@@ -34,7 +34,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             var source = {};
             source.id = [];
             source.name = [];
-              var timer = $interval(function(){
+            var timer = $interval(function(){
                   if($scope.source){
                       $interval.cancel(timer);
                       angular.forEach($scope.source,function(item){
@@ -42,8 +42,8 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
                           source.id.push(item.dimensionId);
                           $scope.source = source;
                       });
-                      //console.log($scope.result);
-                      if($scope.result){
+                      console.log($scope.result);
+                      if($scope.result&&$scope.source.name){
                           angular.forEach($scope.result,function(item){
                               $scope.source.name.remove(item.dimensionName);
                               $scope.source.id.remove(item.dimensionId);

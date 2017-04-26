@@ -39,10 +39,25 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             deleteService : deleteService, //删除服务
             editService : editService, //编辑服务
 
+            addNewService : addNewService
 
 
         };
-
+        //添加节点
+        function addNewService(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1) {
+                    }
+                }
+            });
+        }
 
         /**
          * 加载分页条

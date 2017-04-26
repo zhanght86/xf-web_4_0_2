@@ -78,12 +78,17 @@
     <link rel="stylesheet" href="bower_components/webuploader-0.1.5/css/webuploader.css"/>
     <!-- webuploader-->
     <script src="bower_components/webuploader-0.1.5/dist/webuploader.js"></script>
+
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.ie.css"/>
         <script type="text/javascript" src="js/plugins/html5.js"></script>
         <script type="text/javascript" src="js/plugins/respond.min.js"></script>
-        <script type="text/javascript" src="js/plugins/PIE_IE678.js"></script>
+
     <![endif]-->
+    <!--<script type="text/javascript" src="js/plugins/PIE_IE678.js"></script>-->
+
+
+
     <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.css"/>
     <!--<link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.min.css"/>-->
     <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.reset.css"/>
@@ -130,23 +135,19 @@
     <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>-->
 </head>
 <body>
-
+<div alert-bar class="alert_bar" message="tipService.message" type="tipService.type"></div>
     <div class="container" style="width: 100%;margin: 0;padding: 0;" ui-view>
     </div>
     <script src="js/plugins/common.js"></script>
-    <script src="js/plugins/calendar.js"></script>
+    <!--<script src="js/plugins/calendar.js"></script>-->
     <script src="js/plugins/H-ui.admin.js"></script>
     <!--<script src="js/plugins/H-ui.js"></script>-->
     <script src="js/plugins/jquery.pin.min.js"></script>
     <script src="js/plugins/jquery.placeholder.min.js"></script>
     <script src="js/plugins/layer.js"></script>
-    <script src="js/plugins/PIE_IE678.js"></script>
+    <script src="bower_components/es5-shim/es5-sham.js"></script>
     <!--<script src="js/plugins/WdatePicker.js"></script>-->
 
-
-
-    <script src="bower_components/es5-shim/es5-shim.min.js"></script>
-    <script src="bower_components/es5-shim/es5-sham.min.js"></script>
     <!--上传图片-->
     <script src="js/console-sham.js"  charset="utf-8"></script>
 

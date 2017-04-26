@@ -13,6 +13,24 @@
 //
 ////var Authorization = getCookie("Authorization");
 //
+//function downloadFile(fileName, content){
+//    var aLink = document.createElement('a');
+//    var blob = new Blob([content]);
+//    var evt = document.createEvent("HTMLEvents");
+//    evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错, 感谢 Barret Lee 的反馈
+//    aLink.download = fileName;
+//    aLink.href = URL.createObjectURL(blob);
+//    aLink.dispatchEvent(evt);
+//}
+function enterEvent(e,callback) {
+    srcObj = e.srcElement ? e.srcElement : e.target;
+    var keycode = window.event?e.keyCode:e.which;
+    if(keycode==13){
+        srcObj.blur();
+        callback();
+        //srcObj.focus()
+    }
+}
 function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
     ajaxType == "POST"? "POST" :ajaxType;
     //if(ajaxType === "post"){
@@ -169,7 +187,6 @@ function delCookie(name)
 
     //tianjia   type
 function milesAdd(item,arr,type){
-    alert();
     //验证  0  验证重复    1  不验证重复
     if(type){
         arr.push(item)
@@ -182,9 +199,76 @@ function milesAdd(item,arr,type){
 function milesRemove(item,arr){
     arr.remove(item)
 }
-
-
-	
+/**
+ * 为空判断 包括空字符串及回车换行符
+ * @param value
+ */
+function nullCheck(value){
+    if(value==null){
+        return false;
+    }
+    if(value==""){
+        return false;
+    }
+    if(value==undefined){
+        return false;
+    }
+    var result = value.replace(/[ \r\n]/g,"");
+    if(result==""){
+        return false;
+    }
+    return true;
+}
+/**
+ * 长度检测 包括边界
+ * @param value
+ * @param min
+ * @param max
+ */
+function lengthCheck(value,min,max){
+    if(nullCheck(value)==false){
+        return false;
+    }
+    if(value.length<min){
+        return false;
+    }
+    if(value.length>max){
+        return false;
+    }
+    return true;
+}
+/**
+ * 字符串截取
+ * @param value
+ * @param limit
+ * @param tail
+ * @returns {*}
+ */
+function subStringWithTail(value,limit,tail){
+    if(nullCheck(value)==false){
+        return "";
+    }
+    if(value.length<=limit){
+        return value;
+    }
+    if(value.length>limit){
+        return value.substring(0,limit)+tail;
+    }
+}
+/**
+ * 数组内容重复检测
+ * @param arr
+ * @returns {boolean}
+ */
+function arrayRepeatCheck(arr){
+    var hash = {};
+    for(var i in arr) {
+        if(hash[arr[i]])
+            return false;
+        hash[arr[i]] = false;
+    }
+    return true;
+}
 
 	
 	

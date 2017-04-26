@@ -438,6 +438,20 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.association", {
+                //params:{"userPermission" : null},
+                url: "/association",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/AssociationManage.html',
+                        controller: "AssociationManageController"
+                    },
+                }
+            })
             //应用信息
             .state("setting.Infor", {
                 //params:{"userPermission" : null},
@@ -736,8 +750,9 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
+
 
                     }
                 }

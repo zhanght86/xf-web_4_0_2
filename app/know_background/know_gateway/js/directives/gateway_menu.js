@@ -80,7 +80,11 @@ knowledge_static_web.directive('plupload', ['$timeout', function ($timeout) {
                     FilesAdded: function (up, files) {
                         plupload.each(files, function (file) {
                             //document.getElementById('file_container').innerHTML += '<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> (' + plupload.formatSize(file.size) + ') </span></div>';
-                            $('#file_container').append('<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> (' + plupload.formatSize(file.size) + ') </span></div>');
+                            $('#file_container').append('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
+                                                            '<span  class="name">' + file.name + '</span>' +
+                                                            '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
+                                                            '<span class="size"> (' + plupload.formatSize(file.size) + ') </span>' +
+                                                        '</div>');
                         });
                     },
 
@@ -189,7 +193,11 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                     FilesAdded: function (up, files) {
                         plupload.each(files, function (file) {
                             //document.getElementById('temcontainer').innerHTML = '<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> </span></div>';
-                            $('#temcontainer').html('<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> </span></div>');
+                            $('#temcontainer').html('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
+                                                        '<span  class="name">' + file.name + '</span>' +
+                                                        '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
+                                                        '<span class="size"> </span>' +
+                                                    '</div>');
                             if (up.files.length <= 1) {
                                 return;
                             }

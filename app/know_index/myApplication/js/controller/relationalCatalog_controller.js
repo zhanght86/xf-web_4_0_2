@@ -11,6 +11,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             failed : 10004,
             empty : 10005,
             botSelectValue:"root",
+            categoryNode:"node",
+            categoryEdge:"edge",
             botRoot : "",     //根节点
             knowledgeBotVal:"",  //bot 内容
             botInfo:null,  //bot信息
@@ -21,13 +23,15 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             categoryTypeId: 10009,
             botSelectType:10009,
             categorySceneId: 0,
-            categoryAttributeName: "",
+            categoryAttributeName: "edge",
             categoryName: "",
             categoryPid: "",
             categoryApplicationId: "",
             categoryLeaf: 1,
             botInfoToCategoryAttribute:botInfoToCategoryAttribute,
-            clearColor:clearColor
+            clearColor:clearColor,
+            repeatCheck:repeatCheck,
+            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50"
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -81,8 +85,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
-                        '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
+                        '<span node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -99,8 +103,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
+            $scope.vm.categoryAttributeName = $(this).attr("node-option");
             $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
+            console.log($scope.vm.categoryAttributeName);
             disableAttributeType();
             $scope.$apply()
         });
@@ -121,30 +127,60 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e===1){
-                        if($("#categoryName").val()){
-                            httpRequestPost("/api/modeling/category/updatebycategoryid",{
-                                "categoryId": $scope.vm.categoryId,
-                                "categoryApplicationId": $scope.vm.categoryApplicationId,
-                                "categoryPid": $scope.vm.categoryPid,
-                                "categoryAttributeName": $("#categoryName").val(),
-                                "categoryName": $("#categoryName").val(),
-                                "categoryTypeId": $("#categoryTypeId").val(),
-                                "categoryModifierId": categoryModifierId,
-                                "categorySceneId": $scope.vm.categorySceneId,
-                                "categoryLeaf": $scope.vm.categoryLeaf
-                            },function(data){
-                                if(responseView(data)==true){
-                                    //重新加载
-                                    reloadBot(data,2);
-                                }
-                            },function(err){
-                                console.log(err);
-                            });
+                        if(lengthCheck($("#categoryName").val(),0,50)==false){
+                            $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
+                            return false;
                         }
+                        if(repeatCheck("#editErrorView",1)==false){
+                            return false;
+                        }
+                        httpRequestPost("/api/modeling/category/updatebycategoryid",{
+                            "categoryId": $scope.vm.categoryId,
+                            "categoryApplicationId": $scope.vm.categoryApplicationId,
+                            "categoryPid": $scope.vm.categoryPid,
+                            "categoryAttributeName": $scope.vm.categoryAttributeName,
+                            "categoryName": $("#categoryName").val(),
+                            "categoryTypeId": $("#categoryTypeId").val(),
+                            "categoryModifierId": categoryModifierId,
+                            "categorySceneId": $scope.vm.categorySceneId,
+                            "categoryLeaf": $scope.vm.categoryLeaf
+                        },function(data){
+                            if(responseView(data)==true){
+                                //重新加载
+                                reloadBot(data,2);
+                            }
+                        },function(err){
+                            console.log(err);
+                        });
                     }else{
                     }
+                    //还原类目属性类型
+                    $scope.vm.categoryAttributeName="edge";
                 }
             });
+            if(dialog){
+                $timeout(function () {
+                    $("#categoryName").blur(function(){
+                        if(lengthCheck($("#categoryName").val(),0,50)==false){
+                            $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
+                        }else{
+                            $("#editErrorView").html('');
+                            repeatCheck("#editErrorView",1);
+                        }
+                    });
+                    //$.each($("#categoryTypeId").find("option"),function(index,value){
+                    //    console.log($(value).val() +"======"+ $scope.vm.categoryTypeId);
+                    //    if(($(value).val()==$scope.vm.categoryTypeId)>0){
+                    //        $("#categoryTypeId").val($scope.vm.categoryTypeId)
+                    //        $(value).attr("disabled",null);
+                    //        $(value).attr("style","");
+                    //    }else{
+                    //        $(value).attr("disabled","disabled");
+                    //        $(value).attr("style","background-color: lightgrey");
+                    //    }
+                    //});
+                }, 100);
+            }
         }
         $(".aside-navs").on("click",".delete",function(){
             console.log("delete");
@@ -178,6 +214,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         });
                     }else{
                     }
+                    //还原类目属性类型
+                    $scope.vm.categoryAttributeName="edge";
                 }
             });
         }
@@ -201,8 +239,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
-                                '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
+                                '<span node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -231,15 +269,22 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             if($scope.vm.botSelectValue==""){
                 return;
             }
+            if(lengthCheck($("#category-name").val(),0,50)==false){
+                $(".c-error").html($scope.vm.categoryNameNullOrBeyondLimit);
+                return;
+            }
+            if(repeatCheck(".c-error",0)==false){
+                return;
+            }
             httpRequestPost("/api/modeling/category/add",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": $scope.vm.botSelectValue,
-                "categoryAttributeName": $("#category-name").val(),
+                "categoryAttributeName": $scope.vm.categoryAttributeName,
                 "categoryName": $("#category-name").val(),
                 "categoryTypeId": $("#category-type").val(),
                 "categoryModifierId": categoryModifierId,
                 "categorySceneId": categorySceneId,
-                "categoryLeaf": 0,
+                "categoryLeaf": 0
             },function(data){
                 if(responseView(data)==true){
                     //重新加载
@@ -249,11 +294,53 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 console.log(err);
             });
         }
+
+        /**
+         * 类目名称城府判断  0:添加时的重复判断 1:修改时的重复判断
+         * @param type
+         * @returns {boolean}
+         */
+        function repeatCheck(selector,type){
+            var flag = false;
+            var request = new Object();
+            if(type==1){
+                request.categoryId=$scope.vm.categoryId;
+                request.categoryApplicationId=$scope.vm.categoryApplicationId;
+                request.categoryPid=$scope.vm.categoryPid;
+                request.categoryAttributeName=$scope.vm.categoryAttributeName;
+                request.categoryName=$("#categoryName").val();
+                request.categorySceneId=$scope.vm.categorySceneId;
+            }else{
+                request.categoryApplicationId=categoryApplicationId;
+                request.categoryPid=$scope.vm.botSelectValue;
+                request.categoryAttributeName=$scope.vm.categoryAttributeName;
+                request.categoryName=$("#category-name").val();
+                request.categorySceneId=categorySceneId;
+            }
+            httpRequestPostAsync("/api/modeling/category/repeatcheck",request,function(data){
+                if(responseWithoutView(data)==false){
+                    if(data){
+                        $(selector).html(data.info);
+                    }
+                }else{
+                    flag = true;
+                }
+            },function(err){
+                console.log(err);
+            });
+            return flag;
+        }
         //局部加载 type:0->添加 1:删除 2:修改
         function reloadBot(data,type){
             if(type!=0){
                 $.each($(".aside-navs").find("li"),function(index,value){
-                    if($(value).find("i").attr("data-option")==$scope.vm.botSelectValue){
+                    if($(value).find("i").attr("data-option")==$scope.vm.categoryId){
+                        var length = $(value).parent().find("li").length-1;
+                        //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
+                        console.log("==========="+length+"=====");
+                        if(length==0){
+                            $(value).parent().prev().find("i").attr("style","display:none");
+                        }
                         //移除指定元素
                         $(value).remove();
                     }
@@ -267,14 +354,16 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             if($scope.vm.botSelectValue=="root"){
                 initBot();
             }else{
+                var count=0;
                 $.each($(".aside-navs").find("i"),function(index,value){
                     if(type==2){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
+                            count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
+                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -282,28 +371,45 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             //按照修改时间排序 把数据添加到前面
                             $(value).parent().parent().next().prepend(html);
                         }
-                    }
-                    if(type==0){
+                    }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
+                            count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
+                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            if($(value).parent().parent().next()){
-                                $(value).parent().parent().next().prepend(html);
+                            var obj = $(value).parent().parent().next();
+                            var sty = styleSwitch(data.data[0].categoryTypeId,1,data.data[0].categoryAttributeName);
+                            sty = sty.substring(7,sty.length-1);
+                            console.log("===="+sty);
+                            console.log("====obj===="+obj);
+                            if($(value).parent().parent().next()!=null){
+                                var len = $(value).parent().parent().next().find("li").length;
+                                console.log("====len===="+len);
+                                if(len>0){
+                                    $(value).parent().parent().next().prepend(html);
+                                }else{
+                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).attr("style",sty);
+                                }
                             }else{
                                 var htmlAppend='<ul class="menus show">'+html+'</ul>';
                                 $(value).parent().parent().parent().append(htmlAppend);
+                                //加上子节点之后 把开关按钮显示
+                                $(value).attr("style",sty);
                             }
                         }
                     }
                 });
+                if(count==0){
+                    initBot();
+                }
             }
         }
         //返回状态显示
@@ -317,6 +423,16 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
             return false;
         }
+        //返回状态显示
+        function responseWithoutView(data){
+            if(data==null){
+                return false;
+            }
+            if(data.status==$scope.vm.success){
+                return true;
+            }
+            return false;
+        }
         //属性填充
         function botInfoToCategoryAttribute(){
             if($scope.vm.botInfo){
@@ -325,8 +441,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.categoryId=category.categoryId;
                 $scope.vm.categoryTypeId=category.categoryTypeId;
                 $scope.vm.categorySceneId=category.categorySceneId;
-                $scope.vm.categoryAttributeName=category.categoryAttributeName;
                 $scope.vm.categoryName=category.categoryName;
+                $scope.vm.categoryAttributeName=category.categoryAttributeName;
                 $scope.vm.categoryPid=category.categoryPid;
                 $scope.vm.categoryApplicationId=category.categoryApplicationId;
                 $scope.vm.categoryLeaf=category.categoryLeaf;
@@ -335,12 +451,14 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //禁用指定属性类型
         function disableAttributeType(){
             $.each($("#category-type").find("option"),function(index,value){
-                if(($(value).val()==$scope.vm.botSelectType & $scope.vm.botSelectType!=10009)>0){
+                console.log($(value).val() +"======"+ $scope.vm.botSelectType);
+                if(($(value).val()==$scope.vm.botSelectType)>0){
+                    $("#category-type").val($scope.vm.botSelectType)
+                    $(value).attr("disabled",null);
+                    $(value).attr("style","");
+                }else{
                     $(value).attr("disabled","disabled");
                     $(value).attr("style","background-color: lightgrey");
-                }else{
-                    $(value).attr("disabled");
-                    $(value).attr("style");
                 }
             });
         }
@@ -351,20 +469,32 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             });
         }
         //自动转换图标类型
-        function styleSwitch(type,leaf){
+        function styleSwitch(type,leaf,attrType){
+            var styleHidden = "display: inline-block;";
             if(leaf==0){
-                return "";
+                styleHidden="display:none;";
             }
-            var style ='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+            if(attrType=="node"){
+                return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
+            }
+            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
                 case 10008:
-                    style='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
                 case 10007:
-                    style='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
                 case 10006:
-                    style='style="position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
         }
+        $("#category-name").blur(function(){
+            if(lengthCheck($("#category-name").val(),0,50)==false){
+                $(".c-error").html($scope.vm.categoryNameNullOrBeyondLimit);
+            }else{
+                $(".c-error").html('');
+                repeatCheck(".c-error",0);
+            }
+        });
     }
 ]);
