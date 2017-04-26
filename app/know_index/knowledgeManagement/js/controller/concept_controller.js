@@ -106,7 +106,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
-                "frameTypeId":10011,
+                "frameTypeId":10012,
                 "index": 0,
                 "pageSize":999999
             },function(data){
@@ -151,27 +151,36 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function getExtensionByFrame(id,type){
             console.log(id);
             httpRequestPost("/api/modeling/frame/listbyattribute",{
-                "frameTypeId": 10011,
+                "frameTypeId": 10012,
                 "frameId": id,
                 "index": 0,
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    //console.log(data);
+                    console.log(data);
+                var  extensionQuestionList = [] ,
+                      frameQuestionTagList = [];
                     if(data.data[0].elements){
-                        angular.forEach(data.data[0].elements,function(item){
-                            var obj = {} ;
-                            obj.extensionQuestionTitle  = item.elementContent;
-                            obj.extensionQuestionType = 1;
-                            obj.source = data.data[0].frameTitle;
-                            if(type){
-                                $scope.vm.extensionsByFrame.pop();
-                                $scope.vm.extensionsByFrame.push(obj)
-                            }else{
-                                $scope.vm.extensionsByFrame.push(obj)
+                        angular.forEach(data.data[0].elements,function(item,index){
+                            if(index>0){
+                                // 展示内容
+                                var obj = {} ;
+                                obj.extensionQuestionTitle  = item.elementContent;
+                                obj.extensionQuestionType = 1;
+                                obj.source = data.data[0].frameTitle;
+                                //校驗内容
+                                extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
+                                frameQuestionTagList.push( item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
+                                if(type){
+                                    // 展示内容
+                                    $scope.vm.extensionsByFrame.pop();
+                                    $scope.vm.extensionsByFrame.push(obj)
+                                }else{
+                                    $scope.vm.extensionsByFrame.push(obj)
+                                }
                             }
                         });
-                        //console.log($scope.vm.extensionsByFrame)
+                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList);
                     }
                     $scope.$apply();
                 }
@@ -215,6 +224,24 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("添加扩展问失败")
             });
         }
+
+        //生成扩展问校验
+        function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList){
+            console.log(extensionQuestionList);
+            httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
+                "applicationId": "100",
+                " extensionQuestionList" : extensionQuestionList,
+                "frameQuestionTagList" : frameQuestionTagList
+            },function(data){
+                if(data.status==10000){
+                    console.log(data);
+
+                }
+            },function(){
+                alert("err or err")
+            });
+        }
+
         //添加扩展问
         function getExtension(title,weight){
             var obj = {} ;
@@ -227,9 +254,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
-                    title : $scope.vm.extensionTitle
+                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+                    "applicationId": "100",
+                    "extendQuestionList" : title
                 },function(data){
+                    console.log(data);
                     if(data.status == 500){
                         layer.msg("扩展问重复")
                     }else if(data.status==200){
@@ -549,7 +578,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }else{
                 angular.forEach(arr,function(val){
                     if(val.extensionQuestionTitle == item.extensionQuestionTitle && val.extensionQuestionType == item.extensionQuestionType){
-                        console.log(val.extensionQuestionTitle == item.extensionQuestionTitle)
+                        console.log(val.extensionQuestionTitle == item.extensionQuestionTitle);
                         return false
                     }
                 })
