@@ -64,19 +64,43 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //根据服务id查询服务信息
         function findServiceByServiceId(){
-            console.log($stateParams.serviceId);
             if($stateParams.serviceId!=null){
                 $scope.vm.dialogTitle="编辑服务";
                 httpRequestPost("/api/application/service/findServiceById",{
                     "serviceId": $stateParams.serviceId
                 },function(data){
                     if(data.status==200){
-                        httpRequestPost("/api/application/service/listDimensionByServiceId",{
-                            "serviceId": $stateParams.serviceId
+                        console.log(data)
+                        $scope.vm.appName=data.data.appName;//应用名称
+                        $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
+                        $scope.vm.newCategoryIds=data.data.categoryIds;//选中的分类初始化
+                        $scope.vm.channels=data.data.channels;//渠道id列表
+                        console.log("查询结果"+data.data.channels);
+                        //$scope.vm.dimensions=data.data.dimensions;//维度id列表
+                        $scope.vm.nodeCode=data.data.nodeCode;//节点编号
+                        $scope.vm.serviceName=data.data.serviceName;//服务名称
+                        $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
+                        $scope.vm.serviceType=data.data.serviceType;//服务类型
+                        $scope.vm.serviceId=data.data.serviceId;//服务id
+                        $scope.$apply();
+                        httpRequestPost("/api/application/node/findParentNodeInfo",{
+                            "nodeCode" : data.data.nodeCode
                         },function(data){
                             if(data.status==200){
+                                $scope.vm.nodeData.push(data.data);
+                                $scope.$apply();
+                            }else{
+                                layer.msg("查询节点信息失败");
+                            }
+                        },function(){
+                            layer.msg("请求失败");
+                        })
+                        httpRequestPost("/api/application/service/listDimensionByServiceId",{
+                            "serviceId": $stateParams.serviceId
+                        },function(data1){
+                            if(data1.status==200){
                                 var dimensionSelected=[];
-                                angular.forEach(data.data,function(dimensionId){
+                                angular.forEach(data1.data,function(dimensionId){
                                     angular.forEach($scope.vm.dimensionAll,function(dimension){
                                         if(dimensionId==dimension.dimensionId){
                                             dimensionSelected.push(dimension);
@@ -85,17 +109,8 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                                     });
                                 });
                                 $scope.vm.dimensionSelected=dimensionSelected;
-                                $scope.vm.appName=data.data.appName;//应用名称
-                                $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
-                                $scope.vm.channels=data.data.channels;//渠道id列表
-                                //$scope.vm.dimensions=data.data.dimensions;//维度id列表
-                                $scope.vm.nodeCode=data.data.nodeCode;//节点编号
-                                $scope.vm.serviceName=data.data.serviceName;//服务名称
-                                $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
-                                $scope.vm.serviceType=data.data.serviceType;//服务类型
-                                $scope.vm.userId=data.data.userId;//操作用户id
-                                $scope.vm.serviceId=data.data.serviceId;//服务id
                                 $scope.$apply();
+
                             }else{
                                 layer.msg("查询失败");
                             }
@@ -118,24 +133,48 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             console.log($scope.vm.allowSubmit);
             if($scope.vm.allowSubmit){  //服务名称验证没有错误
                 $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
-                httpRequestPost("/api/application/service/addAndPublishService",{
-                    "applicationId": $scope.vm.applicationId,
-                    "categoryIds" : $scope.vm.categoryIds, //分类id列表
-                    "channels" : $scope.vm.channels, //渠道id列表
-                    "dimensions" : $scope.vm.dimensions, //维度id列表
-                    "nodeCode" : $scope.vm.nodeCode, //节点编号
-                    "serviceName": $scope.vm.serviceName, //服务名称
-                    "serviceType" : $scope.vm.serviceType, //服务类型
-                    "userId" : $scope.vm.userId //获取用户id
-                },function(data){
-                    if(data.status==200){
-                        $state.go("setting.releaseMan");
-                    }else{
-                        layer.msg("新增发布服务失败");
-                    }
-                },function(){
-                    layer.msg("请求失败")
-                })
+                if($scope.vm.serviceId!=null){
+                    console.log("渠道id"+$scope.vm.channels);
+
+                    httpRequestPost("/api/application/service/editService",{
+                        "applicationId": $scope.vm.applicationId,
+                        "categoryIds" : $scope.vm.categoryIds, //分类id列表
+                        "channels" : $scope.vm.channels, //渠道id列表
+                        "dimensions" : $scope.vm.dimensions, //维度id列表
+                        "nodeCode" : $scope.vm.nodeCode, //节点编号
+                        "serviceName": $scope.vm.serviceName, //服务名称
+                        "serviceType" : $scope.vm.serviceType, //服务类型
+                        "userId" : $scope.vm.userId, //获取用户id
+                        "serviceId" : $scope.vm.serviceId //服务id
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("setting.releaseMan");
+                        }else{
+                            layer.msg("新增发布服务失败");
+                        }
+                    },function(){
+                        layer.msg("请求失败")
+                    })
+                }else{
+                    httpRequestPost("/api/application/service/addAndPublishService",{
+                        "applicationId": $scope.vm.applicationId,
+                        "categoryIds" : $scope.vm.categoryIds, //分类id列表
+                        "channels" : $scope.vm.channels, //渠道id列表
+                        "dimensions" : $scope.vm.dimensions, //维度id列表
+                        "nodeCode" : $scope.vm.nodeCode, //节点编号
+                        "serviceName": $scope.vm.serviceName, //服务名称
+                        "serviceType" : $scope.vm.serviceType, //服务类型
+                        "userId" : $scope.vm.userId //获取用户id
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("setting.releaseMan");
+                        }else{
+                            layer.msg("新增发布服务失败");
+                        }
+                    },function(){
+                        layer.msg("请求失败")
+                    })
+                }
             }
         }
 
@@ -215,13 +254,19 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
         //选择渠道
         function selectChannel(channelId){
-            var index=$scope.vm.channels.indexOf(channelId);
-            if(index>-1){
-                $scope.vm.channels.splice(index,1);
+            if($scope.vm.channels==null){
+                $scope.vm.channels=[];
+            }
+            var index=$scope.vm.channels.inArray(channelId);
+            if(index){
+                $scope.vm.channels.remove(channelId);
             }else{
                 $scope.vm.channels.push(channelId);
             }
         }
+
+
+
         //选择服务类型
         function selectType(serviceType){
             $scope.vm.serviceType=serviceType;
@@ -287,17 +332,19 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                 var self = angular.element(this);
                 var id = self.attr("data-option");
                 if(self.prop("checked")){
-                   $scope.vm.newCategoryIds.push(id)
-                    $scope.$apply()
+                   $scope.vm.newCategoryIds.push(id);
+                    $scope.$apply();
+                    console.log($scope.vm.newCategoryIds);
                 }else{
-                    $scope.vm.newCategoryIds.remove(id)
-                    $scope.$apply()
+                    $scope.vm.newCategoryIds.remove(id);
+                    $scope.$apply();
+                    console.log($scope.vm.newCategoryIds);
                 }
             });
             //点击下一级 bot 下拉数据填充以及下拉效果
             $(".aside-navs-cont").on("click",'.icon-jj',function(){
                 var id = $(this).attr("data-option");
-                console.log(id);
+                console.log("点击的节点："+id);
                 var that = $(this);
                 if(!that.parent().parent().siblings().length){
                     that.css("backgroundPosition","0% 100%");
@@ -308,11 +355,20 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                         if(data.data){
                             var  html = '<ul class="menus">';
                             for(var i=0;i<data.data.length;i++){
+                                var checkbox="";
+                                if($scope.vm.categoryIds!=null){
+                                    //判断选中的分类是否为空
+                                    checkbox = $scope.vm.categoryIds.inArray(data.data[i].categoryId);
+                                }
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
                                     '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<input type="checkbox" class="botSelect" data-option="'+data.data[i].categoryId+'"/>'+
+                                    '<input type="checkbox" class="botSelect" ';
+                                if(checkbox){
+                                    html+=' checked ';
+                                }
+                                html+='data-option="'+data.data[i].categoryId+'"/>'+
                                 '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
