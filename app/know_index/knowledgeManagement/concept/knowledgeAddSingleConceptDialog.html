@@ -10,7 +10,7 @@
         </form>
         <div class="checkboxStr mb-10">
             <div>渠道：</div>
-            {{vm.channel}}
+            <!--{{vm.channel}}-->
             <label ng-repeat="channel in vm.channels">
                 <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
                 {{channel.channelName}}
@@ -18,7 +18,7 @@
         </div>
         <div class="checkboxAddress pr"  style="padding-left:50px;height: auto;">
             <span class="pa" style="left:0;top:0;">维度：</span>
-            {{vm.dimensionArr.id}}
+            <!--{{vm.dimensionArr.id}}-->
             <auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>
 
         </div>
@@ -70,8 +70,8 @@
                 </div>
             </div>
         </div>
-        {{vm.channel.length}}
-        {{}}
+        <!--{{vm.channel.length}}-->
+        <!--{{}}-->
         <div class="jqrsz-btn-box" style="padding-left: 0px;">
 
             <input ng-disabled="(!vm.newTitle) || (!vm.channel.length)" value="保存" type="button" class="btn btn-blue mr10" ng-click="closeThisDialog(1)" >
