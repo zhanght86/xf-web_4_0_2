@@ -5,24 +5,22 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('businessModelingModule').controller('disableConceptManageController', [
 '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
-            list :[{stopConceptKey:'eidtcart',stopConceptTerm:'重要',stopConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
             addStop : addStop,
             editStop : editStop,
             deleteStop:deleteStop,
             listData : "",   // table 数据
-            singleDel : singleDel,    //單條刪除
-            singleAdd : singleAdd,
+            singleDelStopConcept : singleDelStopConcept,    //單條刪除
+            singleAddStopConcept : singleAddStopConcept,
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
             //查詢
-            search : search,
+            searchStopConcept : searchStopConcept,
             searchVal : "",
             searchType : "stopConceptKey",
             timeStart : "",
@@ -35,43 +33,41 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
-            termSpliter: "；"
+            termSpliter: "；",
+            current:1
         };
 
         /**
          * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         * @type
          */
-        getAggre(1);
+        loadStopConceptTable(1);
         //请求列表
-        function getAggre(index){
+        function loadStopConceptTable(current){
             httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
                 "stopConceptApplicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                $scope.vm.listData = data.data;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
+                loadStopConcept(current,data);
             },function(){
-                layer.msg("请求失败")
+                layer.msg("请求失败");
             })
+        }
+        function loadStopConcept(current,data){
+            $scope.vm.listData = data.data;
+            $scope.vm.current=current;
+            $scope.vm.paginationConf = {
+                currentPage: current,//当前页
+                totalItems: data.total, //总条数
+                pageSize: $scope.vm.pageSize,//第页条目数
+                pagesLength: 8,//分页框数量
+            };
+            $scope.$apply();
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
-                    "stopConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                },function(){
-                })
+                loadStopConceptTable(current);
             }
         });
         //编辑
@@ -79,57 +75,62 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             $scope.vm.dialogTitle="编辑停用概念";
             $scope.vm.key = item.stopConceptKey;
             $scope.vm.term =  item.stopConceptTerm;
-            addDelDialog(singleEdit,item);
+            addStopConceptDialog(singleEditStopConcept,item);
         }
-        function search(){
+        function searchStopConcept(){
             if($scope.vm.searchType == "stopConceptModifier"){
-                searchByUser()
+                searchStopConceptByUser();
             }else{
-                searchByType()
+                searchStopConceptByType();
             }
         }
         //查询
-        function searchByUser(){
+        function searchStopConceptByUser(){
             console.log($scope.vm.searchVal);
             httpRequestPost("/api/modeling/concept/stop/listByModifier",{
                 "stopConceptModifier":$scope.vm.searchVal,
                 "stopConceptApplicationId": $scope.vm.applicationId,
-                "index":0,
-                "pageSize":10
+                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "pageSize": $scope.vm.pageSize
             },function(data){
-                console.log(data);
-                $scope.vm.listData = data.data
+                loadStopConcept($scope.vm.current,data);
             },function(){
-                layer.msg("查询没有对应信息")
+                layer.msg("查询没有对应信息");
             });
         }
-        function searchByType(){
-            var data;
+        function searchStopConceptByType(){
+            var request = new Object();
+            request.stopConceptApplicationId=$scope.vm.applicationId;
+            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "stopConceptModifyTime"){
-                var key = angular.copy($scope.vm.searchType);
-                var data =  {
-                    key: $scope.vm.searchVal,
-                    "stopConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
+                request=switchStopConceptSearchType(request,$scope.vm.searchVal);
             }else{
-                console.log( $scope.vm.timeStart);
-                data =  {
-                    "startTimeRequest": $scope.vm.timeStart,
-                    "endTimeRequest": $scope.vm.timeEnd,
-                    "stopConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
+                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+                request.startTimeRequest=$scope.vm.timeStart;
+                request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/stop/listByAttribute",data,function(data){
-                $scope.vm.listData = data.data
+            httpRequestPost("/api/modeling/concept/stop/listByAttribute",request,function(data){
+                loadStopConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });
         }
-        var  key = angular.copy($scope.vm.searchType);
+
+        /**
+         * 转换查询类型
+         * @param request
+         * @param value
+         * @returns {*}
+         */
+        function switchStopConceptSearchType(request,value){
+            if($("#searchType").val()=="stopConceptKey"){
+                request.stopConceptKey=value;
+            }else if($("#searchType").val()=="stopConceptTerm"){
+                request.stopConceptTerm=value;
+            }
+            return request;
+        }
 
         //添加 窗口
         function addStop(){
@@ -148,16 +149,16 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                             "stopConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
-                                layer.msg("概念类名重复");
+                                layer.msg("停用概念类名重复");
                                 httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
                                     "stopConceptApplicationId": $scope.vm.applicationId,
                                     "stopConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
-                                    $scope.vm.dialogTitle="修改停用概念";
+                                    $scope.vm.dialogTitle="编辑停用概念";
                                     console.log(data);
-                                    addDelDialog(singleEdit,data.data[0]);
+                                    addStopConceptDialog(singleEditStopConcept,data.data[0]);
                                     $scope.vm.key = data.data[0].stopConceptKey;
                                     $scope.vm.term =  data.data[0].stopConceptTerm;
                                 },function(){
@@ -166,7 +167,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加停用概念";
                                 $scope.vm.term="";
-                                addDelDialog(singleAdd);
+                                addStopConceptDialog(singleAddStopConcept);
                             }
                         },function(){
                             layer.msg("添加失敗")
@@ -180,7 +181,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         }
 
         //編輯彈框   添加公用
-        function addDelDialog(callback,item){
+        function addStopConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
                 scope: $scope,
@@ -214,14 +215,14 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        singleDel(id)
+                        singleDelStopConcept(id)
                     }
                 }
             });
         }
         //編輯事件
-        function singleEdit(item){
-            assembleTerm();
+        function singleEditStopConcept(item){
+            assembleStopConceptTerm();
             httpRequestPost("/api/modeling/concept/stop/update",{
                 "stopConceptId":item.stopConceptId,
                 "stopConceptApplicationId": $scope.vm.applicationId,
@@ -239,8 +240,8 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             })
         }
         //单条新增
-        function singleAdd(){
-            assembleTerm();
+        function singleAddStopConcept(){
+            assembleStopConceptTerm();
             httpRequestPost("/api/modeling/concept/stop/add",{
                 "stopConceptApplicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
@@ -254,7 +255,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             })
         }
         //单条刪除
-        function singleDel(id){
+        function singleDelStopConcept(id){
             httpRequestPost("/api/modeling/concept/stop/delete",{
                 "stopConceptId":id
             },function(data){
@@ -282,7 +283,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             }
         }
         //组装term数据
-        function assembleTerm(){
+        function assembleStopConceptTerm(){
             var obj = $("#term").next();
             var term = "";
             $.each(obj.find("li"),function(index,value){

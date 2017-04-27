@@ -134,17 +134,23 @@
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
                                 <div class="essential_factor_div bd mt-10">
                                     <div class="mb-10">
-                                        <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"/></a>
-                                        <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"/></a>
-										<a href="javascript:;" class="add_column mr-10" ng-click="vm.addList();"><img src="../images/ys_img3.png"/></a>                                        <a href="javascript:;" class="delete_column"><img src="../images/ys_img4.png"/></a>
+                                        <a href="javascript:;" class="add_l ine mr-10" ng-click="vm.addRow()"><img src="../images/ys_img1.png"/></a>
+                                        <a href="javascript:;" class="delete_line mr-10" ng-click="vm.tableRemove(1)"><img src="../images/ys_img2.png"/></a>
+										<a href="javascript:;" class="add_column mr-10"  ng-click="vm.addList();"><img src="../images/ys_img3.png"/></a>
+                                        <a href="javascript:;" class="delete_column"  ng-click="vm.tableRemove(2)"><img src="../images/ys_img4.png"/></a>
                                     </div>
                                     <div>
                                         <!--{{vm.tableList}}-->
                                         <!--{{vm.tableList.data.listTable}}-->
+                                        <!--{{vm.tableRow}}{{vm.tableColumn}}-->
                                         <table class="essential_factor_tab">
-
-                                            <tr ng-repeat="(row,indexRow) in  vm.tableList.data.listTable track by $index">
-                                                <td ng-repeat="(item,indexRow) in row track by $index" ng-click="vm.removeTable($index)">{{indexRow}}{{item}}</td>
+                                            <tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">
+                                                <td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">
+                                                    <!--{{item}}-->
+                                                    <input type="text" ng-if="indexRow==0" ng-model="item"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.addList()" style="background:inherit;cursor:pointer"/>
+                                                    <!--<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>-->
+                                                    <input type="text" ng-if="indexRow!=0" ng-model="item"  ng-change="vm.tableChange(indexRow,indexColumn,item)"/>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
