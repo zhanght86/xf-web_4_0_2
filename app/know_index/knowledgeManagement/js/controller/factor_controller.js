@@ -79,6 +79,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             appointRelativeGroup : [],
             replaceType : 0 ,
             enterEvent : enterEvent,  //鍵盤事件
+            //表格
 			tableList :{"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型",""],[null,null,null,null],[null,null,null,null],[null,null,null,null],[null,null,null,null],[null,null,null,null],[null,null,null,null],[null,null,null,null],[null,null,null,null]],"listTableType":[["要素名称","要素类型","挖掘技术","反问","相关概念",""],["代缴类别","字符串","oec","请问您的代缴类别是什么","长沙市;湖南省",""],["缴费类型","字符串","gate","请问您的缴费类型是什么","可以不添加",""]]},"requestId":"374990990672396288"} ,    //table列表
             addList : addList,  //table 添加列
             tableRow : null,   //行
@@ -86,8 +87,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableChange : tableChange  ,//編輯
             tableRemove : tableRemove, //删除行或列
             addRow : addRow,   //添加行
-            gorithm : [130], //语义挖掘
-
+            gorithm : [], //语义挖掘
+            tableType : null,   //类型
 
         };
         function tableChange(row, col ,val){
@@ -100,21 +101,27 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 case 1:
                     if($scope.vm.tableRow==0){
                         layer.msg("不可删除第一行")
+                    }else if(!$scope.vm.tableRow==null){
+                        layer.msg("请先选择要删除的行")
                     }else{
                         $scope.vm.tableList.data.listTable.splice($scope.vm.tableRow,1);
+                        $scope.vm.tableRow = null
                     }
                     break;
                 case 2:
                     if($scope.vm.tableColumn==0){
                         layer.msg("不可删除第一列")
+                    }else if(!$scope.vm.tableRow==null){
+                        layer.msg("请先选择要删除的列")
                     }else{
-                    angular.forEach($scope.vm.tableList.data.listTable,function(item,indexRow){
-                        angular.forEach(item,function(val,index){
-                            if(index == $scope.vm.tableColumn){
-                                $scope.vm.tableList.data.listTable[indexRow].splice(index,1)
-                            }
-                        })
-                    });
+                        angular.forEach($scope.vm.tableList.data.listTable,function(item,indexRow){
+                            angular.forEach(item,function(val,index){
+                                if(index == $scope.vm.tableColumn){
+                                    $scope.vm.tableList.data.listTable[indexRow].splice(index,1)
+                                }
+                            })
+                        });
+                        $scope.vm.tableColumn = null
                     }
                     break;
             }
@@ -143,6 +150,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
                 if(data.data){
+                    //console.log(data)
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
                 }
