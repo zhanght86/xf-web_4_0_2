@@ -78,8 +78,25 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             replaceType : 0 ,
-            enterEvent : enterEvent
+            enterEvent : enterEvent,
+            addList : addList
+
         };
+        function addList(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
