@@ -143,8 +143,8 @@
                                         <!--{{vm.tableList.data.listTable}}-->
                                         <table class="essential_factor_tab">
 
-                                            <tr ng-repeat="row  in  vm.tableList.data.listTable track by $index">
-                                                <td ng-repeat="item in row track by $index">{{item}}</td>
+                                            <tr ng-repeat="(row,indexRow) in  vm.tableList.data.listTable track by $index">
+                                                <td ng-repeat="(item,indexRow) in row track by $index" ng-click="vm.removeTable($index)">{{indexRow}}{{item}}</td>
                                             </tr>
                                         </table>
                                     </div>
