@@ -78,7 +78,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             replaceType : 0 ,
-            enterEvent : enterEvent
+            enterEvent : enterEvent,
+            tableList : null,
+            editBable : editBable
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -336,6 +338,25 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
         function replace(id){
             var replace = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/replace.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){     //关闭回掉
+                    if(e === 1){    //替换
+                        getExtensionByFrame( id ,1 )
+                    }else if(e === 0){
+                        // 添加不替换
+                        getExtensionByFrame( id ,0 )
+                    }
+                }
+            });
+        }
+        function editBable(){
+            var edit = ngDialog.openConfirm({
+                //knowledge_factor_select.html
                 template:"/know_index/knowledgeManagement/faq/replace.html",
                 scope: $scope,
                 closeByDocument:false,

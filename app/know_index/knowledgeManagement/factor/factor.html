@@ -127,24 +127,24 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r">要素知识导入:</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="clearfix mb-10">
-                                <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'"></span>
+
+                                <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
                                 <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
                                 <div class="essential_factor_div bd">
                                     <div class="mb-10">
                                         <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"/></a>
                                         <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"/></a>
-                                        <a href="javascript:;" class="add_column mr-10" onclick="add_popup('新增要素','knowledge_factor_select.html','520','400')"><img src="../images/ys_img3.png"/></a>
+                                        <a href="javascript:;" class="add_column mr-10"  ng-click="vm.editTable"><img src="../images/ys_img3.png"/></a>
                                         <a href="javascript:;" class="delete_column"><img src="../images/ys_img4.png"/></a>
                                     </div>
                                     <div>
+                                        <!--{{vm.tableList}}-->
+                                        <!--{{vm.tableList.data.listTable}}-->
                                         <table class="essential_factor_tab">
-                                            <tr>
-                                                <td>对象名称</td>
-                                                <td>被投保人</td>
-                                                <td>地区</td>
-                                                <td>价格</td>
-                                                <td>期限</td>
+
+                                            <tr ng-repeat="row  in  vm.tableList.data.listTable track by $index">
+                                                <td ng-repeat="item in row track by $index">{{item}}</td>
                                             </tr>
                                         </table>
                                     </div>
