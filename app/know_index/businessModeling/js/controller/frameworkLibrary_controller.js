@@ -53,7 +53,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             concept_marking:concept_marking,
             addEle:addEle,
             delEle:delEle,
-            relateConcept:null
+            relateConcept:null,
+            frameTitleNullErrorInfo:"框架标题为空或超过长度限制50",
+            frameTitleRepeatCheck:frameTitleRepeatCheck
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -288,13 +290,16 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        $scope.vm.frameTitle=$("#frameTitle").val();
-                        if($("#frameTitle").val()==""){
-                            layer.msg("请添加框架标题");
-                            return;
-                        }
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
                         console.log($scope.vm.frameTypeId);
+                        $scope.vm.frameTitle=$("#frameTitle").val();
+                        if(lengthCheck($("#frameTitle").val(),0,50)==false){
+                            $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                            return false;
+                        }
+                        if(frameTitleRepeatCheck(0,"#frameAddErrorObj")==false){
+                            return false;
+                        }
                         if($scope.vm.frameTypeId==10011){
                             addFaq();
                         }
@@ -307,6 +312,52 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             });
+            if(dialog){
+                $timeout(function(){
+                    $("#frameTitle").blur(function(){
+                        $scope.vm.frameTypeId=$("#frameTypeId").val();
+                        $scope.vm.frameTitle=$("#frameTitle").val();
+                        if(lengthCheck($("#frameTitle").val(),0,50)==false){
+                            $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                        }else{
+                            $("#frameAddErrorObj").html('');
+                            frameTitleRepeatCheck(0,"#frameAddErrorObj");
+                        }
+                    });
+                },100);
+            }
+        }
+
+        /**
+         * 框架标题重复判断
+         * @param type 0:添加时 1:修改时
+         * @param selector
+         * @returns {boolean}
+         */
+        function frameTitleRepeatCheck(type,selector){
+            var flag = false;
+            var request = new Object();
+            request.frameTitle=$scope.vm.frameTitle;
+            request.frameTypeId=$scope.vm.frameTypeId;
+            request.frameCategoryId=$scope.vm.botSelectValue;
+            if(type==1){
+                request.frameId=$scope.vm.frameId;
+            }
+            httpRequestPostAsync("/api/modeling/frame/repeatcheck",request,function(data){
+                if(data){
+                    if(responseWithoutView(data)==true){
+                        $(selector).html('');
+                        flag = true;
+                    }else{
+                        if(data){
+                            $(selector).html(data.info);
+                        }
+                    }
+                }
+            },function(err){
+                console.log(err);
+            });
+            return flag;
         }
         //添加表达式
         function addFaq(){
@@ -1050,6 +1101,16 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             layer.msg(data.info);
             if(data.status==$scope.vm.success){
                 console.log("===success===");
+                return true;
+            }
+            return false;
+        }
+        //返回状态显示
+        function responseWithoutView(data){
+            if(data==null){
+                return false;
+            }
+            if(data.status==$scope.vm.success){
                 return true;
             }
             return false;

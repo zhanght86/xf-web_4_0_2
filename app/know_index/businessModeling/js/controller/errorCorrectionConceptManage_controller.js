@@ -11,18 +11,17 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
         $scope.vm = {
-            list :[{correctionConceptKey:'eidtcart',correctionConceptTerm:'重要',correctionConceptModifier:'admin'}],
             applicationId : getCookie("applicationId"),
             addCorrection : addCorrection,
             editCorrection : editCorrection,
             deleteCorrection:deleteCorrection,
             listData : "",   // table 数据
-            singleDel : singleDel,    //單條刪除
-            singleAdd : singleAdd,
+            singleDelCorrectionConcept : singleDelCorrectionConcept,    //單條刪除
+            singleAddCorrectionConcept : singleAddCorrectionConcept,
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
             //查詢
-            search : search,
+            searchCorrectionConcept : searchCorrectionConcept,
             searchVal : "",
             searchType : "correctionConceptKey",
             timeStart : "",
@@ -35,43 +34,41 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
-            termSpliter: "；"
+            termSpliter: "；",
+            current:1
         };
 
         /**
          * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+         * @type
          */
-        getAggre(1);
+        loadCorrectionConceptTable(1);
         //请求列表
-        function getAggre(index){
+        function loadCorrectionConceptTable(current){
             httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
                 "correctionConceptApplicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                $scope.vm.listData = data.data;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
+                loadCorrectionConcept(current,data);
             },function(){
                 layer.msg("请求失败")
-            })
+            });
+        }
+        function loadCorrectionConcept(current,data){
+            $scope.vm.listData = data.data;
+            $scope.vm.current=current;
+            $scope.vm.paginationConf = {
+                currentPage: current,//当前页
+                totalItems: data.total, //总条数
+                pageSize: $scope.vm.pageSize,//第页条目数
+                pagesLength: 8,//分页框数量
+            };
+            $scope.$apply();
         }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
-                    "correctionConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                },function(){
-                })
+                loadCorrectionConceptTable(current);
             }
         });
         //编辑
@@ -79,57 +76,60 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             $scope.vm.dialogTitle="编辑纠错概念";
             $scope.vm.key = item.correctionConceptKey;
             $scope.vm.term =  item.correctionConceptTerm;
-            addDelDialog(singleEdit,item);
+            addCorrectionConceptDialog(singleEditCorrectionConcept,item);
         }
-        function search(){
+        function searchCorrectionConcept(){
             if($scope.vm.searchType == "correctionConceptModifier"){
-                searchByUser()
+                searchCorrectionConceptByUser();
             }else{
-                searchByType()
+                searchCorrectionConceptByType();
             }
         }
         //查询
-        function searchByUser(){
-            console.log($scope.vm.searchVal);
+        function searchCorrectionConceptByUser(){
             httpRequestPost("/api/modeling/concept/correction/listByModifier",{
                 "correctionConceptModifier":$scope.vm.searchVal,
                 "correctionConceptApplicationId": $scope.vm.applicationId,
-                "index":0,
-                "pageSize":10
+                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "pageSize": $scope.vm.pageSize
             },function(data){
-                console.log(data);
-                $scope.vm.listData = data.data
+                loadCorrectionConcept($scope.vm.current,data);
             },function(){
-                layer.msg("查询没有对应信息")
+                layer.msg("查询没有对应信息");
             });
         }
-        function searchByType(){
-            var data;
+        function searchCorrectionConceptByType(){
+            var request = new Object();
+            request.correctionConceptApplicationId=$scope.vm.applicationId;
+            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "correctionConceptModifyTime"){
-                var key = angular.copy($scope.vm.searchType);
-                var data =  {
-                    key: $scope.vm.searchVal,
-                    "correctionConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
+                request=switchCorrectionConceptSearchType(request,$scope.vm.searchVal);
             }else{
-                console.log( $scope.vm.timeStart);
-                data =  {
-                    "startTimeRequest": $scope.vm.timeStart,
-                    "endTimeRequest": $scope.vm.timeEnd,
-                    "correctionConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
+                request.startTimeRequest=$scope.vm.timeStart;
+                request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/correction/listByAttribute",data,function(data){
-                $scope.vm.listData = data.data
+            httpRequestPost("/api/modeling/concept/correction/listByAttribute",request,function(data){
+                loadCorrectionConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });
         }
-        var key = angular.copy($scope.vm.searchType);
+
+        /**
+         * 转换查询类型
+         * @param request
+         * @param value
+         * @returns {*}
+         */
+        function switchCorrectionConceptSearchType(request,value){
+            if($("#searchType").val()=="correctionConceptKey"){
+                request.correctionConceptKey=value;
+            }else if($("#searchType").val()=="correctionConceptTerm"){
+                request.correctionConceptTerm=value;
+            }
+            return request;
+        }
 
         //添加 窗口
         function addCorrection(){
@@ -148,16 +148,16 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                             "correctionConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
-                                layer.msg("概念类名重复");
+                                layer.msg("纠错概念类名重复");
                                 httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
                                     "correctionConceptApplicationId": $scope.vm.applicationId,
                                     "correctionConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
-                                    $scope.vm.dialogTitle="修改纠错概念";
+                                    $scope.vm.dialogTitle="编辑纠错概念";
                                     console.log(data);
-                                    addDelDialog(singleEdit,data.data[0]);
+                                    addCorrectionConceptDialog(singleEditCorrectionConcept,data.data[0]);
                                     $scope.vm.key = data.data[0].correctionConceptKey;
                                     $scope.vm.term =  data.data[0].correctionConceptTerm;
                                 },function(){
@@ -166,7 +166,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加纠错概念";
                                 $scope.vm.term="";
-                                addDelDialog(singleAdd);
+                                addCorrectionConceptDialog(singleAddCorrectionConcept);
                             }
                         },function(){
                             layer.msg("添加失敗")
@@ -180,7 +180,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
 
         //編輯彈框   添加公用
-        function addDelDialog(callback,item){
+        function addCorrectionConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
                 scope: $scope,
@@ -214,14 +214,14 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        singleDel(id)
+                        singleDelCorrectionConcept(id)
                     }
                 }
             });
         }
         //編輯事件
-        function singleEdit(item){
-            assembleTerm();
+        function singleEditCorrectionConcept(item){
+            assembleCorrectionConceptTerm();
             httpRequestPost("/api/modeling/concept/correction/update",{
                 "correctionConceptId":item.correctionConceptId,
                 "correctionConceptApplicationId": $scope.vm.applicationId,
@@ -236,8 +236,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             })
         }
         //单条新增
-        function singleAdd(){
-            assembleTerm();
+        function singleAddCorrectionConcept(){
+            assembleCorrectionConceptTerm();
             httpRequestPost("/api/modeling/concept/correction/add",{
                 "correctionConceptApplicationId": $scope.vm.applicationId,
                 "correctionConceptKey":  $scope.vm.key,
@@ -251,7 +251,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             })
         }
         //单条刪除
-        function singleDel(id){
+        function singleDelCorrectionConcept(id){
             httpRequestPost("/api/modeling/concept/correction/delete",{
                 "correctionConceptId":id
             },function(data){
@@ -279,7 +279,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             }
         }
         //组装term数据
-        function assembleTerm(){
+        function assembleCorrectionConceptTerm(){
             var obj = $("#term").next();
             var term = "";
             $.each(obj.find("li"),function(index,value){
