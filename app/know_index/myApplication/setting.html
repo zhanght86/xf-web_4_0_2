@@ -21,24 +21,13 @@
                         <a class="slide-a ellipsis" ng-click="vm.isSlide($event)" ui-sref="setting.Infor">
                             <i class="icon-l icon-nav1"></i>
                             <span>应用信息</span>
-                            <i class="icon-r icon-jt"></i>
+                            <!--<i class="icon-r icon-jt"></i>-->
                         </a>
-                        <ul class="menu_1">
-                            <!--<li>-->
-                                <!--<a class="ellipsis" href="javascript:;"><span></span></a>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<a class="ellipsis" href="javascript:;"><span></span></a>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<a class="ellipsis" href="javascript:;"><span></span></a>-->
-                            <!--</li>-->
-                        </ul>
                     </li>
                     <li>
                         <a class="slide-a ellipsis" ng-click="vm.isSlide($event)">
                             <i class="icon-l icon-nav2"></i>
-                            <span>应用开发</span>
+                            <span ng-click="vm.isSlide2($event)">应用开发</span>
                             <i class="icon-r icon-jt"></i>
                         </a>
                         <ul class="menu_1">
@@ -55,7 +44,7 @@
                     <li>
                         <a class="slide-a ellipsis" ng-click="vm.isSlide($event)">
                             <i class="icon-l icon-nav3"></i>
-                            <span>应用配置</span>
+                            <span ng-click="vm.isSlide2($event)">应用配置</span>
                             <i class="icon-r icon-jt"></i>
                         </a>
                         <ul class="menu_1">
@@ -85,7 +74,7 @@
                     <li>
                         <a class="slide-a ellipsis"  ng-click="vm.isSlide($event)">
                             <i class="icon-l icon-nav4"></i>
-                            <span>应用发布 </span>
+                            <span ng-click="vm.isSlide2($event)">应用发布 </span>
                             <i class="icon-r icon-jt"></i>
                         </a>
                         <ul class="menu_1" >
