@@ -79,7 +79,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             appointRelativeGroup : [],
             replaceType : 0 ,
             enterEvent : enterEvent,
-			tableList : null,			editBable : editBable,			addList : addList,        };
+			tableList : null,
+            editBable : editBable,
+            addList : addList,
+        };
+        
         function addList(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",

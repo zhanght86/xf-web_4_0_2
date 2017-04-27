@@ -16,7 +16,7 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:264px;"/>
-                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getCreatBot()" class=" mr-15" ><img src="../../../images/match_img.png" width="30" height="30"></a>
+                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getCreatBot()" class=" mr-15" ><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -39,8 +39,8 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="value Div" id="Div">
-                                    <div class="ipt-txt-box">
+                                <div class="value Div clearfix" id="Div">
+                                    <div class="ipt-txt-box L mr-10">
                                         <input class="ipt-txt" ng-click="vm.knowledgeBot($event)" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 250px;border: solid 1px #ddd;"/>
                                         <i class="btn-menu_1" ng-click="vm.knowledgeBot($event)"></i>
                                         <div class="rootClassfy aside-navs aside-navs2" >
@@ -57,6 +57,7 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <a href="javascript:;" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +132,7 @@
                                 <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
                                 <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
-                                <div class="essential_factor_div bd">
+                                <div class="essential_factor_div bd mt-10">
                                     <div class="mb-10">
                                         <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"/></a>
                                         <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"/></a>
