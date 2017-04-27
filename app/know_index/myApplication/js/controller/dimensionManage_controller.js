@@ -58,8 +58,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.data.total/$scope.vm.pageSize), //总条数
-                    pageSize: 1,//第页条目数
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply();
