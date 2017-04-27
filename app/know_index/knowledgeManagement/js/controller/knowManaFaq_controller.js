@@ -642,7 +642,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //渠道
         function  getChannel(){
             httpRequestPost("/api/application/channel/listChannels",{
-                //"applicationId": "360619411498860544"
                 "applicationId" : $scope.vm.applicationId
             },function(data){
                 if(data.data){

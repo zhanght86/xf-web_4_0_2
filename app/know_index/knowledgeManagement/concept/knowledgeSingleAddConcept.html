@@ -22,7 +22,8 @@
                         <div class="ipt-txt-box">
                             <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
-<a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="30" height="30"></a>                            <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
+                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
                 </div>
@@ -45,8 +46,8 @@
                     <div class="lable">
                         BOT分类：
                     </div>
-                    <div class="value Div" id="Div">
-                        <div class="ipt-txt-box">
+                    <div class="value Div clearfix" id="Div">
+                        <div class="ipt-txt-box L mr-10">
                             <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <!--<p class="ipt-txt" id="ipt-txt" >-->
                             <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
@@ -67,18 +68,19 @@
                             </div>
 
                         </div>
+                        <a href="javascript:;" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
                     </div>
                 </div>
                 <!--bot  标题 点击生成  -->
                 <div class="item-line" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                     <div class="lable"> BOT分类：</div>
-                    <div class="value Div" id="Div">
-                        <div class="ipt-txt-box">
+                    <div class="value Div clearfix" id="Div">
+                        <div class="ipt-txt-box L mr-10">
                             <div class="ipt-txt">
                                 <span>{{item.className.join("/")}}</span>
                             </div>
                         </div>
-                        <a href="javascript:;" class=" mr-10" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
+                        <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                     </div>
                 </div>
                 <!-- 手选生成-->
@@ -132,7 +134,7 @@
                     <div class="lable">
                         概念扩展：
                     </div>
-                    <div class="value clearfix" >
+                    <div class="value clearfix">
                         <div class="bd tag_box L mr-10" >
                             {{item.extensionQuestionTitle}}
                         </div>
@@ -148,8 +150,10 @@
                         概念扩展：
                     </div>
                     <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10">
-                            {{item.extensionQuestionTitle}}
+                        <div class=" tag_box L mr-10">
+                            <span ng-repeat="i in item.extensionQuestionTitle.substring(item.extensionQuestionTitle.indexOf('#')+1).split('；')" style="margin: 0 5px;background: #e1e1e1;padding: 4px;">
+                                {{i}}
+                            </span>
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
