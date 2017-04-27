@@ -17,7 +17,8 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
             //item  : '@'
             type : "="   ,   //image：图片 video：音视频  flash：flash   file：办公文档，压缩文件等等
             isAuto : "=",
-            selectBtn : "="
+            selectBtn : "=",
+            "tableList" : "="
         },
         template:
         '<button  id="picker" >上传线下编辑场景知识</button><span class="f-14 pl-10">请先<a href="/api/elementKnowledgeAdd/download?fileName=factor_template.xlsx"  class="c-primary">下载模板</a>进行填写</span>'
@@ -65,7 +66,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
                 if ( !$percent.length ) {
                     $percent = $('<div class="progress progress-striped active" style="height: 50px;background: red; width: 200px;">' +
                         '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-                        '</div>' +
+                        '</div> ' +
                         '</div>').appendTo( $li ).find('.progress-bar');
                 }
                 $li.find('p.state').text('上传中');
@@ -76,6 +77,13 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
                console.log("上传失败")
             });
             uploader.on('uploadSuccess', function (file,response) {
+                if(response.status == 500){
+                    layer.msg("模板错误")
+                }else{
+                    scope.tableList = response ;
+                    scope.$apply();
+                }
+
                console.log(response)
             });
 
