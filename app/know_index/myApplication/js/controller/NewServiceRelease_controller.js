@@ -178,6 +178,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             }
         }
 
+
         //取消发布服务
         function cancelPublish(){
             $state.go("setting.releaseMan");
