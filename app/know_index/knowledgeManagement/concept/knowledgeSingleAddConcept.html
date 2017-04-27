@@ -22,8 +22,9 @@
                         <div class="ipt-txt-box">
                             <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
-
-<a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a><p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>                        </div>
+                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
+                        </div>
                     </div>
                 </div>
 
