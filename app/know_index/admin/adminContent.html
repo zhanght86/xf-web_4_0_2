@@ -26,7 +26,8 @@
             </a>
             <div class="p10 mb-10 bd_bot" >
                 <p class="name">{{application.applicationName}}</p>
-                <p class="scene">场景类型：<span>{{application.applicationLisence}}</span></p>
+                <p class="scene" ng-repeat="licence in vm.selectLicence"
+                   ng-if="application.sceneId==licence.sceneId">场景类型：<span>{{licence.sceneName}}</span></p>
                     <p class="status">应用状态：
                         <span ng-if="application.statusId==40001" class="c-blue">未使用</span>
                         <span ng-if="application.statusId==40002" class="c-primary">使用中</span>

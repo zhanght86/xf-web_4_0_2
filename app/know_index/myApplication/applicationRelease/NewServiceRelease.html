@@ -48,7 +48,7 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <label ng-repeat="serviceType in vm.typeData" class="mr-10">
                         <input type="radio" name="style" ng-checked="vm.serviceType==serviceType.statusId"
-                               ng-click="vm.selectType(serviceType.statusId)"> {{serviceType.statusName}}
+                               ng-click="vm.serviceType=serviceType.statusId"> {{serviceType.statusName}}
                     </label>
                 </div>
             </div>
@@ -57,16 +57,16 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <ul class="bd pd-10 node_ul L mr-10" >
                         <li ng-repeat="node in vm.nodeData"  ng-class="{'btn1_blue':vm.nodeCode==node.nodeCode}"
-                        ng-click="vm.selectNode(node.nodeCode)">{{node.nodeAccessIp}}</li>
+                        ng-click="vm.nodeCode=node.nodeCode">{{node.nodeAccessIp}}</li>
                     </ul>
-                    <a ui-sref="setting.nodeMan" class="c-primary">不在列表内，去创建新节点</a>
+                    <a ui-sref="setting.nodeMan" class="c-primary" ng-click="closeThisDialog(0)">不在列表内，去创建新节点</a>
                 </div>
             </div>
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <button class="btn1 btn1_blue mr-10"  ng-click="vm.publish()">发布</button>
-                    <button class="btn1 btn_gray"  ng-click="vm.cancelPublish()">取消</button>
+                    <button class="btn1 btn1_blue mr-10"  ng-click="closeThisDialog(1)">发布</button>
+                    <button class="btn1 btn_gray"  ng-click="closeThisDialog(0)">取消</button>
                 </div>
             </div>
         </div>
