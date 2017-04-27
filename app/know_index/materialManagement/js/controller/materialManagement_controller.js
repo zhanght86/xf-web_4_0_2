@@ -8,13 +8,84 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
+
             title : "" ,           //知识标题
             search : search,  //查询
             seeDtails:seeDtails,//标题预览
-            searchList : "",   //查询数据结果
+            //searchList : "",   //查询数据结果
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
+            getType : 0 ,    // 默认请求 0    查找 1
+//刪除知识
+            getDel : getDel,
+            delKnowledge : delKnowledge,
+            delArr : [],
+//高级查询
+            searchHeighFlag : false ,
+            "chatKnowledgeModifier": "",
+            "modifyTimeType": "",
+            "chatKnowledgeTopic": "",
+            "chatQuestionContent": "",
+             selectTimeType : selectTimeType
         };
+
+        function getDel(ev,id){
+            var  self =$(ev.target);
+            if(self.prop("checked")){
+                $scope.vm.delArr.push(id)
+            }else{
+                $scope.vm.delArr.remove(id)
+            }
+        }
+        function delKnowledge(){
+            httpRequestPost("/api/chatKnowledge/deleteConceCptChatKnowledge",{
+                "applicationId": $scope.vm.applicationId,
+                "ids":$scope.vm.delArr
+            },function(data){
+                $state.reload();
+            },function(err){
+                layer.msg("删除失败")
+            })
+        }
+        $scope.$watch("vm.searchHeighFlag",function(val){
+            if(val){
+                $('.advanced_search').slideDown();
+            }else{
+                $('.advanced_search').slideUp();
+            }
+        });
+// 时间   1   仅三天   2  近七天   3  近一个月
+        function search(index){
+            $scope.vm.getType = 1;
+            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+                "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
+                "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
+                "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
+                "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
+                "index": index==1?0:$scope.vm.pageSize*index,
+                "pageSize":$scope.vm.pageSize,
+            },function(data){
+                if(data.data==10005){
+                    layer.msg("查询无次相关知识")
+                }else{
+                    console.log(data);
+                    $scope.vm.listData = data.data.objs,
+                            $scope.vm.paginationConf = {
+                            currentPage: index,//当前页
+                            totalItems: Math.ceil(data.data.total/5), //总条数
+                            pageSize: 1,//第页条目数
+                            pagesLength: 8,//分页框数量
+                        };
+                    $scope.$apply();
+                    $scope.vm.title = null;
+                }
+
+            },function(err){})
+        }
+        function selectTimeType(type){
+            $scope.vm.modifyTimeType = type;
+            console.log($scope.vm.modifyTimeType)
+        }
 
         init();
         function init(){
@@ -22,12 +93,12 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         }
         //请求列表
         function getData(index){
+            $scope.vm.getType = 0 ;
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
+                "index" :index==1?0:$scope.vm.pageSize*index,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                //console.log(data.data.objs);
               $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
@@ -40,28 +111,16 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 layer.msg("请求失败");
             })
         }
+        //分页 查询
         $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
-                    "applicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    //console.log( data.data.objs);
-                    $scope.vm.listData= data.data.objs;
-                },function(){
-                })
+            if(current&&$scope.vm.getType==1){
+               search(current)
+            }else if(current&&$scope.vm.getType==0){
+                console.log(current);
+                getData(current);
             }
         });
-        function search(){
-            httpRequestPost("",{
-
-            },function(data){
-
-            },function(err){})
-        }
-
-        //点击标题查看
+        //点击标题预览内容
         function seeDtails(data){
             console.log(data);
             var params = {
@@ -76,12 +135,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 type : 0
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
-
         }
-
     }
-
-
-
-
 ]);

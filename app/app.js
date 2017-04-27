@@ -5,6 +5,7 @@
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
     //'ui.autocomplete',
+
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
@@ -437,6 +438,20 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.association", {
+                //params:{"userPermission" : null},
+                url: "/association",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/myApplication/applicationConfig/AssociationManage.html',
+                        controller: "AssociationManageController"
+                    },
+                }
+            })
             //应用信息
             .state("setting.Infor", {
                 //params:{"userPermission" : null},
@@ -539,13 +554,13 @@ knowledge_static_web
             })
             //应用开发-知识管理-客服知识预览
             .state("custKnowledgePreview", {
-                //params:{"userPermission" : null},
+                params:{"scanKnowledge" : null},
                 url: "/custKnowledgePreview",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/custKnowledgePreview.html',
                 controller:"custKnowledgePreviewController"
             })
             .state("custKnowledgePreview.manage", {
-                //params:{"userPermission" : null},
+                params:{"scanKnowledge" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -571,7 +586,7 @@ knowledge_static_web
                 }
             })
             .state("setting.newService", {
-                //params:{"userPermission" : null},
+                params:{"serviceId" : null},
                 url: "/newService",
                 views: {
                     'header': {
@@ -621,23 +636,24 @@ knowledge_static_web
                     }
                 }
             })
-            .state("materialManagement.chatKnowledgeScan", {
-                params:{"chatKnowledgeId" : null},
-                url: "/chatKnowledgeScan",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
-                        controller: "chatKnowledgeScanController"
-                    }
-                }
-            })
+            //.state("materialManagement.chatKnowledgeScan", {
+            //    params:{"chatKnowledgeId" : null},
+            //    url: "/chatKnowledgeScan",
+            //    views: {
+            //        'header': {
+            //            templateUrl: 'know_index/home/homePageNav.html',
+            //            controller: "homePageNavController"
+            //        },
+            //        'content': {
+            //            templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
+            //            controller: "chatKnowledgeScanController"
+            //        }
+            //    }
+            //})
             .state("materialManagement.chatKnowledgeBasePreview", {
                 params:{"scanData" : null,"id":null},
                 url: "/chatKnowledgeBasePreview",
+                //cache:'true',
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -686,6 +702,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.singleAddConcept", {
                 url: "/singleAddConcept",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -693,12 +710,13 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
-                        controller: "knowledgeSingleAddConceptController"
+                        controller: "conceptController"
                     }
                 }
             })
             .state("knowledgeManagement.faqAdd", {
                 url: "/faqAdd",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -732,8 +750,9 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/essential/NewFactorKnow.html',
+                        templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
+
 
                     }
                 }
@@ -896,7 +915,8 @@ knowledge_static_web
             .state("back.gateway", {
                 url: "/gateway",
                 params: {
-                    isGo: null
+                    isGo: null,
+                    knowDocId: null
                 },
                 views: {
                     'header': {
@@ -906,6 +926,25 @@ knowledge_static_web
                     'main_container': {
                         templateUrl: 'know_background/know_gateway/main_container.html',
                         controller: "analyseTaskController"
+                    }
+                }
+            })
+            .state("back.doc_results_view", {
+                url: "/doc_results_view",
+                params: {
+                    isGo: null,
+                    knowDocId: null,
+                    knowDocCreateTime: null,
+                    knowDocUserName: null
+                },
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'main_container': {
+                        templateUrl: 'know_background/know_gateway/doc_results_view.html',
+                        controller: "doc_results_viewController"
                     }
                 }
             })

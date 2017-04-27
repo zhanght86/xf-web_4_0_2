@@ -11,19 +11,16 @@
                     <option value=10006>属性</option>
                 </select>
             </div>
-            <div class="mb-10">
-                <span class="mr-10">类目属性: </span>
-                <input type="text" class="input_text" id="categoryAttributeName" ng-model="vm.categoryAttributeName"/>
-            </div>
             <div class="mb-20">
                 <span class="mr-10">类目名称: </span>
-                <input type="text" class="input_text"  id="categoryName" ng-model="vm.categoryName"/>
+                <input type="text" class="input_text" id="categoryName" ng-model="vm.categoryName"/>
+                <p id="editErrorView" class="c-error pd-5 edit" style="margin-left: 76px;"></p>
             </div>
-            <div class="tc mt10" >
+            <div class="tac mt10">
                 <a class="btn btn-blue mr-10" href="javascript:;" ng-click="closeThisDialog(1)">确认修改</a>
-                <a class="btn btn-gray " href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
+                <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>
             </div>
-
+        </div>
     </div>
 </div>
 <style>

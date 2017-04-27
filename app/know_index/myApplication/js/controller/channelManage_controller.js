@@ -69,8 +69,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 console.log(Math.ceil(data.total/$scope.vm.pageSize))
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vm.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
@@ -101,8 +101,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 $scope.vmo.blackListDataTotal =data.total;
                 $scope.vmo.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vmo.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vmo.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
@@ -338,7 +338,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         //批量移除黑名单
         function batchDelBlacklist(){
             httpRequestPost("/api/application/channel/batchDelBlackList",{
-                "blackListIds": $scope.selected
+                "blackListIds": $scope.selectedList
             },function(data){
                 if(data.data===10000){
                     layer.msg("移除成功");
@@ -363,12 +363,15 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         function updateSelected(action, id){
             if (action == 'add' && $scope.selectedList.indexOf(id) == -1) $scope.selectedList.push(id);
             if (action == 'remove' && $scope.selectedList.indexOf(id) != -1) $scope.selectedList.splice($scope.selectedList.indexOf(id), 1);
+            console.log($scope.selectedList);
+
         }
 
         //更新某一列数据的选择
         function updateSelection($event, id){
             var checkbox = $event.target;
             var action = (checkbox.checked ? 'add' : 'remove');
+            console.log(action+"选中的id"+id);
             updateSelected(action, id);
         }
 

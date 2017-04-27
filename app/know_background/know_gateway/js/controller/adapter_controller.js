@@ -75,19 +75,6 @@ angular.module('knowGatewayModule').controller('adapterController', [
             pagesLength: 6,//分页框数量
             target:$scope.TemSearchPOJO
         };
-        //
-        // $scope.queryTemplate = function(){
-        //     TemplateService.queryTemplate.get({
-        //         pageNo:$scope.TemSearchPOJO.currentPage,
-        //         pageSize:$scope.TemSearchPOJO.pageSize,
-        //         name:$scope.TemSearchPOJO.name
-        //     },function(resource){
-        //         if(resource.status == 200){
-        //             $scope.templates = resource.data.data
-        //             $scope.temPaginationConf.totalItems = resource.data.total;
-        //         }
-        //     })
-        // }
 
         $scope.getAdType = function(type){
             if(type == 1){

@@ -9,33 +9,43 @@
     <div class="addContent pd-30" >
         <div class="r-cont-hd">
             <span>知识预览</span>
-            {{vm.scanData}}
+            <!--{{vm.scanData}}-->
         </div>
         <div class="pd-20 f-14">
             <div class="row cl mb-20">
                 <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
                 <div class="formControls col-xs-8 col-sm-9" >
-                    <span ng-if="vm.scanData.standardQuestion">{{vm.scanData.standardQuestion}}</span>
+                    <p ng-if="vm.scanData.standardQuestion" style="font-size: 14px;height: 31px;
+                        line-height: 1.42857;padding: 4px;border: 1px solid;width: 350px;">{{vm.scanData.standardQuestion}}</p>
                 </div>
             </div>
             <div class="row cl mb-20">
                 <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                 <div class="formControls col-xs-8 col-sm-9" >
-                    <span ng-if="vm.scanData.extendedQuestionArr.length!=0" ng-repeat="item in vm.scanData.extendedQuestionArr">{{item.chatQuestionContent}}<i ng-if="$index!=0">,</i></span>
+                    <span  ng-if="vm.scanData.extendedQuestionArr.length!=0" ng-repeat="item in vm.scanData.extendedQuestionArr" style="padding: 4px;
+                           border: 1px solid #e1e1e1;margin-right: 10px; background: #f1f1f1;">{{item.chatQuestionContent}}<i ng-if="$index!=0&&$index!=vm.scanData.extendedQuestionArr.length">,</i></span>
                 </div>
             </div>
-            <div class="row cl mb-30">
-                <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
-                <div class="formControls col-xs-8 col-sm-9" ng-if="vm.scanData.contentArr.length!=0" ng-repeat="item in vm.scanData.contentArr" >
-                    <span>{{item.chatKnowledgeContent}}</span>
+            <div class="row cl mb-15" ng-repeat="item in vm.scanData.contentArr" >
+                <label class="form-label col-xs-4 col-sm-2 text-r"><span ng-if="$index==0">知识内容：</span></label>
+                <div ng-if="vm.scanData.contentArr.length!=0" class="formControls " style="float: left;height: auto;min-height: 30px;padding: 4px;
+                           border: 1px solid #e1e1e1;margin:0  10px 0 10px; background: #f1f1f1;min-width: 350px" >
+                    <p >{{item.chatKnowledgeContent}}</p>
                 </div>
             </div>
+            <!--<div class="row cl mb-30">-->
+                <!--<label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>-->
+                <!--<div ng-if="vm.scanData.contentArr.length!=0" class="formControls " style="float: left;height: auto;min-height: 30px;padding: 4px;-->
+                           <!--border: 1px solid #e1e1e1;margin:0  10px 0 10px; background: #f1f1f1;min-width: 350px" >-->
+                    <!--<p  ng-repeat="item in vm.scanData.contentArr" >{{item.chatKnowledgeContent}}</p>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="row cl mb-10 ">
                 <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                 <div class="formControls col-xs-8 col-sm-9" >
-                    <input type="button" value="保存" ng-if="vm.type" ng-click="vm.save()" class="btn1 btn1_blue mr-10"/>
                     <input type="button" value="修改" ng-click="vm.edit()" class="btn1 btn_green"/>
-                    <a ng-if="!vm.type" ui-sref="materialManagement.chatKnowledgeBase"><input type="button" value="返回"   class="btn1 btn1_blue mr-10"/></a>
+                    <input type="button" value="保存" ng-if="vm.scanData.type" ng-click="vm.save()" class="btn1 btn1_blue mr-10"/>
+                    <a ng-if="!vm.scanData.type" ui-sref="materialManagement.chatKnowledgeBase"><input type="button" value="返回"   class="btn1 btn1_blue mr-10"/></a>
                 </div>
             </div>
         </div>

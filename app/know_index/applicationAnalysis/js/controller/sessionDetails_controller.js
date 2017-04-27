@@ -3,12 +3,12 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('sessionDetailsController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         setCookie("applicationId","360619411498860544");
         $scope.vm = {
-            applicationId :getCookie("applicationId"),
+            applicationId :$cookieStore.get("applicationId"),
             scan:scan ,
             getList : getList ,
             listData : null ,   // table 数据
@@ -36,16 +36,10 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             userId : null,
             prePage : prePage ,
             nextPage : nextPage
-
         };
-        function remove(item){
-
-            $scope.vm.arr.remove(item)
-
-
-        }
-
-
+        //function remove(item){
+        //    $scope.vm.arr.remove(item)
+        //}
         // 点击查看
         function scan(id){
             $scope.vm.userId = id;
@@ -68,13 +62,14 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
         function getScanData(id,index){
             console.log(id);
             httpRequestPost("/api/analysis/userSession/searchTimeBar",{
+                "applicationId" : $scope.vm.applicationId,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
 
                 "requestTimeType":$scope.vm.timeType,
 
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
@@ -116,12 +111,13 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
         function getList(index){
             //console.log((index-1)*$scope.vm.pageSize );
             httpRequestPost("/api/analysis/userSession/searchList",{
+                "applicationId" : $scope.vm.applicationId,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
 
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
 
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
@@ -197,7 +193,6 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
 
         function  getChannel(){
             httpRequestPost("/api/application/channel/listChannels",{
-                //"applicationId": "360619411498860544"
                 "applicationId" : $scope.vm.applicationId
             },function(data){
                 if(data.data){
