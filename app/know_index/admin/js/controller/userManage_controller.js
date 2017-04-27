@@ -17,6 +17,7 @@ angular.module('adminModule').controller('userManageController', [
             getData : getData,
             paginationConf : "", //分页条件
             userDataTotal:"",   //用户总数
+            pageSize : 5,
             addUser : addUser,
             editUser : editUser,
             deleteUser:deleteUser,
@@ -42,23 +43,56 @@ angular.module('adminModule').controller('userManageController', [
             applicationIds:[],
             savaProp : savaProp,
             saveProp : saveProp ,
-            filter : filter
+            filter : filter,
+            selectAll : selectAll,
+            selectSingle : selectSingle,
+            deleteIds : [],
+            selectAllCheck : false,
+            deleteUsers : deleteUsers
         };
 
-        getData();
+        function selectAll(ev){
+            //var self = $(ev.target);
+            if(!$scope.vm.selectAllCheck){
+                $scope.vm.selectAllCheck = true;
+                $scope.vm.deleteIds = [];
+                angular.forEach($scope.vm.listData,function(item){
+                    $scope.vm.deleteIds.push(item.userId);
+                });
+            }else{
+                $scope.vm.selectAllCheck = false
+                $scope.vm.deleteIds = [];
+            }
+            console.log( $scope.vm.deleteIds)
+        }
+        function selectSingle(ev,id){
+            var self = $(ev.target);
+            if(self.attr('checked')){
+                self.attr('checked',false);
+                $scope.vm.deleteIds.remove(id);
+                $(".selectAllBtn").attr("checked",false)
+            }else{
+                $(".selectAllBtn").attr("checked",false)
+                $scope.vm.deleteIds.push(id)
+            }
+            console.log( $scope.vm.deleteIds)
+        }
+
+
+        getData(1);
         //查询列表
-        function getData(){
+        function getData(index){
             httpRequestPost("/api/user/listUser",{
-                index:0,
-                pageSize:10,
+                index:(index -1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
             },function(data){
                 console.log(data);
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
-                    currentPage: 0,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
-                    pageSize: 1,//第页条目数
+                    currentPage: index,//当前页
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply()
@@ -66,6 +100,11 @@ angular.module('adminModule').controller('userManageController', [
                 layer.msg("请求失败")
             })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
         //添加用户
         function addUser(){
             var dialog = ngDialog.openConfirm({
@@ -95,6 +134,9 @@ angular.module('adminModule').controller('userManageController', [
                         },function(data){
                             //刷新页面
                             $state.reload()
+                            if(data.status == 10009){
+                                layer.msg("数据重复!")
+                            }
                         },function(){
                             layer.msg("请求失败")
                         })
@@ -156,8 +198,15 @@ angular.module('adminModule').controller('userManageController', [
             httpRequestPost("/api/user/queryUserByUserName",{
                 userName:$scope.vm.searchName,
             },function(data){
+                if(data.status == 10016){
+                    $scope.vm.listData = "";
+                    $scope.vm.userDataTotal = 0;
+                    $scope.$apply()
+                    layer.msg("没有查询到记录!")
+                }
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })
@@ -190,6 +239,18 @@ angular.module('adminModule').controller('userManageController', [
                 }
             });
         }
+
+        //批量删除用户
+        function deleteUsers(){
+            httpRequestPost("/api/user/deleteUserByIds",{
+                ids :  $scope.vm.deleteIds
+            },function(data){
+                $state.reload();
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
         //改变用户状态
         function stop(userId,statusId){
             httpRequestPost("/api/user/updateStatus",{

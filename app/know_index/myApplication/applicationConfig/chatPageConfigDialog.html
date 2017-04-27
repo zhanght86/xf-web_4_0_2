@@ -4,9 +4,11 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-2 col-sm-2 bold">已选知识：</label>
             <div class="formControls col-xs-10 col-sm-9">
-                <ul id="already_select">
-                    <li><span class="mr-10">员工请假相关知识</span><a href="javascript:;" onclick="rem_know(this);">X</a></li>
-                    <li><span class="mr-10">员工请假相关知识</span><a href="javascript:;" onclick="rem_know(this);">X</a></li>
+                <ul id="already_select" ng-repeat="item in vm.seleceAddAll">
+                    <!--{{item}}-->
+                    <li><span class="mr-10">{{item.chatKnowledgeTopic}}</span>
+                        <a href="javascript:;" ng-click="vm.deleteDialog(item)" class="c-red">X</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -14,51 +16,33 @@
             <label class="form-label col-xs-2 col-sm-2 bold">未选知识：</label>
             <div class="formControls col-xs-10 col-sm-9">
                 <div class="mb-10">
-                    <input id="inputValue" type="text" placeholder="请输入要查找的知识" style="width:220px" class="input-text">
-                    <button class="btn1 btn1_blue" >查找</button>
-                    <button class="btn1 btn_green" >全部</button>
+                    <input id="inputValue" type="text" placeholder="请输入要查找的知识" ng-model="vm.knowledge" style="width:220px" class="input-text">
+                    <!--<button class="btn1 btn1_blue" >查找</button>-->
+                    <!--<button class="btn1 btn_green" >全部</button>-->
+                    <button class="btn1 btn1_blue" type="button"  ng-click="vm.findKnowledge()">查找</button>
                 </div>
                 <table class="table table-border  table-bordered" id="knowledge-tab">
                     <thead class="text-c bg-1">
                     <tr>
-                        <th><input  type="checkbox" /></th>
+                        <th><input  class="selectAllBtnDialog" type="checkbox" ng-click="vm.selectAllDialog($event)" ng-checked="vm.selectAllCheckDialog"/></th>
                         <th>知识标题</th>
-                        <th>询问次数</th>
                     </tr>
                     </thead>
                     <tbody class="text-c">
-                    <tr>
-                        <td><input  type="checkbox" /></td>
-                        <td>员工请假相关知识</td>
-                        <td>123</td>
-                    </tr>
-                    <tr>
-                        <td><input  type="checkbox" /></td>
-                        <td>员工请假相关知识</td>
-                        <td>123</td>
+                    <tr ng-repeat="item in vm.listKnoData">
+                        <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="vm.selectSingleDialog($event,item.chatKnowledgeId,item.chatKnowledgeTopic,$index)"/></td>
+                        <td>{{item.chatKnowledgeTopic}}</td>
                     </tr>
                     </tbody>
                 </table>
-                <div class="page clearfix">
-                    <span class="page_span ">上一页</span>
-                    <a href="javascript:;" class="cura">1</a>
-                    <a href="javascript:;">2</a>
-                    <a href="javascript:;">3</a>
-                    <a href="javascript:;">4</a>
-                    <a href="javascript:;">5</a>
-                    <span class="page_span ">下一页</span>
-                    <span>共<b class="page_b">12</b>页</span>
-                    <span>跳转到</span>
-                    <input type="text" class="page_txt">
-                    <span>页</span>
-                    <span class="go_span">GO</span>
-                </div>
             </div>
         </div>
+        <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
+
     </div>
     <div class="row tc">
-        <button class="btn1 btn1_blue mr-10" >确定</button>
-        <button class="btn1 btn_gray" >取消</button>
+        <button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>
+        <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
     </div>
 </div>
 <style>

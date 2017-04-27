@@ -7,7 +7,9 @@
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
                     	<span class="L">
-                        	<a ui-sref="setting.newService"  >
+                        	<!--<a ui-sref="setting.newService"  >-->
+                            <!--<a ng-click="$state.go('setting.newService');">-->
+                            <a href="javascript:;" ng-click="vm.addNewService()">
                                 <button class="L btn1 btn1_blue ">发布新服务</button>
                             </a>
                         </span>
@@ -46,7 +48,7 @@
                                    ng-click="vm.startService(item.serviceId)" class="mr-10 c-orange">上线</a>
                                 <a ng-if="item.serviceStatus==30002"
                                    ng-click="vm.restartService(item.serviceId)" class="mr-10 c-orange">重启</a>
-                                <a href="javascript:;" class="c-primary mr-10" >编辑</a>
+                                <a ng-click="vm.editService(item.serviceId)" class="c-primary mr-10" >编辑</a>
                                 <a ng-click="vm.deleteService(item.serviceId)" class="c-error">删除</a>
                             </td>
                         </tr>

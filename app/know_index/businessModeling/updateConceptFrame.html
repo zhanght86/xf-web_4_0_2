@@ -1,0 +1,72 @@
+<div class="wrap pt-20">
+    <div class="content_box mb25 ">
+        <h3 class="f22 pl-10 mb15">{{vm.frameTitle}}</h3>
+        <div class=" p10 ">
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">启用：</label>
+                <div class="dib pt-5 mr-15">
+                    <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[vm.frameEnableStatusId]" ng-click="vm.turnOn(vm.frameEnableStatusId,'frameEnableStatusId')" style="float:left;margin-right:10px;" class="b_box open1">
+                        <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[vm.frameEnableStatusId]" class="s_box open2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cl mb-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r">概念标题：</label>
+                <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;" id="concept_box">
+                    <input id="concept_title" type="text" class="input-text mr-10" style="width:300px;"/>
+                </div>
+            </div>
+
+            <div class="exten_problem" id="concept_extension">
+                <div class="row cl mb-10">
+                    <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" class="L input-text mr-10 extended_query_txt" style="width:300px;"/>
+                        <a href="javascript:;" class="create_a" ng-click="vm.concept_marking();">
+                            <img src="../../images/images/add_img.png">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row cl mb-10 pt-10">
+                <label class="form-label col-xs-4 col-sm-2 text-r"></label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
+                    <input type="button" class="btn1 btn_green" ng-click="closeThisDialog(0)" value="返回"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ngdialog.ngdialog-theme-default .ngdialog-content {
+        min-width: 1000px;
+    }
+    .content_box{
+        width: 970px;
+        height: 400px;
+        overflow: auto;
+    }
+    .del-button{
+        margin-left: 6px;
+    }
+    .tag_box{width:300px;height:40px;overflow-y:auto;padding:5px;box-sizing:border-box;display: inline-block;}
+    .mt-7{
+        margin-top: 7px;
+    }
+    .tag_s{margin-bottom:5px;display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:28px;line-height:28px;padding:0 10px;margin-right:6px;}
+</style>
+<script>
+    //删除扩展问
+    function rem_ques(obj){
+        $(obj).parent().parent().remove();
+    }
+</script>
+
+
+
+
+
+

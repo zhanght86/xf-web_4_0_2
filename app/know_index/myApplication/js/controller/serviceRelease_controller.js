@@ -14,14 +14,50 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             paginationConf : ""  ,//分页条件
             pageSize : 2 , //默认每页数量
             dataTotal: "", //发布服务数据记录总数
+
+            appName : "", //应用名称
+            categoryIds : "", //分类id列表
+            channels : "", //渠道id列表
+            dimensions : "", //维度id列表
+            nodeCode : "", //节点编号
+            serviceId : "", //服务id
+            serviceName: "", //服务平常
+            serviceStatus : 0, //服务状态
+            serviceType : 0, //服务类型
+            userId : getCookie("userId"), //获取用户id
+
+            categoryData : "", //分类数据
+            channelData : "", //渠道数据
+            dimensionData : "", //维度数据
+            typeData : "", //类型数据
+            nodeData : "", //节点数据
+
             publishService : publishService,  //发布服务
             startService : startService, //上线服务
             stopService : stopService, //下线服务
             restartService : restartService, //重启服务
             deleteService : deleteService, //删除服务
+            editService : editService, //编辑服务
+
+            addNewService : addNewService
+
 
         };
-
+        //添加节点
+        function addNewService(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1) {
+                    }
+                }
+            });
+        }
 
         /**
          * 加载分页条
@@ -36,12 +72,11 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 "pageSize": $scope.vm.pageSize
             },function(data){
                 $scope.vm.serviceData = data.data;
-                console.log($scope.vm.serviceData)
                 $scope.vm.dataTotal =data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总记录数
+                    pageSize: $scope.vm.pageSize,//每页记录数
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
@@ -54,6 +89,31 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 listServiceData(current);
             }
         });
+
+
+        //编辑服务
+        function editService(serviceId){
+            $state.go("setting.newService",{serviceId: serviceId});
+            //httpRequestPost("/api/application/service/listDimensionByServiceId",{
+            //    "serviceId": serviceId
+            //},function(data){
+            //    if(data.status==200){
+            //        var dimensionSelected=[];
+            //        angular.forEach(data.data,function(dimensionId){
+            //            angular.forEach($scope.vm.dimensionAll,function(dimension){
+            //                if(dimensionId==dimension.dimensionId){
+            //                    dimensionSelected.push(dimension);
+            //                    //$scope.vm.dimensionAll.remove(dimension);
+            //                }
+            //            });
+            //        });
+            //    }else{
+            //        layer.msg("查询失败");
+            //    }
+            //},function(){
+            //    layer.msg("请求失败");
+            //})
+        }
 
         //发布服务
         function publishService(serviceId){

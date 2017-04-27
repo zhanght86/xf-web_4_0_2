@@ -8,9 +8,9 @@ angular.module('materialManagement').controller('faqChatController', [
         $state.go("materialManagement.faqChat");
         setCookie("applicationId","360619411498860544");
         setCookie("userName","admin1");
-        console.log("d",$stateParams.scanDataList);
+        console.log($stateParams.scanDataList);
         $scope.vm = {
-            userName : getCookie("userName"),
+            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:getCookie("userName"),
             applicationId : getCookie("applicationId"),
             standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
@@ -18,13 +18,14 @@ angular.module('materialManagement').controller('faqChatController', [
             remove : remove ,
             weight : "60" ,         //  权重
             addExtension : addExtension ,  //添加扩展
-
+            chatKnowledgeId : $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeId:null,
             contentVal : "",
             contentArr : $stateParams.scanDataList?$stateParams.scanDataList.contentArr:[] ,
             addContentDialog : addContentDialog,// 添加知识内容
             save : save ,
             scan : scan,
-            scanData : $stateParams.scanData
+            scanData : $stateParams.scanData,
+            type : $stateParams.scanData?$stateParams.scanData.type:1
         };
         //擴展問
         function addExtension(){
@@ -100,25 +101,29 @@ angular.module('materialManagement').controller('faqChatController', [
             arr.remove(item);
         }
         function saveScan(params){
-            httpRequestPost("/api/chatKnowledge/addFAQChatKnowledge",{
-                "applicationId": params.applicationId,
-                "chatKnowledgeModifier": params.chatKnowledgeModifier,
-                "chatKnowledgeTopic": params.standardQuestion,
-                "chatQuestionList" : params.extendedQuestionArr,
-                "chatKnowledgeContentList" : params.contentArr
-            },function(data){
-                if(data.data==10004){
-                    layer.msg("标准问重复")
-                }else{
-                    $state.go("materialManagement.chatKnowledgeBase");
-                }
-            },function(err){
-            })
+            if(check()){
+                httpRequestPost("/api/chatKnowledge/addFAQChatKnowledge",{
+                    "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
+                    "applicationId": params.applicationId,
+                    "chatKnowledgeModifier": params.chatKnowledgeModifier,
+                    "chatKnowledgeTopic": params.standardQuestion,
+                    "chatQuestionList" : params.extendedQuestionArr,
+                    "chatKnowledgeContentList" : params.contentArr,
+                },function(data){
+                    if(data.data==10004){
+                        layer.msg("标准问重复")
+                    }else{
+                        $state.go("materialManagement.chatKnowledgeBase");
+                    }
+                },function(err){
+                })
+            }
         };
         //预览
         function scan(){
-            //if(check()){
+            //if(check()){    // 方便测试  后期放开
                 var params = {
+                    chatKnowledgeId : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     standardQuestion : $scope.vm.standardQuestion,
                     extendedQuestionArr : $scope.vm.extendedQuestionArr,
                     contentArr : $scope.vm.contentArr,
@@ -132,15 +137,16 @@ angular.module('materialManagement').controller('faqChatController', [
             //}
         }
         //保存  0 无验证   1  需要验证
-
         function save(){
                 if(check()){
                     httpRequestPost("/api/chatKnowledge/addFAQChatKnowledge",{
+                        "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                         "applicationId": $scope.vm.applicationId,
                         "chatKnowledgeModifier": $scope.vm.userName,
                         "chatKnowledgeTopic": $scope.vm.standardQuestion,
                         "chatQuestionList" : $scope.vm.extendedQuestionArr,
-                        "chatKnowledgeContentList" : $scope.vm.contentArr
+                        "chatKnowledgeContentList" : $scope.vm.contentArr,
+                        "knoweledgeId" : $scope.vm.knoweledgeId
                     },function(data){
                         if(data.data==10004){
                             layer.msg("标准问重复")
@@ -152,7 +158,6 @@ angular.module('materialManagement').controller('faqChatController', [
                     })
                 }
             }
-
 
         //    判断重复
         function checkRepeat(val , arr ,prop){

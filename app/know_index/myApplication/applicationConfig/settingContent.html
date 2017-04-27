@@ -3,7 +3,6 @@
         <span>机器人设置</span>
     </div>
     <div class="r-cont-bd oh">
-        <form name="angularForm" novalidate>
         <div class="jqrsz-item">
             <div class="item-line">
                 <div class="lable">
@@ -12,10 +11,10 @@
                 <div class="value">
                     <div class="ipt-txt-box">
                         <input name="robotName" class="ipt-txt" type="text"
-                               ng-model="robot.robotName" ng-maxlength="8" ng-pattern="/[\u4e00-\u9fa5]/"/>
+                               ng-model="robot.robotName" />
                         <i class="btn-empty"></i>
                     </div>
-                    <div class="error-tip" ng-show="angularForm.robotName.$error.maxlength">
+                    <div class="error-tip">
                         昵称输入不能超过8个汉字，请重新输入
                     </div>
                 </div>
@@ -26,14 +25,14 @@
                 </div>
                 <div class="value">
                     <div class="poto-box">
-                        <img src=""/>
+                        <img ng-src="../images/{{robot.robotHead}}"/>
                     </div>
                     <div class="up-tip">
                         网页聊天中左上角展示的圆形头像，<br />设置像素为70*70
                     </div>
                     <div class="up-btn">
-                        <a class="js-jdbtn" href="javascript:;">经典</a>
-                        <a class="js-zdybtn" href="javascript:;">自定义</a>
+                        <a class="js-jdbtn" ng-click="robot.addClassic()">经典</a>
+                        <a class="js-zdybtn" ng-click="robot.addCustom()">自定义</a>
                     </div>
                 </div>
             </div>
@@ -170,7 +169,6 @@
                 </div>
             </div>
         </div>
-        </form>
         <div class="jqrsz-btn-box">
             <a class="btn btn-blue mr10" ng-click="robot.editRobot()">保存</a>
             <a class="btn btn-gray" ng-click="$state.reload()">取消</a>
@@ -183,4 +181,5 @@
     .ipt-txt-box .ipt-txt{
         border:1px solid gray
     }
+    .jqrsz-item .item-line .value .error-tip{position:static;margin-top:5px;}
 </style>

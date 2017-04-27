@@ -252,7 +252,7 @@
 .con_manage_chk,.rad{margin:-2px 3px 0px 0;vertical-align:middle;}
 .refresh{background: url(../images/refresh.png) no-repeat left center;line-height: 30px;
 	width:24px;height:28px;display: inline-block;  position: absolute; top:0;right:15px;}
-#modelSelect .refresh{right:3px;top:-3px;}
+#modelSelect .refresh{right:8px;top:-8px;}
 /*个人中心*/
 .column_manage{background:#fff;padding:40px;}
 .c_orange{color:#f4a344;}

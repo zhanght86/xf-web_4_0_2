@@ -31,10 +31,10 @@
             <div class="mb10 clearfix">
                 <span class="L know_span">文档样例:</span>
                 <input id="tempickfile" type="button" class="btn btn3 L" value="浏览" temp-plupload/>
-                <span id="temcontainer" style="color:#999;margin-left:10px;" class="L">{{fileName}}</span>
-                    <span class="R" style="margin-right:210px">
-                        <input id="temupload" type="button" value="保存" class="btn btn3 clearfix" style="color:#333;margin-right:12px"/>
-                        <input id="temreset" type="button" value="取消" class="btn btn3 clearfix" style="color:#333;"/>
+                <span id="temcontainer" style="color:#999;margin-left:10px;line-height: 33px;" class="L">{{fileName}}</span>
+                    <span ng-show='temuptools.show' class="R" style="margin-right:210px">
+                        <input id="temupload" type="button" value="保存" class="btn1 btn_gray clearfix" style="color:#333;margin-right:12px"/>
+                        <input id="temreset" type="button" value="取消" class="btn1 btn_gray clearfix" style="color:#333;"/>
                     </span>
             </div>
             <div class="clearfix" style="margin-top:30px">
@@ -58,10 +58,10 @@
                         </div> -->
                         <table class="rule_table">
                             <tr class="tr_t" ng-repeat="role in rules">
-                                <td width="30%">{{$index+1}}级目录</td>
+                                <td width="30%">{{role.level+1}}级目录</td>
                                 <td width="30%" style="color:#999"><span ng-if="role.ruleId">规则完成</span></td>
                                 <td width="20%"><a type="button" class="btn3"  ui-sref="back.docselect({temId:temId,level:$index,roleId:role.ruleId})" >从文章中提取</a></td>
-                                <td width="20%" ng-if="role.ruleId"><a href="javascript:;" class="btn3" ng-confirm="确认删除?" value="删除" ng-click="deleteRule(role.id)">删除</a></td>
+                                <td width="20%" ng-if="role.ruleId"><a href="javascript:;" class="btn3" ng-confirm="确认删除?" value="删除" ng-click="deleteRule(role.ruleId)">删除</a></td>
                                 <td width="20%" ng-if="!role.ruleId"><a class="btn3" ng-click="resetRule($index)">取消</a></td>
                             </tr>
                             <tr>

@@ -1,3 +1,146 @@
-.resetH70{
-    height: 70px;
+.resetH70 {
+  height: 70px;
 }
+.ng-red {
+  color: red !important;
+}
+.ng-blue {
+  color: blue!important;
+}
+.type1 .icon-ngJj {
+  position: relative;
+  top: -1px;
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-image: url(../../images/pic-navs-lc.png);
+}
+.type2 .icon-ngJj {
+  position: relative;
+  top: -1px;
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-image: url(../../images/pic-navs-dy.png);
+}
+/*************************      uploader  **************************************/
+.upWrapper {
+  width: 400px;
+}
+.miles-progress {
+  width: 256px;
+  height: 26px;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #e1e1e1;
+  border-radius: 100px;
+  z-index: 9999;
+}
+.miles-progress .miles-progressBar {
+  height: 100%;
+  background: url("../../images/ng/progress.png") repeat;
+}
+/*************************      uploader  **************************************/
+/*************************      autocomplete  **************************************/
+.miles-autoBar {
+  width: 421px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.miles-autoBar .miles-container {
+  width: 100%;
+  border: 1px solid #ccc;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 20px;
+  padding: 4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.miles-autoBar .miles-container .miles-autoInput {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #000;
+  float: left;
+  font-size: 16px;
+  height: 20px;
+  line-height: 20px;
+  margin: 0px 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: middle;
+  width: 120px;
+  position: relative;
+}
+.miles-autoBar .miles-container .miles-resultItem {
+  line-height: 18px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  float: left;
+  margin: 2px 4px;
+  padding: 0px 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+.miles-autoBar .miles-container .miles-resultItem .miles-remove {
+  font-size: 11px;
+  margin-right: 2px;
+}
+.miles-autoBar .miles-dropDown {
+  background: #e3e3e3;
+  border: 1px solid #ccc;
+  margin: 2px 0 0 0;
+  max-height: 300px;
+  min-width: 140px;
+  overflow-x: visible;
+  overflow-y: auto;
+  padding: 0;
+  position: absolute;
+  z-index: 10;
+}
+.miles-autoBar .miles-dropDown .miles-item {
+  line-height: 18px;
+  background: #f9f9f9;
+  color: #333;
+  border-bottom: 1px solid #d8d8d8;
+  font-size: 13px;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  cursor: pointer;
+}
+.miles-autoBar .miles-dropDown .miles-item:hover {
+  background: #00519d;
+  color: #fff;
+}
+/*.miles-autoBar .miles-container .miles-placeholder{*/
+/*color: #777;*/
+/*float: left;*/
+/*font-size: 16px;*/
+/*line-height: 20px;*/
+/*margin: 10px 0 0 0;*/
+/*}*/
+/*************************      autocomplete  **************************************/

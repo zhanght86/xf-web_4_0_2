@@ -16,14 +16,24 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
         setCookie("userId","368191545326702592");
         $scope.vm = {
             listData : "",   // table 数据
+            listKnoData : "", //知识数据
             listDataTotal : "", //总数
+            pageSize : 5,
+            listKnoDataTotal : "", //聊天知识库知识总数
+            chatKnowledgeId : "",
+            chatKnowledgeTopic : "",
             userId:getCookie("userId"),
             applicationId:getCookie("applicationId"),
             paginationConf : "", //分页条件
+            paginationConf1 : "",
             deleteIds : [],
             selectAllCheck : false,
             hotQuestionTitle : "",
+            knowledge : "",
             listDataLength : "",
+            selectAllCheckDialog : false,
+            seleceAddAll : [],
+            //knowledge : [],
             //========================方法=========================
             getData : getData, //返回知识列表数据
             addHotIssues : addHotIssues,  //添加方法
@@ -33,10 +43,60 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             deleteKnowledge : deleteKnowledge, //删除知识
             selectAll : selectAll,
             selectSingle : selectSingle,
-            findHotQuestion : findHotQuestion
+            findHotQuestion : findHotQuestion,
+            findKnowledge : findKnowledge,
+            selectAllDialog : selectAllDialog,
+            selectSingleDialog : selectSingleDialog,
+            deleteDialog : deleteDialog,
 
+            setFlag : false   // 设置手动设置开关
         };
 
+        function selectAllDialog(ev){
+            //var self = $(ev.target);
+            if(!$scope.vm.selectAllCheckDialog){
+                $scope.vm.selectAllCheckDialog = true;
+                $scope.vm.seleceAddAll = [];
+                angular.forEach($scope.vm.listKnoData,function(item,index){
+                    var obj = {};
+                    obj.chatKnowledgeId = item.chatKnowledgeId;
+                    obj.chatKnowledgeTopic = item.chatKnowledgeTopic;
+                    obj.index = index;
+                    $scope.vm.seleceAddAll.push(obj);
+                });
+            }else{
+                $scope.vm.selectAllCheckDialog = false
+                $scope.vm.seleceAddAll = [];
+            }
+            console.log( $scope.vm.seleceAddAll)
+        }
+        function deleteDialog(item){
+            $scope.vm.seleceAddAll.remove(item);
+            $(".selectAllBtnDialog").prop("checked",false);
+            $(".selectSingle").eq(item.index).attr("checked",false);
+        }
+
+        function selectSingleDialog(ev,id,name,index){
+            var self = $(ev.target);
+            var prop = self.prop("checked");
+            console.log(prop);
+            var obj = {};
+            obj.chatKnowledgeId = id;
+            obj.chatKnowledgeTopic = name;
+            obj.index = index;
+            if(!prop){
+                    angular.forEach($scope.vm.seleceAddAll,function(item,index){
+                        if(id==item.chatKnowledgeId){
+                            $scope.vm.seleceAddAll.splice(index,1)
+                        }
+                    });
+                //$scope.vm.seleceAddAll.remove(obj);
+                $(".selectAllBtnDialog").prop("checked",false)
+            }else{
+                $(".selectAllBtnDialog").prop("checked",false);
+                $scope.vm.seleceAddAll.push(obj)
+            }
+        }
 
         function selectAll(ev){
             //var self = $(ev.target);
@@ -50,12 +110,11 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 $scope.vm.selectAllCheck = false
                 $scope.vm.deleteIds = [];
             }
-
             console.log( $scope.vm.deleteIds)
         }
        function selectSingle(ev,id){
            var self = $(ev.target);
-           if(self.attr('checked')){
+           if(self.attr('checked')){   
                self.attr('checked',false);
                $scope.vm.deleteIds.remove(id);
                $(".selectAllBtn").attr("checked",false)
@@ -66,11 +125,11 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
            console.log( $scope.vm.deleteIds)
        }
         //加载列表
-        getData();
-        function getData(){
+        getData(1);
+        function getData(index){
             httpRequestPost("/api/application/hotQuestion/getHotQuestionList",{
-                index:0,
-                pageSize:10,
+                index:(index - 1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
                 applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
@@ -78,9 +137,9 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.listDataLength = data.data.total;
                 $scope.vm.paginationConf = {
-                    currentPage: 0,//当前页
-                    totalItems: Math.ceil(data.total/5), //总条数
-                    pageSize: 1,//第页条目数
+                    currentPage: index,//当前页
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply()
@@ -88,6 +147,35 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                getData(current);
+            }
+        });
+
+
+        //从聊天知识库查询知识
+        function findKnowledge(index){
+            httpRequestPost("/api/chatKnowledge/findChatKnowledgeByApplicationId",{
+                applicationId:$scope.vm.applicationId,
+                title : $scope.vm.knowledge,
+                pageSize : $scope.vm.pageSize,
+                index : (index - 1)* $scope.vm.pageSize,
+            },function(data){
+                $scope.vm.listKnoData = data.data.objs;
+                $scope.vm.listKnoDataTotal = data.data.total;
+                $scope.vm.paginationConf1 = {
+                    currentPage: index,//当前页
+                    totalItems:data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply()
+            },function(){
+                layer.msg("请求失败")
+            })
+        }
+
         //删除知识
         function deleteKnowledge(){
             httpRequestPost("/api/application/hotQuestion/deleteHotQuestionByIds",{
@@ -106,6 +194,12 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionTitle:$scope.vm.hotQuestionTitle,
                 applicationId:$scope.vm.applicationId,
             },function(data){
+                if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    $scope.$apply()
+                    layer.msg("没有查询到记录!")
+                }
                 $scope.vm.listData = data.data.hotQuestionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.$apply()
@@ -122,7 +216,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-             $state.reload();
+                $state.reload();
             },function(){
                 layer.msg("请求失败")
             })
@@ -154,16 +248,10 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
-
+        //添加知识
         function addHotIssues(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/chatPageConfigDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -171,11 +259,27 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        console.log($scope.vm.seleceAddAll);
+                        httpRequestPost("/api/application/hotQuestion/batchAdd",{
+                            applicationId : $scope.vm.applicationId,
+                            userId :  $scope.vm.userId,
+                            hotKnowledgeList : $scope.vm.seleceAddAll
+                        },function(data){
+                            console.log(data);
+                            $state.reload();
+                            if(data.status == 10012){
+                                layer.msg("数据重复!")
+                            }
+                        },function(){
+                            layer.msg("请求失败")
+                        })
+                    }else{
+                        $scope.vm.listKnoData = [];
+                        $scope.vm.knowledge = "";
+                        $scope.vm.listKnoDataTotal = 0
                     }
                 }
             });
         }
-      
-
     }
 ]);

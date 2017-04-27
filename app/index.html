@@ -2,17 +2,24 @@
 <html lang="zh-cn" ng-app="knowledge_static_web" ng-controller="ApplicationController">
 <head>
     <script>
+
+//        <!-- 数组重复判断 -->
+        Array.prototype.S=String.fromCharCode(2);
+        Array.prototype.inArray=function(e){
+            var r=new RegExp(this.S+e+this.S);
+            return (r.test(this.S+this.join(this.S)+this.S));
+        };
 //        <!-- 增加数组 remove方法-->
         Array.prototype.indexOf = function (val) {
             for(var i = 0; i < this.length; i++){
                 if(this[i] == val){return i;}
             }
             return -1;
-        }
+        };
         Array.prototype.remove = function (val) {
             var index = this.indexOf(val);
             if(index > -1){this.splice(index,1);}
-        }
+        };
 
         /*IE8兼容start*/
         if (!Array.prototype.indexOf) {
@@ -67,12 +74,21 @@
     <script src="libs/H_ui/lib/jquery/1.9.1/jquery.js"></script>
     <!-- H-ui-->
 
+    <!-- webuploader-->
+    <link rel="stylesheet" href="bower_components/webuploader-0.1.5/css/webuploader.css"/>
+    <!-- webuploader-->
+    <script src="bower_components/webuploader-0.1.5/dist/webuploader.js"></script>
+
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.ie.css"/>
         <script type="text/javascript" src="js/plugins/html5.js"></script>
         <script type="text/javascript" src="js/plugins/respond.min.js"></script>
-        <script type="text/javascript" src="js/plugins/PIE_IE678.js"></script>
+
     <![endif]-->
+    <!--<script type="text/javascript" src="js/plugins/PIE_IE678.js"></script>-->
+
+
+
     <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.css"/>
     <!--<link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.min.css"/>-->
     <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.reset.css"/>
@@ -96,6 +112,8 @@
 
     <link rel="stylesheet" href="css/plugins/layer.css"/>
     <link rel="stylesheet" href="css/plugins/autocomplete-0.3.0.min.css"/>
+    <!--autocomplete-->
+    <link rel="stylesheet" href="libs/autocomplete/styles.css"/>
 
 
     <!-- 上线引入know_front-min 测试试用 know_front  需要进行样式调优 统一后实行 -->
@@ -113,25 +131,23 @@
 
     <!--下拉搜索框4.8add-->
     <link rel="stylesheet" href="css/amazeui.chosen.css"/>
+
+    <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>-->
 </head>
 <body>
-
+<div alert-bar class="alert_bar" message="tipService.message" type="tipService.type"></div>
     <div class="container" style="width: 100%;margin: 0;padding: 0;" ui-view>
     </div>
     <script src="js/plugins/common.js"></script>
-    <script src="js/plugins/calendar.js"></script>
+    <!--<script src="js/plugins/calendar.js"></script>-->
     <script src="js/plugins/H-ui.admin.js"></script>
     <!--<script src="js/plugins/H-ui.js"></script>-->
     <script src="js/plugins/jquery.pin.min.js"></script>
     <script src="js/plugins/jquery.placeholder.min.js"></script>
     <script src="js/plugins/layer.js"></script>
-    <script src="js/plugins/PIE_IE678.js"></script>
+    <script src="bower_components/es5-shim/es5-sham.js"></script>
     <!--<script src="js/plugins/WdatePicker.js"></script>-->
 
-
-
-    <script src="bower_components/es5-shim/es5-shim.min.js"></script>
-    <script src="bower_components/es5-shim/es5-sham.min.js"></script>
     <!--上传图片-->
     <script src="js/console-sham.js"  charset="utf-8"></script>
 
@@ -201,10 +217,17 @@
     <script  src="js/home/jquery.plugIn.min.js"></script>
     <script src="js/home/base.js"></script>
     <script src="js/home/autocomplete-0.3.0.js"></script>
-
-    <!--<script src="bower_components/ui-autocomplete/autocomplete.js"></script>-->
+    <script src="bower_components/ui-autocomplete/autocomplete.js"></script>
     <!--tagEditorJs-->
     <script src="libs/tagEditor/js/jquery.caret.min.js"></script>
     <script src="libs/tagEditor/js/jquery.tag-editor.js"></script>
+    <!--autocomplete-->
+    <script src="libs/autocomplete/jquery.autocomplete.js"></script>
+    <script src="libs/autocomplete/jquery.mockjax.js"></script>
+    <!--裁切-->
+    <link rel="stylesheet" type="text/css" href="css/jcrop/jquery.Jcrop.min.css">
+    <script type="text/javascript" src="js/jcrop/jquery.Jcrop.min.js"></script>
+
+
 </body>
 </html>

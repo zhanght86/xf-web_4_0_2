@@ -34,7 +34,7 @@ angular.module('pagination',[]).directive('pagination',[function(){
 
                 //总页数
                 scope.conf.numberOfPages = Math.ceil(scope.conf.totalItems / scope.conf.pageSize);
-
+                console.log(scope.conf.numberOfPages);
                 if(scope.conf.currentPage < 1){
                     scope.conf.currentPage = 1;
                 }
@@ -130,7 +130,7 @@ angular.module('pagination',[]).directive('pagination',[function(){
                 }
             }
             scope.$watch(function(){
-                return scope.conf.totalItems +' '+scope.conf.currentPage +' '+scope.conf.pageSize;
+                return scope.conf.numberOfPages  +' '+scope.conf.currentPage +' '+scope.conf.pageSize;
             },getPagination);
         }
     }

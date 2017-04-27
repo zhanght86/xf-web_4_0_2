@@ -25,3 +25,4 @@ app/dest/release/js/know_front_module.min.js
 /app/dest/release/js/know_front.min.js
 dest
 dest
+/app/bower_components/jquery
