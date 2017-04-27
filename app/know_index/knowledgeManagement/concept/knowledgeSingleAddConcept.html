@@ -132,7 +132,7 @@
                     <div class="lable">
                         概念扩展：
                     </div>
-                    <div class="value clearfix" >
+                    <div class="value clearfix">
                         <div class="bd tag_box L mr-10" >
                             {{item.extensionQuestionTitle}}
                         </div>
@@ -148,8 +148,10 @@
                         概念扩展：
                     </div>
                     <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10">
-                            {{item.extensionQuestionTitle}}
+                        <div class=" tag_box L mr-10">
+                            <span ng-repeat="i in item.extensionQuestionTitle.substring(item.extensionQuestionTitle.indexOf('#')+1).split('；')" style="margin: 0 5px;background: #e1e1e1;padding: 4px;">
+                                {{i}}
+                            </span>
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
