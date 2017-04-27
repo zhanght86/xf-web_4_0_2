@@ -15,12 +15,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             editCollective : editCollective,
             deleteCollective:deleteCollective,
             listData : "",   // table 数据
-            singleDel : singleDel,    //單條刪除
-            singleAdd : singleAdd,
+            singleDelCollectiveConcept : singleDelCollectiveConcept,    //單條刪除
+            singleAddCollectiveConcept : singleAddCollectiveConcept,
             paginationConf : ""  ,//分页条件
             pageSize : 5  , //默认每页数量
             //查詢
-            search : search,
+            searchCollectiveConcept : searchCollectiveConcept,
             searchVal : "",
             searchType : "collectiveConceptKey",
             timeStart : "",
@@ -33,45 +33,41 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
-            termSpliter: "；"
+            termSpliter: "；",
+            current:1
         };
 
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        getAggre(1);
+        loadCollectiveConceptTable(1);
         //请求列表
-        function getAggre(index){
+        function loadCollectiveConceptTable(current){
             httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
-                "index" :index==1?0:index,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                console.log(data);
-                console.log(data.total)
-                $scope.vm.listData = data.data;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
+                loadCollectiveConcept(current,data);
             },function(){
                 layer.msg("请求失败")
             })
         }
+        function loadCollectiveConcept(current,data){
+            $scope.vm.listData = data.data;
+            $scope.vm.current=current;
+            $scope.vm.paginationConf = {
+                currentPage: current,//当前页
+                totalItems: data.total, //总条数
+                pageSize: $scope.vm.pageSize,//第页条目数
+                pagesLength: 8,//分页框数量
+            };
+            $scope.$apply();
+        }
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                    "index" :current*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    $scope.listData = data.data;
-                },function(){
-                })
+                loadCollectiveConceptTable(current);
             }
         });
         //编辑
@@ -80,57 +76,62 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             $scope.vm.key = item.collectiveConceptKey;
             $scope.vm.term =  item.collectiveConceptTerm;
             $scope.vm.weight =  item.collectiveConceptWeight;
-            addDelDialog(singleEdit,item);
+            addCollectiveConceptDialog(singleEditCollectiveConcept,item);
         }
-        function search(){
+        function searchCollectiveConcept(){
             if($scope.vm.searchType == "collectiveConceptModifier"){
-                searchByUser()
+                searchCollectiveConceptByUser();
             }else{
-                searchByType()
+                searchCollectiveConceptByType();
             }
         }
         //查询
-        function searchByUser(){
-            console.log($scope.vm.searchVal);
+        function searchCollectiveConceptByUser(){
             httpRequestPost("/api/modeling/concept/collective/listByModifier",{
                 "collectiveConceptModifier":$scope.vm.searchVal,
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
-                "index":0,
-                "pageSize":10
+                "index":($scope.vm.current-1)*$scope.vm.pageSize,
+                "pageSize":$scope.vm.pageSize
             },function(data){
-                console.log(data);
-                $scope.vm.listData = data.data
+                loadCollectiveConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });
         }
-        function searchByType(){
-            var data;
+        function searchCollectiveConceptByType(){
+            var request = new Object();
+            request.collectiveConceptApplicationId=$scope.vm.applicationId;
+            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "collectiveConceptModifyTime"){
-                var key = angular.copy($scope.vm.searchType);
-                var data =  {
-                    key: $scope.vm.searchVal,
-                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
+                request=switchCollectiveConceptSearchType(request,$scope.vm.searchVal);
             }else{
-                console.log( $scope.vm.timeStart);
-                data =  {
-                    "startTimeRequest": $scope.vm.timeStart,
-                    "endTimeRequest": $scope.vm.timeEnd,
-                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                    "index":0,
-                    "pageSize":1
-                }
+                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+                request.startTimeRequest=$scope.vm.timeStart;
+                request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/collective/listByAttribute",data,function(data){
-                $scope.vm.listData = data.data
+            httpRequestPost("/api/modeling/concept/collective/listByAttribute",request,function(data){
+                loadCollectiveConcept($scope.vm.current,data);
             },function(){
-                layer.msg("查询没有对应信息")
+                layer.msg("查询没有对应信息");
             });
         }
-        var  key = angular.copy($scope.vm.searchType);
+        /**
+         * 转换查询类型
+         * @param request
+         * @param value
+         * @returns {*}
+         */
+        function switchCollectiveConceptSearchType(request,value){
+            if($("#searchType").val()=="collectiveConceptKey"){
+                request.collectiveConceptKey=value;
+            }else if($("#searchType").val()=="collectiveConceptWeight"){
+                request.collectiveConceptWeight=$("#collectiveConceptWeight").val();
+            }else if($("#searchType").val()=="collectiveConceptTerm"){
+                request.collectiveConceptTerm=value;
+            }
+            return request;
+        }
 
         //添加 窗口
         function addCollective(){
@@ -149,16 +150,16 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                             "collectiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
-                                layer.msg("概念类名重复");
+                                layer.msg("集合概念类名重复");
                                 httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
                                     "collectiveConceptApplicationId": $scope.vm.applicationId,
                                     "collectiveConceptKey":$scope.vm.key,
                                     "index":0,
                                     "pageSize":1
                                 },function(data){
-                                    $scope.vm.dialogTitle="修改集合概念";
+                                    $scope.vm.dialogTitle="编辑集合概念";
                                     console.log(data);
-                                    addDelDialog(singleEdit,data.data[0]);
+                                    addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
                                     $scope.vm.key = data.data[0].collectiveConceptKey;
                                     $scope.vm.term =  data.data[0].collectiveConceptTerm;
                                     $scope.vm.weight =  data.data[0].collectiveConceptWeight;
@@ -169,7 +170,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                                 $scope.vm.dialogTitle="增加集合概念";
                                 $scope.vm.term="";
                                 $scope.vm.weight="1" ;   //默認權重
-                                addDelDialog(singleAdd);
+                                addCollectiveConceptDialog(singleAddCollectiveConcept);
                             }
                         },function(){
                             layer.msg("添加失敗")
@@ -184,7 +185,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
 
         //編輯彈框   添加公用
-        function addDelDialog(callback,item){
+        function addCollectiveConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
                 scope: $scope,
@@ -221,14 +222,14 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        singleDel(id)
+                        singleDelCollectiveConcept(id)
                     }
                 }
             });
         }
         //編輯事件
-        function singleEdit(item){
-            assembleTerm();
+        function singleEditCollectiveConcept(item){
+            assembleCollectiveConceptTerm();
             httpRequestPost("/api/modeling/concept/collective/update",{
                 "collectiveConceptId":item.collectiveConceptId,
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
@@ -247,8 +248,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             })
         }
         //单条新增
-        function singleAdd(){
-            assembleTerm();
+        function singleAddCollectiveConcept(){
+            assembleCollectiveConceptTerm();
             httpRequestPost("/api/modeling/concept/collective/add",{
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "collectiveConceptKey":  $scope.vm.key,
@@ -256,7 +257,6 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 "collectiveConceptTerm": $scope.vm.term,
                 "collectiveConceptWeight": $scope.vm.weight
             },function(data){
-                //console.log(data);
                 layer.msg("添加成功");
                 $state.reload()
             },function(){
@@ -264,7 +264,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             })
         }
         //单条刪除
-        function singleDel(id){
+        function singleDelCollectiveConcept(id){
             httpRequestPost("/api/modeling/concept/collective/delete",{
                 "collectiveConceptId":id
             },function(data){
@@ -292,7 +292,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             }
         }
         //组装term数据
-        function assembleTerm(){
+        function assembleCollectiveConceptTerm(){
             var obj = $("#term").next();
             var term = "";
             $.each(obj.find("li"),function(index,value){
