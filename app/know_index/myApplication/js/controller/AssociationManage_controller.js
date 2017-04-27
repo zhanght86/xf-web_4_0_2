@@ -14,8 +14,41 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
 
         $scope.vm = {
+            addAssocia : addAssocia,
+            cancelAssocia : cancelAssocia
 
         };
+        function addAssocia(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/AssociationManageDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
+        function cancelAssocia(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/myApplication/applicationConfig/AssociationManageDialog2.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
+
 
 
 
