@@ -54,14 +54,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [{"requestId":"372211926127607808","channelId":"361738105134252034","applicationId":"360619411498860544","channelName":"QQ","channelUpdateTime":1490099521000,"channelUpdateId":"359873057331875840","statusId":50002},{"requestId":"372211926131802112","channelId":"367856312874172416","applicationId":"360619411498860544","channelName":"微信","channelUpdateTime":1491558301000,"channelUpdateId":"359873057331875840","statusId":50001},{"requestId":"372211926131802113","channelId":"367859239487537152","applicationId":"360619411498860544","channelName":"PC","channelUpdateTime":1491558999000,"channelUpdateId":"359873057331875840","statusId":50002},{"requestId":"372211926131802114","channelId":"367863798171697152","applicationId":"360619411498860544","channelName":"PC端","channelUpdateTime":1491560086000,"channelUpdateId":"359873057331875840","statusId":50002}],     //所有渠道
+            channels : [],     //所有渠道
             channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
-            dimensions : [{"dimensionId":"369243445367144448","dimensionName":"国家_中国","dimensionParentId":"368896402614386688"},{"dimensionId":"369244855760584704","dimensionName":"国家_日本","dimensionParentId":"368896402614386688"},{"dimensionId":"369176517474779137","dimensionName":"鞋子_李宁","dimensionParentId":"369176517193760768"},{"dimensionId":"369932079611248640","dimensionName":"鞋子_阿达达斯","dimensionParentId":"369176517193760768"},{"dimensionId":"369931334048546816","dimensionName":"省份_石家庄","dimensionParentId":"369931334027575296"},{"dimensionId":"369931334048546817","dimensionName":"省份_唐山","dimensionParentId":"369931334027575296"},{"dimensionId":"370271192004689920","dimensionName":"爱好_篮球","dimensionParentId":"370271191987912704"},{"dimensionId":"370271192004689921","dimensionName":"爱好_爬山","dimensionParentId":"370271191987912704"},{"dimensionId":"370271313735974912","dimensionName":"大海_黑海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271313735974913","dimensionName":"大海_死海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271389023731712","dimensionName":"人类_男人","dimensionParentId":"370271389006954496"},{"dimensionId":"370271389023731713","dimensionName":"人类_女人","dimensionParentId":"370271389006954496"}]
+            dimensions : []
             ,  //所有维度
-            dimensionArr : [{'dimensionName':'国家_中国','dimensionId':'369243445367144448'}],  //選擇的維度
-            dimensionsCopy :[{"dimensionId":"369243445367144448","dimensionName":"国家_中国","dimensionParentId":"368896402614386688"},{"dimensionId":"369244855760584704","dimensionName":"国家_日本","dimensionParentId":"368896402614386688"},{"dimensionId":"369176517474779137","dimensionName":"鞋子_李宁","dimensionParentId":"369176517193760768"},{"dimensionId":"369932079611248640","dimensionName":"鞋子_阿达达斯","dimensionParentId":"369176517193760768"},{"dimensionId":"369931334048546816","dimensionName":"省份_石家庄","dimensionParentId":"369931334027575296"},{"dimensionId":"369931334048546817","dimensionName":"省份_唐山","dimensionParentId":"369931334027575296"},{"dimensionId":"370271192004689920","dimensionName":"爱好_篮球","dimensionParentId":"370271191987912704"},{"dimensionId":"370271192004689921","dimensionName":"爱好_爬山","dimensionParentId":"370271191987912704"},{"dimensionId":"370271313735974912","dimensionName":"大海_黑海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271313735974913","dimensionName":"大海_死海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271389023731712","dimensionName":"人类_男人","dimensionParentId":"370271389006954496"},{"dimensionId":"370271389023731713","dimensionName":"人类_女人","dimensionParentId":"370271389006954496"}]
+            dimensionArr : [],  //選擇的維度
+            dimensionsCopy :[]
             ,
 
             checkChannelDimension : checkChannelDimension ,
@@ -84,7 +84,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
+                console.log("succ");
                 if(data.data){
+                    console.log(data);
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
                 }
@@ -95,6 +97,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
             function(data) {
                 if(data.data){
+                    console.log(data);
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
