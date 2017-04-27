@@ -37,6 +37,8 @@
                 </table>
             </div>
         </div>
+        <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
+
     </div>
     <div class="row tc">
         <button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>
