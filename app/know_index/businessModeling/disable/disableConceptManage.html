@@ -1,4 +1,4 @@
-<div class="r-cont pd30 L">
+<div class="r-cont pd30 L" style="min-width: 1000px;">
     <div class="r-cont-hd">
         <span>停用概念管理</span>
     </div>
@@ -6,21 +6,20 @@
         <div class="conceptSearch clearfix">
             <div class=" L bd mr-5">
 
-                <select ng-model="vm.searchType">
-                    <option value="stopConceptKey" selected>概念类名</option>
-                    <option value="stopConceptTerm">业务词</option>
-                    <option value="stopConceptModifier">创建人</option>
-                    <option value="stopConceptModifyTime">上传日期</option>
+                <select id="searchType" ng-model="vm.searchType" style="height: 31px;">
+                    <option value="stopConceptKey" selected>停用概念类名</option>
+                    <option value="stopConceptTerm">停用概念集合</option>
+                    <option value="stopConceptModifier">修改人</option>
+                    <option value="stopConceptModifyTime">更新时间</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='stopConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: 5px  0 0;"   ng-if="vm.searchType=='stopConceptModifyTime'">
-                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                <div style="margin: -31px 0px 0px 88px;" ng-if="vm.searchType=='stopConceptModifyTime'">
+                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     -
-                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                 </div>
             </div>
-
-            <input type="button" value="查找" ng-click="vm.search()"  class="btn1 btn1_blue"/>
+            <input type="button" value="查找" ng-click="vm.searchStopConcept()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addStop()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
@@ -29,34 +28,33 @@
                 <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
             </div>
         </div>
-        <div class="conceptTab">
-            <table border="1">
-                <thead>集合概念表</thead>
+        <table class="stop_word_tab">
+            <thead>
                 <tr>
-                    <td>概念类名</td>
-                    <td>集合概念</td>
-                    <td>更新时间</td>
-                    <td>创建人</td>
-                    <td>操作</td>
+                    <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
+                    <th class="bold">停用概念类名</th>
+                    <th class="bold">停用概念集合</th>
+                    <th class="bold">更新时间</th>
+                    <th class="bold">修改人</th>
+                    <th class="bold">操作</th>
                 </tr>
-                <tr ng-repeat="item in vm.listData">
-                    <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
-                    <td class="color-blue2">{{item.stopConceptKey}}</td>
-                    <td class="color-blue2">
-                        <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.stopConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.stopConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
-                    </td>
-                    <td>{{item.stopConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                    <td>{{item.stopConceptModifier}}</td>
-                    <td>
-                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editStop(item)">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteStop(item.stopConceptId)">删除</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            </thead>
+            <tr ng-repeat="item in vm.listData">
+                <!--<td><input type="checkbox"></td>-->
+                <td>{{item.stopConceptKey}}</td>
+                <td>
+                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.stopConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.stopConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
+                </td>
+                <td>{{item.stopConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                <td>{{item.stopConceptModifier}}</td>
+                <td>
+                    <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editStop(item)">修改</a> &nbsp;
+                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteStop(item.stopConceptId)">删除</a>
+                </td>
+            </tr>
+        </table>
         <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
     </div>
-
 </div>
 <style>
     .pagination {

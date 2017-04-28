@@ -16,6 +16,7 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,
+            isSlide2 : isSlide2,
         };
 
         function isSlide(event){
@@ -24,6 +25,14 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
                 $(self).removeClass("slideActive").next(".menu_1").stop().slideToggle();
             }else{
                 $(self).addClass("slideActive").next(".menu_1").stop().slideToggle();
+            }
+        }
+        function isSlide2(event){
+            var self=event.target;
+            if($(self).hasClass("slideActive")){
+                $(self).removeClass("slideActive").parent().next(".menu_1").stop().slideToggle();
+            }else{
+                $(self).addClass("slideActive").parent().next(".menu_1").stop().slideToggle();
             }
 
         }

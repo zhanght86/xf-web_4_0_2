@@ -149,6 +149,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 if(data.status==200){
                     $scope.vm.sceneId =data.data.sceneId; //场景id
                     $scope.vm.applicationName =data.data.applicationName;//应用名称
+                    $scope.vm.applicationNewName = data.data.applicationName; //待编辑的新应用名称
                     $scope.vm.applicationDescription =data.data.applicationDescription;//应用描述
                     $scope.vm.applicationCreateTime =data.data.applicationCreateTime;//创建时间
                     $scope.vm.statusId =data.data.statusId; //应用状态
@@ -161,7 +162,6 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 layer.msg("请求失败");
             })
         }
-
 
             //查看场景信息
         function findSceneInfo(){
@@ -184,6 +184,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
 
         //编辑应用的名称
         function editName(){
+            $scope.vm.applicationNewName = $scope.vm.applicationName ; //待编辑的新应用名称
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationInfor/applicationInforDialog.html",
                 scope: $scope,
