@@ -6,6 +6,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
         $cookieStore.put("userName","admin1");
+        $cookieStore.put("userId","111111");
+        $cookieStore.put("sceneId","1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
@@ -13,6 +15,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
+            userId : $cookieStore.get("userId") ,
+            sceneId :  $cookieStore.get("sceneId") ,
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
@@ -37,7 +41,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
             //扩展问
             extensionTitle : "",
-            extensionWeight :1,
+            extensionWeight :60,
             getExtension : getExtension,  //獲取擴展問
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
@@ -160,27 +164,17 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     console.log(data);
                 var  extensionQuestionList = [] ,
                       frameQuestionTagList = [];
+                    var obj = {} ;
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item,index){
                             if(index>0){
-                                // 展示内容
-                                var obj = {} ;
-                                obj.extensionQuestionTitle  = item.elementContent;
-                                obj.extensionQuestionType = 1;
+                                obj.extensionQuestionType = 60;   //61
                                 obj.source = data.data[0].frameTitle;
-                                //校驗内容
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
-                                frameQuestionTagList.push( item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
-                                //if(type){
-                                //    // 展示内容
-                                //    $scope.vm.extensionsByFrame.pop();
-                                //    $scope.vm.extensionsByFrame.push(obj)
-                                //}else{
-                                //    $scope.vm.extensionsByFrame.push(obj)
-                                //}
+                                frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
                             }
                         });
-                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList);
+                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
                     }
                     $scope.$apply();
                 }
@@ -226,15 +220,35 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         //生成扩展问校验
-        function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList){
+        function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
+            console.log(oldWord)
             httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
                 "applicationId": "100",
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
                 if(data.status==200){
-                    $scope.vm.extensionsByFrame = data.data;
-                    $scope.$apply()
+                    var enxtensionBack = [] ;
+                    angular.forEach(data.data,function(item){
+                        var obj = {} ;
+                        obj.extensionQuestionTitle = item.extensionQuestionTitle;
+                        obj.extensionQuestionType = oldWord.extensionQuestionType;
+                        obj.source = oldWord.source ;
+                        var arr = [] ;
+                        angular.forEach(item.extensionQuestionTagList,function(val){
+                            var tag = {} ;
+                            tag.exist = val.exist ;
+                            tag.tagClass = val.tagClass ;
+                            tag.tagName =val.tagName ;
+                            tag.tagType = [];
+                            tag.tagType.push(val.tagType) ;
+                            arr.push(tag)
+                        });
+                        obj.tagList = arr ;
+                        enxtensionBack.push(obj);
+                    });
+                    $scope.vm.extensionsByFrame =  enxtensionBack;
+                    $scope.$apply();
                     console.log(data);
                 }
             },function(){
@@ -242,31 +256,33 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             });
         }
 
-        //添加扩展问
+        //手动添加扩展问
         function getExtension(title,weight){
+            var question = [];
+            question.push(title);
             var obj = {} ;
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
-            console.log(checkExtension(obj , $scope.vm.extensions));
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+                httpRequestPost("/api/conceptKnowledge/checkExtensionQuestion",{
                     "applicationId": "100",
-                    "extendQuestionList" : title
+                    "extendQuestionList" : question
                 },function(data){
-                    console.log(data);
                     if(data.status == 500){
                         layer.msg("扩展问重复")
                     }else if(data.status==200){
-                        $scope.vm.extensions.push(obj);
-                        console.log(obj);
+                        var enten = data.data[0]  ;
+                        enten.extensionQuestionTitle = title;
+                        enten.extensionQuestionType = weight ;
+                        $scope.vm.extensions.push(enten);
                         $scope.$apply()
+                        console.log( $scope.vm.extensions)
                     }
-                    console.log(data);
                 },function(){
                    layer.msg("添加扩展问失败")
                 });
@@ -282,7 +298,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //    getChannel();
         //点击 root 的下拉效果
         function  knowledgeBot(ev){
-            console.log(1)
+            console.log(1) ;
             $timeout(function(){
                 angular.element(".rootClassfy").slideToggle();
             },50)
@@ -426,7 +442,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
         }
-        //生成 bot
+        //根據 標題 生成 bot
         function getBotByTitle(){
             console.log($scope.vm.title) ;
             if($scope.vm.title){
@@ -447,18 +463,16 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             obj.classificationId = item.id ;
                             obj.classificationType = 0;
                             $scope.vm.botClassfy.push(obj);
-                                $scope.vm.frameCategoryId = item.id
+                            $scope.vm.frameCategoryId = item.id
                         });
                         $scope.$apply()
                     }
-                    //console.log(data);
                 },function(err){
-                    layer.msg("打标失败，请重新打标")
+                    layer.msg("标题打标失败，请重新打标")
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
             }
-
         }
         //  主页保存 获取参数
         function getParams(){
@@ -475,6 +489,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy;
+            params.userId = $scope.vm.userId;
+            params.sceneId = $scope.vm.sceneId
+
             return params
         }
 
@@ -485,7 +502,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                return false
            }else{
                 httpRequestPost("/api/faqKnowledge/addFAQKnowledge",getParams(),function(data){
-                    console.log(data)
+                    console.log(data);
                     if(data.status == 200){
                         //open
                         //$state.go("custServScenaOverview.manage")

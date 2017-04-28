@@ -117,10 +117,10 @@
                         <div class="clearfix" style="width: 500px;height: 38px;">
                             <input type="text " class="L" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
                             <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 20%;height:39px;">
-                                <option value="1">普通</option>
-                                <option value="0">否定</option>
+                                <option value="60">普通</option>
+                                <option value="61">否定</option>
                             </select>
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -135,28 +135,32 @@
                         概念扩展：
                     </div>
                     <div class="value clearfix">
-                        <div class="bd tag_box L mr-10" >
-                            {{item.extensionQuestionTitle}}
+                        <div class=" tag_box L mr-10">
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
+                            </span>
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">普通</span>
+                        <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
-                        <!--<span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>-->
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                        <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
                 </div>
 
                 <!-- 業務框架 生成 -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
-
                     <div class="lable">
                         概念扩展：
                     </div>
-                    <div class="value clearfix" >
+                    <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="tag in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
-                                {{tag.tagName}}
+                            <!--{{item.extensionQuestionTagList}}-->
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
                             </span>
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                         <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
@@ -182,13 +186,13 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span  ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">维度:
-                            <span ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                            <span class="mr-10" ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
                         </div>
                     </div>
                 </div>
@@ -227,6 +231,7 @@
         background: #fff;
         color: #ed;
     }
+
 </style>
 <script>
 
