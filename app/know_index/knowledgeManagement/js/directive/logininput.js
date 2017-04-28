@@ -9,7 +9,7 @@ knowledge_static_web.directive("loginInput", function() {
                 $(this).parents(".login-fItem").removeClass("focus");
             });
         }
-    }
+    }     
 })
 .directive('switch',function(){
     return{

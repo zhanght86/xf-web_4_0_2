@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('satisfactionDegreeController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
@@ -22,8 +22,8 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             sendChannels : [],
 
             timeType : 0,
-            timeStart : null,
-            timeEnd : null,
+            timeStart : $filter('date')(new Date(), 'yyyy-MM-dd'),
+            timeEnd : $filter('date')(new Date(), 'yyyy-MM-dd'),
 
             "orderForSessionNumber": null,
 
@@ -107,46 +107,51 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
                 "endTime": $scope.vm.timeEnd,
 
             },function(data){
-                if(data.data){
-                    var params = data.data.objs[0];
-                    var myChart = echarts.init(document.getElementById('statistics'));
-                    // 指定图表的配置项和数据
-                    var option = {
-                        title : {
-                            text: '满意率统计',
-                            x:'center'
-                        },
-                        tooltip : {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c} ({d}%)"
-                        },
-                        legend: {
-                            orient: 'vertical',
-                            left: 'left',
-                            data: ['满意率','不满意率']
-                        },
-                        series : [
-                            {
-                                type: 'pie',
-                                radius : '55%',
-                                center: ['50%', '60%'],
-                                data:[
-                                    {value:params.satisfiedNumber, name:'满意率'},
-                                    {value:params.unsatisfiedNumber, name:'不满意率'},
-                                ],
-                                itemStyle: {
-                                    emphasis: {
-                                        shadowBlur: 10,
-                                        shadowOffsetX: 0,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                    }
+                var params;
+                if(data && data.status == 200 && data.data != null && data.data.length != 0)
+                    params = data.data.objs[0];
+                else
+                    params = {
+                        satisfiedNumber: 0,
+                        unsatisfiedNumber: 0
+                    };
+                var myChart = echarts.init(document.getElementById('statistics'));
+                // 指定图表的配置项和数据
+                var option = {
+                    title : {
+                        text: '满意率统计',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['满意率','不满意率']
+                    },
+                    series : [
+                        {
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:[
+                                {value:params.satisfiedNumber, name:'满意率'},
+                                {value:params.unsatisfiedNumber, name:'不满意率'},
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
                                 }
                             }
-                        ]
-                    };
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
-                }
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
             },function(err){
                 layer.msg("获取满意度失败，请刷新页面")
             });
