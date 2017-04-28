@@ -52,7 +52,7 @@
                         <td>{{item.userEmail}}</td>
                         <td>{{item.roleName}}</td>
                         <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
-                        <td><span ng-repeat="val in item.applicationName[0].data">{{val}}<i ng-if="$index!=item.applicationName[0].data.length-1">,</i></span></td>
+                        <td><span ng-repeat="val in item.applicationName[0].data">{{val.applicationName}}<i ng-if="$index!=item.applicationName[0].data.length-1">,</i></span></td>
                         <td>
                             <span class="btn1 btn_green2" ng-if="item.statusId==10001">已启用</span>
                             <span class="btn1 btn_red" ng-if="item.statusId==10002">未启用</span>
@@ -68,7 +68,7 @@
                     </tbody>
                 </table>
             </div>
-            <pagination ng-if="vmo.paginationConf.totalItems && vmo.paginationConf.totalItems>0" conf="vmo.paginationConf"></pagination>
+            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
         </div>
     </div>
 </div>
