@@ -157,7 +157,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
                 "ruleId":$scope.roleId,
                 "requestId":"String"
             };
-            if($scope.roleId != null)
+            if($scope.roleId && $scope.roleId != null && $scope.roleId != "")
                 TemplateService.updateWordRule.save(params, function(re){
                     if(re.status == 200){
                         history.back();
