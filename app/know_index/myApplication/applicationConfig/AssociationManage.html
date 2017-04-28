@@ -5,45 +5,37 @@
     <div class="r-cont-bd oh ">
         <div class="con_box  mb25">
             <div class="pr con_box_serl bd mr10" style="margin:0 auto 20px;">
-                <input type="text" class="txt L" placeholder=""  style="width:257px;">
-                <input type="button" class="btn1" value="查找" >
+                <input type="text" class="txt L" placeholder=""  style="width:257px;" ng-model="vm.searchWord">
+                <input type="button" class="btn1" value="查找" ng-click="vm.listApplicationServiceData(1)" >
             </div>
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
-                    <button class="L btn1 btn1_blue mr-10" ng-click="vm.addAssocia()">关联</button>
-                    <button class="btn1 btn_green" ng-click="vm.cancelAssocia()">取消关联</button>
+                    <button class="L btn1 btn1_blue mr-10" ng-click="vm.addRelatedService()">关联</button>
+                    <button class="btn1 btn_green" ng-click="vm.cancelRelatedService()">取消关联</button>
                 </div>
                 <div>
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="10%"><input  type="checkbox" id="selectAll" onclick="checkedAll()"/></th>
+                            <!--<th class="bold" width="10%"><input  type="checkbox" id="selectAll" onclick="checkedAll()"/></th>-->
+                            <th class="bold" width="10%"></th>
                             <th class="bold" width="40%">服务名称</th>
                             <th class="bold" width="30%">关联服务</th>
                             <th class="bold" width="20%">关联服务应用类型</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input  type="checkbox" name="sid" onclick="clear_checked()"/></td>
-                            <td>长沙银行信用卡服务</td>
-                            <td>长沙银行客服1</td>
-                            <td>客服</td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" name="sid" onclick="clear_checked()"/></td>
-                            <td>湖南电信服务</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input  type="checkbox" name="sid" onclick="clear_checked()"/></td>
-                            <td>长沙电子银行服务</td>
-                            <td></td>
-                            <td></td>
+                        <tr  ng-repeat="item in vm.applicationServiceData">
+                            <!--<td><input  type="checkbox" name="sid" onclick="clear_checked()"/></td>-->
+                            <td><input type="radio" name="serviceId" ng-click="vm.selectServiceId(item.serviceId)"/></td>
+                            <td>{{item.serviceName}}</td>
+                            <td>{{item.relatedServiceNames}}</td>
+                            <td>{{item.relatedServiceSceneNames}}</td>
                         </tr>
                         </tbody>
                     </table>
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0"
+                                conf="vm.paginationConf"></pagination>
                 </div>
 
             </div>
