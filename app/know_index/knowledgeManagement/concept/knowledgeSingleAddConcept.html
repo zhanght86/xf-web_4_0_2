@@ -182,13 +182,13 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span  ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">维度:
-                            <span ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                            <span class="mr-10" ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
                         </div>
                     </div>
                 </div>
@@ -227,6 +227,7 @@
         background: #fff;
         color: #ed;
     }
+
 </style>
 <script>
 

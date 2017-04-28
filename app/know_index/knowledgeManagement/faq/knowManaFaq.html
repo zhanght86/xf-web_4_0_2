@@ -182,8 +182,9 @@
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
-                        <div class="optionDiv">维度:
-                            <span ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                        <div class="optionDiv">
+                            维度:
+                            <span class="mr-10"  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
                         </div>
                     </div>
                 </div>
