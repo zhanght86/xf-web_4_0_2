@@ -133,6 +133,17 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         $(".aside-navs").on("click",'i',function(){
             appendTree(this);
         });
+        //重设请求数组
+        function requestArrayReset(){
+            $scope.vm.elementAskContentArray=[];
+            $scope.vm.elementAttributeIdArray=[];
+            $scope.vm.elementContentArray=[];
+            $scope.vm.elementFrameIdArray=[];
+            $scope.vm.elementMiningTypeIdArray=[];
+            $scope.vm.elementRelateConceptArray=[];
+            $scope.vm.elementTypeIdArray=[];
+            $scope.vm.elementIdArray=[];
+        }
         //加载子树
         function appendTree(obj){
             var id = $(obj).attr("data-option");
@@ -371,13 +382,38 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        if(faqValidata()==true){
+                        if(faqValidata(0)==true){
                             faqAssemble(0);
                             faqRequestAdd();
+                        }else{
+                            return false;
                         }
                     }
                 }
             });
+            if(dialog){
+                $timeout(function(){
+                    $("#faqFrameTitle").blur(function(){
+                        console.log($scope.vm.frameTypeId);
+                        $scope.vm.frameTitle=$("#faqFrameTitle").val();
+                        if(lengthCheck($("#faqFrameTitle").val(),0,50)==false){
+                            $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                            return;
+                        }
+                        if(frameTitleRepeatCheck(0,"#faqFrameAddErrorObj")==false){
+                            return;
+                        }
+                    });
+                    $("#standard_question").blur(function(){
+                        console.log("standard_question");
+                        if(lengthCheck($("#standard_question").val(),0,50)==false){
+                            $("#faqStandardQuestionErrorObj").html("标准问题为空或超过长度限制50");
+                        }else{
+                            $("#faqStandardQuestionErrorObj").html('');
+                        }
+                    });
+                },100);
+            }
         }
         //修改表达式
         function updateFaq(){
@@ -391,31 +427,63 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        if(faqValidata()==true){
+                        if(faqValidata(1)==true){
                             faqAssemble(1);
                             faqRequestUpdate();
+                        }else{
+                            return false;
                         }
                     }
+                    loadFrameLibrary(1);
                 }
             });
             if(dialog){
                 $timeout(function () {
                     fillFaqUpdatePage();
+                    $("#faqFrameTitle").blur(function(){
+                        console.log($scope.vm.frameTypeId);
+                        $scope.vm.frameTitle=$("#faqFrameTitle").val();
+                        if(lengthCheck($("#faqFrameTitle").val(),0,50)==false){
+                            $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                            return;
+                        }
+                        if(frameTitleRepeatCheck(1,"#faqFrameAddErrorObj")==false){
+                            return;
+                        }
+                    });
+                    $("#standard_question").blur(function(){
+                        console.log("standard_question");
+                        if(lengthCheck($("#standard_question").val(),0,50)==false){
+                            $("#faqStandardQuestionErrorObj").html("标准问题为空或超过长度限制50");
+                        }else{
+                            $("#faqStandardQuestionErrorObj").html('');
+                        }
+                    });
                     //单个删除元素
                     $("#faq_extension").on("click",'.del',function(){
                         console.log("======deletebyelementId======");
                         if($(this).attr("element-id")==null){
                             return;
                         }
+                        var obj = $(this).parent().parent();
                         var elementId=$(this).attr("element-id");
-                        console.log("======elementId======"+elementId);
-                        $(this).parent().parent().remove();
-                        httpRequestPost("/api/modeling/frame/deleteelementbyid",{
-                            "elementId":elementId
-                        },function(data){
-                            responseView(data);
-                        },function(err){
-                            console.log(err);
+                        var flag = false;
+                        layer.confirm("删除以后不能恢复，确认删除？",{
+                            btn:['确认','取消'],
+                            shade:false
+                        },function(){
+                            console.log("======elementId======"+elementId);
+                            httpRequestPostAsync("/api/modeling/frame/deleteelementbyid",{
+                                "elementId":elementId
+                            },function(data){
+                                if (responseView(data)==true) {
+                                    $(obj).remove();
+                                }
+                            },function(err){
+                                console.log(err);
+                            });
+                        },function(){
+                            console.log("cancel");
                         });
                     });
                 }, 100);
@@ -427,7 +495,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $("#standard_question").val($scope.vm.elementContentArray[i]);
                     $("#standard_question").attr("element-id",$scope.vm.elementIdArray[i]);
                 }else{
-                    var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
+                    var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;" disabled="disabled"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
                     $(".exten_problem").append(html);
                 }
             }
@@ -470,6 +538,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //表达式类型数据组装 0:新增 1:修改
         function faqAssemble(type){
+            requestArrayReset();
             $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
             $scope.vm.elementAttributeIdArray[0]=10025;
             $scope.vm.elementContentArray[0]=$("#standard_question").val();
@@ -499,6 +568,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //组装框架数据
         function assembleFrame(){
+            requestArrayReset();
             var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
             $scope.vm.frameId=frameInfo.frameId;
             $scope.vm.frameTypeId=frameInfo.frameTypeId;
@@ -519,7 +589,28 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //
         //表达式类型数据校验
-        function faqValidata(){
+        function faqValidata(type){
+            //框架标题校验
+            console.log($scope.vm.frameTitle);
+            if(lengthCheck($scope.vm.frameTitle,0,50)==false){
+                $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                return false;
+            }
+            if(frameTitleRepeatCheck(type,"#faqFrameAddErrorObj")==false){
+                return false;
+            }
+            //标准问题校验
+            if(lengthCheck($("#standard_question").val(),0,50)==false){
+                $("#faqStandardQuestionErrorObj").html("标准问题为空或超过长度限制50");
+                return false;
+            }
+            //扩展问题校验
+            var length = $(".exten_problem").find("input").filter(":gt(0)").length;
+            console.log(length);
+            if(length==0){
+                $("#faqExtendQuestionErrorObj").html("至少应该有一个扩展问题");
+                return false;
+            }
             return true;
         }
         function faqRequestAdd(){
@@ -603,6 +694,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //组装概念数据 0:添加 1:修改
         function conceptAssemble(type){
+            requestArrayReset();
             $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
             $scope.vm.elementAttributeIdArray[0]=10025;
             $scope.vm.elementContentArray[0]=$("#concept_title").val();
@@ -675,7 +767,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        if(faqValidata()==true){
+                        if(conceptValidate(1)==true){
                             conceptAssemble(1);
                             conceptRequestUpdate();
                         }
@@ -692,15 +784,27 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return;
                         }
                         var elementId=$(this).attr("element-id");
-                        console.log("======elementId======"+elementId);
-                        $(this).parent().parent().remove();
-                        httpRequestPost("/api/modeling/frame/deleteelementbyid",{
-                            "elementId":elementId
-                        },function(data){
-                            responseView(data);
-                        },function(err){
-                            console.log(err);
+                        layer.confirm("删除以后不能恢复，确认删除？",{
+                            btn:['确认','取消'],
+                            shade:false
+                        },function(){
+                            console.log("======elementId======"+elementId);
+                            $(this).parent().parent().remove();
+                            httpRequestPost("/api/modeling/frame/deleteelementbyid",{
+                                "elementId":elementId
+                            },function(data){
+                                if (responseView(data)==true) {
+                                    flag = true;
+                                }
+                            },function(err){
+                                console.log(err);
+                            });
+                        },function(){
+                            console.log("cancel");
                         });
+                        if(flag){
+                            $(this).parent().parent().remove();
+                        }
                     });
                 }, 100);
             }
@@ -857,6 +961,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //元素类型数据组装
         function elementAssemble(type){
+            requestArrayReset();
             $.each($("#add-item").find("tr"),function(index,value){
                 console.log("====="+$(value).find(".ele-name-add").val());
                 $scope.vm.elementAskContentArray[index]=$(value).find(".ele-asked-add").val();
