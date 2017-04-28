@@ -25,7 +25,7 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="dib">
                                 <label>
-                                    <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                                    <input style=" margin: 0px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
                                 </label>
                                 <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -159,9 +159,9 @@
                             <div class="channel_div  mb-10">
                                 <span class="channel_s">渠道：</span>
                                 <div>
-                                    <label ng-repeat="channel in vm.channels">
+                                    <label class="mr-10" ng-repeat="channel in vm.channels">
                                         <!--<checkbox ng-click="vm.selectChannel(channel.channelId)"></checkbox>-->
-                                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
+                                        <input style=" margin: 0px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
                                         {{channel.channelName}}
                                     </label>
                                 </div>
