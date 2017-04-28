@@ -164,7 +164,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
-                console.log(1)
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
                     var obj = {};
