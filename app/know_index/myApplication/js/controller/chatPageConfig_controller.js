@@ -19,6 +19,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             listKnoData : "", //知识数据
             listDataTotal : "", //总数
             pageSize : 5,
+            indexV :1,
             listKnoDataTotal : "", //聊天知识库知识总数
             chatKnowledgeId : "",
             chatKnowledgeTopic : "",
@@ -160,7 +161,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 applicationId:$scope.vm.applicationId,
                 title : $scope.vm.knowledge,
                 pageSize : $scope.vm.pageSize,
-                index : (index - 1)* $scope.vm.pageSize,
+                index : (index - 1)*$scope.vm.pageSize,
             },function(data){
                 $scope.vm.listKnoData = data.data.objs;
                 $scope.vm.listKnoDataTotal = data.data.total;
@@ -175,6 +176,12 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
+
+        $scope.$watch('vm.paginationConf1.currentPage', function(current){
+            if(current){
+                findKnowledge(current);
+            }
+        });
 
         //删除知识
         function deleteKnowledge(){
