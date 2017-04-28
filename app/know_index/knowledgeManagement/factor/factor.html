@@ -25,7 +25,7 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="dib">
                                 <label>
-                                    <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                                    <input style=" margin: 0px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
                                 </label>
                                 <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -57,7 +57,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <a href="javascript:;" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
+                                    <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.botSelectAdd"><img src="../../../images/images/add_img.png" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -134,17 +134,23 @@
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
                                 <div class="essential_factor_div bd mt-10">
                                     <div class="mb-10">
-                                        <a href="javascript:;" class="add_line mr-10"><img src="../images/ys_img1.png"/></a>
-                                        <a href="javascript:;" class="delete_line mr-10"><img src="../images/ys_img2.png"/></a>
-										<a href="javascript:;" class="add_column mr-10" ng-click="vm.addList();"><img src="../images/ys_img3.png"/></a>                                        <a href="javascript:;" class="delete_column"><img src="../images/ys_img4.png"/></a>
+                                        <a href="javascript:;" class="add_l ine mr-10" ng-click="vm.addRow()"><img src="../images/ys_img1.png"/></a>
+                                        <a href="javascript:;" class="delete_line mr-10" ng-click="vm.tableRemove(1)"><img src="../images/ys_img2.png"/></a>
+										<a href="javascript:;" class="add_column mr-10"  ng-click="vm.addList();"><img src="../images/ys_img3.png"/></a>
+                                        <a href="javascript:;" class="delete_column"  ng-click="vm.tableRemove(2)"><img src="../images/ys_img4.png"/></a>
                                     </div>
                                     <div>
                                         <!--{{vm.tableList}}-->
                                         <!--{{vm.tableList.data.listTable}}-->
+                                        <!--{{vm.tableRow}}{{vm.tableColumn}}-->
                                         <table class="essential_factor_tab">
-
-                                            <tr ng-repeat="(row,indexRow) in  vm.tableList.data.listTable track by $index">
-                                                <td ng-repeat="(item,indexRow) in row track by $index" ng-click="vm.removeTable($index)">{{indexRow}}{{item}}</td>
+                                            <tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">
+                                                <td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">
+                                                    <!--{{item}}-->
+                                                    <input type="text" ng-if="indexRow==0" ng-model="item"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.addList()" style="background:inherit;cursor:pointer"/>
+                                                    <!--<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>-->
+                                                    <input type="text" ng-if="indexRow!=0" ng-model="item"  ng-change="vm.tableChange(indexRow,indexColumn,item)"/>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -153,9 +159,9 @@
                             <div class="channel_div  mb-10">
                                 <span class="channel_s">渠道：</span>
                                 <div>
-                                    <label ng-repeat="channel in vm.channels">
+                                    <label class="mr-10" ng-repeat="channel in vm.channels">
                                         <!--<checkbox ng-click="vm.selectChannel(channel.channelId)"></checkbox>-->
-                                        <input style="width: 18px;height: 18px; margin-top: 2px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
+                                        <input style=" margin: 0px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
                                         {{channel.channelName}}
                                     </label>
                                 </div>

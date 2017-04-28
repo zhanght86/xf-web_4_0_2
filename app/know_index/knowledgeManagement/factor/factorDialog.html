@@ -13,18 +13,19 @@
             <label class="form-label col-xs-3 col-sm-2">要素类型：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text">
-                    <option value="string">字符串</option>
-                    <option value="int">数值</option>
-                    <option value="date">日期</option>
+                <select class="input-text" ng-model="vm.tableType">
+                    <option value="114">字符串</option>
+                    <option value="115">数值</option>
+                    <option value="116">日期</option>
                 </select>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">挖掘技术：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10"><input type="checkbox"/> OEC语义挖掘</label>
-                <label><input type="checkbox"/> gate算法</label>
+                <label class="mr-10"><input type="checkbox" ng-checked="vm.gorithm.inArray('130')" ng-click="vm.gorithm.inArray('130')?vm.gorithm.remove('130'):vm.gorithm.push('130')"/> OEC语义挖掘</label>
+                <label class="mr-10"><input type="checkbox" ng-checked="vm.gorithm.inArray('131')" ng-click="vm.gorithm.inArray('131')?vm.gorithm.remove('131'):vm.gorithm.push('131')"/> gate算法</label>
+
             </div>
         </div>
         <div class="mb-10 cl">
