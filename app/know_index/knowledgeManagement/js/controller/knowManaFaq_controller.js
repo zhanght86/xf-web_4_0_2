@@ -482,8 +482,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
-                obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
                 obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                 //高級 選項
                 $scope.vm.scanContent.push(obj);

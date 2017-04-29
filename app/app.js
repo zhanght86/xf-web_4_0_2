@@ -714,6 +714,21 @@ knowledge_static_web
                     }
                 }
             })
+            //客服場景
+            .state("knowledgeManagement.customKnowledge", {
+                url: "/customKnowledge",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/customKnowledge/customKnowledge.html',
+                        controller: "customKnowledge"
+                    }
+                }
+            })
             .state("knowledgeManagement.faqAdd", {
                 url: "/faqAdd",
                 params : {data : null},

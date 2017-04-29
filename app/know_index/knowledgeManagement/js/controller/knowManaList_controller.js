@@ -253,8 +253,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             tag.tagTypeList.push(val.tagType) ;
                             arr.push(tag)
                         });
-                        obj.tagList = arr ;
-                        obj.wholeDecorateTag = wholeTag
+                        obj.extensionQuestionTagList = arr ;
+                        obj.wholeDecorateTag = wholeTag;
                         enxtensionBack.push(obj);
                     });
                     $scope.vm.extensionsByFrame =  enxtensionBack;
@@ -298,14 +298,31 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     "applicationId": "100",
                     "extendQuestionList" : question
                 },function(data){
+                    console.log(data);
                     if(data.status == 500){
                         layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==200){
-                        var enten = data.data[0]  ;
+                        var enten = {}  ;
+                        var tag = [] ;
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = weight ;
+                        angular.forEach(data.data[0].extensionQuestionTagList,function(item){
+                            var tagTem = {};
+                            tagTem.tagClass= item.tagClass;
+                            tagTem.tagName= item.tagName;
+                            tagTem.tagTypeList= [] ;
+                            tagTem.tagTypeList.push(item.tagType);
+                            tag.push(tagTem)
+                        });
+                        enten.extensionQuestionTagList = tag ;
+                        var listArr = [];
+                        var listObj = {};
+                        listObj.wholeDecorateTagName="";
+                        listObj.wholeDecorateTagType="";
+                        listArr.push(listObj);
+                        enten.wholeDecorateTagList = listArr;
                         $scope.vm.extensions.push(enten);
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
@@ -478,7 +495,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             obj.classificationId = item.id ;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
-                            $scope.vm.frameCategoryId = item.id;
+                            //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
                         $scope.$apply()
@@ -510,10 +527,12 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-                obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
-                obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
-                obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+
+               obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+               obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+               obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
+            obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent.push(obj);
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
@@ -525,27 +544,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!checkSave()){
                 return false
             }else{
-                httpRequestPost("/api/listKnowledge/addConceptKnowledge",getParams(),function(data){
+                httpRequestPost("/api/listKnowledge/addListKnowledge",getParams(),function(data){
                     console.log(getParams());
                     if(data.status == 200){
-                        var url = $state.href('custServScenaOverview.manage',{data:getParams()});
-                        window.open(url,'_blank');
+                        console.log(data);
+                        var url = $state.go('custServScenaOverview.manage');
                     }else if(data.status==500){
                         layer.msg("保存失败")
                     }
                 },function(err){
                     console.log(err)
                 });
-                //knowledgeAddServer.faqSave(getParams(),
-                //    function(data){
-                //        if(data.status == 200){
-                //            //open
-                //            //$state.go("custServScenaOverview.manage")
-                //        }
-                //    //console.log(data)
-                //},function(err) {
-                //    layer.msg("保存失败")
-                //})
             }
         }
         function scan(){

@@ -54,14 +54,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //高级选项
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [],     //所有渠道
+            channels : [{"requestId":"372211926127607808","channelId":"361738105134252034","applicationId":"360619411498860544","channelName":"QQ","channelUpdateTime":1490099521000,"channelUpdateId":"359873057331875840","statusId":50002},{"requestId":"372211926131802112","channelId":"367856312874172416","applicationId":"360619411498860544","channelName":"微信","channelUpdateTime":1491558301000,"channelUpdateId":"359873057331875840","statusId":50001},{"requestId":"372211926131802113","channelId":"367859239487537152","applicationId":"360619411498860544","channelName":"PC","channelUpdateTime":1491558999000,"channelUpdateId":"359873057331875840","statusId":50002},{"requestId":"372211926131802114","channelId":"367863798171697152","applicationId":"360619411498860544","channelName":"PC端","channelUpdateTime":1491560086000,"channelUpdateId":"359873057331875840","statusId":50002}],     //所有渠道
             channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
-            dimensions : []
+            dimensions : [{"dimensionId":"369243445367144448","dimensionName":"国家_中国","dimensionParentId":"368896402614386688"},{"dimensionId":"369244855760584704","dimensionName":"国家_日本","dimensionParentId":"368896402614386688"},{"dimensionId":"369176517474779137","dimensionName":"鞋子_李宁","dimensionParentId":"369176517193760768"},{"dimensionId":"369932079611248640","dimensionName":"鞋子_阿达达斯","dimensionParentId":"369176517193760768"},{"dimensionId":"369931334048546816","dimensionName":"省份_石家庄","dimensionParentId":"369931334027575296"},{"dimensionId":"369931334048546817","dimensionName":"省份_唐山","dimensionParentId":"369931334027575296"},{"dimensionId":"370271192004689920","dimensionName":"爱好_篮球","dimensionParentId":"370271191987912704"},{"dimensionId":"370271192004689921","dimensionName":"爱好_爬山","dimensionParentId":"370271191987912704"},{"dimensionId":"370271313735974912","dimensionName":"大海_黑海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271313735974913","dimensionName":"大海_死海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271389023731712","dimensionName":"人类_男人","dimensionParentId":"370271389006954496"},{"dimensionId":"370271389023731713","dimensionName":"人类_女人","dimensionParentId":"370271389006954496"}]
             ,  //所有维度
-            dimensionArr : [],  //選擇的維度
-            dimensionsCopy :[]
+            dimensionArr : [{'dimensionName':'国家_中国','dimensionId':'369243445367144448'}],  //選擇的維度
+            dimensionsCopy :[{"dimensionId":"369243445367144448","dimensionName":"国家_中国","dimensionParentId":"368896402614386688"},{"dimensionId":"369244855760584704","dimensionName":"国家_日本","dimensionParentId":"368896402614386688"},{"dimensionId":"369176517474779137","dimensionName":"鞋子_李宁","dimensionParentId":"369176517193760768"},{"dimensionId":"369932079611248640","dimensionName":"鞋子_阿达达斯","dimensionParentId":"369176517193760768"},{"dimensionId":"369931334048546816","dimensionName":"省份_石家庄","dimensionParentId":"369931334027575296"},{"dimensionId":"369931334048546817","dimensionName":"省份_唐山","dimensionParentId":"369931334027575296"},{"dimensionId":"370271192004689920","dimensionName":"爱好_篮球","dimensionParentId":"370271191987912704"},{"dimensionId":"370271192004689921","dimensionName":"爱好_爬山","dimensionParentId":"370271191987912704"},{"dimensionId":"370271313735974912","dimensionName":"大海_黑海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271313735974913","dimensionName":"大海_死海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271389023731712","dimensionName":"人类_男人","dimensionParentId":"370271389006954496"},{"dimensionId":"370271389023731713","dimensionName":"人类_女人","dimensionParentId":"370271389006954496"}]
             ,
 
             //高级选项内容
@@ -80,10 +80,158 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
             appointRelativeGroup : [],
             replaceType : 0 ,
-            enterEvent : enterEvent,
+            enterEvent : enterEvent,  //鍵盤事件
+            //表格
+            addList : addList,  //table 添加列
+            editList : editList , //编辑表格
+            tableRow : null,   //行
+            tableColumn : null,  //刪除用
+            tableChange : tableChange  ,//編輯
+            tableRemove : tableRemove, //删除行或列
+            addRow : addRow,   //添加行
+            gorithm : [], //语义挖掘
+            tableType : null,   //类型
+            factorName : null,   //要素名称
+            reQuestion : null, //反问
 
             dialogExtension : [],
+            tableList: {"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代缴类别","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"375718535801864192","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"375718535801864192\"}"}
         };
+        function tableChange(row, col ,val){
+            console.log($scope.vm.tableList);
+            console.log(val);
+            $scope.vm.tableList.data.listTable[row][col] = val;
+        }
+        function tableRemove(type){
+            switch (type){
+                case 1:
+                    if($scope.vm.tableRow==0){
+                        layer.msg("不可删除第一行")
+                    }else if($scope.vm.tableRow==null){
+                        layer.msg("请先选择要删除的行")
+                    }else{
+                        $scope.vm.tableList.data.listTable.splice($scope.vm.tableRow,1);
+                        $scope.vm.tableRow = null
+                    }
+                    break;
+                case 2:
+                    if($scope.vm.tableColumn==0){
+                        layer.msg("不可删除第一列")
+                    }else if($scope.vm.tableRow==null){
+                        layer.msg("请先选择要删除的列")
+                    }else{
+                        angular.forEach($scope.vm.tableList.data.listTable,function(item,tableRow){
+                            angular.forEach(item,function(val,index){
+                                if(index == $scope.vm.tableColumn){
+                                    $scope.vm.tableList.data.listTable[tableRow].splice(index,1)
+                                }
+                            })
+                        });
+                        $scope.vm.tableColumn = null
+                    }
+                    break;
+            }
+        }
+        function addRow(){
+            var len = $scope.vm.tableList.data.listTable[0].length;
+            var arr = new Array(len);
+            $scope.vm.tableList.data.listTable.push(arr);
+        }
+        function addList(row,column){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        angular.forEach($scope.vm.tableList.data.listTable,function(item,index){
+                            if(index==0){
+                                $scope.vm.tableList.data.listTable[index].push($scope.vm.factorName)
+                            }else{
+                                $scope.vm.tableList.data.listTable[index].push(null)
+                            }
+                        });
+                        var newType = {};
+                        newType.elementName = $scope.vm.factorName;
+                        newType.elementType = $scope.vm.tableType;
+                        newType.technology = $scope.vm.gorithm;
+                        newType.elementAsk = $scope.vm.elementAsk;
+                        newType.relatedQuestions = null;
+                        $scope.vm.tableList.data.listTableType.push(newType);
+                        setDialogNew()
+                    }
+                }
+            });
+        }
+
+        function editList(row,column){
+            $scope.vm.factorName = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementName ;
+            $scope.vm.tableType = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementType;
+            $scope.vm.gorithm = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].technology;
+            $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementAsk;
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
+        console.log(getTableParams());
+        function getTableParams(){
+            var tabelData = angular.copy($scope.vm.tableList.data);
+            var params = {} ;
+            var ask = [] ;
+            var items = [];
+            // 反问
+            angular.forEach(tabelData.listTableType, function (item,index) {
+                if(index>0){
+                    var obj = {};
+                    obj.name = item.elementName;
+                    obj.value = item.elementAsk ;
+                    ask.push(obj) ;
+                    console.log(ask);
+
+                }
+            });
+            angular.forEach(tabelData.listTable,function(item,icon){
+                if(icon>0){
+                    var row = {} ;
+                    row.name = item[0] ;
+                    row.slots =[];
+                    angular.forEach(tabelData.listTableType, function (val,cur) {
+                        if(cur>0){
+                            var slot = {} ;
+                            slot.name = val.elementName;
+                            console.log(tabelData.listTable[icon][cur]);
+                            slot.value = tabelData.listTable[icon][cur];
+                            slot.type = val.elementType ;
+                            slot.algorithm = val.technology;
+                            row.slots.push(slot)
+                        }
+                    });
+                    items.push(row)
+                }
+            });
+            params.ask = ask;
+            params.items = items;
+            return JSON.stringify(params)
+         }
+        function setDialogNew(){
+            $scope.vm.factorName = null ;
+            $scope.vm.tableType = null;
+            $scope.vm.gorithm = [];
+            $scope.vm.elementAsk = null;
+        }
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
@@ -225,7 +373,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
-                console.log(data)
+                console.log(data);
                 if(data.status==200){
                     var enxtensionBack = [] ;
                     angular.forEach(data.data,function(item){
@@ -251,8 +399,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             tag.tagTypeList.push(val.tagType) ;
                             arr.push(tag)
                         });
-                        obj.tagList = arr ;
-                        obj.wholeDecorateTag = wholeTag
+                        obj.extensionQuestionTagList = arr ;
+                        obj.wholeDecorateTag = wholeTag ;
                         enxtensionBack.push(obj);
                     });
                     $scope.vm.extensionsByFrame =  enxtensionBack;
@@ -296,14 +444,31 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     "applicationId": "100",
                     "extendQuestionList" : question
                 },function(data){
+                    console.log(data);
                     if(data.status == 500){
                         layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==200){
-                        var enten = data.data[0]  ;
+                        var enten = {}  ;
+                        var tag = [] ;
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = weight ;
+                        angular.forEach(data.data[0].extensionQuestionTagList,function(item){
+                            var tagTem = {};
+                            tagTem.tagClass= item.tagClass;
+                            tagTem.tagName= item.tagName;
+                            tagTem.tagTypeList= [] ;
+                            tagTem.tagTypeList.push(item.tagType);
+                            tag.push(tagTem)
+                        });
+                        enten.extensionQuestionTagList = tag ;
+                        var listArr = [];
+                        var listObj = {};
+                        listObj.wholeDecorateTagName="";
+                        listObj.wholeDecorateTagType="";
+                        listArr.push(listObj);
+                        enten.wholeDecorateTagList = listArr;
                         $scope.vm.extensions.push(enten);
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
@@ -476,7 +641,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             obj.classificationId = item.id ;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
-                            $scope.vm.frameCategoryId = item.id;
+                            //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
                         $scope.$apply()
@@ -504,13 +669,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 var title = angular.copy($scope.vm.newTitle);
                 scanCotentByTitle(title) ;
                 var obj = {};
-                obj.knowledgeContent = $scope.vm.newTitle;
+                obj.knowledgeContent = getTableParams();
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
-                obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
-                obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
+           obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent.push(obj);
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
@@ -518,38 +685,28 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             return params
         }
 
-        function save(){
-            if(!checkSave()){
+        function save() {
+            if (!checkSave()) {
                 return false
-            }else{
-                httpRequestPost("/api/listKnowledge/addConceptKnowledge",getParams(),function(data){
-                    console.log(getParams());
-                    if(data.status == 200){
-                        var url = $state.href('custServScenaOverview.manage',{data:getParams()});
-                        window.open(url,'_blank');
-                    }else if(data.status==500){
+            } else {
+                httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
+                    console.log(data);
+                    if (data.status == 200) {
+                        var url = $state.go('custServScenaOverview.manage');
+                        window.open(url, '_blank');
+                    } else if (data.status == 500) {
                         layer.msg("保存失败")
                     }
-                },function(err){
+                }, function (err) {
                     console.log(err)
                 });
-                //knowledgeAddServer.faqSave(getParams(),
-                //    function(data){
-                //        if(data.status == 200){
-                //            //open
-                //            //$state.go("custServScenaOverview.manage")
-                //        }
-                //    //console.log(data)
-                //},function(err) {
-                //    layer.msg("保存失败")
-                //})
             }
         }
         function scan(){
             if(!checkSave()){
                 return false
             }else{
-                $state.go()
+                //$state.go()
             }
         };
 
@@ -629,9 +786,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }
         }
         // 添加时候 存储对象
-        function saveScan(){
-
-        }
+        //function saveScan(){
+        //    var url = $state.go('custServScenaOverview.manage',{scanData:getParams()});
+        //    window.open(url, '_blank');
+        //}
 //*************************************************************************
 
         function addAppoint(item,arr){
