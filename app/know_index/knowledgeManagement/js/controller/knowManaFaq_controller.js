@@ -362,7 +362,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //生成 bot
         function getCreatBot(){
             if($scope.vm.title){
-                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                httpRequestPost("/api/faqKnowledge/findClasssByKnowledgeTitle",{
                     "title" :  $scope.vm.title,
                     "applicationId" : "100"
                 },function(data){
