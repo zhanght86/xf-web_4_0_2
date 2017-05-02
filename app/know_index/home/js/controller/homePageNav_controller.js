@@ -7,15 +7,13 @@
  */
 
 angular.module('homePage').controller('homePageNavController', [
-
-    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", kieStore",
+    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", "$cookieStore",
     function ($scope, $location, localStorageService, AuthService,$timeout,$cookieStore) {
             $scope.vm = {
 
                 applicationId : true,
 
                 sceneId : $cookieStore.get('sceneId'),
-
 
             };
         //$timeout(function(){
