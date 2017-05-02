@@ -438,11 +438,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function scan(){
-            if(!checkSave()){
-                return false
-            }else{
-              $state.go()
-            }
+            //if(!checkSave()){
+            //    return false
+            //}else{
+                var url = $state.href('knowledgeManagement.knowledgeScan',{'knowledgeScan': 'fffffff'});
+                window.open(url,'_blank');
+            //$state.go('knowledgeManagement.knowledgeScan,"_blank")
+            //}
         };
         /* ****************************************** //
          *
