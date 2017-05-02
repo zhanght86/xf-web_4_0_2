@@ -3,13 +3,12 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
-        //console.log($stateParams.data)
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -413,11 +412,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         function save(){
             //console.log(getParams());
            if(!checkSave()){
-               alert()
                return false
            }else{
                 httpRequestPost("/api/faqKnowledge/addFAQKnowledge",getParams(),function(data){
-                    console.log(data)
+                    console.log(data) ;
                     if(data.status == 200){
                         //open
                         //$state.go("custServScenaOverview.manage")
@@ -441,9 +439,26 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //if(!checkSave()){
             //    return false
             //}else{
-                var url = $state.href('knowledgeManagement.knowledgeScan',{'knowledgeScan': 'fffffff'});
-                window.open(url,'_blank');
-            //$state.go('knowledgeManagement.knowledgeScan,"_blank")
+            var obj = {};
+            var params = getParams();
+            console.log(params);
+            obj.params = params;
+            obj.save = function(){
+                httpRequestPost("/api/faqKnowledge/addFAQKnowledge",params,function(data){
+                    console.log(data) ;
+                    if(data.status == 200){
+                        //open
+                        //$state.go("custServScenaOverview.manage")
+                    }
+                },function(err){
+                    console.log(err)
+                });
+            };
+            //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                var url = $state.href('knowledgeManagement.knowledgeScan');
+                    $window.open(url,'_blank');
+                    $cookieStore.put("knowledgeScan",obj);
+            //$state.go('knowledgeManagement.knowledgeScan',{knowledgeScan: 111},{reload:true},{blank:true});
             //}
         };
         /* ****************************************** //
