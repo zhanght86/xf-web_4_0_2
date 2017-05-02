@@ -11,7 +11,7 @@ angular.module('homePage').controller('homePageNavController', [
     '$scope', '$location', 'localStorageService', 'AuthService',"$timeout",
     function ($scope, $location, localStorageService, AuthService,$timeout) {
             $scope.vm = {
-                applicatioinId : true,
+                applicationId : true,
 
             };
         //$timeout(function(){

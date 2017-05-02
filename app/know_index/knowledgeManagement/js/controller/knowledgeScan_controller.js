@@ -1,16 +1,16 @@
 
 /**
  * Created by Administrator on 2016/6/3.
- * ¿ØÖÆÆ÷
+ * æ§åˆ¶å™¨
  */
 
 angular.module('knowledgeManagementModule').controller('knowledgeScanController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","$location","$rootScope",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","$location","$rootScope","knowledgeAddServer",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope,knowledgeAddServer) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         //"364180924750893056"
         //knowledgeScan
-        console.log($cookieStore.get("knowledgeScan").params);
+        console.log($cookieStore.get("knowledgeScan"));
         console.log($stateParams);
         var knowledgeScan =  $cookieStore.get("knowledgeScan");
 
@@ -21,34 +21,53 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             knowledgeType : $stateParams.knowledgeType,
             listData : null,
             knowledgeData : knowledgeScan.params ,
-            save : knowledgeScan.save
-
-
-
-            //editName : editName
-            //"pageSize": 5,
-            //"sceneIds" : [] ,
-            //"knowledgeTitle": $stateParams.scanKnowledge.knowledgeTitle,         //ÖªÊ¶±êÌâÄ¬ÈÏÖµnull
-            //"knowledgeContent": $stateParams.scanKnowledge.knowledgeContent,        //ÖªÊ¶ÄÚÈİÄ¬ÈÏÖµnull
-            //"knowledgeCreator": $stateParams.scanKnowledge.knowledgeCreator,        //×÷ÕßÄ¬ÈÏÖµnull
-            //"knowledgeExpDateEnd": $stateParams.scanKnowledge.knowledgeExpDateEnd,        //ÖªÊ¶ÓĞĞ§ÆÚ¿ªÊ¼ÖµÄ¬ÈÏÖµnull
-            //"knowledgeExpDateStart": $stateParams.scanKnowledge.knowledgeExpDateStart,        //ÖªÊ¶ÓĞĞ§ÆÚ½áÊøÖµÄ¬ÈÏÖµnull
-            //"sourceType": $stateParams.scanKnowledge.sourceType,        //ÖªÊ¶À´Ô´Ä¬ÈÏÖµ0   (0:È«²¿   1:µ¥ÌõĞÂÔö  2£ºÎÄµµ¼Ó¹¤)
-            //"updateTimeType": $stateParams.scanKnowledge.updateTimeType ,  //ÖªÊ¶¸üĞÂÊ±¼äÄ¬ÈÏÖµ0   (0:²»ÏŞ 1:½üÈıÌì 2:½üÆßÌì 3:½üÒ»ÔÂ)
+            dimensions : "",
+            channels : "",
+            editUrl : knowledgeScan.editUrl,
+            save :save
         };
-        //getData();
-        //function getData(){
-        //    httpRequestPost("/api/conceptKnowledge/getKnowledge",{
-        //        "knowledgeId" : $scope.vm.knowledgeId,
-        //        "applicationId" : $scope.vm.applicationId
-        //    },function(data){
-        //        console.log(data)
-        //        $scope.vm.listData = data.data;
-        //        $scope.$apply();
-        //        console.log(data);
-        //    },function(){
-        //        layer.msg("»ñÈ¡Ê§°Ü")
-        //    });
-        //}
+        //ä¿å­˜æ–¹æ³•  æ ¹æ®url  è·å– ä¿å­˜è·¯å¾„
+        function save(){
+            var api = "" ;
+            switch($scope.vm.editUrl){
+                case "knowledgeManagement.faqAdd":
+                    api = "/api/faqKnowledge/addFAQKnowledge";
+                    break;
+                case "knowledgeManagement.singleAddConcept":
+                    api = "/api/conceptKnowledge/addConceptKnowledge";
+                    break;
+                case "knowledgeManagement.listAdd":
+                    api = "/api/listKnowledge/addListKnowledge";
+                    break;
+                case "knowledgeManagement.factorAdd":
+                    api = "/api/elementKnowledgeAdd/addElementKnowledge";
+                    break;
+            }
+            httpRequestPost(api,$scope.vm.knowledgeData,function(data){
+                console.log(data) ;
+                if(data.status == 200){
+                    $state.go("custServScenaOverview.manage")
+                }
+            },function(err){
+                console.log(err)
+            });
+        }
+        // å±•ç¤ºæ¸ é“ç»´åº¦ä½¿ç”¨
+        //ç²å–æ¸ é“
+        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.dimensions = data.data;
+                }
+            }, function(error) {
+            });
+        //è·å–ç»´åº¦
+        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.channels = data.data
+                }
+            }, function(error) {
+            });
     }
 ]);

@@ -4,8 +4,8 @@
 
 
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("userId","111111");
         $cookieStore.put("sceneId","1");
@@ -561,7 +561,15 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!checkSave()){
                 return false
             }else{
-                $state.go()
+                var obj = {};
+                var params = getParams();
+                //console.log(params);
+                obj.params = params;
+                obj.editUrl = "knowledgeManagement.singleAddConcept";
+                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                var url = $state.href('knowledgeManagement.knowledgeScan');
+                $window.open(url,'_blank');
+                $cookieStore.put("knowledgeScan",obj);
             }
         };
 
