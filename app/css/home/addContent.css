@@ -345,6 +345,7 @@
 #item-line{
     height: 16px;
     padding: 5px 0;
+    min-height:25px;
 }
 .pd30 span{
     color: #333;

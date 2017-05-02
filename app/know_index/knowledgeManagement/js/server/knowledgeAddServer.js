@@ -10,7 +10,8 @@
             getDimensions: getDimensions,  //获取  渠道
             getChannels : getChannels ,    //獲取維度
             getFrame : getFrame    ,        //    獲取框架
-            faqSave : faqSave
+            faqSave : faqSave,
+            conceptGetExtensionByDialogTitle : conceptGetExtensionByDialogTitle
         };
         return services;
         function getDimensions(params, onSuccess, onError) {
@@ -49,6 +50,17 @@
 
         function getFrame(id){
             return $resource("/api/modeling/frame/listbyattribute", {}, {}).save();
+        }
+
+        function conceptGetExtensionByDialogTitle(params, onSuccess, onError) {
+            var url = '/api/conceptKnowledge/productExtensionQuestion';
+            var _resource = $resource(url, {}, {
+                create: {
+                    method: 'POST',
+                    params: {}
+                }
+            });
+            return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);
         }
         //functtionqueryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationById', {}, {});
     }

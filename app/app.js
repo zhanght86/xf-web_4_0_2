@@ -334,20 +334,20 @@ knowledge_static_web
                 controller: "myApplicationController"
             })
 
-            .state("myApplication.manage", {
-                params:{"userPermission" : null},
-                url: "/manage",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'know_index/myApplication/adminContent.html',
-                        controller: "adminContentController"
-                    }
-                }
-            })
+            //.state("myApplication.manage", {
+            //    params:{"userPermission" : null},
+            //    url: "/manage",
+            //    views: {
+            //        'header': {
+            //            templateUrl: 'know_index/home/homePageNav.html',
+            //            controller: "homePageNavController"
+            //        },
+            //        'content': {
+            //            templateUrl: 'know_index/myApplication/adminContent.html',
+            //            controller: "adminContentController"
+            //        }
+            //    }
+            //})
             .state("setting", {
                 //params:{"userPermission" : null},
                 url: "/setting",
@@ -711,6 +711,21 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
                         controller: "conceptController"
+                    }
+                }
+            })
+            //客服場景
+            .state("knowledgeManagement.customKnowledge", {
+                url: "/customKnowledge",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/customKnowledge/customKnowledge.html',
+                        controller: "customKnowledge"
                     }
                 }
             })

@@ -20,6 +20,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
+            botFullPath: null ,
             botSelectAdd : botSelectAdd,
             frameCategoryId : "",
             title : "",   //标题
@@ -165,6 +166,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             },function(data){
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
+                    var obj = {};
                     if(len){
                         angular.forEach($scope.vm.botClassfy,function(item){
                             if(item.classificationId!=id){
@@ -172,23 +174,21 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                             }
                         });
                         if(len==0){
-                            var obj = {};
                             obj.className = data.categoryFullName.split("/");
                             obj.classificationId = id ;
                             obj.classificationType = 1;
-                            $scope.vm.botClassfy.push(obj);
-                            $scope.$apply()
                         }else{
-                            layer.msg("添加分类重复")
+                            layer.msg("添加分类重复");
+                            return false
                         }
                     }else{
-                        var obj = {};
                         obj.className = data.categoryFullName.split("/");
                         obj.classificationId = id ;
                         obj.classificationType = 1;
-                        $scope.vm.botClassfy.push(obj);
-                        $scope.$apply()
                     }
+                    $scope.vm.knowledgeBotVal = obj.className;
+                    $scope.vm.botFullPath=obj ;
+                    $scope.$apply()
                 }
             },function(){
                 layer.msg("添加扩展问失败")
@@ -251,17 +251,18 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
-            //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
-            //}
         });
         //点击bot分类的 加号
         function botSelectAdd(){
-            $scope.vm.knowledgeBotVa = "";
+            if($scope.vm.botFullPath){
+                $scope.vm.botClassfy.push($scope.vm.botFullPath);
+                $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
+                $scope.vm.botFullPath = null;
+            }
         };
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'.icon-jj',function(){
@@ -481,8 +482,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
-                obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
                 obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                 //高級 選項
                 $scope.vm.scanContent.push(obj);

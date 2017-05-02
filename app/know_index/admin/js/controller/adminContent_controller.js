@@ -1,6 +1,4 @@
-/**
- * Created by 41212 on 2017/3/21.
- */
+
 /**
  * Created by Administrator on 2016/6/3.
  * 控制器
@@ -9,14 +7,9 @@
 angular.module('adminModule').controller('adminContentController', [
     '$scope',"$state","$timeout","$stateParams","ngDialog",
     function ($scope,  $state,$timeout,$stateParams,ngDialog) {
-
-
         //"applicationId": "string",
-
-
         setCookie("userName","mf");
         getCookie("userName");
-
         //setCookie("userId","359873057331875840");
         //$stateParams.userPermission = ['超级管理员','初级管理员'];
                 $scope.vm = {
@@ -46,6 +39,7 @@ angular.module('adminModule').controller('adminContentController', [
             },function(err){
                 //console.log(err)
 
+
             });
 
         }
@@ -56,15 +50,15 @@ angular.module('adminModule').controller('adminContentController', [
         //获取 scene
        function selectLicence(){
            httpRequestPost("/api/application/scene/listAllScene",{
-
-                                    },function(data){
-                                        $scope.vm.selectLicence = data.data;
-                                        $scope.$apply();
-                                        return data.data
-                                    },function(err){
-
-                                        console.log(err)
-                                 });
+            },function(data){
+                $scope.vm.selectLicence = data.data;
+                $scope.vm.newScene=data.data[0].sceneId;
+                console.log(data.data);
+                $scope.$apply();
+                return data.data
+            },function(err){
+                console.log(err)
+         });
        }
 
         //打开添加窗口
@@ -79,6 +73,10 @@ angular.module('adminModule').controller('adminContentController', [
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         addApplication()
+                    }else{
+                        $scope.vm.newApplicationName="";
+                        $scope.vm.newLicence="";
+                        $scope.vm.newDescribe="";
                     }
                 }
 
@@ -94,6 +92,11 @@ angular.module('adminModule').controller('adminContentController', [
                 "applicationLisence": $scope.vm.newLicence,
                 "applicationDescription": $scope.vm.newDescribe
             },function(data){
+                if(data.status==200){
+                    $state.reload();
+                }else{
+                    layer.msg(data.data);
+                }
                 console.log(data)
             },function(err){
                 console.log(err)

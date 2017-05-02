@@ -24,7 +24,6 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
         '<button  id="picker" >上传线下编辑场景知识</button><span class="f-14 pl-10">请先<a href="/api/elementKnowledgeAdd/download?fileName=factor_template.xlsx"  class="c-primary">下载模板</a>进行填写</span>'
         ,
         link:function(scope,element,attrs){
-            console.log(11111);
             //var $list = angular.element("#thelist");
             var server = angular.copy(scope.server) ;
             var uploader = WebUploader.create({
