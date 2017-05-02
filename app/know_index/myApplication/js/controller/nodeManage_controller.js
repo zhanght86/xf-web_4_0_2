@@ -120,53 +120,50 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        console.log(JSON.stringify($scope.vm.nodes));
-                        angular.forEach($scope.vm.nodes,function(data1){
-                            var obj = {};
-                            obj.nodeId = data1.nodeId;
-                            obj.nodeAccessIp = data1.nodeAccessIp;
-                            obj.nodeCode = data1.nodeCode;
-                            console.log("节点编号"+data1.nodeCode);
-                            $scope.vm.newNodes.push(obj);
-                        });
+                        if($scope.vm.allowSubmit){
+                            console.log(JSON.stringify($scope.vm.nodes));
+                            angular.forEach($scope.vm.nodes,function(data1){
+                                var obj = {};
+                                obj.nodeId = data1.nodeId;
+                                obj.nodeAccessIp = data1.nodeAccessIp;
+                                obj.nodeCode = data1.nodeCode;
+                                console.log("节点编号"+data1.nodeCode);
+                                $scope.vm.newNodes.push(obj);
+                            });
 
-                        angular.forEach($scope.vm.deleteNodes,function(data1){
-                            var obj = {};
-                            obj.nodeId = data1.nodeId;
-                            obj.nodeAccessIp = data1.nodeAccessIp;
-                            obj.nodeCode = data1.nodeCode;
-                            $scope.vm.delNodes.push(obj);
-                        });
+                            angular.forEach($scope.vm.deleteNodes,function(data1){
+                                var obj = {};
+                                obj.nodeId = data1.nodeId;
+                                obj.nodeAccessIp = data1.nodeAccessIp;
+                                obj.nodeCode = data1.nodeCode;
+                                $scope.vm.delNodes.push(obj);
+                            });
 
-                        httpRequestPost("/api/application/node/editNode",{
-                            "nodeId" : $scope.vm.nodeId, //父级节点id
-                            "nodeAccessIp" : $scope.vm.nodeAccessIp, //父级节点访问地址
-                            "statusId" : $scope.vm.statusId, //父级节点状态
-                            "nodeType" : $scope.vm.nodeType, //父级节点类型
-                            "nodes" : $scope.vm.newNodes, //新增子集节点集合
-                            "nodeCreateId" : $scope.vm.nodeCreateId, //操作用户id
-                            "nodeCode" : $scope.vm.nodeCode, //父级节点编号
-                            "deleteNodes" : $scope.vm.delNodes, //待删除的子节点
-                            "userId": $scope.vm.nodeCreateId
-                        },function(data){
-                            if(data.status==200){
-                                layer.msg("编辑成功");
-                                $state.reload();
-                            }else{
-                                layer.msg("编辑出错了");
-                            }
-                        },function(){
-                            layer.msg("请求失敗");
-                        })
-                    }else{
-                        $scope.vm.channelName = "";
-                        $scope.vm.nodeId=""; //父级节点id
-                        $scope.vm.nodeAccessIp=""; //父级节点访问地址
-                        $scope.vm.nodes=[]; //新增子集节点集合
-                        $scope.vm.subNode=""; //子节点的id
-                        $scope.vm.subNodeAccessIp=""; //子节点的访问地址
-                        $scope.vm.nodeCode=""; //父级节点编号
+                            httpRequestPost("/api/application/node/editNode",{
+                                "nodeId" : $scope.vm.nodeId, //父级节点id
+                                "nodeAccessIp" : $scope.vm.nodeAccessIp, //父级节点访问地址
+                                "statusId" : $scope.vm.statusId, //父级节点状态
+                                "nodeType" : $scope.vm.nodeType, //父级节点类型
+                                "nodes" : $scope.vm.newNodes, //新增子集节点集合
+                                "nodeCreateId" : $scope.vm.nodeCreateId, //操作用户id
+                                "nodeCode" : $scope.vm.nodeCode, //父级节点编号
+                                "deleteNodes" : $scope.vm.delNodes, //待删除的子节点
+                                "userId": $scope.vm.nodeCreateId
+                            },function(data){
+                                if(data.status==200){
+                                    layer.msg("编辑成功");
+                                    $state.reload();
+                                }else{
+                                    layer.msg("编辑出错了");
+                                }
+                            },function(){
+                                layer.msg("请求失敗");
+                            })
+                        }else{
+                            layer.msg("访问地址或者节点编号重复了！");
+                        }
                     }
+                    initNodeInput();
                 }
             });
         }
@@ -182,43 +179,52 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        angular.forEach($scope.vm.nodes,function(data1){
-                            var obj = {};
-                            obj.nodeId = data1.nodeId;
-                            obj.nodeAccessIp = data1.nodeAccessIp;
-                            $scope.vm.newNodes.push(obj);
-                        });
-
-                        httpRequestPost("/api/application/node/addNode",{
-                            "nodeId" : $scope.vm.nodeId==""?0:$scope.vm.nodeId, //父级节点id
-                            "nodeAccessIp" : $scope.vm.nodeAccessIp, //父级节点访问地址
-                            "statusId" : $scope.vm.statusId, //父级节点状态
-                            "nodeType" : $scope.vm.nodeType, //父级节点类型
-                            "nodes" : $scope.vm.newNodes, //新增子集节点集合
-                            "nodeCreateId" : $scope.vm.nodeCreateId,  //操作用户id
-                            "userId": $scope.vm.nodeCreateId
-                        },function(data){
-                            if(data.status==200){
-                                layer.msg("添加成功");
-                                $state.reload();
-                            }else{
-                                layer.msg("添加出错了！");
-                            }
-                        },function(){
-                            layer.msg("添加失敗");
-                        })
-                    }else{
-                        $scope.vm.channelName = "";
-                        $scope.vm.nodeId=""; //父级节点id
-                        $scope.vm.nodeAccessIp=""; //父级节点访问地址
-                        $scope.vm.nodes=[]; //新增子集节点集合
-                        $scope.vm.subNode=""; //子节点的id
-                        $scope.vm.subNodeAccessIp=""; //子节点的访问地址
-                        $scope.vm.nodeCode=""; //父级节点编号
+                        if($scope.vm.allowSubmit){
+                            angular.forEach($scope.vm.nodes,function(data1){
+                                var obj = {};
+                                obj.nodeId = data1.nodeId;
+                                obj.nodeAccessIp = data1.nodeAccessIp;
+                                $scope.vm.newNodes.push(obj);
+                            });
+                            httpRequestPost("/api/application/node/addNode",{
+                                "nodeId" : $scope.vm.nodeId==""?0:$scope.vm.nodeId, //父级节点id
+                                "nodeAccessIp" : $scope.vm.nodeAccessIp, //父级节点访问地址
+                                "statusId" : $scope.vm.statusId, //父级节点状态
+                                "nodeType" : $scope.vm.nodeType, //父级节点类型
+                                "nodes" : $scope.vm.newNodes, //新增子集节点集合
+                                "nodeCreateId" : $scope.vm.nodeCreateId,  //操作用户id
+                                "userId": $scope.vm.nodeCreateId
+                            },function(data){
+                                if(data.status==200){
+                                    layer.msg("添加成功");
+                                    $state.reload();
+                                }else{
+                                    layer.msg("添加出错了！");
+                                }
+                            },function(){
+                                layer.msg("添加失敗");
+                            })
+                        }else{
+                            layer.msg("访问地址或者节点编号重复了！");
+                        }
                     }
+                    initNodeInput();
                 }
             });
         }
+
+        //初始化添加节点页面相应的输入值
+        function initNodeInput(){
+            $scope.vm.channelName = "";
+            $scope.vm.nodeId=""; //父级节点id
+            $scope.vm.nodeAccessIp=""; //父级节点访问地址
+            $scope.vm.nodes=[]; //新增子集节点集合
+            $scope.vm.subNode=""; //子节点的id
+            $scope.vm.subNodeAccessIp=""; //子节点的访问地址
+            $scope.vm.nodeCode=""; //父级节点编号
+        }
+
+
 
         //查询节点类型数据
         function listTypeData(){
@@ -292,11 +298,23 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
 
         //添加子节点信息到子节点集合中并进行校验
         function addSubNode(nodeId,nodeAccessIp){
+            if($scope.vm.nodeAccessIp==nodeAccessIp){
+                layer.msg("子节点IP与集群节点IP重复了");
+                $scope.vm.allowSubmit=0;
+                return ;
+            }
             var obj = {};
             obj.nodeId = nodeId;
             obj.nodeAccessIp = nodeAccessIp;
+            var repeatFlag=false;
             if(nodeId!=null&&nodeAccessIp!=null&&nodeId!=""&&nodeAccessIp!=""){
-                if($scope.vm.nodes.inArray(obj)){
+                console.log("添加前："+$scope.vm.nodes);
+                angular.forEach($scope.vm.nodes,function(data1){
+                    if(data1.nodeId==nodeId&&data1.nodeAccessIp==nodeAccessIp){
+                        repeatFlag=true;
+                    }
+                });
+                if(repeatFlag){
                     layer.msg("重复添加了");
                 }else{
                     httpRequestPost("/api/application/node/checkNode",{
@@ -307,8 +325,10 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                             $scope.vm.nodes.push(obj);
                             $scope.vm.subNodeId="";
                             $scope.vm.subNodeAccessIp="";
+                            $scope.vm.allowSubmit=1;
                             $scope.$apply();
                         }else{
+                            $scope.vm.allowSubmit=0;
                             layer.msg(data.info);
                         }
                     },function(){

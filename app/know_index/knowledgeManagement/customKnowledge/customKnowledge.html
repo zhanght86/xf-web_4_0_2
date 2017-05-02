@@ -8,7 +8,7 @@
     </div>
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>概念知识新增</span>
+            <span>营销场景知识管理</span>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
@@ -16,7 +16,7 @@
             <div class="jqrsz-item">
                 <div class="item-line">
                     <div class="lable">
-                        知识标题：
+                        营销标题：
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
@@ -108,6 +108,21 @@
             </div>
 
             <div class="jqrsz-item" style="overflow: visible">
+                <div class="item-line"  style="overflow: visible">
+                    <div class="lable" >
+                        触发要素：
+                    </div>
+                    <div class="value" style="overflow: visible">
+                        <div class="clearfix" style="width: 500px;height: 38px;">
+                            <select  ng-model="vm.extensionWeight"  class="input-text L" style="display: inline-block;width: 20%;height:39px;border-right:0">
+                                <option value="60">知识标题</option>
+                                <option value="61">概念扩展</option>
+                            </select>
+                            <input type="text " class="L" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/add_img.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
                 <div class="item-line"  style="overflow: visible">
                     <div class="lable" >
                         概念扩展：
@@ -207,7 +222,7 @@
                 </div>
                 <div class="item-line" style="margin-top: 15px">
                     <div class="lable">
-                        知识内容：
+                        营销内容：
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">

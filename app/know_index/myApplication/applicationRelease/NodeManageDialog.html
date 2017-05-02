@@ -52,11 +52,11 @@
                 <input type="text" ng-model="vm.subNodeAccessIp" placeholder="请输入节点访问地址" class="input-text bd mr-10" style="width:140px;"/>
                 <a href="javascript:;" ng-click="vm.addSubNode(vm.subNodeId,vm.subNodeAccessIp);"><img src="../../images/images/add_img.png " /></a>
             </div>
-            <div class="mb-10" ng-repeat="node in vm.nodes">
+            <div class="mb-10" ng-repeat="node in vm.nodes track by $index">
                 <span class="mr-10">节点ID:</span>
-                <input type="number" value="{{node.nodeId}}" class="input-text bd mr-10" style="width:140px;"/>
+                <input type="number" value="{{node.nodeId}}" class="input-text bd mr-10" style="width:140px;" readonly/>
                 <span class="mr-10">节点IP:</span>
-                <input type="text" value="{{node.nodeAccessIp}}" class="input-text bd mr-10" style="width:140px;"/>
+                <input type="text" value="{{node.nodeAccessIp}}" class="input-text bd mr-10" style="width:140px;" readonly/>
                 <a href="javascript:;" ng-click="vm.nodes.remove(node);vm.removeOldSubNode(node)"><img src="../../images/images/delete_img.png " /></a>
             </div>
         </div>

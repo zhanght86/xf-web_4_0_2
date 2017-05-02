@@ -6,14 +6,14 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">要素名称：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text"  name="greeting_word_key" ng-model="vm.factorName" class="input-text"/>
+                <input type="text"  name="greeting_word_key" ng-model="vm.tableList.data.listTableType[vm.tableColumn].elementName" class="input-text"/>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">要素类型：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" ng-model="vm.tableType">
+                <select class="input-text" ng-model="vm.tableList.data.listTableType[vm.tableColumn].elementType">
                     <option value="字符串">字符串</option>
                     <option value="数值</">数值</option>
                     <option value="日期">日期</option>
@@ -23,15 +23,14 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">挖掘技术：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10"><input type="checkbox" ng-checked="vm.gorithm.inArray('OEC语义挖掘')" ng-click="vm.gorithm.inArray('OEC语义挖掘')?vm.gorithm.remove('OEC语义挖掘'):vm.gorithm.push('OEC语义挖掘')"/> OEC语义挖掘</label>
-                <label class="mr-10"><input type="checkbox" ng-checked="vm.gorithm.inArray('gate算法')" ng-click="vm.gorithm.inArray('gate算法')?vm.gorithm.remove('gate算法'):vm.gorithm.push('gate算法')"/> gate算法</label>
-
+                <label class="mr-10"><input type="checkbox" ng-checked="vm.tableList.data.listTableType[vm.tableColumn].technology.inArray('oec')" ng-click="vm.tableList.data.listTableType[vm.tableColumn].technology.inArray('oec')?vm.tableList.data.listTableType[vm.tableColumn].technology.remove('oec'):vm.tableList.data.listTableType[vm.tableColumn].technology.push('oec')"/> OEC语义挖掘</label>
+                <label class="mr-10"><input type="checkbox" ng-checked="vm.tableList.data.listTableType[vm.tableColumn].technology.inArray('gate')" ng-click="vm.tableList.data.listTableType[vm.tableColumn].technology.inArray('gate')?vm.tableList.data.listTableType[vm.tableColumn].technology.remove('gate'):vm.tableList.data.listTableType[vm.tableColumn].technology.push('gate')"/> gate算法</label>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">反问：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder="请问您需要的收益率多少？" ng-model="vm.reQuestion" class="input-text"/>
+                <input type="text" placeholder="请问您需要的收益率多少？" ng-model="vm.tableList.data.listTableType[vm.tableColumn].elementAsk" class="input-text"/>
             </div>
         </div>
         <div class="row cl">

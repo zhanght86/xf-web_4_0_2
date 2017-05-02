@@ -3,13 +3,12 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
-        //console.log($stateParams.data)
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -156,7 +155,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         // 获取Bot全路径
@@ -164,7 +163,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
-                console.log(1)
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
                     var obj = {};
@@ -247,7 +245,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -304,7 +302,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                     layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -414,11 +412,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         function save(){
             //console.log(getParams());
            if(!checkSave()){
-               alert()
                return false
            }else{
                 httpRequestPost("/api/faqKnowledge/addFAQKnowledge",getParams(),function(data){
-                    console.log(data)
+                    console.log(data) ;
                     if(data.status == 200){
                         //open
                         //$state.go("custServScenaOverview.manage")
@@ -439,11 +436,30 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function scan(){
-            if(!checkSave()){
-                return false
-            }else{
-              $state.go()
-            }
+            //if(!checkSave()){
+            //    return false
+            //}else{
+            var obj = {};
+            var params = getParams();
+            console.log(params);
+            obj.params = params;
+            obj.save = function(){
+                httpRequestPost("/api/faqKnowledge/addFAQKnowledge",params,function(data){
+                    console.log(data) ;
+                    if(data.status == 200){
+                        //open
+                        //$state.go("custServScenaOverview.manage")
+                    }
+                },function(err){
+                    console.log(err)
+                });
+            };
+            //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                var url = $state.href('knowledgeManagement.knowledgeScan');
+                    $window.open(url,'_blank');
+                    $cookieStore.put("knowledgeScan",obj);
+            //$state.go('knowledgeManagement.knowledgeScan',{knowledgeScan: 111},{reload:true},{blank:true});
+            //}
         };
         /* ****************************************** //
          *
@@ -483,8 +499,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                obj.knowledgeCommonOn =  $scope.vm.tip,    //在提示
-                obj.knowledgeRelatedQuestionOn  = $scope.vm.tail,    //弹出评价小尾巴
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
                 obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                 //高級 選項
                 $scope.vm.scanContent.push(obj);

@@ -2,7 +2,7 @@
  * Created by dinfo on 2017/3/28.
  */
 
-angular.module('knowledgeManagementModule').controller('conceptController', [
+angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
         $cookieStore.put("userName","admin1");
@@ -453,7 +453,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         function KnowledgeAdd(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+                template:"/know_index/knowledgeManagement/marking_concept/newConceptDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -461,10 +461,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        //return;
-                        saveAddNew()
+
                     }else{
-                        setDialog()
+
                     }
                 }
             });

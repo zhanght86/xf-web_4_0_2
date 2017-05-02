@@ -2,7 +2,7 @@
  * Created by dinfo on 2017/3/28.
  */
 
-angular.module('knowledgeManagementModule').controller('conceptController', [
+angular.module('knowledgeManagementModule').controller('customKnowledge', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
         $cookieStore.put("userName","admin1");
@@ -12,7 +12,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
-//主页
+//主页   
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
             userId : $cookieStore.get("userId") ,
@@ -163,8 +163,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             },function(data){
                 if(data.status==10000){
                     console.log(data);
-                var  extensionQuestionList = [] ,
-                      frameQuestionTagList = [];
+                    var  extensionQuestionList = [] ,
+                        frameQuestionTagList = [];
                     var obj = {} ;
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item,index){
@@ -222,7 +222,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
-            httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
+            httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
                 "applicationId": "100",
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
@@ -294,7 +294,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/listKnowledge/checkExtensionQuestion",{
+                httpRequestPost("/api/marketingKnowledge/checkExtensionQuestion",{
                     "applicationId": "100",
                     "extendQuestionList" : question
                 },function(data){
@@ -495,7 +495,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //根據 標題 生成 bot
         function getBotByTitle(){
             if($scope.vm.title){
-                httpRequestPost("/api/conceptKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
+                httpRequestPost("/api/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId" : "100"
                 },function(data){
@@ -507,16 +507,16 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         console.log(data);
                         $scope.vm.botClassfy = [] ;   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [] ;
-                            angular.forEach(data.data.classifyList,function(item){
-                                $scope.vm.knowledgeTitleTag.push(item.name);
-                                var obj = {};
-                                obj.className = item.fullPath;
-                                obj.classificationId = item.id ;
-                                obj.classificationType = item.type;
-                                $scope.vm.botClassfy.push(obj);
-                                //$scope.vm.frameCategoryId = item.id;
-                                $scope.$apply()
-                            });
+                        angular.forEach(data.data.classifyList,function(item){
+                            $scope.vm.knowledgeTitleTag.push(item.name);
+                            var obj = {};
+                            obj.className = item.fullPath;
+                            obj.classificationId = item.id ;
+                            obj.classificationType = item.type;
+                            $scope.vm.botClassfy.push(obj);
+                            //$scope.vm.frameCategoryId = item.id;
+                            $scope.$apply()
+                        });
                         $scope.$apply()
                     }
                 },function(err){
@@ -546,13 +546,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         function save(){
-           if(!checkSave()){
-               return false
-           }else{
-                httpRequestPost("/api/conceptKnowledge/addConceptKnowledge",getParams(),function(data){
+            if(!checkSave()){
+                return false
+            }else{
+                httpRequestPost("/api/marketingKnowledge/addMarketingKnowledge",getParams(),function(data){
                     console.log(getParams());
                     if(data.status == 200){
-                       $state.go('custServScenaOverview.manage');
+                        $state.go('custServScenaOverview.manage');
                     }else if(data.status==500){
                         layer.msg("保存失败")
                     }
@@ -565,24 +565,24 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             if(!checkSave()){
                 return false
             }else{
-              //  var
-              //$state.go()
+                //  var
+                //$state.go()
             }
         };
 
- /* *********************              弹框相关           **************************/ //
+        /* *********************              弹框相关           **************************/ //
 //重置参数
         function setDialog(){
-             $scope.vm.newTitle = "";
-             $scope.vm.channel = [];
-             $scope.vm.dimension = [];
-             $scope.vm.question = 1,    //显示相关问
-             $scope.vm.tip = 1,    //在提示
-             $scope.vm.tail =1,    //弹出评价小尾巴
-             $scope.vm.appointRelativeGroup = [] ;//业务扩展问
-             $scope.vm.appointRelative = ""
-             $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-             $scope.vm.dimensionArr = []
+            $scope.vm.newTitle = "";
+            $scope.vm.channel = [];
+            $scope.vm.dimension = [];
+            $scope.vm.question = 1,    //显示相关问
+                $scope.vm.tip = 1,    //在提示
+                $scope.vm.tail =1,    //弹出评价小尾巴
+                $scope.vm.appointRelativeGroup = [] ;//业务扩展问
+            $scope.vm.appointRelative = ""
+            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+            $scope.vm.dimensionArr = []
         }
 
         //选择渠道
@@ -603,7 +603,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                    obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
                 obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
                 // 生成扩展问题+
@@ -611,9 +611,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 //高級 選項
                 $scope.vm.scanContent.push(obj);
                 setDialog()
-                }else{
-                    setDialog()
-                }
+            }else{
+                setDialog()
+            }
         }
         // 检验标题是否符合
         function checkTitle(title,type){
@@ -621,7 +621,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("标题不能为空");
                 return false
             }else{
-                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+                httpRequestPost("/api/marketingKnowledge/checkDistribute",{
                     "title" : title
                 },function(data){
                     console.log(data);
@@ -678,8 +678,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         },true);
         function checkChannelDimension(channel,dimension){
             console.log(channel,dimension);
-        //    新增的 channel = []  dimension = [] ,
-        //   页面以添加 scanContent.dimensions   scanContent.channels
+            //    新增的 channel = []  dimension = [] ,
+            //   页面以添加 scanContent.dimensions   scanContent.channels
             if(!channel.length){     //渠道不能为空
                 layer.msg("请填写渠道");
                 return false
@@ -689,23 +689,23 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 angular.forEach($scope.vm.scanContent,function(item){
                     angular.forEach(item.channelId,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
-                           if(val == v){
-                               angular.forEach(item.dimensionId,function(value){
-                                   angular.forEach(dimension,function(key,indexDimension){
-                                       if(key==value){
-                                           var channelTip;
-                                           angular.forEach($scope.vm.channels,function(all){
-                                               if(all.channelId==v){
-                                                   channelTip = all.channelName
-                                               };
-                                           });
-                                           layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
-                                           $scope.vm.dimensionArr.id.remove(key);
-                                           $scope.vm.dimensionArr.name.splice(indexDimension,1);
-                                       }
-                                   })
-                               })
-                           }
+                            if(val == v){
+                                angular.forEach(item.dimensionId,function(value){
+                                    angular.forEach(dimension,function(key,indexDimension){
+                                        if(key==value){
+                                            var channelTip;
+                                            angular.forEach($scope.vm.channels,function(all){
+                                                if(all.channelId==v){
+                                                    channelTip = all.channelName
+                                                };
+                                            });
+                                            layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
+                                            $scope.vm.dimensionArr.id.remove(key);
+                                            $scope.vm.dimensionArr.name.splice(indexDimension,1);
+                                        }
+                                    })
+                                })
+                            }
                         });
                     });
                 });
@@ -734,7 +734,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         });
 
         function getAppointRelative(title){
-            httpRequestPost("/api/conceptKnowledge/getKnowledgeTitle",{
+            httpRequestPost("/api/marketingKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
                 if(data.status == 200){

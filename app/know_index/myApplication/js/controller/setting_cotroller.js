@@ -10,13 +10,14 @@
  */
 
 angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
-    '$scope', "$state", "$stateParams",
-    function ($scope,$state, $stateParams) {
+    '$scope', "$state", "$stateParams","$cookieStore",
+    function ($scope,$state, $stateParams,$cookieStore) {
        // alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,
             isSlide2 : isSlide2,
+            sceneId : $cookieStore.get('sceneId'),
         };
 
         function isSlide(event){
