@@ -1,11 +1,13 @@
 <div class="i-nav">
     <div class="i-img-box i-img1">
-        <a  ui-sref="knowledgeManagement.customKnowledge">
-            <div class="psa" ng-if="vm.sceneId==2">
+        <a  ui-sref="knowledgeManagement.customKnowledge" ng-if="vm.sceneId==2">
+            <div class="psa" >
                 <strong>营销场景知识管理</strong>
                 <p>可以针对营销场景内容的知识进行管理</p>
             </div>
-            <div class="psa" ng-if="vm.sceneId==1">
+        </a>
+        <a ui-sref="knowledgeManagement.faqAdd" ng-if="vm.sceneId==1">
+            <div class="psa" >
                 <strong>客服场景知识管理</strong>
                 <p>可以针对客服场景内容的知识进行管理</p>
             </div>

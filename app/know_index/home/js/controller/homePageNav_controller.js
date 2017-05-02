@@ -8,10 +8,11 @@
 
 angular.module('homePage').controller('homePageNavController', [
 
-    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout",
-    function ($scope, $location, localStorageService, AuthService,$timeout) {
+    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout","$cookieStore",
+    function ($scope, $location, localStorageService, AuthService,$timeout,$cookieStore) {
             $scope.vm = {
                 applicatioinId : true,
+                sceneId : $cookieStore.get('sceneId'),
 
             };
         //$timeout(function(){
