@@ -123,7 +123,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                 }
             },function(){
-                //alert("err or err")
+                // layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -180,7 +180,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
 
@@ -262,7 +262,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     console.log(data);
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         function scanCotentByTitle(title){
@@ -294,7 +294,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/listKnowledge/checkExtensionQuestion",{
+                httpRequestPost("/api/conceptKnowledge/checkExtensionQuestion",{
                     "applicationId": "100",
                     "extendQuestionList" : question
                 },function(data){
@@ -359,7 +359,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -418,7 +418,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                     layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -565,8 +565,27 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             if(!checkSave()){
                 return false
             }else{
-              //  var
-              //$state.go()
+                var obj = {};
+                var params = getParams();
+                console.log(params);
+                obj.params = params;
+                obj.editUrl = "knowledgeManagement.faqAdd";
+                obj.save = function(){
+                    httpRequestPost("/api/faqKnowledge/addFAQKnowledge",params,function(data){
+                        console.log(data) ;
+                        if(data.status == 200){
+                            //open
+                            //$state.go("custServScenaOverview.manage")
+                        }
+                    },function(err){
+                        console.log(err)
+                    });
+                };
+                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                var url = $state.href('knowledgeManagement.knowledgeScan');
+                $window.open(url,'_blank');
+                $cookieStore.put("knowledgeScan",obj);
+
             }
         };
 

@@ -11,7 +11,7 @@
             <li>
                 <a ui-sref="setting.Infor">我的应用</a>
             </li>
-            <li ng-if="vm.applicatioinId">
+            <li ng-if="vm.applicationId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -34,7 +34,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-if="vm.applicatioinId">
+            <li ng-if="vm.applicationId">
                 <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -48,12 +48,14 @@
                             <!--<span>知识总览</span>-->
                         <!--</a>-->
                         <!--营销型-->
+                    </li>
+                    <li ng-if="vm.sceneId==2">
                         <a ui-sref="knowledgeManagement.ConceptAdd">
                             <i class="icon-nav icon-nav__icon-nav_zszl"></i>
                             <span>营销知识新增</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="vm.sceneId==1">
                         <ul class="menu_1 menu_2 " style="min-height: 40%;">
                             <li>
                                 <a ui-sref="knowledgeManagement.faqAdd">
@@ -115,7 +117,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-if="vm.applicatioinId">
+            <li ng-if="vm.applicationId">
                 <a href="javascript:;">测试功能<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -138,7 +140,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-if="vm.applicatioinId">
+            <li ng-if="vm.applicationId">
                 <a href="javascript:;">应用分析<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
@@ -185,7 +187,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-if="vm.applicatioinId">
+            <li ng-if="vm.applicationId">
                 <a href="javascript:;">素材管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>

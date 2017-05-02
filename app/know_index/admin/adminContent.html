@@ -19,10 +19,10 @@
     </div>
     <div class="application_box cl">
         <div class="L text-c application_box_list" ng-repeat="application in vm.myApplication">
-            <a ui-sref="setting.Infor">
-                <img ng-if="application.statusId==40001" src="../../images/images/u33.png" width="150" height="150"/>
-                <img ng-if="application.statusId==40002" src="../../images/images/u46.png" width="150" height="150"/>
-                <img ng-if="application.statusId==40003" src="../../images/images/u33.png" width="150" height="150"/>
+            <a ui-sref="setting.robot" >
+                <img ng-if="application.statusId==40001" ng-click="vm.selectScene(application.sceneId)"  src="../../images/images/u33.png" width="150" height="150"/>
+                <img ng-if="application.statusId==40002" ng-click="vm.selectScene(application.sceneId)" src="../../images/images/u46.png" width="150" height="150"/>
+                <img ng-if="application.statusId==40003" ng-click="vm.selectScene(application.sceneId)" src="../../images/images/u33.png" width="150" height="150"/>
             </a>
             <div class="p10 mb-10 bd_bot" >
                 <p class="name">{{application.applicationName}}</p>

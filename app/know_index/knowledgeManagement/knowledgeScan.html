@@ -12,7 +12,7 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
-     {{vm.knowledgeData}}
+        {{vm.knowledgeData}}
         <ul class="Preview">
             <li>
                 <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
@@ -24,27 +24,35 @@
                 <div class="knowContent">
                     <span>知识内容：</span>
                     <div class="PreviewRight" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
-                        <p>内容一</p>
+                        <p>内容 {{$index+1 | numberToWord}}</p>
                         <div>
-                            <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户。</p>
+                            <p>{{item.knowledgeContent}}</p>
                             <p><i>渠道：</i>  <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span></p>
                             <p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span></p>
-                            <p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>
+                            <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
                             <span>&nbsp;</span>
                         </div>
-                        <!--<p>内容二</p>-->
-                        <!--<div class="PreviewRightPic">-->
-                        <!--<img src="../../../images/images/service_24.jpg"/>-->
-                        <!--<p><span class="PreviewRightPic_L">宝宝听故事：种子按安家...</span><span class="PreviewRightPic_R">2016-9-27</span></p>-->
-                        <!--<div>太阳公公落山了，农场主人休息了，大棚里却热闹了泡过55度汤的种子们兴奋得有点睡不着，明天就可以进入他们专属的安乐窝...</div>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </li>
-            <li style="border: none"><p><span>概念扩展：</span>信用卡怎么办理啊</p></li>
+            <!--{{vm.knowledgeData.extensionQuestions}}-->
+            <li style="border: none" ng-if="vm.knowledgeData.extensionQuestions[0].extensionQuestionTagList">
+                <p ng-repeat="item in vm.knowledgeData.extensionQuestions">
+                    <span>概念扩展：</span>
+                    <span ng-repeat="val in item.extensionQuestionTagList">{{val.tagName}}</span>
+                </p>
+            </li>
+            <li style="border: none" ng-if="!vm.knowledgeData.extensionQuestions[0].extensionQuestionTagList">
+                <p ng-repeat="item in vm.knowledgeData.extensionQuestions">
+                    <span>概念扩展：</span>
+                    <span>{{item.extensionQuestionTitle}}</span>
+                </p>
+            </li>
             <div class="jqrsz-btn-box" style="padding-left: 150px;">
-                <a class="btn btn-blue mr10" ui-sref="custServScenaOverview.manage">返回</a>
-                <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;">修改</a>
+                {{vm.save}}
+                <a class="btn btn-blue mr10" ng-click="vm.save()">保存</a>
+                <!--ui-sref="{{vm.editUrl}}"-->
+                <a class="btn btn-gray" href="javascript:window.opener=null;window.open('','_self');window.close();" style="background: #2bcacc; color: #fff;">修改</a>
             </div>
         </ul>
     </div>

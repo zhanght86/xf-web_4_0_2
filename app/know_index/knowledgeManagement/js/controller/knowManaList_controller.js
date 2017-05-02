@@ -4,8 +4,8 @@
 
 
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("userId","111111");
         $cookieStore.put("sceneId","1");
@@ -123,7 +123,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     }
                 }
             },function(){
-                //alert("err or err")
+                // layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -180,7 +180,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                layer.msg("err or err")
             });
         }
 
@@ -262,7 +262,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     console.log(data);
                 }
             },function(){
-                alert("err or err")
+                layer.msg("err or err")
             });
         }
         function scanCotentByTitle(title){
@@ -359,7 +359,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -418,7 +418,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                    layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -520,17 +520,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
             };
-                var title = angular.copy($scope.vm.newTitle);
-                scanCotentByTitle(title) ;
-                var obj = {};
-                obj.knowledgeContent = $scope.vm.newTitle;
-                obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
+            var title = angular.copy($scope.vm.newTitle);
+            scanCotentByTitle(title) ;
+            var obj = {};
+            obj.knowledgeContent = $scope.vm.newTitle;
+            obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
                 obj.channelIdList =  $scope.vm.channel;
-                obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+            obj.dimensionIdList =  $scope.vm.dimensionArr.id;
 
-               obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-               obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-               obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+            obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+            obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
 
             obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent.push(obj);
@@ -561,7 +561,15 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!checkSave()){
                 return false
             }else{
-                $state.go()
+                var obj = {};
+                var params = getParams();
+                //console.log(params);
+                obj.params = params;
+                obj.editUrl = "knowledgeManagement.singleAddConcept";
+                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                var url = $state.href('knowledgeManagement.knowledgeScan');
+                $window.open(url,'_blank');
+                $cookieStore.put("knowledgeScan",obj);
             }
         };
 

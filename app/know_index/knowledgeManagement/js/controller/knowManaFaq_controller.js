@@ -155,7 +155,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         // 获取Bot全路径
@@ -245,7 +245,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -302,7 +302,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                     layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -362,7 +362,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //生成 bot
         function getCreatBot(){
             if($scope.vm.title){
-                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                httpRequestPost("/api/faqKnowledge/findClasssByKnowledgeTitle",{
                     "title" :  $scope.vm.title,
                     "applicationId" : "100"
                 },function(data){
@@ -436,30 +436,20 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function scan(){
-            //if(!checkSave()){
-            //    return false
-            //}else{
+            if(!checkSave()){
+                return false
+            }else{
             var obj = {};
             var params = getParams();
             console.log(params);
             obj.params = params;
-            obj.save = function(){
-                httpRequestPost("/api/faqKnowledge/addFAQKnowledge",params,function(data){
-                    console.log(data) ;
-                    if(data.status == 200){
-                        //open
-                        //$state.go("custServScenaOverview.manage")
-                    }
-                },function(err){
-                    console.log(err)
-                });
-            };
+            obj.editUrl = "knowledgeManagement.faqAdd";
             //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
-                var url = $state.href('knowledgeManagement.knowledgeScan');
-                    $window.open(url,'_blank');
-                    $cookieStore.put("knowledgeScan",obj);
+            var url = $state.href('knowledgeManagement.knowledgeScan');
+                $window.open(url,'_blank');
+                $cookieStore.put("knowledgeScan",obj);
             //$state.go('knowledgeManagement.knowledgeScan',{knowledgeScan: 111},{reload:true},{blank:true});
-            //}
+            }
         };
         /* ****************************************** //
          *

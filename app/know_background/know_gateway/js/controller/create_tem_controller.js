@@ -73,7 +73,7 @@ angular.module('knowGatewayModule').controller('createTemController', [
                 }
                 $('.proce_result ').trigger('click');
             }else{
-                alert("请先上传模板或选定模板");
+                 layer.msg("请先上传模板或选定模板");
             }
         }
 

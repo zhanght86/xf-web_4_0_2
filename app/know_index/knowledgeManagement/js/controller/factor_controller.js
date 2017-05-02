@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/28.
  */
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("userId","111111");
         $cookieStore.put("sceneId","1");
@@ -54,14 +54,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //高级选项
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [{"requestId":"372211926127607808","channelId":"361738105134252034","applicationId":"360619411498860544","channelName":"QQ","channelUpdateTime":1490099521000,"channelUpdateId":"359873057331875840","statusId":50002},{"requestId":"372211926131802112","channelId":"367856312874172416","applicationId":"360619411498860544","channelName":"微信","channelUpdateTime":1491558301000,"channelUpdateId":"359873057331875840","statusId":50001},{"requestId":"372211926131802113","channelId":"367859239487537152","applicationId":"360619411498860544","channelName":"PC","channelUpdateTime":1491558999000,"channelUpdateId":"359873057331875840","statusId":50002},{"requestId":"372211926131802114","channelId":"367863798171697152","applicationId":"360619411498860544","channelName":"PC端","channelUpdateTime":1491560086000,"channelUpdateId":"359873057331875840","statusId":50002}],     //所有渠道
+            channels : [],     //所有渠道
             channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
-            dimensions : [{"dimensionId":"369243445367144448","dimensionName":"国家_中国","dimensionParentId":"368896402614386688"},{"dimensionId":"369244855760584704","dimensionName":"国家_日本","dimensionParentId":"368896402614386688"},{"dimensionId":"369176517474779137","dimensionName":"鞋子_李宁","dimensionParentId":"369176517193760768"},{"dimensionId":"369932079611248640","dimensionName":"鞋子_阿达达斯","dimensionParentId":"369176517193760768"},{"dimensionId":"369931334048546816","dimensionName":"省份_石家庄","dimensionParentId":"369931334027575296"},{"dimensionId":"369931334048546817","dimensionName":"省份_唐山","dimensionParentId":"369931334027575296"},{"dimensionId":"370271192004689920","dimensionName":"爱好_篮球","dimensionParentId":"370271191987912704"},{"dimensionId":"370271192004689921","dimensionName":"爱好_爬山","dimensionParentId":"370271191987912704"},{"dimensionId":"370271313735974912","dimensionName":"大海_黑海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271313735974913","dimensionName":"大海_死海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271389023731712","dimensionName":"人类_男人","dimensionParentId":"370271389006954496"},{"dimensionId":"370271389023731713","dimensionName":"人类_女人","dimensionParentId":"370271389006954496"}]
+            dimensions : []
             ,  //所有维度
             dimensionArr : [{'dimensionName':'国家_中国','dimensionId':'369243445367144448'}],  //選擇的維度
-            dimensionsCopy :[{"dimensionId":"369243445367144448","dimensionName":"国家_中国","dimensionParentId":"368896402614386688"},{"dimensionId":"369244855760584704","dimensionName":"国家_日本","dimensionParentId":"368896402614386688"},{"dimensionId":"369176517474779137","dimensionName":"鞋子_李宁","dimensionParentId":"369176517193760768"},{"dimensionId":"369932079611248640","dimensionName":"鞋子_阿达达斯","dimensionParentId":"369176517193760768"},{"dimensionId":"369931334048546816","dimensionName":"省份_石家庄","dimensionParentId":"369931334027575296"},{"dimensionId":"369931334048546817","dimensionName":"省份_唐山","dimensionParentId":"369931334027575296"},{"dimensionId":"370271192004689920","dimensionName":"爱好_篮球","dimensionParentId":"370271191987912704"},{"dimensionId":"370271192004689921","dimensionName":"爱好_爬山","dimensionParentId":"370271191987912704"},{"dimensionId":"370271313735974912","dimensionName":"大海_黑海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271313735974913","dimensionName":"大海_死海","dimensionParentId":"370271313727586304"},{"dimensionId":"370271389023731712","dimensionName":"人类_男人","dimensionParentId":"370271389006954496"},{"dimensionId":"370271389023731713","dimensionName":"人类_女人","dimensionParentId":"370271389006954496"}]
+            dimensionsCopy :[]
             ,
 
             //高级选项内容
@@ -95,7 +95,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             reQuestion : null, //反问
 
             dialogExtension : [],
-            tableList: {"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代缴类别","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"375718535801864192","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"375718535801864192\"}"}
+            tableList: ""
         };
         function tableChange(row, col ,val){
             console.log($scope.vm.tableList);
@@ -186,7 +186,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 }
             });
         }
-        console.log(getTableParams());
         function getTableParams(){
             var tabelData = angular.copy($scope.vm.tableList.data);
             var params = {} ;
@@ -269,7 +268,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     }
                 }
             },function(){
-                //alert("err or err")
+                // layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -326,7 +325,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
 
@@ -408,7 +407,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     console.log(data);
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         function scanCotentByTitle(title){
@@ -505,7 +504,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -564,7 +563,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                     layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -706,7 +705,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(!checkSave()){
                 return false
             }else{
-                //$state.go()
+                var obj = {};
+                var params = getParams();
+                //console.log(params);
+                obj.params = params;
+                obj.editUrl = "knowledgeManagement.factorAdd";
+                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                var url = $state.href('knowledgeManagement.knowledgeScan');
+                $window.open(url,'_blank');
+                $cookieStore.put("knowledgeScan",obj);
+                //$state.go('knowledgeManagement.knowledgeScan',{knowledgeScan: 111},{reload:true},{blank:true});
             }
         };
 
