@@ -54,12 +54,12 @@ angular.module('loginModule').controller('loginController', [
         //  随机产生四位验证码
         function randomNumber(number){
             var rnd="";
-            for(var i=0;i<number;i++)
+            for(var i=0;i<number;i++){
                 rnd+=Math.floor(Math.random()*10);
-            return rnd
+            }
+                return rnd;
         }
-
-      //$scope.loginFailed = false;
+        //$scope.loginFailed = false;
       //
       //  $scope.login = function () {
       //      //校验表单数据
