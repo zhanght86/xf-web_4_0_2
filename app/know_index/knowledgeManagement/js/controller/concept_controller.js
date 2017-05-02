@@ -123,7 +123,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                 }
             },function(){
-                //alert("err or err")
+                // layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -180,7 +180,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
 
@@ -262,7 +262,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     console.log(data);
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         function scanCotentByTitle(title){
@@ -359,7 +359,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -418,7 +418,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                     layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){

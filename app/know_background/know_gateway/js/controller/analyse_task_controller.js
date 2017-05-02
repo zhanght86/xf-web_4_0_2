@@ -109,7 +109,7 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
         // }
 
         $scope.queryKnowDocList = function(){
-            //alert($scope.SearchPOJO.currentPage)
+            // layer.msg($scope.SearchPOJO.currentPage)
             KnowDocService.queryKnowDocList.save({
                 "index": ($scope.SearchPOJO.currentPage-1)*$scope.SearchPOJO.pageSize,
                 "pageSize": $scope.SearchPOJO.pageSize,
