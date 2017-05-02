@@ -137,8 +137,12 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
 
+                preCloseCallback:function(e){    //关闭回掉
+                    if($scope.vm.dimension == ''){
+                        layer.msg("维度名称不能为空！");
+                        return;
+                    }
                     if(e === 1){
                         httpRequestPost("/api/application/dimension/addDimension",{
                             applicationId:$scope.vm.applicationId,
@@ -149,7 +153,10 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             dimensionNameArray : $scope.vm.newDimensions,
 
                         },function(data){
-                            $state.reload()
+                            $state.reload();
+                            if(data.status == 10002){
+                                layer.msg("维度名称重复，请重新添加！")
+                            }
                         },function(){
                             layer.msg("请求失败")
                         })
