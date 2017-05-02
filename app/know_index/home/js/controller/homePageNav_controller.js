@@ -8,9 +8,11 @@
 
 angular.module('homePage').controller('homePageNavController', [
 
-    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", function ($scope, $location, localStorageService, AuthService,$timeout) {
+    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout",
+    function ($scope, $location, localStorageService, AuthService,$timeout) {
             $scope.vm = {
-                applicatioinId : true
+                applicatioinId : true,
+
             };
         //$timeout(function(){
         //    $scope.vm.applicatioinId = false;

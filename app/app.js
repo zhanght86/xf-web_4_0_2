@@ -151,7 +151,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/home/homePageContent.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageContentController"
                     }
                 }
             })
