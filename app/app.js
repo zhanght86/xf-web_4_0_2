@@ -151,7 +151,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/home/homePageContent.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageContentController"
                     }
                 }
             })
@@ -711,6 +711,21 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/concept/knowledgeSingleAddConcept.html',
                         controller: "conceptController"
+                    }
+                }
+            })
+            //营销场景-概念新增
+            .state("knowledgeManagement.ConceptAdd", {
+                url: "/ConceptAdd",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/marking_concept/newConcept.html',
+                        controller: "newConceptController"
                     }
                 }
             })

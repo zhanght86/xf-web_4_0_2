@@ -3,8 +3,11 @@
     <div class="mb-20 ">
         <form name="myForm" class="css-form" novalidate>
         <input type="text" class="input-text mb-10" ng-model="vm.applicationNewName"
-                name="applicationName" check-name="applicationName">
-        <p class="c-error" ng-show="myForm.applicationName.$error.unique">*已有相同应用名称，请重新输入！</p>
+                name="applicationName" check-name="applicationName" required>
+        <p class="c-error" ng-show="myForm.applicationName.$dirty && myForm.applicationName.$invalid">
+            <p class="c-error" ng-show="myForm.applicationName.$error.required">应用名称不能为空！</p>
+            <p class="c-error" ng-show="myForm.applicationName.$error.unique">*已有相同应用名称，请重新输入！</p>
+        </p>
         </form>
     </div>
     <div class="tc">

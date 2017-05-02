@@ -156,9 +156,9 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
 
         //监听分页菜单的变化
         var timeout3;
-        $scope.$watch('TemSearchPOJO', function (SearchPOJO) {
+        $scope.$watch('SearchPOJO', function (SearchPOJO) {
             if (timeout3) {
-                $timeout.cancel(timeout3)
+                $timeout.cancel(timeout3);
             }
             timeout3 = $timeout(function () {
                 $scope.queryDocKnowItems();

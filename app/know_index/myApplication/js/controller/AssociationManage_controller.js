@@ -26,6 +26,7 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
             addRelatedService : addRelatedService, //关联服务弹窗
             cancelRelatedService : cancelRelatedService, //取消关联服务弹窗
             listApplicationServiceData : listApplicationServiceData, //分页查询本应用的服务
+            
 
         };
 

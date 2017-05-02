@@ -56,7 +56,7 @@ knowledge_static_web.directive('plupload', ['$timeout', function ($timeout) {
                             };
                             if ($scope.processMethod == true) {
                                 if (!$scope.targetId || $scope.targetId == null) {
-                                    alert("请选择加工模板");
+                                     layer.msg("请选择加工模板");
                                     return;
                                 }
                                 //params.targetId = $scope.targetId;
@@ -154,19 +154,19 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                     PostInit: function () {
                         $('#temupload').click(function () {
                             if ($scope.temName == null || $scope.temName == '' || !$scope.temName) {
-                                alert("请输入模板名称");
+                                 layer.msg("请输入模板名称");
                                 return;
                             }
                             if ($scope.temName.length > 50) {
-                                alert("模板名称不能大于50字");
+                                 layer.msg("模板名称不能大于50字");
                                 return;
                             }
                             if (!$scope.temNameChecked) {
-                                alert("模板名校验失败");
+                                 layer.msg("模板名校验失败");
                                 return;
                             }
                             if (uploader.files.length <= 0) {
-                                alert("请选择上传文件");
+                                 layer.msg("请选择上传文件");
                                 return;
                             }
                             uploader.setOption('multipart_params', {
@@ -232,13 +232,13 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                             //var res = res.replace(/<.*?>/ig,"")
                             var response = JSON.parse(res.response.replace(/<.*?>/ig,""));
                             if (response.status == 200) {
-                                alert("模板文件上传成功，请添加规则");
+                                 layer.msg("模板文件上传成功，请添加规则");
                                 $scope.$apply(function () {
                                     $scope.temId = response.data.templateId;
                                     $scope.storeParams($scope.temId);
                                 })
                             } else {
-                                alert("模板文件上传失败");
+                                 layer.msg("模板文件上传失败");
                             }
                         }
                     }
@@ -274,11 +274,11 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
 //                         //document.getElementById('sinupload').onclick = function() {
 //                         $('#sinupload').click(function () {
 //                             if (!$scope.sinKnowItemTitle || $scope.sinKnowItemTitle == '' || $scope.sinKnowItemTitle == null) {
-//                                 alert("知识条目标题不能为空");
+//                                  layer.msg("知识条目标题不能为空");
 //                                 return;
 //                             }
 //                             if (!$scope.sinKnowItemContent || $scope.sinKnowItemContent == '' || $scope.sinKnowItemContent == null) {
-//                                 alert("知识条目内容不能为空");
+//                                  layer.msg("知识条目内容不能为空");
 //                                 return;
 //                             }
 //                             uploader.setOption('multipart_params', {
@@ -543,7 +543,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
                 }
             };
 
-            // alert(attrs.dropDownMenuByZtree);
+            //  layer.msg(attrs.dropDownMenuByZtree);
             var split = attrs.dropDownMenuByZtree;
             var arr = split.split(",");
             var citySel = arr[0];
@@ -574,7 +574,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
                             location += nodeArrs[i] + "->";
                         }
                         location = location.substring(0, location.lastIndexOf("->"));
-                        // alert(location);
+                        //  layer.msg(location);
                         selectLocation += location + ",";
                     }
 
@@ -626,7 +626,7 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
                     type = e.data.type,
                     nodes = zTree.getSelectedNodes();
                 if (type.indexOf("All") < 0 && nodes.length == 0) {
-                    alert("请先选择一个父节点");
+                     layer.msg("请先选择一个父节点");
                 }
 
                 if (type == "expandAll") {

@@ -50,7 +50,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
 
         $scope.generateRule = function(){
             if(!$scope.titleText || $scope.titleText == ''){
-                alert("请填写匹配标题");
+                 layer.msg("请填写匹配标题");
                 return;
             }
             TemplateService.generateRule.save({
@@ -81,7 +81,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
             }
 
             if(!$scope.checkedRule || $scope.checkedRule == ''){
-                alert("请选择匹配标题");
+                 layer.msg("请选择匹配标题");
                 return;
             }
             //console.log($scope.checkedRule)
@@ -102,18 +102,18 @@ angular.module('knowGatewayModule').controller('docSelectController', [
                         if($scope.extractRegTxt != null && $scope.extractRegTxt != '')
                             $scope.optimizeText();
                     }else{
-                        alert("未能抽取到匹配内容");
+                         layer.msg("未能抽取到匹配内容");
                     }
                 }
             })
         }
         $scope.optimizeText = function(){
             if(!$scope.strs || $scope.strs.length <= 0){
-                alert("没有匹配的标题");
+                 layer.msg("没有匹配的标题");
                 return;
             }
             if(!$scope.extractRegTxt || $scope.extractRegTxt == ''){
-                alert("请输入正则表达式");
+                 layer.msg("请输入正则表达式");
                 return;
             }
             TemplateService.optimizeText.save({
@@ -124,7 +124,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
                     if(re.data.objs.length > 0){
                         $scope.extractStrs = re.data;
                     }else{
-                        alert("未能匹配到相应正则结果");
+                         layer.msg("未能匹配到相应正则结果");
                     }
                 }
             })
@@ -138,7 +138,7 @@ angular.module('knowGatewayModule').controller('docSelectController', [
             }
 
             if(!$scope.checkedRule){
-                alert("请选择要保存的规则");
+                 layer.msg("请选择要保存的规则");
                 return;
             }
             var params = {
