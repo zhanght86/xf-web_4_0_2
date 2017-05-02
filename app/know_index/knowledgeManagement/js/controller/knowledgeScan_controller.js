@@ -5,18 +5,26 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowledgeScanController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","$location","$rootScope",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         //"364180924750893056"
         //knowledgeScan
+        console.log($cookieStore.get("knowledgeScan").params);
         console.log($stateParams);
+        var knowledgeScan =  $cookieStore.get("knowledgeScan");
+
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
             //knowledgeId : $stateParams.knowledgeId,
             knowledgeId : "364180924750893056",        //del
             knowledgeType : $stateParams.knowledgeType,
-            listData : null
+            listData : null,
+            knowledgeData : knowledgeScan.params ,
+            save : knowledgeScan.save
+
+
+
             //editName : editName
             //"pageSize": 5,
             //"sceneIds" : [] ,
