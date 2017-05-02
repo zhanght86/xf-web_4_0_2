@@ -714,6 +714,21 @@ knowledge_static_web
                     }
                 }
             })
+            //营销场景-概念新增
+            .state("knowledgeManagement.ConceptAdd", {
+                url: "/ConceptAdd",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/marking_concept/newConcept.html',
+                        controller: "newConceptController"
+                    }
+                }
+            })
             //客服場景
             .state("knowledgeManagement.customKnowledge", {
                 url: "/customKnowledge",
