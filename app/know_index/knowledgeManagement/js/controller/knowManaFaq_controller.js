@@ -155,7 +155,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.$apply();
                 }
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         // 获取Bot全路径
@@ -245,7 +245,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                alert("err or err")
+                 layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -302,7 +302,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    alert(err)
+                     layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){

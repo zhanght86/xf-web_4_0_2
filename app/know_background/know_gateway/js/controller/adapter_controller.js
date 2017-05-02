@@ -143,63 +143,63 @@ angular.module('knowGatewayModule').controller('adapterController', [
 
         $scope.addAdaptor = function(){
             if(!$scope.AdapterPOJO.name || $scope.AdapterPOJO.name ==''){
-                alert("请输入适配器名称");
+                 layer.msg("请输入适配器名称");
                 return;
             }
             if($scope.CheckStr($scope.AdapterPOJO.name)){
-                alert("名称包含非法字符!");
+                 layer.msg("名称包含非法字符!");
                 return;
             }
             if(!$scope.AdapterPOJO.type || $scope.AdapterPOJO.type ==''){
-                alert("请选择适配器类型");
+                 layer.msg("请选择适配器类型");
                 return;
             }
 
             if($scope.AdapterPOJO.type == 1){
                 if(!$scope.AdapterPOJO.dbtype || $scope.AdapterPOJO.dbtype ==''){
-                    alert("请选择数据库类型");
+                     layer.msg("请选择数据库类型");
                     return;
                 }
                 if(!$scope.AdapterPOJO.url || $scope.AdapterPOJO.url ==''){
-                    alert("请输入URL");
+                     layer.msg("请输入URL");
                     return;
                 }
                 if(!$scope.AdapterPOJO.userName || $scope.AdapterPOJO.userName ==''){
-                    alert("请输入用户名");
+                     layer.msg("请输入用户名");
                     return;
                 }
                 if(!$scope.AdapterPOJO.password || $scope.AdapterPOJO.password ==''){
-                    alert("请输入密码");
+                     layer.msg("请输入密码");
                     return;
                 }
                 if(!$scope.AdapterPOJO.sql || $scope.AdapterPOJO.sql ==''){
-                    alert("请输入SQL语句");
+                     layer.msg("请输入SQL语句");
                     return;
                 }
                 if(!$scope.AdapterPOJO.titleCol || $scope.AdapterPOJO.titleCol ==''){
-                    alert("请输入标题列");
+                     layer.msg("请输入标题列");
                     return;
                 }
                 if(!$scope.AdapterPOJO.contentCol || $scope.AdapterPOJO.contentCol ==''){
-                    alert("请输入内容列");
+                     layer.msg("请输入内容列");
                     return;
                 }
                 if(!$scope.AdapterPOJO.tagCol || $scope.AdapterPOJO.tagCol ==''){
-                    alert("请输入标记列");
+                     layer.msg("请输入标记列");
                     return;
                 }
                 if(!$scope.AdapterPOJO.synchronizingTime ||  isNaN($scope.AdapterPOJO.synchronizingTime) || $scope.AdapterPOJO.synchronizingTime < 0){
-                    alert("请输入正确的时间间隔");
+                     layer.msg("请输入正确的时间间隔");
                     return;
                 }
             }else if($scope.AdapterPOJO.type == 4){
                 if(!$scope.AdapterPOJO.synchronizingTime ||  isNaN($scope.AdapterPOJO.synchronizingTime) || $scope.AdapterPOJO.synchronizingTime < 0){
-                    alert("请输入正确的时间间隔");
+                     layer.msg("请输入正确的时间间隔");
                     return;
                 }
 
                 if(!$scope.AdapterPOJO.docPath || $scope.AdapterPOJO.docPath ==''){
-                    alert("请输入文档路径");
+                     layer.msg("请输入文档路径");
                     return;
                 }
             }
@@ -235,7 +235,7 @@ angular.module('knowGatewayModule').controller('adapterController', [
                         $('.popup_wrap').hide();
                         TipService.setMessage('更新成功!',"success");
                     }else if(resource.data.err){
-                        alert(resource.data.err);
+                         layer.msg(resource.data.err);
                     }
                 })
             }else{
@@ -246,7 +246,7 @@ angular.module('knowGatewayModule').controller('adapterController', [
                         $('.popup_wrap').hide();
                         TipService.setMessage('创建成功!',"success");
                     }else if(resource.data.err){
-                        alert(resource.data.err);
+                         layer.msg(resource.data.err);
                     }
                 })
             }
