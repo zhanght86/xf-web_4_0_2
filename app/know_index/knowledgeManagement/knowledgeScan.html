@@ -12,23 +12,23 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
-        {{vm.listData}}
+     {{vm.knowledgeData}}
         <ul class="Preview">
             <li>
                 <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
-                <p><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
-                <p><span>业务框架：</span>卡类/信用卡/北京</p>
-                <p><span>知识标题： {{vm.listData.knowledgeBase.knowledgeTitle}}</span></p>
+                <p><span>知识标题： {{vm.knowledgeData.knowledgeTitle}}</span></p>
+                <p><span>知识有效期：</span>{{vm.knowledgeData.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.knowledgeData.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
+                <p><span>知识bot：</span> <span ng-repeat="item in vm.knowledgeData.classificationAndKnowledgeList track by $index">{{item.className.join("/")}}</span></p>
             </li>
             <li>
                 <div class="knowContent">
                     <span>知识内容：</span>
-                    <div class="PreviewRight">
+                    <div class="PreviewRight" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
                         <p>内容一</p>
                         <div>
                             <p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户。</p>
-                            <p><i>渠道：</i>web</p>
-                            <p><i>维度：</i>地区_北京  地区_河北  地区_湖南  地区_湖南</p>
+                            <p><i>渠道：</i>  <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span></p>
+                            <p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span></p>
                             <p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>
                             <span>&nbsp;</span>
                         </div>
