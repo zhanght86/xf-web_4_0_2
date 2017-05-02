@@ -10,7 +10,7 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">渠道状态：</label>
             <div class="formControls col-xs-9 col-sm-9" >
-                <select class="input-text" value="x.statusId" ng-init="vm.statusId = vm.channelStatus[0].statusId"
+                <select class="input-text" value="x.statusId" ng-init="vm.statusId = vm.channelStatus[0]"
                         ng-model="vm.statusId"
                         ng-options="x.statusName for x in vm.channelStatus">
                 </select>
