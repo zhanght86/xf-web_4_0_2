@@ -772,6 +772,23 @@ knowledge_static_web
                     }
                 }
             })
+            //知識預覽
+            .state("knowledgeManagement.knowledgeScan", {
+                url: "/knowledgeScan",
+                params : {knowledgeScan : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowledgeScan.html',
+                        controller: "knowledgeScanController"
+
+
+                    }
+                }
+            })
             //    -------------------------
             //测试功能
             .state("functionalTest", {
