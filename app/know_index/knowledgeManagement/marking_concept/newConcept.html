@@ -8,24 +8,26 @@
     </div>
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>FAQ知识新增</span>
+            <span>营销知识新增</span>
         </div>
+        <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
             <!--<form novalidate="novalidate" name="form">-->
             <div class="jqrsz-item">
                 <div class="item-line">
                     <div class="lable">
-                        知识标题：
+                        营销标题：
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
-                            <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-keypress="vm.enterEvent($event,vm.getCreatBot)" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
+                            <input class="ipt-txt" type="text"  ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
-                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/match_img.png"  width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="item-line">
                     <div class="lable">
                         知识有效期：
@@ -40,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="item-line">
+                <div class="item-line mb-10">
                     <div class="lable">
                         BOT分类：
                     </div>
@@ -64,35 +66,34 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
-                        <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.botSelectAdd()"><img src="../../../images/images/add_img.png" alt=""></a>
+                        <a href="javascript:;" ng-click="vm.botSelectAdd()" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
                     </div>
                 </div>
- <!--bot  标题 点击生成  -->
+                <!--bot  标题 点击生成  -->
                 <div class="item-line" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                     <div class="lable"> BOT分类：</div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
-                            <div class="ipt-txt">
+                            <div class="ipt-txt" >
                                 <span>{{item.className.join("/")}}</span>
                             </div>
                         </div>
                         <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                     </div>
                 </div>
-<!-- 手选生成-->
-                <!--<div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">-->
-                    <!--<div class="lable"> BOT分类：</div>-->
-                    <!--<div class="value Div" id="Div">-->
-                        <!--<div class="ipt-txt-box">-->
-                            <!--<div class="ipt-txt">-->
-                                <!--<span>{{item}}</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.botClassfy.splice($index,1)" alt=""></a>-->
-                    <!--</div>-->
-                <!--</div>-->
+                 <!--手选生成-->
+                <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
+                    <div class="lable"> BOT分类：</div>
+                        <div class="value Div" id="Div">
+                            <div class="ipt-txt-box">
+                            <div class="ipt-txt">
+                            <span>{{item.className.join("/")}}</span>
+                            </div>
+                        </div>
+                        <a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                    </div>
+                </div>
                 <div class="item-line">
                     <div class="row cl mb-10">
                         <div class="lable" style="width:245px;">业务框架：</div>
@@ -104,75 +105,97 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="item-line"  style="overflow: visible">
+                    <div class="lable" >
+                        触发要素：
+                    </div>
+                    <div class="value" style="overflow: visible">
+                        <div class="clearfix mb-10" style="width: 500px;height: 38px;">
+                            <select  ng-model="vm.factor"  class="input-text L " style="width: 20%;height:39px;">
+                                <option value="0">知识标题</option>
+                                <option value="1">概念扩展</option>
+                            </select>
+                            <input type="text " class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
+
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
+                        </div>
+                        <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
+
+                            <!--<span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">知识标题</span>-->
+                            <!--<div class="L mr-10" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">流量</div>-->
+
+                            <!--<a href="javascript:;" class="L mr-15 " ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                        <!--</div>-->
+                        <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
+
+                            <!--<span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">概念扩展</span>-->
+                            <!--<div class="L mr-10 clearfix kuozhan_div" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
+                                <!--<span class="L "><a href="javascript:;" class="mr-10">X</a>手机业务-话费</span>-->
+                                <!--<span class="L"><a href="javascript:;" class="mr-10">X</a>办理</span>-->
+                            <!--</div>-->
+                            <!--<a href="javascript:;" class="L mr-15 " ><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                        <!--</div>-->
+                    </div>
+                </div>
             </div>
 
             <div class="jqrsz-item" style="overflow: visible">
-                <div class="item-line"  style="overflow: visible">
-                    <div class="lable" >
-                        扩展问：
-                    </div>
-                    <div class="value" style="overflow: visible">
-                        <div class="clearfix" style="width: 500px;height: 38px;">
-                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 20%;height: 39px;">
-                                <option value="1">普通</option>
-                                <option value="0">否定</option>
-                            </select>
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight)"><img src="../../../images/images/add_img.png" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="Concept-Ipt-nxtDiv Concept-Ipt-nxtDivOut" style="margin-top: 20px;margin-bottom: 0;">
-                    <span class="Concept-Ipt-nxt-ico"></span>
-                    <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
-                </div>
-
-<!--sshoudong  tinajia -->
+                <!--sshoudong  tinajia -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
                     <div class="lable">
-                        扩展问：
+                        概念扩展：
                     </div>
-                    <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10" >
-                           {{item.extensionQuestionTitle}}
+                    <div class="value clearfix">
+                        <div class=" tag_box L mr-10">
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
+                            </span>
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">普通</span>
+                        <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
-                        <!--<span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>-->
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                        <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
                 </div>
 
-<!-- 業務框架 生成 -->
+                <!-- 業務框架 生成 -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
                     <div class="lable">
-                        扩展问：
+                        概念扩展：
                     </div>
-                    <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10" >
-                            {{item.extensionQuestionTitle}}
+                    <div class="value clearfix">
+                        <div class=" tag_box L mr-10">
+                            <!--{{item.extensionQuestionTagList}}-->
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
+                            </span>
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
-                        <!--<a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>-->
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                         <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
                     </div>
                 </div>
             </div>
-            <div class="jqrsz-item">
+
+
+            <div class="jqrsz-item" style="padding-top:0;">
                 <!--预览内容-->
-                <div ng-repeat="item in vm.scanContent">
+                <div ng-repeat="(index,item) in vm.scanContent">
                     <div class="item-line">
                         <div class="lable"></div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
-                                <div class="textareaDiv textareaDiv1 textareaDiv2 L " >
+                                <div class="textareaDiv textareaDiv1 textareaDiv2 L" >
                                 <!--<textarea   readonly style="width: 100%;">-->
                                     {{item.knowledgeContent}}
                                 <!--</textarea>-->
                                 </div>
                                 <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
                                 <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
-                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(vm.scanContent[$index])"></a>
+                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.KnowledgeEdit()"></a>
                             </div>
                         </div>
                     </div>
@@ -184,19 +207,28 @@
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
-                        <div class="optionDiv">
-                            维度:
-                            <span class="mr-10"  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                        <div class="optionDiv">维度:
+                            <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                        </div>
+                    </div>
+                    <!-- 扩展问生成标签-->
+                    <div class="item-line" ng-repeat="val in vm.dialogExtension[index]" style="margin-top: 4px;">
+                        <div class="value">
+                            <div class="ipt-txt-box">
+                                <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
+                                <i class="btn-empty"></i>
+                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="item-line" style="margin-top: 15px">
                     <div class="lable">
-                        知识内容：
+                        营销内容：
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
-                            <input class="addBth" ng-click="vm.knowledgeAdd()" type="button" value="+ 新增"/>
+                            <input class="addBth" ng-click="vm.KnowledgeAdd()" type="button" value="+ 新增"/>
                             <i class="btn-empty"></i>
                         </div>
                     </div>
@@ -221,9 +253,13 @@
     .tag_box{width:356px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
     .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
-
+    .tagRepeat{
+        background: #fff;
+        color: #ed;
+    }
+    .jqrsz-item{border-top:0;}
+    .kuozhan_div span{background:#ccc;padding:2px 5px;display:inline;text-indent:0; line-height:25px;margin:4px 5px 4px 2px;}
 </style>
 <script>
-
 
 </script>

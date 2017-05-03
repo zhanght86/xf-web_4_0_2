@@ -66,9 +66,8 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
-                        <a href="javascript:;" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
+                        <a href="javascript:;" ng-click="vm.botSelectAdd()" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
                     </div>
                 </div>
                 <!--bot  标题 点击生成  -->
@@ -76,30 +75,30 @@
                     <div class="lable"> BOT分类：</div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
-                            <div class="ipt-txt">
+                            <div class="ipt-txt" >
                                 <span>{{item.className.join("/")}}</span>
                             </div>
                         </div>
                         <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                     </div>
                 </div>
-                <!-- 手选生成-->
-                <!--<div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">-->
-                <!--<div class="lable"> BOT分类：</div>-->
-                <!--<div class="value Div" id="Div">-->
-                <!--<div class="ipt-txt-box">-->
-                <!--<div class="ipt-txt">-->
-                <!--<span>{{item}}</span>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.botClassfy.splice($index,1)" alt=""></a>-->
-                <!--</div>-->
-                <!--</div>-->
+                 <!--手选生成-->
+                <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
+                    <div class="lable"> BOT分类：</div>
+                        <div class="value Div" id="Div">
+                            <div class="ipt-txt-box">
+                            <div class="ipt-txt">
+                            <span>{{item.className.join("/")}}</span>
+                            </div>
+                        </div>
+                        <a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                    </div>
+                </div>
                 <div class="item-line">
                     <div class="row cl mb-10">
-                        <div class="lable">业务框架：</div>
+                        <div class="lable" style="width:245px;">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
-                        <div class="formControls col-xs-8 col-sm-9">
+                        <div class="formControls col-xs-8 col-sm-9" style="padding-left:0;">
                             <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
                                 <option value="" ng-if="vm.frames.length">--业务框架为空--</option>
                             </select>
@@ -169,30 +168,42 @@
             </div>
             <div class="jqrsz-item">
                 <!--预览内容-->
-                <div ng-repeat="item in vm.scanContent">
+                <div ng-repeat="(index,item) in vm.scanContent">
                     <div class="item-line">
                         <div class="lable"></div>
                         <div class="value">
-                            <div class="ipt-txt-box">
-                                <div class="textareaDiv textareaDiv1 textareaDiv2" >
+                            <div class="ipt-txt-box clearfix">
+                                <div class="textareaDiv textareaDiv1 textareaDiv2 L" >
                                 <!--<textarea   readonly style="width: 100%;">-->
                                     {{item.knowledgeContent}}
                                 <!--</textarea>-->
                                 </div>
-                                <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                                <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                                <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
+                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.KnowledgeEdit()"></a>
                             </div>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span  ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">维度:
-                            <span class="mr-10" ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                            <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                        </div>
+                    </div>
+                    <!-- 扩展问生成标签-->
+                    <div class="item-line" ng-repeat="val in vm.dialogExtension[index]" style="margin-top: 4px;">
+                        <div class="value">
+                            <div class="ipt-txt-box">
+                                <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
+                                <i class="btn-empty"></i>
+                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" width="25" height="25"></a>
+                            </div>
                         </div>
                     </div>
                 </div>

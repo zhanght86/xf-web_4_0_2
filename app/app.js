@@ -151,7 +151,7 @@ knowledge_static_web
                     },
                     'content': {
                         templateUrl: 'know_index/home/homePageContent.html',
-                        //controller: "homePageNavController"
+                        controller: "homePageContentController"
                     }
                 }
             })
@@ -714,6 +714,36 @@ knowledge_static_web
                     }
                 }
             })
+            //营销场景-概念新增
+            .state("knowledgeManagement.ConceptAdd", {
+                url: "/ConceptAdd",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/marking_concept/newConcept.html',
+                        controller: "newConceptController"
+                    }
+                }
+            })
+            //客服場景
+            .state("knowledgeManagement.customKnowledge", {
+                url: "/customKnowledge",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/customKnowledge/customKnowledge.html',
+                        controller: "customKnowledge"
+                    }
+                }
+            })
             .state("knowledgeManagement.faqAdd", {
                 url: "/faqAdd",
                 params : {data : null},
@@ -730,7 +760,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.listAdd", {
                 url: "/listAdd",
-
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -744,6 +774,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.factorAdd", {
                 url: "/factorAdd",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -752,6 +783,21 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
+                    }
+                }
+            })
+            //知識預覽
+            .state("knowledgeManagement.knowledgeScan", {
+                url: "/knowledgeScan",
+                params : {knowledgeScan : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowledgeScan.html',
+                        controller: "knowledgeScanController"
 
 
                     }

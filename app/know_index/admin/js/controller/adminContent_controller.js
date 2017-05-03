@@ -5,11 +5,10 @@
  */
 
 angular.module('adminModule').controller('adminContentController', [
-    '$scope',"$state","$timeout","$stateParams","ngDialog",
-    function ($scope,  $state,$timeout,$stateParams,ngDialog) {
+    '$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore) {
         //"applicationId": "string",
-        setCookie("userName","mf");
-        getCookie("userName");
+        $cookieStore.put("userName","mf");
         //setCookie("userId","359873057331875840");
         //$stateParams.userPermission = ['超级管理员','初级管理员'];
                 $scope.vm = {
@@ -18,12 +17,17 @@ angular.module('adminModule').controller('adminContentController', [
                     addApplicationWindow : addApplicationWindow,
                     myApplication : "",
                     selectLicence : "",
-
                     newApplicationName : "",
                     newScene : "",
                     newLicence : "",
-                    newDescribe : ""
+                    newDescribe : "",
+                    selectScene : selectScene
                 };
+        function selectScene(id,applicationId){
+            $cookieStore.put("sceneId",id);
+            $cookieStore.put("applicationId",applicationId);
+            //console.log($cookieStore.get("sceneId"))
+        }
         myApplication();
         selectLicence();
 
@@ -32,8 +36,9 @@ angular.module('adminModule').controller('adminContentController', [
             //console.log(getCookie("userId"));
             var sel = $scope;
             httpRequestPost("/api/application/application/listApplicationByUserId",{
-                "userId":getCookie("userId")
+                "userId":$cookieStore.get("userId")
             },function(data){
+                console.log(data)
                 sel.vm.myApplication = data.data;
                 $scope.$apply()
             },function(err){

@@ -10,13 +10,13 @@
                 <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
             </div>
             <div class="content_box mb25 ">
-                <h3 class="f22 pl-10 mb15">要素知识新增</h3>
+                <h3 class="f22 pl-10 mb15">要素型知识新增</h3>
                 <div class=" p10 ">
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:264px;"/>
-                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getCreatBot()" class=" mr-15" ><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="dib">
                                 <label>
-                                    <input style=" margin: 0px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                                    <input style=" margin: 0px 0 -1px 0;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
                                 </label>
                                 <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -41,8 +41,8 @@
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
-                                        <input class="ipt-txt" ng-click="vm.knowledgeBot($event)" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 250px;border: solid 1px #ddd;"/>
-                                        <i class="btn-menu_1" ng-click="vm.knowledgeBot($event)"></i>
+                                        <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 250px;border: solid 1px #ddd;"/>
+                                        <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
                                         <div class="rootClassfy aside-navs aside-navs2" >
                                             <ul class="menus show">
                                                 <!--//test-->
@@ -57,11 +57,40 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.botSelectAdd"><img src="../../../images/images/add_img.png" alt=""></a>
+                                    <a href="javascript:;" ng-click="vm.botSelectAdd()" class="L mr-15 mt-5" ><img src="../../../images/images/add_img.png" alt=""></a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!--bot  标题 点击生成  -->
+                    <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT分类：</label>
+                            <div class="value Div clearfix" id="Div">
+                                <div class="ipt-txt-box L mr-10" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                    <div class="ipt-txt">
+                                        <span>{{item.className.join("/")}}</span>
+                                    </div>
+                                </div>
+                                <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--手选生成-->
+                    <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT分类：</label>
+                            <div class="value Div" id="Div">
+                                <div class="ipt-txt-box" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                    <div class="ipt-txt">
+                                        <span>{{item.className.join("/")}}</span>
+                                    </div>
+                                </div>
+                                <a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
@@ -75,34 +104,32 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="L input-text extended_query_txt" placeholder="请输入问题"
+                                <input type="text" class="L input-text extended_query_txt" ng-model="vm.extensionTitle" placeholder="请输入问题"
                                        style="width:279px;" >
                                 <select class="sel bd L mr-10" style="margin-left:-1px;"  ng-model="vm.extensionWeight" >
-                                    <option value="1">普通</option>
-                                    <option value="0">否定</option>
+                                    <option value="60">普通</option>
+                                    <option value="61">否定</option>
                                 </select>
-                                <a href="javascript:;" class="create_a" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight)">
-                                    <img src="../../../images/images/add_img.png">
-                                </a>
+                                <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/add_img.png" alt=""></a>
                             </div>
                         </div>
                     </div>
-
-
                     <!--sshoudong  tinajia -->
                     <div class="exten_problem"  ng-repeat="item in vm.extensions">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="L input-text extended_query_txt" style="width:279px;" >
-                                    <!--{{item.extensionQuestionTitle}}-->
-                                    <span>ddddd</span>
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                        {{val.tagName}}
+                                    </span>
                                 </div>
                                 <span class="sel bd L mr-10" style="padding-left:2px;">
-                                    {{item.extensionQuestionType==1?'普通':'否定'}}
+                                    普通
                                 </span>
-                                    <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="create_a" ><img src="../../../images/images/delete_img.png" alt="" ></a>
-                            </div>
+                                <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                                <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>                            </div>
                         </div>
                     </div>
                     <!-- 業務框架 生成 -->
@@ -111,32 +138,31 @@
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="L input-text extended_query_txt" style="width:279px;" >
-                                    <!--{{item.extensionQuestionTitle}}-->
-                                    <span>ddddd</span>
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                        {{val.tagName}}
+                                    </span>
                                 </div>
-                                <span class="sel bd L mr-10" style="padding-left:2px;">
-                                    {{item.extensionQuestionType==1?'普通':'否定'}}
-                                </span>
+                                <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                                 <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                                 <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
                             </div>
                         </div>
                     </div>
-                </div>
                     <div class="row cl mb-50">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">要素知识导入:</label>
-                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容: &nbsp;</label>
+                        <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">
                             <div class="clearfix mb-10">
 
                                 <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
                                 <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
                                 <div class="essential_factor_div bd mt-10">
+                                    <!--{{vm.tableList}}-->
                                     <div class="mb-10">
                                         <a href="javascript:;" class="add_l ine mr-10" ng-click="vm.addRow()"><img src="../images/ys_img1.png"/></a>
                                         <a href="javascript:;" class="delete_line mr-10" ng-click="vm.tableRemove(1)"><img src="../images/ys_img2.png"/></a>
-										<a href="javascript:;" class="add_column mr-10"  ng-click="vm.addList();"><img src="../images/ys_img3.png"/></a>
+                                        <a href="javascript:;" class="add_column mr-10"  ng-click="vm.addList();"><img src="../images/ys_img3.png"/></a>
                                         <a href="javascript:;" class="delete_column"  ng-click="vm.tableRemove(2)"><img src="../images/ys_img4.png"/></a>
                                     </div>
                                     <div>
@@ -147,7 +173,7 @@
                                             <tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">
                                                 <td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">
                                                     <!--{{item}}-->
-                                                    <input type="text" ng-if="indexRow==0" ng-model="item"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.addList()" style="background:inherit;cursor:pointer"/>
+                                                    <input type="text" ng-if="indexRow==0" ng-model="item"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="background:inherit;cursor:pointer"/>
                                                     <!--<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>-->
                                                     <input type="text" ng-if="indexRow!=0" ng-model="item"  ng-change="vm.tableChange(indexRow,indexColumn,item)"/>
                                                 </td>
@@ -160,8 +186,7 @@
                                 <span class="channel_s">渠道：</span>
                                 <div>
                                     <label class="mr-10" ng-repeat="channel in vm.channels">
-                                        <!--<checkbox ng-click="vm.selectChannel(channel.channelId)"></checkbox>-->
-                                        <input style=" margin: 0px;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
+                                        <input style="vertical-align: middle; margin:0px 0 0px 0;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
                                         {{channel.channelName}}
                                     </label>
                                 </div>
@@ -218,8 +243,8 @@
                     <div class="row cl mb-10 ">
                         <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                         <div class="formControls col-xs-8 col-sm-9">
-                            <input type="button" class="btn1 btn1_blue mr-20" value="预览"/>
-                            <input type="button" class="btn1 btn_green" value="保存"/>
+                            <input type="button" class="btn1 btn1_blue mr-20" value="预览" ng-click="vm.scan()"/>
+                            <input type="button" class="btn1 btn_green"  ng-click="vm.save()" value="保存"/>
                         </div>
                     </div>
                 </div>
@@ -228,6 +253,5 @@
     </div>
 </div>
 
-<style>
 
-</style>
+

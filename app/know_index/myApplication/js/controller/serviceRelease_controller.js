@@ -6,7 +6,7 @@
 angular.module('myApplicationSettingModule').controller('serviceReleaseController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
-        $cookieStore.put("applicationId","360619411498860544");
+        $cookieStore.put("applicationId","377165362136875008");
         $cookieStore.put("userName","admin1");
         $cookieStore.put("userId","359873057331875840");
         $scope.vm = {
@@ -36,7 +36,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             serviceId : "", //服务id
             serviceName: "", //服务名称
             serviceStatus : 0, //服务状态
-            serviceType : 0, //服务类型
+            serviceType : 10, //服务类型
             userId : $cookieStore.get("userId"), //获取用户id
 
             categoryData : "", //分类数据
@@ -61,9 +61,10 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             botRoot : "",     //根节点
             newCategoryIds : [],  //选中的分类节点
 
-
+            //flagDialog : true, //发布按钮是否可点击，默认不可点击
 
         };
+
 
         listDimensionData(); //获取维度数据
         listChannelData();  //获取渠道数据
@@ -136,6 +137,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
         function addAndPublishService(){
             listNodeData(); //获取可用节点数据
             $scope.vm.dialogTitle="发布新服务";
+            initPublishServiceInput();
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
                 scope: $scope,
@@ -146,6 +148,31 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1) {
                         console.log($scope.vm.allowSubmit);
+                        if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
+                            layer.msg("发布服务的名称不能为空!");
+                            $scope.vm.allowSubmit=0;
+                            return;
+                        }
+                        if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
+                            layer.msg("发布服务时未选择分类!");
+                            $scope.vm.allowSubmit=0;
+                            return;
+                        }
+                        if($scope.vm.channels==null||$scope.vm.channels.length==0){
+                            layer.msg("发布服务时未选择渠道!");
+                            $scope.vm.allowSubmit=0;
+                            return;
+                        }
+                        if($scope.vm.dimensions==null||$scope.vm.dimensions.length==0){
+                            layer.msg("发布服务时未选择发布维度!");
+                            $scope.vm.allowSubmit=0;
+                            return;
+                        }
+                        if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
+                            layer.msg("发布服务时未选择发布节点!");
+                            $scope.vm.allowSubmit=0;
+                            return;
+                        }
                         if($scope.vm.allowSubmit){  //服务名称验证没有错误
                             $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
                             httpRequestPost("/api/application/service/addAndPublishService",{
@@ -162,25 +189,28 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                     $state.reload();
                                 }else{
                                     layer.msg("新增发布服务失败");
+                                    $state.reload();
                                 }
                             },function(){
                                 layer.msg("请求失败")
                             })
                         }
-                    }else{
-                        $scope.vm.categoryIds=[]; //分类id列表
-                        $scope.vm.channels=[]; //渠道id列表
-                        $scope.vm.dimensions=[]; //维度id列表
-                        $scope.vm.nodeCode=""; //节点编号
-                        $scope.vm.serviceName=""; //服务名称
-                        $scope.vm.serviceType=""; //服务类型
-                        $scope.vm.dimensionSelected=[];  //选中的维度
-                        $scope.vm.dimensionAll=$scope.vm.originDimensionAll;  //所有的维度
                     }
+                    initPublishServiceInput();
                 }
             });
         }
 
+        function initPublishServiceInput(){
+            $scope.vm.categoryIds=[]; //分类id列表
+            $scope.vm.channels=[]; //渠道id列表
+            $scope.vm.dimensions=[]; //维度id列表
+            $scope.vm.nodeCode=""; //节点编号
+            $scope.vm.serviceName=""; //服务名称
+            $scope.vm.serviceType=""; //服务类型
+            $scope.vm.dimensionSelected=[];  //选中的维度
+            $scope.vm.dimensionAll=$scope.vm.originDimensionAll;  //所有的维度
+        }
 
         //编辑服务
         function editService(serviceId){
@@ -213,22 +243,14 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                     $state.reload();
                                 }else{
                                     layer.msg("新增发布服务失败");
+                                    $state.reload();
                                 }
                             },function(){
                                 layer.msg("请求失败")
                             })
                         }
-                    }else{
-                        $scope.vm.categoryIds=[]; //分类id列表
-                        $scope.vm.channels=[]; //渠道id列表
-                        $scope.vm.dimensions=[]; //维度id列表
-                        $scope.vm.nodeCode=""; //节点编号
-                        $scope.vm.serviceName=""; //服务名称
-                        $scope.vm.serviceType=""; //服务类型
-                        $scope.vm.dimensionSelected=[];  //选中的维度
-                        $scope.vm.dimensionAll=$scope.vm.originDimensionAll;  //所有的维度
-
                     }
+                    initPublishServiceInput();
                 }
             });
 

@@ -134,70 +134,76 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
 
         //添加 窗口
         function addCorrection(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/correction/repeatCheck",{
-                            "correctionConceptApplicationId": $scope.vm.applicationId,
-                            "correctionConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("纠错概念类名重复");
-                                httpRequestPost("/api/modeling/concept/correction/listByAttribute",{
-                                    "correctionConceptApplicationId": $scope.vm.applicationId,
-                                    "correctionConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑纠错概念";
-                                    console.log(data);
-                                    addCorrectionConceptDialog(singleEditCorrectionConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].correctionConceptKey;
-                                    $scope.vm.term =  data.data[0].correctionConceptTerm;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加纠错概念";
-                                $scope.vm.term="";
-                                addCorrectionConceptDialog(singleAddCorrectionConcept);
-                            }
-                        },function(){
-                            layer.msg("添加失敗")
-                        })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            console.log($scope.vm.key);
+                            httpRequestPost("/api/modeling/concept/correction/repeatCheck", {
+                                "correctionConceptApplicationId": $scope.vm.applicationId,
+                                "correctionConceptKey": $scope.vm.key
+                            }, function (data) {          //类名重複
+                                if (data.status === 10002) {
+                                    layer.msg("纠错概念类名重复");
+                                    httpRequestPost("/api/modeling/concept/correction/listByAttribute", {
+                                        "correctionConceptApplicationId": $scope.vm.applicationId,
+                                        "correctionConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑纠错概念";
+                                        console.log(data);
+                                        addCorrectionConceptDialog(singleEditCorrectionConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].correctionConceptKey;
+                                        $scope.vm.term = data.data[0].correctionConceptTerm;
+                                    }, function () {
+                                    });
+                                } else {
+                                    //类名无冲突
+                                    $scope.vm.dialogTitle = "增加纠错概念";
+                                    $scope.vm.term = "";
+                                    addCorrectionConceptDialog(singleAddCorrectionConcept);
+                                }
+                            }, function () {
+                                layer.msg("添加失敗")
+                            })
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         //編輯彈框   添加公用
         function addCorrectionConceptDialog(callback,item){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item)
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog2.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            callback(item)
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()
@@ -206,19 +212,22 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
         //   刪除 彈框
         function deleteCorrection(id){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDelCorrectionConcept(id)
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/ConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            singleDelCorrectionConcept(id)
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         //編輯事件
         function singleEditCorrectionConcept(item){

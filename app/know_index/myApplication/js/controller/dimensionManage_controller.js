@@ -110,23 +110,28 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         }
 
         function findDimension(){
-            httpRequestPost("/api/application/dimension/findByDimensionName",{
-                dimensionName:$scope.vm.getDimension,
-                applicationId:$scope.vm.applicationId,
-                dimensionParentId : 0
-            },function(data){
-                if(data.status == 10005){
-                    $scope.vm.listData = "";
-                    $scope.vm.listDataTotal = 0;
-                    layer.msg("没有查询到记录!")
+            //为空查询判断
+            if($scope.vm.getDimension == ''|| $scope.vm.getDimension == null){
+                getData(1);
+            }else {
+                httpRequestPost("/api/application/dimension/findByDimensionName", {
+                    dimensionName: $scope.vm.getDimension,
+                    applicationId: $scope.vm.applicationId,
+                    dimensionParentId: 0
+                }, function (data) {
+                    if (data.status == 10005) {
+                        $scope.vm.listData = "";
+                        $scope.vm.listDataTotal = 0;
+                        layer.msg("没有查询到记录!")
+                        $scope.$apply()
+                    }
+                    $scope.vm.listData = data.data.dimensionList;
+                    $scope.vm.listDataTotal = data.data.total;
                     $scope.$apply()
-                }
-                $scope.vm.listData = data.data.dimensionList;
-                $scope.vm.listDataTotal = data.data.total;
-                $scope.$apply()
-            },function(){
-                layer.msg("请求失败")
-            })
+                }, function () {
+                    layer.msg("请求失败")
+                })
+            }
         }
 
         function addDimension(){
@@ -137,8 +142,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
 
+                preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         httpRequestPost("/api/application/dimension/addDimension",{
                             applicationId:$scope.vm.applicationId,
@@ -149,7 +154,10 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             dimensionNameArray : $scope.vm.newDimensions,
 
                         },function(data){
-                            $state.reload()
+                            $state.reload();
+                            if(data.status == 10002){
+                                layer.msg("维度名称重复，请重新添加！")
+                            }
                         },function(){
                             layer.msg("请求失败")
                         })

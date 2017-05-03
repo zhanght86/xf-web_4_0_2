@@ -136,55 +136,60 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
 
         //添加 窗口
         function addForceSegment(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/intention/intentionConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck",{
-                            "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                            "forceSegmentConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("强制分词概念类名重复");
-                                httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
-                                    "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                                    "forceSegmentConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑强制分词概念";
-                                    console.log(data);
-                                    addForceSegmentConceptDialog(singleEditForceSegmentConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].forceSegmentConceptKey;
-                                    $scope.vm.term =  data.data[0].forceSegmentConceptTerm;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加强制分词概念";
-                                $scope.vm.term="";
-                                addForceSegmentConceptDialog(singleAddForceSegmentConcept);
-                            }
-                        },function(){
-                            layer.msg("添加失敗")
-                        })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/intention/intentionConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            console.log($scope.vm.key);
+                            httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck", {
+                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                "forceSegmentConceptKey": $scope.vm.key
+                            }, function (data) {          //类名重複
+                                if (data.status === 10002) {
+                                    layer.msg("强制分词概念类名重复");
+                                    httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute", {
+                                        "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                        "forceSegmentConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑强制分词概念";
+                                        console.log(data);
+                                        addForceSegmentConceptDialog(singleEditForceSegmentConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].forceSegmentConceptKey;
+                                        $scope.vm.term = data.data[0].forceSegmentConceptTerm;
+                                    }, function () {
+                                    });
+                                } else {
+                                    //类名无冲突
+                                    $scope.vm.dialogTitle = "增加强制分词概念";
+                                    $scope.vm.term = "";
+                                    addForceSegmentConceptDialog(singleAddForceSegmentConcept);
+                                }
+                            }, function () {
+                                layer.msg("添加失敗")
+                            })
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         //編輯彈框   添加公用
         function addForceSegmentConceptDialog(callback,item){
-            var dialog = ngDialog.openConfirm({
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+               var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/intention/intentionConceptManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
@@ -200,6 +205,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                     }
                 }
             });
+            }
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()
@@ -208,19 +214,22 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         }
         //   刪除 彈框
         function deleteForceSegment(id){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDelForceSegmentConcept(id)
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/ConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            singleDelForceSegmentConcept(id)
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         //編輯事件
         function singleEditForceSegmentConcept(item){

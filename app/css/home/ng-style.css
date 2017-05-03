@@ -7,6 +7,9 @@
 .ng-blue {
   color: blue!important;
 }
+.milesVh {
+  visibility: hidden;
+}
 .type1 .icon-ngJj {
   position: relative;
   top: -1px;
