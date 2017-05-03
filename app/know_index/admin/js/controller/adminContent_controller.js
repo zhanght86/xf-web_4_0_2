@@ -24,7 +24,6 @@ angular.module('adminModule').controller('adminContentController', [
                     selectScene : selectScene
                 };
         function selectScene(id,applicationId){
-            alert(applicationId);
             $cookieStore.put("sceneId",id);
             $cookieStore.put("applicationId",applicationId);
             //console.log($cookieStore.get("sceneId"))
