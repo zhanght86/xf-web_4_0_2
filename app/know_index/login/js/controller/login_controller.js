@@ -35,14 +35,13 @@ angular.module('loginModule').controller('loginController', [
                 layer.msg("验证码错误");
             }else{
                 httpRequestPost("/api/user/userLogin",{
-                    "userName":$scope.vm.userName,
+                    "userLoginName":$scope.vm.userName,
                     "userPassword":$scope.vm.password
                 },function(data){
-                    console.log(data);
                     // cookie  userId
                     $cookieStore.put("userId" , data.data.userId);
+                    $cookieStore.put("username" , data.data.userName);
                     $state.go("admin");
-                    //console.dir(data.data.roleList)
                 },function(err){
                     layer.msg("登陆失败");
                     //console.log(err)

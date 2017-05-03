@@ -6,10 +6,10 @@
         </div>
         <ul class="nav">
             <li>
-                <a ui-sref="homePage.define">首页</a>
+                <a ui-sref="homePage.define" ng-if="vm.sceneId">首页</a>
             </li>
             <li>
-                <a ui-sref="setting.Infor">我的应用</a>
+                <a ng-click="vm.logApplication">我的应用</a>
             </li>
             <li ng-if="vm.applicationId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
@@ -225,7 +225,7 @@
         </ul>
         <div class="header-r">
             <div class="user-admin">
-                <a class="user-name" href="javascript:;"><i></i><span>鼎富科技</span></a>
+                <a class="user-name" href="javascript:;"><i></i><span>{{vm.userName}}</span></a>
                 <div class="ua-menu_1-box">
                     <ul class="ua-menu_1">
                         <li>
@@ -243,7 +243,7 @@
                         <li>
                             <a href="javascript:;">
                                 <i class="icon-header-r icon-header-r__h-r3"></i>
-                                <span ui-sref="login">退出登录</span>
+                                <span ng-click="vm.loginout()">退出登录</span>
                             </a>
                         </li>
                     </ul>
@@ -258,6 +258,7 @@
         </div>
     </div>
 </div>
+
 
 <style>
 
