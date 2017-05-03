@@ -13,50 +13,70 @@
             <span>知识预览</span>
         </div>
         {{vm.knowledgeData}}
-        <ul class="Preview">
-            <li>
-                <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
-                <p><span>知识标题： {{vm.knowledgeData.knowledgeTitle}}</span></p>
-                <p><span>知识有效期：</span>{{vm.knowledgeData.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.knowledgeData.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
-                <p><span>知识bot：</span> <span ng-repeat="item in vm.knowledgeData.classificationAndKnowledgeList track by $index">{{item.className.join("/")}}</span></p>
+        <ul class="preview pd-30">
+            <!--<li>-->
+                <!--&lt;!&ndash;<p><span>知识类目：</span>{{item.sceneName}}</p>&ndash;&gt;-->
+                <!--<p><span>知识标题： {{vm.knowledgeData.knowledgeTitle}}</span></p>-->
+                <!--<p><span>知识有效期：</span>{{vm.knowledgeData.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.knowledgeData.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>-->
+                <!--<p><span>知识bot：</span> <span ng-repeat="item in vm.knowledgeData.classificationAndKnowledgeList track by $index">{{item.className.join("/")}}</span></p>-->
+            <!--</li>-->
+            <li class="preview_li pr" >
+                <span class="pa preview_span">知识标题：</span>
+                <div>{{vm.knowledgeData.knowledgeTitle}}</div>
             </li>
-            <li>
-                <div class="knowContent">
-                    <span>知识内容：</span>
-                    <div class="PreviewRight" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
-                        <p>内容 {{$index+1 | numberToWord}}</p>
-                        <div>
-                            <p>{{item.knowledgeContent}}</p>
-                            <p><i>渠道：</i>  <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span></p>
-                            <p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span></p>
-                            <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
-                            <span>&nbsp;</span>
-                        </div>
-                    </div>
-                </div>
+            <li class="preview_li pr">
+                <span class="pa preview_span">知识有效期：</span>
+                <i>{{vm.knowledgeData.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}}</i>
+                至
+                <i> {{vm.knowledgeData.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</i>
+            </li>
+            <li class="preview_li pr" >
+                <span class="pa preview_span">知识bot：</span>
+                <i ng-repeat="item in vm.knowledgeData.classificationAndKnowledgeList track by $index">{{item.className.join("/")}}</i>
+            </li>
+
+            <li class="preview_li pr">
+                <span class="pa preview_span">知识内容：</span>
+
+                <ul class="clearfix" style="min-height:85px;" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
+                    <li class="preview_li pr" style="padding-left: 80px;">
+                        <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
+                        <p>{{item.knowledgeContent}}</p>
+                    </li>
+                    <li class="preview_li pr" style="padding-left: 80px;">
+                        <span class="pa preview_span2">渠道:</span>
+                        <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                    </li>
+                    <li class="preview_li pr" style="padding-left: 80px;">
+                        <span class="pa preview_span2">维度:</span>
+                        <span  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                    </li>
+                </ul>
             </li>
             <!--{{vm.knowledgeData.extensionQuestions}}-->
-            <li style="border: none" ng-if="vm.knowledgeData.extensionQuestions[0].extensionQuestionTagList">
+            <li class="preview_li pr" ng-if="vm.knowledgeData.extensionQuestions[0].extensionQuestionTagList">
                 <p ng-repeat="item in vm.knowledgeData.extensionQuestions">
-                    <span>概念扩展：</span>
+                    <span class="pa preview_span">概念扩展：</span>
                     <span ng-repeat="val in item.extensionQuestionTagList">{{val.tagName}}</span>
                 </p>
             </li>
-            <li style="border: none" ng-if="!vm.knowledgeData.extensionQuestions[0].extensionQuestionTagList">
+            <li class="preview_li pr" ng-if="!vm.knowledgeData.extensionQuestions[0].extensionQuestionTagList">
                 <p ng-repeat="item in vm.knowledgeData.extensionQuestions">
-                    <span>概念扩展：</span>
+                    <span class="pa preview_span">概念扩展：</span>
                     <span>{{item.extensionQuestionTitle}}</span>
                 </p>
             </li>
-            <div class="jqrsz-btn-box" style="padding-left: 150px;">
-                {{vm.save}}
-                <a class="btn btn-blue mr10" ng-click="vm.save()">保存</a>
-                <!--ui-sref="{{vm.editUrl}}"-->
-                <a class="btn btn-gray" href="javascript:window.opener=null;window.open('','_self');window.close();" style="background: #2bcacc; color: #fff;">修改</a>
-            </div>
         </ul>
+        <div class="jqrsz-btn-box" style="padding-left: 150px;">
+            {{vm.save}}
+            <a class="btn btn-blue mr10" ng-click="vm.save()">保存</a>
+            <!--ui-sref="{{vm.editUrl}}"-->
+            <a class="btn btn-gray" href="javascript:window.opener=null;window.open('','_self');window.close();" style="background: #2bcacc; color: #fff;">修改</a>
+        </div>
     </div>
 </div>
 <style>
-
+    .preview_li{padding-left:130px;margin-bottom:10px;}
+    .preview_span{left:0;top:0;text-align:right;width:130px;diaplay:inline-block;}
+    .preview_span2{left:0;top:0;text-align:right;width:80px;diaplay:inline-block;padding-right:10px;}
 </style>

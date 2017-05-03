@@ -187,13 +187,15 @@
                     <div class="item-line">
                         <div class="lable"></div>
                         <div class="value">
-                            <div class="ipt-txt-box">
-                                <div class="textareaDiv textareaDiv1 textareaDiv2" >
+                            <div class="ipt-txt-box clearfix">
+                                <div class="textareaDiv textareaDiv1 textareaDiv2 L" >
                                 <!--<textarea   readonly style="width: 100%;">-->
                                     {{item.knowledgeContent}}
                                 <!--</textarea>-->
                                 </div>
-                                <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                                <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                                <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
+                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.KnowledgeEdit()"></a>
                             </div>
                         </div>
                     </div>
@@ -215,7 +217,7 @@
                             <div class="ipt-txt-box">
                                 <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
-                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" width="25" height="25"></a>
+                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>
                         </div>
                     </div>

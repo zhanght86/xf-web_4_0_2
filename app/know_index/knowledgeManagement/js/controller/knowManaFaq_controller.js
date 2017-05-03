@@ -13,6 +13,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
+
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
@@ -442,7 +443,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     console.log(data) ;
                     if(data.status == 200){
                         //open
-                        //$state.go("custServScenaOverview.manage")
+                        $state.go("custServScenaOverview.manage");
                     }
                 },function(err){
                     console.log(err)
