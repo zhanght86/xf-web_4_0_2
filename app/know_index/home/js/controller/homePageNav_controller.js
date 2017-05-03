@@ -10,8 +10,12 @@ angular.module('homePage').controller('homePageNavController', [
                                 //$cookieStore.get("applicationId")
 
                 sceneId : $cookieStore.get('sceneId'),
+                jump: jump
 
             };
+        function jump() {
+            window.open('http://'+window.location.host+':7003/index.html');
+        }
         //$timeout(function(){
         //    $scope.vm.applicatioinId = false;
         //},1000)
