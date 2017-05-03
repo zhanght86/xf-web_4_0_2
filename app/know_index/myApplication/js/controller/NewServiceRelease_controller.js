@@ -6,9 +6,6 @@
 angular.module('myApplicationSettingModule').controller('newServiceReleaseController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$stateParams","$cookieStore","$timeout",
     function ($scope,localStorageService, $state,ngDialog,$stateParams,$cookieStore,$timeout) {
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","359873057331875840");
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             appName : "", //应用名称

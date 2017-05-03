@@ -5,9 +5,6 @@
  */
 angular.module('myApplicationSettingModule').controller('AssociationManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout", function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
-        $cookieStore.put("applicationId","377165362136875008");
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","359873057331875840");
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"), //获取用户id
