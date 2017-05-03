@@ -4,13 +4,11 @@
  * Date: 2017/4/10 17:16
  */
 angular.module('myApplicationSettingModule').controller('applicationInforController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","377165362136875008");
-        setCookie("userName","admin1");
-        setCookie("userId","359873057331875840");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore",
+    function ($scope,localStorageService, $state, ngDialog,$cookieStore) {
         $scope.vm = {
-            applicationId: getCookie("applicationId"),
-            userId : getCookie("userId"),   //用户id
+            applicationId: $cookieStore.get("applicationId"),
+            userId : $cookieStore.get("userId"),   //用户id
             serviceData : "",   // 发布服务列表数据
             paginationConf : ""  ,//分页条件
             pageSize : 3 , //默认每页数量
