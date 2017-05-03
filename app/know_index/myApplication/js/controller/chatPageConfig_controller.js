@@ -197,22 +197,27 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //查找知识
         function findHotQuestion(){
-            httpRequestPost("/api/application/hotQuestion/findHotQuestion",{
-                hotQuestionTitle:$scope.vm.hotQuestionTitle,
-                applicationId:$scope.vm.applicationId,
-            },function(data){
-                if(data.status == 10005){
-                    $scope.vm.listData = "";
-                    $scope.vm.listDataTotal = 0;
+            //为空查询分页
+            if($scope.vm.hotQuestionTitle == '' || $scope.vm.hotQuestionTitle == null){
+                getData(1)
+            }else {
+                httpRequestPost("/api/application/hotQuestion/findHotQuestion", {
+                    hotQuestionTitle: $scope.vm.hotQuestionTitle,
+                    applicationId: $scope.vm.applicationId,
+                }, function (data) {
+                    if (data.status == 10005) {
+                        $scope.vm.listData = "";
+                        $scope.vm.listDataTotal = 0;
+                        $scope.$apply()
+                        layer.msg("没有查询到记录!")
+                    }
+                    $scope.vm.listData = data.data.hotQuestionList;
+                    $scope.vm.listDataTotal = data.data.total;
                     $scope.$apply()
-                    layer.msg("没有查询到记录!")
-                }
-                $scope.vm.listData = data.data.hotQuestionList;
-                $scope.vm.listDataTotal = data.data.total;
-                $scope.$apply()
-            },function(){
-                layer.msg("请求失败")
-            })
+                }, function () {
+                    layer.msg("请求失败")
+                })
+            }
         }
 
         //知识置顶
