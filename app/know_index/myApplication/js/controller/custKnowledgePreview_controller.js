@@ -22,13 +22,15 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
 //        应用id：
 //377165362136875008
 
-
-        console.log($stateParams);
+//        if(!$stateParams.scanKnowledge.knowledgeId){
+//                $state.go("custServScenaOverview/manage")
+//        }
+        console.log($stateParams.scanKnowledge);
         $scope.vm = {
             applicationId :377165362136875008,
-            //knowledgeId : $stateParams.knowledgeId,
+            //knowledgeId : $stateParams.scanKnowledge.knowledgeId,
             knowledgeId : "377232867685568512",        //del
-            knowledgeType : $stateParams.knowledgeType,
+            knowledgeType : $stateParams.scanKnowledge.knowledgeType,
             listData : null,
             edit :  edit
             //editName : editName
@@ -60,34 +62,38 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
             }, function(error) {
             });
         //修改
+        var editUrl,api;
+        switch($stateParams.scanKnowledge.knowledgeType){
+            case 100 :
+                editurl = "knowledgeManagement.faqAdd";
+                api = "/api/faqKnowledge/getKnowledge";
+                break;
+            case 101 :
+                editurl = "knowledgeManagement.singleAddConcept";
+                api = "/api/conceptKnowledge/getKnowledge";
+                break;
+            case 102 :
+                editurl = "knowledgeManagement.listAdd";
+                api = "/api/conceptKnowledge/getKnowledge";
+                break;
+            case 103 :
+                editurl = "knowledgeManagement.factorAdd";
+                api = " /api/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId";
+                break;
+        }
         function edit(){
-            var editurl;
-            switch($stateParams.scanKnowledge.knowledgeType){
-                case 100 :
-                    editurl = "knowledgeManagement.faqAdd";
-                    break;
-                case 101 :
-                    editurl = "knowledgeManagement.singleAddConcept";
-                    break;
-                case 102 :
-                    editurl = "knowledgeManagement.listAdd";
-                    break;
-                case 103 :
-                    editurl = "knowledgeManagement.factorAdd";
-                    break;
-            }
-            $state.go(editurl,{data:$scope.vm.listData})
+            $state.go(editUrl,{data:$scope.vm.listData})
         }
         getData();
         function getData(){
-            httpRequestPost("/api/conceptKnowledge/getKnowledge",{
+            httpRequestPost(api,{
                 "knowledgeId" : $scope.vm.knowledgeId,
                 "applicationId" : $scope.vm.applicationId
             },function(data){
             console.log(data);
                 $scope.vm.listData = data.data;
                 $scope.$apply();
-                console.log(data);
+                //console.log(data);
             },function(){
                 layer.msg("获取失败")
             });
