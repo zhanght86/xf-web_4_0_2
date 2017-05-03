@@ -19,6 +19,7 @@ angular.module('adminModule').controller('adminContentController', [
             newDescribe : "",
             selectScene : selectScene
         };
+
         function selectScene(id,applicationId){
             $cookieStore.put("sceneId",id);
             $cookieStore.put("applicationId",applicationId);
@@ -36,16 +37,6 @@ angular.module('adminModule').controller('adminContentController', [
                     $scope.vm.userPermission = data.data.roleList;
                 //}
             },function(err){
-            });
-            httpRequestPost("/api/user/findUserLoginNameByUserId",{
-                "userId":$cookieStore.get("userId")
-            },function(data){
-                //if(data.status==200){
-                    //console.log(data);
-                    $scope.vm.userName = data.data.userLoginName;
-                //}
-            },function(err){
-                //console.log(err)
             });
         }
         //获取当前 应用场景
