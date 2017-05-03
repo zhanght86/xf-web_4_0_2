@@ -451,14 +451,19 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //禁用指定属性类型
         function disableAttributeType(){
             $.each($("#category-type").find("option"),function(index,value){
-                console.log($(value).val() +"======"+ $scope.vm.botSelectType);
-                if(($(value).val()==$scope.vm.botSelectType)>0){
-                    $("#category-type").val($scope.vm.botSelectType)
+                if($scope.vm.categoryAttributeName=="node"){
                     $(value).attr("disabled",null);
                     $(value).attr("style","");
                 }else{
-                    $(value).attr("disabled","disabled");
-                    $(value).attr("style","background-color: lightgrey");
+                    console.log($(value).val() +"======"+ $scope.vm.botSelectType);
+                    if(($(value).val()==$scope.vm.botSelectType)>0){
+                        $("#category-type").val($scope.vm.botSelectType)
+                        $(value).attr("disabled",null);
+                        $(value).attr("style","");
+                    }else{
+                        $(value).attr("disabled","disabled");
+                        $(value).attr("style","background-color: lightgrey");
+                    }
                 }
             });
         }

@@ -34,7 +34,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -124,72 +125,67 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
          */
         function switchSynonymConceptSearchType(request,value){
             if($("#searchType").val()=="synonymConceptKey"){
-                request.synonymConceptKey=value;
+                request.synonymConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="synonymConceptWeight"){
                 request.synonymConceptWeight=$("#synonymConceptWeight").val();
             }else if($("#searchType").val()=="synonymConceptTerm"){
-                request.synonymConceptTerm=value;
+                request.synonymConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }
         //添加 窗口
         function addSynonym(){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/businessModeling/synony/synonyConceptManageDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            console.log($scope.vm.key);
-                            httpRequestPost("/api/modeling/concept/synonym/repeatCheck", {
-                                "synonymConceptApplicationId": $scope.vm.applicationId,
-                                "synonymConceptKey": $scope.vm.key
-                            }, function (data) {          //类名重複
-                                if (data.status === 10002) {
-                                    layer.msg("同义概念类名重复");
-                                    httpRequestPost("/api/modeling/concept/synonym/listByAttribute", {
-                                        "synonymConceptApplicationId": $scope.vm.applicationId,
-                                        "synonymConceptKey": $scope.vm.key,
-                                        "index": 0,
-                                        "pageSize": 1
-                                    }, function (data) {
-                                        $scope.vm.dialogTitle = "编辑同义概念";
-                                        console.log(data);
-                                        addSynonymConceptDialog(singleEditSynonymConcept, data.data[0]);
-                                        $scope.vm.key = data.data[0].synonymConceptKey;
-                                        $scope.vm.term = data.data[0].synonymConceptTerm;
-                                        $scope.vm.weight = data.data[0].synonymConceptWeight;
-                                    }, function () {
-                                    });
-                                } else {
-                                    //类名无冲突
-                                    $scope.vm.dialogTitle = "增加同义概念";
-                                    $scope.vm.term = "";
-                                    $scope.vm.weight = "1";   //默認權重
-                                    addSynonymConceptDialog(singleAddSynonymConcept);
-                                }
-                            }, function () {
-                                layer.msg("添加失敗")
-                            })
-                        } else {
-                            $scope.vm.key = "";
-                            $scope.vm.term = "";
-                            $scope.vm.weight = 1;
-                        }
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/synony/synonyConceptManageDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        console.log($scope.vm.key);
+                        httpRequestPost("/api/modeling/concept/synonym/repeatCheck",{
+                            "synonymConceptApplicationId": $scope.vm.applicationId,
+                            "synonymConceptKey": $scope.vm.key
+                        },function(data){          //类名重複
+                            if(data.status===10002){
+                                layer.msg("同义概念类名重复");
+                                httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
+                                    "synonymConceptApplicationId": $scope.vm.applicationId,
+                                    "synonymConceptKey":$scope.vm.key,
+                                    "index":0,
+                                    "pageSize":1
+                                },function(data){
+                                    $scope.vm.dialogTitle="编辑同义概念";
+                                    console.log(data);
+                                    addSynonymConceptDialog(singleEditSynonymConcept,data.data[0]);
+                                    $scope.vm.key = data.data[0].synonymConceptKey;
+                                    $scope.vm.term =  data.data[0].synonymConceptTerm;
+                                    $scope.vm.weight =  data.data[0].synonymConceptWeight;
+                                },function(){
+                                });
+                            }else{
+                                //类名无冲突
+                                $scope.vm.dialogTitle="增加同义概念";
+                                $scope.vm.term="";
+                                $scope.vm.weight="3" ;   //默認權重
+                                addSynonymConceptDialog(singleAddSynonymConcept);
+                            }
+                        },function(){
+                            layer.msg("添加失敗")
+                        })
+                    }else{
+                        $scope.vm.key = "";
+                        $scope.vm.term = "";
+                        $scope.vm.weight = 3;
                     }
-                });
-            }
+                }
+            });
         }
 
         //編輯彈框   添加公用
         function addSynonymConceptDialog(callback,item){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/synony/synonyConceptManageDialog2.html",
                 scope: $scope,
@@ -203,11 +199,10 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight = 3;
                     }
                 }
             });
-            }
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()
@@ -216,8 +211,6 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //   刪除 彈框
         function deleteSynonym(id){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/ConceptManageDialog.html",
                 scope: $scope,
@@ -231,7 +224,6 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }
                 }
             });
-            }
         }
         //編輯事件
         function singleEditSynonymConcept(item){
