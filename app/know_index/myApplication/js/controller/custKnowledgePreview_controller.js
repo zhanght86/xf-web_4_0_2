@@ -9,6 +9,20 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         //"364180924750893056"
+
+//        概念：
+//知识id：
+//377253294751354880
+//        应用id：
+//377165362136875008
+//
+//        列表：
+//知识id：
+//377255238807064576
+//        应用id：
+//377165362136875008
+
+
         console.log($stateParams);
         $scope.vm = {
             applicationId :377165362136875008,

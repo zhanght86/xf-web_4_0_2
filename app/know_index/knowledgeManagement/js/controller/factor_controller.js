@@ -205,7 +205,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     obj.value = item.elementAsk ;
                     ask.push(obj) ;
                     console.log(ask);
-
                 }
             });
             angular.forEach(tabelData.listTable,function(item,icon){
@@ -683,6 +682,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
 
            obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+            $scope.vm.scanContent=[];
             $scope.vm.scanContent.push(obj);
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
@@ -694,6 +694,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if (!checkSave()) {
                 return false
             } else {
+                console.log(getParams())
                 httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                     console.log(data);
                     if (data.status == 200) {
