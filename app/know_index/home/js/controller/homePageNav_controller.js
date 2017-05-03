@@ -9,7 +9,7 @@ angular.module('homePage').controller('homePageNavController', [
                 sceneId : $cookieStore.get('sceneId'),
                 loginout : loginout,
                 userName : $cookieStore.get('userName'),
-                logApplication : logApplication
+                logApplication : logApplication,
                 jump: jump
 
             };
