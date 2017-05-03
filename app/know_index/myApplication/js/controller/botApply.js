@@ -696,12 +696,17 @@ angular.module('myApplicationModule').controller('botApplyController', [
             attrArr[2]={name:"划分",value:10007};
             attrArr[3]={name:"属性",value:10006};
             for(var index=0;index<attrArr.length;index++){
-                if((attrArr[index].value==$scope.vm.botSelectType)>0){
+                if($scope.vm.categoryLibraryAttributeName=="node"){
                     console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                     $("#categoryLibraryTypeIdAdd").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                 }else{
-                    console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
-                    $("#categoryLibraryTypeIdAdd").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                    if((attrArr[index].value==$scope.vm.botSelectType)>0){
+                        console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                        $("#categoryLibraryTypeIdAdd").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                    }else{
+                        console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                        $("#categoryLibraryTypeIdAdd").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                    }
                 }
             }
             $("#categoryLibraryTypeIdAdd").val($scope.vm.botSelectType);
