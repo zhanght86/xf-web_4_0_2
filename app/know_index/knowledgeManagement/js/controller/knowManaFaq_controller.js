@@ -14,6 +14,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
+
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
