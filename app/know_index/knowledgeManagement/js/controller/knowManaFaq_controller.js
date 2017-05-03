@@ -5,6 +5,7 @@
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
+      console.log($stateParams);
         $cookieStore.put("userName","admin1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
@@ -15,8 +16,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             userName :  $cookieStore.get("userName"),
             frames : [],      //业务框架
             frameId : "",
-            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
-            KnowledgeEdit : KnowledgeEdit,
+            knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -81,6 +81,19 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             enterEvent : enterEvent
         };
+        checkState();  //判断 是否是预览页面的修改添加
+        function checkState(){
+            var data = $stateParams.data
+            if(data){
+                $scope.vm.title = data.knowledgeTitle ;
+                $scope.vm.isTimeTable = (data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd)?true:false ;
+                $scope.vm.timeStart = data.knowledgeBase.knowledgeExpDateStart ;
+                $scope.vm.timeEnd = data.knowledgeBase.knowledgeExpDateEnd ;
+                $scope.vm.userName =  data.knowledgeBase.knowledgeCreator;
+                $scope.vm.scanContent = data.knowledgeContents;
+                $scope.vm.botClassfy = data.classificationAndKnowledgeList
+            }
+        }
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -316,7 +329,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         });
 
-////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
+////////////////////////////////////////         Bot     //////////////////////////////////////////////////////
         function replace(id){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
@@ -339,44 +352,60 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
 
-        function KnowledgeAdd(){
+        function knowledgeAdd(data){
+            console.log(data)
             var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            //return;
-                            saveAddNew()
-                        } else {
-                            setDialog()
-                        }
+            if(data){    //增加
+                //obj.knowledgeContent = $scope.vm.newTitle;
+                //obj.knowledgeContentType = 0,  // 答案类型
+                //    obj.channelIdList =  $scope.vm.channel;
+                //obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+                //obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+                //    obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                //obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+                //
+                //obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
+                ////高級 選項
+                //$scope.vm.scanContent.push(obj);
+
+                 $scope.vm.newTitle = data.knowledgeContent;
+                 $scope.vm.channel = data.channelIdList;
+                 $scope.vm.dimensionArr.id = data.dimensionIdList;
+
+                angular.forEach($scope.vm.dimensions,function(item){
+                    if(data.dimensionIdList.inArray(item.dimensionId)){
+                        $scope.vm.dimensionArr.name = [] ;
+                       $scope.vm.dimensionArr.name.push(item.dimensionName)
                     }
                 });
+                 $scope.vm.dimensionArr.name = "";
+                 $scope.vm.question = data.knowledgeRelatedQuestionOn;
+                 $scope.vm.tail = data.knowledgeCommonOn;
+                 $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
+
+                var callback = ""
+            }else{
+               var  callback = saveAddNew
+            }
+            if(dia.length==0) {
+                    var dialog = ngDialog.openConfirm({
+                        template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                        scope: $scope,
+                        closeByDocument: false,
+                        closeByEscape: true,
+                        showClose: true,
+                        backdrop: 'static',
+                        preCloseCallback: function (e) {    //关闭回掉
+                            if (e === 1) {
+                                callback()
+                            } else {
+                                setDialog()
+                            }
+                        }
+                    });
             }
         }
-        function KnowledgeEdit(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
 
-                    }else{
-
-                    }
-                }
-            });
-        }
 
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
