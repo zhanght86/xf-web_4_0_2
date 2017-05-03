@@ -138,33 +138,36 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.tableList.data.listTable.push(arr);
         }
         function addList(row,column){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/factor/factorDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        angular.forEach($scope.vm.tableList.data.listTable,function(item,index){
-                            if(index==0){
-                                $scope.vm.tableList.data.listTable[index].push($scope.vm.factorName)
-                            }else{
-                                $scope.vm.tableList.data.listTable[index].push(null)
-                            }
-                        });
-                        var newType = {};
-                        newType.elementName = $scope.vm.factorName;
-                        newType.elementType = $scope.vm.tableType;
-                        newType.technology = $scope.vm.gorithm;
-                        newType.elementAsk = $scope.vm.elementAsk;
-                        newType.relatedQuestions = null;
-                        $scope.vm.tableList.data.listTableType.push(newType);
-                        setDialogNew()
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/knowledgeManagement/factor/factorDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            angular.forEach($scope.vm.tableList.data.listTable, function (item, index) {
+                                if (index == 0) {
+                                    $scope.vm.tableList.data.listTable[index].push($scope.vm.factorName)
+                                } else {
+                                    $scope.vm.tableList.data.listTable[index].push(null)
+                                }
+                            });
+                            var newType = {};
+                            newType.elementName = $scope.vm.factorName;
+                            newType.elementType = $scope.vm.tableType;
+                            newType.technology = $scope.vm.gorithm;
+                            newType.elementAsk = $scope.vm.elementAsk;
+                            newType.relatedQuestions = null;
+                            $scope.vm.tableList.data.listTableType.push(newType);
+                            setDialogNew()
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         function editList(row,column){
@@ -172,7 +175,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.tableType = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementType;
             $scope.vm.gorithm = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].technology;
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementAsk;
-            var dialog = ngDialog.openConfirm({
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0){
+                var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",
                 scope: $scope,
                 closeByDocument:false,
@@ -185,6 +190,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     }
                 }
             });
+            }
         }
         function getTableParams(){
             var tabelData = angular.copy($scope.vm.tableList.data);

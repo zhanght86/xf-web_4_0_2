@@ -3,8 +3,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('conceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("userId","111111");
         $cookieStore.put("sceneId","1");
@@ -453,23 +453,25 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 //        }
 
         function KnowledgeAdd(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        //return;
-                        saveAddNew()
-                    }else{
-                        setDialog()
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0){
+                var dialog = ngDialog.openConfirm({
+                    template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
+                    preCloseCallback:function(e){    //关闭回掉
+                        if(e === 1){
+                            //return;
+                            saveAddNew()
+                        }else{
+                            setDialog()
+                        }
                     }
-                }
-            });
-
+                });
+            }
         }
         function KnowledgeEdit(){
             var dialog = ngDialog.openConfirm({
@@ -489,7 +491,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             });
         }
         function extensionEdit(){
-            var extensionEdit = ngDialog.openConfirm({
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0){
+                 var extensionEdit = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
@@ -504,6 +508,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                 }
             });
+            }
         }
 
         function slideDown(){

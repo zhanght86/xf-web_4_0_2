@@ -12,6 +12,7 @@ angular.module('homePage').controller('homePageNavController', [
             $scope.vm = {
      
                 applicationId : true,
+                                //$cookieStore.get("applicationId")
 
                 sceneId : $cookieStore.get('sceneId'),
 

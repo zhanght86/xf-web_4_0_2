@@ -39,10 +39,10 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             current:1
         };
 
-        /**
-         * 加载分页条
-         * @type
-         */
+        ///**
+        // * 加载分页条
+        // * @type
+        // */
         loadBusinessConceptTable(1);
         //请求列表
         function loadBusinessConceptTable(current){
@@ -139,95 +139,104 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
 
         //添加 窗口
         function addBusiness(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/business/businessConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
-                            "businessConceptApplicationId": $scope.vm.applicationId,
-                            "businessConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("业务概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑业务概念";
-                                    console.log(data);
-                                    addBusinessConceptDialog(singleEditBusinessConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
-                                    $scope.vm.weight =  data.data[0].businessConceptWeight;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加业务概念";
-                                $scope.vm.term="";
-                                $scope.vm.weight="3" ;   //默認權重
-                                addBusinessConceptDialog(singleAddBusinessConcept);
-                            }
-                        },function(){
-                            layer.msg("添加失敗")
-                        })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/business/businessConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            console.log($scope.vm.key);
+                            httpRequestPost("/api/modeling/concept/business/repeatCheck", {
+                                "businessConceptApplicationId": $scope.vm.applicationId,
+                                "businessConceptKey": $scope.vm.key
+                            }, function (data) {          //类名重複
+                                if (data.status === 10002) {
+                                    layer.msg("业务概念类名重复");
+                                    httpRequestPost("/api/modeling/concept/business/listByAttribute", {
+                                        "businessConceptApplicationId": $scope.vm.applicationId,
+                                        "businessConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑业务概念";
+                                        console.log(data);
+                                        addBusinessConceptDialog(singleEditBusinessConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].businessConceptKey;
+                                        $scope.vm.term = data.data[0].businessConceptTerm;
+                                        $scope.vm.weight = data.data[0].businessConceptWeight;
+                                    }, function () {
+                                    });
+                                } else {
+                                    //类名无冲突
+                                    $scope.vm.dialogTitle = "增加业务概念";
+                                    $scope.vm.term = "";
+                                    $scope.vm.weight = "3";   //默認權重
+                                    addBusinessConceptDialog(singleAddBusinessConcept);
+                                }
+                            }, function () {
+                                layer.msg("添加失敗")
+                            })
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                            $scope.vm.weight = 1;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         //編輯彈框   添加公用
         function addBusinessConceptDialog(callback,item){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/business/businessConceptManageDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item);
-                    }else{
-                         $scope.vm.key = "";
-                         $scope.vm.term = "";
-                         $scope.vm.weight =  1;
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/business/businessConceptManageDialog2.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            callback(item);
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                            $scope.vm.weight = 1;
+                        }
                     }
+                });
+                if (dialog) {
+                    $timeout(function () {
+                        termSpliterTagEditor()
+                    }, 100);
                 }
-            });
-            if(dialog){
-                $timeout(function () {
-                    termSpliterTagEditor()
-                }, 100);
             }
         }
         //   刪除 彈框
         function deleteBusiness(id){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDelBusinessConcept(id)
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/ConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            singleDelBusinessConcept(id)
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         //編輯事件
         function singleEditBusinessConcept(item){
@@ -276,7 +285,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 if (data) {
                     console.log(data);
                 }
-               layer.msg("刪除成功");
+                layer.msg("刪除成功");
                 $state.reload();
             },function(){
                 layer.msg("刪除失敗")
