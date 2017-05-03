@@ -442,7 +442,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     console.log(data) ;
                     if(data.status == 200){
                         //open
-                        //$state.go("custServScenaOverview.manage")
+                        $state.go("custServScenaOverview.manage");
                     }
                 },function(err){
                     console.log(err)

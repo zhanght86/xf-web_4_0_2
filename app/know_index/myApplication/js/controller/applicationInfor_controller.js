@@ -5,7 +5,7 @@
  */
 angular.module('myApplicationSettingModule').controller('applicationInforController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
+        setCookie("applicationId","377165362136875008");
         setCookie("userName","admin1");
         setCookie("userId","359873057331875840");
         $scope.vm = {
@@ -251,7 +251,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                         },function(data){
                             if(data.status==200){
                                 layer.msg("删除成功");
-                                $state.go("myApplication.manage");
+                                $state.go("admin.manage");
                             }else{
                                 layer.msg("删除失败");
                             }

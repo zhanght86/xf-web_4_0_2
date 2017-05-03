@@ -20,6 +20,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit : KnowledgeEdit,
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -468,6 +469,27 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             saveAddNew()
                         } else {
                             setDialog()
+                        }
+                    }
+                });
+
+            }
+        }
+        function KnowledgeEdit(){
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialogEdit.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+
+                        } else {
+                           
                         }
                     }
                 });

@@ -147,6 +147,12 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
         //查看机器人设置
         findRobotSetting();
 
+        //$scope.$watch('robot.robotName', function(current){
+        //    if(current==""){
+        //        $scope.robot.robotName="小富机器人";
+        //    }
+        //});
+
         //查看机器人参数
         function findRobotSetting(){
             httpRequestPost("/api/application/application/findRobotSetting",{
@@ -226,33 +232,35 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
 
         //编辑机器人参数
-        function editRobot(){
-            httpRequestPost("/api/application/application/saveRobotSetting",{
-                "applicationId": $scope.robot.applicationId,
-                "robotExpire": $scope.robot.robotExpire,
-                "robotHead": $scope.robot.robotHead,
-                "robotHotQuestionTimeout": $scope.robot.robotHotQuestionTimeout,
-                "robotLearned": $scope.robot.robotLearned,
-                "robotName": $scope.robot.robotName,
-                "robotRepeat": $scope.robot.robotRepeat,
-                "robotRepeatNumber": $scope.robot.robotRepeatNumber,
-                "robotSensitive": $scope.robot.robotSensitive,
-                "robotTimeout": $scope.robot.robotTimeout,
-                "robotTimeoutLimit": $scope.robot.robotTimeoutLimit,
-                "robotUnknown": $scope.robot.robotUnknown,
-                "robotUpdateId":$scope.robot.settingUpdateId ,
-                "robotWelcome": $scope.robot.robotWelcome,
-                "settingId": $scope.robot.settingId
-            },function(data){
-                if(data.status===200){
-                    layer.msg("保存成功");
-                    $state.reload()
-                }else{
+        function editRobot(flag){
+            if(flag){
+                httpRequestPost("/api/application/application/saveRobotSetting",{
+                    "applicationId": $scope.robot.applicationId,
+                    "robotExpire": $scope.robot.robotExpire,
+                    "robotHead": $scope.robot.robotHead,
+                    "robotHotQuestionTimeout": $scope.robot.robotHotQuestionTimeout,
+                    "robotLearned": $scope.robot.robotLearned,
+                    "robotName": $scope.robot.robotName,
+                    "robotRepeat": $scope.robot.robotRepeat,
+                    "robotRepeatNumber": $scope.robot.robotRepeatNumber,
+                    "robotSensitive": $scope.robot.robotSensitive,
+                    "robotTimeout": $scope.robot.robotTimeout,
+                    "robotTimeoutLimit": $scope.robot.robotTimeoutLimit,
+                    "robotUnknown": $scope.robot.robotUnknown,
+                    "robotUpdateId":$scope.robot.settingUpdateId ,
+                    "robotWelcome": $scope.robot.robotWelcome,
+                    "settingId": $scope.robot.settingId
+                },function(data){
+                    if(data.status===200){
+                        layer.msg("保存成功");
+                        $state.reload()
+                    }else{
+                        layer.msg("保存失敗");
+                    }
+                },function(){
                     layer.msg("保存失敗");
-                }
-            },function(){
-                layer.msg("保存失敗");
-            })
+                })
+            }
         }
 
         //编辑应用参数
@@ -289,4 +297,21 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
 
     }
-]);
+]).directive('checkWelcome', function($http){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attrs, c){
+            scope.$watch(attrs.ngModel, function(n){
+                if(!n) return;
+                console.log(scope.robot.robotWelcome);
+                var welcomes=scope.robot.robotWelcome.split("\n");
+                console.log(welcomes.length);
+                if(welcomes.length>10){
+                    c.$setValidity('len', false);
+                }else{
+                    c.$setValidity('len', true);
+                }
+            });
+        }
+    }
+});
