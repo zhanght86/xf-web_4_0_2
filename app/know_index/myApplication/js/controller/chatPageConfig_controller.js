@@ -208,7 +208,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     if (data.status == 10005) {
                         $scope.vm.listData = "";
                         $scope.vm.listDataTotal = 0;
-                        $scope.$apply()
+                        $scope.$apply();
                         layer.msg("没有查询到记录!")
                     }
                     $scope.vm.listData = data.data.hotQuestionList;
@@ -280,7 +280,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             console.log(data);
                             $state.reload();
                             if(data.status == 10012){
-                                layer.msg("数据重复!")
+                                layer.msg("该知识已经存在,请重新添加!")
                             }
                         },function(){
                             layer.msg("请求失败")
@@ -288,7 +288,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     }else{
                         $scope.vm.listKnoData = [];
                         $scope.vm.knowledge = "";
-                        $scope.vm.listKnoDataTotal = 0
+                        $scope.vm.listKnoDataTotal = 0,
+                        $scope.vm.paginationConf1 = ''
                     }
                 }
             });

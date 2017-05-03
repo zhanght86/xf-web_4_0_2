@@ -122,6 +122,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 "applicationId": $scope.vm.applicationId
             },function(data){
                 $scope.vm.channelStatus = data.data;
+                //$scope.vm.statusId=data.data[0].statusId;
             },function(){
                 layer.msg("请求失败")
             })
@@ -149,6 +150,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        if($scope.vm.channelName==null||$scope.vm.channelName==""){
+                            layer.msg("渠道名称不能为空！");
+                            return ;
+                        }
                         httpRequestPost("/api/application/channel/addChannel",{
                             "applicationId": $scope.vm.applicationId,
                             "channelName": $scope.vm.channelName,
@@ -213,6 +218,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
 
         //编辑事件
         function singleEdit(item){
+            if($scope.vm.channelName==null||$scope.vm.channelName==""){
+                layer.msg("渠道名称不能为空！");
+                return ;
+            }
             httpRequestPost("/api/application/channel/editChannel",{
                 "channelId": item.channelId,
                 "applicationId": $scope.vm.applicationId,

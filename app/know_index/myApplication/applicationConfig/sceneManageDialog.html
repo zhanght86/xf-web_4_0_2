@@ -16,7 +16,7 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">推荐问题相似度：</span>
             <div>
-                <input type="text" class="bd" placeholder="3.1" ng-model="vm.recommendedSimilarity"/>
+                <input type="number" step="0.1" class="bd" placeholder="3.1" ng-model="vm.recommendedSimilarity" required/>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">主题记忆轮数：</span>
             <div>
-                <input type="text" class="bd" placeholder="3.1" ng-model="vm.subjectMemoryRounds"/>
+                <input type="number" class="bd" placeholder="3.1" ng-model="vm.subjectMemoryRounds" required/>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
@@ -65,7 +65,7 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">要素推荐顺序：</span>
             <div>
-                <input type="number" class="bd" placeholder="3" ng-model="vm.elementRecommendationOrder"/>
+                <input type="number" class="bd" placeholder="3" ng-model="vm.elementRecommendationOrder" required/>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
