@@ -10,7 +10,7 @@ angular.module('homePage').controller('homePageNavController', [
     '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", "$cookieStore",
     function ($scope, $location, localStorageService, AuthService,$timeout,$cookieStore) {
             $scope.vm = {
-
+     
                 applicationId : true,
                                 //$cookieStore.get("applicationId")
 
