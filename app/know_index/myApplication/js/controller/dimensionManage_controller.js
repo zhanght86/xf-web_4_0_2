@@ -11,9 +11,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('dimensionManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userId","368191545326702592");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval","$cookieStore",
+    function ($scope,localStorageService, $state,ngDialog,$timeout,$interval,$cookieStore) {
         $scope.vm = {
             addDimension : addDimension,
             editDimension : editDimension,
@@ -25,8 +24,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             findDimension : findDimension,
             getData : getData, //返回维度列表
             savePro : savePro, //x向数组中添加数据
-            userId:getCookie("userId"),
-            applicationId:getCookie("applicationId"),
+            userId: $cookieStore.get("userId"),
+            applicationId: $cookieStore.get("applicationId"),
             paginationConf : "", //分页条件
             switchTurn :10001,
             newDimensions : [],

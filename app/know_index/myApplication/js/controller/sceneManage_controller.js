@@ -4,10 +4,8 @@
  * Date: 2017/4/5 15:39
  */
 angular.module('myApplicationSettingModule').controller('sceneManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore", function ($scope,localStorageService, $state,ngDialog,$cookieStore) {
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","359873057331875840");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore) {
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             keyword: "",  //检索条件
