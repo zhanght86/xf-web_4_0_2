@@ -760,7 +760,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.listAdd", {
                 url: "/listAdd",
-
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -774,6 +774,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.factorAdd", {
                 url: "/factorAdd",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -782,8 +783,6 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
-
-
                     }
                 }
             })

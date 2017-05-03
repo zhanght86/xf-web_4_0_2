@@ -11,11 +11,12 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
         //"364180924750893056"
         console.log($stateParams);
         $scope.vm = {
-            applicationId :$cookieStore.get("applicationId"),
+            applicationId :377165362136875008,
             //knowledgeId : $stateParams.knowledgeId,
-            knowledgeId : "376886121822425088",        //del
+            knowledgeId : "377232867685568512",        //del
             knowledgeType : $stateParams.knowledgeType,
             listData : null,
+            edit :  edit
             //editName : editName
             //"pageSize": 5,
             //"sceneIds" : [] ,
@@ -44,7 +45,25 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 }
             }, function(error) {
             });
-
+        //修改
+        function edit(){
+            var editurl;
+            switch($stateParams.scanKnowledge.knowledgeType){
+                case 100 :
+                    editurl = "knowledgeManagement.faqAdd";
+                    break;
+                case 101 :
+                    editurl = "knowledgeManagement.singleAddConcept";
+                    break;
+                case 102 :
+                    editurl = "knowledgeManagement.listAdd";
+                    break;
+                case 103 :
+                    editurl = "knowledgeManagement.factorAdd";
+                    break;
+            }
+            $state.go(editurl,{data:$scope.vm.listData})
+        }
         getData();
         function getData(){
             httpRequestPost("/api/conceptKnowledge/getKnowledge",{

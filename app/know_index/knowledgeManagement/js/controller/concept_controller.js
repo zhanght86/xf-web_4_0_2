@@ -3,14 +3,16 @@
  */
 
 angular.module('knowledgeManagementModule').controller('conceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams) {
         $cookieStore.put("userName","admin1");
         $cookieStore.put("userId","111111");
         $cookieStore.put("sceneId","1");
         $cookieStore.put("applicationId","360619411498860544");
         $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
+
+        console.log($stateParams.data);
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),

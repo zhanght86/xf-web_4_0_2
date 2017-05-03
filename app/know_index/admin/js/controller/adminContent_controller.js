@@ -21,12 +21,11 @@ angular.module('adminModule').controller('adminContentController', [
                     newScene : "",
                     newLicence : "",
                     newDescribe : "",
-
-                  selectScene : selectScene
+                    selectScene : selectScene
                 };
-
-        function selectScene(id){
+        function selectScene(id,applicationId){
             $cookieStore.put("sceneId",id);
+            $cookieStore.put("applicationId",applicationId);
             //console.log($cookieStore.get("sceneId"))
         }
         myApplication();

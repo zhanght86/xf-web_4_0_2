@@ -227,7 +227,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     items.push(row)
                 }
             });
-            params.ask = ask;
+            params.asks = ask;
             params.items = items;
             return JSON.stringify(params)
          }
