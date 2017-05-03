@@ -134,70 +134,76 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
 
         //添加 窗口
         function addSensitive(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/sensitive/repeatCheck",{
-                            "sensitiveConceptApplicationId": $scope.vm.applicationId,
-                            "sensitiveConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("敏感概念类名重复");
-                                httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
-                                    "sensitiveConceptApplicationId": $scope.vm.applicationId,
-                                    "sensitiveConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑敏感概念";
-                                    console.log(data);
-                                    addSensitiveConceptDialog(singleEditSensitiveConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].sensitiveConceptKey;
-                                    $scope.vm.term =  data.data[0].sensitiveConceptTerm;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加敏感概念";
-                                $scope.vm.term="";
-                                addSensitiveConceptDialog(singleAddSensitiveConcept);
-                            }
-                        },function(){
-                            layer.msg("添加失敗")
-                        })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/sensitive/sensitiveConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            console.log($scope.vm.key);
+                            httpRequestPost("/api/modeling/concept/sensitive/repeatCheck", {
+                                "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                                "sensitiveConceptKey": $scope.vm.key
+                            }, function (data) {          //类名重複
+                                if (data.status === 10002) {
+                                    layer.msg("敏感概念类名重复");
+                                    httpRequestPost("/api/modeling/concept/sensitive/listByAttribute", {
+                                        "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                                        "sensitiveConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑敏感概念";
+                                        console.log(data);
+                                        addSensitiveConceptDialog(singleEditSensitiveConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].sensitiveConceptKey;
+                                        $scope.vm.term = data.data[0].sensitiveConceptTerm;
+                                    }, function () {
+                                    });
+                                } else {
+                                    //类名无冲突
+                                    $scope.vm.dialogTitle = "增加敏感概念";
+                                    $scope.vm.term = "";
+                                    addSensitiveConceptDialog(singleAddSensitiveConcept);
+                                }
+                            }, function () {
+                                layer.msg("添加失敗")
+                            })
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         //編輯彈框   添加公用
         function addSensitiveConceptDialog(callback,item){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item)
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/sensitive/sensitiveConceptManageDialog2.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            callback(item)
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor();
@@ -206,19 +212,22 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         //   刪除 彈框
         function deleteSensitive(id){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDelSensitiveConcept(id);
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/ConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            singleDelSensitiveConcept(id);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         //編輯事件
         function singleEditSensitiveConcept(item){
