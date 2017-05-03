@@ -11,9 +11,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('chatPageConfigController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userId","368191545326702592");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog", "$cookieStore",
+    function ($scope,localStorageService, $state,ngDialog, $cookieStore) {
         $scope.vm = {
             listData : "",   // table 数据
             listKnoData : "", //知识数据
@@ -23,8 +22,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             listKnoDataTotal : "", //聊天知识库知识总数
             chatKnowledgeId : "",
             chatKnowledgeTopic : "",
-            userId:getCookie("userId"),
-            applicationId:getCookie("applicationId"),
+            userId: $cookieStore.get("userId"),
+            applicationId: $cookieStore.get("applicationId"),
             paginationConf : "", //分页条件
             paginationConf1 : "",
             deleteIds : [],

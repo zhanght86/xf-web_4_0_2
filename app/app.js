@@ -5,7 +5,6 @@
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
     //'ui.autocomplete',
-
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
@@ -125,7 +124,7 @@ knowledge_static_web.run(function ($rootScope, $state, $stateParams, $location, 
 knowledge_static_web
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise(function($injector, $location){
-            $location.path('/homePage');
+            $location.path('/login');
         });
         $stateProvider
         //登录路由
@@ -134,7 +133,7 @@ knowledge_static_web
                 templateUrl: 'know_index/login/login.html',
                 controller: "loginController"
             })
-
+  
             // 首页路由
             .state("homePage", {
                     url: "/homePage",
@@ -760,7 +759,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.listAdd", {
                 url: "/listAdd",
-
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -774,6 +773,7 @@ knowledge_static_web
             })
             .state("knowledgeManagement.factorAdd", {
                 url: "/factorAdd",
+                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -782,8 +782,6 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/factor/factor.html',
                         controller: "knowledgeEssentialController"
-
-
                     }
                 }
             })

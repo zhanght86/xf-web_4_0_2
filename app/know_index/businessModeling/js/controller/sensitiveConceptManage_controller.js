@@ -35,7 +35,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -125,9 +126,9 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
          */
         function switchSensitiveConceptSearchType(request,value){
             if($("#searchType").val()=="sensitiveConceptKey"){
-                request.sensitiveConceptKey=value;
+                request.sensitiveConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="sensitiveConceptTerm"){
-                request.sensitiveConceptTerm=value;
+                request.sensitiveConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }

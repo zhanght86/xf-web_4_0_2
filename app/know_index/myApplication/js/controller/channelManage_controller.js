@@ -11,12 +11,10 @@
  */
 
 angular.module('myApplicationSettingModule').controller('channelManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
-        setCookie("userId","359873057331875840");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore) {
         $scope.vm = {
-            applicationId: getCookie("applicationId"),
+            applicationId: $cookieStore.get("applicationId"),
             channelData : "",   // 渠道数据
             paginationConf : ""  ,//分页条件
             pageSize : 2 , //默认每页数量
@@ -27,13 +25,13 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             changeChannel : changeChannel, //修改渠道状态
             channelName : "",  //渠道名称
             statusId : "",  //状态
-            userId : getCookie("userId"),   //用户id
+            userId : $cookieStore.get("userId"),   //用户id
             channelStatus : "",
             dialogTitle : "", //对话框标题
         };
 
         $scope.vmo = {
-            applicationId: getCookie("applicationId"),
+            applicationId: $cookieStore.get("applicationId"),
             blackListData : "",  //黑名单数据
             paginationConf : ""  ,//分页条件
             pageSize : 2 , //默认每页数量
@@ -45,7 +43,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             blackListIdentify : "",  //黑名单标识
             blackListRemark : "", //黑名单备注
             channelId : "", //渠道id
-            blackListUpdateId : getCookie("userId"),   //用户id
+            blackListUpdateId : $cookieStore.get("userId"),   //用户id
         };
 
         //获取渠道列表
@@ -122,6 +120,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 "applicationId": $scope.vm.applicationId
             },function(data){
                 $scope.vm.channelStatus = data.data;
+                //$scope.vm.statusId=data.data[0].statusId;
             },function(){
                 layer.msg("请求失败")
             })
@@ -149,6 +148,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        if($scope.vm.channelName==null||$scope.vm.channelName==""){
+                            layer.msg("渠道名称不能为空！");
+                            return ;
+                        }
                         httpRequestPost("/api/application/channel/addChannel",{
                             "applicationId": $scope.vm.applicationId,
                             "channelName": $scope.vm.channelName,
@@ -213,6 +216,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
 
         //编辑事件
         function singleEdit(item){
+            if($scope.vm.channelName==null||$scope.vm.channelName==""){
+                layer.msg("渠道名称不能为空！");
+                return ;
+            }
             httpRequestPost("/api/application/channel/editChannel",{
                 "channelId": item.channelId,
                 "applicationId": $scope.vm.applicationId,

@@ -9,18 +9,16 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('myApplicationSettingModule').controller('robotSettingController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",'$http',function ($scope,localStorageService, $state,ngDialog,$http) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
-        setCookie("userId","359873057331875840");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",'$http', "$cookieStore",
+    function ($scope,localStorageService, $state,ngDialog,$http,$cookieStore) {
         $scope.robot = {
             classicHead:['touxiang1.png','touxiang2.png','touxiang3.png','touxiang4.png', 'touxiang5.png','touxiang6.png','touxiang7.png','touxiang8.png'], //经典头像列表
-            applicationId: getCookie("applicationId"),
-            userId : getCookie("userId"),   //用户id
+            applicationId: $cookieStore.get("applicationId"),
+            userId :  $cookieStore.get("userId"),   //用户id
             robotExpire : "", //时间到期回复
             robotHead : "",//头像
+            imgUrl : "", //文件服务器地址
             newRobotHead : "", //新的头像
             robotHotQuestionTimeout : "",//热点问题更新频率
             robotLearned : "",//学到新知识回答
@@ -31,7 +29,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             robotTimeout : "",//超时提示回复
             robotTimeoutLimit : "",//超时时长
             robotUnknown : "",//未知问答回复
-            robotUpdateId : getCookie("userId"),//更新人员id
+            robotUpdateId :  $cookieStore.get("userId"),//更新人员id
             robotWelcome : "",//欢迎语
             settingId : "",//机器人参数ID
             editRobot : editRobot,  //编辑机器人参数
@@ -125,8 +123,8 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
         }
 
         $scope.app = {
-            applicationId: getCookie("applicationId"),
-            userId : getCookie("userId"),   //用户id
+            applicationId: $cookieStore.get("applicationId"),
+            userId : $cookieStore.get("userId"),   //用户id
             settingCommentOn : 1,   //评价开关
             settingDataTimeoutLimit : "",//获取数据时间
             settingGreetingOn : 1,//寒暄开关
@@ -137,7 +135,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             settingRelateNumber : "",//关联问题数量
             settingTurnRoundOn : 1,//话轮识别开关
             settingUpperLimit : "",//上限阈值
-            settingUpdateId : getCookie("userId"),//更新人员
+            settingUpdateId : $cookieStore.get("userId"),//更新人员
             editApplication : editApplication,  //编辑应用参数
             findApplicationSetting : findApplicationSetting, //查询应用参数
             turnOn : turnOn,//开关函数
@@ -146,6 +144,12 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
         findApplicationSetting();
         //查看机器人设置
         findRobotSetting();
+
+        //$scope.$watch('robot.robotName', function(current){
+        //    if(current==""){
+        //        $scope.robot.robotName="小富机器人";
+        //    }
+        //});
 
         //查看机器人参数
         function findRobotSetting(){
@@ -167,9 +171,11 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                     $scope.robot.robotWelcome = "";//欢迎语
                     $scope.robot.settingId = "" ;  //机器人参数ID
                     $scope.robot.newRobotHead =""; //新的头像
+                    $scope.robot.imgUrl =""; //文件服务器地址
                 }else{
                     $scope.robot.robotExpire= data.data.robotExpire; //过期知识回答
                     $scope.robot.robotHead= data.data.robotHead;//头像
+                    $scope.robot.imgUrl = data.data.imgUrl; //文件服务器地址
                     $scope.robot.robotHotQuestionTimeout = data.data.robotHotQuestionTimeout;//热点问题更新频率
                     $scope.robot.robotLearned = data.data.robotLearned;//学到新知识回答
                     $scope.robot.robotName = data.data.robotName; //名称
@@ -224,35 +230,36 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
         }
 
 
-
         //编辑机器人参数
-        function editRobot(){
-            httpRequestPost("/api/application/application/saveRobotSetting",{
-                "applicationId": $scope.robot.applicationId,
-                "robotExpire": $scope.robot.robotExpire,
-                "robotHead": $scope.robot.robotHead,
-                "robotHotQuestionTimeout": $scope.robot.robotHotQuestionTimeout,
-                "robotLearned": $scope.robot.robotLearned,
-                "robotName": $scope.robot.robotName,
-                "robotRepeat": $scope.robot.robotRepeat,
-                "robotRepeatNumber": $scope.robot.robotRepeatNumber,
-                "robotSensitive": $scope.robot.robotSensitive,
-                "robotTimeout": $scope.robot.robotTimeout,
-                "robotTimeoutLimit": $scope.robot.robotTimeoutLimit,
-                "robotUnknown": $scope.robot.robotUnknown,
-                "robotUpdateId":$scope.robot.settingUpdateId ,
-                "robotWelcome": $scope.robot.robotWelcome,
-                "settingId": $scope.robot.settingId
-            },function(data){
-                if(data.status===200){
-                    layer.msg("保存成功");
-                    $state.reload()
-                }else{
+        function editRobot(flag){
+            if(flag){
+                httpRequestPost("/api/application/application/saveRobotSetting",{
+                    "applicationId": $scope.robot.applicationId,
+                    "robotExpire": $scope.robot.robotExpire,
+                    "robotHead": $scope.robot.robotHead,
+                    "robotHotQuestionTimeout": $scope.robot.robotHotQuestionTimeout,
+                    "robotLearned": $scope.robot.robotLearned,
+                    "robotName": $scope.robot.robotName,
+                    "robotRepeat": $scope.robot.robotRepeat,
+                    "robotRepeatNumber": $scope.robot.robotRepeatNumber,
+                    "robotSensitive": $scope.robot.robotSensitive,
+                    "robotTimeout": $scope.robot.robotTimeout,
+                    "robotTimeoutLimit": $scope.robot.robotTimeoutLimit,
+                    "robotUnknown": $scope.robot.robotUnknown,
+                    "robotUpdateId":$scope.robot.settingUpdateId ,
+                    "robotWelcome": $scope.robot.robotWelcome,
+                    "settingId": $scope.robot.settingId
+                },function(data){
+                    if(data.status===200){
+                        layer.msg("保存成功");
+                        $state.reload()
+                    }else{
+                        layer.msg("保存失敗");
+                    }
+                },function(){
                     layer.msg("保存失敗");
-                }
-            },function(){
-                layer.msg("保存失敗");
-            })
+                })
+            }
         }
 
         //编辑应用参数
@@ -289,4 +296,21 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
 
     }
-]);
+]).directive('checkWelcome', function($http){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attrs, c){
+            scope.$watch(attrs.ngModel, function(n){
+                if(!n) return;
+                console.log(scope.robot.robotWelcome);
+                var welcomes=scope.robot.robotWelcome.split("\n");
+                console.log(welcomes.length);
+                if(welcomes.length>10){
+                    c.$setValidity('len', false);
+                }else{
+                    c.$setValidity('len', true);
+                }
+            });
+        }
+    }
+});
