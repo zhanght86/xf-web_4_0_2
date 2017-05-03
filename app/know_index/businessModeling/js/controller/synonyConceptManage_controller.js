@@ -34,7 +34,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -124,11 +125,11 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
          */
         function switchSynonymConceptSearchType(request,value){
             if($("#searchType").val()=="synonymConceptKey"){
-                request.synonymConceptKey=value;
+                request.synonymConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="synonymConceptWeight"){
                 request.synonymConceptWeight=$("#synonymConceptWeight").val();
             }else if($("#searchType").val()=="synonymConceptTerm"){
-                request.synonymConceptTerm=value;
+                request.synonymConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }
@@ -168,7 +169,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加同义概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="1" ;   //默認權重
+                                $scope.vm.weight="3" ;   //默認權重
                                 addSynonymConceptDialog(singleAddSynonymConcept);
                             }
                         },function(){
@@ -177,7 +178,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight = 3;
                     }
                 }
             });
@@ -198,7 +199,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight = 3;
                     }
                 }
             });

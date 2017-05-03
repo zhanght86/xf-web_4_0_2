@@ -34,7 +34,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -124,11 +125,11 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          */
         function switchCollectiveConceptSearchType(request,value){
             if($("#searchType").val()=="collectiveConceptKey"){
-                request.collectiveConceptKey=value;
+                request.collectiveConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="collectiveConceptWeight"){
                 request.collectiveConceptWeight=$("#collectiveConceptWeight").val();
             }else if($("#searchType").val()=="collectiveConceptTerm"){
-                request.collectiveConceptTerm=value;
+                request.collectiveConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }
@@ -169,7 +170,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加集合概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="1" ;   //默認權重
+                                $scope.vm.weight="3" ;   //默認權重
                                 addCollectiveConceptDialog(singleAddCollectiveConcept);
                             }
                         },function(){

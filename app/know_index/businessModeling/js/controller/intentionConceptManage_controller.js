@@ -35,7 +35,8 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -126,9 +127,9 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
          */
         function switchForceSegmentConceptSearchType(request,value){
             if($("#searchType").val()=="forceSegmentConceptKey"){
-                request.forceSegmentConceptKey=value;
+                request.forceSegmentConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="forceSegmentConceptTerm"){
-                request.forceSegmentConceptTerm=value;
+                request.forceSegmentConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }

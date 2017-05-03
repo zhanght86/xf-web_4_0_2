@@ -35,7 +35,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -124,9 +125,9 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
          */
         function switchCorrectionConceptSearchType(request,value){
             if($("#searchType").val()=="correctionConceptKey"){
-                request.correctionConceptKey=value;
+                request.correctionConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="correctionConceptTerm"){
-                request.correctionConceptTerm=value;
+                request.correctionConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }

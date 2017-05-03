@@ -34,7 +34,8 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -125,9 +126,9 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
          */
         function switchStopConceptSearchType(request,value){
             if($("#searchType").val()=="stopConceptKey"){
-                request.stopConceptKey=value;
+                request.stopConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="stopConceptTerm"){
-                request.stopConceptTerm=value;
+                request.stopConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }

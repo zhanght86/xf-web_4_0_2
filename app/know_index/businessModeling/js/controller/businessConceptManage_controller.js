@@ -36,7 +36,8 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1
+            current:1,
+            percent:"%"
         };
 
         /**
@@ -128,11 +129,11 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
          */
         function switchBusinessConceptSearchType(request,value){
             if($("#searchType").val()=="businessConceptKey"){
-                request.businessConceptKey=value;
+                request.businessConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="businessConceptWeight"){
                 request.businessConceptWeight=$("#businessConceptWeight").val();
             }else if($("#searchType").val()=="businessConceptTerm"){
-                request.businessConceptTerm=value;
+                request.businessConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }
@@ -182,7 +183,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight =  3;
                     }
                 }
             });
@@ -203,7 +204,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     }else{
                          $scope.vm.key = "";
                          $scope.vm.term = "";
-                         $scope.vm.weight =  1;
+                         $scope.vm.weight = 3;
                     }
                 }
             });
