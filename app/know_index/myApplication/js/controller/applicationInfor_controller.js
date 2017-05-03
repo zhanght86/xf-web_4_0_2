@@ -5,7 +5,7 @@
  */
 angular.module('myApplicationSettingModule').controller('applicationInforController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
+        setCookie("applicationId","377165362136875008");
         setCookie("userName","admin1");
         setCookie("userId","359873057331875840");
         $scope.vm = {
