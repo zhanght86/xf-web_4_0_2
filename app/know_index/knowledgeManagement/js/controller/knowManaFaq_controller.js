@@ -16,6 +16,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit : KnowledgeEdit,
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -349,6 +350,23 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         saveAddNew()
                     }else{
                         setDialog()
+                    }
+                }
+            });
+        }
+        function KnowledgeEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }else{
+
                     }
                 }
             });
