@@ -31,15 +31,19 @@ angular.module('adminModule').controller('adminContentController', [
             httpRequestPost("/api/user/findRoleIdByUserId",{
                 "userId":$cookieStore.get("userId")
             },function(data){
-                console.log(data);
-                $scope.vm.userPermission = data.data.roleList;
+                //if(data.status==200){
+                    console.log(data);
+                    $scope.vm.userPermission = data.data.roleList;
+                //}
             },function(err){
             });
             httpRequestPost("/api/user/findUserLoginNameByUserId",{
                 "userId":$cookieStore.get("userId")
             },function(data){
-                console.log(data);
-                $scope.vm.userName = data.data.userLoginName;
+                //if(data.status==200){
+                    //console.log(data);
+                    $scope.vm.userName = data.data.userLoginName;
+                //}
             },function(err){
                 //console.log(err)
             });

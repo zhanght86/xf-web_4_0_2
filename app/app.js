@@ -133,7 +133,7 @@ knowledge_static_web
                 templateUrl: 'know_index/login/login.html',
                 controller: "loginController"
             })
-  
+
             // 首页路由
             .state("homePage", {
                     url: "/homePage",
