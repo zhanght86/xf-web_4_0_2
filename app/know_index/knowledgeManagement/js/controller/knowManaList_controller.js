@@ -452,21 +452,24 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 //        }
 
         function extensionEdit(){
-            var extensionEdit = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){     //关闭回掉
-                    if(e === 1){
-                        //getExtensionByFrame( id ,1 )
-                    }else if(e === 0){
-                        //getExtensionByFrame( id ,0 )
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var extensionEdit = ngDialog.openConfirm({
+                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {     //关闭回掉
+                        if (e === 1) {
+                            //getExtensionByFrame( id ,1 )
+                        } else if (e === 0) {
+                            //getExtensionByFrame( id ,0 )
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         function slideDown(){

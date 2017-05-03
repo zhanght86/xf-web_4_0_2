@@ -134,70 +134,76 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
 
         //添加 窗口
         function addStop(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/disable/disableConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/stop/repeatCheck",{
-                            "stopConceptApplicationId": $scope.vm.applicationId,
-                            "stopConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("停用概念类名重复");
-                                httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
-                                    "stopConceptApplicationId": $scope.vm.applicationId,
-                                    "stopConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑停用概念";
-                                    console.log(data);
-                                    addStopConceptDialog(singleEditStopConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].stopConceptKey;
-                                    $scope.vm.term =  data.data[0].stopConceptTerm;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加停用概念";
-                                $scope.vm.term="";
-                                addStopConceptDialog(singleAddStopConcept);
-                            }
-                        },function(){
-                            layer.msg("添加失敗")
-                        })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/disable/disableConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            console.log($scope.vm.key);
+                            httpRequestPost("/api/modeling/concept/stop/repeatCheck", {
+                                "stopConceptApplicationId": $scope.vm.applicationId,
+                                "stopConceptKey": $scope.vm.key
+                            }, function (data) {          //类名重複
+                                if (data.status === 10002) {
+                                    layer.msg("停用概念类名重复");
+                                    httpRequestPost("/api/modeling/concept/stop/listByAttribute", {
+                                        "stopConceptApplicationId": $scope.vm.applicationId,
+                                        "stopConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑停用概念";
+                                        console.log(data);
+                                        addStopConceptDialog(singleEditStopConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].stopConceptKey;
+                                        $scope.vm.term = data.data[0].stopConceptTerm;
+                                    }, function () {
+                                    });
+                                } else {
+                                    //类名无冲突
+                                    $scope.vm.dialogTitle = "增加停用概念";
+                                    $scope.vm.term = "";
+                                    addStopConceptDialog(singleAddStopConcept);
+                                }
+                            }, function () {
+                                layer.msg("添加失敗")
+                            })
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         //編輯彈框   添加公用
         function addStopConceptDialog(callback,item){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/disable/disableConceptManageDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item)
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/disable/disableConceptManageDialog2.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            callback(item)
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                        }
                     }
-                }
-            });
+                });
+            }
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()

@@ -96,48 +96,90 @@
                 </div>
                 <div class="item-line">
                     <div class="row cl mb-10">
-                        <div class="lable">业务框架：</div>
+                        <div class="lable" style="width:245px;">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
-                        <div class="formControls col-xs-8 col-sm-9">
+                        <div class="formControls col-xs-8 col-sm-9" style="padding-left:0;">
                             <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
                                 <option value="" ng-if="vm.frames.length">--业务框架为空--</option>
                             </select>
                         </div>
                     </div>
                 </div>
+
                 <div class="item-line"  style="overflow: visible">
                     <div class="lable" >
                         触发要素：
                     </div>
                     <div class="value" style="overflow: visible">
                         <div class="clearfix mb-10" style="width: 500px;height: 38px;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text L " style="width: 20%;height:39px;">
-                                <option value="60">知识标题</option>
-                                <option value="61">概念扩展</option>
+                            <select  ng-model="vm.factor"  class="input-text L " style="width: 20%;height:39px;">
+                                <option value="0">知识标题</option>
+                                <option value="1">概念扩展</option>
                             </select>
                             <input type="text " class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
 
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
-                        <div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">
+                        <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
 
-                            <span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">知识标题</span>
-                            <div class="L mr-10" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">流量</div>
+                            <!--<span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">知识标题</span>-->
+                            <!--<div class="L mr-10" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">流量</div>-->
 
-                            <a href="javascript:;" class="L mr-15 " ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/delete_img.png" alt=""></a>
-                        </div>
-                        <div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">
+                            <!--<a href="javascript:;" class="L mr-15 " ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                        <!--</div>-->
+                        <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
 
-                            <span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">概念扩展</span>
-                            <div class="L mr-10 clearfix kuozhan_div" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
-                                <span class="L "><a href="javascript:;" class="mr-10">X</a>手机业务-话费</span>
-                                <span class="L"><a href="javascript:;" class="mr-10">X</a>办理</span>
-                            </div>
-                            <a href="javascript:;" class="L mr-15 " ><img src="../../../images/images/delete_img.png" alt=""></a>
-                        </div>
+                            <!--<span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">概念扩展</span>-->
+                            <!--<div class="L mr-10 clearfix kuozhan_div" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
+                                <!--<span class="L "><a href="javascript:;" class="mr-10">X</a>手机业务-话费</span>-->
+                                <!--<span class="L"><a href="javascript:;" class="mr-10">X</a>办理</span>-->
+                            <!--</div>-->
+                            <!--<a href="javascript:;" class="L mr-15 " ><img src="../../../images/images/delete_img.png" alt=""></a>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
+
+            <div class="jqrsz-item" style="overflow: visible">
+                <!--sshoudong  tinajia -->
+                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value clearfix">
+                        <div class=" tag_box L mr-10">
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
+                            </span>
+                        </div>
+                        <span class="tag_s mr-10 L">普通</span>
+                        <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
+                        <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                        <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
+                    </div>
+                </div>
+
+                <!-- 業務框架 生成 -->
+                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value clearfix">
+                        <div class=" tag_box L mr-10">
+                            <!--{{item.extensionQuestionTagList}}-->
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
+                            </span>
+                        </div>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
+                        <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
+                        <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="jqrsz-item" style="padding-top:0;">
                 <!--预览内容-->

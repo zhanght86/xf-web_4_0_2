@@ -135,97 +135,107 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
 
         //添加 窗口
         function addCollective(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        console.log($scope.vm.key);
-                        httpRequestPost("/api/modeling/concept/collective/repeatCheck",{
-                            "collectiveConceptApplicationId": $scope.vm.applicationId,
-                            "collectiveConceptKey": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
-                                layer.msg("集合概念类名重复");
-                                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-                                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                                    "collectiveConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑集合概念";
-                                    console.log(data);
-                                    addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].collectiveConceptKey;
-                                    $scope.vm.term =  data.data[0].collectiveConceptTerm;
-                                    $scope.vm.weight =  data.data[0].collectiveConceptWeight;
-                                },function(){
-                                });
-                            }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加集合概念";
-                                $scope.vm.term="";
-                                $scope.vm.weight="1" ;   //默認權重
-                                addCollectiveConceptDialog(singleAddCollectiveConcept);
-                            }
-                        },function(){
-                            layer.msg("添加失敗")
-                        })
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/aggregate/aggregateConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            console.log($scope.vm.key);
+                            httpRequestPost("/api/modeling/concept/collective/repeatCheck", {
+                                "collectiveConceptApplicationId": $scope.vm.applicationId,
+                                "collectiveConceptKey": $scope.vm.key
+                            }, function (data) {          //类名重複
+                                if (data.status === 10002) {
+                                    layer.msg("集合概念类名重复");
+                                    httpRequestPost("/api/modeling/concept/collective/listByAttribute", {
+                                        "collectiveConceptApplicationId": $scope.vm.applicationId,
+                                        "collectiveConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑集合概念";
+                                        console.log(data);
+                                        addCollectiveConceptDialog(singleEditCollectiveConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].collectiveConceptKey;
+                                        $scope.vm.term = data.data[0].collectiveConceptTerm;
+                                        $scope.vm.weight = data.data[0].collectiveConceptWeight;
+                                    }, function () {
+                                    });
+                                } else {
+                                    //类名无冲突
+                                    $scope.vm.dialogTitle = "增加集合概念";
+                                    $scope.vm.term = "";
+                                    $scope.vm.weight = "1";   //默認權重
+                                    addCollectiveConceptDialog(singleAddCollectiveConcept);
+                                }
+                            }, function () {
+                                layer.msg("添加失敗")
+                            })
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                            $scope.vm.weight = 1;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         //編輯彈框   添加公用
         function addCollectiveConceptDialog(callback,item){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
-                scope: $scope,
-                Returns : {a:1},
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        callback(item)
-                    }else{
-                        $scope.vm.key = "";
-                        $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/aggregate/aggregateConceptManageDialog2.html",
+                    scope: $scope,
+                    Returns: {a: 1},
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            callback(item)
+                        } else {
+                            $scope.vm.key = "";
+                            $scope.vm.term = "";
+                            $scope.vm.weight = 1;
+                        }
                     }
+
+                });
+            }
+                if (dialog) {
+                    $timeout(function () {
+                        termSpliterTagEditor()
+                    }, 100);
                 }
 
-            });
-            if(dialog){
-                $timeout(function () {
-                    termSpliterTagEditor()
-                }, 100);
-            }
         }
         //   刪除 彈框
         function deleteCollective(id){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        singleDelCollectiveConcept(id)
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/businessModeling/ConceptManageDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            singleDelCollectiveConcept(id)
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         //編輯事件
         function singleEditCollectiveConcept(item){
