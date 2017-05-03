@@ -16,6 +16,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit : KnowledgeEdit,
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -317,27 +318,51 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
         function replace(id){
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
                 var replace = ngDialog.openConfirm({
-                    template:"/know_index/knowledgeManagement/faq/replace.html",
+                    template: "/know_index/knowledgeManagement/faq/replace.html",
                     scope: $scope,
-                    closeByDocument:false,
+                    closeByDocument: false,
                     closeByEscape: true,
-                    showClose : true,
-                    backdrop : 'static',
-                    preCloseCallback:function(e){     //关闭回掉
-                        if(e === 1){    //替换
-                            getExtensionByFrame( id ,1 )
-                        }else if(e === 0){
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {     //关闭回掉
+                        if (e === 1) {    //替换
+                            getExtensionByFrame(id, 1)
+                        } else if (e === 0) {
                             // 添加不替换
-                            getExtensionByFrame( id ,0 )
+                            getExtensionByFrame(id, 0)
                         }
                     }
                 });
+            }
         }
 
         function KnowledgeAdd(){
+            var dia = angular.element(".ngdialog ");
+            if(dia.length==0) {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            //return;
+                            saveAddNew()
+                        } else {
+                            setDialog()
+                        }
+                    }
+                });
+            }
+        }
+        function KnowledgeEdit(){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template:"/know_index/knowledgeManagement/faq/knowManaFaqDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -345,10 +370,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        //return;
-                        saveAddNew()
+
                     }else{
-                        setDialog()
+
                     }
                 }
             });
@@ -418,7 +442,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     console.log(data) ;
                     if(data.status == 200){
                         //open
-                        //$state.go("custServScenaOverview.manage")
+                        $state.go("custServScenaOverview.manage");
                     }
                 },function(err){
                     console.log(err)
@@ -432,6 +456,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 //    //console.log(data)
                 //},function(err) {
                 //    layer.msg("保存失败")
+
                 //})
             }
         }

@@ -195,21 +195,25 @@ angular.module('adminModule').controller('userManageController', [
         }
         //查询用户
         function search(){
-            httpRequestPost("/api/user/queryUserByUserName",{
-                userName:$scope.vm.searchName,
-            },function(data){
-                if(data.status == 10016){
-                    $scope.vm.listData = "";
-                    $scope.vm.userDataTotal = 0;
+            if($scope.vm.searchName == '' || $scope.vm.searchName == null){
+                getData(1);
+            }else {
+                httpRequestPost("/api/user/queryUserByUserName", {
+                    userName: $scope.vm.searchName,
+                }, function (data) {
+                    if (data.status == 10016) {
+                        $scope.vm.listData = "";
+                        $scope.vm.userDataTotal = 0;
+                        $scope.$apply()
+                        layer.msg("没有查询到记录!")
+                    }
+                    $scope.vm.listData = data.data.userManageList;
+                    $scope.vm.userDataTotal = data.data.total;
                     $scope.$apply()
-                    layer.msg("没有查询到记录!")
-                }
-                $scope.vm.listData = data.data.userManageList;
-                $scope.vm.userDataTotal = data.data.total;
-                $scope.$apply()
-            },function(){
-                layer.msg("请求失败")
-            })
+                }, function () {
+                    layer.msg("请求失败")
+                })
+            }
         }
         //删除用户
         function deleteUser(userId){
