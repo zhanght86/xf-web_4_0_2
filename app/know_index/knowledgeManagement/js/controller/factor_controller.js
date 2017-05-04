@@ -4,6 +4,7 @@
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
+
         var applicationId = $cookieStore.get("applicationId");
         $scope.vm = {
 //主页
@@ -190,7 +191,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm;
                                 $scope.vm.tableList.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
 
-                                $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;   ``
+                                $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;
                                 //table.data.
                                 setDialogNew()
                             }else{

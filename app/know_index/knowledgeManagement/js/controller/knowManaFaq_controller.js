@@ -5,10 +5,7 @@
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
-      console.log($stateParams);
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("categoryApplicationId","360619411498860544");
+      //console.log($stateParams);
         var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页

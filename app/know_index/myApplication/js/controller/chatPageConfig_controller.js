@@ -133,6 +133,10 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
+                if(data.status == 10005){
+                    layer.msg("查询到记录为空");
+                    return;
+                }
                 $scope.vm.listData = data.data.hotQuestionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.listDataLength = data.data.total;

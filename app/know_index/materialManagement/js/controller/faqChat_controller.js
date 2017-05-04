@@ -4,14 +4,12 @@
  */
 
 angular.module('materialManagement').controller('faqChatController', [
-    '$scope',"$state","ngDialog", "$stateParams",function ($scope,$state,ngDialog,$stateParams) {
+    '$scope',"$state","ngDialog", "$cookieStore","$stateParams",function ($scope,$state,ngDialog,$cookieStore,$stateParams) {
         $state.go("materialManagement.faqChat");
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
         console.log($stateParams.scanDataList);
         $scope.vm = {
-            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:getCookie("userName"),
-            applicationId : getCookie("applicationId"),
+            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:$cookieStore.get("userName"),
+            applicationId : $cookieStore.get("applicationId"),
             standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
             extendedQuestionArr : $stateParams.scanDataList?$stateParams.scanDataList.extendedQuestionArr:[],  //扩展问数组
