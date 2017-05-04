@@ -444,7 +444,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/listKnowledge/checkExtensionQuestion",{
+                httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
                     "applicationId": "100",
                     "extendQuestionList" : question
                 },function(data){
@@ -691,6 +691,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function save() {
+            console.log(getTableParams());
             if (!checkSave()) {
                 return false
             } else {

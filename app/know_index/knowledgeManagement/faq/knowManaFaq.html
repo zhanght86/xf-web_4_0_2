@@ -71,7 +71,7 @@
                 </div>
  <!--bot  标题 点击生成  -->
                 <div class="item-line" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
-                    <div class="lable"> BOT分类：</div>
+                    <div class="lable"> BOT路径：</div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
                             <div class="ipt-txt">
@@ -129,7 +129,7 @@
 
 <!--sshoudong  tinajia -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
-                    <div class="lable">
+                    <div class="lable" ng-class="'milesVh'">
                         扩展问：
                     </div>
                     <div class="value clearfix" >
@@ -144,7 +144,7 @@
 
 <!-- 業務框架 生成 -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
-                    <div class="lable">
+                    <div class="lable" ng-class="'milesVh'">
                         扩展问：
                     </div>
                     <div class="value clearfix" >

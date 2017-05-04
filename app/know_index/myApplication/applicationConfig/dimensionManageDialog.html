@@ -1,11 +1,14 @@
 <div class="" >
-    <form class="form form-horizontal">
+    <form class="form form-horizontal" name="myForm">
         <div class="mb-10 mt-10 pl30" style="height:200px;overflow:auto;">
             <div class="latit_repres_div">
                 <div class="mb-10 clearfix">
                     <span class="add_ele_span L">维度名称：</span>
                     <div class="dib L pl-5">
-                        <input type="text"  class="input-text " placeholder="维度名称" ng-model="vm.dimension"/>
+                        <input type="text" name="dimension" class="input-text" placeholder="维度名称" ng-model="vm.dimension" required/>
+                        <span style="color:red" ng-show="myForm.dimension.$dirty && myForm.dimension.$invalid">
+                        <span ng-show="myForm.dimension.$error.required">维度名称不能为空!</span>
+                        </span>
                     </div>
                     <div class="dib ml-15 pt-5 L mr-15">
                         <span class="L mr-30">状态：</span>

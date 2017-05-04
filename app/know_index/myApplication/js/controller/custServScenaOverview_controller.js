@@ -137,14 +137,19 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             $scope.vm.heighSarch = false
         }
         function delData(){
+            if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
+            {
+                layer.msg("请选择删除知识");
+                return;
+            }
             //console.log($scope.vm.knowledgeIds);
             httpRequestPost("/api/knowledgeManage/overView/deleteKnowledge",{
                 "knowledgeIds":$scope.vm.knowledgeIds
             },function(data){
                 $state.reload();
-              layer.msg("刪除成功")
+                layer.msg("刪除成功");
             },function(){
-                layer.msg("刪除失败")
+                layer.msg("刪除失败");
             });
         }
         function addDelIds(id,arr){

@@ -5,7 +5,6 @@
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
     //'ui.autocomplete',
-
     'ui.router',
     //"ui.bootstrap",
     'ngDialog',
@@ -125,7 +124,7 @@ knowledge_static_web.run(function ($rootScope, $state, $stateParams, $location, 
 knowledge_static_web
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise(function($injector, $location){
-            $location.path('/homePage');
+            $location.path('/login');
         });
         $stateProvider
         //登录路由

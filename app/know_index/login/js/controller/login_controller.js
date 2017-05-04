@@ -4,7 +4,8 @@
  */
 
 angular.module('loginModule').controller('loginController', [
-    '$scope', '$location', 'localStorageService' ,"$state" ,function ($scope, $location, localStorageService, $state) {
+    '$scope', '$location', 'localStorageService' ,"$state" ,"$cookieStore",
+    function ($scope, $location, localStorageService, $state,$cookieStore) {
 
         $scope.vm = {
             userName: '',
@@ -33,17 +34,14 @@ angular.module('loginModule').controller('loginController', [
             }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
                 layer.msg("验证码错误");
             }else{
-                //console.log($scope.vm.userName);
                 httpRequestPost("/api/user/userLogin",{
-                    "userName":$scope.vm.userName,
+                    "userLoginName":$scope.vm.userName,
                     "userPassword":$scope.vm.password
                 },function(data){
-                    console.log(data);
-                    // cookie   userName  userId
-                    setCookie("userName" , $scope.vm.userName);
-                    setCookie("userId" , data.data.userId);
-                    $state.go("admin",{userPermission : data.data.roleList});
-                    //console.dir(data.data.roleList)
+                    // cookie  userId
+                    $cookieStore.put("userId" , data.data.userId);
+                    $cookieStore.put("username" , data.data.userName);
+                    $state.go("admin");
                 },function(err){
                     layer.msg("登陆失败");
                     //console.log(err)

@@ -4,12 +4,10 @@
  * Date: 2017/4/10 14:52
  */
 angular.module('myApplicationSettingModule').controller('nodeManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",function ($scope,localStorageService, $state,ngDialog) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
-        setCookie("userId","359873057331875840");
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog", "$cookieStore",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             nodeData : "",   // 节点列表数据
             paginationConf : ""  ,//分页条件
             pageSize : 5 , //默认每页数量
@@ -26,7 +24,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             delNodes : [], //待删除的子节点去除$$hashkey
             subNode : "", //子节点的id
             subNodeAccessIp : "" , //子节点的访问地址
-            nodeCreateId : getCookie("userId"), //用户id
+            nodeCreateId : $cookieStore.get("userId"), //用户id
 
 
             statusData : "", //节点状态数据

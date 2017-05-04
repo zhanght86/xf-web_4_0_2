@@ -7,44 +7,49 @@
 angular.module('adminModule').controller('adminContentController', [
     '$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore) {
-        //"applicationId": "string",
-        $cookieStore.put("userName","mf");
-        //setCookie("userId","359873057331875840");
-        //$stateParams.userPermission = ['超级管理员','初级管理员'];
-                $scope.vm = {
-                    userName : getCookie("userName"),
-                    userPermission : $stateParams.userPermission,
-                    addApplicationWindow : addApplicationWindow,
-                    myApplication : "",
-                    selectLicence : "",
-                    newApplicationName : "",
-                    newScene : "",
-                    newLicence : "",
-                    newDescribe : "",
-                    selectScene : selectScene
-                };
+        $scope.vm = {
+            userName :"",
+            userPermission : $stateParams.userPermission,
+            addApplicationWindow : addApplicationWindow,
+            myApplication : "",
+            selectLicence : "",
+            newApplicationName : "",
+            newScene : "",
+            newLicence : "",
+            newDescribe : "",
+            selectScene : selectScene
+        };
+
         function selectScene(id,applicationId){
             $cookieStore.put("sceneId",id);
             $cookieStore.put("applicationId",applicationId);
-            //console.log($cookieStore.get("sceneId"))
         }
+        getUserInfo();
         myApplication();
         selectLicence();
-
+        //获取用户信息
+        function getUserInfo(){
+            httpRequestPost("/api/user/findRoleIdByUserId",{
+                "userId":$cookieStore.get("userId")
+            },function(data){
+                //if(data.status==200){
+                    console.log(data);
+                    $scope.vm.userPermission = data.data.roleList;
+                //}
+            },function(err){
+            });
+        }
         //获取当前 应用场景
         function myApplication(){
             //console.log(getCookie("userId"));
-            var sel = $scope;
             httpRequestPost("/api/application/application/listApplicationByUserId",{
                 "userId":$cookieStore.get("userId")
             },function(data){
-                console.log(data)
-                sel.vm.myApplication = data.data;
-                $scope.$apply()
+                console.log(data);
+                $scope.vm.myApplication = data.data;
+                $scope.$apply();
             },function(err){
                 //console.log(err)
-
-
             });
 
         }
