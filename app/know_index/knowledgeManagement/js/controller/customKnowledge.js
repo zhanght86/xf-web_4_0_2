@@ -5,11 +5,7 @@
 angular.module('knowledgeManagementModule').controller('customKnowledge', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","111111");
-        $cookieStore.put("sceneId","1");
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("categoryApplicationId","360619411498860544");
+
         var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页   

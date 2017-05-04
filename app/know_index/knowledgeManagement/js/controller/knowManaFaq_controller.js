@@ -5,13 +5,10 @@
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
-      console.log($stateParams);
-
+      //console.log($stateParams);
         var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页
-
-
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
 

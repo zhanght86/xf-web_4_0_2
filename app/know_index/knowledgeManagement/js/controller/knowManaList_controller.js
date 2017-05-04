@@ -6,11 +6,6 @@
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","111111");
-        $cookieStore.put("sceneId","1");
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("categoryApplicationId","360619411498860544");
         var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页

@@ -10,14 +10,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         //"364180924750893056"
         //knowledgeScan
-        console.log($cookieStore.get("knowledgeScan"));
-        console.log($stateParams);
+        //console.log($cookieStore.get("knowledgeScan"));
+        //console.log($stateParams);
         var knowledgeScan =  $cookieStore.get("knowledgeScan");
-
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
-            //knowledgeId : $stateParams.knowledgeId,
-            knowledgeId : "364180924750893056",        //del
+            knowledgeId : $stateParams.knowledgeId,
             knowledgeType : $stateParams.knowledgeType,
             listData : null,
             knowledgeData : knowledgeScan.params ,
