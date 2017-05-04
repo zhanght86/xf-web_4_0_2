@@ -5,6 +5,7 @@
 angular.module('knowledgeManagementModule').controller('customKnowledge', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
+        alert()
         $scope.vm = {
 //主页   
             applicationId : $cookieStore.get("applicationId"),
