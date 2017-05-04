@@ -144,14 +144,11 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1) {
-                        console.log($scope.vm.allowSubmit);
+                        $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
+
+                        console.log("维度"+$scope.vm.dimensions);
                         if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
                             layer.msg("发布服务的名称不能为空!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
-                        if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
-                            layer.msg("发布服务时未选择分类!");
                             $scope.vm.allowSubmit=0;
                             return;
                         }
@@ -160,8 +157,14 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                             $scope.vm.allowSubmit=0;
                             return;
                         }
+
                         if($scope.vm.dimensions==null||$scope.vm.dimensions.length==0){
                             layer.msg("发布服务时未选择发布维度!");
+                            $scope.vm.allowSubmit=0;
+                            return;
+                        }
+                        if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
+                            layer.msg("发布服务时未选择分类!");
                             $scope.vm.allowSubmit=0;
                             return;
                         }
@@ -170,8 +173,9 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                             $scope.vm.allowSubmit=0;
                             return;
                         }
+
+
                         if($scope.vm.allowSubmit){  //服务名称验证没有错误
-                            $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
                             httpRequestPost("/api/application/service/addAndPublishService",{
                                 "applicationId": $scope.vm.applicationId,
                                 "categoryIds" : $scope.vm.categoryIds, //分类id列表
