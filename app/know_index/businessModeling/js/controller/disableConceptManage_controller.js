@@ -6,9 +6,9 @@
  * 控制器
  */
 angular.module('businessModelingModule').controller('disableConceptManageController', [
-'$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+'$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             addStop : addStop,
             editStop : editStop,
             deleteStop:deleteStop,
@@ -25,7 +25,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userId"),
+            modifier: $cookieStore.get("userId"),
             term: "",
             dialogTitle : "",
             inputSelect : [],

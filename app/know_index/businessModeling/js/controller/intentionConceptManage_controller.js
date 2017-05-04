@@ -7,9 +7,9 @@
 */
 
 angular.module('businessModelingModule').controller('intentionConceptManageController', [
-'$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+'$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             addForceSegment : addForceSegment,
             editForceSegment : editForceSegment,
             deleteForceSegment:deleteForceSegment,
@@ -26,7 +26,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userId"),
+            modifier: $cookieStore.get("userId"),
             term: "",
             dialogTitle : "",
             inputSelect : [],
