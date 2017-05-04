@@ -11,6 +11,7 @@ angular.module('adminModule').controller('userManageController', [
 
     function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore) {
         $state.go("admin.userManage");
+
         $scope.vm = {
             listData : "",   // table 数据
             getData : getData,
@@ -22,7 +23,7 @@ angular.module('adminModule').controller('userManageController', [
             deleteUser:deleteUser,
             search:search,
             stop:stop,
-            userId:$cookieStore("userId"),
+            userId:$cookieStore.get("userId"),
 
             //添加用户所需要数据
             userName : "",
