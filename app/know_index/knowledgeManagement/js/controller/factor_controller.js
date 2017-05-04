@@ -185,14 +185,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             if(e === 1){
 
                     //{"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"377349609204219904","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"377349609204219904\"}"}
-                                var table = angular.copy($scope.vm.tableList);
-                                $scope.vm.tableList = null;
                                 console.log( $scope.vm.tableList);
-                                table.data.listTableType[column].elementName =  $scope.vm.factorName;
-                                table.data.listTableType[column].elementType = $scope.vm.tableType;
-                                table.data.listTableType[column].technology =  $scope.vm.gorithm;
-                                table.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
-                                $scope.vm.tableList = table;
+                                $scope.vm.tableList.data.listTableType[column].elementName =  $scope.vm.factorName;
+                                $scope.vm.tableList.data.listTableType[column].elementType = $scope.vm.tableType;
+                                $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm;
+                                $scope.vm.tableList.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
+
+                                $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;
+                                //table.data.
                                 setDialogNew()
                             }else{
                                 setDialogNew()

@@ -4,8 +4,8 @@
         <span class="cn-lable">你曾经路过此地：</span>
         <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
         <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
     </div>
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
@@ -109,10 +109,11 @@
                             </div>
                         </div>
                     </div>
-                    <select class="sel bd L">
-                        <option>新增知识</option>
-                        <option>新增知识</option>
-                        <option>新增知识</option>
+                    <select class="sel bd L" ng-model="vm.newKnowledge" ng-change="vm.jumpToNewKonwledge(vm.newKnowledge)" style="width: 126px;">
+                        <option value="100">FAQ型知识新增</option>
+                        <option value="101">概念知识型新增</option>
+                        <option value="102">列表型知识新增</option>
+                        <option value="103">要素型知识新增</option>
                     </select>
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;">批量导入</a>

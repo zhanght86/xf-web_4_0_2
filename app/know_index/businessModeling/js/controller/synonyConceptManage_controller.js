@@ -6,9 +6,9 @@
  * 控制器
  */
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             addSynonym : addSynonym,
             editSynonym : editSynonym,
             deleteSynonym:deleteSynonym,
@@ -25,7 +25,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userId"),
+            modifier: $cookieStore.get("userId"),
             term: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",

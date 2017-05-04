@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/23.
  */
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope','$timeout',"$state", "$stateParams","ngDialog",
-    function ($scope,$timeout,$state, $stateParams, ngDialog) {
+    '$scope','$timeout',"$state", "$stateParams","ngDialog","$cookieStore",
+    function ($scope,$timeout,$state, $stateParams, ngDialog,$cookieStore) {
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -60,9 +60,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
         //setCookie("categorySceneId","10023");
-        var categoryApplicationId = getCookie("applicationId");
-        var categoryModifierId = getCookie("userId");
-        var categorySceneId = getCookie("sceneId");
+        var categoryApplicationId = $cookieStore.get("applicationId");
+        var categoryModifierId = $cookieStore.get("userId");
+        var categorySceneId = $cookieStore.get("sceneId");
         var params = {
             "categoryName":$("#category-autocomplete").val(),
             "categoryApplicationId":categoryApplicationId
