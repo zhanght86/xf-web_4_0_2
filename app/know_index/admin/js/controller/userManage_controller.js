@@ -29,6 +29,7 @@ angular.module('adminModule').controller('userManageController', [
             userName : "",
             userLonginName :  "",
             userPassword :  "",
+            userPassWord : "", //用户所输入确认密码
             userPhoneNumber  :  "",
             userEmail :"",
             remark:"",

@@ -7,8 +7,6 @@
  */
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
             addSynonym : addSynonym,
@@ -27,9 +25,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userName"),
+            modifier: getCookie("userId"),
             term: "",
-            weight: "3" ,   //默認權重
+            weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
@@ -169,7 +167,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加同义概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="3" ;   //默認權重
+                                $scope.vm.weight="33" ;   //默認權重
                                 addSynonymConceptDialog(singleAddSynonymConcept);
                             }
                         },function(){
@@ -178,7 +176,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight = 3;
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -199,7 +197,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight = 3;
+                        $scope.vm.weight = 33;
                     }
                 }
             });

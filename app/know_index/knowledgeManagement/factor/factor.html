@@ -173,9 +173,9 @@
                                             <tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">
                                                 <td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">
                                                     <!--{{item}}-->
-                                                    <input type="text" ng-if="indexRow==0" ng-model="item"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="background:inherit;cursor:pointer"/>
+                                                    <input type="text" ng-if="indexRow==0" ng-model="item" value="{{item}}"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="background:inherit;cursor:pointer"/>
                                                     <!--<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>-->
-                                                    <input type="text" ng-if="indexRow!=0" ng-model="item"  ng-change="vm.tableChange(indexRow,indexColumn,item)"/>
+                                                    <input type="text" ng-if="indexRow!=0" ng-model="item" value="{{item}}" ng-change="vm.tableChange(indexRow,indexColumn,item)"/>
                                                 </td>
                                             </tr>
                                         </table>

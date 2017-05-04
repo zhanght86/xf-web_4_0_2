@@ -7,8 +7,6 @@
  */
 angular.module('businessModelingModule').controller('aggregateConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
             addCollective : addCollective,
@@ -27,14 +25,14 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userName"),
+            modifier: getCookie("userId"),
             term: "",
-            weight: "3" ,   //默認權重
+            weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
+            current:3,
             percent:"%"
         };
 
@@ -42,7 +40,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        loadCollectiveConceptTable(1);
+        loadCollectiveConceptTable(3);
         //请求列表
         function loadCollectiveConceptTable(current){
             httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
@@ -170,7 +168,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加集合概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="3" ;   //默認權重
+                                $scope.vm.weight="33" ;   //默認權重
                                 addCollectiveConceptDialog(singleAddCollectiveConcept);
                             }
                         },function(){
@@ -179,7 +177,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -201,7 +199,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight =  33;
                     }
                 }
 

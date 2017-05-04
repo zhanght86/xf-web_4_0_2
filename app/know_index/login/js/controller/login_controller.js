@@ -4,7 +4,8 @@
  */
 
 angular.module('loginModule').controller('loginController', [
-    '$scope', '$location', 'localStorageService' ,"$state" ,function ($scope, $location, localStorageService, $state) {
+    '$scope', '$location', 'localStorageService' ,"$state" ,"$cookieStore",
+    function ($scope, $location, localStorageService, $state,$cookieStore) {
 
         $scope.vm = {
             userName: '',
@@ -32,20 +33,31 @@ angular.module('loginModule').controller('loginController', [
                 layer.msg("验证码不能为空")
             }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
                 layer.msg("验证码错误");
+            }else if($scope.vm.userName == ""){
+                layer.msg("用户名不能为空");
+            }else if($scope.vm.password == ""){
+                layer.msg("密码不能为空");
             }else{
-                //console.log($scope.vm.userName);
                 httpRequestPost("/api/user/userLogin",{
-                    "userName":$scope.vm.userName,
+                    "userLoginName":$scope.vm.userName,
                     "userPassword":$scope.vm.password
                 },function(data){
-                    console.log(data);
-                    // cookie   userName  userId
-                    setCookie("userName" , $scope.vm.userName);
-                    setCookie("userId" , data.data.userId);
-                    $state.go("admin",{userPermission : data.data.roleList});
-                    //console.dir(data.data.roleList)
+                    if(data.status==10006){
+                        // cookie  userId userName
+                        $cookieStore.put("userId" , data.data.userId);
+                        $cookieStore.put("userName" , data.data.userName);
+                        $state.go("admin");
+                    }else if(data.status==10007){
+                        $scope.vm.randomNumber = randomNumber(4);
+                        $scope.vm.randomNumberValue = "";
+                        layer.msg("用户名或密码错误");
+                    }
+                    console.log(data)
+
                 },function(err){
                     layer.msg("登陆失败");
+                    $scope.vm.randomNumber = randomNumber(4);
+                    $scope.vm.randomNumberValue = "";
                     //console.log(err)
                 });
             }
