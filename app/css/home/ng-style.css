@@ -7,8 +7,11 @@
 .ng-blue {
   color: blue!important;
 }
-.milesVh {
+.mileVs {
   visibility: hidden;
+}
+.textIndent10 {
+  text-indent: 10px;
 }
 .type1 .icon-ngJj {
   position: relative;

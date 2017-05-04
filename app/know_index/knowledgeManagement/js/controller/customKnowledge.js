@@ -5,8 +5,6 @@
 angular.module('knowledgeManagementModule').controller('customKnowledge', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
-
-        var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页   
             applicationId : $cookieStore.get("applicationId"),
@@ -219,7 +217,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
-                applicationId : $cookieStore.get("applicationId"),
+                "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -265,7 +263,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                applicationId : $cookieStore.get("applicationId"),
+                "applicationId": $scope.vm.applicationId,
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -291,7 +289,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
                 return false
             }else{
                 httpRequestPost("/api/marketingKnowledge/checkExtensionQuestion",{
-                    applicationId : $cookieStore.get("applicationId"),
+                    "applicationId":$scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -348,7 +346,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": applicationId,
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
@@ -383,7 +381,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
@@ -493,7 +491,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
             if($scope.vm.title){
                 httpRequestPost("/api/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    applicationId : $cookieStore.get("applicationId"),
+                    "applicationId" : $scope.vm.applicationId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败

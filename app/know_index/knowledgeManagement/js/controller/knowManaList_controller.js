@@ -6,7 +6,6 @@
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
-        var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -347,7 +346,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": applicationId,
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
@@ -382,7 +381,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
@@ -476,7 +475,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if($scope.vm.title){
                 httpRequestPost("/api/listKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : "100"
+                    "applicationId" : $scope.vm.applicationId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
