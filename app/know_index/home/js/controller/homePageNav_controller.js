@@ -11,6 +11,9 @@ angular.module('homePage').controller('homePageNavController', [
                 userName : $cookieStore.get('userName'),
                 logApplication : logApplication
             };
+        if(!$cookieStore.get('userId')){
+            $state.go("login")
+        }
         function logApplication(){
             if($scope.vm.sceneId){
                 $state.go("setting.Infor")
@@ -25,6 +28,7 @@ angular.module('homePage').controller('homePageNavController', [
             $cookieStore.remove('userName');
             $state.go("login")
         }
+
         //$timeout(function(){
         //    $scope.vm.applicatioinId = false;
         //},1000)

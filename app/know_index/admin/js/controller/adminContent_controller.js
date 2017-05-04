@@ -8,7 +8,7 @@ angular.module('adminModule').controller('adminContentController', [
     '$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
-            userName :"",
+            userName : $cookieStore.get("userName"),
             userPermission : $stateParams.userPermission,
             addApplicationWindow : addApplicationWindow,
             myApplication : "",
@@ -35,6 +35,7 @@ angular.module('adminModule').controller('adminContentController', [
                 //if(data.status==200){
                     console.log(data);
                     $scope.vm.userPermission = data.data.roleList;
+                $scope.$apply();
                 //}
             },function(err){
             });

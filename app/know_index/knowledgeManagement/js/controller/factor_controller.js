@@ -4,12 +4,8 @@
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","111111");
-        $cookieStore.put("sceneId","1");
         $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("categoryApplicationId","360619411498860544");
-        var applicationId = $cookieStore.get("categoryApplicationId");
+        var applicationId = $cookieStore.get("applicationId");
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -60,7 +56,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             dimension  : "",
             dimensions : []
             ,  //所有维度
-            dimensionArr : [{'dimensionName':'国家_中国','dimensionId':'369243445367144448'}],  //選擇的維度
+            dimensionArr : [],  //選擇的維度
             dimensionsCopy :[]
             ,
 
@@ -95,7 +91,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             reQuestion : null, //反问
 
             dialogExtension : [],
-            tableList: ""
+            tableList: {"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"377349609204219904","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"377349609204219904\"}"}
         };
         function tableChange(row, col ,val){
             console.log($scope.vm.tableList);
@@ -171,25 +167,40 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function editList(row,column){
-            $scope.vm.factorName = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementName ;
-            $scope.vm.tableType = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementType;
-            $scope.vm.gorithm = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].technology;
-            $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[$scope.vm.tableColumn].elementAsk;
+            $scope.vm.factorName = $scope.vm.tableList.data.listTableType[column].elementName ;
+            $scope.vm.tableType = $scope.vm.tableList.data.listTableType[column].elementType;
+            $scope.vm.gorithm = $scope.vm.tableList.data.listTableType[column].technology;
+            $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
-                var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/factor/factorDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
+                $timeout(function(){
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                            if(e === 1){
 
-                    }
-                }
-            });
+                    //{"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"377349609204219904","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"377349609204219904\"}"}
+                                var table = angular.copy($scope.vm.tableList);
+                                $scope.vm.tableList = null;
+                                console.log( $scope.vm.tableList);
+                                table.data.listTableType[column].elementName =  $scope.vm.factorName;
+                                table.data.listTableType[column].elementType = $scope.vm.tableType;
+                                table.data.listTableType[column].technology =  $scope.vm.gorithm;
+                                table.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
+                                $scope.vm.tableList = table;
+                                setDialogNew()
+                            }else{
+                                setDialogNew()
+                            }
+                        }
+                    });
+                },100);
+
             }
         }
         function getTableParams(){
@@ -695,7 +706,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if (!checkSave()) {
                 return false
             } else {
-                console.log(getParams())
+                console.log(getParams());
                 httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                     console.log(data);
                     if (data.status == 200) {

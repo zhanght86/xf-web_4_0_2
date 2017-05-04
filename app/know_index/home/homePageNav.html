@@ -2,14 +2,15 @@
 <div class="homePageNav">
     <div class="header clearfix">
         <div class="logo">
-            <a ui-sref="homePage.define" ><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>
+            <a ><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>
+            <!--<a ui-sref="homePage.define"><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>-->
         </div>
         <ul class="nav">
             <li>
                 <a ui-sref="homePage.define" ng-if="vm.sceneId">首页</a>
             </li>
             <li>
-                <a ng-click="vm.logApplication">我的应用</a>
+                <a ng-click="vm.logApplication()">我的应用</a>
             </li>
             <li ng-if="vm.applicationId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
