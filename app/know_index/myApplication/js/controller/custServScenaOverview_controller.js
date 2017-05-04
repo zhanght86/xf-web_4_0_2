@@ -142,6 +142,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
         });
         function keySearch(e){
+            console.log(1)
                 var keycode = window.e?e.keyCode:e.which;
                 if(keycode==13){
                     napSearch()
@@ -203,7 +204,10 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }
 
 ////////////////////////////////////// ///          Bot      /////////////////////////////////////////////////////
-
+        //{
+        //    "categoryApplicationId": "360619411498860544",
+        //    "categoryPid": "root"
+        //}
         getBotRoot();
         //    getDimensions();
         //    getChannel();
