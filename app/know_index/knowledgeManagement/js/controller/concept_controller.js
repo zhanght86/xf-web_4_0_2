@@ -221,7 +221,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
-                "applicationId": "100",
+                applicationId : $cookieStore.get("applicationId"),
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -267,7 +267,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                "applicationId": "100",
+                applicationId : $cookieStore.get("applicationId"),
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -293,7 +293,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 return false
             }else{
                 httpRequestPost("/api/conceptKnowledge/checkExtensionQuestion",{
-                    "applicationId": "100",
+                    applicationId : $cookieStore.get("applicationId"),
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -517,7 +517,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             if($scope.vm.title){
                 httpRequestPost("/api/conceptKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : "100"
+                    applicationId : $cookieStore.get("applicationId"),
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败

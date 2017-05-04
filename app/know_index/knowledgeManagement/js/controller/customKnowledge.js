@@ -219,7 +219,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
-                "applicationId": "100",
+                applicationId : $cookieStore.get("applicationId"),
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -265,7 +265,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                "applicationId": "100",
+                applicationId : $cookieStore.get("applicationId"),
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -291,7 +291,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
                 return false
             }else{
                 httpRequestPost("/api/marketingKnowledge/checkExtensionQuestion",{
-                    "applicationId": "100",
+                    applicationId : $cookieStore.get("applicationId"),
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -493,7 +493,7 @@ angular.module('knowledgeManagementModule').controller('customKnowledge', [
             if($scope.vm.title){
                 httpRequestPost("/api/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : "100"
+                    applicationId : $cookieStore.get("applicationId"),
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
