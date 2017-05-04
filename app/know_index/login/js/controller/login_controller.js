@@ -16,9 +16,13 @@ angular.module('loginModule').controller('loginController', [
             login: login,
             keyLogin : keyLogin
         };
-       function keyLogin($event){
-            if($event.keyCode==13){//回车
+       function keyLogin(e){
+           var srcObj = e.srcElement ? e.srcElement : e.target;
+           var keycode = window.event?e.keyCode:e.which;
+            if(keycode==13){//回车
+                srcObj.blur() ;
                 login();
+                srcObj.focus() ;
             }
         }
         //改变验证码

@@ -4,8 +4,6 @@
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
-
-        var applicationId = $cookieStore.get("applicationId");
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -384,7 +382,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/listKnowledge/checkFrameTag",{
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -430,7 +428,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -456,7 +454,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false
             }else{
                 httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
-                    "applicationId": "100",
+                    "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -513,7 +511,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": applicationId,
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
@@ -548,7 +546,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
@@ -639,7 +637,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if($scope.vm.title){
                 httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : "100"
+                    "applicationId" : $scope.vm.applicationId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
