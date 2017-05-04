@@ -220,7 +220,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -266,7 +266,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -292,7 +292,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 return false
             }else{
                 httpRequestPost("/api/marketingKnowledge/checkExtensionQuestion",{
-                    "applicationId": "100",
+                    "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
