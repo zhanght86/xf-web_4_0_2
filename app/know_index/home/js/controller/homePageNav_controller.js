@@ -9,7 +9,9 @@ angular.module('homePage').controller('homePageNavController', [
                 sceneId : $cookieStore.get('sceneId'),
                 loginout : loginout,
                 userName : $cookieStore.get('userName'),
-                logApplication : logApplication
+                logApplication : logApplication,
+                jump: jump
+
             };
         if(!$cookieStore.get('userId')){
             $state.go("login")
@@ -28,7 +30,9 @@ angular.module('homePage').controller('homePageNavController', [
             $cookieStore.remove('userName');
             $state.go("login")
         }
-
+        function jump() {
+            window.open('http://'+window.location.host+':7003/index.html');
+        }
         //$timeout(function(){
         //    $scope.vm.applicatioinId = false;
         //},1000)
