@@ -384,7 +384,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/listKnowledge/checkFrameTag",{
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -430,7 +430,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -456,7 +456,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false
             }else{
                 httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
-                    "applicationId": "100",
+                    "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -639,7 +639,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if($scope.vm.title){
                 httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : "100"
+                    "applicationId": $scope.vm.applicationId,
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
