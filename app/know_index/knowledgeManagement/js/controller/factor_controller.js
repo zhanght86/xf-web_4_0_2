@@ -89,7 +89,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             reQuestion : null, //反问
 
             dialogExtension : [],
-            tableList: {"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"377349609204219904","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"377349609204219904\"}"}
+            tableList: ""
         };
         function tableChange(row, col ,val){
             console.log($scope.vm.tableList);
