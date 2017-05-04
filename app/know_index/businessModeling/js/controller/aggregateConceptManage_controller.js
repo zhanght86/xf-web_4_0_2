@@ -32,7 +32,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:3,
+            current:1,
             percent:"%"
         };
 
@@ -40,7 +40,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        loadCollectiveConceptTable(3);
+        loadCollectiveConceptTable(1);
         //请求列表
         function loadCollectiveConceptTable(current){
             httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
