@@ -216,7 +216,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             console.log(checkExtension(obj , $scope.vm.extensions));
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
-            }else if(!checkExtension(obj , $scope.vm.extensions)){
+            }else if(checkExtension(obj , $scope.vm.extensionTitle)){
                 layer.msg("扩展问重复");
                 return false
             }else{
@@ -575,10 +575,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //检验扩展问是否重复
         function checkExtension(item,arr){
             if(!arr.length){
+
                 return true ;
             }else{
                 angular.forEach(arr,function(val){
-                    if(val.extensionQuestionTitle == item.extensionQuestionTitle && val.extensionQuestionType == item.extensionQuestionType){
+                    if(val.extensionQuestionTitle == item.extensionQuestionTitle){
                         console.log(val.extensionQuestionTitle == item.extensionQuestionTitle)
                         return false
                     }
