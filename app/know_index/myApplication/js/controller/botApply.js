@@ -50,12 +50,12 @@ angular.module('myApplicationModule').controller('botApplyController', [
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
             responseView:responseView
         };
-        setCookie("categoryApplicationId","360619411498860544");
-        setCookie("categoryModifierId","1");
-        setCookie("categorySceneId","10023");
-        var categoryApplicationId = getCookie("categoryApplicationId");
-        var categoryModifierId = getCookie("categoryModifierId");
-        var categorySceneId = getCookie("categorySceneId");
+        //setCookie("applicationId","360619411498860544");
+        //setCookie("userId","1");
+        //setCookie("sceneId","10023");
+        var categoryApplicationId = getCookie("applicationId");
+        var categoryModifierId = getCookie("userId");
+        var categorySceneId = getCookie("sceneId");
         //加载业务树
         initBot();
         initBotLibrary();

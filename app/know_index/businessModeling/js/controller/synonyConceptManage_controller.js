@@ -7,8 +7,6 @@
  */
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
         $scope.vm = {
             applicationId : getCookie("applicationId"),
             addSynonym : addSynonym,
@@ -27,7 +25,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userName"),
+            modifier: getCookie("userId"),
             term: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",
