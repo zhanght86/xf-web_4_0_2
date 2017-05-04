@@ -3,7 +3,7 @@
  * 控制器
  */
 angular.module('myApplicationModule').controller('botApplyController', [
-    '$scope', 'localStorageService','$timeout',"$state" ,"$stateParams","ngDialog",function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog) {
+    '$scope', 'localStorageService','$timeout',"$state" ,"$stateParams","ngDialog","$cookieStore",function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -53,9 +53,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
         //setCookie("applicationId","360619411498860544");
         //setCookie("userId","1");
         //setCookie("sceneId","10023");
-        var categoryApplicationId = getCookie("applicationId");
-        var categoryModifierId = getCookie("userId");
-        var categorySceneId = getCookie("sceneId");
+        var categoryApplicationId = $cookieStore.get("applicationId");
+        var categoryModifierId = $cookieStore.get("userId");
+        var categorySceneId = $cookieStore.get("sceneId");
         //加载业务树
         initBot();
         initBotLibrary();
@@ -484,7 +484,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 request.categoryPid=$scope.vm.categoryLibraryPid;
                 request.categoryAttributeName=$("#categoryLibraryName").val();
                 request.categoryName=$("#categoryLibraryName").val();
-                request.categorySceneId=$scope.vm.categoryLibrarySceneId;
+                request.categorySceneId=categorySceneId;
             }else{
                 request.categoryPid=$scope.vm.botLibrarySelectValue;
                 request.categoryAttributeName=$("#categoryLibraryNameAdd").val();
@@ -528,7 +528,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             "categoryName": $("#categoryLibraryName").val(),
                             "categoryTypeId": $("#categoryLibraryTypeId").val(),
                             "categoryModifierId": categoryModifierId,
-                            "categorySceneId": $scope.vm.categoryLibrarySceneId,
+                            "categorySceneId": categorySceneId,
                             "categoryLeaf": $scope.vm.categoryLibraryLeaf
                         },function(data){
                             if(responseView(data)==true){
