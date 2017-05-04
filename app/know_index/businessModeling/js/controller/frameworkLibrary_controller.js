@@ -1515,7 +1515,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 arr[0]=$(value).val();
                 httpRequestPost("/api/modeling/frame/batchtag",{
                     "extendQuestionList":arr,
-                    "applicationId":categoryApplicationId
+                    "applicationId":"100"
                 },function(data){
                     if(data){
                         if(data.status==200){

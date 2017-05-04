@@ -183,25 +183,22 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
 
         //編輯彈框   添加公用
         function addStopConceptDialog(callback,item){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/businessModeling/disable/disableConceptManageDialog2.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            callback(item)
-                        } else {
-                            $scope.vm.key = "";
-                            $scope.vm.term = "";
-                        }
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/businessModeling/disable/disableConceptManageDialog2.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+                        callback(item)
+                    } else {
+                        $scope.vm.key = "";
+                        $scope.vm.term = "";
                     }
-                });
-            }
+                }
+            });
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()
