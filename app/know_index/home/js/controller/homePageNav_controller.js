@@ -13,6 +13,9 @@ angular.module('homePage').controller('homePageNavController', [
                 jump: jump
 
             };
+        if(!$cookieStore.get('userId')){
+            $state.go("login")
+        }
         function logApplication(){
             if($scope.vm.sceneId){
                 $state.go("setting.Infor")

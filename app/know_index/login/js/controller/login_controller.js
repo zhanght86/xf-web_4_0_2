@@ -33,17 +33,31 @@ angular.module('loginModule').controller('loginController', [
                 layer.msg("验证码不能为空")
             }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
                 layer.msg("验证码错误");
+            }else if($scope.vm.userName == ""){
+                layer.msg("用户名不能为空");
+            }else if($scope.vm.password == ""){
+                layer.msg("密码不能为空");
             }else{
                 httpRequestPost("/api/user/userLogin",{
                     "userLoginName":$scope.vm.userName,
                     "userPassword":$scope.vm.password
                 },function(data){
-                    // cookie  userId
-                    $cookieStore.put("userId" , data.data.userId);
-                    $cookieStore.put("username" , data.data.userName);
-                    $state.go("admin");
+                    if(data.status==10006){
+                        // cookie  userId userName
+                        $cookieStore.put("userId" , data.data.userId);
+                        $cookieStore.put("userName" , data.data.userName);
+                        $state.go("admin");
+                    }else if(data.status==10007){
+                        $scope.vm.randomNumber = randomNumber(4);
+                        $scope.vm.randomNumberValue = "";
+                        layer.msg("用户名或密码错误");
+                    }
+                    console.log(data)
+
                 },function(err){
                     layer.msg("登陆失败");
+                    $scope.vm.randomNumber = randomNumber(4);
+                    $scope.vm.randomNumberValue = "";
                     //console.log(err)
                 });
             }
