@@ -7,11 +7,11 @@
  */
 
 angular.module('adminModule').controller('userManageController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
 
-    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog) {
+    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore) {
         $state.go("admin.userManage");
-        setCookie("userId","1");
+
         $scope.vm = {
             listData : "",   // table 数据
             getData : getData,
@@ -23,7 +23,7 @@ angular.module('adminModule').controller('userManageController', [
             deleteUser:deleteUser,
             search:search,
             stop:stop,
-            userId:getCookie("userId"),
+            userId:$cookieStore.get("userId"),
 
             //添加用户所需要数据
             userName : "",

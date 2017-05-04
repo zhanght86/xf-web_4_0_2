@@ -8,9 +8,9 @@
  */
 
 angular.module('businessModelingModule').controller('businessConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval,$cookieStore) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             addBusiness : addBusiness,
             editBusiness : editBusiness,
             deleteBusiness:deleteBusiness,
@@ -27,7 +27,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userId"),
+            modifier: $cookieStore.get("userId"),
             term: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",
