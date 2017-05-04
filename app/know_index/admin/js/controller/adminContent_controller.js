@@ -97,7 +97,7 @@ angular.module('adminModule').controller('adminContentController', [
         function addApplication(){
             console.log(getCookie("userId"),$scope.vm.newApplicationName,$scope.vm.newScene,$scope.vm.newLicence,$scope.vm.newDescribe);
             httpRequestPost("/api/application/application/addApplication",{
-                "userId":getCookie("userId"),
+                "userId":$cookieStore.get("userId"),
                 "applicationName": $scope.vm.newApplicationName,
                 "sceneId": $scope.vm.newScene,
                 "applicationLisence": $scope.vm.newLicence,

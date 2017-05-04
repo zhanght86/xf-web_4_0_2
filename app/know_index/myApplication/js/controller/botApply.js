@@ -47,14 +47,15 @@ angular.module('myApplicationModule').controller('botApplyController', [
             reloadBot:reloadBot,
             disableAttributeTypeForApply:disableAttributeTypeForApply,
             repeatCheckForCategory:repeatCheckForCategory,
-            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50"
+            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            responseView:responseView
         };
-        setCookie("categoryApplicationId","360619411498860544");
-        setCookie("categoryModifierId","1");
-        setCookie("categorySceneId","10023");
-        var categoryApplicationId = getCookie("categoryApplicationId");
-        var categoryModifierId = getCookie("categoryModifierId");
-        var categorySceneId = getCookie("categorySceneId");
+        //setCookie("applicationId","360619411498860544");
+        //setCookie("userId","1");
+        //setCookie("sceneId","10023");
+        var categoryApplicationId = getCookie("applicationId");
+        var categoryModifierId = getCookie("userId");
+        var categorySceneId = getCookie("sceneId");
         //加载业务树
         initBot();
         initBotLibrary();
@@ -250,8 +251,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categoryApplicationId": categoryApplicationId,
                 "categoryModifierId": categoryModifierId
             },function(data){
-                if(data.data){
-                    $("#category").empty();
+                if(responseView(data)==true){
                     initBot();
                 }
             },function(err){
@@ -297,7 +297,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         },function(data){
                             if(responseView(data)==true){
                                 //重新加载
-                                reloadBot(data,0);
+                                reloadBot(data,1);
                             }
                         },function(err){
                             console.log(err);

@@ -57,12 +57,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             frameTitleNullErrorInfo:"框架标题为空或超过长度限制50",
             frameTitleRepeatCheck:frameTitleRepeatCheck
         };
-        setCookie("categoryApplicationId","360619411498860544");
-        setCookie("categoryModifierId","1");
-        setCookie("categorySceneId","10023");
-        var categoryApplicationId = getCookie("categoryApplicationId");
-        var categoryModifierId = getCookie("categoryModifierId");
-        var categorySceneId = getCookie("categorySceneId");
+        //setCookie("categoryApplicationId","360619411498860544");
+        //setCookie("categoryModifierId","1");
+        //setCookie("categorySceneId","10023");
+        var categoryApplicationId = getCookie("applicationId");
+        var categoryModifierId = getCookie("userId");
+        var categorySceneId = getCookie("sceneId");
         var params = {
             "categoryName":$("#category-autocomplete").val(),
             "categoryApplicationId":categoryApplicationId
