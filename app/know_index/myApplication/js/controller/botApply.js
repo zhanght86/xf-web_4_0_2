@@ -47,7 +47,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
             reloadBot:reloadBot,
             disableAttributeTypeForApply:disableAttributeTypeForApply,
             repeatCheckForCategory:repeatCheckForCategory,
-            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50"
+            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            responseView:responseView
         };
         setCookie("categoryApplicationId","360619411498860544");
         setCookie("categoryModifierId","1");
@@ -250,8 +251,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categoryApplicationId": categoryApplicationId,
                 "categoryModifierId": categoryModifierId
             },function(data){
-                if(data.data){
-                    $("#category").empty();
+                if(responseView(data)==true){
                     initBot();
                 }
             },function(err){
@@ -297,7 +297,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         },function(data){
                             if(responseView(data)==true){
                                 //重新加载
-                                reloadBot(data,0);
+                                reloadBot(data,1);
                             }
                         },function(err){
                             console.log(err);

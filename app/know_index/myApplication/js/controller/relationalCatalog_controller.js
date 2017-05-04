@@ -288,6 +288,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             },function(data){
                 if(responseView(data)==true){
                     //重新加载
+                    $("#category-name").val('');
                     reloadBot(data,0);
                 }
             },function(err){
