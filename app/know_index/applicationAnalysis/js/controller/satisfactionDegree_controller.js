@@ -10,10 +10,8 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             applicationId :$cookieStore.get("applicationId"),
             getList : getList ,
             listData : null ,   // table 数据
-
             paginationConf : null ,//分页条件
             pageSize : 5  , //默认每页数量
-
             dimensions : [] ,
             channels : [] ,
             channelId  : null ,

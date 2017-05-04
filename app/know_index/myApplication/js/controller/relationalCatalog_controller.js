@@ -4,7 +4,7 @@
  * 控制器
  */
 angular.module('myApplicationModule').controller('relationalCatalogController',[
-    '$scope','localStorageService','$timeout', '$state','$stateParams','ngDialog',function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog) {
+    '$scope','localStorageService','$timeout', '$state','$stateParams','ngDialog','$cookieStore',function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -36,9 +36,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
         //setCookie("categorySceneId","10023");
-        var categoryApplicationId = getCookie("applicationId");
-        var categoryModifierId = getCookie("userId");
-        var categorySceneId = getCookie("sceneId");
+        var categoryApplicationId = $cookieStore.get("applicationId");
+        var categoryModifierId = $cookieStore.get("userId");
+        var categorySceneId = $cookieStore.get("sceneId");
 
         var params = {
             "categoryName":$("#category-autocomplete").val(),
@@ -142,7 +142,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             "categoryName": $("#categoryName").val(),
                             "categoryTypeId": $("#categoryTypeId").val(),
                             "categoryModifierId": categoryModifierId,
-                            "categorySceneId": $scope.vm.categorySceneId,
+                            "categorySceneId": categorySceneId,
                             "categoryLeaf": $scope.vm.categoryLeaf
                         },function(data){
                             if(responseView(data)==true){
@@ -310,7 +310,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 request.categoryPid=$scope.vm.categoryPid;
                 request.categoryAttributeName=$scope.vm.categoryAttributeName;
                 request.categoryName=$("#categoryName").val();
-                request.categorySceneId=$scope.vm.categorySceneId;
+                request.categorySceneId=categorySceneId;
             }else{
                 request.categoryApplicationId=categoryApplicationId;
                 request.categoryPid=$scope.vm.botSelectValue;
@@ -441,7 +441,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.botSelectValue=category.categoryId;
                 $scope.vm.categoryId=category.categoryId;
                 $scope.vm.categoryTypeId=category.categoryTypeId;
-                $scope.vm.categorySceneId=category.categorySceneId;
+                categorySceneId=category.categorySceneId;
                 $scope.vm.categoryName=category.categoryName;
                 $scope.vm.categoryAttributeName=category.categoryAttributeName;
                 $scope.vm.categoryPid=category.categoryPid;

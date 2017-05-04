@@ -5,11 +5,10 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore ) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window ) {
         $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
-        $cookieStore.put("applicationId","360619411498860544");
-        var applicationId = $cookieStore.get("applicationId");
+
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
@@ -50,8 +49,32 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
 
             scan : scan ,   // 点击标题预览
 
-            heighSarch : false
+            heighSarch : false ,
+
+            newKnowledge : 100,
+            jumpToNewKonwledge : jumpToNewKonwledge
         };
+        function jumpToNewKonwledge(id){
+            var addUrl=null;
+            switch(id){
+                case "100" :
+                    addUrl = "knowledgeManagement.faqAdd";
+                    break;
+                case "101":
+                    addUrl = "knowledgeManagement.singleAddConcept";
+                    break;
+                case "102" :
+                    addUrl = "knowledgeManagement.listAdd";
+                    break;
+                case "103" :
+                    addUrl = "knowledgeManagement.factorAdd";
+                    break;
+            }
+            var url = $state.href(addUrl);
+            $window.open(url,'_blank');
+
+        }
+
         napSearch();
         //高级搜索 开关
         $scope.$watch("vm.heighSarch",function(val){
@@ -198,7 +221,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": applicationId,
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 console.log(data);
@@ -213,7 +236,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             var id = angular.element(this).attr("data-option-id");
             $scope.vm.sceneIds.push(id);
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId":applicationId,
+                "categoryApplicationId":$scope.vm.applicationId,
                 "categoryPid": id
             },function(data){
                     angular.forEach(data.data,function(item){
@@ -232,7 +255,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             if(!that.parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     console.log(data);
@@ -284,7 +307,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             //    that.css("backgroundPosition","0% 100%");
             if($(that).children().length==1){
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     console.log(data);

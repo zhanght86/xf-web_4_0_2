@@ -3,15 +3,13 @@
  * 控制器
  */
 angular.module('materialManagement').controller('conceptChatController', [
-    '$scope',"$state","ngDialog","$stateParams",
-    function ($scope,$state,ngDialog,$stateParams) {
+    '$scope',"$state","ngDialog","$stateParams" ,"$cookieStore",
+    function ($scope,$state,ngDialog,$stateParams,$cookieStore) {
         $state.go("materialManagement.conceptChat");
-        setCookie("applicationId","360619411498860544");
-        setCookie("userName","admin1");
         //console.log( $stateParams.scanDataList.extendedQuestionArr[0]);    //edit    -----taglist
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
-            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:getCookie("userName"),
+            applicationId :  $cookieStore.get("applicationId"),
+            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:$cookieStore.get("userName"),
             standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
             extendedQuestionArr : $stateParams.scanDataList?$stateParams.scanDataList.extendedQuestionArr:[],  //扩展问数组
@@ -36,7 +34,7 @@ angular.module('materialManagement').controller('conceptChatController', [
             }else{
                 httpRequestPost("/api/chatKnowledge/checkConceCptChatQuestion",{
                     "chatQuestionContent" : $scope.vm.extendedQuestion,
-                    "applicationId" : 1
+                    "applicationId" :  $scope.vm.applicationId
                 },function(data){
                     console.log(data);
                     //$scope.vm.extendedQuestionArr = data.data;

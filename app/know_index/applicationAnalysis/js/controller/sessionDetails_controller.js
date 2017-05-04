@@ -6,7 +6,6 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
-        setCookie("applicationId","360619411498860544");
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
             scan:scan ,

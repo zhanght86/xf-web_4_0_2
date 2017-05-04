@@ -6,8 +6,8 @@
                 <span class="cn-lable">你曾经路过此地：</span>
                 <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
                 <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-                <span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>
+                <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
+                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
             </div>
             <div class="content_box mb25 ">
                 <h3 class="f22 pl-10 mb15">要素型知识新增</h3>
@@ -65,7 +65,7 @@
                     <!--bot  标题 点击生成  -->
                     <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                         <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT分类：</label>
+                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
                                 <div class="ipt-txt-box L mr-10" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt">
@@ -79,7 +79,7 @@
                     <!--手选生成-->
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                         <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT分类：</label>
+                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div" id="Div">
                                 <div class="ipt-txt-box" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt">
@@ -158,7 +158,6 @@
                                 <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
                                 <div class="essential_factor_div bd mt-10">
-                                    <!--{{vm.tableList}}-->
                                     <div class="mb-10">
                                         <a href="javascript:;" class="add_l ine mr-10" ng-click="vm.addRow()"><img src="../images/ys_img1.png"/></a>
                                         <a href="javascript:;" class="delete_line mr-10" ng-click="vm.tableRemove(1)"><img src="../images/ys_img2.png"/></a>

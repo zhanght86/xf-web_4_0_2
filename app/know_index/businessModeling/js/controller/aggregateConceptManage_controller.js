@@ -6,9 +6,9 @@
  * 控制器
  */
 angular.module('businessModelingModule').controller('aggregateConceptManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",function ($scope,localStorageService, $state,ngDialog,$timeout) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
+            applicationId : $cookieStore.get("applicationId"),
             addCollective : addCollective,
             editCollective : editCollective,
             deleteCollective:deleteCollective,
@@ -25,14 +25,14 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: getCookie("userId"),
+            modifier: $cookieStore.get("userId"),
             term: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:3,
+            current:1,
             percent:"%"
         };
 
@@ -40,7 +40,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        loadCollectiveConceptTable(3);
+        loadCollectiveConceptTable(1);
         //请求列表
         function loadCollectiveConceptTable(current){
             httpRequestPost("/api/modeling/concept/collective/listByAttribute",{

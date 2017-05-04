@@ -5,12 +5,6 @@
 angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
-        $cookieStore.put("userName","admin1");
-        $cookieStore.put("userId","111111");
-        $cookieStore.put("sceneId","1");
-        $cookieStore.put("applicationId","360619411498860544");
-        $cookieStore.put("categoryApplicationId","360619411498860544");
-        var applicationId = $cookieStore.get("categoryApplicationId");
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -225,7 +219,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
             httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -271,7 +265,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var answerContentList = [];
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
-                "applicationId": "100",
+                "applicationId": $scope.vm.applicationId,
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
@@ -297,7 +291,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 return false
             }else{
                 httpRequestPost("/api/marketingKnowledge/checkExtensionQuestion",{
-                    "applicationId": "100",
+                    "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -354,7 +348,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": applicationId,
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
@@ -389,7 +383,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId": $scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
@@ -526,7 +520,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if($scope.vm.title){
                 httpRequestPost("/api/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : "100"
+                    "applicationId" :  $scope.vm.applicationId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
