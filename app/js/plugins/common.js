@@ -23,7 +23,7 @@
 //    aLink.dispatchEvent(evt);
 //}
 function enterEvent(e,callback) {
-    srcObj = e.srcElement ? e.srcElement : e.target;
+    var  srcObj = e.srcElement ? e.srcElement : e.target;
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
         srcObj.blur();
