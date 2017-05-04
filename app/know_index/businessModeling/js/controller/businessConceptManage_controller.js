@@ -31,7 +31,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             key: "" ,
             modifier: getCookie("userName"),
             term: "",
-            weight: "3" ,   //默認權重
+            weight: "31" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
@@ -174,7 +174,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加业务概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="3" ;   //默認權重
+                                $scope.vm.weight="31" ;   //默認權重
                                 addBusinessConceptDialog(singleAddBusinessConcept);
                             }
                         },function(){
@@ -183,7 +183,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  3;
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -204,7 +204,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     }else{
                          $scope.vm.key = "";
                          $scope.vm.term = "";
-                         $scope.vm.weight = 3;
+                         $scope.vm.weight = 33;
                     }
                 }
             });

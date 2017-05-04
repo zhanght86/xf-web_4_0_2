@@ -29,7 +29,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             key: "" ,
             modifier: getCookie("userName"),
             term: "",
-            weight: "3" ,   //默認權重
+            weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
@@ -169,7 +169,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加同义概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="3" ;   //默認權重
+                                $scope.vm.weight="33" ;   //默認權重
                                 addSynonymConceptDialog(singleAddSynonymConcept);
                             }
                         },function(){
@@ -178,7 +178,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight = 3;
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -199,7 +199,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight = 3;
+                        $scope.vm.weight = 33;
                     }
                 }
             });

@@ -29,12 +29,12 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             key: "" ,
             modifier: getCookie("userName"),
             term: "",
-            weight: "3" ,   //默認權重
+            weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
+            current:3,
             percent:"%"
         };
 
@@ -42,7 +42,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        loadCollectiveConceptTable(1);
+        loadCollectiveConceptTable(3);
         //请求列表
         function loadCollectiveConceptTable(current){
             httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
@@ -170,7 +170,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加集合概念";
                                 $scope.vm.term="";
-                                $scope.vm.weight="3" ;   //默認權重
+                                $scope.vm.weight="33" ;   //默認權重
                                 addCollectiveConceptDialog(singleAddCollectiveConcept);
                             }
                         },function(){
@@ -179,7 +179,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -201,7 +201,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  1;
+                        $scope.vm.weight =  33;
                     }
                 }
 
