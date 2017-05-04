@@ -12,7 +12,7 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
-        {{vm.knowledgeData}}
+        <!--{{vm.knowledgeData}}-->
         <ul class="preview pd-30">
             <!--<li>-->
                 <!--&lt;!&ndash;<p><span>知识类目：</span>{{item.sceneName}}</p>&ndash;&gt;-->
@@ -32,7 +32,7 @@
             </li>
             <li class="preview_li pr" >
                 <span class="pa preview_span">知识bot：</span>
-                <i ng-repeat="item in vm.knowledgeData.classificationAndKnowledgeList track by $index">{{item.className.join("/")}}</i>
+                <span ng-repeat="item in vm.knowledgeData.classificationAndKnowledgeList track by $index">{{item.className.join("/")}}<i ng-if="$index!=(vm.knowledgeData.classificationAndKnowledgeList.length-1)">,</i></span>
             </li>
 
             <li class="preview_li pr">
