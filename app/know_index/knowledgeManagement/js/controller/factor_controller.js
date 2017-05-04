@@ -4,7 +4,7 @@
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
-        $cookieStore.put("applicationId","360619411498860544");
+
         var applicationId = $cookieStore.get("applicationId");
         $scope.vm = {
 //主页
