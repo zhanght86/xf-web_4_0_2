@@ -187,15 +187,43 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
         });
 
         //删除知识
+        //function deleteKnowledge(){
+        //    httpRequestPost("/api/application/hotQuestion/deleteHotQuestionByIds",{
+        //        applicationId :  $scope.vm.applicationId,
+        //        ids :  $scope.vm.deleteIds
+        //    },function(data){
+        //        $state.reload();
+        //    },function(){
+        //        layer.msg("请求失败")
+        //    })
+        //}
+
+        //知识删除
         function deleteKnowledge(){
-            httpRequestPost("/api/application/hotQuestion/deleteHotQuestionByIds",{
-                applicationId :  $scope.vm.applicationId,
-                ids :  $scope.vm.deleteIds
-            },function(data){
-                $state.reload();
-            },function(){
-                layer.msg("请求失败")
-            })
+            if($scope.vm.deleteIds == 0){
+                layer.msg("请选择要删除的知识！");
+                return;
+            }
+            var dialog = ngDialog.openConfirm({
+                template : "/know_index/admin/deleteDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback : function(e){
+                    if(e === 1){
+                        httpRequestPost("/api/application/hotQuestion/deleteHotQuestionByIds",{
+                            applicationId :  $scope.vm.applicationId,
+                            ids :  $scope.vm.deleteIds
+                        },function(data){
+                            $state.reload();
+                        },function(){
+                            layer.msg("请求失败")
+                        });
+                    }
+                }
+            });
         }
 
         //查找知识
