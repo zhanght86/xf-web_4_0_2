@@ -205,7 +205,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             applicationId :  $scope.vm.applicationId,
                             ids :  $scope.vm.deleteIds
                         },function(data){
-                            $state.reload();
+                            //$state.reload();
+                            getData(1);
                         },function(){
                             layer.msg("请求失败")
                         });
