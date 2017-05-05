@@ -196,7 +196,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         obj.classificationId = id ;
                         obj.classificationType = 1;
                     }
-                    $scope.vm.knowledgeBotVal = obj.className;
+                    $scope.vm.knowledgeBotVal = obj.className.join("/");
                     $scope.vm.botFullPath=obj ;
                     $scope.$apply()
                 }

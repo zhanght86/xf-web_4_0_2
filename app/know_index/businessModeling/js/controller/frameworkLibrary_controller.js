@@ -234,7 +234,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         }
                         html += '   <a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>'+
                                 '   <img src="../../images/images/libTxt_22.png"/>'+
-                                '   <p>银行邻域业务框架</p>'+
+                                '   <p>银行领域业务框架</p>'+
                                 '   <div>' +
                                 '      <a class="edit" type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' href="javascript:;">'+data.data[i].frameTitle+'</a>' +
                                 '   </div>'+
@@ -1515,7 +1515,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 arr[0]=$(value).val();
                 httpRequestPost("/api/modeling/frame/batchtag",{
                     "extendQuestionList":arr,
-                    "applicationId":categoryApplicationId
+                    "applicationId":"100"
                 },function(data){
                     if(data){
                         if(data.status==200){

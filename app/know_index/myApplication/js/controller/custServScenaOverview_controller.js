@@ -142,7 +142,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
         });
         function keySearch(e){
-                var keycode = window.event?e.keyCode:e.which;
+            console.log(1)
+                var keycode = window.e?e.keyCode:e.which;
                 if(keycode==13){
                     napSearch()
                 }

@@ -184,9 +184,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
 
         //編輯彈框   添加公用
         function addForceSegmentConceptDialog(callback,item){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-               var dialog = ngDialog.openConfirm({
+           var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/intention/intentionConceptManageDialog2.html",
                 scope: $scope,
                 closeByDocument:false,
@@ -202,7 +200,6 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                     }
                 }
             });
-            }
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor()
