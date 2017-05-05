@@ -152,12 +152,12 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="txt-item oh">
+                                        <div class="lable fl">知识类型：</div>
+                                        {{item.knowledgeTypeDetail}}
+                                    </div>
                                 </div>
                                 <div class="csso-info oh">
-                                    <div class="fl">
-                                        <span>知识类型：{{item.knowledgeTypeDetail}}</span>
-                                        <!--<span>知识类目：{{item.sceneName}}</span>-->
-                                    </div>
                                     <div class="fr">
                                         <span>作者：{{item.knowledgeCreator}}</span>
                                         <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd hh:mm:ss'}}</span>

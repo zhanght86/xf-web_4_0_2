@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/28.
  */
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -91,11 +91,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableList: ""
         };
 
-
-
-
+        console.log($stateParams);
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-
+/*
         params =  {
             "applicationId": $scope.vm.applicationId,
             "userId" : $scope.vm.userId ,
@@ -111,7 +109,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         obj.knowledgeContent = getTableParams();
         obj.channelIdList =  $scope.vm.channel;
         obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-
         obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
             obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
@@ -122,17 +119,27 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         params.knowledgeContents =  $scope.vm.scanContent;
         params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
         params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
+    */
 
 
-        
+        //組裝數據   擴展問   content
+        //BOT路径设置为 选择添加                  再次增加判断重复
+        //
+        //标题
+        if(!$stateParams.data){
+            $scope.vm.title =  $stateParams.data.knowledgeBase.knowledgeTitle ;
+            //bot路径
+            $scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.classificationAndKnowledgeList ;
+            //knowledgeId
+            //$scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.knowledgeId ;
+            //扩展问
+            $scope.vm.extensionsByFrame = $stateParams.data.extensionQuestions;
+            //内容
+            $scope.vm.scanContent = $stateParams.data.knowledgeContents;
+            //
+        }
 
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
-
-
-
-
-
-
 
 
 
