@@ -187,10 +187,9 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                 "userId" : $scope.vm.userId //获取用户id
                             },function(data){
                                 if(data.status==200){
-                                    $state.reload();
+                                    listServiceData(1);
                                 }else{
                                     layer.msg("新增发布服务失败");
-                                    $state.reload();
                                 }
                             },function(){
                                 layer.msg("请求失败")
@@ -241,10 +240,9 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                 "serviceId" : $scope.vm.serviceId //服务id
                             },function(data){
                                 if(data.status==200){
-                                    $state.reload();
+                                    listServiceData(1);
                                 }else{
                                     layer.msg("新增发布服务失败");
-                                    $state.reload();
                                 }
                             },function(){
                                 layer.msg("请求失败")
@@ -297,7 +295,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(data){
                 if(data.status==200){
                     layer.msg("发布服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("发布服务失败");
                 }
@@ -313,7 +311,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(data){
                 if(data.status==200){
                     layer.msg("上线服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("上线服务失败");
                 }
@@ -328,7 +326,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(data){
                 if(data.status==200){
                     layer.msg("下线服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("下线服务失败");
                 }
@@ -344,7 +342,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(data){
                 if(data.status==200){
                     layer.msg("重启服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("重启服务失败");
                 }
@@ -360,7 +358,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(data){
                 if(data.status==200){
                     layer.msg("删除服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("删除服务失败");
                 }

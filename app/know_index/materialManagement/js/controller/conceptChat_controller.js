@@ -53,10 +53,12 @@ angular.module('materialManagement').controller('conceptChatController', [
                                     });
                                     if(len!=data.data.length){
                                         lenArr -= 1;
+                                        layer.msg("扩展问题重复，请重新输入");
                                         return false
                                     };
                                 });
                                 if(lenArr != $scope.vm.extendedQuestionArr.length){
+                                    layer.msg("扩展问题重复，请重新输入");
                                     return false
                                 }else{
                                     obj.chatQuestionContent = data.data;

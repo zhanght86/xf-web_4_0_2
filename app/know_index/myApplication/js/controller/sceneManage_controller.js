@@ -160,7 +160,10 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
                 "statusId": item.statusId,
                 "knowledgeTypeId": item.knowledgeTypeId
             },function(data){
-                $state.reload();
+                //$state.reload();
+                layer.msg("更新知识类型成功！");
+                listExchangeMode();
+                listKnowledgeType();
             },function(){
                 layer.msg("请求失败")
             })
@@ -173,6 +176,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
                 "exchangeModeId": item.exchangeModeId
             },function(data){
                 //$state.reload();
+                layer.msg("更新交互方式成功！");
                 listExchangeMode();
                 listKnowledgeType();
                 $("#exchangeMode").click();
