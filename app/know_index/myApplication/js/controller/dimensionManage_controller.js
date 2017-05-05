@@ -91,7 +91,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             applicationId:$scope.vm.applicationId,
                             dimensionId:dimensionId
                         },function(data){
-                            $state.reload()
+                            //$state.reload();
+                            getData(1);
                         },function(){
                             layer.msg("请求失败")
                         })
@@ -158,9 +159,12 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             dimensionNameArray : $scope.vm.newDimensions,
 
                         },function(data){
-                            $state.reload();
+                            //$state.reload();
                             if(data.status == 10002){
                                 layer.msg("维度名称重复，请重新添加！")
+                            }else{
+                                layer.msg("维度添加成功！")
+                                getData(1);
                             }
                         },function(){
                             layer.msg("请求失败")
@@ -202,7 +206,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             dimensionStatusId : $scope.vm.switchTurn,
                             dimensionNameArray : $scope.vm.newDimensions
                         },function(data){
-                            $state.reload()
+                            getData(1);
                         },function(){
                             layer.msg("请求失败")
                         })
