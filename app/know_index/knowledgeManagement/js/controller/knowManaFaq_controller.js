@@ -7,10 +7,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
       //console.log($stateParams);
         $scope.vm = {
-//主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
-
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -29,7 +27,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //生成  BOT
             getCreatBot : getCreatBot,
             //creatBot : [],
-
+            //失去焦点
+            blur:blur,
             botClassfy : [],   //类目
             //creatSelectBot : [], //手选生成 bot
             //扩展问
@@ -56,8 +55,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             dimensions : []
             ,  //所有维度
             dimensionArr : [],  //選擇的維度
-            dimensionsCopy :[]
-            ,
+            dimensionsCopy :[],
+            extensionsArr:[],//校验页面扩展是否重复集合A
+
 
             checkChannelDimension : checkChannelDimension ,
             //高级选项内容
@@ -78,6 +78,25 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             enterEvent : enterEvent
         };
+
+       //标题失去焦点校验标题重复
+        function blur(){
+            httpRequestPost("/api/faqKnowledge/checkKnowledgeTitle",{
+                "title":$scope.vm.title,
+                "applicationId" : $scope.vm.applicationId
+            },function(data){
+            console.log(data);
+            if(data.status == 500) {
+                if (data.data == 10002) {
+                    $scope.vm.titleTip = "标题重复";
+                }
+                // $scope.vm.titleTip = data.info;
+                $scope.$apply()
+            }else{
+
+             }
+            });
+        }
         checkState();  //判断 是否是预览页面的修改添加
         function checkState(){
             var data = $stateParams.data
@@ -207,12 +226,14 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //添加扩展问
         function getExtension(title,weight){
             var obj = {} ;
+
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
-            console.log(checkExtension(obj , $scope.vm.extensions));
+            $scope.vm.extensionsArr.push($scope.vm.extensionTitle);
+            console.log( $scope.vm.extensionsArr)
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
-            }else if(checkExtension(obj , $scope.vm.extensionTitle)){
+            }else if(!checkExtension(obj ,  $scope.vm.extensionsArr)){
                 layer.msg("扩展问重复");
                 return false
             }else{
@@ -223,6 +244,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         layer.msg("扩展问重复")
                     }else if(data.status==200){
                         $scope.vm.extensions.push(obj);
+
                         console.log(obj);
                         $scope.$apply()
                     }
@@ -418,7 +440,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
-                        $scope.vm.titleTip = data.info;
+                       if(data.data==10002){
+                           $scope.vm.titleTip = "标题重复";
+                       }
+                       // $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     }else{
                         $scope.vm.botClassfy = [] ;
@@ -570,7 +595,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
-            if(!arr.length){
+            console.log(arr)
+            if(arr.length==1){
 
                 return true ;
             }else{
@@ -585,6 +611,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 //        提交 检验参数
         function checkSave(){
             var params = getParams();
+            if($scope.vm.titleTip!=""){
+                layer.msg($scope.vm.titleTip);
+                return false;
+            }
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false

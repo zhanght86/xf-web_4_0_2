@@ -4,8 +4,6 @@
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
-
-        var applicationId = $cookieStore.get("applicationId");
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -25,7 +23,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
             timeFlag : "启用",
-
             //生成  知识标题 打标生成 BOT
             getBotByTitle : getBotByTitle,
             //creatBot : [],
@@ -93,6 +90,53 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             dialogExtension : [],
             tableList: ""
         };
+
+
+
+
+        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
+
+        params =  {
+            "applicationId": $scope.vm.applicationId,
+            "userId" : $scope.vm.userId ,
+            "sceneId" : $scope.vm.sceneId ,
+            "knowledgeTitle": $scope.vm.title,      //知识标题
+            "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
+            "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
+            "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
+        };
+        var title = angular.copy($scope.vm.newTitle);
+        scanCotentByTitle(title) ;
+        var obj = {};
+        obj.knowledgeContent = getTableParams();
+        obj.channelIdList =  $scope.vm.channel;
+        obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+
+        obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+            obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+        obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
+        obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+        $scope.vm.scanContent=[];
+        $scope.vm.scanContent.push(obj);
+        params.knowledgeContents =  $scope.vm.scanContent;
+        params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
+        params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
+
+
+        
+
+        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+
+
+
+
+
+
+
+
+
+
         function tableChange(row, col ,val){
             console.log($scope.vm.tableList);
             console.log(val);
@@ -513,7 +557,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
-                "categoryApplicationId": applicationId,
+                "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
@@ -548,7 +592,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
@@ -692,7 +736,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
 
-           obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+            obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent=[];
             $scope.vm.scanContent.push(obj);
             params.knowledgeContents =  $scope.vm.scanContent;
