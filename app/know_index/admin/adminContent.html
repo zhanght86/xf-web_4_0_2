@@ -1,5 +1,7 @@
 <div class="wrap" >
-    <h4 class="pt-10 pb-10"><img src="../../images/images/u13.png" width="30" height="30" />我的应用</h4>
+    <h4 class="pt-20 pb-20"><img src="../../images/u15.png" width="25" height="25" />
+        <b class="f16 pl-5 pt-5" style="color:green;">我的应用</b>
+    </h4>
     <div class="p20 my_appbox cl mb-20">
         <div class="L">
             <div class="mb-10">用户名称： {{vm.userName}}</div>
@@ -12,24 +14,24 @@
         </div>
         <div class="R">
             <div ng-click="vm.addApplicationWindow()" style="cursor: pointer">
-                <img src="../../images/images/u24.png" width="50" height="50" />
+                <img src="../../images/u25.png" width="50" height="50" />
                 <p class="mt-10">新建应用</p>
             </div>
         </div>
     </div>
     <div class="application_box cl">
-        <div class="L text-c application_box_list" ng-repeat="application in vm.myApplication">
+        <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication">
             <a ui-sref="setting.Infor" >
-                <img ng-if="application.statusId==40001" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../images/images/u33.png" width="150" height="150"/>
-                <img ng-if="application.statusId==40002" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/images/u46.png" width="150" height="150"/>
-                <img ng-if="application.statusId==40003" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/images/u33.png" width="150" height="150"/>
+                <img ng-if="application.statusId==40001" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../images/marketing.png" width="80" height="80"/>
+                <img ng-if="application.statusId==40002" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/cust_service.png" width="80" height="80"/>
+                <img ng-if="application.statusId==40003" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/images/u33.png" width="80" height="80"/>
             </a>
             <div class="p10 mb-10 bd_bot" >
                 <p class="name">{{application.applicationName}}</p>
                 <p class="scene" ng-repeat="licence in vm.selectLicence"
                    ng-if="application.sceneId==licence.sceneId">场景类型：<span>{{licence.sceneName}}</span></p>
                     <p class="status">应用状态：
-                        <span ng-if="application.statusId==40001" class="c-blue">未使用</span>
+                        <span ng-if="application.statusId==40001" class="c-orange">未使用</span>
                         <span ng-if="application.statusId==40002" class="c-primary">使用中</span>
                         <span ng-if="application.statusId==40003" class="c-error">已停用</span>
                     </p>
@@ -39,9 +41,7 @@
     </div>
 </div>
 <style>
-    .application_box_list{
-        margin-left: 100px;
-    }
+    .application_box{background:#fff;padding:20px 10px;}
     .application_box_list .describe{
         width: 200px;
         text-align: left;
@@ -50,5 +50,6 @@
     .application_box_list .status .c-blue{
         color:lightblue;
     }
+    .application_box_list{padding:10px;box-sizing:border-box;}
     
 </style>

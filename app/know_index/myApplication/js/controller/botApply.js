@@ -661,7 +661,13 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
                             var obj = $(value).parent().parent().next();
-                            var sty = styleSwitch(data.data[0].categoryTypeId,1,data.data[0].categoryAttributeName);
+                            var nodeType = "edge";
+                            if(data.data[0].categoryAttributeName=="node"){
+                                nodeType = "edge";
+                            }else if(data.data[0].categoryAttributeName=="edge"){
+                                nodeType = "node";
+                            }
+                            var sty = styleSwitch(data.data[0].categoryTypeId,1,nodeType);
                             sty = sty.substring(7,sty.length-1);
                             console.log("===="+sty);
                             console.log("====obj===="+obj);

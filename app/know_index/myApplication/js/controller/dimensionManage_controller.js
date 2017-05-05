@@ -53,6 +53,10 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 applicationId:$scope.vm.applicationId
             },function(data){
               console.log(data);
+                if(data.status == 10005){
+                    layer.msg("查询到记录为空！");
+                    return;
+                }
                 $scope.vm.listData = data.data.dimensionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
@@ -122,8 +126,9 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                     if (data.status == 10005) {
                         $scope.vm.listData = "";
                         $scope.vm.listDataTotal = 0;
-                        layer.msg("没有查询到记录!")
-                        $scope.$apply()
+                        layer.msg("没有查询到记录!");
+                        $scope.$apply();
+                        return;
                     }
                     $scope.vm.listData = data.data.dimensionList;
                     $scope.vm.listDataTotal = data.data.total;

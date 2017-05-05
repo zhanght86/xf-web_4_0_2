@@ -351,7 +351,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
-                //console.log(data);
+                console.log(data);
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
@@ -375,7 +375,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
             }
-        };
+        }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'.icon-jj',function(){
             var id = $(this).attr("data-option");

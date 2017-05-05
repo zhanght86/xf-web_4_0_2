@@ -20,7 +20,7 @@ knowledge_static_web.directive("gatewayMenu", function () {
     }
 });
 
-knowledge_static_web.directive('plupload', ['$timeout', function ($timeout) {
+knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function ($timeout,$cookieStore) {
     return {
         restrict: 'A',
         link: function ($scope, iElm, iAttrs, controller) {
@@ -51,7 +51,7 @@ knowledge_static_web.directive('plupload', ['$timeout', function ($timeout) {
                                 templateId:$scope.targetId,
                                 requestId:"String",
                                 //设置用户信息
-                                userId:"testuser"
+                                userName: $cookieStore.get("userName")
 
                             };
                             if ($scope.processMethod == true) {

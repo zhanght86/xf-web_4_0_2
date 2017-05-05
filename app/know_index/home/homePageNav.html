@@ -39,19 +39,20 @@
                 <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
-                        <a ui-sref="custServScenaOverview.manage">
+                        <a  ng-if="vm.sceneId==1" ui-sref="custServScenaOverview.manage">
+                            <i class="icon-nav icon-nav__icon-nav_zszl"></i>
+                            <span>知识总览</span>
+                        </a>
+
+                        <!--营销型-->
+                        <a  ng-if="vm.sceneId==2" ui-sref="markServScenaOverview.manage">
                             <i class="icon-nav icon-nav__icon-nav_zszl"></i>
                             <span>知识总览</span>
                         </a>
                         <!--营销型-->
-                        <!--<a ui-sref="markServScenaOverview.manage">-->
-                            <!--<i class="icon-nav icon-nav__icon-nav_zszl"></i>-->
-                            <!--<span>知识总览</span>-->
-                        <!--</a>-->
-                        <!--营销型-->
                     </li>
                     <li ng-if="vm.sceneId==2">
-                        <a ui-sref="knowledgeManagement.ConceptAdd">
+                        <a ui-sref="knowledgeManagement.conceptAdd">
                             <i class="icon-nav icon-nav__icon-nav_zszl"></i>
                             <span>营销知识新增</span>
                         </a>
