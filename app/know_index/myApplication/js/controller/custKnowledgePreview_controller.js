@@ -8,20 +8,6 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
-        //"364180924750893056"
-
-//        概念：
-//知识id：
-//377253294751354880
-//        应用id：
-//377165362136875008
-//
-//        列表：
-//知识id：
-//377255238807064576
-//        应用id：
-//377165362136875008
-
         if(!$stateParams.scanKnowledge){
                 $state.go("custServScenaOverview.manage")
         }else{
@@ -61,6 +47,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 }, function(error) {
                 });
             //修改
+            console.log($stateParams.scanKnowledge.knowledgeType);
             var editUrl,api;
             switch($stateParams.scanKnowledge.knowledgeType){
                 case 100 :
@@ -89,8 +76,16 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
+                    if($stateParams.scanKnowledge.knowledgeType == 103){
+                        var data = data.data ;
+                        var table = data.knowledgeContents[0].knowledgeTable ;
+                        data.knowledgeContents[0].knowledgeContent = table;
+                        delete data.knowledgeContents[0].knowledgeTable;
+                        $scope.vm.listData = data;
+                    }else{
+                        $scope.vm.listData = data.data;
+                    }
                     console.log(data);
-                    $scope.vm.listData = data.data;
                     $scope.$apply();
                 },function(){
                     layer.msg("获取失败")

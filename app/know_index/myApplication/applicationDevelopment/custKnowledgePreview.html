@@ -22,20 +22,29 @@
             </li>
             <li>
 
-                <div class="knowContent">
-                    <span>知识内容：</span>
-                    <div class="PreviewRight" ng-repeat="item in vm.listData.knowledgeContents track by $index">
-                        <p>内容 {{$index+1 | numberToWord}}</p>
-                        <div>
+                <div class="knowContent" ng-repeat="item in vm.listData.knowledgeContents track by $index">
+                    <span ng-class="$index==0?'mileVs':''">知识内容：</span>
+                    <div class="PreviewRight" >
+                        <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
+                        <div  ng-if="vm.knowledgeType!=103">
                             <p>{{item.knowledgeContent}}</p>
                             <!--<p><i>渠道：</i>  <span ng-repeat="val in item.channelId">{{val | channel:vm.channels}}</span></p>-->
                             <!--<p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionId">{{val | dimension:vm.dimensions}}</span></p>-->
                             <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
                             <span>&nbsp;</span>
                         </div>
+                        <div ng-if="vm.knowledgeType==103">
+                                <table class="essential_factor_tab">
+                                    <tr ng-repeat="(indexRow,row) in item.knowledgeContent.listTable track by $index">
+                                        <td ng-repeat="(indexColumn,item) in row track by $index">
+                                            {{item}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            <span>&nbsp;</span>
+                        </div>
                     </div>
                 </div>
-
                 <!--<div class="knowContent">-->
                     <!--<span>知识内容：</span>-->
                     <!--<div class="PreviewRight">-->
