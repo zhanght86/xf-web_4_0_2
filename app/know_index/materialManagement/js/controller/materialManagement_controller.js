@@ -4,11 +4,11 @@
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
-    '$scope',"$state", function ($scope,$state) {
+    '$scope',"$state", "$cookieStore",
+    function ($scope,$state,$cookieStore) {
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
-            applicationId : getCookie("applicationId"),
-
+            applicationId : $cookieStore.get("applicationId"),
             title : "" ,           //知识标题
             search : search,  //查询
             seeDtails:seeDtails,//标题预览
@@ -50,6 +50,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         $scope.$watch("vm.searchHeighFlag",function(val){
             if(val){
                 $('.advanced_search').slideDown();
+
             }else{
                 $('.advanced_search').slideUp();
             }
@@ -96,7 +97,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $scope.vm.getType = 0 ;
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
-                "index" :index==1?0:$scope.vm.pageSize*index,
+                "index" :(index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
               $scope.vm.listData = data.data.objs;

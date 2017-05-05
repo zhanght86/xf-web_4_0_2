@@ -119,7 +119,7 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                                 },function(data){
                                     if(data.status==200){
                                         layer.msg("关联成功");
-                                        $state.reload();
+                                        listApplicationServiceData(1);
                                     }else{
                                         layer.msg("关联出错了");
                                     }
@@ -154,7 +154,7 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                             },function(data){
                                 if(data.status==200){
                                     layer.msg("取消关联成功");
-                                    $state.reload();
+                                    listApplicationServiceData(1);
                                 }else{
                                     layer.msg("取消关联出错了");
                                 }

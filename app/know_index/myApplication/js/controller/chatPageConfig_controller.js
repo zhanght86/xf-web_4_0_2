@@ -188,14 +188,31 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //删除知识
         function deleteKnowledge(){
-            httpRequestPost("/api/application/hotQuestion/deleteHotQuestionByIds",{
-                applicationId :  $scope.vm.applicationId,
-                ids :  $scope.vm.deleteIds
-            },function(data){
-                $state.reload();
-            },function(){
-                layer.msg("请求失败")
-            })
+            if($scope.vm.deleteIds == 0){
+                layer.msg("请选择要删除的知识！");
+                return;
+            }
+            var dialog = ngDialog.openConfirm({
+                template : "/know_index/admin/deleteDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback : function(e){
+                    if(e === 1){
+                        httpRequestPost("/api/application/hotQuestion/deleteHotQuestionByIds",{
+                            applicationId :  $scope.vm.applicationId,
+                            ids :  $scope.vm.deleteIds
+                        },function(data){
+                            //$state.reload();
+                            getData(1);
+                        },function(){
+                            layer.msg("请求失败")
+                        });
+                    }
+                }
+            });
         }
 
         //查找知识
@@ -231,7 +248,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -244,7 +262,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -258,7 +277,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -281,7 +301,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
                             console.log(data);
-                            $state.reload();
+                            //$state.reload();
+                            getData(1);
                             if(data.status == 10012){
                                 layer.msg("该知识已经存在,请重新添加!")
                             }

@@ -166,7 +166,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                                     layer.msg("添加出错了！");
                                 }else{
                                     layer.msg("添加成功");
-                                    $state.reload()
+                                    //$state.reload();
+                                    listChannelData(1);
                                 }
                             }
                         },function(){
@@ -232,7 +233,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 }else{
                     if(data.data==10000){
                         layer.msg("编辑成功");
-                        $state.reload()
+                        //$state.reload();
+                        listChannelData(1);
                     }else{
                         layer.msg("编辑失败")
                     }
@@ -249,7 +251,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             },function(data){
                 if(data.data==10000){
                     layer.msg("删除成功");
-                    $state.reload()
+                    //$state.reload();
+                    listChannelData(1);
                 }else{
                     layer.msg("删除失败")
                 }
@@ -265,7 +268,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             },function(data){
                 if(data.data===10000){
                     layer.msg("状态修改成功");
-                    $state.reload()
+                    //$state.reload();
+                    listChannelData(1);
                 }else{
                     layer.msg("状态修改失败")
                 }
@@ -308,7 +312,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                                         "channelId": $scope.vmo.channelId.channelId
                                     },function(data){
                                         layer.msg("添加成功");
-                                        $state.reload()
+                                        //$state.reload();
+                                        listBlackListData(1);
                                     },function(){
                                         layer.msg("添加失敗");
                                         $scope.vmo.blackListIdentify = "";
@@ -336,7 +341,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 "blackListId": blackListId
             },function(data){
                 layer.msg("移除成功");
-                $state.reload()
+                //$state.reload();
+                listBlackListData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -349,7 +355,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             },function(data){
                 if(data.data===10000){
                     layer.msg("移除成功");
-                    $state.reload()
+                    //$state.reload();
+                    listBlackListData(1);
                 }else{
                     layer.msg("移除失败");
                 }

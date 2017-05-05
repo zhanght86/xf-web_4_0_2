@@ -150,7 +150,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                             },function(data){
                                 if(data.status==200){
                                     layer.msg("编辑成功");
-                                    $state.reload();
+                                    listNodeData(1);
                                 }else{
                                     layer.msg("编辑出错了");
                                 }
@@ -195,7 +195,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                             },function(data){
                                 if(data.status==200){
                                     layer.msg("添加成功");
-                                    $state.reload();
+                                    listNodeData(1);
                                 }else{
                                     layer.msg("添加出错了！");
                                 }
@@ -261,7 +261,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             },function(data){
                 if(data.status==200){
                     layer.msg(data.info);
-                    $state.reload()
+                    listNodeData(1);
                 }else{
                     layer.msg("操作失败");
                 }
@@ -278,7 +278,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             },function(data){
                 if(data.status==200){
                     layer.msg("删除节点成功");
-                    $state.reload()
+                    listNodeData(1);
                 }else{
                     layer.msg("删除节点失败");
                 }
