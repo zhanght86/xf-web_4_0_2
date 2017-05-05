@@ -83,7 +83,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(data){
                 if(data.status==200){
                     layer.msg("发布服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("发布服务失败");
                 }
@@ -99,7 +99,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(data){
                 if(data.status==200){
                     layer.msg("上线服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("上线服务失败");
                 }
@@ -114,7 +114,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(data){
                 if(data.status==200){
                     layer.msg("下线服务成功");
-                    $state.reload()
+                    listServiceData(1);
                 }else{
                     layer.msg("下线服务失败");
                 }
@@ -130,7 +130,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(data){
                 if(data.status==200){
                     layer.msg("重启服务成功");
-                    $state.reload();
+                    listServiceData(1);
                 }else{
                     layer.msg("重启服务失败");
                 }
@@ -224,7 +224,8 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(data){
                 if(data.status==200){
                     layer.msg("下线所有服务成功");
-                    $state.reload();
+                    listServiceData(1);
+                    findApplicationInfo(); //查看应用的基本信息
                 }else{
                     layer.msg("下线所有服务失败")
                 }

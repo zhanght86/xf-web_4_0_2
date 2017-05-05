@@ -192,7 +192,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 applicationId :  $scope.vm.applicationId,
                 ids :  $scope.vm.deleteIds
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -231,7 +232,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -244,7 +246,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -258,7 +261,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
             },function(data){
-                $state.reload();
+                //$state.reload();
+                getData(1);
             },function(){
                 layer.msg("请求失败")
             })
@@ -281,7 +285,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
                             console.log(data);
-                            $state.reload();
+                            //$state.reload();
+                            getData(1);
                             if(data.status == 10012){
                                 layer.msg("该知识已经存在,请重新添加!")
                             }
