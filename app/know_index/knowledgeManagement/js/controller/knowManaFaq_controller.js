@@ -9,6 +9,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
+            userId : $cookieStore.get("userId") ,
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -475,7 +476,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-                "knowledgeCreator": $scope.vm.userName, //创建人
+                "knowledgeCreator": $scope.vm.userId, //创建人
                 "knowledgeUpdater": $scope.vm.userName, //操作人
                 "knowledgeType": 100  //知识类型
             };
