@@ -20,42 +20,46 @@
                             <li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>
                         </ul>
                     </div>
-                    <div class="L mr-10 pr">
-                        <div class="clearfix">
-                            <input class="input_text L mr-10" ng-model="vm.chatKnowledgeTopic" type="text" placeholder="请输入知识标题" >
-                            <button class="btn1 btn1_blue L mr-10" ng-click="vm.search(1)">查找</button>
-                            <button class="L btn se-search-btn advanced_sear_btn" style="border: 1px solid #3ea9fb;" ng-click="vm.searchHeighFlag=!vm.searchHeighFlag">高级查找</button>
-                        </div>
-
-
-                        <div class="advanced_search bd" >
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">知识内容:</span>
-                                <input type="text" ng-model="vm.chatQuestionContent" class="input_text"/>
+                    <div class="R">
+                        <div class="L mr-10 pr">
+                            <div class="clearfix">
+                                <input class="input_text L mr-10" ng-model="vm.chatKnowledgeTopic" type="text" placeholder="请输入知识标题" >
+                                <button class="btn1 btn1_blue L mr-10" ng-click="vm.search(1)">查找</button>
+                                <button class="L btn se-search-btn advanced_sear_btn" style="border: 1px solid #3ea9fb;" ng-click="vm.searchHeighFlag=!vm.searchHeighFlag">高级查找</button>
                             </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">更新时间:</span>
-                                <div>
-                                    <label class="mr-10"><input name="time" ng-click="vm.selectTimeType(1)" type="radio"/>近三天</label>
-                                    <label class="mr-10"><input name="time" ng-click="vm.selectTimeType(2)" type="radio"/>近七天</label>
-                                    <label><input name="time" ng-click="vm.selectTimeType(3)" type="radio"/>近一月</label>
+                            <div class="advanced_search bd" >
+                                <div class="framework mb-10" style="padding-left: 85px;">
+                                    <span class="framework_s">知识内容:</span>
+                                    <input type="text" ng-model="vm.chatQuestionContent" class="input_text"/>
+                                </div>
+                                <div class="framework mb-10" style="padding-left: 85px;">
+                                    <span class="framework_s">更新时间:</span>
+                                    <div>
+                                        <label class="mr-10"><input name="time"  type="radio"/>不限</label>
+                                        <label class="mr-10"><input name="time" ng-click="vm.selectTimeType(1)" type="radio"/>近三天</label>
+                                        <label class="mr-10"><input name="time" ng-click="vm.selectTimeType(2)" type="radio"/>近七天</label>
+                                        <label><input name="time" ng-click="vm.selectTimeType(3)" type="radio"/>近一月</label>
+                                    </div>
+                                </div>
+                                <div class="framework mb-10" style="padding-left: 85px;">
+                                    <span class="framework_s">作者:</span>
+                                    <input type="text" ng-model="vm.chatKnowledgeModifier" class="input_text"/>
+                                </div>
+                                <div class="tc">
+                                    <input type="button" class="btn1 btn1_blue" ng-click="vm.search()" value="高级搜索" style="width:100px;"/>
                                 </div>
                             </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">作者:</span>
-                                <input type="text" ng-model="vm.chatKnowledgeModifier" class="input_text"/>
-                            </div>
-                            <div class="tc">
-                                <input type="button" class="btn1 btn1_blue" ng-click="vm.search()" value="高级搜索" style="width:100px;"/>
-                            </div>
                         </div>
+                        <button class="btn1 R btn_delete  mr-20" ng-click="vm.delKnowledge()">刪除</button>
                     </div>
-                    <button class="btn1 R btn_delete  mr-20" ng-click="vm.delKnowledge()">刪除</button>
                 </div>
                 <div class="clearfix csso-bd bd pl-20 pr-20 mt-30" style="min-height:400px;">
                     <ul class="csso-lsit">
                         <li ng-if="vm.listData" ng-repeat="item in vm.listData">
-                            <div class="mb-10"><input type="checkbox" style="margin:0 3px" ng-click="vm.getDel($event,item.chatKnowledgeId)"/><a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.chatKnowledgeTopic}}</a></div>
+                            <div class="mb-10">
+                                <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>
+                                <a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.chatKnowledgeTopic}}</a>
+                            </div>
                             <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>
                             <div class="cl">
                                 <div class="L">
@@ -94,4 +98,6 @@
         $('.chat_add_p').html(str);
         $(this).parent().parent().hide();
     });
+
+
 </script>

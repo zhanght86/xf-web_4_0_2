@@ -50,6 +50,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         $scope.$watch("vm.searchHeighFlag",function(val){
             if(val){
                 $('.advanced_search').slideDown();
+
             }else{
                 $('.advanced_search').slideUp();
             }

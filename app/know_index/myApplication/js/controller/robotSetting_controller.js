@@ -252,7 +252,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 },function(data){
                     if(data.status===200){
                         layer.msg("保存成功");
-                        $state.reload()
+                        //$state.reload();
                     }else{
                         layer.msg("保存失敗");
                     }
@@ -280,7 +280,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             },function(data){
                 if(data.status===200){
                     layer.msg("保存成功");
-                    $state.reload()
+                    //$state.reload();
                 }else{
                     layer.msg("保存失敗");
                 }
