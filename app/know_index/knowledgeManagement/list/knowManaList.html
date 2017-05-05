@@ -75,7 +75,7 @@
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
+                                <a href="javascript:;" class="L mr-10 mt-5"  ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -156,11 +156,13 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">
                             <div class="clearfix mb-10">
                                 <p class="mb-10 f-16">肯定回答:</p>
+                                <!--{{vm.newTitle}}-->
                                 <textarea class="word_div bd" ng-model="vm.newTitle" placeholder="#违禁品#是违禁物品，不可以带上飞机"></textarea>
                             </div>
                             <div class="clearfix mb-10">
                                 <p class="mb-10 f-16">否定回答:</p>
-                                <textarea class="word_div bd" ng-modle="vm.knowledgeContentNegative" placeholder=" #违禁品#是违禁物品，不可以带上飞机"></textarea>
+                                <!--{{vm.knowledgeContentNegative}}-->
+                                <textarea class="word_div bd" ng-model="vm.knowledgeContentNegative" placeholder=" #违禁品#是违禁物品，不可以带上飞机"></textarea>
                             </div>
                             <div class="channel_div  mb-10">
                                 <span class="channel_s">渠道：</span>
