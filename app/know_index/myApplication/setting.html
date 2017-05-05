@@ -12,7 +12,7 @@
     <div class="page-lrcont210 clearfix bgwhite mt10">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                <img class="hd-img" src="../../images/images/poto.png"/>
+                <img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>
                 <span class="hd-name ellipsis">长沙银行机器人</span>
             </div>
             <div class="aside-nav aside-nav2">
@@ -49,25 +49,25 @@
                         </a>
                         <ul class="menu_1">
                             <li>
-                                <a class="ellipsis" ui-sref="setting.robot"><span>机器人设置</span></a>
+                                <a class="ellipsis" ui-sref=".robot"><span>机器人设置</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" ui-sref="setting.parameter"><span>参数设置</span></a>
+                                <a class="ellipsis" ui-sref=".parameter"><span>参数设置</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" ui-sref="setting.chatPageConfig"><span>聊天页面配置</span></a>
+                                <a class="ellipsis" ui-sref=".chatPageConfig"><span>聊天页面配置</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" ui-sref="setting.sceneManage"><span>场景管理</span></a>
+                                <a class="ellipsis" ui-sref=".sceneManage"><span>场景管理</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" ui-sref="setting.dimension"><span>维度管理</span></a>
+                                <a class="ellipsis" ui-sref=".dimension"><span>维度管理</span></a>
                             </li>
                             <li>
-                                <a class="ellipsis" ui-sref="setting.channel"><span>渠道管理</span></a>
+                                <a class="ellipsis" ui-sref=".channel"><span>渠道管理</span></a>
                             </li>
                             <li ng-if="vm.sceneId==2">
-                                <a class="ellipsis" ui-sref="setting.association"><span>关联管理</span></a>
+                                <a class="ellipsis" ui-sref=".association"><span>关联管理</span></a>
                             </li>
                         </ul>
                     </li>

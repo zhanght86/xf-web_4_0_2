@@ -246,14 +246,39 @@ angular.module('adminModule').controller('userManageController', [
         }
 
         //批量删除用户
+        //function deleteUsers(){
+        //    httpRequestPost("/api/user/deleteUserByIds",{
+        //        ids :  $scope.vm.deleteIds
+        //    },function(data){
+        //        $state.reload();
+        //    },function(){
+        //        layer.msg("请求失败")
+        //    })
+        //}
+
+        //批量删除用户
         function deleteUsers(){
-            httpRequestPost("/api/user/deleteUserByIds",{
-                ids :  $scope.vm.deleteIds
-            },function(data){
-                $state.reload();
-            },function(){
-                layer.msg("请求失败")
-            })
+            if($scope.vm.deleteIds == 0){
+                layer.msg("请您选择要删除的用户！");
+                return;
+            }
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/deleteDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback : function(e){
+                    httpRequestPost("/api/user/deleteUserByIds",{
+                        ids :  $scope.vm.deleteIds
+                    },function(data){
+                        $state.reload();
+                    },function(){
+                        layer.msg("请求失败")
+                    })
+                }
+            });
         }
 
         //改变用户状态

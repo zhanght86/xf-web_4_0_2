@@ -18,7 +18,14 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
             isSlide : isSlide,
             isSlide2 : isSlide2,
             sceneId : $cookieStore.get('sceneId'),
+            applicationId: $cookieStore.get("applicationId"),
+
+            robotHead : "",//头像
+            imgUrl : "", //文件服务器地址
         };
+
+        //获取应用的头像
+        findRobotHead();
 
         function isSlide(event){
             var self=event.target;
@@ -36,6 +43,24 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
                 $(self).addClass("slideActive").parent().next(".menu_1").stop().slideToggle();
             }
 
+        }
+
+        //获取应用的头像
+        function findRobotHead(){
+            httpRequestPost("/api/application/application/findRobotSetting",{
+                "applicationId": $scope.vm.applicationId
+            },function(data){          //类名重複
+                if(data.data===10005){
+                    $scope.vm.robotHead= "";//头像
+                    $scope.vm.imgUrl =""; //文件服务器地址
+                }else{
+                    $scope.vm.robotHead= data.data.robotHead;//头像
+                    $scope.vm.imgUrl = data.data.imgUrl; //文件服务器地址
+                    $scope.$apply();
+                }
+            },function(){
+                layer.msg("获取头像失敗");
+            })
         }
     }
 ]);
