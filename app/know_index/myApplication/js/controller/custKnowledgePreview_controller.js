@@ -11,7 +11,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
         if(!$stateParams.scanKnowledge){
                 $state.go("custServScenaOverview.manage")
         }else{
-            console.log($stateParams.scanKnowledge);
+            //console.log($stateParams.scanKnowledge);
             $scope.vm = {
                 applicationId :$cookieStore.get("applicationId"),
                 knowledgeId : $stateParams.scanKnowledge.knowledgeId,        //del
@@ -82,6 +82,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                         data.knowledgeContents[0].knowledgeContent = table;
                         delete data.knowledgeContents[0].knowledgeTable;
                         $scope.vm.listData = data;
+                        console.log(data)
                     }else{
                         $scope.vm.listData = data.data;
                     }

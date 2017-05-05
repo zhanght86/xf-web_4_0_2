@@ -14,39 +14,28 @@
                 <span class="hd-name ellipsis">长沙银行机器人</span>
             </div>
             <div class="aside-nav aside-navn">
-                <ul>
-                    <li class="type1">
+                <ul class="">
+                    <li class="type1" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
                         <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj  ngBotAdd"></i>
-                            <!--<i class="icon-ngJj"></i>-->
-                            <span>分属性展开</span>
+                            <i class="icon-jj ngBotAdd" data-option-id="{{item.categoryId}}"></i>
+                            <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
                         </a>
-                        <ul class="menu_1">
-                            <li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
-                                <a class="slide-a ellipsis" href="javascript:;">
-                                    <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                                    <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
-                                    <i class="icon-r icon-jt"></i>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-
-                    <li class="type2">
-                        <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj  ngBotAdd"></i>
-                            <span>分业务展开</span>
-                        </a>
-                        <ul class="menu_1">
-                            <li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
-                                <a class="slide-a ellipsis" href="javascript:;">
-                                    <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                                    <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
-                                    <i class="icon-r icon-jt"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="type2">-->
+                        <!--<a class="slide-a ellipsis" href="javascript:;">-->
+                            <!--<i class="icon-jj  ngBotAdd"></i>-->
+                            <!--<span>分业务展开</span>-->
+                        <!--</a>-->
+                        <!--<ul class="menu_1">-->
+                            <!--<li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">-->
+                                <!--<a class="slide-a ellipsis" href="javascript:;">-->
+                                    <!--&lt;!&ndash;<i class="icon-jj" data-option="{{item.categoryId}}"></i>&ndash;&gt;-->
+                                    <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
+                                    <!--<i class="icon-r icon-jt"></i>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <!--<li ng-repeat="item in vm.botRoot">-->
                         <!--<a class="slide-a ellipsis" href="javascript:;">-->
                             <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->

@@ -58,6 +58,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
 // 时间   1   仅三天   2  近七天   3  近一个月
         function search(index){
             $scope.vm.getType = 1;
+            console.log($scope.vm.chatQuestionContent);
             httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
