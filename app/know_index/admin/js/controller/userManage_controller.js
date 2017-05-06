@@ -136,7 +136,7 @@ angular.module('adminModule').controller('userManageController', [
                             //刷新页面
                             $state.reload()
                             if(data.status == 10009){
-                                layer.msg("数据重复!")
+                                layer.msg("该用户已经存在，请重新添加!")
                             }
                         },function(){
                             layer.msg("请求失败")
