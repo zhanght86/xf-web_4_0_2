@@ -168,7 +168,12 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             }
                         },function(){
                             layer.msg("请求失败")
-                        })
+                        });
+
+                        //添加成功，清空数据
+                        $scope.vm.newDimensions = [];
+                        $scope.vm.dimension = "";
+                        $scope.vm.getDimensionVal = "";
                     }else{
                         $scope.vm.newDimensions = [];
                         $scope.vm.dimension = "";
