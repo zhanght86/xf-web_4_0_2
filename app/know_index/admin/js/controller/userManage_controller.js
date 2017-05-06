@@ -151,6 +151,7 @@ angular.module('adminModule').controller('userManageController', [
             $scope.vm.userName = data.userName;
             $scope.vm.userLoginName = data.userLoginName;
             $scope.vm.userPassword = data.userPassword;
+            $scope.vm.userPassWord = data.userPassword;
             $scope.vm.userPhoneNumber = data.userPhoneNumber;
             $scope.vm.userEmail = data.userEmail;
             $scope.vm.remark = data.remark;
