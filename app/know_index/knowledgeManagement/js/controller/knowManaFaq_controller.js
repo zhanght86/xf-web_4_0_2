@@ -79,6 +79,114 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             enterEvent : enterEvent
         };
 
+        //獲取渠道
+        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.dimensions = data.data;
+                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+                }
+            }, function(error) {
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        //获取维度
+        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.channels = data.data
+                }
+            }, function(error) {
+                layer.msg("获取渠道失败，请刷新页面")
+            });
+
+        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
+        /*
+         params =  {
+         "applicationId": $scope.vm.applicationId,
+         "userId" : $scope.vm.userId ,
+         "sceneId" : $scope.vm.sceneId ,
+         "knowledgeTitle": $scope.vm.title,      //知识标题
+         "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
+         "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
+         "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
+         };
+         var title = angular.copy($scope.vm.newTitle);
+         scanCotentByTitle(title) ;
+         var obj = {};
+         obj.knowledgeContent = getTableParams();
+         obj.channelIdList =  $scope.vm.channel;
+         obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+         obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+         obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+
+         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+         $scope.vm.scanContent=[];
+         $scope.vm.scanContent.push(obj);
+         params.knowledgeContents =  $scope.vm.scanContent;
+         params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
+         params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
+         */
+
+
+        //組裝數據   擴展問   content
+        //BOT路径设置为 选择添加                  再次增加判断重复
+        //
+        //标题
+        if($stateParams.data!=null){
+            console.log($stateParams.data);
+            $scope.vm.title =  $stateParams.data.knowledgeBase.knowledgeTitle ;
+            //bot路径
+            $scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.classificationAndKnowledgeList ;
+            //knowledgeId
+            //$scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.knowledgeId ;
+            //扩展问
+            $scope.vm.extensionsByFrame = $stateParams.data.extensionQuestions;
+            //内容
+            $scope.vm.scanContent = [] ;
+            angular.forEach($stateParams.data.knowledgeContents,function(item){
+                var obj = {} ;
+                //obj.knowledgeContent = item.knowledgeContent;
+                $scope.vm.tableList = {} ;
+                $scope.vm.tableList.data = item.knowledgeContent ;
+                //維度，添加預覽效果   以name id 的 形式显示
+                obj.channelIdList =  item.channelIdList ;
+                obj.dimensionIdList =  item.dimensionIdList ;
+
+                $scope.vm.channel = item.channelIdList ;
+
+                //$scope.vm.dimensionArr = [] ;
+                ////异步原因
+                //var getDimension = $interval(function(){
+                //    if($scope.vm.dimensions){
+                //        $interval.cancel(getDimension);
+                //        angular.forEach($scope.vm.dimensions,function(val){
+                //            if(!item.dimensionIdList.inArray(val.dimensionId)){
+                //                var obj = {};
+                //                obj.dimensionName = val.dimensionName;
+                //                obj.dimensionId = val.dimensionId;
+                //                $scope.vm.dimensionArr.push(obj);
+                //
+                //            }
+                //        });
+                //    }
+                //},100) ;
+                obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
+                obj.knowledgeBeRelatedOn  =  item.knowledgeBeRelatedOn ; //在提示
+                obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
+                obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
+                $scope.vm.scanContent.push(obj) ;
+
+                console.log(obj)
+            });
+            //
+        }
+
+        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+
+
+
+
        //标题失去焦点校验标题重复
         function blur(){
             httpRequestPost("/api/faqKnowledge/checkKnowledgeTitle",{
@@ -708,39 +816,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(data);
             },function(err){
                 layer.msg("获取指定相关知识失败")
-            });
-        }
-        //初始化頁面數據
-        init();
-        function  init(){
-            getDimensions();
-            getChannel();
-        }
-        //維度
-        function  getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions)
-                }
-                //console.log(data)
-            },function(err){
-                layer.msg("获取维度失败，请刷新页面")
-            });
-        }
-        //渠道
-        function  getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data
-                }
-                //console.log(data)
-            },function(err){
-                layer.msg("获取渠道失败，请刷新页面")
             });
         }
     }
