@@ -91,7 +91,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableList: ""
         };
 
-        console.log($stateParams);
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
 /*
         params =  {
@@ -126,7 +125,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if(!$stateParams.data){
+        if($stateParams.data!=null){
             $scope.vm.title =  $stateParams.data.knowledgeBase.knowledgeTitle ;
             //bot路径
             $scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.classificationAndKnowledgeList ;
