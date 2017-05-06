@@ -156,7 +156,6 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容: &nbsp;</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">
                             <div class="clearfix mb-10">
-
                                 <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
                                 <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
@@ -168,6 +167,7 @@
                                         <a href="javascript:;" class="delete_column"  ng-click="vm.tableRemove(2)"><img src="../images/ys_img4.png"/></a>
                                     </div>
                                     <div>
+
                                         <!--{{vm.tableList}}-->
                                         <!--{{vm.tableList.data.listTable}}-->
                                         <!--{{vm.tableRow}}{{vm.tableColumn}}-->
@@ -188,7 +188,7 @@
                                 <span class="channel_s">渠道：</span>
                                 <div>
                                     <label class="mr-10" ng-repeat="channel in vm.channels">
-                                        <input style="vertical-align: middle; margin:0px 0 0px 0;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
+                                        <input style="vertical-align: middle; margin:0px 0 0px 0;" type="checkbox" ng-checked="vm.channel.inArray(channel.channelId)" ng-click="vm.selectChannel(channel.channelId)">
                                         {{channel.channelName}}
                                     </label>
                                 </div>

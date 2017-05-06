@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/28.
  */
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -90,7 +90,25 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             dialogExtension : [],
             tableList: ""
         };
-
+        //獲取渠道
+        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.dimensions = data.data;
+                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+                }
+            }, function(error) {
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        //获取维度
+        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.channels = data.data
+                }
+            }, function(error) {
+                layer.msg("获取渠道失败，请刷新页面")
+            });
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
 /*
         params =  {
@@ -126,22 +144,56 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //
         //标题
         if($stateParams.data!=null){
-            $scope.vm.title =  $stateParams.data.knowledgeBase.knowledgeTitle ;
+            var data = $stateParams.data ;
+            console.log($stateParams.data);
+            $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             //bot路径
-            $scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.classificationAndKnowledgeList ;
+            $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //knowledgeId
-            //$scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.knowledgeId ;
+            //$scope.vm.creatSelectBot = data.knowledgeBase.knowledgeId ;
             //扩展问
-            $scope.vm.extensionsByFrame = $stateParams.data.extensionQuestions;
+            $scope.vm.extensionsByFrame = data.extensionQuestions;
+            angular.forEach(data.extensionQuestions,function(item){
+
+            });
             //内容
-            $scope.vm.scanContent = $stateParams.data.knowledgeContents;
+            angular.forEach(data.knowledgeContents,function(item){
+                var obj = {} ;
+                //obj.knowledgeContent = item.knowledgeContent;
+                $scope.vm.tableList = {} ;
+                $scope.vm.tableList.data = item.knowledgeContent ;
+                //維度，添加預覽效果   以name id 的 形式显示
+                obj.channelIdList =  item.channelIdList ;
+                obj.dimensionIdList =  item.dimensionIdList ;
+
+                $scope.vm.channel = item.channelIdList ;
+
+                $scope.vm.dimensionArr = [] ;
+                    //异步原因
+                var getDimension = $interval(function(){
+                        if($scope.vm.dimensions){
+                            $interval.cancel(getDimension);
+                            angular.forEach($scope.vm.dimensions,function(val){
+                                if(!item.dimensionIdList.inArray(val.dimensionId)){
+                                    var obj = {};
+                                    obj.dimensionName = val.dimensionName;
+                                    obj.dimensionId = val.dimensionId;
+                                    $scope.vm.dimensionArr.push(obj);
+
+                                }
+                            });
+                        }
+                    },100) ;
+                $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
+                $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
+                $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                console.log(obj)
+            });
             //
         }
 
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
-
-
-
 
         function tableChange(row, col ,val){
             console.log($scope.vm.tableList);
@@ -297,26 +349,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.gorithm = [];
             $scope.vm.elementAsk = null;
         }
-        //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                }
-            }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
-            });
-        //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channels = data.data
-                }
-            }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
-            });
-
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -352,7 +384,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     // 在未生成扩展问情況
                     getExtensionByFrame(val);
                 }
-
             }
         });
         //检测时间表开关
@@ -545,7 +576,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 });
             }
         }
-////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
+////////////////////////////////////// ///         Bot     /////////////////////////////////////////////////////
         //{
         //    "categoryApplicationId": "360619411498860544",
         //    "categoryPid": "root"
