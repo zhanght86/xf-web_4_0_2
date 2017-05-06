@@ -134,43 +134,32 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //
         //标题
         if($stateParams.data!=null){
-            console.log($stateParams.data);
-            $scope.vm.title =  $stateParams.data.knowledgeBase.knowledgeTitle ;
-            //bot路径
-            $scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.classificationAndKnowledgeList ;
+            var data = $stateParams.data ;
+            console.log(data);
+            //标题
+            $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
+            // 时间
+            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
+            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            // bot 路径
+            $scope.vm.botClassfy = data.knowledgeBase.classificationAndKnowledgeList ;
+
             //knowledgeId
-            //$scope.vm.creatSelectBot = $stateParams.data.knowledgeBase.knowledgeId ;
             //扩展问
-            $scope.vm.extensionsByFrame = $stateParams.data.extensionQuestions;
+            $scope.vm.extensionsByFrame = data.extensionQuestions;
             //内容
-            $scope.vm.scanContent = [] ;
-            angular.forEach($stateParams.data.knowledgeContents,function(item){
+            $scope.vm.scanContent = data.knowledgeContents ;
+            angular.forEach(data.knowledgeContents,function(item){
                 var obj = {} ;
                 //obj.knowledgeContent = item.knowledgeContent;
                 $scope.vm.tableList = {} ;
-                $scope.vm.tableList.data = item.knowledgeContent ;
+                $scope.vm.tableList.data = item.knowledgeTable ;
                 //維度，添加預覽效果   以name id 的 形式显示
                 obj.channelIdList =  item.channelIdList ;
                 obj.dimensionIdList =  item.dimensionIdList ;
 
                 $scope.vm.channel = item.channelIdList ;
 
-                //$scope.vm.dimensionArr = [] ;
-                ////异步原因
-                //var getDimension = $interval(function(){
-                //    if($scope.vm.dimensions){
-                //        $interval.cancel(getDimension);
-                //        angular.forEach($scope.vm.dimensions,function(val){
-                //            if(!item.dimensionIdList.inArray(val.dimensionId)){
-                //                var obj = {};
-                //                obj.dimensionName = val.dimensionName;
-                //                obj.dimensionId = val.dimensionId;
-                //                $scope.vm.dimensionArr.push(obj);
-                //
-                //            }
-                //        });
-                //    }
-                //},100) ;
                 obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 obj.knowledgeBeRelatedOn  =  item.knowledgeBeRelatedOn ; //在提示
                 obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
@@ -205,19 +194,19 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
              }
             });
         }
-        checkState();  //判断 是否是预览页面的修改添加
-        function checkState(){
-            var data = $stateParams.data
-            if(data){
-                $scope.vm.title = data.knowledgeTitle ;
-                $scope.vm.isTimeTable = (data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd)?true:false ;
-                $scope.vm.timeStart = data.knowledgeBase.knowledgeExpDateStart ;
-                $scope.vm.timeEnd = data.knowledgeBase.knowledgeExpDateEnd ;
-                $scope.vm.userName =  data.knowledgeBase.knowledgeCreator;
-                $scope.vm.scanContent = data.knowledgeContents;
-                $scope.vm.botClassfy = data.classificationAndKnowledgeList
-            }
-        }
+        //checkState();  //判断 是否是预览页面的修改添加
+        //function checkState(){
+        //    var data = $stateParams.data ;
+        //    if(data){
+        //        $scope.vm.title = data.knowledgeTitle ;
+        //        $scope.vm.isTimeTable = (data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd)?true:false ;
+        //        $scope.vm.timeStart = data.knowledgeBase.knowledgeExpDateStart ;
+        //        $scope.vm.timeEnd = data.knowledgeBase.knowledgeExpDateEnd ;
+        //        $scope.vm.userName =  data.knowledgeBase.knowledgeCreator;
+        //        $scope.vm.scanContent = data.knowledgeContents;
+        //        $scope.vm.botClassfy = data.classificationAndKnowledgeList
+        //    }
+        //}
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{

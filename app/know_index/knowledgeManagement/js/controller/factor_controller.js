@@ -146,7 +146,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         if($stateParams.data!=null){
             var data = $stateParams.data ;
             console.log($stateParams.data);
+            //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
+            // 时间
+            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
+            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
             //bot路径
             $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //knowledgeId
@@ -188,7 +192,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
-                console.log(obj)
+                //console.log(obj)
             });
             //
         }

@@ -102,6 +102,46 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("获取渠道失败，请刷新页面")
             });
 
+        ////类目查找自动补全
+        //$('#category-autocomplete').autocomplete({
+        //    serviceUrl: "/api/modeling/category/searchbycategoryname",
+        //    type:'POST',
+        //    params:params,
+        //    paramName:'categoryName',
+        //    dataType:'json',
+        //    transformResult:function(data){
+        //        var result = new Object();
+        //        var array = [];
+        //        if(data.data){
+        //            for(var i=0;i<data.data.length;i++){
+        //                array[i]={
+        //                    data:data.data[i].categoryId,
+        //                    value:data.data[i].categoryName
+        //                }
+        //            }
+        //        }
+        //        result.suggestions = array;
+        //        return result;
+        //    },
+        //    onSelect: function(suggestion) {
+        //        console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        //        searchNodeForFrame(suggestion);
+        //        locationForFrame(suggestion);
+        //    }
+        //});
+
+
+//        選擇知識标题
+        function getDetailByTitle(title){
+            httpRequestPost("/api/marketingKnowledge/getKnowledgeTitle",{
+                "title" : title
+            },function(data){
+                console.log(data) ;
+            },function(){
+                // layer.msg("err or err")
+            });
+        }
+
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
