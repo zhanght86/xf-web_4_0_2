@@ -1,5 +1,5 @@
 <div class="" >
-    <form class="form form-horizontal" name="myForm">
+    <form class="form form-horizontal" name="myForm" novalidate>
         <div class="mb-10 mt-10 pl30" style="height:200px;overflow:auto;">
             <div class="latit_repres_div">
                 <div class="mb-10 clearfix">
@@ -35,7 +35,7 @@
 
         </div>
         <div class="tc">
-            <input type="button" value="确定" ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
+            <input type="button" value="确定" ng-disabled="myForm.$invalid" ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
             <input type="button" value="取消" ng-click="closeThisDialog(0)"  class="btn1 btn_gray"/>
         </div>
     </form>
