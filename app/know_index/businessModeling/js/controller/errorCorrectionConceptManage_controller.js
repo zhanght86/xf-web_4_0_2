@@ -33,7 +33,9 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             inputVal : "",
             termSpliter: "；",
             current:1,
-            percent:"%"
+            percent:"%",
+            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
         };
 
         /**
@@ -131,52 +133,64 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
 
         //添加 窗口
         function addCorrection(){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            console.log($scope.vm.key);
-                            httpRequestPost("/api/modeling/concept/correction/repeatCheck", {
-                                "correctionConceptApplicationId": $scope.vm.applicationId,
-                                "correctionConceptKey": $scope.vm.key
-                            }, function (data) {          //类名重複
-                                if (data.status === 10002) {
-                                    layer.msg("纠错概念类名重复");
-                                    httpRequestPost("/api/modeling/concept/correction/listByAttribute", {
-                                        "correctionConceptApplicationId": $scope.vm.applicationId,
-                                        "correctionConceptKey": $scope.vm.key,
-                                        "index": 0,
-                                        "pageSize": 1
-                                    }, function (data) {
-                                        $scope.vm.dialogTitle = "编辑纠错概念";
-                                        console.log(data);
-                                        addCorrectionConceptDialog(singleEditCorrectionConcept, data.data[0]);
-                                        $scope.vm.key = data.data[0].correctionConceptKey;
-                                        $scope.vm.term = data.data[0].correctionConceptTerm;
-                                    }, function () {
-                                    });
-                                } else {
-                                    //类名无冲突
-                                    $scope.vm.dialogTitle = "增加纠错概念";
-                                    $scope.vm.term = "";
-                                    addCorrectionConceptDialog(singleAddCorrectionConcept);
-                                }
-                            }, function () {
-                                layer.msg("添加失敗")
-                            })
-                        } else {
-                            $scope.vm.key = "";
-                            $scope.vm.term = "";
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/businessModeling/errorCorrection/errorCorrectionConceptManageDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
                         }
+                        httpRequestPost("/api/modeling/concept/correction/repeatCheck", {
+                            "correctionConceptApplicationId": $scope.vm.applicationId,
+                            "correctionConceptKey": $scope.vm.key
+                        }, function (data) {          //类名重複
+                            if (data.status === 10002) {
+                                layer.msg("纠错概念类名重复");
+                                httpRequestPost("/api/modeling/concept/correction/listByAttribute", {
+                                    "correctionConceptApplicationId": $scope.vm.applicationId,
+                                    "correctionConceptKey": $scope.vm.key,
+                                    "index": 0,
+                                    "pageSize": 1
+                                }, function (data) {
+                                    $scope.vm.dialogTitle = "编辑纠错概念";
+                                    console.log(data);
+                                    addCorrectionConceptDialog(singleEditCorrectionConcept, data.data[0]);
+                                    $scope.vm.key = data.data[0].correctionConceptKey;
+                                    $scope.vm.term = data.data[0].correctionConceptTerm;
+                                }, function () {
+                                });
+                            } else {
+                                //类名无冲突
+                                $scope.vm.dialogTitle = "增加纠错概念";
+                                $scope.vm.term = "";
+                                addCorrectionConceptDialog(singleAddCorrectionConcept);
+                            }
+                        }, function () {
+                            layer.msg("添加失敗")
+                        })
+                    } else {
+                        $scope.vm.key = "";
+                        $scope.vm.term = "";
                     }
-                });
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor();
+                    $("#correctionKey").blur(function(){
+                        if(lengthCheck($("#correctionKey").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
+                }, 100);
             }
         }
 
@@ -191,7 +205,37 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-                        callback(item)
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        var obj = $("#term").next();
+                        var term = "";
+                        var length = obj.find("li").length;
+                        if(length<=0){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        $.each(obj.find("li"),function(index,value){
+                            if(index>0){
+                                $.each($(value).find("div"),function(index1,value1){
+                                    if(index1==1){
+                                        term+=$(value1).html()+$scope.vm.termSpliter;
+                                    }
+                                });
+                            }
+                        });
+                        term=term.substring(0,term.length-1);
+                        $scope.vm.term=term;
+                        if(lengthCheck(term,0,500)==false){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        callback(item);
                     } else {
                         $scope.vm.key = "";
                         $scope.vm.term = "";
@@ -200,7 +244,14 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             });
             if(dialog){
                 $timeout(function () {
-                    termSpliterTagEditor()
+                    termSpliterTagEditor();
+                    $("#correctionKeyTwo").blur(function(){
+                        if(lengthCheck($("#correctionKeyTwo").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
                 }, 100);
             }
         }
