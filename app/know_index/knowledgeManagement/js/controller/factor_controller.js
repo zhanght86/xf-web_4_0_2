@@ -157,9 +157,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //$scope.vm.creatSelectBot = data.knowledgeBase.knowledgeId ;
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
-            angular.forEach(data.extensionQuestions,function(item){
-
-            });
             //内容
             angular.forEach(data.knowledgeContents,function(item){
                 var obj = {} ;
@@ -188,6 +185,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             });
                         }
                     },100) ;
+                $scope.vm.knowledgeTitleTag = item.knowledgeTitleTag ;
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
