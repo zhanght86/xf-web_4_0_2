@@ -12,12 +12,12 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
-        {{vm.listData}}
+        <!--{{vm.listData}}-->
         <ul class="Preview">
             <li>
                 <p ng-if="vm.listData.knowledgeBase.knowledgeTitle"><span>知识标题： </span>{{vm.listData.knowledgeBase.knowledgeTitle}}</p>
                 <p ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart"><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
-                <p  ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span><span >{{item.classificationName}}</span></p>
+                <p  ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span><span >{{item.className.join("/")}}</span></p>
             </li>
 
             <!-- -->
