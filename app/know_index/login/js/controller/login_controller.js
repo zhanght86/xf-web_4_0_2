@@ -34,13 +34,17 @@ angular.module('loginModule').controller('loginController', [
             //$state.go("materialManagement.chatKnowledgeBase",{userPermission : "['超级管理员','初级管理员']"});
             if($scope.vm.randomNumberValue.length==0){
                 console.log($scope.vm.randomNumberValue);
-                layer.msg("验证码不能为空")
+                layer.msg("验证码不能为空");
+                setRandomNumber();
             }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
                 layer.msg("验证码错误");
+                setRandomNumber();
             }else if($scope.vm.userName == ""){
                 layer.msg("用户名不能为空");
+                setRandomNumber();
             }else if($scope.vm.password == ""){
                 layer.msg("密码不能为空");
+                setRandomNumber();
             }else{
                 httpRequestPost("/api/user/userLogin",{
                     "userLoginName":$scope.vm.userName,
@@ -52,19 +56,21 @@ angular.module('loginModule').controller('loginController', [
                         $cookieStore.put("userName" , data.data.userName);
                         $state.go("admin");
                     }else if(data.status==10007){
-                        $scope.vm.randomNumber = randomNumber(4);
-                        $scope.vm.randomNumberValue = "";
+                        setRandomNumber();
                         layer.msg("用户名或密码错误");
                     }
                     console.log(data)
 
                 },function(err){
                     layer.msg("登陆失败");
-                    $scope.vm.randomNumber = randomNumber(4);
-                    $scope.vm.randomNumberValue = "";
+                    setRandomNumber();
                     //console.log(err)
                 });
             }
+        }
+        function setRandomNumber(){
+            $scope.vm.randomNumberValue = "";
+            $scope.vm.randomNumber = randomNumber(4);
         }
 
         //  随机产生四位验证码

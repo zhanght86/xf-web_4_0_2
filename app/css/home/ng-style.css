@@ -10,6 +10,17 @@
 .mileVs {
   visibility: hidden;
 }
+.bgE3 {
+  background: #e3e3e3!important;
+}
+.bg50:hover {
+  background: #505767!important;
+  color: #fff!important;
+}
+.borderN {
+  outline: 0;
+  border: 0;
+}
 .textIndent10 {
   text-indent: 10px;
 }
