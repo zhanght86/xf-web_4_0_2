@@ -32,11 +32,10 @@
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">确认密码：</label>
-
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="userPassWord" type="password" ng-model="vm.userPassWord" class="input-text" required/>
-                 <span style="color:red" ng-show="myForm.userPassWord.$dirty && myForm.userPassWord.$invalid">
-                    <span ng-show="myForm.userPassWord.$error.required">请确认密码!</span>
+                <input name="userPassWord" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
+                 <span style="color:red" ng-show="(!myForm.userPassWord.$invalid)  ||  myForm.userPassWord.$dirty">
+                    <span ng-show="vm.userPassWord!=vm.userPassword">请确认密码!</span>
                 </span>
             </div>
         </div>
@@ -69,8 +68,8 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">角色：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" id="role_id" ng-model="vm.roleId" required>
-                    <option ng-repeat="item in vm.listRole" ng-value="item.roleId">{{item.roleName}}</option>
+                <select class="input-text" id="role_id" ng-model="vm.roleId" disabled ng-init="vm.roleId=vm.listRole[0].roleId">
+                    <option ng-repeat="item in vm.listRole" ng-selected="$index==0"  ng-value="item.roleId">{{item.roleName}}</option>
                 </select>
             </div>
         </div>
@@ -90,7 +89,7 @@
             </div>
         </div>
         <div class="tc">
-            <button  class="btn btn-primary radius mr-10" type="button" ng-disabled="myForm.$invalid"   ng-click="closeThisDialog(1)">保存</button>
+            <button  class="btn btn-primary radius mr-10" type="button" ng-disabled="myForm.$invalid || vm.userPassword!=vm.userPassWord || vm.prop.length == 0"   ng-click="closeThisDialog(1)">保存</button>
             <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
         </div>
     </form>

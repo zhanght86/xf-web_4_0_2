@@ -91,10 +91,13 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             applicationId:$scope.vm.applicationId,
                             dimensionId:dimensionId
                         },function(data){
+                            if(data.status == 10013){
+                                getData(1);
+                                layer.msg("维度删除成功!");
+                            }
                             //$state.reload();
-                            getData(1);
                         },function(){
-                            layer.msg("请求失败")
+                            layer.msg("请求失败");
                         })
                     }
                 }
@@ -211,10 +214,15 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             dimensionStatusId : $scope.vm.switchTurn,
                             dimensionNameArray : $scope.vm.newDimensions
                         },function(data){
-                            getData(1);
+                                getData(1);
+                                layer.msg("维度修改成功!");
                         },function(){
                             layer.msg("请求失败")
                         })
+
+                        //添加成功后清空数组数据
+                        $scope.vm.newDimensions = [];
+                        $scope.vm.oldDimension = [];
                     }else{
                         $scope.vm.oldDimension = [];
                         $scope.vm.newDimensions = [];
