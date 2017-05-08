@@ -54,25 +54,10 @@
                                 <td width="60%" class="bold">详情</td>
                                 <td width="20%" class="bold">操作</td>
                             </tr>
-                            <tr>
-                                <td>被动文本型</td>
-                                <td>用户先提问，机器人回答文本类型的知识</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>主动问本型</td>
-                                <td>机器人先提问，回答为文本型的知识</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>被动多伦文本型 </td>
-                                <td>用户先提问，机器人和用户进行多次交互</td>
-                                <td ng-click="vm.saveMultiInteractive()">多轮会话配置</td>
-                            </tr>
-                            <tr>
-                                <td>主动多伦文本型 </td>
-                                <td>机器人先提问，机器人和用户进行多次交互</td>
-                                <td ng-click="vm.saveMultiInteractive()">多轮会话配置</td>
+                            <tr ng-repeat="item in vm.exchangeModeData">
+                                <td>{{item.exchangeModeName}}</td>
+                                <td>{{item.exchangeDescription}}</td>
+                                <td><a ng-if="item.exchangeModeId==13&&item.statusId==20001" ng-click="vm.saveMultiInteractive()">多轮会话配置</a></td>
                             </tr>
                         </table>
                     </div>
