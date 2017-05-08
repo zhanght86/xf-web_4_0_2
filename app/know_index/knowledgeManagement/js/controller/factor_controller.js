@@ -157,9 +157,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //$scope.vm.creatSelectBot = data.knowledgeBase.knowledgeId ;
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
-            angular.forEach(data.extensionQuestions,function(item){
-
-            });
             //内容
             angular.forEach(data.knowledgeContents,function(item){
                 var obj = {} ;
@@ -188,6 +185,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             });
                         }
                     },100) ;
+                $scope.vm.knowledgeTitleTag = item.knowledgeTitleTag ;
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
@@ -761,7 +759,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 "applicationId": $scope.vm.applicationId,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
-                "knowledgeTitle": $scope.vm.title,      //知识标题
+                "knowledgeTitle": $scope.vm.title,//知识标题
+                "knowledgeCreator": $scope.vm.userName, //创建人
+                "knowledgeUpdater": $scope.vm.userName,
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
