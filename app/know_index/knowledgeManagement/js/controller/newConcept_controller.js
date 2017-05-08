@@ -80,7 +80,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             replaceType : 0 ,
             enterEvent : enterEvent,
             dialogExtension : [],
-            factor : 0 ,  //触发要素
+            factor : 0 ,  //触发要素，0 標題   1 擴展問
+            getDetailByTitle : getDetailByTitle
+
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -129,7 +131,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //        locationForFrame(suggestion);
         //    }
         //});
-
 
 //        選擇知識标题
         function getDetailByTitle(title){
