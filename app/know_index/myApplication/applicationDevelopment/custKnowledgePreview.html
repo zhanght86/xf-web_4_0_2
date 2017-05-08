@@ -12,19 +12,24 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
-        <!--{{vm.listData}}-->
+        {{vm.listData}}
         <ul class="Preview">
             <li>
-                <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
-                <p><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
-                <p><span>业务框架：</span><span ng-repeat="item in vm.listData.classificationAndKnowledge">{{item.classificationName}} <i ng-if="vm.listData.classificationAndKnowledge.length!=0 && $index!=(vm.listData.classificationAndKnowledge.length-1)">,</i></span></p>
-                <p><span>知识标题： </span>{{vm.listData.knowledgeBase.knowledgeTitle}}</p>
+                <p ng-if="vm.listData.knowledgeBase.knowledgeTitle"><span>知识标题： </span>{{vm.listData.knowledgeBase.knowledgeTitle}}</p>
+                <p ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart"><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
+                <p  ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span><span >{{item.classificationName}}</span></p>
             </li>
-            <li>
 
+            <!-- -->
+            <li  ng-if="vm.knowledgeType!=101" ng-class="vm.knowledgeType!=101?'':'borderN'"  ng-repeat="item in vm.listData.extensionQuestions">
+                <p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
+            </li>
+
+
+            <li ng-class="vm.knowledgeType==101?'':'borderN'" style="border-bottom: 0">
                 <div class="knowContent" ng-repeat="item in vm.listData.knowledgeContents track by $index">
-                    <span ng-class="$index==0?'mileVs':''">知识内容：</span>
-                    <div class="PreviewRight" >
+                    <span ng-class="$index!=0?'mileVs':''">知识内容：</span>
+                    <div class="PreviewRight">
                         <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
                         <div  ng-if="vm.knowledgeType!=103">
                             <p>{{item.knowledgeContent}}</p>
@@ -45,29 +50,20 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="knowContent">-->
-                    <!--<span>知识内容：</span>-->
-                    <!--<div class="PreviewRight">-->
-                        <!--<p>内容一</p>-->
-                        <!--<div>-->
-                            <!--<p>信用卡账户：是指乙方及其附属卡持卡人在甲方开立的信用卡项下账户，双币信用卡的账户分为人民币账户和外币账户；IC信用卡的账户分为人民币主账户和人民币电子现金账户。</p>-->
-                            <!--<p><i>渠道：</i>web</p>-->
-                            <!--<p><i>维度：</i>地区_北京  地区_河北  地区_湖南  地区_湖南</p>-->
-                            <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
-                            <!--<span>&nbsp;</span>-->
-                        <!--</div>-->
-                        <!--<p>内容二</p>-->
-                        <!--<div class="PreviewRightPic">-->
-                            <!--<img src="../../../images/images/service_24.jpg"/>-->
-                            <!--<p><span class="PreviewRightPic_L">宝宝听故事：种子按安家...</span><span class="PreviewRightPic_R">2016-9-27</span></p>-->
-                            <!--<div>太阳公公落山了，农场主人休息了，大棚里却热闹了泡过55度汤的种子们兴奋得有点睡不着，明天就可以进入他们专属的安乐窝...</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                <p><span>知识配置：</span>
+                    <span><span ng-if="item.knowledgeRelatedQuestionOn==0">不</span>显示相关问题</span>
+                    <span><span ng-if="item.knowledgeBeRelatedOn==0">不</span>在相关问题内提示</span>
+                    <span><span ng-if="item.knowledgeCommonOn==0">不</span>弹出评价小尾巴</span>
+                </p>
+                <p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList"><span ng-class="indexVal?'':'mileVs'">已添加知识：</span>
+                    <span>{{indexVal}}{{val}}</span>
+                </p>
             </li>
-            <li style="border: none" ng-repeat="item in vm.listData.extensionQuestions">
+        <!-- 概念知识 位置-->
+            <li class="borderN"  ng-if="vm.knowledgeType==101" ng-repeat="item in vm.listData.extensionQuestions" >
                 <p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
             </li>
+
             <div class="jqrsz-btn-box" style="padding-left: 150px;margin-top: 4px;">
                 <a class="btn btn-blue mr10" ui-sref="custServScenaOverview.manage">返回</a>
                 <a class="btn btn-gray" href="javascript:;" ng-click="vm.edit()" style="background: #2bcacc; color: #fff;">修改</a>
@@ -76,5 +72,6 @@
     </div>
 </div>
 <style>
+
 
 </style>

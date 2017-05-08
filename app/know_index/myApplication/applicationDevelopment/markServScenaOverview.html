@@ -14,39 +14,28 @@
                 <span class="hd-name ellipsis">长沙银行机器人</span>
             </div>
             <div class="aside-nav aside-navn">
-                <ul>
-                    <li class="type1">
+                <ul class="">
+                    <li class="type1" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
                         <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj  ngBotAdd"></i>
-                            <!--<i class="icon-ngJj"></i>-->
-                            <span>分属性展开</span>
+                            <i class="icon-jj ngBotAdd" data-option-id="{{item.categoryId}}"></i>
+                            <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
                         </a>
-                        <ul class="menu_1">
-                            <li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
-                                <a class="slide-a ellipsis" href="javascript:;">
-                                    <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                                    <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
-                                    <i class="icon-r icon-jt"></i>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-
-                    <li class="type2">
-                        <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj  ngBotAdd"></i>
-                            <span>分业务展开</span>
-                        </a>
-                        <ul class="menu_1">
-                            <li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
-                                <a class="slide-a ellipsis" href="javascript:;">
-                                    <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                                    <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
-                                    <i class="icon-r icon-jt"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="type2">-->
+                    <!--<a class="slide-a ellipsis" href="javascript:;">-->
+                    <!--<i class="icon-jj  ngBotAdd"></i>-->
+                    <!--<span>分业务展开</span>-->
+                    <!--</a>-->
+                    <!--<ul class="menu_1">-->
+                    <!--<li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">-->
+                    <!--<a class="slide-a ellipsis" href="javascript:;">-->
+                    <!--&lt;!&ndash;<i class="icon-jj" data-option="{{item.categoryId}}"></i>&ndash;&gt;-->
+                    <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
+                    <!--<i class="icon-r icon-jt"></i>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
                     <!--<li ng-repeat="item in vm.botRoot">-->
                     <!--<a class="slide-a ellipsis" href="javascript:;">-->
                     <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
@@ -109,12 +98,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--<select class="sel bd L" ng-model="vm.newKnowledge" ng-change="vm.jumpToNewKonwledge(vm.newKnowledge)" style="width: 126px;">-->
-                        <!--<option value="100">FAQ型知识新增</option>-->
-                        <!--<option value="101">概念知识型新增</option>-->
-                        <!--<option value="102">列表型知识新增</option>-->
-                        <!--<option value="103">要素型知识新增</option>-->
-                    <!--</select>-->
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;">批量导入</a>
                         <a class="btn btn-green" href="javascript:;">知识加工</a>
@@ -163,12 +146,11 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="txt-item oh">
+                                        <div class="lable fl">知识类型：概念型知识</div>
+                                    </div>
                                 </div>
                                 <div class="csso-info oh">
-                                    <div class="fl">
-                                        <span>知识类型：{{item.knowledgeTypeDetail}}</span>
-                                        <!--<span>知识类目：{{item.sceneName}}</span>-->
-                                    </div>
                                     <div class="fr">
                                         <span>作者：{{item.knowledgeCreator}}</span>
                                         <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd hh:mm:ss'}}</span>

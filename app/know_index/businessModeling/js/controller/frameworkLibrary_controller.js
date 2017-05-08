@@ -55,7 +55,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             delEle:delEle,
             relateConcept:null,
             frameTitleNullErrorInfo:"框架标题为空或超过长度限制50",
-            frameTitleRepeatCheck:frameTitleRepeatCheck
+            frameTitleRepeatCheck:frameTitleRepeatCheck,
+            searchNodeForFrame:searchNodeForFrame,
+            recursionForFrame:recursionForFrame,
+            autoHeightForFrame:autoHeightForFrame,
+            locationForFrame:locationForFrame
         };
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
@@ -63,8 +67,19 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
+
+        autoHeightForFrame();
+
+        function autoHeightForFrame(){
+            var $win = $(window);
+            var winHeight = $win.height()*0.75;
+            $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
+            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+        }
+
         var params = {
             "categoryName":$("#category-autocomplete").val(),
+            "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
         //类目查找自动补全
@@ -90,8 +105,89 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                searchNodeForFrame(suggestion);
+                locationForFrame(suggestion);
             }
         });
+        //定位
+        function locationForFrame(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $(".aside-navs").find("i").length;
+            $.each($(".aside-navs").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var sumHeight = sum*$(value).outerHeight();
+                    var offset = (initHeight+1/sum)*sumHeight;
+                    console.log(sumHeight+"========"+offset);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return true;
+                }else{
+                    initHeight++;
+                }
+            });
+        }
+        //搜寻节点
+        function searchNodeForFrame(suggestion){
+            var currentNodeId = suggestion.data;
+            console.log('currentNodeId:'+currentNodeId);
+            var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
+            console.log($(firstNode).next().html()+"======"+$(firstNode).attr("data-option")+'currentNodeId:'+currentNodeId+"======"+$(firstNode).css("backgroundPosition"));
+            if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                appendTree(firstNode);
+            }else if($(firstNode).parent().parent().next()==null){
+                appendTree(firstNode);
+            }
+            if($(firstNode).attr("data-option")==currentNodeId){
+                clearColor();
+                $scope.vm.knowledgeBotVal = $(firstNode).next().html();
+                $scope.vm.botSelectValue = $(firstNode).next().attr("data-option");
+                $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
+                $(firstNode).next().attr("style","color:black;font-weight:bold;");
+                console.log($scope.vm.botSelectValue);
+                loadFrameLibrary(1);
+                $scope.$apply();
+            }else{
+                recursionForFrame(suggestion,firstNode);
+            }
+        }
+        function recursionForFrame(suggestion,node){
+            var list = $(".aside-navs").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+                if($(value).attr("data-option")==$(node).attr("data-option")){
+                    var currNode = $(value).find("i").filter(":eq(0)");
+                    if($(currNode).attr("data-option")==suggestion.data){
+                        console.log("===hit===");
+                        clearColor();
+                        $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                        $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                        $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        console.log($scope.vm.botSelectValue);
+                        loadFrameLibrary(1);
+                        $scope.$apply();
+                        flag = true;
+                        //跳出
+                        return true;
+                    }else{
+                        if(flag==true){
+                            return true;
+                        }
+                        //展开
+                        console.log("==="+$(currNode).css("backgroundPosition"));
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendTree(currNode);
+                        }
+                        //递归
+                        recursionForFrame(suggestion,currNode);
+                    }
+                }
+            });
+        }
         //加载业务树
         initBot();
 
@@ -115,6 +211,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }
                 html+='</ul>';
                 $(".aside-navs").append(html);
+                var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
+                if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                    appendTree(firstNode);
+                }else if($(firstNode).parent().parent().next()==null){
+                    appendTree(firstNode);
+                }
             },function(){
                 console.log("err or err");
             });
@@ -150,7 +252,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPostAsync("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
                     "categoryPid": id
                 },function(data){

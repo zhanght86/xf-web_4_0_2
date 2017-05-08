@@ -1,50 +1,75 @@
 <div class="pd-20">
-    <form action="" method="post" class="form form-horizontal" >
+    <form action="" method="post" name="myForm" class="form form-horizontal" novalidate>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">用户名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder=" zhangsan" ng-model="vm.userName" class="input-text" id="username">
+                <input name="userName" type="text" placeholder=" zhangsan" ng-model="vm.userName" class="input-text" id="username" required>
+                 <span style="color:red" ng-show="myForm.userName.$dirty && myForm.userName.$invalid">
+                    <span ng-show="myForm.userName.$error.required">用户名不能为空!</span>
+                </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">登录名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder=" zhangsan" ng-model="vm.userLoginName" class="input-text" id="name">
+                <input name="userLoginName" type="text" placeholder=" zhangsan" ng-model="vm.userLoginName" class="input-text" id="name" required>
+                <span style="color:red" ng-show="myForm.userLoginName.$dirty && myForm.userLoginName.$invalid">
+                    <span ng-show="myForm.userLoginName.$error.required">登录名不能为空!</span>
+                </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">密码：</label>
+
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="password" ng-model="vm.userPassword" class="input-text" />
+                <input name="userPassword" type="password" ng-model="vm.userPassword" class="input-text"  required/>
+                <span style="color:red" ng-show="myForm.userPassword.$dirty && myForm.userPassword.$invalid">
+                    <span ng-show="myForm.userPassword.$error.required">密码不能为空!</span>
+                </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">确认密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="password" ng-model="vm.userPassWord" value="" class="input-text">
+                <input name="userPassWord" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
+                 <span style="color:red" ng-show="(!myForm.userPassWord.$invalid)  ||  myForm.userPassWord.$dirty">
+                    <span ng-show="vm.userPassWord!=vm.userPassword">请确认密码!</span>
+                </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">手机：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder="123456356578" ng-model="vm.userPhoneNumber" class="input-text" id="phone_number">
+                <input name="phoneNumber" type="text" placeholder="123456356578" ng-model="vm.userPhoneNumber" class="input-text" id="phone_number" required />
+                  <span style="color:red" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
+                    <span ng-show="myForm.phoneNumber.$error.required">请输入手机号!</span>
+                </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">邮箱：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder="123456@163.com" ng-model="vm.userEmail" class="input-text" id="email">
+                <input name="userEmail" type="text" placeholder="123456@163.com" ng-model="vm.userEmail" class="input-text" id="email"
+                        ng-pattern="/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/" required />
+
+                  <span style="color:red" ng-show="myForm.userEmail.$dirty && myForm.userEmail.$invalid">
+                    <span ng-show="myForm.userEmail.$error.required">请输入邮箱!</span>
+                </span>
+
+                 <span style="color:red" ng-show="myForm.userEmail.$dirty && myForm.userEmail.$invalid">
+                    <span ng-show="myForm.userEmail.$error.pattern">请输入正确的邮箱格式!</span>
+                </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">角色：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text"  id="role_id" ng-model="vm.roleId">
-                    <option  ng-repeat="item in vm.listRole" ng-value="item.roleId">{{item.roleName}}</option>
+                <select class="input-text" id="role_id" ng-model="vm.roleId" disabled ng-init="vm.roleId=vm.listRole[0].roleId">
+                    <option ng-repeat="item in vm.listRole" ng-selected="$index==0"  ng-value="item.roleId">{{item.roleName}}</option>
                 </select>
             </div>
         </div>
@@ -52,7 +77,9 @@
             <label class="form-label col-xs-3 col-sm-2">所属应用：</label>
             <!--{{vm.prop}}-->
             <div class="formControls col-xs-9 col-sm-9">
-                <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="margin-left: 5px;"><input type="checkbox" ng-click="vm.savaProp($event,item.applicationId)"/>{{item.applicationName}}</label>
+                <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="margin-left: 5px;">
+                    <input  type="checkbox" ng-click="vm.savaProp($event,item.applicationId)"/>{{item.applicationName}}
+                </label>
             </div>
         </div>
         <div class="mb-10 cl">
@@ -62,7 +89,7 @@
             </div>
         </div>
         <div class="tc">
-            <button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>
+            <button  class="btn btn-primary radius mr-10" type="button" ng-disabled="myForm.$invalid || vm.userPassword!=vm.userPassWord || vm.prop.length == 0"   ng-click="closeThisDialog(1)">保存</button>
             <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
         </div>
     </form>

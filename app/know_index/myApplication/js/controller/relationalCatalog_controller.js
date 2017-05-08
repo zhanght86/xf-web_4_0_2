@@ -31,7 +31,11 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             botInfoToCategoryAttribute:botInfoToCategoryAttribute,
             clearColor:clearColor,
             repeatCheck:repeatCheck,
-            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50"
+            categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            searchNode:searchNode,
+            recursion:recursion,
+            location:location,
+            autoHeight:autoHeight
         };
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
@@ -40,8 +44,18 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
 
+        autoHeight();
+
+        function autoHeight(){
+            var $win = $(window);
+            var winHeight = $win.height()*0.75;
+            $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
+            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+        }
+
         var params = {
             "categoryName":$("#category-autocomplete").val(),
+            "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
         console.log("========"+JSON.stringify(params));
@@ -68,8 +82,92 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             },
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                searchNode(suggestion);
+                location(suggestion);
             }
         });
+        //搜寻节点
+        function searchNode(suggestion){
+            var currentNodeId = suggestion.data;
+            console.log('currentNodeId:'+currentNodeId);
+            var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
+            console.log($(firstNode).next().html()+"======"+$(firstNode).attr("data-option")+'currentNodeId:'+currentNodeId+"======"+$(firstNode).css("backgroundPosition"));
+            if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                appendTree(firstNode);
+            }else if($(firstNode).parent().parent().next()==null){
+                appendTree(firstNode);
+            }
+            if($(firstNode).attr("data-option")==currentNodeId){
+                clearColor();
+                $scope.vm.knowledgeBotVal = $(firstNode).next().html();
+                $scope.vm.botSelectValue = $(firstNode).next().attr("data-option");
+                $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
+                $scope.vm.categoryAttributeName = $(firstNode).next().attr("node-option");
+                $(firstNode).next().attr("style","color:black;font-weight:bold;");
+                console.log($scope.vm.botSelectValue);
+                console.log($scope.vm.categoryAttributeName);
+                disableAttributeType();
+                $scope.$apply();
+            }else{
+                recursion(suggestion,firstNode);
+            }
+        }
+        function recursion(suggestion,node){
+            var list = $(".aside-navs").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+                if($(value).attr("data-option")==$(node).attr("data-option")){
+                    var currNode = $(value).find("i").filter(":eq(0)");
+                    if($(currNode).attr("data-option")==suggestion.data){
+                        console.log("===hit===");
+                        clearColor();
+                        $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                        $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                        $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
+                        $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        console.log($scope.vm.botSelectValue);
+                        console.log($scope.vm.categoryAttributeName);
+                        disableAttributeType();
+                        $scope.$apply();
+                        flag = true;
+                        //跳出
+                        return true;
+                    }else{
+                        if(flag==true){
+                            return true;
+                        }
+                        //展开
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendTree(currNode);
+                        }
+                        //递归
+                        recursion(suggestion,currNode);
+                    }
+                }
+            });
+        }
+        //定位
+        function location(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $(".aside-navs").find("i").length;
+            $.each($(".aside-navs").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var sumHeight = sum*$(value).outerHeight();
+                    var offset = (initHeight+1/sum)*sumHeight;
+                    console.log(sumHeight+"========"+offset);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return true;
+                }else{
+                    initHeight++;
+                }
+            });
+        }
         //加载业务树
         initBot();
 
@@ -94,6 +192,12 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 }
                 html+='</ul>';
                 $(".aside-navs").append(html);
+                var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
+                if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                    appendTree(firstNode);
+                }else if($(firstNode).parent().parent().next()==null){
+                    appendTree(firstNode);
+                }
             },function(){
                 console.log("err or err");
             });
@@ -108,7 +212,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             console.log($scope.vm.botSelectValue);
             console.log($scope.vm.categoryAttributeName);
             disableAttributeType();
-            $scope.$apply()
+            $scope.$apply();
         });
         $(".aside-navs").on("click",".edit",function(){
             console.log("edit");
@@ -229,7 +333,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPostAsync("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
                     "categoryPid": id
                 },function(data){
@@ -266,7 +370,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //类目新增
         function addBot(){
             //数据校验
-            if($scope.vm.botSelectValue==""){
+            if($scope.vm.botSelectValue=="root"){
                 return;
             }
             if(lengthCheck($("#category-name").val(),0,50)==false){

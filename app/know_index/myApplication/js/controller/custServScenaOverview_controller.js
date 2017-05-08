@@ -119,7 +119,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                 "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             },function(data){
-                console.log(data);
+                //console.log(data);
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.knowledgeTotal = data.data.total;
                 $scope.vm.paginationConf = {
@@ -132,7 +132,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 $scope.$apply();
                 return true;
             },function(){
-                alert("err or err")
+                console.log("getDate==failed");
             });
 
         }
@@ -142,7 +142,6 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
         });
         function keySearch(e){
-            console.log(1)
                 var keycode = window.e?e.keyCode:e.which;
                 if(keycode==13){
                     napSearch()
@@ -195,7 +194,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
             },function(data){
                 $scope.vm.newNumber = data.data.total;
-                console.log(data)
+                //console.log(data)
                 return true;
 
             },function(){
@@ -225,11 +224,11 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
-                console.log(data);
+                //console.log(data);
                 $scope.vm.botRoot = data.data;
                 $scope.$apply()
             },function(){
-                alert("err or err")
+                console.log("getDate==failed")
             });
         }
         //点击更改bot value
@@ -246,7 +245,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 napSearch()
             },function(){});
             $scope.$apply();
-            console.log( $scope.vm.sceneIds)
+            //console.log( $scope.vm.sceneIds)
 
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
@@ -259,24 +258,24 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.data){
                             var  html = '<ul class="menus_1 ">';
                             angular.forEach(data.data,function(item){
                                 //1  存在叶节点   >
                                 if(item.categoryLeaf){
-                                    html+= '<li class="leafHover" data-option-id="'+item.categoryId+'">' +
-                                        '<div class="slide-a">'+
-                                        ' <a class="ellipsis" href="javascript:;">'+
+                                    html+= '<li class="leafHover bg50 bgE3" data-option-id="'+item.categoryId+'">' +
+                                        '<div class="slide-a  bg50 bgE3">'+
+                                        ' <a class="ellipsis bg50" href="javascript:;">'+
                                         '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span><i class="icon-r icon-jt"></i>'+
                                         '</a>' +
                                         '</div>' +
                                          '</li>'
                                 }else{
                                     //不存在叶节点
-                                    html+= '<li data-option-id="'+item.categoryId+'">' +
-                                        '<div class="slide-a">'+
-                                        ' <a class="ellipsis" href="javascript:;">'+
+                                    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'">' +
+                                        '<div class="slide-a  bg50 bgE3">'+
+                                        ' <a class="ellipsis bg50" href="javascript:;">'+
                                         '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                         '</a>' +
                                         '</div>' +
@@ -287,7 +286,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                         $(html).appendTo((that.parent().parent()));
                     }
                 },function(err){
-                    alert(err)
+                    console.log("getDate==failed");
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -302,18 +301,17 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //第二种  箭头添加 hover
         $(".aside-nav").on("mouseenter",'.leafHover',function(){
             var id = $(this).attr("data-option-id");
+            $(this).addClass("");
             //console.log(id)
             var that = $(this);
-            //if(!that.parent().parent().siblings().length){
-            //    that.css("backgroundPosition","0% 100%");
             if($(that).children().length==1){
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.data){
-                        console.log(data);
+                        //console.log(data);
                             n+=1;
                                 var  html = '<ul class="pas-menu_1 leaf'+n+'">';
                                 angular.forEach(data.data,function(item){
@@ -344,7 +342,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                     $(".leaf"+n).show();
                     //}
                 },function(err){
-                    alert(err)
+                    console.log("getDate==failed");
                 });
 
         }else{

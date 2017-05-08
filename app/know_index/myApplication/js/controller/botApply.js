@@ -48,7 +48,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
             disableAttributeTypeForApply:disableAttributeTypeForApply,
             repeatCheckForCategory:repeatCheckForCategory,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
-            responseView:responseView
+            responseView:responseView,
+            searchNodeForBot:searchNodeForBot,
+            recursionForBot:recursionForBot,
+            autoHeightForBot:autoHeightForBot,
+            locationForBot:locationForBot
         };
         //setCookie("applicationId","360619411498860544");
         //setCookie("userId","1");
@@ -56,13 +60,137 @@ angular.module('myApplicationModule').controller('botApplyController', [
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
+
+        autoHeightForBot();
+
+        function autoHeightForBot(){
+            var $win = $(window);
+            var winHeight = $win.height()*0.75;
+            $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
+            $(".library_mid").attr("style","width: 200px;height: "+winHeight+"px;background: #fff;padding: 50px 20px;");
+            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+        }
+
+        var params = {
+            "categoryName":$("#category-autocomplete").val(),
+            "categoryAttributeName":"node",
+            "categorySceneId":categorySceneId
+        };
+        console.log("========"+JSON.stringify(params));
+        //类目查找自动补全
+        $('#category-autocomplete').autocomplete({
+            serviceUrl: "/api/modeling/categorylibrary/searchbycategoryname",
+            type:'POST',
+            params:params,
+            paramName:'categoryName',
+            dataType:'json',
+            transformResult:function(data){
+                var result = new Object();
+                var array = [];
+                if(data.data){
+                    for(var i=0;i<data.data.length;i++){
+                        array[i]={
+                            data:data.data[i].categoryId,
+                            value:data.data[i].categoryName
+                        }
+                    }
+                }
+                result.suggestions = array;
+                return result;
+            },
+            onSelect: function(suggestion) {
+                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                searchNodeForBot(suggestion);
+                locationForBot(suggestion);
+            }
+        });
+        function locationForBot(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $("#library").find("i").length;
+            $.each($("#library").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var sumHeight = sum*$(value).outerHeight();
+                    var offset = (initHeight+1/sum)*sumHeight;
+                    console.log(sumHeight+"========"+offset);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return true;
+                }else{
+                    initHeight++;
+                }
+            });
+        }
+        //搜寻节点
+        function searchNodeForBot(suggestion){
+            var currentNodeId = suggestion.data;
+            console.log('currentNodeId:'+currentNodeId);
+            var firstNode = $("#library").find("i").filter(":eq(0)");
+            console.log($(firstNode).next().html()+"======"+$(firstNode).attr("data-option")+'currentNodeId:'+currentNodeId+"======"+$(firstNode).css("backgroundPosition"));
+            if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                appendLibraryTree(firstNode);
+            }else if($(firstNode).parent().parent().next()==null){
+                appendLibraryTree(firstNode);
+            }
+            if($(firstNode).attr("data-option")==currentNodeId){
+                clearColorLibrary();
+                $scope.vm.knowledgeBotLibraryVal = $(firstNode).next().html();
+                $scope.vm.botLibrarySelectValue = $(firstNode).next().attr("data-option");
+                $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
+                $scope.vm.categoryLibraryAttributeName = $(firstNode).next().attr("node-option");
+                $(firstNode).next().attr("style","color:black;font-weight:bold;");
+                console.log($scope.vm.botLibrarySelectValue);
+                console.log($scope.vm.categoryLibraryAttributeName);
+                $scope.$apply();
+            }else{
+                recursionForBot(suggestion,firstNode);
+            }
+        }
+        function recursionForBot(suggestion,node){
+            var list = $("#library").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+                if($(value).attr("data-option")==$(node).attr("data-option")){
+                    var currNode = $(value).find("i").filter(":eq(0)");
+                    if($(currNode).attr("data-option")==suggestion.data){
+                        console.log("===hit===");
+                        clearColorLibrary();
+                        $scope.vm.knowledgeBotLibraryVal = $(currNode).next().html();
+                        $scope.vm.botLibrarySelectValue = $(currNode).next().attr("data-option");
+                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                        $scope.vm.categoryLibraryAttributeName = $(currNode).next().attr("node-option");
+                        $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        console.log($scope.vm.botLibrarySelectValue);
+                        console.log($scope.vm.categoryLibraryAttributeName);
+                        $scope.$apply();
+                        flag = true;
+                        //跳出
+                        return true;
+                    }else{
+                        if(flag==true){
+                            return true;
+                        }
+                        //展开
+                        console.log("==="+$(currNode).css("backgroundPosition"));
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendLibraryTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendLibraryTree(currNode);
+                        }
+                        //递归
+                        recursionForBot(suggestion,currNode);
+                    }
+                }
+            });
+        }
         //加载业务树
         initBot();
         initBotLibrary();
         //获取root 数据
         function initBot(){
             $("#category").empty();
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPostAsync("/api/modeling/category/listbycategorypid",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
             },function(data){
@@ -80,6 +208,12 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 }
                 html+='</ul>';
                 $("#category").append(html);
+                var firstNode = $("#category").find("i").filter(":eq(0)");
+                if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                    appendTree(firstNode);
+                }else if($(firstNode).parent().parent().next()==null){
+                    appendTree(firstNode);
+                }
             },function(){
                 console.log("err or err");
             });
@@ -87,7 +221,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
         function initBotLibrary(){
             $("#library").empty();
             httpRequestPost("/api/modeling/categorylibrary/listbycategorypid",{
-                "categoryPid": "root"
+                "categoryPid": "root",
+                "categorySceneId": categorySceneId,
             },function(data){
                 var html =  '<ul class="menus show">';
                 for(var i=0;i<data.data.length;i++){
@@ -103,6 +238,12 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 }
                 html+='</ul>';
                 $("#library").append(html);
+                var firstNode = $("#library").find("i").filter(":eq(0)");
+                if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                    appendLibraryTree(firstNode);
+                }else if($(firstNode).parent().parent().next()==null){
+                    appendLibraryTree(firstNode);
+                }
             },function(){
                 console.log("err or err");
             });
@@ -178,7 +319,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/categorylibrary/listbycategorypid",{
+                httpRequestPostAsync("/api/modeling/categorylibrary/listbycategorypid",{
                     "categoryPid": id
                 },function(data){
                     if(data.data){

@@ -49,6 +49,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             scan :scan ,   //预览
             //高级选项
             newTitle: "",    //标题
+            knowledgeContentNegative : "",
             channel : [],     //新添加的 channel
             channels : [],     //所有渠道
             channelArr : [] ,
@@ -77,7 +78,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             appointRelativeGroup : [],
             replaceType : 0 ,
             enterEvent : enterEvent,
-            knowledgeContentNegative : null,
+
             dialogExtension : [],
         };
         //獲取渠道
@@ -522,14 +523,15 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
             obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
-                obj.channelIdList =  $scope.vm.channel;
+            obj.channelIdList =  $scope.vm.channel;
             obj.dimensionIdList =  $scope.vm.dimensionArr.id;
 
             obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+            obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
             obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
 
             obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
+            $scope.vm.scanContent = [] ;
             $scope.vm.scanContent.push(obj);
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
@@ -541,8 +543,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!checkSave()){
                 return false
             }else{
+                console.log(getParams());
                 httpRequestPost("/api/listKnowledge/addListKnowledge",getParams(),function(data){
-                    console.log(getParams());
+                    //console.log(getParams());
                     if(data.status == 200){
                         console.log(data);
                         var url = $state.go('custServScenaOverview.manage');
