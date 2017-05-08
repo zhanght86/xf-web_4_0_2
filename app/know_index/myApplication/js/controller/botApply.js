@@ -682,7 +682,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     }else{
                     }
                     //初始节点类型
-                    $scope.vm.categoryLibraryAttributeName="edge";
+                    //$scope.vm.categoryLibraryAttributeName="edge";
                 }
             });
             if(dialog){
@@ -695,6 +695,27 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             repeatCheckForCategory("#editErrorView",1);
                         }
                     });
+                    $("#categoryLibraryTypeId").empty();
+                    var attrArr = [];
+                    attrArr[0]={name:"默认",value:10009};
+                    attrArr[1]={name:"流程",value:10008};
+                    attrArr[2]={name:"划分",value:10007};
+                    attrArr[3]={name:"属性",value:10006};
+                    for(var index=0;index<attrArr.length;index++){
+                        if($scope.vm.categoryLibraryAttributeName=="edge"){
+                            console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                            $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                        }else{
+                            if((attrArr[index].value==$scope.vm.botSelectType)>0){
+                                console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                                $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                            }else{
+                                console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                                $("#categoryLibraryTypeId").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                            }
+                        }
+                    }
+                    $("#categoryLibraryTypeId").val($scope.vm.botSelectType);
                 }, 100);
             }
         }

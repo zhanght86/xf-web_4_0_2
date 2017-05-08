@@ -68,12 +68,13 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     break;
             }
             function edit(){
-                $state.go(editUrl,{data:$scope.vm.listData})
+                $state.go("knowledgeManagement.singleAddConcept",{data:$scope.vm.listData})
             }
             getData();
             function getData(){
-                httpRequestPost(api,{
-                    "knowledgeId" : $scope.vm.knowledgeId,
+                httpRequestPost("/api/conceptKnowledge/getKnowledge",{
+                    "knowledgeId" : "377598124782260224",
+                    //"knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
                     if($stateParams.scanKnowledge.knowledgeType == 103){
