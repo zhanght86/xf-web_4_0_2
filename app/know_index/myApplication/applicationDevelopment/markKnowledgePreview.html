@@ -61,7 +61,7 @@
                             <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
                             <span>&nbsp;</span>
                         </div>
-                        <div ng-if="vm.knowledgeType==103">
+                        <div ng-if="vm.knowledgeType==103" style="height:300px;overflow:auto;">
                             <table class="essential_factor_tab">
                                 <tr ng-repeat="(indexRow,row) in item.knowledgeContent.listTable track by $index">
                                     <td ng-repeat="(indexColumn,item) in row track by $index">
