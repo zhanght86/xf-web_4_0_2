@@ -568,7 +568,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 }else{
                     console.log($(value).val() +"======"+ $scope.vm.botSelectType);
                     if(($(value).val()==$scope.vm.botSelectType)>0){
-                        $("#category-type").val($scope.vm.botSelectType)
+                        $("#category-type").val($scope.vm.botSelectType);
                         $(value).attr("disabled",null);
                         $(value).attr("style","");
                     }else{
