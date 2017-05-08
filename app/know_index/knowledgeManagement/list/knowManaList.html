@@ -15,7 +15,7 @@
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                            <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:264px;"/>
+                            <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
                             <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
@@ -25,12 +25,12 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="dib">
                                 <label>
-                                    <input style=" margin: 0px 0 -1px 0;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                                    <input style=" margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
                                 </label>
                                 <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
-                                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                                     -
-                                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
-                                        <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 250px;border: solid 1px #ddd;"/>
+                                        <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 380px;border: solid 1px #ddd;"/>
                                         <!--<p class="ipt-txt" id="ipt-txt" >-->
                                         <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
                                         <!--</p>-->
@@ -70,7 +70,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
-                                <div class="ipt-txt-box L mr-10" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                <div class="ipt-txt-box L mr-10" style="width: 394px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
@@ -84,7 +84,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div" id="Div">
-                                <div class="ipt-txt-box" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                <div class="ipt-txt-box" style="width: 394px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
@@ -108,7 +108,7 @@
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <input type="text" class="L input-text extended_query_txt" ng-model="vm.extensionTitle" placeholder="请输入问题"
-                                       style="width:279px;" >
+                                       style="width:312px;" >
                                 <select class="sel bd L mr-10" style="margin-left:-1px;"  ng-model="vm.extensionWeight" >
                                         <option value="60">普通</option>
                                         <option value="61">否定</option>
@@ -236,5 +236,5 @@
 </div>
 
 <style>
-
+    .Wdate{background-position:164px center;}
 </style>
