@@ -484,6 +484,7 @@ knowledge_static_web
                 templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
                 controller:"relationalCatalogController"
             })
+            
             .state("botApply.manage", {
                 //params:{"userPermission" : null},
                 url: "/manage",
