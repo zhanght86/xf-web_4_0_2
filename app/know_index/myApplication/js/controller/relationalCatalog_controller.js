@@ -374,7 +374,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //类目新增
         function addBot(){
             //数据校验
-            if($scope.vm.botSelectValue=="root"){
+            if($scope.vm.botSelectValue==""){
                 return;
             }
             if(lengthCheck($("#category-name").val(),0,50)==false){
