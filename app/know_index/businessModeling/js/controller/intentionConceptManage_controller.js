@@ -153,19 +153,27 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                             "forceSegmentConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
                             if (data.status === 10002) {
-                                layer.msg("强制分词概念类名重复");
-                                httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute", {
-                                    "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                                    "forceSegmentConceptKey": $scope.vm.key,
-                                    "index": 0,
-                                    "pageSize": 1
-                                }, function (data) {
-                                    $scope.vm.dialogTitle = "编辑强制分词概念";
-                                    console.log(data);
-                                    addForceSegmentConceptDialog(singleEditForceSegmentConcept, data.data[0]);
-                                    $scope.vm.key = data.data[0].forceSegmentConceptKey;
-                                    $scope.vm.term = data.data[0].forceSegmentConceptTerm;
-                                }, function () {
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
+                                    httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute", {
+                                        "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                                        "forceSegmentConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑强制分词概念";
+                                        console.log(data);
+                                        addForceSegmentConceptDialog(singleEditForceSegmentConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].forceSegmentConceptKey;
+                                        $scope.vm.term = data.data[0].forceSegmentConceptTerm;
+                                    }, function () {
+                                        console.log("cancel");
+                                    });
+                                },function(){
+                                    console.log("cancel");
                                 });
                             } else {
                                 //类名无冲突
