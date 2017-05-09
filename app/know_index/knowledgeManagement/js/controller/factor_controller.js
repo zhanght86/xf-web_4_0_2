@@ -744,7 +744,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var params = {};
             params =  {
                 "applicationId": $scope.vm.applicationId,
-                knowledgeId : $scope.vm.knowledgeId ,
+                "knowledgeId" : $scope.vm.knowledgeId ,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
@@ -770,6 +770,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
+            console.log( params.extensionQuestions)
             console.log(params)
             return params
         }
