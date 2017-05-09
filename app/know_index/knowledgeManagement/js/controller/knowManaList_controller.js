@@ -4,14 +4,15 @@
 
 
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
             userId : $cookieStore.get("userId") ,
             sceneId :  $cookieStore.get("sceneId") ,
+            knowledgeId : "" ,
             frames : [],      //业务框架
             frameId : "",
             botRoot : "",      //根节点
@@ -100,7 +101,66 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
             });
+        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
+        /*
 
+         */
+        //組裝數據   擴展問   content
+        //BOT路径设置为 选择添加                  再次增加判断重复
+        //
+        //标题
+        if($stateParams.data!=null){
+            var data = $stateParams.data ;
+            console.log($stateParams.data);
+            //标题
+            $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
+            // 标题打标结果
+            $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
+            // 时间
+            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
+            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            //bot路径
+            $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
+            //knowledgeId
+            $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            //扩展问
+            $scope.vm.extensionsByFrame = data.extensionQuestions;
+            //内容
+            angular.forEach(data.knowledgeContents,function(item){
+                var obj = {} ;
+                obj.knowledgeContent = item.knowledgeContent;
+                obj.knowledgeContentNegative = item.knowledgeContentNegative ;
+                //維度，添加預覽效果   以name id 的 形式显示
+                obj.channelIdList =  item.channelIdList ;
+                obj.dimensionIdList =  item.dimensionIdList ;
+
+                $scope.vm.channel = item.channelIdList ;
+                $scope.vm.dimensionArr = [] ;
+                //异步原因
+                var getDimension = $interval(function(){
+                    if($scope.vm.dimensions){
+                        $interval.cancel(getDimension);
+                        angular.forEach($scope.vm.dimensions,function(val){
+                            if(!item.dimensionIdList.inArray(val.dimensionId)){
+                                var obj = {};
+                                obj.dimensionName = val.dimensionName;
+                                obj.dimensionId = val.dimensionId;
+                                $scope.vm.dimensionArr.push(obj);
+
+                            }
+                        });
+                    }
+                },100) ;
+                $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
+                $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
+                $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                //console.log(obj)
+            });
+            //
+        }
+
+        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{

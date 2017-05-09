@@ -5,6 +5,7 @@
 angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer) {
+        //$cookieStore.put("sceneId",1)
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -81,7 +82,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             enterEvent : enterEvent,
             dialogExtension : [],
             factor : 0 ,  //触发要素，0 標題   1 擴展問
-            getDetailByTitle : getDetailByTitle
+            factorTitle : "" , // 触发要素 标题
+            getDetailByTitle : getDetailByTitle,
+            detailByFactorTitle : ""
 
         };
         //獲取渠道
@@ -103,41 +106,25 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
             });
+        // 触发要素  知识标题
+        $scope.$watch("vm.factorTitle",function(val){
+            if(val != ""){
+                getDetailByTitle(val)
+            }
+        });
 
-        ////类目查找自动补全
-        //$('#category-autocomplete').autocomplete({
-        //    serviceUrl: "/api/modeling/category/searchbycategoryname",
-        //    type:'POST',
-        //    params:params,
-        //    paramName:'categoryName',
-        //    dataType:'json',
-        //    transformResult:function(data){
-        //        var result = new Object();
-        //        var array = [];
-        //        if(data.data){
-        //            for(var i=0;i<data.data.length;i++){
-        //                array[i]={
-        //                    data:data.data[i].categoryId,
-        //                    value:data.data[i].categoryName
-        //                }
-        //            }
-        //        }
-        //        result.suggestions = array;
-        //        return result;
-        //    },
-        //    onSelect: function(suggestion) {
-        //        console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
-        //        searchNodeForFrame(suggestion);
-        //        locationForFrame(suggestion);
-        //    }
-        //});
+        function selelectTitle(title){
+            $scope.vm.factorTitle = title ;
+            $scope.vm.detailByFactorTitle = [] ;
+        }
 
 //        選擇知識标题
         function getDetailByTitle(title){
             httpRequestPost("/api/marketingKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
-                console.log(data) ;
+                console.log(data);
+                //$scope.vm.detailByFactorTitle = [] ;
             },function(){
                 // layer.msg("err or err")
             });
@@ -620,7 +607,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
-                    api = "/api/conceptKnowledge/addConceptKnowledge"
+                    api = "/api/marketingKnowledge/addMarketingKnowledge"
                 }
                 httpRequestPost(api,params,function(data){
                     console.log(params);
@@ -640,13 +627,23 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }else{
                 var obj = {};
                 var params = getParams();
-                //console.log(params);
+                console.log(params);
                 obj.params = params;
-                obj.editUrl = "knowledgeManagement.singleAddConcept";
+                obj.editUrl = "knowledgeManagement.ConceptAdd";
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "marketingKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api = "/api/marketingKnowledge/addMarketingKnowledge"
+                }
+                obj.params = params;
+                obj.knowledgeType = 101 ;
+                $window.knowledgeScan = obj;
                 //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
-                $cookieStore.put("knowledgeScan",obj);
             }
         };
 

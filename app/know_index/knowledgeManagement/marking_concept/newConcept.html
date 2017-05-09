@@ -121,8 +121,15 @@
                                 <option value="0">知识标题</option>
                                 <option value="1">概念扩展</option>
                             </select>
-                            <input type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
+                            <input ng-if="vm.factor==0" onchange="" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
+                            <input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
                             <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.factor?vm.getExtension(vm.extensionTitle):vm.getDetailByTitle(vm.extensionTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <!--<ul class="listItem" ng-if="vm.appointRelativeList.length" style="position: absolute;-->
+                            <!--left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;box-sizing:border-box;">-->
+                                <!--<li ng-repeat="item in vm.appointRelativeList track by $index" style="min-width: 280px;-->
+                                             <!--cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px"-->
+                                    <!--ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>-->
+                            <!--</ul>-->
                         </div>
                         <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
 
@@ -152,7 +159,7 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -172,7 +179,7 @@
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
                             <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>

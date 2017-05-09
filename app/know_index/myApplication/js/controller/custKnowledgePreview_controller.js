@@ -77,7 +77,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
-                    //console.log(data)
+                    console.log(data) ;
                     if(viewData.knowledgeType == 103){
                         var data = data.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;
@@ -95,6 +95,5 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 });
             }
         }
-
     }
 ]);

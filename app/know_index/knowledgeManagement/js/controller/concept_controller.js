@@ -681,16 +681,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     //新增
                     obj.api = "/api/conceptKnowledge/addConceptKnowledge"
                 }
-                //obj.save = function(){
-                //    httpRequestPost("/api/faqKnowledge/addFAQKnowledge",params,function(data){
-                //        console.log(data) ;
-                //        if(data.status == 200){
-                //            $state.go("custServScenaOverview.manage")
-                //        }
-                //    },function(err){
-                //        console.log(err)
-                //    });
-                //};
                 obj.params = params;
                 obj.knowledgeType = 101 ;
                 $window.knowledgeScan = obj;
