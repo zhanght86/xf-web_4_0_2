@@ -74,10 +74,10 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
             getData();
             function getData(){
                 httpRequestPost(api,{
-                    //"knowledgeId" : "377598124782260224",
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
+                    //console.log(data)
                     if(viewData.knowledgeType == 103){
                         var data = data.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;
