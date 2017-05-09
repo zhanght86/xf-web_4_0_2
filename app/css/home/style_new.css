@@ -52,9 +52,17 @@
 .add_ele_span{width:85px;display:inline-block;line-height:30px;}
 
 /*场景管理*/
-.scene_box_top{}
-.scene_box_top span{width:250px;height:35px;border-radius:2px;background:#ccc;display:inline-block;cursor:pointer;line-height:35px;text-align:center;font-size:16px;color:#fff;}
-.scene_box_top span.cur{background:#529ff6;}
+.scene_box_top{border-bottom:1px solid #e3e3e3;width:100%;height:31px;}
+.scene_box_top span{background:#fff;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 20px;
+}
+.scene_box_top span.cur{background-color: #3ea9fb; color: #fff;}
 .know_style{width:23%;margin:0 1% 15px 1%;padding:10px;box-sizing:border-box;float: left;position:relative;}
 
 /*知识管理-知识总览*/

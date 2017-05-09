@@ -70,7 +70,8 @@
             <label class="form-label col-xs-3 col-sm-2">角色：</label>
             <div class="formControls col-xs-9 col-sm-9">
 
-                <select class="input-text"  id="role_id" ng-model="vm.roleId">
+                <!--<select class="input-text"  id="role_id" ng-model="vm.roleId">-->
+                <select class="input-text" id="role_id" disabled ng-init="vm.roleId">
 
                     <option  ng-repeat="item in vm.listRole"  ng-value="item.roleId" ng-selected="item.roleId ==vm.roleId">{{item.roleName}}</option>
                 </select>

@@ -272,17 +272,21 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             repeatCheck("#editErrorView",1);
                         }
                     });
-                    //$.each($("#categoryTypeId").find("option"),function(index,value){
-                    //    console.log($(value).val() +"======"+ $scope.vm.categoryTypeId);
-                    //    if(($(value).val()==$scope.vm.categoryTypeId)>0){
-                    //        $("#categoryTypeId").val($scope.vm.categoryTypeId)
-                    //        $(value).attr("disabled",null);
-                    //        $(value).attr("style","");
-                    //    }else{
-                    //        $(value).attr("disabled","disabled");
-                    //        $(value).attr("style","background-color: lightgrey");
-                    //    }
-                    //});
+                    $.each($("#categoryTypeId").find("option"),function(index,value){
+                        if($scope.vm.categoryAttributeName=="edge"){
+                            $(value).attr("disabled",null);
+                            $(value).attr("style","");
+                        }else{
+                            if(($(value).val()==$scope.vm.categoryTypeId)>0){
+                                $("#categoryTypeId").val($scope.vm.categoryTypeId);
+                                $(value).attr("disabled",null);
+                                $(value).attr("style","");
+                            }else{
+                                $(value).attr("disabled","disabled");
+                                $(value).attr("style","background-color: lightgrey");
+                            }
+                        }
+                    });
                 }, 100);
             }
         }
@@ -568,7 +572,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 }else{
                     console.log($(value).val() +"======"+ $scope.vm.botSelectType);
                     if(($(value).val()==$scope.vm.botSelectType)>0){
-                        $("#category-type").val($scope.vm.botSelectType)
+                        $("#category-type").val($scope.vm.botSelectType);
                         $(value).attr("disabled",null);
                         $(value).attr("style","");
                     }else{
