@@ -22,9 +22,9 @@
     <div class="application_box cl">
         <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication">
             <a ui-sref="setting.Infor" >
-                <img ng-if="application.statusId==40001" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../images/marketing.png" width="80" height="80"/>
-                <img ng-if="application.statusId==40002" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/cust_service.png" width="80" height="80"/>
-                <img ng-if="application.statusId==40003" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/images/u33.png" width="80" height="80"/>
+                <img ng-if="application.sceneId==2" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../images/marketing.png" width="80" height="80"/>
+                <img ng-if="application.sceneId==1" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/cust_service.png" width="80" height="80"/>
+                <img ng-if="application.sceneId==3" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/images/u33.png" width="80" height="80"/>
             </a>
             <div class="p10 mb-10 bd_bot" >
                 <p class="name">{{application.applicationName}}</p>
@@ -50,6 +50,6 @@
     .application_box_list .status .c-blue{
         color:lightblue;
     }
-    .application_box_list{padding:10px;box-sizing:border-box;}
+    .application_box_list{padding:10px;box-sizing:border-box;height:220px;}
     
 </style>

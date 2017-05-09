@@ -72,9 +72,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
             var url = $state.href(addUrl);
             $window.open(url,'_blank');
-
+            console.log(addUrl)
         }
-
         napSearch();
         //高级搜索 开关
         $scope.$watch("vm.heighSarch",function(val){
@@ -96,7 +95,10 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             obj.applicationId = $scope.vm.applicationId ;
             obj.knowledgeId = item.knowledgeId;
             obj.knowledgeType = item.knowledgeType;
-            $state.go("custKnowledgePreview.manage",{scanKnowledge:obj})
+            $window.knowledgeScan = obj ;
+            var url = $state.href("custKnowledgePreview.manage");
+            $window.open(url,'_blank');
+            //$state.go("custKnowledgePreview.manage")
         }
         function getSourceType(val){
             $scope.vm.sourceType = val

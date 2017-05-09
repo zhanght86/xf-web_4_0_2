@@ -266,37 +266,32 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             },function(data){
                 console.log(data);
                 if(data.status==200){
-                    var enxtensionBack = [] ;
-                    angular.forEach(data.data,function(item){
-                        var obj = {} ;
-                        obj.extensionQuestionTitle = item.extensionQuestionTitle;
-                        obj.extensionQuestionType = oldWord.extensionQuestionType;
-                        obj.wholeDecorateTag = item.wholeDecorateTag;
-                        obj.source = oldWord.source ;
-                        var arr = [] ;
-                        var wholeTag = [];
-                        angular.forEach(item.wholeDecorateTag,function(key){
-                            var whole = {} ;
-                            whole.wholeDecorateTagName = key.wholeDecorateTagName;
-                            whole.wholeDecorateTagType = key.wholeDecorateTagType;
-                            wholeTag.push(tag)
+                    var enten = {}  ;
+                    enten.extensionQuestionTitle = title;
+                    enten.extensionQuestionType = weight ;
+                    var listArr = [];
+                    var listObj = {};
+                    listObj.wholeDecorateTagName="";
+                    listObj.wholeDecorateTagType="";
+                    listArr.push(listObj);
+                    enten.wholeDecorateTagList = listArr;
+                    enten.extensionQuestionTagList = [] ;
+                    angular.forEach(data.data,function(tagList){
+                        var tag = [] ;
+                        angular.forEach(tagList.extensionQuestionTagList,function(item){
+                            var tagTem = {};
+                            tagTem.exist = item.exist ;
+                            tagTem.tagClass= item.tagClass;
+                            tagTem.tagName= item.tagName;
+                            tagTem.tagTypeList= [] ;
+                            tagTem.tagTypeList.push(item.tagType);
+                            tag.push(tagTem)
                         });
-                        angular.forEach(item.extensionQuestionTagList,function(val){
-                            var tag = {} ;
-                            tag.exist = val.exist ;
-                            tag.tagClass = val.tagClass ;
-                            tag.tagName =val.tagName ;
-                            tag.tagTypeList = [];
-                            tag.tagTypeList.push(val.tagType) ;
-                            arr.push(tag)
-                        });
-                        obj.extensionQuestionTagList = arr ;
-                        obj.wholeDecorateTag = wholeTag;
-                        enxtensionBack.push(obj);
+                        enten.extensionQuestionTagList.push(tag) ;
                     });
-                    $scope.vm.extensionsByFrame =  enxtensionBack;
+                    $scope.vm.extensionsByFrame = exten;
+                    console.log($scope.vm.extensionsByFrame);
                     $scope.$apply();
-                    console.log(data);
                 }
             },function(){
                 layer.msg("err or err")
@@ -342,35 +337,38 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         $scope.$apply();
                     }else if(data.status==200){
                         var enten = {}  ;
-                        var tag = [] ;
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = "60" ;
-                        angular.forEach(data.data[0].extensionQuestionTagList,function(item){
-                            var tagTem = {};
-                            tagTem.tagClass= item.tagClass;
-                            tagTem.tagName= item.tagName;
-                            tagTem.tagTypeList= [] ;
-                            tagTem.tagTypeList.push(item.tagType);
-                            tag.push(tagTem)
-                        });
-                        enten.extensionQuestionTagList = tag ;
                         var listArr = [];
                         var listObj = {};
                         listObj.wholeDecorateTagName="";
                         listObj.wholeDecorateTagType="";
                         listArr.push(listObj);
                         enten.wholeDecorateTagList = listArr;
+                        enten.extensionQuestionTagList = [] ;
+                        angular.forEach(data.data,function(tagList){
+                            var tag = [] ;
+                            angular.forEach(tagList.extensionQuestionTagList,function(item){
+                                var tagTem = {};
+                                tagTem.tagClass= item.tagClass;
+                                tagTem.tagName= item.tagName;
+                                tagTem.tagTypeList= [] ;
+                                tagTem.tagTypeList.push(item.tagType);
+                                tag.push(tagTem)
+                            });
+                            enten.extensionQuestionTagList.push(tag) ;
+                        });
                         $scope.vm.extensions.push(enten);
+                        console.log($scope.vm.extensions);
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
-                        console.log( $scope.vm.extensions);
-                        //$scope.vm.extensionTitle = ""
                     }
                 },function(){
                     layer.msg("添加扩展问失败")
                 });
             }
         }
+
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
         //{
         //    "categoryApplicationId": "360619411498860544",

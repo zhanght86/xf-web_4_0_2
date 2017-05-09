@@ -5,18 +5,16 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowledgeScanController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","$location","$rootScope","knowledgeAddServer",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","$location","$rootScope","knowledgeAddServer","$window",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope,knowledgeAddServer,$window) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
-        //"364180924750893056"
-        //knowledgeScan
-        //console.log($cookieStore.get("knowledgeScan"));
-        //console.log($stateParams);
-        var knowledgeScan =  $cookieStore.get("knowledgeScan");
+        console.log($window.opener.knowledgeScan);
+        console.log($stateParams);
+        var knowledgeScan =  $window.opener.knowledgeScan;
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
-            knowledgeId : $stateParams.knowledgeId,
-            knowledgeType : $stateParams.knowledgeType,
+            knowledgeId : knowledgeScan.knowledgeId,
+            knowledgeType : knowledgeScan.knowledgeType,
             listData : null,
             knowledgeData : knowledgeScan.params ,
             dimensions : "",
