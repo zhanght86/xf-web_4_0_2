@@ -154,20 +154,28 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                             "collectiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
-                                layer.msg("集合概念类名重复");
-                                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-                                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                                    "collectiveConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑集合概念";
-                                    console.log(data);
-                                    addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].collectiveConceptKey;
-                                    $scope.vm.term =  data.data[0].collectiveConceptTerm;
-                                    $scope.vm.weight =  data.data[0].collectiveConceptWeight;
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
+                                    httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                                        "collectiveConceptApplicationId": $scope.vm.applicationId,
+                                        "collectiveConceptKey":$scope.vm.key,
+                                        "index":0,
+                                        "pageSize":1
+                                    },function(data){
+                                        $scope.vm.dialogTitle="编辑集合概念";
+                                        console.log(data);
+                                        addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
+                                        $scope.vm.key = data.data[0].collectiveConceptKey;
+                                        $scope.vm.term =  data.data[0].collectiveConceptTerm;
+                                        $scope.vm.weight =  data.data[0].collectiveConceptWeight;
+                                    },function(){
+                                        console.log("cancel");
+                                    });
                                 },function(){
+                                    console.log("cancel");
                                 });
                             }else{
                                 //类名无冲突

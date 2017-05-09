@@ -158,20 +158,28 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                             "businessConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
-                                layer.msg("业务概念类名重复");
-                                httpRequestPost("/api/modeling/concept/business/listByAttribute",{
-                                    "businessConceptApplicationId": $scope.vm.applicationId,
-                                    "businessConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑业务概念";
-                                    console.log(data);
-                                    addBusinessConceptDialog(singleEditBusinessConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].businessConceptKey;
-                                    $scope.vm.term =  data.data[0].businessConceptTerm;
-                                    $scope.vm.weight =  data.data[0].businessConceptWeight;
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
+                                    httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                                        "businessConceptApplicationId": $scope.vm.applicationId,
+                                        "businessConceptKey":$scope.vm.key,
+                                        "index":0,
+                                        "pageSize":1
+                                    },function(data){
+                                        $scope.vm.dialogTitle="编辑业务概念";
+                                        console.log(data);
+                                        addBusinessConceptDialog(singleEditBusinessConcept,data.data[0]);
+                                        $scope.vm.key = data.data[0].businessConceptKey;
+                                        $scope.vm.term =  data.data[0].businessConceptTerm;
+                                        $scope.vm.weight =  data.data[0].businessConceptWeight;
+                                    },function(){
+                                        console.log("cancel");
+                                    });
                                 },function(){
+                                    console.log("cancel");
                                 });
                             }else{
                                 //类名无冲突
