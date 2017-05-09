@@ -277,7 +277,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     enten.wholeDecorateTagList = listArr;
                     enten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        var tag = [] ;
+                        //var tag = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -285,9 +285,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             tagTem.tagName= item.tagName;
                             tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            tag.push(tagTem)
+                            //tag.push(tagTem)
+                            enten.extensionQuestionTagList.push(tagTem) ;
                         });
-                        enten.extensionQuestionTagList.push(tag) ;
                     });
                     $scope.vm.extensionsByFrame = exten;
                     console.log($scope.vm.extensionsByFrame);
@@ -347,16 +347,17 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         enten.wholeDecorateTagList = listArr;
                         enten.extensionQuestionTagList = [] ;
                         angular.forEach(data.data,function(tagList){
-                            var tag = [] ;
+                            //var tag = [] ;
                             angular.forEach(tagList.extensionQuestionTagList,function(item){
                                 var tagTem = {};
+                                tagTem.exist = item.exist ;
                                 tagTem.tagClass= item.tagClass;
                                 tagTem.tagName= item.tagName;
                                 tagTem.tagTypeList= [] ;
                                 tagTem.tagTypeList.push(item.tagType);
-                                tag.push(tagTem)
+                                //tag.push(tagTem)
+                                enten.extensionQuestionTagList.push(tagTem) ;
                             });
-                            enten.extensionQuestionTagList.push(tag) ;
                         });
                         $scope.vm.extensions.push(enten);
                         console.log($scope.vm.extensions);
@@ -611,8 +612,18 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if(!checkSave()){
                 return false
             }else{
-                httpRequestPost("/api/marketingKnowledge/addMarketingKnowledge",getParams(),function(data){
-                    console.log(getParams());
+                var params = getParams() ;
+                var api ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    api = "/api/marketingKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    api = "/api/conceptKnowledge/addConceptKnowledge"
+                }
+                httpRequestPost(api,params,function(data){
+                    console.log(params);
                     if(data.status == 200){
                         $state.go('custServScenaOverview.manage');
                     }else if(data.status==500){
