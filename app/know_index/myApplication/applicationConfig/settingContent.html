@@ -12,7 +12,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input name="robotName" class="ipt-txt" type="text"
+                        <input name="robotName" class="ipt-txt" type="text" placeholder="给机器人起个名字吧"
                                ng-model="robot.robotName" ng-maxlength="8" ng-pattern="/^[\u2E80-\uFE4F]+$/"/>
                         <i class="btn-empty"></i>
                     </div>
@@ -43,7 +43,7 @@
                     欢迎语：
                 </div>
                 <div class="value">
-                    <textarea class="textarea" name="robotWelcome" check-welcome="robotWelcome"
+                    <textarea class="textarea" name="robotWelcome" check-welcome="robotWelcome" placeholder="小富机器人欢迎您"
                               ng-model="robot.robotWelcome"
                               ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！\\r\n]+$/"/>>小富机器人欢迎您！</textarea>
                     <!--<div class="error-tip" ng-show="mySetting.robotWelcome.$dirty && mySetting.robotWelcome.$invalid">-->
@@ -64,11 +64,11 @@
         <div class="jqrsz-item">
             <div class="item-line">
                 <div class="lable">
-                    热点知识跟新频率：
+                    热点知识更新频率：
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" name="robotHotQuestionTimeout"
+                        <input class="ipt-txt" type="text" name="robotHotQuestionTimeout" placeholder="热点问题的更新频率，只限正整数"
                                ng-model="robot.robotHotQuestionTimeout" style="width: 190px;" ng-pattern="/^([1-9][0-9]*){1,3}$/" >
                         <i class="btn-empty"></i>
                     </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" name="robotUnknown"
+                        <input class="ipt-txt" type="text" name="robotUnknown" placeholder="当机器人答不上来时，机器人的回复"
                                ng-model="robot.robotUnknown" ng-maxlength="50"
                                ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                         <i class="btn-empty"></i>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" name="robotSensitive"
+                        <input class="ipt-txt" type="text" name="robotSensitive" placeholder="当会话中包含敏感词时，机器人的回复"
                                ng-model="robot.robotSensitive" ng-maxlength="50"
                                ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                         <i class="btn-empty"></i>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" name="robotExpire" type="text"
+                        <input class="ipt-txt" name="robotExpire" type="text" placeholder="当问答的知识已经过期了，机器人的回复"
                                ng-model="robot.robotExpire" ng-maxlength="50"
                                ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                         <i class="btn-empty"></i>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" type="text" name="robotRepeat"
+                        <input class="ipt-txt" type="text" name="robotRepeat" placeholder="当用户重复回答超过设置次数时，机器人的回复"
                                ng-model="robot.robotRepeat" ng-maxlength="50"
                                ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                         <i class="btn-empty"></i>
@@ -184,7 +184,7 @@
                 </div>
                 <div class="value">
                     <div class="ipt-txt-box">
-                        <input class="ipt-txt" name="robotTimeout" type="text"
+                        <input class="ipt-txt" name="robotTimeout" type="text" placeholder="当会话超时后，机器人的回复"
                                ng-model="robot.robotTimeout" ng-maxlength="50"
                                ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                         <i class="btn-empty"></i>

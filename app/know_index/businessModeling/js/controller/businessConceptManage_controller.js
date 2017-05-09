@@ -35,7 +35,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             inputVal : "",
             termSpliter: "；",
             current:1,
-            percent:"%"
+            percent:"%",
+            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
         };
 
         /**
@@ -147,7 +149,10 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        console.log($scope.vm.key);
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
                         httpRequestPost("/api/modeling/concept/business/repeatCheck",{
                             "businessConceptApplicationId": $scope.vm.applicationId,
                             "businessConceptKey": $scope.vm.key
@@ -185,6 +190,17 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     }
                 }
             });
+            if(dialog){
+                $timeout(function(){
+                    $("#businessKey").blur(function(){
+                        if(lengthCheck($("#businessKey").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
+                },100);
+            }
         }
 
         //編輯彈框   添加公用
@@ -198,6 +214,36 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        var obj = $("#term").next();
+                        var term = "";
+                        var length = obj.find("li").length;
+                        if(length<=0){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        $.each(obj.find("li"),function(index,value){
+                            if(index>0){
+                                $.each($(value).find("div"),function(index1,value1){
+                                    if(index1==1){
+                                        term+=$(value1).html()+$scope.vm.termSpliter;
+                                    }
+                                });
+                            }
+                        });
+                        term=term.substring(0,term.length-1);
+                        $scope.vm.term=term;
+                        if(lengthCheck(term,0,500)==false){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
                         callback(item);
                     }else{
                          $scope.vm.key = "";
@@ -208,7 +254,14 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
             if(dialog){
                 $timeout(function () {
-                    termSpliterTagEditor()
+                    termSpliterTagEditor();
+                    $("#businessKeyTwo").blur(function(){
+                        if(lengthCheck($("#businessKeyTwo").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
                 }, 100);
             }
         }
@@ -302,6 +355,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         function assembleBusinessConceptTerm(){
             var obj = $("#term").next();
             var term = "";
+            var length = obj.find("li").length;
             $.each(obj.find("li"),function(index,value){
                 if(index>0){
                     $.each($(value).find("div"),function(index1,value1){

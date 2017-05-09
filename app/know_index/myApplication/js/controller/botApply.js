@@ -50,7 +50,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
             responseView:responseView,
             searchNodeForBot:searchNodeForBot,
-            recursionForBot:recursionForBot
+            recursionForBot:recursionForBot,
+            autoHeightForBot:autoHeightForBot,
+            locationForBot:locationForBot
         };
         //setCookie("applicationId","360619411498860544");
         //setCookie("userId","1");
@@ -58,8 +60,20 @@ angular.module('myApplicationModule').controller('botApplyController', [
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
+
+        autoHeightForBot();
+
+        function autoHeightForBot(){
+            var $win = $(window);
+            var winHeight = $win.height()*0.75;
+            $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
+            $(".library_mid").attr("style","width: 200px;height: "+winHeight+"px;background: #fff;padding: 50px 20px;");
+            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+        }
+
         var params = {
             "categoryName":$("#category-autocomplete").val(),
+            "categoryAttributeName":"node",
             "categorySceneId":categorySceneId
         };
         console.log("========"+JSON.stringify(params));
@@ -87,8 +101,27 @@ angular.module('myApplicationModule').controller('botApplyController', [
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNodeForBot(suggestion);
+                locationForBot(suggestion);
             }
         });
+        function locationForBot(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $("#library").find("i").length;
+            $.each($("#library").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var sumHeight = sum*$(value).outerHeight();
+                    var offset = (initHeight+1/sum)*sumHeight;
+                    console.log(sumHeight+"========"+offset);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return true;
+                }else{
+                    initHeight++;
+                }
+            });
+        }
         //搜寻节点
         function searchNodeForBot(suggestion){
             var currentNodeId = suggestion.data;
@@ -649,7 +682,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     }else{
                     }
                     //初始节点类型
-                    $scope.vm.categoryLibraryAttributeName="edge";
+                    //$scope.vm.categoryLibraryAttributeName="edge";
                 }
             });
             if(dialog){
@@ -662,6 +695,27 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             repeatCheckForCategory("#editErrorView",1);
                         }
                     });
+                    $("#categoryLibraryTypeId").empty();
+                    var attrArr = [];
+                    attrArr[0]={name:"默认",value:10009};
+                    attrArr[1]={name:"流程",value:10008};
+                    attrArr[2]={name:"划分",value:10007};
+                    attrArr[3]={name:"属性",value:10006};
+                    for(var index=0;index<attrArr.length;index++){
+                        if($scope.vm.categoryLibraryAttributeName=="edge"){
+                            console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                            $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                        }else{
+                            if((attrArr[index].value==$scope.vm.botSelectType)>0){
+                                console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                                $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                            }else{
+                                console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                                $("#categoryLibraryTypeId").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                            }
+                        }
+                    }
+                    $("#categoryLibraryTypeId").val($scope.vm.botSelectType);
                 }, 100);
             }
         }

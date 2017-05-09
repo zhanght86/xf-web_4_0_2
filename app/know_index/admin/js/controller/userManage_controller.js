@@ -134,9 +134,13 @@ angular.module('adminModule').controller('userManageController', [
                             remark:$scope.vm.remark,
                         },function(data){
                             //刷新页面
-                            $state.reload()
+                            $state.reload();
                             if(data.status == 10009){
-                                layer.msg("数据重复!")
+                                layer.msg("该用户已经存在，请重新添加!")
+                            }else if(data.status == 10008){
+                                layer.msg("用户添加成功!");
+                            }else{
+                                layer.msg("用户添加失败!");
                             }
                         },function(){
                             layer.msg("请求失败")
@@ -151,6 +155,7 @@ angular.module('adminModule').controller('userManageController', [
             $scope.vm.userName = data.userName;
             $scope.vm.userLoginName = data.userLoginName;
             $scope.vm.userPassword = data.userPassword;
+            $scope.vm.userPassWord = data.userPassword;
             $scope.vm.userPhoneNumber = data.userPhoneNumber;
             $scope.vm.userEmail = data.userEmail;
             $scope.vm.remark = data.remark;
@@ -187,8 +192,13 @@ angular.module('adminModule').controller('userManageController', [
                         },function(data){
                             //刷新页面
                             $state.reload();
+                            if(data.status == 10012){
+                                layer.msg("用户修改成功!");
+                            }else{
+                                layer.msg("用户修改失败!");
+                            }
                         },function(){
-                            layer.msg("请求失败")
+                            layer.msg("请求失败");
                         })
                     }
                 }
@@ -236,6 +246,11 @@ angular.module('adminModule').controller('userManageController', [
                         httpRequestPost("/api/user/deleteUser",{
                             userId:userId,
                         },function(data){
+                            if(data.status == 10010){
+                                layer.msg("用户删除成功!");
+                            }else{
+                                layer.msg("用户删除失败!");
+                            }
                             $state.reload()
                         },function(){
                             layer.msg("请求失败")
@@ -287,7 +302,12 @@ angular.module('adminModule').controller('userManageController', [
                 userId:userId,
                 statusId:statusId
             },function(data){
-                $state.reload()
+                $state.reload();
+                if(data.status == 10012){
+                    layer.msg("用户状态修改成功!");
+                }else{
+                    layer.msg("用户状态修改失败!");
+                }
             },function(){
                 layer.msg("请求失败")
             })

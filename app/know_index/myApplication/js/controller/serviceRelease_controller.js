@@ -203,6 +203,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
         function initPublishServiceInput(){
             $scope.vm.categoryIds=[]; //分类id列表
+            $scope.vm.newCategoryIds=[]; //选择的分类id
             $scope.vm.channels=[]; //渠道id列表
             $scope.vm.dimensions=[]; //维度id列表
             $scope.vm.nodeCode=""; //节点编号

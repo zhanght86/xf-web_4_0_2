@@ -309,7 +309,15 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         },function(){
                             layer.msg("请求失败")
                         })
+                        //保存的同时清空数据
+                        $scope.vm.seleceAddAll = [];
+                        $scope.vm.listKnoData = [];
+                        $scope.vm.knowledge = "";
+                        $scope.vm.listKnoDataTotal = 0,
+                        $scope.vm.paginationConf1 = ''
                     }else{
+                        //取消的同时清空数据
+                        $scope.vm.seleceAddAll = [];
                         $scope.vm.listKnoData = [];
                         $scope.vm.knowledge = "";
                         $scope.vm.listKnoDataTotal = 0,

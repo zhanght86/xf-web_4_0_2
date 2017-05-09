@@ -57,7 +57,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             frameTitleNullErrorInfo:"框架标题为空或超过长度限制50",
             frameTitleRepeatCheck:frameTitleRepeatCheck,
             searchNodeForFrame:searchNodeForFrame,
-            recursionForFrame:recursionForFrame
+            recursionForFrame:recursionForFrame,
+            autoHeightForFrame:autoHeightForFrame,
+            locationForFrame:locationForFrame
         };
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
@@ -65,8 +67,19 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
+
+        autoHeightForFrame();
+
+        function autoHeightForFrame(){
+            var $win = $(window);
+            var winHeight = $win.height()*0.75;
+            $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
+            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+        }
+
         var params = {
             "categoryName":$("#category-autocomplete").val(),
+            "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
         //类目查找自动补全
@@ -93,8 +106,28 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNodeForFrame(suggestion);
+                locationForFrame(suggestion);
             }
         });
+        //定位
+        function locationForFrame(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $(".aside-navs").find("i").length;
+            $.each($(".aside-navs").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var sumHeight = sum*$(value).outerHeight();
+                    var offset = (initHeight+1/sum)*sumHeight;
+                    console.log(sumHeight+"========"+offset);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return true;
+                }else{
+                    initHeight++;
+                }
+            });
+        }
         //搜寻节点
         function searchNodeForFrame(suggestion){
             var currentNodeId = suggestion.data;
@@ -111,11 +144,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $scope.vm.knowledgeBotVal = $(firstNode).next().html();
                 $scope.vm.botSelectValue = $(firstNode).next().attr("data-option");
                 $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
-                $scope.vm.categoryAttributeName = $(firstNode).next().attr("node-option");
                 $(firstNode).next().attr("style","color:black;font-weight:bold;");
                 console.log($scope.vm.botSelectValue);
-                console.log($scope.vm.categoryAttributeName);
-                disableAttributeType();
+                loadFrameLibrary(1);
                 $scope.$apply();
             }else{
                 recursionForFrame(suggestion,firstNode);
@@ -133,11 +164,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         $scope.vm.knowledgeBotVal = $(currNode).next().html();
                         $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
                         $scope.vm.botSelectType = $(currNode).next().attr("type-option");
-                        $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
                         $(currNode).next().attr("style","color:black;font-weight:bold;");
                         console.log($scope.vm.botSelectValue);
-                        console.log($scope.vm.categoryAttributeName);
-                        disableAttributeType();
+                        loadFrameLibrary(1);
                         $scope.$apply();
                         flag = true;
                         //跳出
@@ -1588,13 +1617,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 arr[0]=$(value).val();
                 httpRequestPost("/api/modeling/frame/batchtag",{
                     "extendQuestionList":arr,
-                    "applicationId":"100"
+                    "applicationId":categoryApplicationId
                 },function(data){
                     if(data){
                         if(data.status==200){
                             if(data.data.length>0){
-                                if(data.data[0][0]!=null){
-                                    appendTag(data.data[0][0],$(value).val())
+                                if(data.data[0]!=null){
+                                    appendTag(data.data[0],$(value).val());
                                 }
                             }
                         }
@@ -1606,8 +1635,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         function appendTag(data,originStr){
             var tagHtml = '<div class="tag_box">';
-            for(var i=0;i<data.tagList.length;i++){
-                tagHtml+='<span class="tag_s">'+data.tagList[i]+'</span>';
+            for(var i=0;i<data.length;i++){
+                for(var j=0;j<data[i].tagList.length;j++){
+                    tagHtml+='<span class="tag_s">'+data[i].tagList[j]+'</span>';
+                }
             }
             tagHtml+='</div>';
             var html =  '<div class="row cl mb-10">'+

@@ -25,13 +25,13 @@
                     <div class="lable">
                         知识有效期：
                     </div>
-                    <label>
-                        <input style="margin: 0px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                    <label style="line-height:32px;">
+                        <input style="margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
                     </label>
                     <div style="margin: 10px 0 10px  232px;" ng-show="vm.isTimeTable">
-                        <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:196px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                         -
-                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:196px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     </div>
                 </div>
 
@@ -59,7 +59,6 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
                         <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.botSelectAdd()"><img src="../../../images/images/add_img.png" alt=""></a>
                     </div>
@@ -108,8 +107,8 @@
                     </div>
                     <div class="value" style="overflow: visible">
                         <div class="clearfix" style="width: 500px;height: 38px;">
-                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-right: 0;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 20%;height: 39px;">
+                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
+                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 39px;">
                                 <option value="1">普通</option>
                                 <option value="0">否定</option>
                             </select>
@@ -117,11 +116,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="Concept-Ipt-nxtDiv Concept-Ipt-nxtDivOut" style="margin-top: 20px;margin-bottom: 0;">
-                    <span class="Concept-Ipt-nxt-ico"></span>
-                    <span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>
-                </div>
-
 <!--sshoudong  tinajia -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
                     <div class="lable" ng-class="'milesVh'">
@@ -213,7 +207,7 @@
     .ipt-txt{
         border: 1px  solid #e1e1e1;
     }
-    .tag_box{width:356px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
+    .tag_box{width:346px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
     .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
 

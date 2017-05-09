@@ -33,7 +33,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             repeatCheck:repeatCheck,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
             searchNode:searchNode,
-            recursion:recursion
+            recursion:recursion,
+            location:location,
+            autoHeight:autoHeight
         };
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
@@ -42,8 +44,18 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
 
+        autoHeight();
+
+        function autoHeight(){
+            var $win = $(window);
+            var winHeight = $win.height()*0.75;
+            $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
+            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+        }
+
         var params = {
             "categoryName":$("#category-autocomplete").val(),
+            "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
         console.log("========"+JSON.stringify(params));
@@ -71,6 +83,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNode(suggestion);
+                location(suggestion);
             }
         });
         //搜寻节点
@@ -125,7 +138,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             return true;
                         }
                         //展开
-                        console.log("==="+$(currNode).css("backgroundPosition"));
                         if($(currNode).css("backgroundPosition")=="0% 0%"){
                             appendTree(currNode);
                         }else if($(currNode).parent().parent().next()==null){
@@ -134,6 +146,25 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         //递归
                         recursion(suggestion,currNode);
                     }
+                }
+            });
+        }
+        //定位
+        function location(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $(".aside-navs").find("i").length;
+            $.each($(".aside-navs").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var sumHeight = sum*$(value).outerHeight();
+                    var offset = (initHeight+1/sum)*sumHeight;
+                    console.log(sumHeight+"========"+offset);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return true;
+                }else{
+                    initHeight++;
                 }
             });
         }
@@ -241,17 +272,21 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             repeatCheck("#editErrorView",1);
                         }
                     });
-                    //$.each($("#categoryTypeId").find("option"),function(index,value){
-                    //    console.log($(value).val() +"======"+ $scope.vm.categoryTypeId);
-                    //    if(($(value).val()==$scope.vm.categoryTypeId)>0){
-                    //        $("#categoryTypeId").val($scope.vm.categoryTypeId)
-                    //        $(value).attr("disabled",null);
-                    //        $(value).attr("style","");
-                    //    }else{
-                    //        $(value).attr("disabled","disabled");
-                    //        $(value).attr("style","background-color: lightgrey");
-                    //    }
-                    //});
+                    $.each($("#categoryTypeId").find("option"),function(index,value){
+                        if($scope.vm.categoryAttributeName=="edge"){
+                            $(value).attr("disabled",null);
+                            $(value).attr("style","");
+                        }else{
+                            if(($(value).val()==$scope.vm.categoryTypeId)>0){
+                                $("#categoryTypeId").val($scope.vm.categoryTypeId);
+                                $(value).attr("disabled",null);
+                                $(value).attr("style","");
+                            }else{
+                                $(value).attr("disabled","disabled");
+                                $(value).attr("style","background-color: lightgrey");
+                            }
+                        }
+                    });
                 }, 100);
             }
         }
@@ -298,7 +333,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         });
         //加载子树
         function appendTree(obj){
-            console.log("====append====");
             var id = $(obj).attr("data-option");
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
@@ -538,7 +572,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 }else{
                     console.log($(value).val() +"======"+ $scope.vm.botSelectType);
                     if(($(value).val()==$scope.vm.botSelectType)>0){
-                        $("#category-type").val($scope.vm.botSelectType)
+                        $("#category-type").val($scope.vm.botSelectType);
                         $(value).attr("disabled",null);
                         $(value).attr("style","");
                     }else{
