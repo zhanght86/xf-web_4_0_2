@@ -88,27 +88,49 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             factorName : null,   //要素名称
             reQuestion : null, //反问
 
-            tableList: ""
+            tableList: "",
+            data : ""
         };
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                }
-            }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
-            });
-        //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
-            function(data) {
+
+        httpRequestPost("/api/application/dimension/list",{"applicationId" : $scope.vm.applicationId},function(data){
+            if(data.data){
+
+                console.log(data)
+                            $scope.vm.dimensions = data.data;
+                            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+                $scope.$apply()
+                        }
+        },function(err){
+            layer.msg("获取维度失败，请刷新页面")
+        });
+        httpRequestPost("/api/application/channel/listChannels",{"applicationId" : $scope.vm.applicationId},function(data){
                 if(data.data){
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
             });
+
+        //knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+        //    function(data) {
+        //        if(data.data){
+        //            $scope.vm.dimensions = data.data;
+        //            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+        //        }
+        //    }, function(error) {
+        //        //console.log(error)
+        //        layer.msg("获取维度失败，请刷新页面")
+        //    });
+        //获取维度
+        //knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        //    function(data) {
+        //        if(data.data){
+        //            $scope.vm.channels = data.data
+        //        }
+        //    }, function(error) {
+        //        layer.msg("获取渠道失败，请刷新页面")
+        //    });
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
 /*
         params =  {
@@ -489,7 +511,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     enten.wholeDecorateTagList = listArr;
                     enten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        var tag = [] ;
+                        //var tag = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -497,9 +519,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             tagTem.tagName= item.tagName;
                             tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            tag.push(tagTem)
+                            //tag.push(tagTem)
+                            enten.extensionQuestionTagList.push(tagTem) ;
                         });
-                        enten.extensionQuestionTagList.push(tag) ;
                     });
                     $scope.vm.extensionsByFrame = exten;
                     console.log($scope.vm.extensionsByFrame);
@@ -544,16 +566,17 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         enten.wholeDecorateTagList = listArr;
                         enten.extensionQuestionTagList = [] ;
                         angular.forEach(data.data,function(tagList){
-                            var tag = [] ;
+                            //var tag = [] ;
                             angular.forEach(tagList.extensionQuestionTagList,function(item){
                                 var tagTem = {};
+                                tagTem.exist = item.exist ;
                                 tagTem.tagClass= item.tagClass;
                                 tagTem.tagName= item.tagName;
                                 tagTem.tagTypeList= [] ;
                                 tagTem.tagTypeList.push(item.tagType);
-                                tag.push(tagTem)
+                                //tag.push(tagTem)
+                                enten.extensionQuestionTagList.push(tagTem) ;
                             });
-                            enten.extensionQuestionTagList.push(tag) ;
                         });
                         $scope.vm.extensions.push(enten);
                         console.log($scope.vm.extensions);
@@ -780,6 +803,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false
             } else {
                 //console.log(getParams());
+                $scope.vm.data = getParams();
                 httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                     //console.log(data);
                     if (data.status == 200) {
@@ -799,6 +823,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }else{
                 var obj = {};
                 var params = getParams();
+
                 //console.log(params);
                 obj.params = params;
                 obj.editUrl = "knowledgeManagement.factorAdd";

@@ -1617,13 +1617,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 arr[0]=$(value).val();
                 httpRequestPost("/api/modeling/frame/batchtag",{
                     "extendQuestionList":arr,
-                    "applicationId":"100"
+                    "applicationId":categoryApplicationId
                 },function(data){
                     if(data){
                         if(data.status==200){
                             if(data.data.length>0){
-                                if(data.data[0][0]!=null){
-                                    appendTag(data.data[0][0],$(value).val())
+                                if(data.data[0]!=null){
+                                    appendTag(data.data[0],$(value).val());
                                 }
                             }
                         }
@@ -1635,8 +1635,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         function appendTag(data,originStr){
             var tagHtml = '<div class="tag_box">';
-            for(var i=0;i<data.tagList.length;i++){
-                tagHtml+='<span class="tag_s">'+data.tagList[i]+'</span>';
+            for(var i=0;i<data.length;i++){
+                for(var j=0;j<data[i].tagList.length;j++){
+                    tagHtml+='<span class="tag_s">'+data[i].tagList[j]+'</span>';
+                }
             }
             tagHtml+='</div>';
             var html =  '<div class="row cl mb-10">'+
