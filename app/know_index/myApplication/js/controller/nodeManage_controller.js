@@ -25,8 +25,6 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             subNode : "", //子节点的id
             subNodeAccessIp : "" , //子节点的访问地址
             nodeCreateId : $cookieStore.get("userId"), //用户id
-
-
             statusData : "", //节点状态数据
             typeData : "", //节点类型数据
 
@@ -48,6 +46,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             errorNodeIdTip : "", //错误节点id提示
 
         };
+
 
         listTypeData(); //查询节点类型数据
         listStatusData(); //查询状态数据
@@ -346,6 +345,23 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         link: function(scope, ele, attrs, c){
             scope.$watch(attrs.ngModel, function(n){
                 if(!n) return;
+                //httpRequestPost("/api/application/node/checkNode",{
+                //    nodeAccessIp: scope.vm.nodeAccessIp,
+                //    nodeCode: scope.vm.nodeCode
+                //},function(data){
+                //    console.log(data);
+                //    if(data.status==200){
+                //        c.$setValidity('unique', true);
+                //        scope.vm.allowSubmit=1;
+                //    }else{
+                //        c.$setValidity('unique', false);
+                //        scope.vm.allowSubmit=0;
+                //        scope.vm.errorTip=data.info;
+                //    }
+                //},function(){
+                //    c.$setValidity('unique', false);
+                //    scope.vm.allowSubmit=0;
+                //});
                 $http({
                     method: 'POST',
                     url: '/api/application/node/checkNode',
@@ -366,6 +382,9 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                     c.$setValidity('unique', false);
                     scope.vm.allowSubmit=0;
                 })
+
+
+
             });
         }
     }

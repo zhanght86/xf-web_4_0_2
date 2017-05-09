@@ -59,11 +59,10 @@ angular.module('loginModule').controller('loginController', [
                         setRandomNumber();
                         layer.msg("用户名或密码错误");
                     }
-                    console.log(data)
-
+                    //console.log(data)
                 },function(err){
-                    layer.msg("登陆失败");
                     setRandomNumber();
+                    layer.msg("登陆失败");
                     //console.log(err)
                 });
             }
@@ -71,6 +70,7 @@ angular.module('loginModule').controller('loginController', [
         function setRandomNumber(){
             $scope.vm.randomNumberValue = "";
             $scope.vm.randomNumber = randomNumber(4);
+            //$scope.$apply()
         }
 
         //  随机产生四位验证码

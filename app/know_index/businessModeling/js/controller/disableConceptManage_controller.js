@@ -152,19 +152,27 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                             "stopConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
                             if (data.status === 10002) {
-                                layer.msg("停用概念类名重复");
-                                httpRequestPost("/api/modeling/concept/stop/listByAttribute", {
-                                    "stopConceptApplicationId": $scope.vm.applicationId,
-                                    "stopConceptKey": $scope.vm.key,
-                                    "index": 0,
-                                    "pageSize": 1
-                                }, function (data) {
-                                    $scope.vm.dialogTitle = "编辑停用概念";
-                                    console.log(data);
-                                    addStopConceptDialog(singleEditStopConcept, data.data[0]);
-                                    $scope.vm.key = data.data[0].stopConceptKey;
-                                    $scope.vm.term = data.data[0].stopConceptTerm;
-                                }, function () {
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
+                                    httpRequestPost("/api/modeling/concept/stop/listByAttribute", {
+                                        "stopConceptApplicationId": $scope.vm.applicationId,
+                                        "stopConceptKey": $scope.vm.key,
+                                        "index": 0,
+                                        "pageSize": 1
+                                    }, function (data) {
+                                        $scope.vm.dialogTitle = "编辑停用概念";
+                                        console.log(data);
+                                        addStopConceptDialog(singleEditStopConcept, data.data[0]);
+                                        $scope.vm.key = data.data[0].stopConceptKey;
+                                        $scope.vm.term = data.data[0].stopConceptTerm;
+                                    }, function () {
+                                        console.log("cancel");
+                                    });
+                                },function(){
+                                    console.log("cancel");
                                 });
                             } else {
                                 //类名无冲突
