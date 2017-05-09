@@ -6,8 +6,7 @@ angular.module('homePage').controller('homePageNavController', [
     function ($scope, $location, localStorageService, AuthService,$timeout,$cookieStore,$state) {
         $scope.url = $location.url();
         $scope.urls=$state.current.name;
-        console.log($scope.urls);
-
+        
         $scope.vm = {
                 applicationId : $cookieStore.get('applicationId'),
                 sceneId : $cookieStore.get('sceneId'),
@@ -17,10 +16,7 @@ angular.module('homePage').controller('homePageNavController', [
                 jump: jump
 
             };
-        $scope.setting ={
 
-
-        }
         if(!$cookieStore.get('userId')){
             $state.go("login")
         }
@@ -54,6 +50,12 @@ angular.module('homePage').controller('homePageNavController', [
                 return true;
             }
         }
+        $scope.checkShowClose=function(url){
+            if(url == 'homePage.define'){
+                return true;
+            }
+        }
+
         function  ObjStory(url,name){
             this.url = url;
             this.name = name;
@@ -61,7 +63,7 @@ angular.module('homePage').controller('homePageNavController', [
         $scope.getParamList = function(){
             if (localStorage.history){
                 var aa = JSON.parse(window.localStorage.history);
-                if(aa.use.length>=9){
+                if(aa.use.length>=8){
                     aa.use.splice(0,1);
                 }
                 for(var i=0;i<aa.use.length;i++){
@@ -69,16 +71,17 @@ angular.module('homePage').controller('homePageNavController', [
                         aa.use.splice(i, 1);
                     }
                 }
-                if($scope.getUrlName($scope.urls)!=0){
+                if($scope.getUrlName($scope.urls)!='0'){
                     aa.use.push(new ObjStory($scope.urls,$scope.getUrlName($scope.urls)));
                 }
                 window.localStorage.history=JSON.stringify(aa);
-                //$scope.crumbs=aa.use.slice(0,-1);
-                $scope.crumbs=aa.use;
+               $scope.crumbs=aa.use.slice(0,-1);
+                // $scope.crumbs=aa.use;
             }
             else {
                 var obj={
-                    use:[new ObjStory($scope.urls,$scope.getUrlName($scope.urls))]
+                    use:[{"url":"homePage.define","name":"首页"}]
+                    // use:[new ObjStory($scope.urls,$scope.getUrlName($scope.urls))]
                 }
                 window.localStorage.history=JSON.stringify(obj);
             }
@@ -86,8 +89,8 @@ angular.module('homePage').controller('homePageNavController', [
         $scope.getUrlName = function(url){
             switch (url)
             {
-                case 'homePage.define':
-                    return '首页';
+                /*case 'homePage.define':
+                    return 0;*/
                 case 'relationalCatalog.manage':
                     return 'BOT';
                 case 'frameworkLibrary.manage':
