@@ -1,11 +1,4 @@
 <div class="main warp">
-    <div class="crumbs-nav bgwhite mt20">
-        <span class="cn-lable">你曾经路过此地：</span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
-    </div>
     <div class="addContent pd30">
         <div class="r-cont-hd">
             <span>概念知识新增</span>
@@ -86,7 +79,7 @@
                 <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                     <div class="lable"> BOT路径：</div>
                         <div class="value Div" id="Div">
-                            <div class="ipt-txt-box">
+                            <div class="ipt-txt-box mr-5">
                             <div class="ipt-txt">
                             <span>{{item.className.join("/")}}</span>
                             </div>
