@@ -67,7 +67,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
-                                <div class="ipt-txt-box L mr-10" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                <div class="ipt-txt-box L mr-10" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
@@ -82,7 +82,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div" id="Div">
-                                <div class="ipt-txt-box" style="width: 263px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                <div class="ipt-txt-box" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
@@ -122,12 +122,12 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L input-text extended_query_txt" style="width:279px;border: 0" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                                <div class="L input-text extended_query_txt" style="width:345px;border: 0;margin-right:0;" >
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin-right:5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                       {{val.tagName}}
                                     </span>
                                 </div>
-                                <span class="tag_s sel bd L mr-10" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;margin-right: 6px;text-align: center">
+                                <span class="tag_s  bd L mr-10" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">
                                     普通
                                 </span>
                                 <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
@@ -141,12 +141,12 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L input-text extended_query_txt" style="width:279px;" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                                <div class="L input-text extended_query_txt" style="width:345px;border:0;" >
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin-right:5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                        {{val.tagName}}
                                     </span>
                                 </div>
-                                <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
+                                <span class="tag_s mr-10 L bd" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                                 <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                                 <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
