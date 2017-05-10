@@ -276,38 +276,47 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             console.log(oldWord);
-            httpRequestPost("/api/listKnowledge/checkFrameTag",{
+            var extensionQuestionListNew = [];
+            for(var i=0;i<extensionQuestionList.length;i++){
+                var obj = {} ;
+                obj.extensionQuestionTitle = extensionQuestionList[i];
+                obj.extensionQuestionType = $scope.vm.extensionWeight;
+                if(checkExtension(obj , $scope.vm.extensions)){
+                    extensionQuestionListNew.push(extensionQuestionList[i]);
+                }
+            }
+            httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
                 "applicationId": $scope.vm.applicationId,
-                "extensionQuestionList" : extensionQuestionList,
-                "frameQuestionTagList" : frameQuestionTagList
+                "extendQuestionList" : extensionQuestionListNew
             },function(data){
                 console.log(data);
-                if(data.status==200){
-                    var enten = {}  ;
-                    enten.extensionQuestionTitle = title;
-                    enten.extensionQuestionType = weight ;
+                if(data.status == 500){
+                    $scope.vm.extensionTitle = "" ;
+                    $scope.$apply();
+                }else if(data.status==200){
+                    var i=0;
                     var listArr = [];
-                    var listObj = {};
-                    listObj.wholeDecorateTagName="";
-                    listObj.wholeDecorateTagType="";
-                    listArr.push(listObj);
-                    enten.wholeDecorateTagList = listArr;
-                    enten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        //var tag = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
+                            var enten = {};
+                            enten.extensionQuestionTitle = extensionQuestionListNew[i++];
+                            enten.extensionQuestionType = $scope.vm.extensionWeight;
+                            var listObj = {};
+                            listObj.wholeDecorateTagName="";
+                            listObj.wholeDecorateTagType="";
+                            listArr.push(listObj);
+                            enten.wholeDecorateTagList = listArr;
+                            enten.extensionQuestionTagList = [] ;
                             var tagTem = {};
                             tagTem.exist = item.exist ;
                             tagTem.tagClass= item.tagClass;
                             tagTem.tagName= item.tagName;
                             tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            //tag.push(tagTem)
-                            enten.extensionQuestionTagList.push(tagTem) ;
+                            enten.extensionQuestionTagList.push(tagTem);
+                            $scope.vm.extensions.push(enten);
                         });
                     });
-                    $scope.vm.extensionsByFrame = exten;
-                    console.log($scope.vm.extensionsByFrame);
                     $scope.$apply();
                 }
             },function(){
@@ -338,10 +347,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
             if(!$scope.vm.extensionTitle){
-                layer.msg("扩展问不能为空")
+                layer.msg("扩展问不能为空");
             }else if(!checkExtension(obj , $scope.vm.extensions)){
                 layer.msg("扩展问重复");
-                return false
+                return false;
             }else{
                 httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
                     "applicationId": $scope.vm.applicationId,
@@ -686,6 +695,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
+            if(arr==undefined){
+                return true;
+            }
             if(!arr.length){
                 return true ;
             }else{
