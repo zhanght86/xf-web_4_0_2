@@ -11,8 +11,6 @@ angular.module('knowGatewayModule').controller('temController', [
               TemplateService,TipService) {
         var self = this;
 
-
-
         self.initSearch = function (column) {
             if (!$scope.SearchPOJO) {
                 $scope.SearchPOJO = $scope.initSearchPOJO();

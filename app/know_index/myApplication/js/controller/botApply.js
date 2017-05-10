@@ -195,7 +195,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categoryPid": "root"
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
@@ -225,7 +225,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categorySceneId": categorySceneId,
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+

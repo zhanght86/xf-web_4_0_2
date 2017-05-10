@@ -26,11 +26,18 @@
                     <span ng-class="$index!=0?'mileVs':''">知识内容：</span>
                     <div class="PreviewRight">
                         <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
-                        <div  ng-if="vm.knowledgeType!=103">
+                        <div  ng-if="vm.knowledgeType!=103 OR vm.knowledgeType!=102">
                             <p>{{item.knowledgeContent}}</p>
                             <!--<p><i>渠道：</i>  <span ng-repeat="val in item.channelId">{{val | channel:vm.channels}}</span></p>-->
                             <!--<p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionId">{{val | dimension:vm.dimensions}}</span></p>-->
                             <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
+                            <span>&nbsp;</span>
+                        </div>
+                        <div ng-if="vm.knowledgeType==102">
+                            <p>肯定回答:</p>
+                            <p>{{item.knowledgeContent}}</p>
+                            <p>否定回答:</p>
+                            <p>{{item.knowledgeContentNegative}}</p>
                             <span>&nbsp;</span>
                         </div>
                         <div ng-if="vm.knowledgeType==103" style="height:300px;overflow:auto;">

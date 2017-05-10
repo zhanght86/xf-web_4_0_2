@@ -13,6 +13,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
+            knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
+            openContentConfirm: openContentConfirm, //打开内容对话框
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -134,7 +136,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if($stateParams.data!=null){
+        if($stateParams.data!=null && $stateParams.data.knowledgeBase){
 
             var data = $stateParams.data ;
             console.log(data);
@@ -167,6 +169,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(obj)
             });
             //
+        }else if($stateParams.data != null && $stateParams.data.docmentation){
+            $scope.vm.docmentation = $stateParams.data.docmentation;
+            $scope.vm.title = $scope.vm.docmentation.documentationTitle;
+            $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
+            $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
 
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
@@ -498,24 +505,28 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 var  callback = saveAddNew ;
             }
             if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            callback()
-                        } else {
-                            setDialog()
-                        }
-                    }
-                });
+                $scope.vm.openContentConfirm(callback);
             }
         }
+        //打开知识内容对话框
+        function openContentConfirm(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
 
+                        callback();
+                    } else {
+                        setDialog();//清空内容对话框
+                    }
+                }
+            });
+        }
 
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
@@ -586,8 +597,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 httpRequestPost("/api/faqKnowledge/addFAQKnowledge",getParams(),function(data){
                     console.log(data) ;
                     if(data.status == 200){
-                        //open
-                        $state.go("custServScenaOverview.manage");
+                        if($scope.vm.docmentation){
+                            //文档知识分类状态回掉
+                            $scope.vm.knowledgeClassifyCall()
+                        }else{
+                            //open
+                            $state.go("custServScenaOverview.manage");
+                        }
                     }
                 },function(err){
                     console.log(err)
@@ -605,6 +621,26 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 //})
             }
         }
+        // 知识文档分类回调
+        function knowledgeClassifyCall(){
+            httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
+                {
+                    knowledgeId: $scope.vm.docmentation.knowledgeId,
+                    knowledgeStatus: 2
+                },
+                function(data){
+                    if(data && data.status == 200) {
+                        $state.go("back.doc_results_view",
+                            {
+                                knowDocId: $scope.vm.docmentation.documentationId,
+                                knowDocCreateTime: $scope.vm.docmentation.knowDocCreateTime,
+                                knowDocUserName: $scope.vm.docmentation.knowDocUserName
+                            }
+                        );
+                    }
+                }
+            );
+        };
         function scan(){
             if(!checkSave()){
                 return false
@@ -633,17 +669,16 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
 //重置参数
         function setDialog(){
-            $scope.vm.newTitle = "";
-            $scope.vm.slideFlag = false ;
-            $scope.vm.channel = [];
-            $scope.vm.dimension = [];
-            $scope.vm.question = 1,    //显示相关问
-                $scope.vm.tip = 1,    //在提示
-                $scope.vm.tail =1,    //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = [] ;//业务扩展问
-            $scope.vm.appointRelative = ""
-            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-            $scope.vm.dimensionArr = []
+             $scope.vm.newTitle = "";
+             $scope.vm.channel = [];
+             $scope.vm.dimension = [];
+             $scope.vm.question = 1,    //显示相关问
+             $scope.vm.tip = 1,    //在提示
+             $scope.vm.tail =1,    //弹出评价小尾巴
+             $scope.vm.appointRelativeGroup = [] ;//业务扩展问
+             $scope.vm.appointRelative = ""
+             $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+             $scope.vm.dimensionArr = []
         }
         //选择渠道
         function selectChannel(channelId){
@@ -742,7 +777,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
             if(!channel.length){     //渠道不能为空
-                //layer.msg("请填写渠道");
+                layer.msg("请填写渠道");
                 return false
             }else{               //渠道非空
                                  //channel   == id
