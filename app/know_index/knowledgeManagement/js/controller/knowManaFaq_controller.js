@@ -563,7 +563,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     }
                     //console.log(data);
                 },function(err){
-                    layer.msg("打标失败，请重新打标")
+                    layer.msg("获取类目失败")
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
