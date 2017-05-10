@@ -7,15 +7,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
         //console.log($stateParams.data);
         $scope.vm = {
-//主页
+            //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
             userId : $cookieStore.get("userId") ,
             sceneId :  $cookieStore.get("sceneId") ,
             frames : [],      //业务框架
             frameId : "",
-            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
-            KnowledgeEdit : KnowledgeEdit,
+            knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -521,45 +520,60 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 //                    }
 //                });
 //        }
-
-        function KnowledgeAdd(){
+        function knowledgeAdd(data,index){
+            console.log(data) ;
             var dia = angular.element(".ngdialog ");
-            if(dia.length==0){
+            if(data){    //增加
+                $scope.vm.newTitle = data.knowledgeContent;
+                $scope.vm.channel = data.channelIdList;
+                //$scope.vm.dimensionArr.id = data.dimensionIdList;
+                angular.forEach($scope.vm.dimensions,function(item){
+                    if(data.dimensionIdList.inArray(item.dimensionId)){
+                        var obj = {} ;
+                        obj.dimensionId = item.dimensionId ;
+                        obj.dimensionName = item.dimensionName ;
+                        $scope.vm.dimensionArr.push(obj) ;
+                    }
+                }) ;
+                $scope.vm.tip  = data.knowledgeBeRelatedOn; //在提示
+                $scope.vm.question = data.knowledgeRelatedQuestionOn;
+                $scope.vm.tail = data.knowledgeCommonOn;
+                $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
+                var callback = function(){
+                    var obj = {};
+                    obj.knowledgeContent = $scope.vm.newTitle;
+                    obj.knowledgeContentType = 0,  // 答案类型
+                        obj.channelIdList =  $scope.vm.channel;
+                    obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+                    obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+                        obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                    obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+                    obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
+                    $scope.vm.scanContent[index] = obj;
+                    setDialog() ;
+                }
+            }else{
+                var  callback = saveAddNew ;
+            }
+            if(dia.length==0) {
                 var dialog = ngDialog.openConfirm({
-                    template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
                     scope: $scope,
-                    closeByDocument:false,
+                    closeByDocument: false,
                     closeByEscape: true,
-                    showClose : true,
-                    backdrop : 'static',
-                    preCloseCallback:function(e){    //关闭回掉
-                        if(e === 1){
-                            //return;
-                            saveAddNew()
-                        }else{
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {    //关闭回掉
+                        if (e === 1) {
+                            callback()
+                        } else {
                             setDialog()
                         }
                     }
                 });
             }
         }
-        function KnowledgeEdit(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialogEdit.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
 
-                    }else{
-
-                    }
-                }
-            });
-        }
         function extensionEdit(){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
@@ -798,8 +812,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function checkSave(){
             var params = getParams();
             if(!params.knowledgeTitle){
-                layer.msg("知识标题不能为空，请填写");
-                return false
+                /*layer.msg("知识标题不能为空，请填写");
+                return false*/
+                return true;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
@@ -816,12 +831,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel.length){
+            if(val.id && $scope.vm.channel){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id.length){
+            if(val.length && $scope.vm.dimensionArr.id){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         },true);

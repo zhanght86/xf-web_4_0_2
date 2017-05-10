@@ -73,13 +73,13 @@
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="value Div" id="Div">
-                                <div class="ipt-txt-box" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                            <div class="value Div clearfix" id="Div">
+                                <div class="ipt-txt-box L" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;margin-right:10px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                                <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L input-text extended_query_txt" style="width:345px;border: 0;margin-right:0;" >
+                                <div class="L extended_query_txt" style="width:345px;border: 0;margin-right:0;" >
                                    <span ng-repeat="val in item.extensionQuestionTagList" style="margin-right:5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                       {{val.tagName}}
                                     </span>
@@ -133,7 +133,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L input-text extended_query_txt" style="width:345px;border:0;" >
+                                <div class="L extended_query_txt" style="width:345px;border:0;" >
                                    <span ng-repeat="val in item.extensionQuestionTagList" style="margin-right:5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                        {{val.tagName}}
                                     </span>

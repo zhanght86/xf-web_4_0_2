@@ -10,7 +10,7 @@
             <div class="jqrsz-item">
                 <div class="item-line">
                     <div class="lable">
-                        知识标题：
+                        标准问题：
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
@@ -103,43 +103,43 @@
             <div class="jqrsz-item" style="overflow: visible">
                 <div class="item-line"  style="overflow: visible">
                     <div class="lable" >
-                        扩展问：
+                        扩展问题：
                     </div>
                     <div class="value" style="overflow: visible">
                         <div class="clearfix" style="width: 500px;height: 38px;">
                             <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
                             <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 39px;">
-                                <option value="1">普通</option>
-                                <option value="0">否定</option>
+                                <option value="60">普通</option>
+                                <option value="61">否定</option>
                             </select>
                             <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight)"><img src="../../../images/images/add_img.png" alt=""></a>
                         </div>
                     </div>
                 </div>
 <!--sshoudong  tinajia -->
-                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
+                <div class="item-line"  style="overflow: visible" ng-if="vm.extensions" ng-repeat="item in vm.extensions track by $index">
                     <div class="lable" ng-class="'milesVh'">
-                        扩展问：
+                        扩展问题：
                     </div>
                     <div class="value clearfix" >
                         <div class="bd tag_box L mr-10" style="padding-left: 14px;">
                            {{item.extensionQuestionTitle}}
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <!--<span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>-->
                     </div>
                 </div>
 <!-- 業務框架 生成 -->
-                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
+                <div class="item-line"  style="overflow: visible" ng-if="vm.extensionsByFrame" ng-repeat="item in vm.extensionsByFrame">
                     <div class="lable" ng-class="'milesVh'">
-                        扩展问：
+                        扩展问题：
                     </div>
                     <div class="value clearfix" >
                         <div class="bd tag_box L mr-10" style="padding-left: 14px;">
                             {{item.extensionQuestionTitle}}
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <!--<a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>-->
                         <span class="L" ng-if="item.source"><b>来源于: </b> <span>{{item.source}}</span></span>
@@ -152,9 +152,9 @@
                         <!--知识内容:-->
                     <!--</div>-->
                 <!--</div>-->
-                <div ng-repeat="(itemIndex,item) in vm.scanContent">
+                <div ng-if="vm.scanContent" ng-repeat="(itemIndex,item) in vm.scanContent">
                     <div class="item-line">
-                        <div class="lable" style="color: #0000cc">
+                        <div class="lable" style="color: #0000cc;padding-right:10px;box-sizing:border-box;">
                            内容{{itemIndex+1|  numberToWord}}:
                         </div>
                         <div class="value">
@@ -166,14 +166,14 @@
                                 </div>
                                 <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
                                 <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
-                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(vm.scanContent[$index])"></a>
+                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(vm.scanContent[$index],$index)"></a>
                             </div>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span class="mr-10" ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
@@ -212,7 +212,7 @@
     .ipt-txt{
         border: 1px  solid #e1e1e1;
     }
-    .tag_box{width:346px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
+    .tag_box{width:352px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
     .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:10px;}
 

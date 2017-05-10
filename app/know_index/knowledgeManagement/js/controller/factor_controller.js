@@ -402,6 +402,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //  根據框架添加擴展問  --》 替換原來的條件
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
+
                 if($scope.vm.extensionsByFrame.length){
                     //  替換條件
                     replace(val);
@@ -423,30 +424,30 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function getExtensionByFrame(id,type){
             //console.log(id);
             httpRequestPost("/api/modeling/frame/listbyattribute",{
-                "frameTypeId": 10013,
+                "frameTypeId": 10012,
                 "frameId": id,
                 "index": 0,
                 "pageSize":999999
             },function(data){
                 console.log(data) ;
-                //if(data.status==10000){
-                //    //console.log(data);
-                //    var  extensionQuestionList = [] ,
-                //        frameQuestionTagList = [];
-                //    var obj = {} ;
-                //    if(data.data[0].elements){
-                //        angular.forEach(data.data[0].elements,function(item,index){
-                //            if(index>0){
-                //                obj.extensionQuestionType = 60;   //61
-                //                obj.source = data.data[0].frameTitle;
-                //                extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
-                //                frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
-                //            }
-                //        });
-                //        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
-                //    }
-                //    $scope.$apply();
-                //}
+                if(data.status==10000){
+                    //console.log(data);
+                    var  extensionQuestionList = [] ,
+                        frameQuestionTagList = [];
+                    var obj = {} ;
+                    if(data.data[0].elements){
+                        angular.forEach(data.data[0].elements,function(item,index){
+                            if(index>0){
+                                obj.extensionQuestionType = 60;   //61
+                                obj.source = data.data[0].frameTitle;
+                                extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
+                                frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
+                            }
+                        });
+                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
+                    }
+                    $scope.$apply();
+                }
             },function(){
                  layer.msg("获取扩展问失败") ;
             });
@@ -490,17 +491,19 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             //console.log(oldWord);
-            httpRequestPost("/api/listKnowledge/checkFrameTag",{
+            httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
+                console.log(data) ;
                 if(data.status==200){
+                    console.log("success") ;
                     var enten = {}  ;
                     enten.extensionQuestionTitle = title;
                     enten.extensionQuestionType = weight ;
                     var listArr = [];
-                    var listObj = {};
+                    var listObj = {};        
                     listObj.wholeDecorateTagName="";
                     listObj.wholeDecorateTagType="";
                     listArr.push(listObj);
@@ -765,6 +768,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             params =  {
                 "applicationId": $scope.vm.applicationId,
                  knowledgeId : $scope.vm.knowledgeId ,
+                "knowledgeUpdater": $scope.vm.userName, //操作人
+                "knowledgeCreator": $scope.vm.userName, //操作人
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
