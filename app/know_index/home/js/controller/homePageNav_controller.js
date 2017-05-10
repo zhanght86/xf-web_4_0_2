@@ -75,13 +75,12 @@ angular.module('homePage').controller('homePageNavController', [
                     aa.use.push(new ObjStory($scope.urls,$scope.getUrlName($scope.urls)));
                 }
                 window.localStorage.history=JSON.stringify(aa);
-               $scope.crumbs=aa.use.slice(0,-1);
-                // $scope.crumbs=aa.use;
+                // $scope.crumbs=aa.use.slice(0,-1);
+                $scope.crumbs=aa.use;
             }
             else {
                 var obj={
                     use:[{"url":"homePage.define","name":"首页"}]
-                    // use:[new ObjStory($scope.urls,$scope.getUrlName($scope.urls))]
                 }
                 window.localStorage.history=JSON.stringify(obj);
             }
