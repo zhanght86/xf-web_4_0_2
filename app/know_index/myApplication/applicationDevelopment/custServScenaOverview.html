@@ -15,27 +15,6 @@
                             <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
                         </a>
                     </li>
-                    <!--<li class="type2">-->
-                        <!--<a class="slide-a ellipsis" href="javascript:;">-->
-                            <!--<i class="icon-jj  ngBotAdd"></i>-->
-                            <!--<span>分业务展开</span>-->
-                        <!--</a>-->
-                        <!--<ul class="menu_1">-->
-                            <!--<li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">-->
-                                <!--<a class="slide-a ellipsis" href="javascript:;">-->
-                                    <!--&lt;!&ndash;<i class="icon-jj" data-option="{{item.categoryId}}"></i>&ndash;&gt;-->
-                                    <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
-                                    <!--<i class="icon-r icon-jt"></i>-->
-                                <!--</a>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li ng-repeat="item in vm.botRoot">-->
-                        <!--<a class="slide-a ellipsis" href="javascript:;">-->
-                            <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                            <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
                 </ul>
             </div>
         </div>
@@ -120,6 +99,7 @@
                     <div class="clearfix csso-bd" style="min-height:300px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
+
                                 <div class="title">
                                     <checkbox ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)"></checkbox>
                                     <a href="javascript:;" ng-click="vm.scan(item)">知识标题: {{item.knowledgeTitle}}</a>

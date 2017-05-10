@@ -143,7 +143,7 @@
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
                             <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -154,7 +154,6 @@
                     </div>
                 </div>
             </div>
-            {{vm.scanContent}}
             <div class="jqrsz-item">
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent">

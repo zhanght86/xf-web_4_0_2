@@ -17,7 +17,7 @@
                 <span class="pa preview_span">知识标题：</span>
                 <div>{{vm.knowledgeData.knowledgeTitle}}</div>
             </li>
-            <li class="preview_li pr">
+            <li class="preview_li pr" ng-if="vm.knowledgeData.knowledgeExpDateStart || vm.knowledgeData.knowledgeExpDateEnd">
                 <span class="pa preview_span">知识有效期：</span>
                 <i>{{vm.knowledgeData.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}}</i>
                 至
@@ -29,18 +29,35 @@
             </li>
 
             <li class="preview_li pr">
+                <!--   要素  -->
                 <span class="pa preview_span">知识内容：</span>
-
-                <ul class="clearfix" style="min-height:85px;" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
+                <table class="essential_factor_tab" ng-if="vm.knowledgeType == 103">
+                    <tr>
+                        <td>产品名称</td>
+                        <td ng-repeat="(indexRow,row) in vm.tableData.asks track by $index">
+                            {{row.name}}
+                        </td>
+                    </tr>
+                    <tr ng-repeat="(indexRow,row) in vm.tableData.items track by $index">
+                        <td >
+                            {{row.name}}
+                        </td>
+                        <td ng-repeat="(indexRow,colum) in row.slots track by $index">
+                            {{colum.value}}
+                        </td>
+                    </tr>
+                </table>
+                <!--   其他   -->
+                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
                     <li class="preview_li pr" style="padding-left: 80px;">
                         <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
                         <p>{{item.knowledgeContent}}</p>
                     </li>
-                    <li class="preview_li pr" style="padding-left: 80px;">
+                    <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.channelIdList">
                         <span class="pa preview_span2">渠道:</span>
                         <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                     </li>
-                    <li class="preview_li pr" style="padding-left: 80px;">
+                    <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.dimensionIdList">
                         <span class="pa preview_span2">维度:</span>
                         <span  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
                     </li>
@@ -61,7 +78,6 @@
             </li>
         </ul>
         <div class="jqrsz-btn-box" style="padding-left: 150px;">
-            {{vm.save}}
             <a class="btn btn-blue mr10" ng-click="vm.save()">保存</a>
             <!--ui-sref="{{vm.editUrl}}"-->
             <a class="btn btn-gray" href="javascript:window.opener=null;window.open('','_self');window.close();" style="background: #2bcacc; color: #fff;">修改</a>

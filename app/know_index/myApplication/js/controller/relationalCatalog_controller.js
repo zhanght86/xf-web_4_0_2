@@ -20,8 +20,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             editBot:editBot,
             deleteBot:deleteBot,
             categoryId: "",
-            categoryTypeId: 10009,
-            botSelectType:10009,
+            categoryTypeId: 163,
+            botSelectType:163,
             categorySceneId: 0,
             categoryAttributeName: "edge",
             categoryName: "",
@@ -599,11 +599,11 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
-                case 10008:
+                case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 10007:
+                case 160:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
-                case 10006:
+                case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;

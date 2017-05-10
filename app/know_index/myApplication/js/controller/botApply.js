@@ -23,8 +23,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
             botInfo:null,  //bot信息
             deleteBot:deleteBot,
             categoryId: "",
-            categoryTypeId: 10009,
-            botSelectType:10009,
+            categoryTypeId: 163,
+            botSelectType:163,
             categorySceneId: 0,
             categoryAttributeName: "",
             categoryName: "",
@@ -36,8 +36,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
             editBotLibrary:editBotLibrary,
             deleteBotLibrary:deleteBotLibrary,
             categoryLibraryId: "",
-            categoryLibraryTypeId: 10009,
-            botLibrarySelectType:10009,
+            categoryLibraryTypeId: 163,
+            botLibrarySelectType:163,
             categoryLibrarySceneId: 0,
             categoryLibraryAttributeName: "edge",
             categoryLibraryName: "",
@@ -375,11 +375,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
             }
             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
-                case 10008:
+                case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 10007:
+                case 160:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
-                case 10006:
+                case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
@@ -697,10 +697,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     });
                     $("#categoryLibraryTypeId").empty();
                     var attrArr = [];
-                    attrArr[0]={name:"默认",value:10009};
-                    attrArr[1]={name:"流程",value:10008};
-                    attrArr[2]={name:"划分",value:10007};
-                    attrArr[3]={name:"属性",value:10006};
+                    attrArr[0]={name:"默认",value:163};
+                    attrArr[1]={name:"流程",value:161};
+                    attrArr[2]={name:"划分",value:160};
+                    attrArr[3]={name:"属性",value:162};
                     for(var index=0;index<attrArr.length;index++){
                         if($scope.vm.categoryLibraryAttributeName=="edge"){
                             console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
@@ -859,10 +859,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
         function disableAttributeTypeForApply(){
             $("#categoryLibraryTypeIdAdd").empty();
             var attrArr = [];
-            attrArr[0]={name:"默认",value:10009};
-            attrArr[1]={name:"流程",value:10008};
-            attrArr[2]={name:"划分",value:10007};
-            attrArr[3]={name:"属性",value:10006};
+            attrArr[0]={name:"默认",value:163};
+            attrArr[1]={name:"流程",value:161};
+            attrArr[2]={name:"划分",value:160};
+            attrArr[3]={name:"属性",value:162};
             for(var index=0;index<attrArr.length;index++){
                 if($scope.vm.categoryLibraryAttributeName=="node"){
                     console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);

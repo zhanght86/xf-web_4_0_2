@@ -4,14 +4,15 @@
 
 
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
             userId : $cookieStore.get("userId") ,
             sceneId :  $cookieStore.get("sceneId") ,
+            knowledgeId : "" ,
             frames : [],      //业务框架
             frameId : "",
             botRoot : "",      //根节点
@@ -100,7 +101,65 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
             });
+        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
+        /*
 
+         */
+        //組裝數據   擴展問   content
+        //BOT路径设置为 选择添加                  再次增加判断重复
+        //
+        //标题
+        if($stateParams.data!=null){
+            var data = $stateParams.data ;
+            console.log($stateParams.data);
+            //标题
+            $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
+            // 标题打标结果
+            $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
+            // 时间
+            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
+            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            //bot路径
+            $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
+            //knowledgeId
+            $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            //扩展问
+            $scope.vm.extensionsByFrame = data.extensionQuestions;
+            //内容
+            angular.forEach(data.knowledgeContents,function(item){
+                var obj = {} ;
+                $scope.vm.newTitle = item.knowledgeContent;
+                $scope.vm.knowledgeContentNegative = item.knowledgeContentNegative ;
+                //維度，添加預覽效果   以name id 的 形式显示
+                               //obj.channelIdList =  item.channelIdList ;
+                //obj.dimensionIdList =  item.dimensionIdList ;
+                $scope.vm.channel = item.channelIdList ;
+                $scope.vm.dimensionArr = [] ;
+                //异步原因
+                var getDimension = $interval(function(){
+                    if($scope.vm.dimensions){
+                        $interval.cancel(getDimension);
+                        angular.forEach($scope.vm.dimensions,function(val){
+                            if(!item.dimensionIdList.inArray(val.dimensionId)){
+                                var obj = {};
+                                obj.dimensionName = val.dimensionName;
+                                obj.dimensionId = val.dimensionId;
+                                $scope.vm.dimensionArr.push(obj);
+
+                            }
+                        });
+                    }
+                },100) ;
+                $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
+                $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
+                $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                //console.log(obj)
+            });
+            //
+        }
+
+        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
@@ -235,7 +294,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     enten.wholeDecorateTagList = listArr;
                     enten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        var tag = [] ;
+                        //var tag = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -243,9 +302,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             tagTem.tagName= item.tagName;
                             tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            tag.push(tagTem)
+                            //tag.push(tagTem)
+                            enten.extensionQuestionTagList.push(tagTem) ;
                         });
-                        enten.extensionQuestionTagList.push(tag) ;
                     });
                     $scope.vm.extensionsByFrame = exten;
                     console.log($scope.vm.extensionsByFrame);
@@ -305,16 +364,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         enten.wholeDecorateTagList = listArr;
                         enten.extensionQuestionTagList = [] ;
                         angular.forEach(data.data,function(tagList){
-                            var tag = [] ;
+                            //var tag = [] ;
                             angular.forEach(tagList.extensionQuestionTagList,function(item){
                                 var tagTem = {};
+                                tagTem.exist = item.exist ;
                                 tagTem.tagClass= item.tagClass;
                                 tagTem.tagName= item.tagName;
                                 tagTem.tagTypeList= [] ;
                                 tagTem.tagTypeList.push(item.tagType);
-                                tag.push(tagTem)
+                                //tag.push(tagTem)
+                                enten.extensionQuestionTagList.push(tagTem) ;
                             });
-                            enten.extensionQuestionTagList.push(tag) ;
                         });
                         $scope.vm.extensions.push(enten);
                         console.log($scope.vm.extensions);
@@ -515,8 +575,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
             };
-            var title = angular.copy($scope.vm.newTitle);
-            scanCotentByTitle(title) ;
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
             obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
@@ -535,13 +593,22 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
             return params
         }
-
         function save(){
             if(!checkSave()){
                 return false
             }else{
+                var params = getParams() ;
+                var api ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    api = "/api/listKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    api = "/api/conceptKnowledge/addConceptKnowledge"
+                }
                 console.log(getParams());
-                httpRequestPost("/api/listKnowledge/addListKnowledge",getParams(),function(data){
+                httpRequestPost(api,params,function(data){
                     //console.log(getParams());
                     if(data.status == 200){
                         console.log(data);
@@ -562,11 +629,13 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 var params = getParams();
                 //console.log(params);
                 obj.params = params;
-                obj.editUrl = "knowledgeManagement.singleAddConcept";
-                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                obj.knowledgeType = 102 ;
+                obj.knowledgeId = $scope.vm.knowledgeId ;
+                obj.api = "/api/listKnowledge/editKnowledge" ;
+                obj.editUrl = "knowledgeManagement.listAdd";
+                $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
-                $cookieStore.put("knowledgeScan",obj);
             }
         };
 

@@ -116,7 +116,7 @@
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="L input-text extended_query_txt" style="width:279px;border:0;" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                         {{val.tagName}}
                                     </span>
                                 </div>
@@ -134,14 +134,15 @@
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="L input-text extended_query_txt" style="width:279px;border:0;" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                    <!--{{item.extensionQuestionTagList}}-->
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                         {{val.tagName}}
                                     </span>
                                 </div>
                                 <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                                 <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
-                                <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>                       </div>
+                                <span class="L"><b>来源于: </b> <span>{{item.source}}</span></span>                       </div>
                         </div>
                     </div>
                     <div class="row cl mb-50">
