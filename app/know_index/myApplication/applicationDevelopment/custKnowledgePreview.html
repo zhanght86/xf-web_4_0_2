@@ -16,7 +16,8 @@
 
             <!-- -->
             <li  ng-if="vm.knowledgeType!=101" ng-class="vm.knowledgeType!=101?'':'borderN'"  ng-repeat="item in vm.listData.extensionQuestions">
-                <p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
+                <p ng-if="vm.knowledgeType!=100"><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
+                <p ng-if="vm.knowledgeType==100"><span ng-class="$index!=0?'milesVh':''">扩展问题：</span>{{item.extensionQuestionTitle}}</p>
             </li>
 
 
