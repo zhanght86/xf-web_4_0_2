@@ -26,21 +26,21 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
 
         //保存方法  根据url  获取 保存路径
         function save(){
-            var api = "" ;
-            switch($scope.vm.editUrl){
-                case "knowledgeManagement.faqAdd":
-                    api = "/api/faqKnowledge/addFAQKnowledge";
-                    break;
-                case "knowledgeManagement.singleAddConcept":
-                    api = "/api/conceptKnowledge/addConceptKnowledge";
-                    break;
-                case "knowledgeManagement.listAdd":
-                    api = "/api/listKnowledge/addListKnowledge";
-                    break;
-                case "knowledgeManagement.factorAdd":
-                    api = "/api/elementKnowledgeAdd/addElementKnowledge";
-                    break;
-            }
+            //var api = "" ;
+            //switch($scope.vm.editUrl){
+            //    case "knowledgeManagement.faqAdd":
+            //        api = "/api/faqKnowledge/addFAQKnowledge";
+            //        break;
+            //    case "knowledgeManagement.singleAddConcept":
+            //        api = "/api/conceptKnowledge/addConceptKnowledge";
+            //        break;
+            //    case "knowledgeManagement.listAdd":
+            //        api = "/api/listKnowledge/addListKnowledge";
+            //        break;
+            //    case "knowledgeManagement.factorAdd":
+            //        api = "/api/elementKnowledgeAdd/addElementKnowledge";
+            //        break;
+            //}
             console.log(knowledgeScan.api) ;
             httpRequestPost(knowledgeScan.api,$scope.vm.knowledgeData,function(data){
                 console.log(data) ;

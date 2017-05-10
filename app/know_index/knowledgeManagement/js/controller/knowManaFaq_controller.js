@@ -613,16 +613,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(params);
                 obj.params = params;
                 obj.editUrl = "knowledgeManagement.faqAdd";
-                obj.api = "/api/conceptKnowledge/editKnowledge" ;
+                obj.api = "/api/faqKnowledge/addFAQKnowledge" ;
                 obj.knowledgeType = 101 ;
-                obj.knowledgeId = $scope.vm.knowledgeId
+                obj.knowledgeId = $scope.vm.knowledgeId ;
                 $window.knowledgeScan = obj;
-
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
-
-
-
             }
         };
         /* ****************************************** //
