@@ -291,6 +291,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             httpRequestPost("/api/modeling/concept/synonym/update",{
                 "synonymConceptId":item.synonymConceptId,
                 "synonymConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "synonymConceptKey":  $scope.vm.key,
                 "synonymConceptModifier": item.synonymConceptModifier,
                 "synonymConceptTerm": $scope.vm.term,
@@ -307,6 +308,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             assembleSynonymConceptTerm();
             httpRequestPost("/api/modeling/concept/synonym/add",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "synonymConceptKey":  $scope.vm.key,
                 "synonymConceptModifier": $scope.vm.modifier,
                 "synonymConceptTerm": $scope.vm.term,
