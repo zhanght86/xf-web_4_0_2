@@ -154,7 +154,7 @@
                 <!--</div>-->
                 <div ng-if="vm.scanContent" ng-repeat="(itemIndex,item) in vm.scanContent">
                     <div class="item-line">
-                        <div class="lable" style="color: #0000cc">
+                        <div class="lable" style="color: #0000cc;padding-right:10px;box-sizing:border-box;">
                            内容{{itemIndex+1|  numberToWord}}:
                         </div>
                         <div class="value">
@@ -173,7 +173,7 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span class="mr-10" ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
@@ -212,7 +212,7 @@
     .ipt-txt{
         border: 1px  solid #e1e1e1;
     }
-    .tag_box{width:346px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
+    .tag_box{width:352px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
     .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:10px;}
 
