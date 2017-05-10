@@ -146,27 +146,23 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             $scope.vm.botClassfy = data.knowledgeBase.classificationAndKnowledgeList ;
 
             //knowledgeId
+            $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
             //内容
-            $scope.vm.scanContent = data.knowledgeContents ;
+            //$scope.vm.scanContent = data.knowledgeContents ;
             angular.forEach(data.knowledgeContents,function(item){
                 var obj = {} ;
-                //obj.knowledgeContent = item.knowledgeContent;
-                $scope.vm.tableList = {} ;
-                $scope.vm.tableList.data = item.knowledgeTable ;
+                obj.knowledgeContent = item.knowledgeContent;
                 //維度，添加預覽效果   以name id 的 形式显示
                 obj.channelIdList =  item.channelIdList ;
                 obj.dimensionIdList =  item.dimensionIdList ;
-
-                $scope.vm.channel = item.channelIdList ;
 
                 obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 obj.knowledgeBeRelatedOn  =  item.knowledgeBeRelatedOn ; //在提示
                 obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
                 $scope.vm.scanContent.push(obj) ;
-
                 console.log(obj)
             });
             //
@@ -178,23 +174,23 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
 
        //标题失去焦点校验标题重复
-        function blur(){
-            httpRequestPost("/api/faqKnowledge/checkKnowledgeTitle",{
-                "title":$scope.vm.title,
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-            console.log(data);
-            if(data.status == 500) {
-                if (data.data == 10002) {
-                    $scope.vm.titleTip = "标题重复";
-                }
-                // $scope.vm.titleTip = data.info;
-                $scope.$apply()
-            }else{
-
-             }
-            });
-        }
+       // function blur(){
+       //     httpRequestPost("/api/faqKnowledge/checkKnowledgeTitle",{
+       //         "title":$scope.vm.title,
+       //         "applicationId" : $scope.vm.applicationId
+       //     },function(data){
+       //     console.log(data);
+       //     if(data.status == 500) {
+       //         if (data.data == 10002) {
+       //             $scope.vm.titleTip = "标题重复";
+       //         }
+       //         // $scope.vm.titleTip = data.info;
+       //         $scope.$apply()
+       //     }else{
+       //
+       //      }
+       //     });
+       // }
         //checkState();  //判断 是否是预览页面的修改添加
         //function checkState(){
         //    var data = $stateParams.data ;
@@ -324,25 +320,23 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //添加扩展问
         function getExtension(title,weight){
             var obj = {} ;
-
-            obj.extensionQuestionTitle = $scope.vm.extensionTitle;
-            obj.extensionQuestionType = $scope.vm.extensionWeight;
-            $scope.vm.extensionsArr.push($scope.vm.extensionTitle);
-            console.log( $scope.vm.extensionsArr)
-            if(!$scope.vm.extensionTitle){
+            obj.extensionQuestionTitle = title;
+            obj.extensionQuestionType = weight;
+            if(!title){
                 layer.msg("扩展问不能为空")
-            }else if(!checkExtension(obj ,  $scope.vm.extensionsArr)){
+            }else if(!checkExtension(title ,  $scope.vm.extensionsArr)){
                 layer.msg("扩展问重复");
                 return false
             }else{
                 httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
-                    title : $scope.vm.extensionTitle
+                    title : title
                 },function(data){
                     if(data.status == 500){
+                        console.log(1) ;
                         layer.msg("扩展问重复")
                     }else if(data.status==200){
+                        $scope.vm.extensionsArr.push(title);
                         $scope.vm.extensions.push(obj);
-
                         console.log(obj);
                         $scope.$apply()
                     }
@@ -570,6 +564,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             var params = {};
             params =  {
                 "applicationId": $scope.vm.applicationId,
+                "knowledgeId" : $scope.vm.knowledgeId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
@@ -613,16 +608,21 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             if(!checkSave()){
                 return false
             }else{
-            var obj = {};
-            var params = getParams();
-            console.log(params);
-            obj.params = params;
-            obj.editUrl = "knowledgeManagement.faqAdd";
-            //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
-            var url = $state.href('knowledgeManagement.knowledgeScan');
+                var obj = {};
+                var params = getParams();
+                console.log(params);
+                obj.params = params;
+                obj.editUrl = "knowledgeManagement.faqAdd";
+                obj.api = "/api/conceptKnowledge/editKnowledge" ;
+                obj.knowledgeType = 101 ;
+                obj.knowledgeId = $scope.vm.knowledgeId
+                $window.knowledgeScan = obj;
+
+                var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
-                $cookieStore.put("knowledgeScan",obj);
-            //$state.go('knowledgeManagement.knowledgeScan',{knowledgeScan: 111},{reload:true},{blank:true});
+
+
+
             }
         };
         /* ****************************************** //
@@ -693,15 +693,15 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
-            console.log(arr)
-            if(arr.length==1){
-
+            console.log(arr) ;
+            if(arr.length==0){
                 return true ;
             }else{
+                //return true ;
                 angular.forEach(arr,function(val){
                     if(val.extensionQuestionTitle == item.extensionQuestionTitle){
-                        console.log(val.extensionQuestionTitle == item.extensionQuestionTitle)
-                        return false
+                        console.log(val.extensionQuestionTitle , item) ;
+                         return false
                     }
                 })
             }

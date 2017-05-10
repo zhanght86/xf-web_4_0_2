@@ -2,14 +2,7 @@
 <div class="wrap">
     <div class="content_wrap page-container" style="padding:0;">
         <div class="wrap mb30">
-            <div class="crumbs-nav bgwhite mt20 mb-10">
-                <span class="cn-lable">你曾经路过此地：</span>
-                <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
-                <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-                <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-                <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
-            </div>
-            <div class="content_box mb25 ">
+            <div class="content_box mb25 mt10">
                 <h3 class="f22 pl-10 mb15">要素型知识新增</h3>
                 <div class=" p10 ">
                     <div class="row cl mb-10">
@@ -77,7 +70,6 @@
                         </div>
                     </div>
                     <!--手选生成-->
-                    <!--{{vm.creatSelectBot}}-->
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
@@ -149,7 +141,7 @@
                                 <span class="tag_s mr-10 L bd" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                                 <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
-                                <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
+                                <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>
                         </div>
                     </div>

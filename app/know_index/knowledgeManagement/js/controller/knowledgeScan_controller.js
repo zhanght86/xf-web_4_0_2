@@ -9,7 +9,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope,knowledgeAddServer,$window) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         console.log($window.opener.knowledgeScan);
-        console.log($stateParams);
+        console.log($window.opener.knowledgeScan);
         var knowledgeScan =  $window.opener.knowledgeScan;
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
@@ -20,8 +20,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             dimensions : "",
             channels : "",
             editUrl : knowledgeScan.editUrl,
-            save :save
+            save :save,
+            tableData : knowledgeScan.knowledgeType==103?JSON.parse(knowledgeScan.params.knowledgeContents[0].knowledgeContent):""
         };
+
         //保存方法  根据url  获取 保存路径
         function save(){
             var api = "" ;
@@ -39,7 +41,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
                     api = "/api/elementKnowledgeAdd/addElementKnowledge";
                     break;
             }
-            httpRequestPost(api,$scope.vm.knowledgeData,function(data){
+            console.log(knowledgeScan.api) ;
+            httpRequestPost(knowledgeScan.api,$scope.vm.knowledgeData,function(data){
                 console.log(data) ;
                 if(data.status == 200){
                     $state.go("custServScenaOverview.manage")
