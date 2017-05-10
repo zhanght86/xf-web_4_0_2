@@ -378,22 +378,25 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             });
         }
 
-        function scanCotentByTitle(title) {
+        function scanCotentByTitle(title,index){
             var answerContentList = [];
             answerContentList.push(title);
-            knowledgeAddServer.conceptGetExtensionByDialogTitle({
+            httpRequestPost("/api/marketingKnowledge/productExtensionQuestion", {
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.title,
                 "answerContentList": answerContentList
             }, function (data) {
+                console.log(data);
                 if (data.status == 200) {
-                    console.log(data.data);
-                    $scope.vm.dialogExtension = data.data.concat($scope.vm.dialogExtension);
+                    //console.log(data.data);
+                    //console.log(index) ;
+                    $scope.vm.scanContent[index].extensionByContentByTitle = data.data;
+                    $scope.$apply()
                 } else if (data.status == 500) {
-
+                    layer.msg(data.info);
                 }
             }, function () {
-                layer.msg("扩展问生成失败")
+                layer.msg("打标失败");
             });
         }
         //手动添加扩展问
@@ -785,8 +788,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         function saveAddNew(){
             if($scope.vm.newTitle){
+                var index = $scope.vm.scanContent.length ;
                 var title = angular.copy($scope.vm.newTitle);
-                scanCotentByTitle(title) ;
+                scanCotentByTitle(title,index) ;
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
                 //obj.knowledgeContentType = 0,  // 答案类型

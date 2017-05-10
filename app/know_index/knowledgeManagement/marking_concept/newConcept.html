@@ -178,7 +178,7 @@
 
             <div class="jqrsz-item" style="padding-top:0;">
                 <!--预览内容-->
-                <div ng-repeat="(index,item) in vm.scanContent">
+                <div ng-repeat="(index,item) in vm.scanContent track by $index">
                     <div class="item-line">
                         <div class="lable" style="color: #0000cc">
                             内容{{index+1|  numberToWord}}:
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                     <!-- 扩展问生成标签-->
-                    <div class="item-line" ng-repeat="val in vm.dialogExtension[index]" style="margin-top: 4px;">
+                    <div class="item-line" ng-repeat="val in item.extensionByContentByTitle" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
                                 <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />

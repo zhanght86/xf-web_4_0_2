@@ -132,12 +132,12 @@
                         </div>
                     </div>
                     <!-- 扩展问生成标签-->
-                    <div class="item-line" ng-repeat="val in vm.dialogExtension[index]  track by $index" style="margin-top: 4px;">
+                    <div class="item-line" ng-repeat="val in item.extensionByContentByTitle" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
                                 <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
-                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" width="25" height="25"></a>
+                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>
                         </div>
                     </div>

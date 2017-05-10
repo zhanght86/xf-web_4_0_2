@@ -80,12 +80,14 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             appointRelativeGroup : [],
             replaceType : 0 ,
             enterEvent : enterEvent,
-            dialogExtension : [],
+
             factor : 0 ,  //触发要素，0 標題   1 擴展問
             factorTitle : "" , // 触发要素 标题
             getDetailByTitle : getDetailByTitle,
             getFactorByTitle : []  ,     // 要素标题产生选项
-            selelectTitle : selelectTitle
+            selelectTitle : selelectTitle ,
+
+            extensionByContentTitle : [] ,   // 内容生成扩展问
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -340,7 +342,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("err or err")
             });
         }
-        function scanCotentByTitle(title){
+        function scanCotentByTitle(title,index){
             var answerContentList = [];
             answerContentList.push(title);
             httpRequestPost("/api/marketingKnowledge/productExtensionQuestion", {
@@ -350,8 +352,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }, function (data) {
                 console.log(data);
                 if (data.status == 200) {
-                    console.log(data.data);
-                    $scope.vm.dialogExtension = data.data.concat($scope.vm.dialogExtension);
+                    //console.log(data.data);
+                    //console.log(index) ;
+                    $scope.vm.scanContent[index].extensionByContentByTitle = data.data;
+                    $scope.$apply()
                 } else if (data.status == 500) {
                     layer.msg(data.info);
                 }
@@ -787,18 +791,18 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function saveAddNew(){
             if($scope.vm.newTitle){
                 var title = angular.copy($scope.vm.newTitle);
-                scanCotentByTitle(title) ;
+                var index = $scope.vm.scanContent.length ;
+                scanCotentByTitle(title,index) ;
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
                 //obj.knowledgeContentType = 0,  // 答案类型
                 obj.channelIdList =  $scope.vm.channel;
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                    obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
                 obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
                 // 生成扩展问题+
-
                 //高級 選項
                 $scope.vm.scanContent.push(obj);
                 setDialog()
