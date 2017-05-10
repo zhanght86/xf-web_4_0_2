@@ -16,6 +16,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             frameId: "",
             botRoot: "",      //根节点
             knowledgeBot: knowledgeBot,  //bot点击事件
+            knowledgeAdd: knowledgeAdd,//知识内容添加
             knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
             knowledgeBotVal: "",  //bot 内容
@@ -348,8 +349,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }, function (data) {
                 if (data.status == 200) {
                     console.log(data.data);
-                    $scope.vm.dialogExtension.push(data.data);
+                    $scope.vm.dialogExtension = data.data.concat($scope.vm.dialogExtension);
                 } else if (data.status == 500) {
+
                 }
             }, function () {
                 layer.msg("扩展问生成失败")
@@ -586,7 +588,23 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 });
             }
         }
+        function KnowledgeEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialogEdit.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
 
+                    }else{
+
+                    }
+                }
+            });
+        }
         // 知识文档分类回调
         function knowledgeClassifyCall() {
             httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
@@ -792,6 +810,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function saveAddNew() {
             if ($scope.vm.newTitle) {
                 var title = angular.copy($scope.vm.newTitle);
+                if($scope.vm.title == null && $scope.vm.title === "")
+                {
+                    layer.msg("请先填写标题");
+                    return false;
+                }
                 scanCotentByTitle(title);
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
