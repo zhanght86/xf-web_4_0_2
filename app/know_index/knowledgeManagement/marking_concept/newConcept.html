@@ -181,7 +181,9 @@
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent">
                     <div class="item-line">
-                        <div class="lable"></div>
+                        <div class="lable" style="color: #0000cc">
+                            内容{{index+1|  numberToWord}}:
+                        </div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
                                 <div class="textareaDiv textareaDiv1 textareaDiv2 L" >

@@ -294,6 +294,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             httpRequestPost("/api/modeling/concept/collective/update",{
                 "collectiveConceptId":item.collectiveConceptId,
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "collectiveConceptKey": $scope.vm.key,
                 "collectiveConceptModifier": item.collectiveConceptModifier,
                 "collectiveConceptTerm": $scope.vm.term,
@@ -313,6 +314,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             assembleCollectiveConceptTerm();
             httpRequestPost("/api/modeling/concept/collective/add",{
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "collectiveConceptKey":  $scope.vm.key,
                 "collectiveConceptModifier": $scope.vm.modifier,
                 "collectiveConceptTerm": $scope.vm.term,

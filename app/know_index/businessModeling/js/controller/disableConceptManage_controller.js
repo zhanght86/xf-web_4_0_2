@@ -286,6 +286,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             httpRequestPost("/api/modeling/concept/stop/update",{
                 "stopConceptId":item.stopConceptId,
                 "stopConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
                 "stopConceptModifier": item.stopConceptModifier,
                 "stopConceptTerm": $scope.vm.term,
@@ -304,6 +305,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             assembleStopConceptTerm();
             httpRequestPost("/api/modeling/concept/stop/add",{
                 "stopConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
                 "stopConceptModifier": $scope.vm.modifier,
                 "stopConceptTerm": $scope.vm.term,

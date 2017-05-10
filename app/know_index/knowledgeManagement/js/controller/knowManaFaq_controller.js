@@ -57,7 +57,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             ,  //所有维度
             dimensionArr : [],  //選擇的維度
             dimensionsCopy :[],
-            extensionsArr:[],//校验页面扩展是否重复集合A
+            //extensionsArr:[],//校验页面扩展是否重复集合A
 
 
             checkChannelDimension : checkChannelDimension ,
@@ -135,6 +135,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //
         //标题
         if($stateParams.data!=null){
+
             var data = $stateParams.data ;
             console.log(data);
             //标题
@@ -324,20 +325,20 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             obj.extensionQuestionType = weight;
             if(!title){
                 layer.msg("扩展问不能为空")
-            }else if(!checkExtension(title ,  $scope.vm.extensionsArr)){
-                layer.msg("扩展问重复");
+            }else if(!checkExtension(obj ,  $scope.vm.extensions)){
+               layer.msg("扩展问重复");
+                $scope.vm.extensionTitle = "" ;
                 return false
             }else{
                 httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
                     title : title
                 },function(data){
                     if(data.status == 500){
-                        console.log(1) ;
-                        layer.msg("扩展问重复")
+                        $scope.vm.extensionTitle = "" ;
+                        layer.msg("扩展问重复") ;
                     }else if(data.status==200){
-                        $scope.vm.extensionsArr.push(title);
+                        $scope.vm.extensionTitle = "" ;
                         $scope.vm.extensions.push(obj);
-                        console.log(obj);
                         $scope.$apply()
                     }
                     console.log(data);
@@ -386,6 +387,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.botClassfy.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
+                $scope.vm.knowledgeBotVal = ""
             }
         };
         //点击下一级 bot 下拉数据填充以及下拉效果
@@ -565,11 +567,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             params =  {
                 "applicationId": $scope.vm.applicationId,
                 "knowledgeId" : $scope.vm.knowledgeId ,
+
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-                "knowledgeCreator": $scope.vm.userId, //创建人
+                //"knowledgeCreator": $scope.vm.userId, //创建人
                 "knowledgeUpdater": $scope.vm.userName, //操作人
+                "knowledgeCreator": $scope.vm.userName, //操作人
                 "knowledgeType": 100  //知识类型
             };
             params.knowledgeContents =  $scope.vm.scanContent;
@@ -661,7 +665,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
                 obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                 //高級 選項
                 $scope.vm.scanContent.push(obj);
@@ -689,17 +692,20 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
-            console.log(arr) ;
             if(arr.length==0){
                 return true ;
             }else{
-                //return true ;
+                var len = arr.length ;
                 angular.forEach(arr,function(val){
-                    if(val.extensionQuestionTitle == item.extensionQuestionTitle){
-                        console.log(val.extensionQuestionTitle , item) ;
-                         return false
+                    if((val.extensionQuestionTitle == item.extensionQuestionTitle)&&(val.extensionQuestionType == item.extensionQuestionType)){
+                        len-=1 ;
                     }
-                })
+                }) ;
+                if(len<arr.length){
+                    return false
+                }else{
+                    return true
+                }
             }
         }
 //        提交 检验参数

@@ -64,7 +64,7 @@ angular.module('homePage').controller('homePageNavController', [
             if (localStorage.history){
                 var aa = JSON.parse(window.localStorage.history);
                 if(aa.use.length>=8){
-                    aa.use.splice(0,1);
+                    aa.use.splice(1,1);
                 }
                 for(var i=0;i<aa.use.length;i++){
                     if(aa.use[i].name == $scope.getUrlName($scope.urls)){
