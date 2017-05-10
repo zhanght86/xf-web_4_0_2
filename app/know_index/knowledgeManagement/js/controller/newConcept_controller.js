@@ -714,6 +714,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 //重置参数
         function setDialog(){
             $scope.vm.newTitle = "";
+            $scope.vm.slideFlag = false ;
             $scope.vm.channel = [];
             $scope.vm.dimension = [];
             $scope.vm.question = 1,    //显示相关问
@@ -823,7 +824,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
             if(!channel.length){     //渠道不能为空
-                layer.msg("请填写渠道");
+                //layer.msg("请填写渠道");
                 return false
             }else{               //渠道非空
                                  //channel   == id
