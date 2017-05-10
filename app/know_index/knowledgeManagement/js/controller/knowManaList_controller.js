@@ -294,9 +294,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     $scope.vm.extensionTitle = "" ;
                     $scope.$apply();
                 }else if(data.status==200){
-                    var i=0;
                     var listArr = [];
                     angular.forEach(data.data,function(tagList){
+                        var i=0;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var enten = {};
                             enten.extensionQuestionTitle = extensionQuestionListNew[i++];
@@ -306,12 +306,12 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             listObj.wholeDecorateTagType="";
                             listArr.push(listObj);
                             enten.wholeDecorateTagList = listArr;
-                            enten.extensionQuestionTagList = [] ;
+                            enten.extensionQuestionTagList = [];
                             var tagTem = {};
                             tagTem.exist = item.exist ;
                             tagTem.tagClass= item.tagClass;
                             tagTem.tagName= item.tagName;
-                            tagTem.tagTypeList= [] ;
+                            tagTem.tagTypeList= [];
                             tagTem.tagTypeList.push(item.tagType);
                             enten.extensionQuestionTagList.push(tagTem);
                             $scope.vm.extensions.push(enten);
@@ -706,7 +706,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         console.log(val.extensionQuestionTitle == item.extensionQuestionTitle);
                         return false
                     }
-                })
+                });
+                return true;
             }
         }
 //        提交 检验参数
