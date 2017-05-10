@@ -16,6 +16,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             frameId: "",
             botRoot: "",      //根节点
             knowledgeBot: knowledgeBot,  //bot点击事件
+            knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
+            openContentConfirm: openContentConfirm, //打开内容对话框
             knowledgeBotVal: "",  //bot 内容
             botSelectAdd: botSelectAdd,
             frameCategoryId: "",
