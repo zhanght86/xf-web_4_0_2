@@ -520,6 +520,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
+
                         callback();
                     } else {
                         setDialog();//清空内容对话框

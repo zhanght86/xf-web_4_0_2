@@ -911,8 +911,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("请填写渠道");
                 return false
             } else {               //渠道非空
-                                   //channel   == id
-                                   //dimenssion   == id
+                //channel   == id
+                //dimenssion   == id
                 angular.forEach($scope.vm.scanContent, function (item) {
                     angular.forEach(item.channelId, function (v) {
                         angular.forEach(channel, function (val, indexChannel) {
