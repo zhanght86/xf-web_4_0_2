@@ -1,11 +1,11 @@
 <div class="main warp">
-    <div class="crumbs-nav bgwhite mt20">
-        <span class="cn-lable">你曾经路过此地：</span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
-    </div>
+    <!--<div class="crumbs-nav bgwhite mt20">-->
+        <!--<span class="cn-lable">你曾经路过此地：</span>-->
+        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>-->
+        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>-->
+        <!--&lt;!&ndash;<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>-->
+        <!--<span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>&ndash;&gt;-->
+    <!--</div>-->
     <!--<div class="tac libSearch">-->
         <!--<div class="search-box">-->
             <!--<input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;">-->
@@ -121,32 +121,17 @@
                                 <option value="0">知识标题</option>
                                 <option value="1">概念扩展</option>
                             </select>
-                            <input ng-if="vm.factor==0" onchange="" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
-                            <input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.factor?vm.getExtension(vm.extensionTitle):vm.getDetailByTitle(vm.extensionTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
-                            <!--<ul class="listItem" ng-if="vm.appointRelativeList.length" style="position: absolute;-->
-                            <!--left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;box-sizing:border-box;">-->
-                                <!--<li ng-repeat="item in vm.appointRelativeList track by $index" style="min-width: 280px;-->
-                                             <!--cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px"-->
-                                    <!--ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>-->
-                            <!--</ul>-->
+                            <input  onchange="" ng-change="vm.factorTitle=''" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
+                            <!--<input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <!--<a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getDetailByTitle(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>-->
+                            <ul class="listItem" ng-if="vm.getFactorByTitle.length" style="position: absolute;
+                            left: 100px;z-index: 2;height: 200px;overflow: auto ;box-sizing:border-box;top: 40px;">
+                                <li ng-repeat="item in vm.getFactorByTitle track by $index" style="min-width: 351px;
+                                              cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px;margin: 2px 0;"
+                                    ng-click="vm.selelectTitle(item)">{{item}}</li>
+                            </ul>
                         </div>
-                        <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
-
-                            <!--<span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">知识标题</span>-->
-                            <!--<div class="L mr-10" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">流量</div>-->
-
-                            <!--<a href="javascript:;" class="L mr-15 " ng-click="vm.getExtension(vm.extensionTitle,vm.extensionWeight);vm.extensionWeight=60"><img src="../../../images/images/delete_img.png" alt=""></a>-->
-                        <!--</div>-->
-                        <!--<div class="clearfix mb-10" style="width: 500px;height: 38px;line-height:38px;">-->
-
-                            <!--<span class="input-text L " style="width: 20%;height:39px;diaplay:inline-block;line-height:32px;">概念扩展</span>-->
-                            <!--<div class="L mr-10 clearfix kuozhan_div" style="text-indent:1em;height: 98%;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
-                                <!--<span class="L "><a href="javascript:;" class="mr-10">X</a>手机业务-话费</span>-->
-                                <!--<span class="L"><a href="javascript:;" class="mr-10">X</a>办理</span>-->
-                            <!--</div>-->
-                            <!--<a href="javascript:;" class="L mr-15 " ><img src="../../../images/images/delete_img.png" alt=""></a>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -186,7 +171,7 @@
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
-                        <span class="L"><b>来源于:业务框架 </b> <span>{{item.source}}</span></span>
+                        <span class="L" ng-if="item.source"><b>来源于: </b> <span>{{item.source}}</span></span>
                     </div>
                 </div>
             </div>
@@ -196,7 +181,9 @@
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent">
                     <div class="item-line">
-                        <div class="lable"></div>
+                        <div class="lable" style="color: #0000cc">
+                            内容{{index+1|  numberToWord}}:
+                        </div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
                                 <div class="textareaDiv textareaDiv1 textareaDiv2 L" >
@@ -213,6 +200,7 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
+                            {{item.channelIdList}}{{vm.channels}}
                             <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
