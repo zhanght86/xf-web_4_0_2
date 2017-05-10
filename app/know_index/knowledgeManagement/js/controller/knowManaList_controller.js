@@ -128,12 +128,11 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             //内容
             angular.forEach(data.knowledgeContents,function(item){
                 var obj = {} ;
-                obj.knowledgeContent = item.knowledgeContent;
-                obj.knowledgeContentNegative = item.knowledgeContentNegative ;
+                $scope.vm.newTitle = item.knowledgeContent;
+                $scope.vm.knowledgeContentNegative = item.knowledgeContentNegative ;
                 //維度，添加預覽效果   以name id 的 形式显示
-                obj.channelIdList =  item.channelIdList ;
-                obj.dimensionIdList =  item.dimensionIdList ;
-
+                               //obj.channelIdList =  item.channelIdList ;
+                //obj.dimensionIdList =  item.dimensionIdList ;
                 $scope.vm.channel = item.channelIdList ;
                 $scope.vm.dimensionArr = [] ;
                 //异步原因
@@ -576,8 +575,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
             };
-            var title = angular.copy($scope.vm.newTitle);
-            scanCotentByTitle(title) ;
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
             obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
@@ -596,7 +593,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
             return params
         }
-
         function save(){
             if(!checkSave()){
                 return false
@@ -633,11 +629,13 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 var params = getParams();
                 //console.log(params);
                 obj.params = params;
-                obj.editUrl = "knowledgeManagement.singleAddConcept";
-                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                obj.knowledgeType = 102 ;
+                obj.knowledgeId = $scope.vm.knowledgeId ;
+                obj.api = "/api/listKnowledge/editKnowledge" ;
+                obj.editUrl = "knowledgeManagement.listAdd";
+                $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
-                $cookieStore.put("knowledgeScan",obj);
             }
         };
 
