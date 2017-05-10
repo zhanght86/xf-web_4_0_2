@@ -78,13 +78,13 @@
                  <!--手选生成-->
                 <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                     <div class="lable"> BOT路径：</div>
-                        <div class="value Div" id="Div">
-                            <div class="ipt-txt-box mr-5">
+                        <div class="value Div clearfix" id="Div">
+                            <div class="ipt-txt-box mr-10 L">
                             <div class="ipt-txt">
                             <span>{{item.className.join("/")}}</span>
                             </div>
                         </div>
-                        <a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                        <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
                     </div>
                 </div>
                 <div class="item-line">
@@ -103,7 +103,7 @@
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent">
                     <div class="item-line">
-                        <div class="lable" style="color: #0000cc">
+                        <div class="lable" style="color: #0000cc;padding-right:10px;box-sizing:border-box;">
                             内容{{index+1|  numberToWord}}:
                         </div>
                         <div class="value">
@@ -122,7 +122,7 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span class="mr-10" ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
@@ -176,12 +176,12 @@
                         概念扩展：
                     </div>
                     <div class="value clearfix">
-                        <div class=" tag_box L mr-10">
+                        <div class=" tag_box L mr-10" style="width:353px;padding:0;">
                             <span ng-repeat="val in item.extensionQuestionTagList" style="margin-right:5px;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>
-                        <span class="tag_s mr-10 L">普通</span>
+                        <span class="tag_s mr-10 L" style="margin-right:10px;">普通</span>
                         <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
@@ -195,7 +195,7 @@
                         概念扩展：
                     </div>
                     <div class="value clearfix">
-                        <div class=" tag_box L mr-10" style="width:353px;">
+                        <div class=" tag_box L mr-10" style="width:353px;padding:0;">
                             <!--{{item.extensionQuestionTagList}}-->
                             <span ng-repeat="val in item.extensionQuestionTagList" style="margin-right:5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                 {{val.tagName}}
