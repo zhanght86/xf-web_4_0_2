@@ -15,6 +15,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             frames : [],      //业务框架
             frameId : "",
             KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
+            openContentConfirm: openContentConfirm, //打开内容对话框
             KnowledgeEdit : KnowledgeEdit,
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
@@ -139,7 +141,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if($stateParams.data!=null){
+        if($stateParams.data!=null && $stateParams.data.knowledgeBase){
 
             var data = $stateParams.data ;
             console.log($stateParams.data);
@@ -172,6 +174,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $scope.vm.scanContent.push(obj);
                 //console.log(obj)
             });
+        }else if($stateParams.data != null && $stateParams.data.docmentation){
+            $scope.vm.docmentation = $stateParams.data.docmentation;
+            $scope.vm.title = $scope.vm.docmentation.documentationTitle;
+            $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
+            $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
 
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
@@ -535,13 +542,51 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     preCloseCallback:function(e){    //关闭回掉
                         if(e === 1){
                             //return;
-                            saveAddNew()
+                            saveAddNew();
                         }else{
                             setDialog()
                         }
                     }
                 });
             }
+        }
+        // 知识文档分类回调
+        function knowledgeClassifyCall() {
+            httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
+                {
+                    knowledgeId: $scope.vm.docmentation.knowledgeId,
+                    knowledgeStatus: 3
+                },
+                function (data) {
+                    if (data && data.status == 200) {
+                        $state.go("back.doc_results_view",
+                            {
+                                knowDocId: $scope.vm.docmentation.documentationId,
+                                knowDocCreateTime: $scope.vm.docmentation.knowDocCreateTime,
+                                knowDocUserName: $scope.vm.docmentation.knowDocUserName
+                            }
+                        );
+                    }
+                }
+            );
+        }
+        //打开知识内容对话框
+        function openContentConfirm(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+                        callback();
+                    } else {
+                        setDialog();//清空内容对话框
+                    }
+                }
+            });
         }
         function KnowledgeEdit(){
             var dialog = ngDialog.openConfirm({
@@ -655,7 +700,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 httpRequestPost(api,params,function(data){
                     console.log(getParams());
                     if(data.status == 200){
-                       $state.go('custServScenaOverview.manage');
+                        if($scope.vm.docmentation){
+                            $scope.vm.knowledgeClassifyCall();
+                        }
+                        else
+                            $state.go('custServScenaOverview.manage');
                     }else if(data.status==500){
                         layer.msg("保存失败")
                     }

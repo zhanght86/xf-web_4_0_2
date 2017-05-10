@@ -3,11 +3,11 @@
  *  知识文档分析结果控制器
  */
 angular.module('knowGatewayModule').controller('doc_results_viewController', [
-    '$scope', 'DetailService','localStorageService','$state','$stateParams',"$timeout",'ngDialog',
-    function ($scope,DetailService,localStorageService,$state,$stateParams,$timeout,ngDialog) {
+    '$scope', 'DetailService','localStorageService','$state','$stateParams',"$timeout",'ngDialog','$cookieStore',
+    function ($scope,DetailService,localStorageService,$state,$stateParams,$timeout,ngDialog,$cookieStore) {
         var self = this;
-        if($scope.knowDocId === null)
-            return false;
+        if($stateParams.knowDocId != null)
+            $state.go("back.doc_results_view");
         $scope.knowDocId = $stateParams.knowDocId;
         $scope.knowDocCreateTime = $stateParams.knowDocCreateTime;
         $scope.knowDocUserName = $stateParams.knowDocUserName;
@@ -17,7 +17,11 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
             knowIgnoreConfirm :knowIgnoreConfirm, //忽略单条知识
             addKnowClass : addKnowClass, //添加知识点分类
             refreshFn : refreshFn,
-            stateUrl : "knowledgeManagement.faqAdd"
+            stateUrlVal: "knowledgeManagement.faqAdd",
+            stateUrl : [
+                        {value:"knowledgeManagement.faqAdd", name:"FAQ知识"},
+                        {value:"knowledgeManagement.singleAddConcept", name:"概念型知识"}
+                       ]
 
         }
 
@@ -58,24 +62,46 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
                 }
             });
         }
-        function addKnowClass(knowledgeTitle, knowledgeContent){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_background/know_gateway/doc_results_viewDialog_add.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        $state.go($scope.vm.stateUrl,{data:
-                           { 'documentationId': $scope.knowDocId,
+        function addKnowClass(knowledgeId, knowledgeTitle, knowledgeContent){
+            if($cookieStore.get("sceneId") == 2){ //营销场景直接跳转到营销知识新增
+                $state.go("knowledgeManagement.conceptAdd",{
+                    data:{
+                        'docmentation': {
+                            'documentationId': $scope.knowDocId,
+                            'knowDocCreateTime': $scope.knowDocCreateTime,
+                            'knowDocUserName': $scope.knowDocUserName,
+                            'knowledgeId': knowledgeId,
                             'documentationTitle': knowledgeTitle,
                             'documentationContext': knowledgeContent
-                        }});
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                var dialog = ngDialog.openConfirm({
+                    template:"/know_background/know_gateway/doc_results_viewDialog_add.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
+                    preCloseCallback:function(e){    //关闭回掉
+                        if(e === 1){
+                            $state.go($scope.vm.stateUrlVal,{
+                                data:{
+                                    'docmentation': {
+                                        'documentationId': $scope.knowDocId,
+                                        'knowDocCreateTime': $scope.knowDocCreateTime,
+                                        'knowDocUserName': $scope.knowDocUserName,
+                                        'knowledgeId': knowledgeId,
+                                        'documentationTitle': knowledgeTitle,
+                                        'documentationContext': knowledgeContent
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
         }
 
         /**
