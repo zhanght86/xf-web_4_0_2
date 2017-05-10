@@ -328,6 +328,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             answerContentList.push(title);
             knowledgeAddServer.conceptGetExtensionByDialogTitle({
                 "applicationId": $scope.vm.applicationId,
+                "title": $scope.vm.title,
                 "answerContentList" : answerContentList
             },function(data){
                 if(data.status == 200){
