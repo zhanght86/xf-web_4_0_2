@@ -46,7 +46,6 @@
                         <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     </div>
                 </div>
-
                 <div class="item-line mb-10">
                     <div class="lable">
                         BOT分类：
@@ -61,7 +60,7 @@
                             <div class="rootClassfy aside-navs aside-navs2" >
                                 <ul class="menus show">
                                     <!--//test-->
-                                    <li ng-repeat="item in vm.botRoot">
+                                    <li ng-repeat="item in vm.botRoot track by $index">
                                         <div class="slide-a">
                                             <a class="ellipsis" href="javascript:;">
                                                 <i class="icon-jj" data-option="{{item.categoryId}}"></i>

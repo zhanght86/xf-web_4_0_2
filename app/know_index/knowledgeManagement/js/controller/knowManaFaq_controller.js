@@ -606,7 +606,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         }
                     }
                 },function(err){
-                    console.log(err)
+                    //console.log(err)
                 });
                 //knowledgeAddServer.faqSave(getParams(),
                 //    function(data){
@@ -777,7 +777,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
             if(!channel.length){     //渠道不能为空
-                layer.msg("请填写渠道");
+                //layer.msg("请填写渠道");
                 return false
             }else{               //渠道非空
                                  //channel   == id

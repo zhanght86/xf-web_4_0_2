@@ -15,13 +15,23 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             knowledgeId: "",
             frames: [],      //业务框架
             frameId: "",
-            knowledgeAdd: KnowledgeAdd,
+            knowledgeAdd : knowledgeAdd ,
             knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
+            botRoot : "",      //根节点
+            knowledgeBot:knowledgeBot,  //bot点击事件
+            knowledgeBotVal : "",  //bot 内容
+            botSelectAdd : botSelectAdd,
+            frameCategoryId : "",
+            title : "",   //标题
+            titleTip :  "",
+            timeStart : "",      //起始时间
+            timeEnd : "",
+            isTimeTable : false,  //时间表隐藏
+            timeFlag : "启用",
             //生成  知识标题 打标生成 BOT
             getBotByTitle : getBotByTitle,
             //creatBot : [],
-
             botClassfy : [],   //类目
             creatSelectBot : [], //手选生成 bot
 
@@ -714,8 +724,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         if ($scope.vm.docmentation) {
                             $scope.vm.knowledgeClassifyCall();
                         }
-                        else
+                        else{
                             $state.go('markServScenaOverview.manage');
+                        }
                     } else if (data.status == 500) {
                         layer.msg("保存失败")
                     }
@@ -757,9 +768,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             $scope.vm.channel = [];
             $scope.vm.dimension = [];
             $scope.vm.question = 1,    //显示相关问
-                $scope.vm.tip = 1,    //在提示
-                $scope.vm.tail =1,    //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = [] ;//业务扩展问
+            $scope.vm.tip = 1,    //在提示
+            $scope.vm.tail =1,    //弹出评价小尾巴
+            $scope.vm.appointRelativeGroup = [] ;//业务扩展问
             $scope.vm.appointRelative = ""
             $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
             $scope.vm.dimensionArr = []
@@ -863,7 +874,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
             if (!channel.length) {     //渠道不能为空
-                layer.msg("请填写渠道");
+                //layer.msg("请填写渠道");
                 return false
             }else{               //渠道非空
                                  //channel   == id
