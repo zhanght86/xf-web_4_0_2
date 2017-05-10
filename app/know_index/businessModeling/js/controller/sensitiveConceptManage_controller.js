@@ -289,6 +289,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             httpRequestPost("/api/modeling/concept/sensitive/update",{
                 "sensitiveConceptId":item.sensitiveConceptId,
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "sensitiveConceptKey":  $scope.vm.key,
                 "sensitiveConceptModifier": item.sensitiveConceptModifier,
                 "sensitiveConceptTerm": $scope.vm.term
@@ -304,6 +305,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             assembleSensitiveConceptTerm();
             httpRequestPost("/api/modeling/concept/sensitive/add",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "sensitiveConceptKey":  $scope.vm.key,
                 "sensitiveConceptModifier": $scope.vm.modifier,
                 "sensitiveConceptTerm": $scope.vm.term

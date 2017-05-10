@@ -295,6 +295,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             httpRequestPost("/api/modeling/concept/business/update",{
                 "businessConceptId":item.businessConceptId,
                 "businessConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "businessConceptKey":  $scope.vm.key,
                 "businessConceptModifier": item.businessConceptModifier,
                 "businessConceptTerm": $scope.vm.term,
@@ -314,6 +315,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             assembleBusinessConceptTerm();
             httpRequestPost("/api/modeling/concept/business/add",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "businessConceptKey":  $scope.vm.key,
                 "businessConceptModifier": $scope.vm.modifier,
                 "businessConceptTerm": $scope.vm.term,

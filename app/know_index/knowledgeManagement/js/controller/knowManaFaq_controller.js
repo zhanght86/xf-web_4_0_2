@@ -564,6 +564,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             params =  {
                 "applicationId": $scope.vm.applicationId,
                 "knowledgeId" : $scope.vm.knowledgeId ,
+
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
