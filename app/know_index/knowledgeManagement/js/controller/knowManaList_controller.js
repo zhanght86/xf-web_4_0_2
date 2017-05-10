@@ -258,7 +258,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             obj.classificationType = 1;
                         }else{
                             layer.msg("添加分类重复");
-                            return false
+                            return false;
                         }
                     }else{
                         obj.className = data.categoryFullName.split("/");
@@ -266,8 +266,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         //obj.classificationType = 1;
                     }
                     $scope.vm.knowledgeBotVal = obj.className.join("/");
-                    $scope.vm.botFullPath=obj ;
-                    $scope.$apply()
+                    $scope.vm.botFullPath=obj;
+                    $scope.$apply();
                 }
             },function(){
                 layer.msg("添加扩展问失败")
@@ -349,7 +349,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
-                        layer.msg("扩展问重复") ;
+                        //layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==200){
@@ -538,22 +538,24 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
-                        $scope.$apply()
+                        $scope.$apply();
                     }else{
-                        console.log(data);
-                        $scope.vm.botClassfy = [] ;   //防止 多次打标,添加类目
-                        $scope.vm.knowledgeTitleTag = [] ;
-                        angular.forEach(data.data.classifyList,function(item){
-                            $scope.vm.knowledgeTitleTag.push(item.name);
-                            var obj = {};
-                            obj.className = item.fullPath;
-                            obj.classificationId = item.id ;
-                            obj.classificationType = item.type;
-                            $scope.vm.botClassfy.push(obj);
-                            //$scope.vm.frameCategoryId = item.id;
-                            $scope.$apply()
-                        });
-                        $scope.$apply()
+                        if(data.data.classifyList){
+                            console.log(data);
+                            $scope.vm.botClassfy = [] ;   //防止 多次打标,添加类目
+                            $scope.vm.knowledgeTitleTag = [] ;
+                            $.each(data.data.classifyList,function(index,item){
+                                $scope.vm.knowledgeTitleTag.push(item.name);
+                                var obj = {};
+                                obj.className = item.fullPath;
+                                obj.classificationId = item.id ;
+                                //obj.classificationType = item.type;
+                                $scope.vm.botClassfy.push(obj);
+                                //$scope.vm.frameCategoryId = item.id;
+                                $scope.$apply();
+                            });
+                            $scope.$apply();
+                        }
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")
@@ -605,7 +607,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
-                    api = "/api/conceptKnowledge/addConceptKnowledge"
+                    api = "/api/listKnowledge/addListKnowledge"
                 }
                 console.log(getParams());
                 httpRequestPost(api,params,function(data){
@@ -628,6 +630,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 var obj = {};
                 var params = getParams();
                 //console.log(params);
+
                 obj.params = params;
                 obj.knowledgeType = 102 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
@@ -706,7 +709,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
-            }else if(!params.knowledgeTitleTag.length){
+            }else if(params.knowledgeTitleTag.length<0){
                 layer.msg("知识标题未打标")
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空")
@@ -742,7 +745,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(data){
                 if(data.status == 200){
                     $scope.vm.appointRelativeList = data.data;
-                    $scope.$apply()
+                    $scope.$apply();
                 }else{
                 }
                 console.log(data);
