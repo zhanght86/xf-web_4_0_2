@@ -7,7 +7,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
         //console.log($stateParams.data);
         $scope.vm = {
-//主页
+            //主页
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
             userId : $cookieStore.get("userId") ,
@@ -798,8 +798,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function checkSave(){
             var params = getParams();
             if(!params.knowledgeTitle){
-                layer.msg("知识标题不能为空，请填写");
-                return false
+                /*layer.msg("知识标题不能为空，请填写");
+                return false*/
+                return true;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false

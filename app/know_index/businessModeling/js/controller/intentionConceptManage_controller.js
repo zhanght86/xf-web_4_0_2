@@ -290,6 +290,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             httpRequestPost("/api/modeling/concept/forceSegment/update",{
                 "forceSegmentConceptId":item.forceSegmentConceptId,
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "forceSegmentConceptKey":  $scope.vm.key,
                 "forceSegmentConceptModifier": item.forceSegmentConceptModifier,
                 "forceSegmentConceptTerm": $scope.vm.term
@@ -305,6 +306,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             assembleForceSegmentConceptTerm();
             httpRequestPost("/api/modeling/concept/forceSegment/add",{
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "forceSegmentConceptKey":  $scope.vm.key,
                 "forceSegmentConceptModifier": $scope.vm.modifier,
                 "forceSegmentConceptTerm": $scope.vm.term
