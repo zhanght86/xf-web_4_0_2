@@ -122,7 +122,7 @@
                         扩展问：
                     </div>
                     <div class="value clearfix" >
-                        <div class="tag_box L mr-10" style="border:0;">
+                        <div class="bd tag_box L mr-10" style="padding-left: 14px;">
                            {{item.extensionQuestionTitle}}
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
@@ -130,14 +130,13 @@
                         <!--<span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>-->
                     </div>
                 </div>
-
 <!-- 業務框架 生成 -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
                     <div class="lable" ng-class="'milesVh'">
                         扩展问：
                     </div>
                     <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10" >
+                        <div class="bd tag_box L mr-10" style="padding-left: 14px;">
                             {{item.extensionQuestionTitle}}
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==1?'普通':'否定'}}</span>
@@ -148,10 +147,16 @@
                 </div>
             </div>
             <div class="jqrsz-item">
-                <!--预览内容-->
-                <div ng-repeat="item in vm.scanContent">
+                <!--<div class="item-line">-->
+                    <!--<div class="lable" >-->
+                        <!--知识内容:-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div ng-repeat="(itemIndex,item) in vm.scanContent">
                     <div class="item-line">
-                        <div class="lable"></div>
+                        <div class="lable" style="color: #0000cc">
+                           内容{{itemIndex+1|  numberToWord}}:
+                        </div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
                                 <div class="textareaDiv textareaDiv1 textareaDiv2 L " >
