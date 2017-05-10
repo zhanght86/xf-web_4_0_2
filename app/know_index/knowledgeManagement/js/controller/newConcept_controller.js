@@ -15,7 +15,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             knowledgeId : "",
             frames : [],      //业务框架
             frameId : "",
-            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
+            KnowledgeEdit : KnowledgeEdit,
             knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
             KnowledgeEdit : KnowledgeEdit,
@@ -533,6 +533,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 //                    }
 //                });
 //        }
+
         // 知识文档分类回调
         function knowledgeClassifyCall(){
             httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
@@ -573,9 +574,44 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
         function KnowledgeAdd(){
             var dia = angular.element(".ngdialog ");
+            if(data){    //增
+                $scope.vm.newTitle = dataknowledgeContent;
+                $scope.vm.channel = dat.channelIdList;
+                //$scope.vm.dimensionrr.id = data.dimensionIdList;
+                angular.forEach($scopevm.dimensions,function(item){
+                    if(data.dimensionIList.inArray(item.dimensionId)){
+                        var obj = {};
+                        obj.dimensioId = item.dimensionId ;
+                        obj.dimensionName  item.dimensionName ;
+                        $scope.vm.imensionArr.push(obj) ;
+                        }
+
+                });
+                $scope.vm.tip  = data.knowledgeBeRelatedOn; //在提示
+                $scope.vm.question = data.knowledgeRelatedQuestionOn;
+                $scope.vm.tail = data.knowledgeCommonOn;
+                $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
+                var callback = function(){
+                    var obj = {};
+                    obj.knowledgeContent = $scope.vm.newTitle;
+                    obj.knowledgeContentType = 0,  // 答案类型
+                    obj.channelIdList =  $scope.vm.channel;
+                    obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+                    obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+                        obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                    obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+                    obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
+                    $scope.vm.scanContent[index] = obj;
+                    setDialog() ;
+            }
+            }else{
+                var  callback = saveAddNew ;
+        }
+        function KnowledgeEdit()
+            var dia = angular.element(".ngdialog ")
             if(dia.length==0) {
                 var dialog = ngDialog.openConfirm({
-                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+                    template: "/know_index/knowledgeManagement/marking_concept/newConceptDialog.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,
@@ -583,37 +619,17 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     backdrop: 'static',
                     preCloseCallback: function (e) {    //关闭回掉
                         if (e === 1) {
-                            //return;
-                            saveAddNew()
+                            callback()
                         } else {
+                          
                             setDialog()
                         }
                     }
                 });
-
             }
         }
-        function KnowledgeEdit(){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialogEdit.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
 
-                        } else {
-                           
-                        }
-                    }
-                });
 
-            }
-        }
         function extensionEdit(){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {

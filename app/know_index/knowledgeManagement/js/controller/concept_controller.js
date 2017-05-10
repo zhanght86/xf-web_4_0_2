@@ -14,10 +14,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             sceneId :  $cookieStore.get("sceneId") ,
             frames : [],      //业务框架
             frameId : "",
-            KnowledgeAdd: KnowledgeAdd,  //新增点击事件
-            knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
-            openContentConfirm: openContentConfirm, //打开内容对话框
-            KnowledgeEdit : KnowledgeEdit,
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
@@ -528,9 +524,41 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 //                    }
 //                });
 //        }
-
-        function KnowledgeAdd(){
+        function knowledgeAdd(data,index){
+            console.log(data) ;
             var dia = angular.element(".ngdialog ");
+            if(data){    //增加
+                $scope.vm.newTitle = data.knowledgeContent;
+                $scope.vm.channel = data.channelIdList;
+                //$scope.vm.dimensionArr.id = data.dimensionIdList;
+                angular.forEach($scope.vm.dimensions,function(item){
+                    if(data.dimensionIdList.inArray(item.dimensionId)){
+                        var obj = {} ;
+                        obj.dimensionId = item.dimensionId ;
+                        obj.dimensionName = item.dimensionName ;
+                        $scope.vm.dimensionArr.push(obj) ;
+                    }
+                }) ;
+                $scope.vm.tip  = data.knowledgeBeRelatedOn; //在提示
+                $scope.vm.question = data.knowledgeRelatedQuestionOn;
+                $scope.vm.tail = data.knowledgeCommonOn;
+                $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
+                var callback = function(){
+                    var obj = {};
+                    obj.knowledgeContent = $scope.vm.newTitle;
+                    obj.knowledgeContentType = 0,  // 答案类型
+                        obj.channelIdList =  $scope.vm.channel;
+                    obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+                    obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+                        obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                    obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+                    obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
+                    $scope.vm.scanContent[index] = obj;
+                    setDialog() ;
+                }
+            }else{
+                var  callback = saveAddNew ;
+            }
             if(dia.length==0){
                 var dialog = ngDialog.openConfirm({
                     template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
@@ -541,8 +569,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     backdrop : 'static',
                     preCloseCallback:function(e){    //关闭回掉
                         if(e === 1){
-                            //return;
-                            saveAddNew();
+                            saveAddNew()
                         }else{
                             setDialog()
                         }
@@ -550,6 +577,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 });
             }
         }
+        
         // 知识文档分类回调
         function knowledgeClassifyCall() {
             httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
@@ -599,12 +627,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
 
-                    }else{
-
-                    }
-                }
-            });
-        }
         function extensionEdit(){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
@@ -866,12 +888,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel.length){
+            if(val.id && $scope.vm.channel){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id.length){
+            if(val.length && $scope.vm.dimensionArr.id){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         },true);

@@ -37,7 +37,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //扩展问
             getExtension : getExtension , //获取扩展问
             extensionTitle : "",
-            extensionWeight :1,
+            extensionWeight :60,
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
 
@@ -273,7 +273,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         angular.forEach(data.data[0].elements,function(item){
                             var obj = {} ;
                             obj.extensionQuestionTitle  = item.elementContent;
-                            obj.extensionQuestionType = 1;
+                            obj.extensionQuestionType = 60;
                             obj.source = data.data[0].frameTitle;
                             if(type){
                                 $scope.vm.extensionsByFrame.pop();
@@ -287,7 +287,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.$apply();
                 }
             },function(){
-                 layer.msg("err or err")
+                //layer.msg("err or err")
             });
         }
         // 获取Bot全路径
@@ -334,14 +334,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj ,  $scope.vm.extensions)){
                layer.msg("扩展问重复");
-                $scope.vm.extensionTitle = "" ;
                 return false
             }else{
                 httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
                     title : title
                 },function(data){
                     if(data.status == 500){
-                        $scope.vm.extensionTitle = "" ;
                         layer.msg("扩展问重复") ;
                     }else if(data.status==200){
                         $scope.vm.extensionTitle = "" ;
@@ -471,41 +469,41 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 });
             }
         }
-
-        function knowledgeAdd(data){
-            console.log(data)
+        function knowledgeAdd(data,index){
+            console.log(data) ;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
-                //obj.knowledgeContent = $scope.vm.newTitle;
-                //obj.knowledgeContentType = 0,  // 答案类型
-                //    obj.channelIdList =  $scope.vm.channel;
-                //obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-                //obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                //    obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-                //obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-                //
-                //obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
-                ////高級 選項
-                //$scope.vm.scanContent.push(obj);
-
-                 $scope.vm.newTitle = data.knowledgeContent;
-                 $scope.vm.channel = data.channelIdList;
-                 $scope.vm.dimensionArr.id = data.dimensionIdList;
-
+                $scope.vm.newTitle = data.knowledgeContent;
+                $scope.vm.channel = data.channelIdList;
+                //$scope.vm.dimensionArr.id = data.dimensionIdList;
                 angular.forEach($scope.vm.dimensions,function(item){
                     if(data.dimensionIdList.inArray(item.dimensionId)){
-                        $scope.vm.dimensionArr.name = [] ;
-                       $scope.vm.dimensionArr.name.push(item.dimensionName)
+                        var obj = {} ;
+                        obj.dimensionId = item.dimensionId ;
+                        obj.dimensionName = item.dimensionName ;
+                        $scope.vm.dimensionArr.push(obj) ;
                     }
-                });
-                 $scope.vm.dimensionArr.name = "";
+                }) ;
+                $scope.vm.tip  = data.knowledgeBeRelatedOn; //在提示
                  $scope.vm.question = data.knowledgeRelatedQuestionOn;
                  $scope.vm.tail = data.knowledgeCommonOn;
                  $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
 
-                var callback = ""
+                var callback = function(){
+                    var obj = {};
+                    obj.knowledgeContent = $scope.vm.newTitle;
+                    obj.knowledgeContentType = 0,  // 答案类型
+                    obj.channelIdList =  $scope.vm.channel;
+                    obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+                    obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+                    obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                    obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
+                    obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
+                    $scope.vm.scanContent[index] = obj;
+                    setDialog() ;
+                }
             }else{
-               var  callback = saveAddNew
+                var  callback = saveAddNew ;
             }
             if(dia.length==0) {
                 $scope.vm.openContentConfirm(callback);
@@ -529,6 +527,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 }
             });
         }
+
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
@@ -576,6 +575,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             params =  {
                 "applicationId": $scope.vm.applicationId,
                 "knowledgeId" : $scope.vm.knowledgeId ,
+
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
@@ -763,12 +763,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel.length){
+            if(val.id && $scope.vm.channel){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id.length){
+            if(val.length && $scope.vm.dimensionArr.id){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         },true);
