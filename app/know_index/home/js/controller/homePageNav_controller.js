@@ -64,7 +64,7 @@ angular.module('homePage').controller('homePageNavController', [
             if (localStorage.history){
                 var aa = JSON.parse(window.localStorage.history);
                 if(aa.use.length>=8){
-                    aa.use.splice(0,1);
+                    aa.use.splice(1,1);
                 }
                 for(var i=0;i<aa.use.length;i++){
                     if(aa.use[i].name == $scope.getUrlName($scope.urls)){
@@ -75,13 +75,12 @@ angular.module('homePage').controller('homePageNavController', [
                     aa.use.push(new ObjStory($scope.urls,$scope.getUrlName($scope.urls)));
                 }
                 window.localStorage.history=JSON.stringify(aa);
-               $scope.crumbs=aa.use.slice(0,-1);
-                // $scope.crumbs=aa.use;
+                // $scope.crumbs=aa.use.slice(0,-1);
+                $scope.crumbs=aa.use;
             }
             else {
                 var obj={
                     use:[{"url":"homePage.define","name":"首页"}]
-                    // use:[new ObjStory($scope.urls,$scope.getUrlName($scope.urls))]
                 }
                 window.localStorage.history=JSON.stringify(obj);
             }
