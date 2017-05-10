@@ -92,7 +92,7 @@
                         <div class="lable" style="width:245px;">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
                         <div class="formControls col-xs-8 col-sm-9" style="padding-left:0;">
-                            <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
+                            <select class="input-text" style="width:407px;height:34px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
                                 <option value="" ng-if="vm.frames.length">--业务框架为空--</option>
                             </select>
                         </div>
@@ -106,9 +106,9 @@
                         扩展问：
                     </div>
                     <div class="value" style="overflow: visible">
-                        <div class="clearfix" style="width: 500px;height: 38px;">
-                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 39px;">
+                        <div class="clearfix" style="width: 500px;height: 34px;">
+                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="padding-left:6px;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
+                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 35px;">
                                 <option value="1">普通</option>
                                 <option value="0">否定</option>
                             </select>
