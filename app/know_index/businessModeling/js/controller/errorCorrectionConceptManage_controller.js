@@ -288,6 +288,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             httpRequestPost("/api/modeling/concept/correction/update",{
                 "correctionConceptId":item.correctionConceptId,
                 "correctionConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "correctionConceptKey":  $scope.vm.key,
                 "correctionConceptModifier": item.correctionConceptModifier,
                 "correctionConceptTerm": $scope.vm.term,
@@ -303,6 +304,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             assembleCorrectionConceptTerm();
             httpRequestPost("/api/modeling/concept/correction/add",{
                 "correctionConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "correctionConceptKey":  $scope.vm.key,
                 "correctionConceptModifier": $scope.vm.modifier,
                 "correctionConceptTerm": $scope.vm.term,
