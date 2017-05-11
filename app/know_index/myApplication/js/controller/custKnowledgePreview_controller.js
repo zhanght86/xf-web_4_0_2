@@ -89,7 +89,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                         $scope.vm.listData = data.data;
                     }
                     console.log(data);
-                    $scope.$apply();
+                        $scope.$apply();
                 },function(){
                     layer.msg("获取失败")
                 });
