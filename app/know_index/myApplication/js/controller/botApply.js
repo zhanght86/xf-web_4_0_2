@@ -195,7 +195,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categoryPid": "root"
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
@@ -225,7 +225,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categorySceneId": categorySceneId,
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
@@ -517,7 +517,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
+                            $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
@@ -541,9 +541,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 var len = $(value).parent().parent().next().find("li").length;
                                 console.log("====len===="+len);
                                 if(len>0){
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                 }else{
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                     $(value).attr("style",sty);
                                 }
                             }else{
@@ -807,7 +807,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
+                            $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
@@ -837,9 +837,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 var len = $(value).parent().parent().next().find("li").length;
                                 console.log("====len===="+len);
                                 if(len>0){
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                 }else{
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                     $(value).attr("style",sty);
                                 }
                             }else{

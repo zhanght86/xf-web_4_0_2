@@ -382,9 +382,6 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                     c.$setValidity('unique', false);
                     scope.vm.allowSubmit=0;
                 })
-
-
-
             });
         }
     }

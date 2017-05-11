@@ -3,7 +3,7 @@
 
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>FAQ知识新增</span>
+            <span>FAQ知识</span>
         </div>
         <div class="r-cont-bd oh">
             <!--<form novalidate="novalidate" name="form">-->
@@ -106,9 +106,9 @@
                         扩展问题：
                     </div>
                     <div class="value" style="overflow: visible">
-                        <div class="clearfix" style="width: 500px;height: 38px;">
-                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 39px;">
+                        <div class="clearfix" style="width: 500px;height: 34px;">
+                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="padding-left:6px;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
+                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 35px;">
                                 <option value="60">普通</option>
                                 <option value="61">否定</option>
                             </select>
@@ -122,7 +122,7 @@
                         扩展问题：
                     </div>
                     <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10" style="padding-left: 14px;">
+                        <div class="bd tag_box L mr-10" style="padding-left: 6px;">
                            {{item.extensionQuestionTitle}}
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
@@ -136,7 +136,7 @@
                         扩展问题：
                     </div>
                     <div class="value clearfix" >
-                        <div class="bd tag_box L mr-10" style="padding-left: 14px;">
+                        <div class="bd tag_box L mr-10" style="padding-left: 6px;">
                             {{item.extensionQuestionTitle}}
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
