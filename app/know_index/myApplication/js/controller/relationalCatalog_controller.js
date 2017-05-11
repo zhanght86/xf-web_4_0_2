@@ -241,6 +241,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         httpRequestPost("/api/modeling/category/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryId,
                             "categoryApplicationId": $scope.vm.categoryApplicationId,
+                            "applicationId": categoryApplicationId,
                             "categoryPid": $scope.vm.categoryPid,
                             "categoryAttributeName": $scope.vm.categoryAttributeName,
                             "categoryName": $("#categoryName").val(),
@@ -386,6 +387,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
             httpRequestPost("/api/modeling/category/add",{
                 "categoryApplicationId": categoryApplicationId,
+                "applicationId": categoryApplicationId,
                 "categoryPid": $scope.vm.botSelectValue,
                 "categoryAttributeName": $scope.vm.categoryAttributeName,
                 "categoryName": $("#category-name").val(),
