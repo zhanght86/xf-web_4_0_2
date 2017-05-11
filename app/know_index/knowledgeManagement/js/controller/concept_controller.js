@@ -384,7 +384,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "title": $scope.vm.title,
                 "answerContentList": answerContentList
             }, function (data) {
-                console.log(data);
+                console.log(data) ;
                 if (data.status == 200) {
                     //console.log(data.data);
                     //console.log(index) ;
@@ -402,9 +402,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var question = [];
             question.push(title);
             var obj = {} ;
-            obj.extensionQuestionTitle = $scope.vm.extensionTitle;
-            obj.extensionQuestionType = $scope.vm.extensionWeight;
-            if(!$scope.vm.extensionTitle){
+            obj.extensionQuestionTitle = title;
+            obj.extensionQuestionType = weight;
+            if(!title){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
                 layer.msg("扩展问重复");

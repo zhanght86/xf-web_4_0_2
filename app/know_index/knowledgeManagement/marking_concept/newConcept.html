@@ -2,7 +2,7 @@
     <div class="addContent pd30">
         <div class="r-cont-hd">
             <span ng-if="!vm.knowledgeId">营销知识新增</span>
-            <span ng-if="!vm.knowledgeId">营销知识编辑</span>
+            <span ng-if="vm.knowledgeId">营销知识编辑</span>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
@@ -111,7 +111,7 @@
                             </select>
                             <input  onchange=""  type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
                             <!--<input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle,60)"><img src="../../../images/images/add_img.png" alt=""></a>
                             <!--<a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getDetailByTitle(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>-->
                             <ul class="listItem" ng-if="vm.getFactorByTitle.length" style="position: absolute;
                             left: 100px;z-index: 2;height: 200px;overflow: auto ;box-sizing:border-box;top: 40px;">
