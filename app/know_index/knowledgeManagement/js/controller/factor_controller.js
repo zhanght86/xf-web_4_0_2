@@ -95,22 +95,25 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             column:""
         };
         //獲取渠道
+        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                console.log( $scope.vm.applicationId) ;
+                if(data.data){
+                    $scope.vm.dimensions = data.data;
+                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
 
-        httpRequestPost("/api/application/dimension/list",{"applicationId" : $scope.vm.applicationId},function(data){
-            if(data.data){
-                $scope.vm.dimensions = data.data;
-                $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                $scope.$apply()
-                        }
-        },function(err){
-            console.log("获取维度失败，请刷新页面")
-        });
-        httpRequestPost("/api/application/channel/listChannels",{"applicationId" : $scope.vm.applicationId},function(data){
+                }   
+            }, function(error) {
+                layer.msg("获取维度失败，请刷新页面")
+            });
+        //获取维度
+        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
                 if(data.data){
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
-                console.log("获取渠道失败，请刷新页面")
+                layer.msg("获取渠道失败，请刷新页面")
             });
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
@@ -144,27 +147,27 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.dimensionIdList =  item.dimensionIdList ;
 
                 $scope.vm.channel = item.channelIdList ;
-
                 $scope.vm.dimensionArr = [] ;
                     //异步原因
                 var getDimension = $interval(function(){
                         if($scope.vm.dimensions){
                             $interval.cancel(getDimension);
                             angular.forEach($scope.vm.dimensions,function(val){
-                                if(!item.dimensionIdList.inArray(val.dimensionId)){
+                                if(item.dimensionIdList.inArray(val.dimensionId)){
                                     var obj = {};
                                     obj.dimensionName = val.dimensionName;
                                     obj.dimensionId = val.dimensionId;
                                     $scope.vm.dimensionArr.push(obj);
+                                    console.log( $scope.vm.dimensionArr )
                                 }
                             });
                         }
                     },100) ;
+
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
-                console.log(obj.dimensionIdList)
             });
         }else{
             init();

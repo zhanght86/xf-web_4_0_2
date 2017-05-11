@@ -620,7 +620,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
         function knowledgeAdd(data,index){
             if(!$scope.vm.title){
-                layer.msg("请先输入知识标题") ;
+                layer.msg("请先输入营销知识标题") ;
                 return false ;
             }else {
                 var dia = angular.element(".ngdialog ");

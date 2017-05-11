@@ -168,7 +168,7 @@
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent track by $index">
                     <div class="item-line">
-                        <div class="lable" style="color: #0000cc">
+                        <div class="lable" style="color: #0000cc;padding-right:10px;box-sizing:border-box;">
                             内容{{index+1|  numberToWord}}:
                         </div>
                         <div class="value">
@@ -202,7 +202,7 @@
                             <div class="ipt-txt-box">
                                 <input class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
-                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
+                                <a href="javascript:;"  title="点击生成扩展问" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>
                         </div>
                     </div>
