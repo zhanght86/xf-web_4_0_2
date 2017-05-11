@@ -63,7 +63,7 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
-                                <div class="ipt-txt-box L " style="width: 394px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 5px;">
+                                <div class="ipt-txt-box L " style="width: 394px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 10px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
@@ -76,13 +76,13 @@
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="value Div" id="Div">
-                                <div class="ipt-txt-box" style="width: 394px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 5px;">
+                            <div class="value Div clearfix" id="Div">
+                                <div class="ipt-txt-box L" style="width: 394px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 10px;">
                                     <div class="ipt-txt">
                                         <span>{{item.className.join("/")}}</span>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                                <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -115,12 +115,12 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L input-text extended_query_txt" style="width:279px;border:0;" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                                <div class="L extended_query_txt" style="width:345px;height:34px;border:0;" >
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="background: #e1e1e1;padding: 4px;margin: 0 5px 5px 0;display:inline-block;" ng-class="val.exist?'':'tagRepeat'">
                                         {{val.tagName}}
                                     </span>
                                 </div>
-                                <span class="tag_s mr-10 L" style="padding:0 10px;">
+                                <span class="tag_s mr-10 L" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center;">
                                     普通
                                 </span>
                                 <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
@@ -133,16 +133,16 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L input-text extended_query_txt" style="width:279px;border:0;" >
+                                <div class="L extended_query_txt" style="width:345px;height:34px;border:0;" >
                                     <!--{{item.extensionQuestionTagList}}-->
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                                   <span ng-repeat="val in item.extensionQuestionTagList" style="background: #e1e1e1;padding: 4px;margin:0 5px 5px 0;display:inline-block;" ng-class="val.exist?'':'tagRepeat'">
                                         {{val.tagName}}
                                     </span>
                                 </div>
-                                <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
+                                <span class="tag_s mr-10 L" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center;">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                                 <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
-                                <span class="L"><b>来源于: </b> <span>{{item.source}}</span></span>                       </div>
+                                <span class="L"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>                       </div>
                         </div>
                     </div>
                     <div class="row cl mb-50">
