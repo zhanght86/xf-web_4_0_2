@@ -489,6 +489,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
+            var title = oldWord.extensionQuestionTitle ;
+            var weight = oldWord.extensionQuestionType ;
             //console.log(oldWord);
             httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
@@ -497,7 +499,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             },function(data){
                 console.log(data) ;
                 if(data.status==200){
-                    console.log("success") ;
+                    //console.log("success") ;
                     var enten = {}  ;
                     enten.extensionQuestionTitle = title;
                     enten.extensionQuestionType = weight ;
@@ -882,7 +884,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
-            return true
+            return true ;
             //if(!arr.length){
             //    return true ;
             //}else{

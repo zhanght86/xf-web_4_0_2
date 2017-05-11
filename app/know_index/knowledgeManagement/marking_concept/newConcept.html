@@ -87,7 +87,7 @@
                     </div>
                 </div>
                  <!--手选生成-->
-                <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
+                <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
                     <div class="lable"> BOT分类：</div>
                         <div class="value Div" id="Div">
                             <div class="ipt-txt-box">
@@ -137,13 +137,13 @@
 
             <div class="jqrsz-item" style="overflow: visible">
                 <!--sshoudong  tinajia -->
-                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions">
+                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensions track by $index">
                     <div class="lable">
                         概念扩展：
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -156,21 +156,21 @@
                 </div>
 
                 <!-- 業務框架 生成 -->
-                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame">
+                <div class="item-line"  style="overflow: visible" ng-repeat="item in vm.extensionsByFrame track by $index">
                     <div class="lable">
                         概念扩展：
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
                             <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in item.extensionQuestionTagList" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin: 0 5px;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
-                        <span class="L" ng-if="item.source"><b>来源于: </b> <span>{{item.source}}</span></span>
+                        <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
                 </div>
             </div>
@@ -198,17 +198,17 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                            <span ng-repeat="val in item.channelIdList track by $index">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">维度:
-                            <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                            <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>
                         </div>
                     </div>
                     <!-- 扩展问生成标签-->
-                    <div class="item-line" ng-repeat="val in item.extensionByContentByTitle" style="margin-top: 4px;">
+                    <div class="item-line" ng-repeat="val in item.extensionByContentByTitle track by $index" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
                                 <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
