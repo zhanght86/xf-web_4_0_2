@@ -20,8 +20,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             pageSize : 5,
             indexV :1,
             listKnoDataTotal : "", //聊天知识库知识总数
-            chatKnowledgeId : "",
-            chatKnowledgeTopic : "",
+            knowledgeId : "",
+            knowledgeTitle : "",
             userId: $cookieStore.get("userId"),
             applicationId: $cookieStore.get("applicationId"),
             paginationConf : "", //分页条件
@@ -59,8 +59,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 $scope.vm.seleceAddAll = [];
                 angular.forEach($scope.vm.listKnoData,function(item,index){
                     var obj = {};
-                    obj.chatKnowledgeId = item.chatKnowledgeId;
-                    obj.chatKnowledgeTopic = item.chatKnowledgeTopic;
+                    obj.knowledgeId = item.knowledgeId;
+                    obj.knowledgeTitle = item.knowledgeTitle;
                     obj.index = index;
                     $scope.vm.seleceAddAll.push(obj);
                 });
@@ -81,8 +81,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             var prop = self.prop("checked");
             console.log(prop);
             var obj = {};
-            obj.chatKnowledgeId = id;
-            obj.chatKnowledgeTopic = name;
+            obj.knowledgeId = id;
+            obj.knowledgeTitle = name;
             obj.index = index;
             if(!prop){
                     angular.forEach($scope.vm.seleceAddAll,function(item,index){
@@ -160,7 +160,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //从聊天知识库查询知识
         function findKnowledge(index){
-            httpRequestPost("/api/chatKnowledge/findChatKnowledgeByApplicationId",{
+            httpRequestPost("/api/owledgeManage/overView/findChatKnowledgeByApplicationId",{
                 applicationId:$scope.vm.applicationId,
                 title : $scope.vm.knowledge,
                 pageSize : $scope.vm.pageSize,

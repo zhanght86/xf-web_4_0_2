@@ -31,7 +31,7 @@
                     <tbody class="text-c">
                     <tr ng-repeat="item in vm.listKnoData">
                         <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="vm.selectSingleDialog($event,item.chatKnowledgeId,item.chatKnowledgeTopic,$index)"/></td>
-                        <td>{{item.chatKnowledgeTopic}}</td>
+                        <td>{{item.knowledgeTitle}}</td>
                     </tr>
                     </tbody>
                 </table>
