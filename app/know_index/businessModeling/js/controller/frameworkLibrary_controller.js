@@ -332,7 +332,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         if(i%2==0){
                             html += '<div class="libraryRthCnt edit" type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
                         }else{
-                            html += '<div class="libraryRthCnt even" data-option="'+data.data[i].frameId+'">';
+                            html += '<div class="libraryRthCnt even edit" data-option='+data.data[i].frameId+' type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
                         }
                         html += '   <a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>';
                         if(data.data[i].frameTypeId == 10011){
