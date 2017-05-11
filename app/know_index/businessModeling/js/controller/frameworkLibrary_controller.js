@@ -330,17 +330,23 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     var html = "";
                     for(var i=0;i<data.data.length;i++){
                         if(i%2==0){
-                            html += '<div class="libraryRthCnt" data-option="'+data.data[i].frameId+'">';
+                            html += '<div class="libraryRthCnt edit" type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
                         }else{
-                            html += '<div class="libraryRthCnt even" data-option="'+data.data[i].frameId+'">';
+                            html += '<div class="libraryRthCnt even edit" data-option='+data.data[i].frameId+' type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
                         }
-                        html += '   <a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>'+
-                                '   <img src="../../images/images/libTxt_22.png"/>'+
-                                '   <p>银行领域业务框架</p>'+
-                                '   <div>' +
-                                '      <a class="edit" type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' href="javascript:;">'+data.data[i].frameTitle+'</a>' +
-                                '   </div>'+
-                                '</div>';
+                        html += '   <a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>';
+                        if(data.data[i].frameTypeId == 10011){
+                            html+='<img src="../../images/faq.png"/><p>FAQ框架</p>';
+                        }
+                        else if(data.data[i].frameTypeId == 10012){
+                            html+='<img src="../../images/gn.png"/><p>概念框架</p>';
+                        }
+                        else if(data.data[i].frameTypeId == 10013){
+                            html+='<img src="../../images/images/libTxt_22.png"/><p>要素框架</p>';
+                        }
+                        html+='<div>' +
+                            '<a  href="javascript:;">'+data.data[i].frameTitle+'</a>' +
+                            '</div></div>';
                     }
                     $("#frame-library").append(html);
                 }
@@ -369,7 +375,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
         });
         //删除框架
-        $("#frame-library").on("click",'.pa',function(){
+        $("#frame-library").on("click",'.pa',function(e){
+            e.stopPropagation();
             var frameId = $(this).attr("data-option");
             console.log("======delete frame======"+frameId);
             httpRequestPost("/api/modeling/frame/delete",{

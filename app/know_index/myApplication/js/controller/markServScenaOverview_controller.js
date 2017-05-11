@@ -14,6 +14,9 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         //********************************************//
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
+            applicationName : $cookieStore.get("applicationName"),
+            imgUrl : $cookieStore.get("imgUrl"),
+            robotHead : $cookieStore.get("robotHead"),
             //editName : editName
             //getCreatBot : getCreatBot,
             creatBot : [],

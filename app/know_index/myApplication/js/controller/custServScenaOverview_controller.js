@@ -5,8 +5,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window ) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
         $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
 
         //******************************************** //
@@ -14,6 +14,9 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //********************************************//
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
+            applicationName : $cookieStore.get("applicationName"),
+            imgUrl : $cookieStore.get("imgUrl"),
+            robotHead : $cookieStore.get("robotHead"),
             //editName : editName
             //getCreatBot : getCreatBot,
             creatBot : [],
