@@ -46,7 +46,6 @@
                         <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     </div>
                 </div>
-
                 <div class="item-line mb-10">
                     <div class="lable">
                         BOT分类：
@@ -61,7 +60,7 @@
                             <div class="rootClassfy aside-navs aside-navs2" >
                                 <ul class="menus show">
                                     <!--//test-->
-                                    <li ng-repeat="item in vm.botRoot">
+                                    <li ng-repeat="item in vm.botRoot track by $index">
                                         <div class="slide-a">
                                             <a class="ellipsis" href="javascript:;">
                                                 <i class="icon-jj" data-option="{{item.categoryId}}"></i>
@@ -121,7 +120,7 @@
                                 <option value="0">知识标题</option>
                                 <option value="1">概念扩展</option>
                             </select>
-                            <input  onchange="" ng-change="vm.factorTitle=''" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
+                            <input  onchange=""  type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
                             <!--<input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
                             <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
                             <!--<a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getDetailByTitle(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>-->
@@ -176,10 +175,9 @@
                 </div>
             </div>
 
-
             <div class="jqrsz-item" style="padding-top:0;">
                 <!--预览内容-->
-                <div ng-repeat="(index,item) in vm.scanContent">
+                <div ng-repeat="(index,item) in vm.scanContent track by $index">
                     <div class="item-line">
                         <div class="lable" style="color: #0000cc">
                             内容{{index+1|  numberToWord}}:
@@ -200,7 +198,6 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            {{item.channelIdList}}{{vm.channels}}
                             <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
@@ -211,7 +208,7 @@
                         </div>
                     </div>
                     <!-- 扩展问生成标签-->
-                    <div class="item-line" ng-repeat="val in vm.dialogExtension[index]" style="margin-top: 4px;">
+                    <div class="item-line" ng-repeat="val in item.extensionByContentByTitle" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
                                 <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />

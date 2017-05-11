@@ -333,7 +333,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(data){
                 if(data.status == 200){
                     console.log(data.data) ;
-                    $scope.vm.dialogExtension.push(data.data) ;
+                    $scope.vm.dialogExtension = data.data.concat($scope.vm.dialogExtension);
                 }else if(data.status==500){
                 }
             },function(){

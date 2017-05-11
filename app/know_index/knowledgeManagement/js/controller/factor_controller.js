@@ -407,7 +407,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //  根據框架添加擴展問  --》 替換原來的條件
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
-
                 if($scope.vm.extensionsByFrame.length){
                     //  替換條件
                     replace(val);
