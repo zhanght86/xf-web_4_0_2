@@ -5,8 +5,8 @@
  */
 
 angular.module('adminModule').controller('adminContentController', [
-    '$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore","$rootScope",
+    function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore,$rootScope) {
         $scope.vm = {
             userName : $cookieStore.get("userName"),
             userPermission : $stateParams.userPermission,
