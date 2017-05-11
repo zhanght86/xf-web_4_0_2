@@ -480,7 +480,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
+                            $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
@@ -510,9 +510,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 var len = $(value).parent().parent().next().find("li").length;
                                 console.log("====len===="+len);
                                 if(len>0){
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                 }else{
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                     $(value).attr("style",sty);
                                 }
                             }else{
