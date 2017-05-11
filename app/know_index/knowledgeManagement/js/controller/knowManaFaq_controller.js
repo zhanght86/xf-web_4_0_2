@@ -707,22 +707,22 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         // 检验标题是否符合
-        function checkTitle(title,type){
-            if(!title){
-                layer.msg("标题不能为空");
-                return false
-            }else{
-                httpRequestPost("/api/conceptKnowledge/checkDistribute",{
-                    "title" : title
-                },function(data){
-                    console.log(data);
-                    return true;
-                },function(err){
-                    layer.msg("打标失败，请重新打标");
-                    return false
-                });
-            }
-        }
+        //function checkTitle(title,type){
+        //    if(!title){
+        //        layer.msg("标题不能为空");
+        //        return false
+        //    }else{
+        //        httpRequestPost("/api/conceptKnowledge/checkDistribute",{
+        //            "title" : title
+        //        },function(data){
+        //            console.log(data);
+        //            return true;
+        //        },function(err){
+        //            layer.msg("打标失败，请重新打标");
+        //            return false
+        //        });
+        //    }
+        //}
         //检验扩展问是否重复
         function checkExtension(item,arr){
             if(arr.length==0){

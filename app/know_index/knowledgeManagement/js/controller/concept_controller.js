@@ -379,9 +379,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         function scanCotentByTitle(title,index){
+            console.log(1)
             var answerContentList = [];
             answerContentList.push(title);
-            httpRequestPost("/api/marketingKnowledge/productExtensionQuestion", {
+            httpRequestPost("/api/conceptKnowledge/productExtensionQuestion", {
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.title,
                 "answerContentList": answerContentList
@@ -396,7 +397,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     layer.msg(data.info);
                 }
             }, function () {
-                layer.msg("打标失败");
+                //layer.msg("打标失败");
             });
         }
         //手动添加扩展问

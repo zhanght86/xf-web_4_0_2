@@ -360,7 +360,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     layer.msg(data.info);
                 }
             }, function () {
-                layer.msg("打标失败");
+                //layer.msg("打标失败");
             });
         }
         //手动添加扩展问

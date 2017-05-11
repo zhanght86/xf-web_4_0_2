@@ -175,7 +175,6 @@
                 </div>
             </div>
 
-
             <div class="jqrsz-item" style="padding-top:0;">
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent track by $index">
@@ -199,7 +198,6 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            {{item.channelIdList}}{{vm.channels}}
                             <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
