@@ -22,6 +22,7 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
 
             robotHead : "",//头像
             imgUrl : "", //文件服务器地址
+            robotName : "", //机器人名称
         };
 
         //获取应用的头像
@@ -56,6 +57,7 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
                 }else{
                     $scope.vm.robotHead= data.data.robotHead;//头像
                     $scope.vm.imgUrl = data.data.imgUrl; //文件服务器地址
+                    $scope.vm.robotName = data.data.robotName; //机器人名称
                     $scope.$apply();
                 }
             },function(){

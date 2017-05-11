@@ -1,7 +1,7 @@
 <div class="pd-20"  >
     <h3 class="f16 mb-20 tc bold">多轮交互配置</h3>
-    <div >
-        <form name="myScene" class="css-form" novalidate>
+    <form name="myScene" class="css-form" novalidate>
+    <div>
         <h3 class="f14 mb-10  c-999">类目模糊:</h3>
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">是否支持：</span>
@@ -17,14 +17,13 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">推荐问题相似度：</span>
             <div>
-                <input type="number" step="0.1" class="bd" placeholder="0.5" min="0" max="1"
+                <input type="number" step="0.1" class="bd" min="0" max="1" style="width:190px;"
                      name="recommendedSimilarity"  ng-model="vm.recommendedSimilarity" required/>
                 <!--{{mySetting.robotWelcome.$error.len}}-->
-                <div class="error-tip " ng-show="myScene.recommendedSimilarity.$dirty && myScene.recommendedSimilarity.$invalid">
-                    推荐问题相似度的值
+                <div class="c-red" ng-show="myScene.recommendedSimilarity.$dirty && myScene.recommendedSimilarity.$invalid">
+                    推荐问题相似度的值必须在0到1之间
                 </div>
-        </div>
-        </div>
+            </div>
     </div>
     <div >
         <h3 class="f14 mb-10 c-999">主题缺失:</h3>
@@ -42,7 +41,7 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">主题记忆轮数：</span>
             <div>
-                <input type="number" class="bd" placeholder="3" ng-model="vm.subjectMemoryRounds" required/>
+                <input type="number" class="bd" ng-model="vm.subjectMemoryRounds" required/>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
@@ -55,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div >
+    <div>
         <h3 class="f14 mb-10 c-999">要素缺失配置:</h3>
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">是否支持：</span>
@@ -71,7 +70,7 @@
         <div class="framework mb-10 " style="margin-left:100px;">
             <span class="framework_s">要素推荐模式：</span>
             <div>
-                <input type="number" class="bd" placeholder="1" ng-model="vm.elementRecommendationOrder" required/>
+                <input type="number" class="bd" ng-model="vm.elementRecommendationOrder" required/>
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;">
@@ -103,11 +102,13 @@
         </div>
     </div>
     <div class="text-c">
-        <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="保存"/>
+        <input type="submit" class="btn1 btn1_blue mr-15" ng-click="myScene.$valid?closeThisDialog(1):''" value="保存"/>
         <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
     </div>
-    </form>
+   </div>
+   </form>
 </div>
+
 <style>
     .framework{padding-left:135px;}
     .ngdialog.ngdialog-theme-default .ngdialog-content{
