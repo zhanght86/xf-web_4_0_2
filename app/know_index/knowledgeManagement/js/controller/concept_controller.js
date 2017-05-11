@@ -685,7 +685,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
-
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")

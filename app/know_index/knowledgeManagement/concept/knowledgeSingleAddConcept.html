@@ -1,7 +1,8 @@
 <div class="main warp">
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>概念知识新增</span>
+            <span ng-if="!vm.knowledgeId">概念知识新增</span>
+            <span ng-if="vm.knowledgeId">概念知识编辑</span>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
@@ -135,7 +136,7 @@
                     <div class="item-line" ng-repeat="val in item.extensionByContentByTitle track by $index" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
-                                <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
+                                <input class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
                                 <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>

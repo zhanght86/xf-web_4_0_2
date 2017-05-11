@@ -3,7 +3,8 @@
 
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>FAQ知识</span>
+            <span ng-if="!vm.knowledgeId">FAQ知识新增</span>
+            <span ng-if="vm.knowledgeId">FAQ知识编辑</span>
         </div>
         <div class="r-cont-bd oh">
             <!--<form novalidate="novalidate" name="form">-->

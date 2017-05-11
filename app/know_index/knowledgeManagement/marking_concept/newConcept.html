@@ -1,19 +1,8 @@
 <div class="main warp">
-    <!--<div class="crumbs-nav bgwhite mt20">-->
-        <!--<span class="cn-lable">你曾经路过此地：</span>-->
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>-->
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>-->
-        <!--&lt;!&ndash;<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>-->
-        <!--<span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>&ndash;&gt;-->
-    <!--</div>-->
-    <!--<div class="tac libSearch">-->
-        <!--<div class="search-box">-->
-            <!--<input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;">-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>营销知识新增</span>
+            <span ng-if="!vm.knowledgeId">营销知识新增</span>
+            <span ng-if="!vm.knowledgeId">营销知识编辑</span>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
@@ -211,7 +200,7 @@
                     <div class="item-line" ng-repeat="val in item.extensionByContentByTitle track by $index" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
-                                <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
+                                <input class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
                                 <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>
