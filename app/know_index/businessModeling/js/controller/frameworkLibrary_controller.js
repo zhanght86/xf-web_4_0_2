@@ -382,7 +382,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             });
         }
         //修改框架
-        $("#frame-library").on("click",'.edit',function(){
+        $(".libraryRth").on("click",'.edit',function(){
             $scope.vm.frameTypeId=$(this).attr("type-option");
             console.log("======frameTypeId======"+$scope.vm.frameTypeId);
             $scope.vm.frameInfo=$(this).attr("frame-info");
@@ -402,7 +402,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
         });
         //删除框架
-        $("#frame-library").on("click",'.pa',function(e){
+        $(".libraryRth").on("click",'.pa',function(e){
             e.stopPropagation();
             var frameId = $(this).attr("data-option");
             console.log("======delete frame======"+frameId);
