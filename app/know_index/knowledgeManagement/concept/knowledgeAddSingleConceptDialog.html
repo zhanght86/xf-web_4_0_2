@@ -55,10 +55,8 @@
                 <div class="mb-10" style="position: relative;">
                     <span>指定相关知识:</span>
                     <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:279px;">
-                    <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position: absolute;
-                            left: 100px;z-index: 2;height: 200px;overflow: scroll ;width:279px;">
-                        <li ng-repeat="item in vm.appointRelativeList track by $index" style="min-width: 280px;
-                                             cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px"
+                    <ul class="listItem" ng-if="vm.appointRelativeList.length" >
+                        <li ng-repeat="item in vm.appointRelativeList track by $index"
                             ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
                     </ul>
                 </div>
@@ -93,6 +91,9 @@
     .addPopupCnt{
         margin-left: 22px;
     }
+    .listItem{position: absolute; left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;}
+    .listItem li{width: 100%; cursor:pointer;background: #eae8e8;padding-left:10px;box-sizing:border-box;line-height: 26px;}
+    .listItem li:hover{background:#dcdbdb;}
 </style>
 <script>
 

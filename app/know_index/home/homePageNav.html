@@ -263,7 +263,7 @@
 <div class="crumbs-nav bgwhite mt20  warp" ng-show="checkShowCrumbs()">
     <span class="cn-lable">你曾经路过此地：</span>
 
-    <span class="cn-value" ng-repeat="crumb in crumbs"><a class="cn-a" ui-sref="{{crumb.url}}" ng-bind="crumb.name"></a><i class="close" ng-hide="checkShowClose(crumb.url)" ng-click="closeCrumb($index)" >x</i></span>
+    <span class="cn-value" ng-repeat="crumb in crumbs track by $index"><a class="cn-a" ui-sref="{{crumb.url}}" ng-bind="crumb.name"></a><i class="close" ng-hide="checkShowClose(crumb.url)" ng-click="closeCrumb($index)" >x</i></span>
 </div>
 
 <style>
