@@ -299,7 +299,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             var newType = {};
                             newType.elementName = $scope.vm.factorName;
                             newType.elementType = $scope.vm.tableType;
-                            newType.technology = $scope.vm.gorithm;
+                            newType.technology = $scope.vm.gorithm.pop();
                             newType.elementAsk = $scope.vm.elementAsk;
                             newType.relatedQuestions = null;
                             $scope.vm.tableList.data.listTableType.push(newType);
@@ -315,7 +315,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             console.log("editList");
             $scope.vm.factorName = $scope.vm.tableList.data.listTableType[column].elementName;
             $scope.vm.tableType = $scope.vm.tableList.data.listTableType[column].elementType;
-            $scope.vm.gorithm = $scope.vm.tableList.data.listTableType[column].technology;
+            $scope.vm.gorithm.push($scope.vm.tableList.data.listTableType[column].technology);
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",
@@ -328,7 +328,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     if(e === 1){
                         $scope.vm.tableList.data.listTableType[column].elementName =  $scope.vm.factorName;
                         $scope.vm.tableList.data.listTableType[column].elementType = $scope.vm.tableType;
-                        $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm;
+                        $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm.pop();
                         $scope.vm.tableList.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
                         $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;
                         setDialogNew();
