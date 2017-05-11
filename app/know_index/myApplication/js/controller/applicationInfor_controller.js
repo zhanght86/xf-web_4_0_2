@@ -4,8 +4,8 @@
  * Date: 2017/4/10 17:16
  */
 angular.module('myApplicationSettingModule').controller('applicationInforController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore",
-    function ($scope,localStorageService, $state, ngDialog,$cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$rootScope",
+    function ($scope,localStorageService, $state, ngDialog,$cookieStore,$rootScope) {
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),   //用户id
@@ -146,6 +146,8 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 "applicationId": $scope.vm.applicationId
             },function(data){
                 if(data.status==200){
+                    $rootScope.applicationName = data.data.applicationName;
+                    $cookieStore.put('applicationName',data.data.applicationName);
                     $scope.vm.sceneId =data.data.sceneId; //场景id
                     $scope.vm.applicationName =data.data.applicationName;//应用名称
                     $scope.vm.applicationNewName = data.data.applicationName; //待编辑的新应用名称
