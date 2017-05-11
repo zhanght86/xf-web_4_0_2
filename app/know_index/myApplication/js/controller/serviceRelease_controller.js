@@ -60,6 +60,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
             //flagDialog : true, //发布按钮是否可点击，默认不可点击
 
+            verifyRelease : verifyRelease, //发布服务校验
         };
 
 
@@ -130,6 +131,26 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             })
         }
 
+        //校验服务发布
+        function verifyRelease(){
+            if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
+                layer.msg("发布服务的名称不能为空!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
+                layer.msg("发布服务时未选择分类!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
+                layer.msg("发布服务时未选择发布节点!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            return 1;
+        }
+
         //添加并发布服务
         function addAndPublishService(){
             listNodeData(); //获取可用节点数据
@@ -146,34 +167,24 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     if(e === 1) {
                         $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
 
-                        console.log("维度"+$scope.vm.dimensions);
-                        if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
-                            layer.msg("发布服务的名称不能为空!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
                         if($scope.vm.channels==null||$scope.vm.channels.length==0){
-                            layer.msg("发布服务时未选择渠道!");
-                            $scope.vm.allowSubmit=0;
-                            return;
+                            angular.forEach($scope.vm.channelData,function(channel){
+                                $scope.vm.channels.push(channel.channelId);
+                            });
+                            //layer.msg("发布服务时未选择渠道!");
+                            //$scope.vm.allowSubmit=0;
+                            //return;
                         }
-
                         if($scope.vm.dimensions==null||$scope.vm.dimensions.length==0){
-                            layer.msg("发布服务时未选择发布维度!");
-                            $scope.vm.allowSubmit=0;
-                            return;
+                            $scope.vm.dimensionSelected=[];
+                            angular.forEach($scope.vm.dimensionAll,function(dimension){
+                                $scope.vm.dimensionSelected.push(dimension);
+                            });
+                            $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
+                            //layer.msg("发布服务时未选择发布维度!");
+                            //$scope.vm.allowSubmit=0;
+                            //return;
                         }
-                        if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
-                            layer.msg("发布服务时未选择分类!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
-                        if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
-                            layer.msg("发布服务时未选择发布节点!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
-
 
                         if($scope.vm.allowSubmit){  //服务名称验证没有错误
                             httpRequestPost("/api/application/service/addAndPublishService",{

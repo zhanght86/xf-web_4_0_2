@@ -19,10 +19,10 @@
                         <p class="tc">{{item.knowledgeTypeName}}</p>
                         <dl class="bd_bot text-c pb-10 mb-10">
                             <dt><img src="../../../images/images/u1435.png " width="50" height="50"/></dt>
-                            <dd>
-                                <a ng-click="vm.updateKnowledgeType(item);" ng-if="item.statusId==20001">禁用</a>
-                                <a ng-click="vm.updateKnowledgeType(item);" ng-if="item.statusId==20002">启用</a>
-                            </dd>
+                            <!--<dd>-->
+                                <!--<a ng-click="vm.updateKnowledgeType(item);" ng-if="item.statusId==20001">禁用</a>-->
+                                <!--<a ng-click="vm.updateKnowledgeType(item);" ng-if="item.statusId==20002">启用</a>-->
+                            <!--</dd>-->
                         </dl>
                         <p class="c-999">*{{item.knowledgeTypeDescription}}</p>
                     </div>
@@ -35,17 +35,31 @@
                     <input type="button" class="btn1 btn1_blue " value="查找" ng-click="vm.listExchangeMode()">
                 </div>
                 <div class="cl">
-                    <div class="bd know_style" ng-repeat="item in vm.exchangeModeData">
-                        <p class="tc">{{item.exchangeModeName}}</p>
-                        <dl class="bd_bot text-c pb-10 mb-10">
-                            <dt><img src="../../../images/images/u1456.png " width="50" height="50"/></dt>
-                            <dd>
-                                <!--<a ng-click="vm.updateExchangeMode(item);" ng-if="item.statusId==20001">禁用</a>-->
-                                <!--<a ng-click="vm.updateExchangeMode(item);" ng-if="item.statusId==20002">启用</a>-->
-                                <a ng-if="item.exchangeModeId==13&&item.statusId==20001" ng-click="vm.saveMultiInteractive()">配置</a>
-                            </dd>
-                        </dl>
-                        <p class="c-999">{{item.exchangeDescription}}</p>
+                    <!--<div class="bd know_style" ng-repeat="item in vm.exchangeModeData">-->
+                        <!--<p class="tc">{{item.exchangeModeName}}</p>-->
+                        <!--<dl class="bd_bot text-c pb-10 mb-10">-->
+                            <!--<dt><img src="../../../images/images/u1456.png " width="50" height="50"/></dt>-->
+                            <!--<dd>-->
+                                <!--&lt;!&ndash;<a ng-click="vm.updateExchangeMode(item);" ng-if="item.statusId==20001">禁用</a>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a ng-click="vm.updateExchangeMode(item);" ng-if="item.statusId==20002">启用</a>&ndash;&gt;-->
+                                <!--<a ng-if="item.exchangeModeId==13&&item.statusId==20001" ng-click="vm.saveMultiInteractive()">配置</a>-->
+                            <!--</dd>-->
+                        <!--</dl>-->
+                        <!--<p class="c-999">{{item.exchangeDescription}}</p>-->
+                    <!--</div>-->
+                    <div>
+                        <table class="stop_word_tab">
+                            <tr>
+                                <td width="20%" class="bold">交互方式</td>
+                                <td width="60%" class="bold">详情</td>
+                                <td width="20%" class="bold">操作</td>
+                            </tr>
+                            <tr ng-repeat="item in vm.exchangeModeData">
+                                <td>{{item.exchangeModeName}}</td>
+                                <td>{{item.exchangeDescription}}</td>
+                                <td><a ng-if="item.exchangeModeId==13&&item.statusId==20001" ng-click="vm.saveMultiInteractive()">多轮会话配置</a></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -53,7 +67,7 @@
     </div>
 </div>
 <style>
-
+    .know_style{height:180px;}
 </style>
 <script>
     $('.scene_box_top span').click(function(){

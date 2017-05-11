@@ -33,7 +33,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             inputVal : "",
             termSpliter: "；",
             current:1,
-            percent:"%"
+            percent:"%",
+            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
         };
 
         /**
@@ -143,26 +145,37 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        console.log($scope.vm.key);
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
                         httpRequestPost("/api/modeling/concept/collective/repeatCheck",{
                             "collectiveConceptApplicationId": $scope.vm.applicationId,
                             "collectiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
-                                layer.msg("集合概念类名重复");
-                                httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
-                                    "collectiveConceptApplicationId": $scope.vm.applicationId,
-                                    "collectiveConceptKey":$scope.vm.key,
-                                    "index":0,
-                                    "pageSize":1
-                                },function(data){
-                                    $scope.vm.dialogTitle="编辑集合概念";
-                                    console.log(data);
-                                    addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
-                                    $scope.vm.key = data.data[0].collectiveConceptKey;
-                                    $scope.vm.term =  data.data[0].collectiveConceptTerm;
-                                    $scope.vm.weight =  data.data[0].collectiveConceptWeight;
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
+                                    httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                                        "collectiveConceptApplicationId": $scope.vm.applicationId,
+                                        "collectiveConceptKey":$scope.vm.key,
+                                        "index":0,
+                                        "pageSize":1
+                                    },function(data){
+                                        $scope.vm.dialogTitle="编辑集合概念";
+                                        console.log(data);
+                                        addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
+                                        $scope.vm.key = data.data[0].collectiveConceptKey;
+                                        $scope.vm.term =  data.data[0].collectiveConceptTerm;
+                                        $scope.vm.weight =  data.data[0].collectiveConceptWeight;
+                                    },function(){
+                                        console.log("cancel");
+                                    });
                                 },function(){
+                                    console.log("cancel");
                                 });
                             }else{
                                 //类名无冲突
@@ -181,6 +194,18 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                     }
                 }
             });
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor();
+                    $("#collectiveKey").blur(function(){
+                        if(lengthCheck($("#collectiveKey").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
+                }, 100);
+            }
         }
 
         //編輯彈框   添加公用
@@ -195,7 +220,37 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        callback(item)
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        var obj = $("#term").next();
+                        var term = "";
+                        var length = obj.find("li").length;
+                        if(length<=0){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        $.each(obj.find("li"),function(index,value){
+                            if(index>0){
+                                $.each($(value).find("div"),function(index1,value1){
+                                    if(index1==1){
+                                        term+=$(value1).html()+$scope.vm.termSpliter;
+                                    }
+                                });
+                            }
+                        });
+                        term=term.substring(0,term.length-1);
+                        $scope.vm.term=term;
+                        if(lengthCheck(term,0,500)==false){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        callback(item);
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
@@ -206,7 +261,14 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             });
             if(dialog){
                 $timeout(function () {
-                    termSpliterTagEditor()
+                    termSpliterTagEditor();
+                    $("#colectiveKeyTwo").blur(function(){
+                        if(lengthCheck($("#colectiveKeyTwo").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
                 }, 100);
             }
         }
@@ -232,6 +294,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             httpRequestPost("/api/modeling/concept/collective/update",{
                 "collectiveConceptId":item.collectiveConceptId,
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "collectiveConceptKey": $scope.vm.key,
                 "collectiveConceptModifier": item.collectiveConceptModifier,
                 "collectiveConceptTerm": $scope.vm.term,
@@ -251,6 +314,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             assembleCollectiveConceptTerm();
             httpRequestPost("/api/modeling/concept/collective/add",{
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "collectiveConceptKey":  $scope.vm.key,
                 "collectiveConceptModifier": $scope.vm.modifier,
                 "collectiveConceptTerm": $scope.vm.term,

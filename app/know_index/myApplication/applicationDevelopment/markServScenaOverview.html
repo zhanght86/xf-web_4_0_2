@@ -1,17 +1,12 @@
 <div ui-view="header"></div>
 <div class="main warp">
-    <div class="crumbs-nav bgwhite mt20">
-        <span class="cn-lable">你曾经路过此地：</span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
-    </div>
+
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                <img class="hd-img" src="../../../images/images/poto.png"/>
-                <span class="hd-name ellipsis">长沙银行机器人</span>
+                <!--<img class="hd-img" src="../../../images/images/poto.png"/>-->
+                <img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>
+                <span class="hd-name ellipsis">{{vm.applicationName}}</span>
             </div>
             <div class="aside-nav aside-navn">
                 <ul class="">

@@ -32,7 +32,9 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             inputVal : "",
             termSpliter: "；",
             current:1,
-            percent:"%"
+            percent:"%",
+            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
         };
 
         /**
@@ -132,24 +134,29 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
 
         //添加 窗口
         function addStop(){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/businessModeling/disable/disableConceptManageDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            console.log($scope.vm.key);
-                            httpRequestPost("/api/modeling/concept/stop/repeatCheck", {
-                                "stopConceptApplicationId": $scope.vm.applicationId,
-                                "stopConceptKey": $scope.vm.key
-                            }, function (data) {          //类名重複
-                                if (data.status === 10002) {
-                                    layer.msg("停用概念类名重复");
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/businessModeling/disable/disableConceptManageDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        httpRequestPost("/api/modeling/concept/stop/repeatCheck", {
+                            "stopConceptApplicationId": $scope.vm.applicationId,
+                            "stopConceptKey": $scope.vm.key
+                        }, function (data) {          //类名重複
+                            if (data.status === 10002) {
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
                                     httpRequestPost("/api/modeling/concept/stop/listByAttribute", {
                                         "stopConceptApplicationId": $scope.vm.applicationId,
                                         "stopConceptKey": $scope.vm.key,
@@ -162,22 +169,37 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                         $scope.vm.key = data.data[0].stopConceptKey;
                                         $scope.vm.term = data.data[0].stopConceptTerm;
                                     }, function () {
+                                        console.log("cancel");
                                     });
-                                } else {
-                                    //类名无冲突
-                                    $scope.vm.dialogTitle = "增加停用概念";
-                                    $scope.vm.term = "";
-                                    addStopConceptDialog(singleAddStopConcept);
-                                }
-                            }, function () {
-                                layer.msg("添加失敗")
-                            })
-                        } else {
-                            $scope.vm.key = "";
-                            $scope.vm.term = "";
-                        }
+                                },function(){
+                                    console.log("cancel");
+                                });
+                            } else {
+                                //类名无冲突
+                                $scope.vm.dialogTitle = "增加停用概念";
+                                $scope.vm.term = "";
+                                addStopConceptDialog(singleAddStopConcept);
+                            }
+                        }, function () {
+                            layer.msg("添加失敗")
+                        })
+                    } else {
+                        $scope.vm.key = "";
+                        $scope.vm.term = "";
                     }
-                });
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor();
+                    $("#stopKey").blur(function(){
+                        if(lengthCheck($("#stopKey").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
+                }, 100);
             }
         }
 
@@ -192,7 +214,37 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-                        callback(item)
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        var obj = $("#term").next();
+                        var term = "";
+                        var length = obj.find("li").length;
+                        if(length<=0){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        $.each(obj.find("li"),function(index,value){
+                            if(index>0){
+                                $.each($(value).find("div"),function(index1,value1){
+                                    if(index1==1){
+                                        term+=$(value1).html()+$scope.vm.termSpliter;
+                                    }
+                                });
+                            }
+                        });
+                        term=term.substring(0,term.length-1);
+                        $scope.vm.term=term;
+                        if(lengthCheck(term,0,500)==false){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        callback(item);
                     } else {
                         $scope.vm.key = "";
                         $scope.vm.term = "";
@@ -201,7 +253,14 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             });
             if(dialog){
                 $timeout(function () {
-                    termSpliterTagEditor()
+                    termSpliterTagEditor();
+                    $("#stopKeyTwo").blur(function(){
+                        if(lengthCheck($("#stopKeyTwo").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
                 }, 100);
             }
         }
@@ -227,6 +286,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             httpRequestPost("/api/modeling/concept/stop/update",{
                 "stopConceptId":item.stopConceptId,
                 "stopConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
                 "stopConceptModifier": item.stopConceptModifier,
                 "stopConceptTerm": $scope.vm.term,
@@ -245,6 +305,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             assembleStopConceptTerm();
             httpRequestPost("/api/modeling/concept/stop/add",{
                 "stopConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
                 "stopConceptModifier": $scope.vm.modifier,
                 "stopConceptTerm": $scope.vm.term,

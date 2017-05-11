@@ -5,12 +5,13 @@
         <div class="mb-20 concept_div">
             <span class="concept_s">概念类名：</span>
             <div>
-                <input type="text" ng-model="vm.key"  maxlength="20"  class="input_text" placeholder="违禁品"/>
+                <input id="businessKey" type="text" ng-model="vm.key" class="input_text" placeholder="违禁品"/>
+                <p id="keyAddError" class="c-error pd-5"></p>
             </div>
         </div>
         <div class="concept_div">
             <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="确定"/>
-            <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+            <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消"/>
         </div>
     </div>
 </div>

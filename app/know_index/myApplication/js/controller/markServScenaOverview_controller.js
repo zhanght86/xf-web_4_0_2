@@ -14,6 +14,9 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         //********************************************//
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
+            applicationName : $cookieStore.get("applicationName"),
+            imgUrl : $cookieStore.get("imgUrl"),
+            robotHead : $cookieStore.get("robotHead"),
             //editName : editName
             //getCreatBot : getCreatBot,
             creatBot : [],
@@ -70,11 +73,15 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             },500);
         }
         function scan(item){
+
             var obj = {};
             obj.applicationId = $scope.vm.applicationId ;
             obj.knowledgeId = item.knowledgeId;
-            obj.knowledgeType = item.knowledgeType;
-            $state.go("markKnowledgePreview.manage",{scanKnowledge:obj})
+            obj.knowledgeType = "104";
+            $window.knowledgeScan = obj ;
+            var url = $state.href("markKnowledgePreview.manage");
+            $window.open(url,'_blank');
+            //$state.go("custKnowledgePreview.manage")
         }
         function getSourceType(val){
             $scope.vm.sourceType = val

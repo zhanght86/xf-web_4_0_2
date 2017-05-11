@@ -5,17 +5,18 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custKnowledgePreviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer","$window",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer,$window) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
-        if(!$stateParams.scanKnowledge){
+             var viewData =  $window.opener.knowledgeScan ;
+        if(!viewData){
                 $state.go("custServScenaOverview.manage")
         }else{
             //console.log($stateParams.scanKnowledge);
             $scope.vm = {
                 applicationId :$cookieStore.get("applicationId"),
-                knowledgeId : $stateParams.scanKnowledge.knowledgeId,        //del
-                knowledgeType : $stateParams.scanKnowledge.knowledgeType,
+                knowledgeId : viewData.knowledgeId,        //del
+                knowledgeType : viewData.knowledgeType,
                 listData : null,
                 edit :  edit
                 //editName : editName
@@ -47,15 +48,15 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 }, function(error) {
                 });
             //修改
-            console.log($stateParams.scanKnowledge.knowledgeType);
+            //console.log(viewData.knowledgeType);
             var editUrl,api;
-            switch($stateParams.scanKnowledge.knowledgeType){
+            switch(viewData.knowledgeType){
                 case 100 :
                     editUrl = "knowledgeManagement.faqAdd";
                     api = "/api/faqKnowledge/getKnowledge";
                     break;
                 case 101 :
-                    editUrl = "knowledgeManagement.singleAddConcept";
+                    editUrl = "knowledgeManagement.singleAddConcept" ;
                     api = "/api/conceptKnowledge/getKnowledge";
                     break;
                 case 102 :
@@ -76,7 +77,8 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
-                    if($stateParams.scanKnowledge.knowledgeType == 103){
+                    console.log(data) ;
+                    if(viewData.knowledgeType == 103){
                         var data = data.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;
                         data.knowledgeContents[0].knowledgeContent = table;
@@ -87,12 +89,11 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                         $scope.vm.listData = data.data;
                     }
                     console.log(data);
-                    $scope.$apply();
+                        $scope.$apply();
                 },function(){
                     layer.msg("获取失败")
                 });
             }
         }
-
     }
 ]);

@@ -38,6 +38,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
             extensionEdit : extensionEdit,
+            botFullPath : "",
 
             //展示内容
             scanContent : [],
@@ -88,14 +89,19 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             factorName : null,   //要素名称
             reQuestion : null, //反问
 
-            tableList: ""
+            tableList: "",
+            listTableType: "",
+            data : "",
+            column:""
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
+                console.log( $scope.vm.applicationId) ;
                 if(data.data){
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+
                 }
             }, function(error) {
                 layer.msg("获取维度失败，请刷新页面")
@@ -109,41 +115,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
             });
-        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-/*
-        params =  {
-            "applicationId": $scope.vm.applicationId,
-            "userId" : $scope.vm.userId ,
-            "sceneId" : $scope.vm.sceneId ,
-            "knowledgeTitle": $scope.vm.title,      //知识标题
-            "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-            "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-            "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-        };
-        var title = angular.copy($scope.vm.newTitle);
-        scanCotentByTitle(title) ;
-        var obj = {};
-        obj.knowledgeContent = getTableParams();
-        obj.channelIdList =  $scope.vm.channel;
-        obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-        obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-            obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-        obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
-        obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
-        $scope.vm.scanContent=[];
-        $scope.vm.scanContent.push(obj);
-        params.knowledgeContents =  $scope.vm.scanContent;
-        params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
-        params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-    */
-
-
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
         if($stateParams.data!=null){
+
             var data = $stateParams.data ;
             console.log($stateParams.data);
             //标题
@@ -170,19 +147,18 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.dimensionIdList =  item.dimensionIdList ;
 
                 $scope.vm.channel = item.channelIdList ;
-
                 $scope.vm.dimensionArr = [] ;
                     //异步原因
                 var getDimension = $interval(function(){
                         if($scope.vm.dimensions){
                             $interval.cancel(getDimension);
                             angular.forEach($scope.vm.dimensions,function(val){
-                                if(!item.dimensionIdList.inArray(val.dimensionId)){
+                                if(item.dimensionIdList.inArray(val.dimensionId)){
                                     var obj = {};
                                     obj.dimensionName = val.dimensionName;
                                     obj.dimensionId = val.dimensionId;
                                     $scope.vm.dimensionArr.push(obj);
-
+                                    console.log( $scope.vm.dimensionArr )
                                 }
                             });
                         }
@@ -191,16 +167,33 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
-                //console.log(obj)
             });
-            //
+        }else{
+            init();
+        }
+        function init(){
+            $scope.vm.tableList = {};
+            var column = [];
+            var innerColumn = [];
+            innerColumn.push("产品名称");
+            column.push(innerColumn);
+            var listTable = {
+                "listTable":column
+            }
+            $scope.vm.tableList.data = listTable;
+            $scope.vm.listTableType = [];
+            var newType = {};
+            newType.elementName = "产品名称";
+            newType.elementType = "字符串";
+            newType.technology = null;
+            newType.elementAsk = "";
+            newType.relatedQuestions = null;
+            $scope.vm.listTableType.push(newType);
+            $scope.vm.tableList.data.listTableType=$scope.vm.listTableType;
+            //$scope.$apply();
         }
 
-        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
-
         function tableChange(row, col ,val){
-            //console.log($scope.vm.tableList);
-            //console.log(val);
             $scope.vm.tableList.data.listTable[row][col] = val;
         }
         function tableRemove(type){
@@ -264,7 +257,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             newType.elementAsk = $scope.vm.elementAsk;
                             newType.relatedQuestions = null;
                             $scope.vm.tableList.data.listTableType.push(newType);
-                            setDialogNew()
+                            //$scope.$apply();
+                            setDialogNew();
                         }
                     }
                 });
@@ -272,45 +266,35 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function editList(row,column){
-            $scope.vm.factorName = $scope.vm.tableList.data.listTableType[column].elementName ;
+            console.log("editList");
+            $scope.vm.factorName = $scope.vm.tableList.data.listTableType[column].elementName;
             $scope.vm.tableType = $scope.vm.tableList.data.listTableType[column].elementType;
-            $scope.vm.gorithm = $scope.vm.tableList.data.listTableType[column].technology;
+            $scope.vm.gorithm=$scope.vm.tableList.data.listTableType[column].technology;
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0){
-                $timeout(function(){
-                    var dialog = ngDialog.openConfirm({
-                        template:"/know_index/knowledgeManagement/factor/factorDialog.html",
-                        scope: $scope,
-                        closeByDocument:false,
-                        closeByEscape: true,
-                        showClose : true,
-                        backdrop : 'static',
-                        preCloseCallback:function(e){    //关闭回掉
-                            if(e === 1){
-
-                    //{"status":200,"info":"上传完毕","data":{"listTable":[["产品名称","代缴类别","缴费类型"],[null,null,null]],"listTableType":[{"elementName":"要素名称","elementType":"要素类型","technology":[],"elementAsk":"反问","relatedQuestions":"相关概念"},{"elementName":"代","elementType":"字符串","technology":["oec"],"elementAsk":"请问您的代缴类别是什么","relatedQuestions":"长沙市;湖南省"},{"elementName":"缴费类型","elementType":"字符串","technology":["gate"],"elementAsk":"请问您的缴费类型是什么","relatedQuestions":"可以不添加"}]},"requestId":"377349609204219904","_raw":"{\"status\":200,\"info\":\"上传完毕\",\"data\":{\"listTable\":[[\"产品名称\",\"代缴类别\",\"缴费类型\"],[null,null,null]],\"listTableType\":[{\"elementName\":\"要素名称\",\"elementType\":\"要素类型\",\"technology\":[],\"elementAsk\":\"反问\",\"relatedQuestions\":\"相关概念\"},{\"elementName\":\"代缴类别\",\"elementType\":\"字符串\",\"technology\":[\"oec\"],\"elementAsk\":\"请问您的代缴类别是什么\",\"relatedQuestions\":\"长沙市;湖南省\"},{\"elementName\":\"缴费类型\",\"elementType\":\"字符串\",\"technology\":[\"gate\"],\"elementAsk\":\"请问您的缴费类型是什么\",\"relatedQuestions\":\"可以不添加\"}]},\"requestId\":\"377349609204219904\"}"}
-                    //            console.log( $scope.vm.tableList);
-                                $scope.vm.tableList.data.listTableType[column].elementName =  $scope.vm.factorName;
-                                $scope.vm.tableList.data.listTableType[column].elementType = $scope.vm.tableType;
-                                $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm;
-                                $scope.vm.tableList.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
-
-                                $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;
-                                //table.data.
-                                setDialogNew()
-                            }else{
-                                setDialogNew()
-                            }
-                        }
-                    });
-                },100);
-
-            }
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        $scope.vm.tableList.data.listTableType[column].elementName =  $scope.vm.factorName;
+                        $scope.vm.tableList.data.listTableType[column].elementType = $scope.vm.tableType;
+                        $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm;
+                        $scope.vm.tableList.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
+                        $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;
+                        setDialogNew();
+                    }else{
+                        setDialogNew();
+                    }
+                }
+            });
         }
         function getTableParams(){
             if(!$scope.vm.tableList.data){
-                layer.msg("请上传表格知识") ;
+                console.log("请上传表格知识") ;
                 return false ;
             }else{
                 var tabelData = angular.copy($scope.vm.tableList.data);
@@ -362,9 +346,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
-                "frameTypeId":10012,
+                "frameTypeId":10013,
                 "index": 0,
-                "pageSize":999999
+                "pageSize":32767
             },function(data){
                 //console.log(data);
                 if(data.status!=10005){
@@ -374,7 +358,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     }
                 }
             },function(){
-                // layer.msg("err or err")
+                console.log("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -382,6 +366,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 getFrame( val )
             }
         });
+
+        //replace()
         //  根據框架添加擴展問  --》 替換原來的條件
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
@@ -406,32 +392,70 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function getExtensionByFrame(id,type){
             //console.log(id);
             httpRequestPost("/api/modeling/frame/listbyattribute",{
-                "frameTypeId": 10012,
+                "frameTypeId": 10013,
                 "frameId": id,
                 "index": 0,
-                "pageSize":999999
+                "pageSize":32767
             },function(data){
                 if(data.status==10000){
-                    //console.log(data);
-                    var  extensionQuestionList = [] ,
-                        frameQuestionTagList = [];
-                    var obj = {} ;
                     if(data.data[0].elements){
-                        angular.forEach(data.data[0].elements,function(item,index){
-                            if(index>0){
-                                obj.extensionQuestionType = 60;   //61
-                                obj.source = data.data[0].frameTitle;
-                                extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
-                                frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
+                        $.each(data.data[0].elements,function(index,value){
+                            console.log("===="+value.elementContent);
+                            var addFlag = true;
+                            for(var i=0;i<$scope.vm.tableList.data.listTable[0].length;i++){
+                                console.log("==="+$scope.vm.tableList.data.listTable[0][i]);
+                                if($scope.vm.tableList.data.listTable[0][i]==value.elementContent){
+                                    addFlag=false;
+                                }
+                            }
+                            if(addFlag==true){
+                                $scope.vm.tableList.data.listTable[0].push(value.elementContent);
+                                var newType = {};
+                                newType.elementName = value.elementContent;
+                                newType.elementType = switchContentType(value.elementTypeId);
+                                var miningTypeArr = [];
+                                miningTypeArr.push(switchMiningType(value.elementMiningTypeId));
+                                newType.technology = miningTypeArr;
+                                newType.elementAsk = value.elementAskContent;
+                                newType.relatedQuestions = value.elementRelateConcept;
+                                $scope.vm.tableList.data.listTableType.push(newType);
+                                $scope.$apply();
                             }
                         });
-                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
                     }
-                    $scope.$apply();
                 }
             },function(){
-                 layer.msg("err or err")
+                 console.log("获取表格失败") ;
             });
+        }
+
+        function switchMiningType(type){
+            var returnStr = "OEC";
+            switch(type){
+                case 10017:
+                    returnStr = "OEC";
+                    break;
+                case 10018:
+                    returnStr = "GATE";
+                    break;
+            }
+            return returnStr;
+        }
+
+        function switchContentType(type){
+            var returnStr = "字符串";
+            switch(type){
+                case 10014:
+                    returnStr = "字符串";
+                    break;
+                case 10015:
+                    returnStr = "日期";
+                    break;
+                case 10016:
+                    returnStr = "范围";
+                    break;
+            }
+            return returnStr;
         }
 
         // 获取Bot全路径
@@ -439,6 +463,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
+                console.log(data) ;
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
                     var obj = {};
@@ -462,57 +487,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         //obj.classificationType = 1;
                     }
                     $scope.vm.knowledgeBotVal = obj.className.join("/");
-                    $scope.vm.botFullPath=obj ;
-                    $scope.$apply()
-                }
-            },function(){
-                layer.msg("添加扩展问失败")
-            });
-        }
-        //生成扩展问校验
-        function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
-            //console.log(oldWord);
-            httpRequestPost("/api/listKnowledge/checkFrameTag",{
-                "applicationId": $scope.vm.applicationId,
-                "extensionQuestionList" : extensionQuestionList,
-                "frameQuestionTagList" : frameQuestionTagList
-            },function(data){
-                //console.log(data);
-                if(data.status==200){
-                    var enxtensionBack = [] ;
-                    angular.forEach(data.data,function(item){
-                        var obj = {} ;
-                        obj.extensionQuestionTitle = item.extensionQuestionTitle;
-                        obj.extensionQuestionType = oldWord.extensionQuestionType;
-                        obj.wholeDecorateTag = item.wholeDecorateTag;
-                        obj.source = oldWord.source ;
-                        var arr = [] ;
-                        var wholeTag = [];
-                        angular.forEach(item.wholeDecorateTag,function(key){
-                            var whole = {} ;
-                            whole.wholeDecorateTagName = key.wholeDecorateTagName;
-                            whole.wholeDecorateTagType = key.wholeDecorateTagType;
-                            wholeTag.push(tag)
-                        });
-                        angular.forEach(item.extensionQuestionTagList,function(val){
-                            var tag = {} ;
-                            tag.exist = val.exist ;
-                            tag.tagClass = val.tagClass ;
-                            tag.tagName =val.tagName ;
-                            tag.tagTypeList = [];
-                            tag.tagTypeList.push(val.tagType) ;
-                            arr.push(tag)
-                        });
-                        obj.extensionQuestionTagList = arr ;
-                        obj.wholeDecorateTag = wholeTag ;
-                        enxtensionBack.push(obj);
-                    });
-                    $scope.vm.extensionsByFrame =  enxtensionBack;
+                    $scope.vm.botFullPath=obj;
                     $scope.$apply();
-                    //console.log(data);
                 }
             },function(){
-                 layer.msg("err or err")
+                //console.log("添加扩展问失败")
             });
         }
 
@@ -539,30 +518,34 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==200){
+                        console.log(data);
                         var enten = {}  ;
-                        var tag = [] ;
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = weight ;
-                        angular.forEach(data.data[0].extensionQuestionTagList,function(item){
-                            var tagTem = {};
-                            tagTem.tagClass= item.tagClass;
-                            tagTem.tagName= item.tagName;
-                            tagTem.tagTypeList= [] ;
-                            tagTem.tagTypeList.push(item.tagType);
-                            tag.push(tagTem)
-                        });
-                        enten.extensionQuestionTagList = tag ;
                         var listArr = [];
                         var listObj = {};
                         listObj.wholeDecorateTagName="";
                         listObj.wholeDecorateTagType="";
                         listArr.push(listObj);
                         enten.wholeDecorateTagList = listArr;
+                        enten.extensionQuestionTagList = [] ;
+                        angular.forEach(data.data,function(tagList){
+                            //var tag = [] ;
+                            angular.forEach(tagList.extensionQuestionTagList,function(item){
+                                var tagTem = {};
+                                tagTem.exist = item.exist ;
+                                tagTem.tagClass= item.tagClass;
+                                tagTem.tagName= item.tagName;
+                                tagTem.tagTypeList= [] ;
+                                tagTem.tagTypeList.push(item.tagType);
+                                //tag.push(tagTem)
+                                enten.extensionQuestionTagList.push(tagTem) ;
+                            });
+                        });
                         $scope.vm.extensions.push(enten);
+                        console.log($scope.vm.extensions);
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
-                        //console.log( $scope.vm.extensions);
-                        //$scope.vm.extensionTitle = ""
                     }
                 },function(){
                     layer.msg("添加扩展问失败")
@@ -594,7 +577,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.applicationId);
             },function(){
-                 layer.msg("err or err")
+                 console.log("err or err")
             });
         }
         //点击更改bot value
@@ -602,19 +585,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
+            //$scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
         });
-        //点击bot分类的 加号
+        //添加BOT 分类  ==== 点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
+                $scope.vm.knowledgeBotVal = "";
             }
-        };
+        }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'.icon-jj',function(){
             var id = $(this).attr("data-option");
@@ -653,7 +637,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                     layer.msg(err)
+                     console.log(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -667,24 +651,24 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         });
 
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
-//        function replace(id){
-//                var replace = ngDialog.openConfirm({
-//                    template:"/know_index/knowledgeManagement/faq/replace.html",
-//                    scope: $scope,
-//                    closeByDocument:false,
-//                    closeByEscape: true,
-//                    showClose : true,
-//                    backdrop : 'static',
-//                    preCloseCallback:function(e){     //关闭回掉
-//                        if(e === 1){    //替换
-//                            getExtensionByFrame( id ,1 )
-//                        }else if(e === 0){
-//                            // 添加不替换
-//                            getExtensionByFrame( id ,0 )
-//                        }
-//                    }
-//                });
-//        }
+        function replace(id){
+                var replace = ngDialog.openConfirm({
+                    template:"/know_index/knowledgeManagement/faq/replace.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
+                    preCloseCallback:function(e){     //关闭回掉
+                        if(e === 1){    //替换
+                            getExtensionByFrame( id ,1 )
+                        }else if(e === 0){
+                            // 添加不替换
+                            getExtensionByFrame( id ,0 )
+                        }
+                    }
+                });
+        }
 
         function extensionEdit(){
             var extensionEdit = ngDialog.openConfirm({
@@ -719,21 +703,21 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
-                    }else{
+                    }else if(data.status == 200){
                         //console.log(data);
-                        $scope.vm.botClassfy = [] ;   //防止 多次打标,添加类目
-                        $scope.vm.knowledgeTitleTag = [] ;
-                        angular.forEach(data.data.classifyList,function(item){
-                            $scope.vm.knowledgeTitleTag.push(item.name);
+                        $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                        $scope.vm.knowledgeTitleTag = [];
+                        $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
+                        angular.forEach(data.data.classifyList, function (item) {
+                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
-                            obj.classificationId = item.id ;
+                            obj.classificationId = item.id;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
                             //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
-                        $scope.$apply()
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")
@@ -748,7 +732,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var params = {};
             params =  {
                 "applicationId": $scope.vm.applicationId,
-                knowledgeId : $scope.vm.knowledgeId ,
+                 knowledgeId : $scope.vm.knowledgeId ,
+                "knowledgeUpdater": $scope.vm.userName, //操作人
+                "knowledgeCreator": $scope.vm.userName, //操作人
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
@@ -774,7 +760,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-            console.log(params)
+            console.log(params);
             return params
         }
 
@@ -783,11 +769,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false
             } else {
                 //console.log(getParams());
+                $scope.vm.data = getParams();
                 httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                     //console.log(data);
                     if (data.status == 200) {
                         var url = $state.go('custServScenaOverview.manage');
-                        window.open(url, '_blank');
+                        //window.open(url, '_blank');
                     } else if (data.status == 500) {
                         layer.msg("保存失败")
                     }
@@ -805,7 +792,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 //console.log(params);
                 obj.params = params;
                 obj.editUrl = "knowledgeManagement.factorAdd";
-                    //var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
+                obj.knowledgeType = 103 ;
+                obj.knowledgeId = $scope.vm.knowledgeId ;
+                obj.api = "/api/elementKnowledgeAdd/addElementKnowledge" ;
+
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
@@ -858,8 +848,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
-            return false
-            //if(!arr.length){
+            return true ;
             //    return true ;
             //}else{
             //    angular.forEach(arr,function(val){
@@ -884,8 +873,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false;
             }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标");
-                return false;
+                return true
+                //layer.msg("知识标题未打标");
+                //return false;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空");
                 return false;
@@ -930,7 +920,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 }
                 //console.log(data);
             },function(err){
-                layer.msg("获取指定相关知识失败")
+                console.log("获取指定相关知识失败")
             });
         }
 

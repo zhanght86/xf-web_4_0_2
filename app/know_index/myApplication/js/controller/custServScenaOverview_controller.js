@@ -5,8 +5,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window ) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
         $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
 
         //******************************************** //
@@ -14,6 +14,9 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //********************************************//
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
+            applicationName : $cookieStore.get("applicationName"),
+            imgUrl : $cookieStore.get("imgUrl"),
+            robotHead : $cookieStore.get("robotHead"),
             //editName : editName
             //getCreatBot : getCreatBot,
             creatBot : [],
@@ -72,9 +75,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
             var url = $state.href(addUrl);
             $window.open(url,'_blank');
-
+            console.log(addUrl)
         }
-
         napSearch();
         //高级搜索 开关
         $scope.$watch("vm.heighSarch",function(val){
@@ -96,7 +98,10 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             obj.applicationId = $scope.vm.applicationId ;
             obj.knowledgeId = item.knowledgeId;
             obj.knowledgeType = item.knowledgeType;
-            $state.go("custKnowledgePreview.manage",{scanKnowledge:obj})
+            $window.knowledgeScan = obj ;
+            var url = $state.href("custKnowledgePreview.manage");
+            $window.open(url,'_blank');
+            //$state.go("custKnowledgePreview.manage")
         }
         function getSourceType(val){
             $scope.vm.sourceType = val

@@ -33,7 +33,9 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             inputVal : "",
             termSpliter: "；",
             current:1,
-            percent:"%"
+            percent:"%",
+            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
         };
 
         /**
@@ -133,24 +135,29 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
 
         //添加 窗口
         function addForceSegment(){
-            var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/businessModeling/intention/intentionConceptManageDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            console.log($scope.vm.key);
-                            httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck", {
-                                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                                "forceSegmentConceptKey": $scope.vm.key
-                            }, function (data) {          //类名重複
-                                if (data.status === 10002) {
-                                    layer.msg("强制分词概念类名重复");
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/businessModeling/intention/intentionConceptManageDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck", {
+                            "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                            "forceSegmentConceptKey": $scope.vm.key
+                        }, function (data) {          //类名重複
+                            if (data.status === 10002) {
+                                layer.confirm("您添加的概念类已经在，是否前往编辑？",{
+                                    btn:['前往','取消'],
+                                    shade:false
+                                },function(index){
+                                    layer.close(index);
                                     httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute", {
                                         "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                                         "forceSegmentConceptKey": $scope.vm.key,
@@ -163,22 +170,37 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                         $scope.vm.key = data.data[0].forceSegmentConceptKey;
                                         $scope.vm.term = data.data[0].forceSegmentConceptTerm;
                                     }, function () {
+                                        console.log("cancel");
                                     });
-                                } else {
-                                    //类名无冲突
-                                    $scope.vm.dialogTitle = "增加强制分词概念";
-                                    $scope.vm.term = "";
-                                    addForceSegmentConceptDialog(singleAddForceSegmentConcept);
-                                }
-                            }, function () {
-                                layer.msg("添加失敗")
-                            })
-                        } else {
-                            $scope.vm.key = "";
-                            $scope.vm.term = "";
-                        }
+                                },function(){
+                                    console.log("cancel");
+                                });
+                            } else {
+                                //类名无冲突
+                                $scope.vm.dialogTitle = "增加强制分词概念";
+                                $scope.vm.term = "";
+                                addForceSegmentConceptDialog(singleAddForceSegmentConcept);
+                            }
+                        }, function () {
+                            layer.msg("添加失敗")
+                        })
+                    } else {
+                        $scope.vm.key = "";
+                        $scope.vm.term = "";
                     }
-                });
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    termSpliterTagEditor();
+                    $("#forceSegmentKey").blur(function(){
+                        if(lengthCheck($("#forceSegmentKey").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
+                }, 100);
             }
         }
 
@@ -193,7 +215,37 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        callback(item)
+                        if(lengthCheck($scope.vm.key,0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                            return false;
+                        }
+                        var obj = $("#term").next();
+                        var term = "";
+                        var length = obj.find("li").length;
+                        if(length<=0){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        $.each(obj.find("li"),function(index,value){
+                            if(index>0){
+                                $.each($(value).find("div"),function(index1,value1){
+                                    if(index1==1){
+                                        term+=$(value1).html()+$scope.vm.termSpliter;
+                                    }
+                                });
+                            }
+                        });
+                        term=term.substring(0,term.length-1);
+                        $scope.vm.term=term;
+                        if(lengthCheck(term,0,500)==false){
+                            $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#termAddError").html('');
+                        }
+                        callback(item);
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
@@ -202,7 +254,14 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             });
             if(dialog){
                 $timeout(function () {
-                    termSpliterTagEditor()
+                    termSpliterTagEditor();
+                    $("#forceSegmentKeyTwo").blur(function(){
+                        if(lengthCheck($("#forceSegmentKeyTwo").val(),0,50)==false){
+                            $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
+                        }else{
+                            $("#keyAddError").html('');
+                        }
+                    });
                 }, 100);
             }
         }
@@ -231,6 +290,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             httpRequestPost("/api/modeling/concept/forceSegment/update",{
                 "forceSegmentConceptId":item.forceSegmentConceptId,
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "forceSegmentConceptKey":  $scope.vm.key,
                 "forceSegmentConceptModifier": item.forceSegmentConceptModifier,
                 "forceSegmentConceptTerm": $scope.vm.term
@@ -246,6 +306,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             assembleForceSegmentConceptTerm();
             httpRequestPost("/api/modeling/concept/forceSegment/add",{
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
                 "forceSegmentConceptKey":  $scope.vm.key,
                 "forceSegmentConceptModifier": $scope.vm.modifier,
                 "forceSegmentConceptTerm": $scope.vm.term

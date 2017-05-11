@@ -23,8 +23,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
             botInfo:null,  //bot信息
             deleteBot:deleteBot,
             categoryId: "",
-            categoryTypeId: 10009,
-            botSelectType:10009,
+            categoryTypeId: 163,
+            botSelectType:163,
             categorySceneId: 0,
             categoryAttributeName: "",
             categoryName: "",
@@ -36,8 +36,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
             editBotLibrary:editBotLibrary,
             deleteBotLibrary:deleteBotLibrary,
             categoryLibraryId: "",
-            categoryLibraryTypeId: 10009,
-            botLibrarySelectType:10009,
+            categoryLibraryTypeId: 163,
+            botLibrarySelectType:163,
             categoryLibrarySceneId: 0,
             categoryLibraryAttributeName: "edge",
             categoryLibraryName: "",
@@ -195,7 +195,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categoryPid": "root"
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
@@ -225,7 +225,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 "categorySceneId": categorySceneId,
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
@@ -375,11 +375,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
             }
             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
-                case 10008:
+                case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 10007:
+                case 160:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
-                case 10006:
+                case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
@@ -517,7 +517,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
+                            $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
@@ -541,9 +541,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 var len = $(value).parent().parent().next().find("li").length;
                                 console.log("====len===="+len);
                                 if(len>0){
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                 }else{
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                     $(value).attr("style",sty);
                                 }
                             }else{
@@ -682,7 +682,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     }else{
                     }
                     //初始节点类型
-                    $scope.vm.categoryLibraryAttributeName="edge";
+                    //$scope.vm.categoryLibraryAttributeName="edge";
                 }
             });
             if(dialog){
@@ -695,6 +695,27 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             repeatCheckForCategory("#editErrorView",1);
                         }
                     });
+                    $("#categoryLibraryTypeId").empty();
+                    var attrArr = [];
+                    attrArr[0]={name:"默认",value:163};
+                    attrArr[1]={name:"流程",value:161};
+                    attrArr[2]={name:"划分",value:160};
+                    attrArr[3]={name:"属性",value:162};
+                    for(var index=0;index<attrArr.length;index++){
+                        if($scope.vm.categoryLibraryAttributeName=="edge"){
+                            console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                            $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                        }else{
+                            if((attrArr[index].value==$scope.vm.botSelectType)>0){
+                                console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                                $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                            }else{
+                                console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
+                                $("#categoryLibraryTypeId").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                            }
+                        }
+                    }
+                    $("#categoryLibraryTypeId").val($scope.vm.botSelectType);
                 }, 100);
             }
         }
@@ -786,7 +807,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
+                            $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
@@ -816,9 +837,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 var len = $(value).parent().parent().next().find("li").length;
                                 console.log("====len===="+len);
                                 if(len>0){
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                 }else{
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                     $(value).attr("style",sty);
                                 }
                             }else{
@@ -838,10 +859,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
         function disableAttributeTypeForApply(){
             $("#categoryLibraryTypeIdAdd").empty();
             var attrArr = [];
-            attrArr[0]={name:"默认",value:10009};
-            attrArr[1]={name:"流程",value:10008};
-            attrArr[2]={name:"划分",value:10007};
-            attrArr[3]={name:"属性",value:10006};
+            attrArr[0]={name:"默认",value:163};
+            attrArr[1]={name:"流程",value:161};
+            attrArr[2]={name:"划分",value:160};
+            attrArr[3]={name:"属性",value:162};
             for(var index=0;index<attrArr.length;index++){
                 if($scope.vm.categoryLibraryAttributeName=="node"){
                     console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);

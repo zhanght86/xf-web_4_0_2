@@ -1,17 +1,12 @@
 <div ui-view="header"></div>
 <div class="main warp">
-    <div class="crumbs-nav bgwhite mt20">
-        <span class="cn-lable">你曾经路过此地：</span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>
-        <span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>
-        <span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>-->
-    </div>
+
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                <img class="hd-img" src="../../../images/images/poto.png"/>
-                <span class="hd-name ellipsis">长沙银行机器人</span>
+                <!--<img class="hd-img" src="../../../images/images/poto.png"/>-->
+                <img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>
+                <span class="hd-name ellipsis">{{vm.applicationName}}</span>
             </div>
             <div class="aside-nav aside-navn">
                 <ul class="">
@@ -21,27 +16,6 @@
                             <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
                         </a>
                     </li>
-                    <!--<li class="type2">-->
-                        <!--<a class="slide-a ellipsis" href="javascript:;">-->
-                            <!--<i class="icon-jj  ngBotAdd"></i>-->
-                            <!--<span>分业务展开</span>-->
-                        <!--</a>-->
-                        <!--<ul class="menu_1">-->
-                            <!--<li class="leafHover" ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">-->
-                                <!--<a class="slide-a ellipsis" href="javascript:;">-->
-                                    <!--&lt;!&ndash;<i class="icon-jj" data-option="{{item.categoryId}}"></i>&ndash;&gt;-->
-                                    <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
-                                    <!--<i class="icon-r icon-jt"></i>-->
-                                <!--</a>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li ng-repeat="item in vm.botRoot">-->
-                        <!--<a class="slide-a ellipsis" href="javascript:;">-->
-                            <!--<i class="icon-jj" data-option="{{item.categoryId}}"></i>-->
-                            <!--<span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
                 </ul>
             </div>
         </div>
@@ -126,6 +100,7 @@
                     <div class="clearfix csso-bd" style="min-height:300px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
+
                                 <div class="title">
                                     <checkbox ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)"></checkbox>
                                     <a href="javascript:;" ng-click="vm.scan(item)">知识标题: {{item.knowledgeTitle}}</a>
@@ -167,9 +142,6 @@
                         </ul>
                         <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
                     </div>
-
-
-
                 </div>
             </div>
         </div>

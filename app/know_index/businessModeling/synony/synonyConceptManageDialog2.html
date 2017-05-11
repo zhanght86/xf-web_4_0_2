@@ -4,7 +4,8 @@
         <div class="mb-20 concept_div">
             <span class="concept_s">概念类名：</span>
             <div>
-                <input type="text" ng-model="vm.key" maxlength="20"  class="input_text" placeholder="违禁品"/>
+                <input id="synonymKeyTwo" type="text" ng-model="vm.key" class="input_text" placeholder="违禁品"/>
+                <p id="keyAddError" class="c-eror pd-5"></p>
             </div>
         </div>
         <div class="mb-20 concept_div">
@@ -25,6 +26,7 @@
                 <div class="textarea" style="height: auto;width: 260px ;border: 0;padding: 0;">
                     <textarea id="term"></textarea>
                 </div>
+                <p id="termAddError" class="c-error pd-5"></p>
             </div>
         </div>
         <div class="concept_div">

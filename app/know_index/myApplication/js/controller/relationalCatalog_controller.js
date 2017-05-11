@@ -20,8 +20,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             editBot:editBot,
             deleteBot:deleteBot,
             categoryId: "",
-            categoryTypeId: 10009,
-            botSelectType:10009,
+            categoryTypeId: 163,
+            botSelectType:163,
             categorySceneId: 0,
             categoryAttributeName: "edge",
             categoryName: "",
@@ -50,7 +50,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             var $win = $(window);
             var winHeight = $win.height()*0.75;
             $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
-            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
+            $(".libraryRth").attr("style","width: 720px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
         }
 
         var params = {
@@ -179,7 +179,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 "categoryPid": "root"
             },function(data){
                 var html =  '<ul class="menus show">';
-                for(var i=0;i<data.data.length;i++){
+                for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
@@ -241,6 +241,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         httpRequestPost("/api/modeling/category/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryId,
                             "categoryApplicationId": $scope.vm.categoryApplicationId,
+                            "applicationId": categoryApplicationId,
                             "categoryPid": $scope.vm.categoryPid,
                             "categoryAttributeName": $scope.vm.categoryAttributeName,
                             "categoryName": $("#categoryName").val(),
@@ -272,17 +273,21 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             repeatCheck("#editErrorView",1);
                         }
                     });
-                    //$.each($("#categoryTypeId").find("option"),function(index,value){
-                    //    console.log($(value).val() +"======"+ $scope.vm.categoryTypeId);
-                    //    if(($(value).val()==$scope.vm.categoryTypeId)>0){
-                    //        $("#categoryTypeId").val($scope.vm.categoryTypeId)
-                    //        $(value).attr("disabled",null);
-                    //        $(value).attr("style","");
-                    //    }else{
-                    //        $(value).attr("disabled","disabled");
-                    //        $(value).attr("style","background-color: lightgrey");
-                    //    }
-                    //});
+                    $.each($("#categoryTypeId").find("option"),function(index,value){
+                        if($scope.vm.categoryAttributeName=="edge"){
+                            $(value).attr("disabled",null);
+                            $(value).attr("style","");
+                        }else{
+                            if(($(value).val()==$scope.vm.categoryTypeId)>0){
+                                $("#categoryTypeId").val($scope.vm.categoryTypeId);
+                                $(value).attr("disabled",null);
+                                $(value).attr("style","");
+                            }else{
+                                $(value).attr("disabled","disabled");
+                                $(value).attr("style","background-color: lightgrey");
+                            }
+                        }
+                    });
                 }, 100);
             }
         }
@@ -370,7 +375,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //类目新增
         function addBot(){
             //数据校验
-            if($scope.vm.botSelectValue=="root"){
+            if($scope.vm.botSelectValue==""){
                 return;
             }
             if(lengthCheck($("#category-name").val(),0,50)==false){
@@ -382,6 +387,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
             httpRequestPost("/api/modeling/category/add",{
                 "categoryApplicationId": categoryApplicationId,
+                "applicationId": categoryApplicationId,
                 "categoryPid": $scope.vm.botSelectValue,
                 "categoryAttributeName": $scope.vm.categoryAttributeName,
                 "categoryName": $("#category-name").val(),
@@ -474,7 +480,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
-                            $(value).parent().parent().next().prepend(html);
+                            $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
                         if($(value).attr("data-option")==data.data[0].categoryPid){
@@ -504,9 +510,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 var len = $(value).parent().parent().next().find("li").length;
                                 console.log("====len===="+len);
                                 if(len>0){
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                 }else{
-                                    $(value).parent().parent().next().prepend(html);
+                                    $(value).parent().parent().next().append(html);
                                     $(value).attr("style",sty);
                                 }
                             }else{
@@ -568,7 +574,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 }else{
                     console.log($(value).val() +"======"+ $scope.vm.botSelectType);
                     if(($(value).val()==$scope.vm.botSelectType)>0){
-                        $("#category-type").val($scope.vm.botSelectType)
+                        $("#category-type").val($scope.vm.botSelectType);
                         $(value).attr("disabled",null);
                         $(value).attr("style","");
                     }else{
@@ -595,11 +601,11 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
-                case 10008:
+                case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 10007:
+                case 160:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
-                case 10006:
+                case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
