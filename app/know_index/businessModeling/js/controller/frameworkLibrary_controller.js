@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/23.
  */
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope','$timeout',"$state", "$stateParams","ngDialog","$cookieStore",
-    function ($scope,$timeout,$state, $stateParams, ngDialog,$cookieStore) {
+    '$scope','$timeout',"$state", "$stateParams","$compile","ngDialog","$cookieStore",
+    function ($scope,$timeout,$state, $stateParams,$compile,ngDialog,$cookieStore) {
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -60,7 +60,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             recursionForFrame:recursionForFrame,
             autoHeightForFrame:autoHeightForFrame,
             locationForFrame:locationForFrame
+
         };
+        $scope.categoryAttributeName;
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
         //setCookie("categorySceneId","10023");
@@ -145,8 +147,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $scope.vm.botSelectValue = $(firstNode).next().attr("data-option");
                 $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
                 $(firstNode).next().attr("style","color:black;font-weight:bold;");
-                console.log($scope.vm.botSelectValue);
-                loadFrameLibrary(1);
+                console.log(1,$scope.vm.botSelectValue);
+                loadFrameLibrary(1,0);
                 $scope.$apply();
             }else{
                 recursionForFrame(suggestion,firstNode);
@@ -166,7 +168,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         $scope.vm.botSelectType = $(currNode).next().attr("type-option");
                         $(currNode).next().attr("style","color:black;font-weight:bold;");
                         console.log($scope.vm.botSelectValue);
-                        loadFrameLibrary(1);
+                        loadFrameLibrary(1,0);
                         $scope.$apply();
                         flag = true;
                         //跳出
@@ -204,10 +206,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span type-option="'+data.data[i].categoryTypeId+'"attribute-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
+
                 }
                 html+='</ul>';
                 $(".aside-navs").append(html);
@@ -217,6 +220,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }else if($(firstNode).parent().parent().next()==null){
                     appendTree(firstNode);
                 }
+
+
             },function(){
                 console.log("err or err");
             });
@@ -226,9 +231,19 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
+            var categoryAttributeName =$(this).attr("attribute-option");
+            var categoryAttribute;
+            console.log(22222,categoryAttributeName)
+            if($(this).attr("attribute-option")=='edge'){
+                categoryAttribute=1;
+            }
+            else{
+                categoryAttribute=0;
+            }
             $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
-            loadFrameLibrary(1);
+            console.log($scope.vm.botSelectType);
+            loadFrameLibrary(1,categoryAttribute);
             $scope.$apply();
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
@@ -263,14 +278,16 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span attribute-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
+                            console.log(data.data[i].categoryAttributeName);
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
                         that.parent().parent().next().slideDown();
+
                     }
                 },function(err){
                     console.log(err);
@@ -312,13 +329,14 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             return style;
         }
         //加载对应类目下的框架库
-        function loadFrameLibrary(current){
+        function loadFrameLibrary(current,type){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": $scope.vm.botSelectValue,
                 "index":(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                $("#frame-library").empty();
+                console.log(111,type);
+                $(".libraryRth").empty();
                 $scope.vm.paginationConf={
                     currentPage: 1,//当前页
                     totalItems: Math.ceil(data.total/6), //总页数
@@ -326,15 +344,23 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply();
+                console.log(type);
+                var html = "";
+                if(type == '0'){
+                    var aaaa ='<div class="tac mt10 btnWrap"style="margin: 0; text-align: left"><a class="btn btn-blue" href="javascript:;" ng-click="vm.addFrame()">新增框架</a>'+
+                        '<a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>'+
+                        '<a class="btn btn-green2 ml15" href="javascript:;">导出框架</a></div>';
+                    var $html = $compile(aaaa)($scope);
+                    $(".libraryRth").append($html);
+                }
                 if(data.data){
-                    var html = "";
                     for(var i=0;i<data.data.length;i++){
                         if(i%2==0){
                             html += '<div class="libraryRthCnt edit" type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
                         }else{
                             html += '<div class="libraryRthCnt even edit" data-option='+data.data[i].frameId+' type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
                         }
-                        html += '   <a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>';
+                        html += '<a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>';
                         if(data.data[i].frameTypeId == 10011){
                             html+='<img src="../../images/faq.png"/><p>FAQ框架</p>';
                         }
@@ -344,12 +370,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         else if(data.data[i].frameTypeId == 10013){
                             html+='<img src="../../images/images/libTxt_22.png"/><p>要素框架</p>';
                         }
+
                         html+='<div>' +
                             '<a  href="javascript:;">'+data.data[i].frameTitle+'</a>' +
                             '</div></div>';
                     }
-                    $("#frame-library").append(html);
-                }
+
+                } $(".libraryRth").append(html);
             },function(err){
                 console.log(err);
             });
@@ -383,7 +410,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 "frameId":frameId
             },function(data){
                 if(responseView(data)==true){
-                    loadFrameLibrary(1);
+                    loadFrameLibrary(1,0);
                 }
             },function(err){
                 console.log(err);
@@ -392,7 +419,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadFrameLibrary(current);
+                loadFrameLibrary(current,0);
             }
         });
         //添加框架
@@ -543,7 +570,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return false;
                         }
                     }
-                    loadFrameLibrary(1);
+                    loadFrameLibrary(1,0);
                 }
             });
             if(dialog){
@@ -738,7 +765,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },function(data){
                 if(data){
                     if(responseView(data)==true){
-                        loadFrameLibrary(1);
+                        loadFrameLibrary(1,0);
                     }
                 }
             },function(err){
@@ -764,7 +791,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },function(data){
                 if(data){
                     if(responseView(data)==true){
-                        loadFrameLibrary(1);
+                        loadFrameLibrary(1,0);
                     }
                 }
             },function(err){
@@ -897,7 +924,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },function(data){
                 if(data){
                     if(responseView(data)==true){
-                        loadFrameLibrary(1);
+                        loadFrameLibrary(1,0);
                     }
                 }
             },function(err){
@@ -996,7 +1023,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 "frameId":$scope.vm.frameId
             },function(data){
                 if(responseView(data)==true){
-                    loadFrameLibrary(1);
+                    loadFrameLibrary(1,0);
                 }
             },function(err){
                 console.log(err);
@@ -1277,7 +1304,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },function(data){
                 if(data){
                     if(responseView(data)==true){
-                        loadFrameLibrary(1);
+                        loadFrameLibrary(1,0);
                     }
                 }
             },function(err){
@@ -1304,7 +1331,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },function(data){
                 if(data){
                     if(responseView(data)==true){
-                        loadFrameLibrary(1);
+                        loadFrameLibrary(1,0);
                     }
                 }
             },function(err){
@@ -1777,7 +1804,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             "elementId":$(value).parent().parent().attr("element-id")
                         },function(data){
                             if(responseView(data)==true){
-                                loadFrameLibrary(1);
+                                loadFrameLibrary(1,0);
+
                             }
                         },function(err){
                             console.log(err);
