@@ -63,6 +63,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     obj.knowledgeTitle = item.knowledgeTitle;
                     obj.index = index;
                     $scope.vm.seleceAddAll.push(obj);
+                    console.log(obj)
                 });
             }else{
                 $scope.vm.selectAllCheckDialog = false
@@ -160,7 +161,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //从聊天知识库查询知识
         function findKnowledge(index){
-            httpRequestPost("/api/owledgeManage/overView/findChatKnowledgeByApplicationId",{
+            httpRequestPost("/api/knowledgeManage/overView/findChatKnowledgeByApplicationId",{
                 applicationId:$scope.vm.applicationId,
                 title : $scope.vm.knowledge,
                 pageSize : $scope.vm.pageSize,

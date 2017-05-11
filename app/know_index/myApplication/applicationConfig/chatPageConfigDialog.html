@@ -6,7 +6,7 @@
             <div class="formControls col-xs-10 col-sm-9">
                 <ul id="already_select" ng-repeat="item in vm.seleceAddAll">
                     <!--{{item}}-->
-                    <li><span class="mr-10">{{item.chatKnowledgeTopic}}</span>
+                    <li><span class="mr-10">{{item.knowledgeTitle}}</span>
                         <a href="javascript:;" ng-click="vm.deleteDialog(item)" class="c-red">X</a>
                     </li>
                 </ul>
@@ -29,7 +29,9 @@
                     </tr>
                     </thead>
                     <tbody class="text-c">
+                    <!--{{vm.listKnoData}}-->
                     <tr ng-repeat="item in vm.listKnoData">
+
                         <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="vm.selectSingleDialog($event,item.chatKnowledgeId,item.chatKnowledgeTopic,$index)"/></td>
                         <td>{{item.knowledgeTitle}}</td>
                     </tr>
