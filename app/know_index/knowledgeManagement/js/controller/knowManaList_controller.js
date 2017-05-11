@@ -449,7 +449,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
+            //$scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
@@ -460,6 +460,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
+                $scope.vm.knowledgeBotVal = "";
             }
         };
         //点击下一级 bot 下拉数据填充以及下拉效果
@@ -622,6 +623,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
+            //console.log(params)
             return params
         }
         function save(){
