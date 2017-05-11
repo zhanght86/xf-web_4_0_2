@@ -133,7 +133,22 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
         //校验服务发布
         function verifyRelease(){
-
+            if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
+                layer.msg("发布服务的名称不能为空!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
+                layer.msg("发布服务时未选择分类!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
+                layer.msg("发布服务时未选择发布节点!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            return 1;
         }
 
         //添加并发布服务
@@ -152,12 +167,6 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     if(e === 1) {
                         $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
 
-                        console.log("维度"+$scope.vm.dimensions);
-                        if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
-                            layer.msg("发布服务的名称不能为空!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
                         if($scope.vm.channels==null||$scope.vm.channels.length==0){
                             angular.forEach($scope.vm.channelData,function(channel){
                                 $scope.vm.channels.push(channel.channelId);
@@ -167,6 +176,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                             //return;
                         }
                         if($scope.vm.dimensions==null||$scope.vm.dimensions.length==0){
+                            $scope.vm.dimensionSelected=[];
                             angular.forEach($scope.vm.dimensionAll,function(dimension){
                                 $scope.vm.dimensionSelected.push(dimension);
                             });
@@ -175,17 +185,6 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                             //$scope.vm.allowSubmit=0;
                             //return;
                         }
-                        if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
-                            layer.msg("发布服务时未选择分类!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
-                        if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
-                            layer.msg("发布服务时未选择发布节点!");
-                            $scope.vm.allowSubmit=0;
-                            return;
-                        }
-
 
                         if($scope.vm.allowSubmit){  //服务名称验证没有错误
                             httpRequestPost("/api/application/service/addAndPublishService",{
