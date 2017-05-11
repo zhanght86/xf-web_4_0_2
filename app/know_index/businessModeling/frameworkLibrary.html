@@ -30,36 +30,17 @@
                 <a class="btn btn-green2 ml15" href="javascript:;">导出框架</a>
             </div>
             <div id="frame-library"></div>
-            <div class="clearfix">
-                <div class="libraryRthCnt pr L mr-20">
-                    <a href="javascript:;" class="pa delete_a"></a>
-                    <img src="../../../images/faq.png" />
-                    <p>FAQ框架</p>
-                    <div><a href="javascript:;">银行是什么?</a></div>
-                </div>
-                <div class="libraryRthCnt pr L mr-20">
-                    <a href="javascript:;" class="pa delete_a"></a>
-                    <img src="../../../images/gn.png" />
-                    <p>概念框架</p>
-                    <div><a href="javascript:;">银行是什么?</a></div>
-                </div>
-                <div class="libraryRthCnt pr L mr-20">
-                    <a href="javascript:;" class="pa delete_a"></a>
-                    <img src="../../../images/libTxt_22.png" />
-                    <p>要素框架</p>
-                    <div><a href="javascript:;">银行是什么?</a></div>
-                </div>
-            </div>
             <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
         </div>
     </div>
 </div>
 <style>
+
     .ngdialog{
         z-index: 5!important;
     }
     .libraryRth{min-width:720px;}
-    .libraryRthCnt{position:relative;}
+    .libraryRthCnt{position:relative; cursor: pointer;}
     .delete_a{width:15px;height:17px;display:block;right:5px;top:5px;z-index:100;background: url(../images/icon-ljt.png) no-repeat;}
     .delete_a:hover{background-image:url(../images/icon-ljt_on.png);}
 </style>
