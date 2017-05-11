@@ -97,6 +97,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             function(data) {
                 if(data.data){
                     $scope.vm.channels = data.data
+                    console.log(data.data)
                 }
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
@@ -111,7 +112,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //标题
         if($stateParams.data!=null){
             var data = $stateParams.data ;
-            console.log($stateParams.data);
+            //console.log($stateParams.data);
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 标题打标结果
@@ -127,25 +128,27 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             $scope.vm.extensionsByFrame = data.extensionQuestions;
             //内容
             angular.forEach(data.knowledgeContents,function(item){
-                var obj = {} ;
                 $scope.vm.newTitle = item.knowledgeContent;
                 $scope.vm.knowledgeContentNegative = item.knowledgeContentNegative ;
                 //維度，添加預覽效果   以name id 的 形式显示
                                //obj.channelIdList =  item.channelIdList ;
                 //obj.dimensionIdList =  item.dimensionIdList ;
                 $scope.vm.channel = item.channelIdList ;
+                //console.log(item.channelIdList ,$scope.vm.channels )
                 $scope.vm.dimensionArr = [] ;
                 //异步原因
                 var getDimension = $interval(function(){
                     if($scope.vm.dimensions){
+                        //console.log(item.dimensionIdList , $scope.vm.dimensions) ;
                         $interval.cancel(getDimension);
                         angular.forEach($scope.vm.dimensions,function(val){
-                            if(!item.dimensionIdList.inArray(val.dimensionId)){
+                            if(item.dimensionIdList.inArray(val.dimensionId)){
                                 var obj = {};
                                 obj.dimensionName = val.dimensionName;
                                 obj.dimensionId = val.dimensionId;
                                 $scope.vm.dimensionArr.push(obj);
-
+                                //console.log(obj)
+                                //console.log( $scope.vm.dimensionArr )
                             }
                         });
                     }
