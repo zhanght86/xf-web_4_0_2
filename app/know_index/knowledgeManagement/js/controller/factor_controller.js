@@ -117,6 +117,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //
         //标题
         if($stateParams.data!=null){
+
             var data = $stateParams.data ;
             console.log($stateParams.data);
             //标题
@@ -163,6 +164,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                console.log(obj.dimensionIdList)
             });
         }else{
             init();
@@ -770,7 +772,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     //console.log(data);
                     if (data.status == 200) {
                         var url = $state.go('custServScenaOverview.manage');
-                        window.open(url, '_blank');
+                        //window.open(url, '_blank');
                     } else if (data.status == 500) {
                         layer.msg("保存失败")
                     }

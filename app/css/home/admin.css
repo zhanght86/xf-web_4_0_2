@@ -1,17 +1,4 @@
 
-/* CSS Document */
-.btn1{padding:5px 15px;height:30px;border-radius:2px;cursor:pointer;color:#fff;border:0;}
-.btn1_blue{background:#529ff6;}
-.btn1_blue:hover{background:#488cd8;}
-.btn_green{background:#2bcacc;}
-.btn_green:hover{background:#2dbcbe;}
-.btn_green2{background:#63d197;}
-.btn_green2:hover{background:#60c690;}
-.btn_gray{background:#d5d4d4;}
-.btn_gray:hover{background:#c7c7c7;}
-.btn_delete{background:#d95353;}
-.btn_delete:hover{background:#be5353;}
-
 /*我的应用*/
 .my_appbox{box-sizing:border-box;background:#fff;}
 .application_box_list{width:23%;margin:1%;}
