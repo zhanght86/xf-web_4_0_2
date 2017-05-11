@@ -40,10 +40,7 @@ angular.module('homePage').controller('homePageNavController', [
             window.open('http://'+window.location.host+':7003/index.html');
         }
         $scope.checkShowCrumbs=function(){
-            if(!$scope.url.toString().indexOf("/homePage/define") > 0 ){
-                return false;
-            }
-            else if( !$scope.url.toString().indexOf("/admin/manage") > 0){
+            if(!$scope.url.toString().indexOf("/homePage/define") > 0 || !$scope.url.toString().indexOf("/admin/manage") > 0){
                 return false;
             }
             else{

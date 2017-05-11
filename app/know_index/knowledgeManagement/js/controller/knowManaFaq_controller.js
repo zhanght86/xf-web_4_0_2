@@ -559,6 +559,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     "title" :  $scope.vm.title,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
+
                     console.log(data);
                     if(data.status == 500){
                         if(data.data==10002){
