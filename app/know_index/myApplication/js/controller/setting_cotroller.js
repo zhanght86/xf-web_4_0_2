@@ -10,8 +10,8 @@
  */
 
 angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
-    '$scope', "$state", "$stateParams","$cookieStore",
-    function ($scope,$state, $stateParams,$cookieStore) {
+    '$scope', "$state", "$stateParams","$cookieStore","$rootScope",
+    function ($scope,$state, $stateParams,$cookieStore,$rootScope) {
        // alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
@@ -22,7 +22,9 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
 
             robotHead : "",//头像
             imgUrl : "", //文件服务器地址
+            applicationName : $cookieStore.get("applicationName"),
         };
+
 
         //获取应用的头像
         findRobotHead();
@@ -54,6 +56,9 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
                     $scope.vm.robotHead= "";//头像
                     $scope.vm.imgUrl =""; //文件服务器地址
                 }else{
+                    $cookieStore.put('robotHead',data.data.robotHead);
+                    $cookieStore.put('imgUrl',data.data.imgUrl);
+
                     $scope.vm.robotHead= data.data.robotHead;//头像
                     $scope.vm.imgUrl = data.data.imgUrl; //文件服务器地址
                     $scope.$apply();
