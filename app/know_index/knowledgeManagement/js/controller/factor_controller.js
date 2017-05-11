@@ -110,56 +110,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }, function(error) {
                 console.log("获取渠道失败，请刷新页面")
             });
-
-        //knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
-        //    function(data) {
-        //        if(data.data){
-        //            $scope.vm.dimensions = data.data;
-        //            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-        //        }
-        //    }, function(error) {
-        //        //console.log(error)
-        //        console.log("获取维度失败，请刷新页面")
-        //    });
-        //获取维度
-        //knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
-        //    function(data) {
-        //        if(data.data){
-        //            $scope.vm.channels = data.data
-        //        }
-        //    }, function(error) {
-        //        console.log("获取渠道失败，请刷新页面")
-        //    });
-        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-/*
-        params =  {
-            "applicationId": $scope.vm.applicationId,
-            "userId" : $scope.vm.userId ,
-            "sceneId" : $scope.vm.sceneId ,
-            "knowledgeTitle": $scope.vm.title,      //知识标题
-            "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-            "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-            "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-        };
-        var title = angular.copy($scope.vm.newTitle);
-        scanCotentByTitle(title) ;
-        var obj = {};
-        obj.knowledgeContent = getTableParams();
-        obj.channelIdList =  $scope.vm.channel;
-        obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-        obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-            obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-        obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
-        obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
-        $scope.vm.scanContent=[];
-        $scope.vm.scanContent.push(obj);
-        params.knowledgeContents =  $scope.vm.scanContent;
-        params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
-        params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-    */
-
-
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
@@ -299,7 +249,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             var newType = {};
                             newType.elementName = $scope.vm.factorName;
                             newType.elementType = $scope.vm.tableType;
-                            newType.technology = $scope.vm.gorithm.pop();
+                            newType.technology = $scope.vm.gorithm;
                             newType.elementAsk = $scope.vm.elementAsk;
                             newType.relatedQuestions = null;
                             $scope.vm.tableList.data.listTableType.push(newType);
@@ -315,7 +265,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             console.log("editList");
             $scope.vm.factorName = $scope.vm.tableList.data.listTableType[column].elementName;
             $scope.vm.tableType = $scope.vm.tableList.data.listTableType[column].elementType;
-            $scope.vm.gorithm.push($scope.vm.tableList.data.listTableType[column].technology);
+            $scope.vm.gorithm=$scope.vm.tableList.data.listTableType[column].technology;
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",
@@ -328,7 +278,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     if(e === 1){
                         $scope.vm.tableList.data.listTableType[column].elementName =  $scope.vm.factorName;
                         $scope.vm.tableList.data.listTableType[column].elementType = $scope.vm.tableType;
-                        $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm.pop();
+                        $scope.vm.tableList.data.listTableType[column].technology =  $scope.vm.gorithm;
                         $scope.vm.tableList.data.listTableType[column].elementAsk = $scope.vm.elementAsk;
                         $scope.vm.tableList.data.listTable[0][column] = $scope.vm.factorName;
                         setDialogNew();
@@ -453,7 +403,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 var newType = {};
                                 newType.elementName = value.elementContent;
                                 newType.elementType = switchContentType(value.elementTypeId);
-                                newType.technology = switchMiningType(value.elementMiningTypeId);
+                                var miningTypeArr = [];
+                                miningTypeArr.push(switchMiningType(value.elementMiningTypeId));
+                                newType.technology = miningTypeArr;
                                 newType.elementAsk = value.elementAskContent;
                                 newType.relatedQuestions = value.elementRelateConcept;
                                 $scope.vm.tableList.data.listTableType.push(newType);
