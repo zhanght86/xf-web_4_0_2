@@ -26,12 +26,12 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
 
             settingId: "", //配置id
             categoryFuzzyOn: 1,  //类目模糊开关
-            recommendedSimilarity: 3.1, //推荐问相似度
+            recommendedSimilarity: 0.5, //推荐问相似度
             subjectMissingOn: 1, //主题缺失开关
             subjectMemoryRounds: 3, //主题记忆轮数
             memoryMethod: 1, //记忆方法
             elementMissingOn: 1, //要素缺失开关
-            elementRecommendationOrder: 3,  //要素推荐顺序
+            elementRecommendationOrder: 1,  //要素推荐顺序
             nonZeroStartOn: 1, //非零点启动开关
             matchCompleteOn: 1, //完全匹配开关
             matchTagOn: 1,  //标签匹配开关

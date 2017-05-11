@@ -193,11 +193,11 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
-                "frameTypeId":10013,
+                "frameTypeId":10012,
                 "index": 0,
                 "pageSize":999999
             },function(data){
-                //console.log(data);
+                console.log(data);
                 if(data.status!=10005){
                     if(data.data.length){
                         $scope.vm.frames = $scope.vm.frames.concat(data.data) ;
@@ -238,7 +238,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function getExtensionByFrame(id,type){
             //console.log(id);
             httpRequestPost("/api/modeling/frame/listbyattribute",{
-                "frameTypeId": 10013,
+                "frameTypeId": 10012,
                 "frameId": id,
                 "index": 0,
                 "pageSize":999999
@@ -479,6 +479,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function getBotRoot(){
             httpRequestPost("/api/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
+                "title" : $scope.vm.title ,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
@@ -493,7 +494,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
+            //$scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
@@ -502,8 +503,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function botSelectAdd(){
             if($scope.vm.botFullPath){
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
+                console.log($scope.vm.botFullPath) ;
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
+                $scope.vm.knowledgeBotVal = "";
             }
         }
         //点击下一级 bot 下拉数据填充以及下拉效果
