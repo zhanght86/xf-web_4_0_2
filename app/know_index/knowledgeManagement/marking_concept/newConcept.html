@@ -115,8 +115,8 @@
                         触发要素：
                     </div>
                     <div class="value" style="overflow: visible">
-                        <div class="clearfix mb-10" style="width: 500px;height: 38px;">
-                            <select  ng-model="vm.factor" onchange="" class="input-text L " style="width: 20%;height:39px;">
+                        <div class="clearfix mb-10" style="width: 500px;height: 34px;">
+                            <select  ng-model="vm.factor" onchange="" class="input-text L " style="width: 20%;height:35px;">
                                 <option value="0">知识标题</option>
                                 <option value="1">概念扩展</option>
                             </select>
@@ -198,7 +198,7 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span ng-repeat="val in item.channelIdList track by $index">{{val | channel:vm.channels}}</span>
+                            <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">
