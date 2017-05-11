@@ -42,6 +42,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             stopAllServices : stopAllServices, //下线应用的所有服务
 
         };
+
         findApplicationInfo(); //查看应用的基本信息
 
         findSceneInfo(); //查看场景信息
