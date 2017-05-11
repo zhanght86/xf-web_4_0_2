@@ -38,6 +38,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
             extensionEdit : extensionEdit,
+            botFullPath : "",
 
             //展示内容
             scanContent : [],
@@ -456,6 +457,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
+                console.log(data) ;
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
                     var obj = {};
@@ -577,19 +579,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
+            //$scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
         });
-        //点击bot分类的 加号
+        //添加BOT 分类  ==== 点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
+                $scope.vm.knowledgeBotVal = "";
             }
-        };
+        }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'.icon-jj',function(){
             var id = $(this).attr("data-option");

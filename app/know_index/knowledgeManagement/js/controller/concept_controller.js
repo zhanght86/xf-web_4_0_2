@@ -491,7 +491,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
+            //$scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
@@ -502,6 +502,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
+                $scope.vm.knowledgeBotVal = "";
+
             }
         };
         //点击下一级 bot 下拉数据填充以及下拉效果

@@ -279,7 +279,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         });
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
-            console.log(id);
+            //console.log(id);
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameTypeId": 10011,
                 "frameId": id,
@@ -287,7 +287,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    console.log(data);
+                    //console.log(data);
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item){
                             var obj = {} ;
@@ -365,7 +365,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $scope.vm.extensions.push(obj);
                         $scope.$apply()
                     }
-                    console.log(data);
+                    //console.log(data);
                 },function(){
                     layer.msg("添加扩展问失败")
                 });
@@ -489,7 +489,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
-            console.log(data) ;
+            //console.log(data) ;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.newTitle = data.knowledgeContent;
@@ -559,7 +559,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     "title" :  $scope.vm.title,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.status == 500){
                         if(data.data==10002){
                             $scope.vm.titleTip = "标题重复";
