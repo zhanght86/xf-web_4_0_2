@@ -185,7 +185,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             newType.relatedQuestions = null;
             $scope.vm.listTableType.push(newType);
             $scope.vm.tableList.data.listTableType=$scope.vm.listTableType;
-            $scope.$apply();
+            //$scope.$apply();
         }
 
         function tableChange(row, col ,val){
@@ -252,7 +252,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             newType.elementAsk = $scope.vm.elementAsk;
                             newType.relatedQuestions = null;
                             $scope.vm.tableList.data.listTableType.push(newType);
-                            $scope.$apply();
+                            //$scope.$apply();
                             setDialogNew();
                         }
                     }
@@ -694,21 +694,21 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
-                    }else{
+                    }else if(data.status == 200){
                         //console.log(data);
-                        $scope.vm.botClassfy = [] ;   //防止 多次打标,添加类目
-                        $scope.vm.knowledgeTitleTag = [] ;
-                        angular.forEach(data.data.classifyList,function(item){
-                            $scope.vm.knowledgeTitleTag.push(item.name);
+                        $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                        $scope.vm.knowledgeTitleTag = [];
+                        $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
+                        angular.forEach(data.data.classifyList, function (item) {
+                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
-                            obj.classificationId = item.id ;
+                            obj.classificationId = item.id;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
                             //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
-                        $scope.$apply()
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")

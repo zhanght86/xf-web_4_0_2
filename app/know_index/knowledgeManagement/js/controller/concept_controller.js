@@ -17,7 +17,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
             knowledgeBot:knowledgeBot,  //bot点击事件
-            knowledgeAdd: knowledgeAdd,//知识内容添加
             knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
             knowledgeBotVal : "",  //bot 内容
@@ -334,12 +333,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             });
         }
-
-
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             var title = oldWord.extensionQuestionTitle ;
-            var weight = oldWord.extensionQuestionType
+            var weight = oldWord.extensionQuestionType ;
             console.log(oldWord);
             httpRequestPost("/api/conceptKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
@@ -348,18 +345,17 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             },function(data){
                 console.log(data);
                 if(data.status==200){
-                    var exten = {}  ;
-                    exten.extensionQuestionTitle = title;
-                    exten.extensionQuestionType = weight ;
-                    var listArr = [];
-                    var listObj = {};
-                    listObj.wholeDecorateTagName="";
-                    listObj.wholeDecorateTagType="";
-                    listArr.push(listObj);
-                    exten.wholeDecorateTagList = listArr;
-                    exten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        //var tag = [] ;
+                        var exten = {}  ;
+                        exten.extensionQuestionTitle = title;
+                        exten.extensionQuestionType = weight ;
+                        var listArr = [];
+                        var listObj = {};
+                        listObj.wholeDecorateTagName="";
+                        listObj.wholeDecorateTagType="";
+                        listArr.push(listObj);
+                        exten.wholeDecorateTagList = listArr;
+                        exten.extensionQuestionTagList = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -367,13 +363,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             tagTem.tagName= item.tagName;
                             tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            //tag.push(tagTem)
                             exten.extensionQuestionTagList.push(tagTem) ;
                         });
+                        $scope.vm.extensionsByFrame.push(exten);
+                        console.log($scope.vm.extensionsByFrame);
+                        $scope.$apply();
                     });
-                    $scope.vm.extensionsByFrame.push(exten);
-                    console.log($scope.vm.extensionsByFrame);
-                    $scope.$apply();
                 }
             }, function () {
                 //layer.msg("err or err")
@@ -492,6 +487,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
+
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
@@ -672,12 +668,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
-                    }else{
+                    }else if(data.status == 200){
                         //console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [];
+                        $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.knowledgeTitleTag.push(item.name);
+                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
@@ -686,7 +683,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
-                        $scope.$apply()
+
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")
@@ -873,22 +870,39 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         }
                     })
                 });
-                var lenExtension = extension.length ;
+
+
+                var lenExtension = extension.length ;  //已有扩展问获取长度
                 angular.forEach(extension,function(item){
-                    var lenItem = valItem.length ;
+                    var lenItem = 0 ;
                     angular.forEach(item.extensionQuestionTagList,function(tag){
                         if((!tag.exist) && (valItem.inArray(tag.tagName))){   //标签存在情况下
-                            lenItem-=1 ;
-                            console.log(tag.tagName)
+                            lenItem+=1 ;
                         }
                     }) ;
-                    if(lenItem == 0){    //重複
+                    if(lenItem == valItem.length){    //重複
                         return true ;
                     }else{
                         lenExtension-=1 ;
                     }
                 }) ;
-                console.log(lenExtension,valItem);
+
+                //var lenExtension = extension.length ;  //已有扩展问获取长度
+                //angular.forEach(extension,function(item){
+                //    var lenItem = 0 ;
+                //    angular.forEach(item.extensionQuestionTagList,function(tag){
+                //        if((!tag.exist) && (valItem.inArray(tag.tagName))){   //标签存在情况下
+                //            lenItem+=1 ;
+                //        }
+                //    }) ;
+                //    if(lenItem == valItem.length){    //重複
+                //        return true ;
+                //    }else{
+                //        lenExtension-=1 ;
+                //    }
+                //}) ;
+
+
                 if(lenExtension != extension.length){
                     console.log("use --- success") ;
                     return false
@@ -896,25 +910,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     return true
                 }
             }
-            //$scope.vm.checkExtensionByFrame
-           // $scope.vm.extensions
-           // return false ;
-
-            //if(!arr.length){
-            //    return true ;
-            //}else{
-            //    var len = arr.length;
-            //    angular.forEach(arr,function(val){
-            //        if(val.extensionQuestionTitle == item.extensionQuestionTitle && val.extensionQuestionType == item.extensionQuestionType){
-            //            len-=1 ;
-            //            console.log(val.extensionQuestionTitle == item.extensionQuestionTitle);
-            //            return false
-            //        }
-            //        if(len==0){
-            //            return true
-            //        }
-            //    })
-            //}
         }
 //        提交 检验参数
         function checkSave(){

@@ -313,18 +313,17 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             },function(data){
                 //console.log(data);
                 if(data.status==200){
-                    var exten = {}  ;
-                    exten.extensionQuestionTitle = title;
-                    exten.extensionQuestionType = weight ;
-                    var listArr = [];
-                    var listObj = {};
-                    listObj.wholeDecorateTagName="";
-                    listObj.wholeDecorateTagType="";
-                    listArr.push(listObj);
-                    exten.wholeDecorateTagList = listArr;
-                    exten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        //var tag = [] ;
+                        var exten = {}  ;
+                        exten.extensionQuestionTitle = title;
+                        exten.extensionQuestionType = weight ;
+                        var listArr = [];
+                        var listObj = {};
+                        listObj.wholeDecorateTagName="";
+                        listObj.wholeDecorateTagType="";
+                        listArr.push(listObj);
+                        exten.wholeDecorateTagList = listArr;
+                        exten.extensionQuestionTagList = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -332,13 +331,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             tagTem.tagName= item.tagName;
                             tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            //tag.push(tagTem)
                             exten.extensionQuestionTagList.push(tagTem) ;
                         });
+                        $scope.vm.extensionsByFrame.push(exten);
+                        console.log($scope.vm.extensionsByFrame);
+                        $scope.$apply();
                     });
-                    $scope.vm.extensionsByFrame.push(exten);
-                    //console.log($scope.vm.extensionsByFrame);
-                    $scope.$apply();
                 }
             }, function () {
                 //layer.msg("err or err")
@@ -712,21 +710,21 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
-                    }else{
+                    }else if(data.status == 200){
                         //console.log(data);
-                        $scope.vm.botClassfy = [] ;   //防止 多次打标,添加类目
-                        $scope.vm.knowledgeTitleTag = [] ;
-                        angular.forEach(data.data.classifyList,function(item){
-                            $scope.vm.knowledgeTitleTag.push(item.name);
+                        $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                        $scope.vm.knowledgeTitleTag = [];
+                        $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
+                        angular.forEach(data.data.classifyList, function (item) {
+                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
-                            obj.classificationId = item.id ;
+                            obj.classificationId = item.id;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
                             //$scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
-                        $scope.$apply()
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")
