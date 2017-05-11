@@ -5,6 +5,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$rootScope",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$rootScope) {
         $scope.vm = {
+//主页
             applicationId : $cookieStore.get("applicationId"),
             knowledgeId : "" ,
             userName :  $cookieStore.get("userName"),
@@ -194,9 +195,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             switch (type){
                 case 1:
                     if($scope.vm.tableRow==0){
-                        console.log("不可删除第一行")
+                        layer.msg("不可删除第一行")
                     }else if($scope.vm.tableRow==null){
-                        console.log("请先选择要删除的行")
+                        layer.msg("请先选择要删除的行")
                     }else{
                         $scope.vm.tableList.data.listTable.splice($scope.vm.tableRow,1);
                         $scope.vm.tableRow = null
@@ -204,9 +205,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     break;
                 case 2:
                     if($scope.vm.tableColumn==0){
-                        console.log("不可删除第一列")
+                        layer.msg("不可删除第一列")
                     }else if($scope.vm.tableRow==null){
-                        console.log("请先选择要删除的列")
+                        layer.msg("请先选择要删除的列")
                     }else{
                         angular.forEach($scope.vm.tableList.data.listTable,function(item,tableRow){
                             angular.forEach(item,function(val,index){
@@ -237,7 +238,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     backdrop: 'static',
                     preCloseCallback: function (e) {    //关闭回掉
                         if (e === 1) {
-
                             angular.forEach($scope.vm.tableList.data.listTable, function (item, index) {
                                 if (index == 0) {
                                     $scope.vm.tableList.data.listTable[index].push($scope.vm.factorName)
@@ -245,7 +245,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                     $scope.vm.tableList.data.listTable[index].push(null)
                                 }
                             });
-
                             var newType = {};
                             newType.elementName = $scope.vm.factorName;
                             newType.elementType = $scope.vm.tableType;
@@ -298,35 +297,37 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 var ask = [] ;
                 var items = [];
                 // 反问
-                angular.forEach(tabelData.listTableType, function (item,index){
+                angular.forEach(tabelData.listTableType, function (item,index) {
                     if(index>0){
                         var obj = {};
                         obj.name = item.elementName;
                         obj.value = item.elementAsk ;
                         ask.push(obj) ;
+                        //console.log(ask);
                     }
                 });
                 angular.forEach(tabelData.listTable,function(item,icon){
                     if(icon>0){
-                        var row = {};
-                        row.name = item[0];
+                        var row = {} ;
+                        row.name = item[0] ;
                         row.slots =[];
-                        angular.forEach(tabelData.listTableType, function (val,cur){
+                        angular.forEach(tabelData.listTableType, function (val,cur) {
                             if(cur>0){
-                                var slot = {};
+                                var slot = {} ;
                                 slot.name = val.elementName;
+                                //console.log(tabelData.listTable[icon][cur]);
                                 slot.value = tabelData.listTable[icon][cur];
-                                slot.type = val.elementType;
+                                slot.type = val.elementType ;
                                 slot.algorithm = val.technology;
-                                row.slots.push(slot);
+                                row.slots.push(slot)
                             }
                         });
-                        items.push(row);
+                        items.push(row)
                     }
                 });
                 params.asks = ask;
                 params.items = items;
-                return JSON.stringify(params);
+                return JSON.stringify(params)
             }
          }
         function setDialogNew(){
@@ -335,7 +336,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.gorithm = [];
             $scope.vm.elementAsk = null;
         }
-        // 通过类目id 获取框架
+// 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
@@ -344,6 +345,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 "index": 0,
                 "pageSize":32767
             },function(data){
+                //console.log(data);
                 if(data.status!=10005){
                     if(data.data.length){
                         $scope.vm.frames = $scope.vm.frames.concat(data.data) ;
@@ -381,6 +383,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         });
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
+            //console.log(id);
             httpRequestPost("/api/modeling/frame/listbyattribute",{
                 "frameTypeId": 10013,
                 "frameId": id,
@@ -415,7 +418,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     }
                 }
             },function(){
-                 console.log("获取扩展问失败") ;
+                 console.log("获取表格失败") ;
             });
         }
 
@@ -467,19 +470,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             obj.classificationId = id ;
                             obj.classificationType = 1;
                         }else{
-                            console.log("添加分类重复");
+                            layer.msg("添加分类重复");
                             return false
                         }
                     }else{
                         obj.className = data.categoryFullName.split("/");
-                        obj.classificationId = id;
+                        obj.classificationId = id ;
+                        //obj.classificationType = 1;
                     }
                     $scope.vm.knowledgeBotVal = obj.className.join("/");
                     $scope.vm.botFullPath=obj;
                     $scope.$apply();
                 }
             },function(){
-                console.log("添加扩展问失败")
+                //console.log("添加扩展问失败")
             });
         }
 
@@ -491,9 +495,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
             if(!$scope.vm.extensionTitle){
-                console.log("扩展问不能为空");
-            }else if(!checkExtension(obj,$scope.vm.extensions)){
-                console.log("扩展问重复");
+                layer.msg("扩展问不能为空")
+            }else if(!checkExtension(obj , $scope.vm.extensions)){
+                layer.msg("扩展问重复");
                 return false
             }else{
                 httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
@@ -502,7 +506,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
-                        console.log("扩展问重复") ;
+                        layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==200){
@@ -536,7 +540,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.$apply();
                     }
                 },function(){
-                    console.log("添加扩展问失败")
+                    layer.msg("添加扩展问失败")
                 });
             }
         }
@@ -707,7 +711,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.$apply()
                     }
                 },function(err){
-                    console.log("标题打标失败，请重新打标")
+                    layer.msg("标题打标失败，请重新打标")
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
@@ -739,7 +743,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-                obj.knowledgeCommonOn = $scope.vm.tail;   //弹出评价小尾巴
+                obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
 
             obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent=[];
@@ -763,7 +767,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         var url = $state.go('custServScenaOverview.manage');
                         window.open(url, '_blank');
                     } else if (data.status == 500) {
-                        console.log("保存失败")
+                        layer.msg("保存失败")
                     }
                 }, function (err) {
                     //console.log(err)
@@ -819,7 +823,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         // 检验标题是否符合
         function checkTitle(title,type){
             if(!title){
-                console.log("标题不能为空");
+                layer.msg("标题不能为空");
                 return false
             }else{
                 httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
@@ -828,15 +832,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     //console.log(data);
                     return true;
                 },function(err){
-                    console.log("打标失败，请重新打标");
+                    layer.msg("打标失败，请重新打标");
                     return false
                 });
             }
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
-            return true
-            //if(!arr.length){
+            return true ;
             //    return true ;
             //}else{
             //    angular.forEach(arr,function(val){
@@ -852,23 +855,23 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function checkSave(){
             var params = getParams();
             if(!params.knowledgeTitle){
-                console.log("知识标题不能为空，请填写");
+                layer.msg("知识标题不能为空，请填写");
                 return false;
             }else if(!params.classificationAndKnowledgeList.length){
-                console.log("知识类目不能为空，请选择分类");
+                layer.msg("知识类目不能为空，请选择分类");
                 return false;
             }else if(!params.knowledgeContents.length){
-                console.log("知识内容不能为空，请点击新增填写");
+                layer.msg("知识内容不能为空，请点击新增填写");
                 return false;
             }else if(!params.knowledgeTitleTag.length){
                 return true
-                //console.log("知识标题未打标");
+                //layer.msg("知识标题未打标");
                 //return false;
             }else if(!params.classificationAndKnowledgeList.length){
-                console.log("分类知识Bot不能为空");
+                layer.msg("分类知识Bot不能为空");
                 return false;
             }else if(!$scope.vm.tableList.data){
-                console.log("请上传表格知识");
+                layer.msg("请上传表格知识");
                 return false;
             }else{
                 return true

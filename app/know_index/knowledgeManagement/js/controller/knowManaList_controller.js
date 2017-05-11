@@ -224,7 +224,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         angular.forEach(data.data[0].elements,function(item,index){
                             if(index>0){
                                 obj.extensionQuestionType = 60;   //61
-                                obj.source = data.data[0].frameTitle;
+                                obj.extensionQuestiontitle = data.data[0].frameTitle;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
                             }
@@ -275,52 +275,45 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
-            console.log(oldWord);
-            var extensionQuestionListNew = [];
-            for(var i=0;i<extensionQuestionList.length;i++){
-                var obj = {} ;
-                obj.extensionQuestionTitle = extensionQuestionList[i];
-                obj.extensionQuestionType = $scope.vm.extensionWeight;
-                if(checkExtension(obj , $scope.vm.extensions)){
-                    extensionQuestionListNew.push(extensionQuestionList[i]);
-                }
-            }
-            httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
+            var title = oldWord.extensionQuestionTitle ;
+            var weight = oldWord.extensionQuestionType
+            //console.log(oldWord);
+            httpRequestPost("/api/listKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
-                "extendQuestionList" : extensionQuestionListNew
+                "extensionQuestionList" : extensionQuestionList,
+                "frameQuestionTagList" : frameQuestionTagList
             },function(data){
                 console.log(data);
-                if(data.status == 500){
-                    $scope.vm.extensionTitle = "" ;
-                    $scope.$apply();
-                }else if(data.status==200){
+                if(data.status==200){
+                    var exten = {}  ;
+                    exten.extensionQuestionTitle = title;
+                    exten.extensionQuestionType = weight ;
                     var listArr = [];
+                    var listObj = {};
+                    listObj.wholeDecorateTagName="";
+                    listObj.wholeDecorateTagType="";
+                    listArr.push(listObj);
+                    exten.wholeDecorateTagList = listArr;
+                    exten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        var i=0;
+                        //var tag = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
-                            var enten = {};
-                            enten.extensionQuestionTitle = extensionQuestionListNew[i++];
-                            enten.extensionQuestionType = $scope.vm.extensionWeight;
-                            var listObj = {};
-                            listObj.wholeDecorateTagName="";
-                            listObj.wholeDecorateTagType="";
-                            listArr.push(listObj);
-                            enten.wholeDecorateTagList = listArr;
-                            enten.extensionQuestionTagList = [];
                             var tagTem = {};
                             tagTem.exist = item.exist ;
                             tagTem.tagClass= item.tagClass;
                             tagTem.tagName= item.tagName;
-                            tagTem.tagTypeList= [];
+                            tagTem.tagTypeList= [] ;
                             tagTem.tagTypeList.push(item.tagType);
-                            enten.extensionQuestionTagList.push(tagTem);
-                            $scope.vm.extensions.push(enten);
+                            //tag.push(tagTem)
+                            exten.extensionQuestionTagList.push(tagTem) ;
                         });
                     });
+                    $scope.vm.extensionsByFrame.push(exten);
+                    console.log($scope.vm.extensionsByFrame);
                     $scope.$apply();
                 }
-            },function(){
-                layer.msg("err or err")
+            }, function () {
+                //layer.msg("err or err")
             });
         }
         function scanCotentByTitle(title){
@@ -348,50 +341,53 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
             if(!$scope.vm.extensionTitle){
-                layer.msg("扩展问不能为空");
+                layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
                 layer.msg("扩展问重复");
-                return false;
-            }else{
-                httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
+                return false
+            } else {
+                httpRequestPost("/api/listKnowledge/checkExtensionQuestion", {
                     "applicationId": $scope.vm.applicationId,
-                    "extendQuestionList" : question
-                },function(data){
+                    "extendQuestionList": question
+                }, function (data) {
                     console.log(data);
-                    if(data.status == 500){
-                        //layer.msg("扩展问重复") ;
-                        $scope.vm.extensionTitle = "" ;
+                    if (data.status == 500) {
+                        layer.msg("扩展问打标结果为空 请重新打标");
+                        $scope.vm.extensionTitle = "";
                         $scope.$apply();
-                    }else if(data.status==200){
-                        var enten = {}  ;
-                        enten.extensionQuestionTitle = title;
-                        enten.extensionQuestionType = weight ;
-                        var listArr = [];
-                        var listObj = {};
-                        listObj.wholeDecorateTagName="";
-                        listObj.wholeDecorateTagType="";
-                        listArr.push(listObj);
-                        enten.wholeDecorateTagList = listArr;
-                        enten.extensionQuestionTagList = [] ;
-                        angular.forEach(data.data,function(tagList){
-                            //var tag = [] ;
-                            angular.forEach(tagList.extensionQuestionTagList,function(item){
-                                var tagTem = {};
-                                tagTem.exist = item.exist ;
-                                tagTem.tagClass= item.tagClass;
-                                tagTem.tagName= item.tagName;
-                                tagTem.tagTypeList= [] ;
-                                tagTem.tagTypeList.push(item.tagType);
-                                //tag.push(tagTem)
-                                enten.extensionQuestionTagList.push(tagTem) ;
+                    } else if (data.status == 200) {
+                        if (!checkHeighExtension(data.data)) {
+                            //alert() ;
+                            var enten = {};
+                            enten.extensionQuestionTitle = title;
+                            enten.extensionQuestionType = weight;
+                            var listArr = [];
+                            var listObj = {};
+                            listObj.wholeDecorateTagName = "";
+                            listObj.wholeDecorateTagType = "";
+                            listArr.push(listObj);
+                            enten.wholeDecorateTagList = listArr;
+                            enten.extensionQuestionTagList = [];
+                            angular.forEach(data.data, function (tagList) {
+                                //var tag = [] ;
+                                angular.forEach(tagList.extensionQuestionTagList, function (item) {
+                                    var tagTem = {};
+                                    tagTem.exist = item.exist;
+                                    tagTem.tagClass = item.tagClass;
+                                    tagTem.tagName = item.tagName;
+                                    tagTem.tagTypeList = [];
+                                    tagTem.tagTypeList.push(item.tagType);
+                                    //tag.push(tagTem)
+                                    enten.extensionQuestionTagList.push(tagTem);
+                                });
                             });
-                        });
-                        $scope.vm.extensions.push(enten);
-                        console.log($scope.vm.extensions);
-                        $scope.vm.extensionTitle = "" ;
-                        $scope.$apply();
+                            $scope.vm.extensions.push(enten);
+                            console.log($scope.vm.extensions);
+                            $scope.vm.extensionTitle = "";
+                            $scope.$apply();
+                        }
                     }
-                },function(){
+                }, function () {
                     layer.msg("添加扩展问失败")
                 });
             }
@@ -696,6 +692,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //检验扩展问是否重复
         function checkExtension(item,arr){
+            return true
             if(arr==undefined){
                 return true;
             }
@@ -707,8 +704,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         console.log(val.extensionQuestionTitle == item.extensionQuestionTitle);
                         return false
                     }
-                });
-                return true;
+                })
             }
         }
 //        提交 检验参数

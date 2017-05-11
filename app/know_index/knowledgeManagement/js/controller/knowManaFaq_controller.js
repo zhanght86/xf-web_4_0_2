@@ -79,7 +79,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             removeAppointRelative : removeAppointRelative,
             replaceType : 0,
 
-            enterEvent : enterEvent
+            enterEvent : enterEvent ,
+            //selectEvent : selectEvent
         };
 
         //獲取渠道
@@ -101,7 +102,27 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }, function(error) {
                 layer.msg("获取渠道失败，请刷新页面")
             });
-
+        // 相关问题 键盘选择
+        //function selectEvent(e){
+        //        var  srcObj = e.srcElement ? e.srcElement : e.target;
+        //        var keycode = window.event?e.keyCode:e.which;
+        //    switch(keycode){
+        //        case 13 :
+        //            if(arr.indexOf(item)==-1){
+        //                arr.push(item)
+        //            }
+        //            $scope.vm.appointRelative = null;  //清楚title
+        //            $scope.vm.appointRelativeList = [];  //清除 列表
+        //            break ;
+        //        case 40 :
+        //            if(arr.indexOf(item)==-1){
+        //                arr.push(item)
+        //            }
+        //            $scope.vm.appointRelative = null;  //清楚title
+        //            $scope.vm.appointRelativeList = [];  //清除 列表
+        //            break ;
+        //    }
+        //}
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         /*
          params =  {
@@ -131,13 +152,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
          params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
          */
 
-
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
         if($stateParams.data!=null && $stateParams.data.knowledgeBase){
-
             var data = $stateParams.data ;
             console.log(data);
             //标题
@@ -149,7 +168,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             $scope.vm.botClassfy = data.knowledgeBase.classificationAndKnowledgeList ;
 
             //knowledgeId
-            $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId
+            $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
             //内容
