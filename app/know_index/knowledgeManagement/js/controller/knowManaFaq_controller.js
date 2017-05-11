@@ -604,7 +604,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "knowledgeType": 100  //知识类型
             };
             params.knowledgeContents =  $scope.vm.scanContent;
-            params.extensionQuestions =  $scope.vm.extensions ;
+            params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy;
             return params
         }
