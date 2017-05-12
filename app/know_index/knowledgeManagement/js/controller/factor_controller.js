@@ -92,7 +92,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableList: "",
             listTableType: "",
             data : "",
-            column:""
+            column:"" ,
+
+            limitSave : false //限制多次打标
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -784,22 +786,25 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function save() {
-            if (!checkSave()) {
-                return false
-            } else {
-                //console.log(getParams());
-                $scope.vm.data = getParams();
-                httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
-                    //console.log(data);
-                    if (data.status == 200) {
-                        var url = $state.go('custServScenaOverview.manage');
-                        //window.open(url, '_blank');
-                    } else if (data.status == 500) {
-                        layer.msg("保存失败")
-                    }
-                }, function (err) {
-                    //console.log(err)
-                });
+            if(!$scope.vm.limitSave){
+                $scope.vm.limitSave = true ;
+                if (!checkSave()) {
+                    return false
+                } else {
+                    //console.log(getParams());
+                    $scope.vm.data = getParams();
+                    httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
+                        //console.log(data);
+                        if (data.status == 200) {
+                            var url = $state.go('custServScenaOverview.manage');
+                            //window.open(url, '_blank');
+                        } else if (data.status == 500) {
+                            layer.msg("保存失败")
+                        }
+                    }, function (err) {
+                        //console.log(err)
+                    });
+                }
             }
         }
         function scan(){

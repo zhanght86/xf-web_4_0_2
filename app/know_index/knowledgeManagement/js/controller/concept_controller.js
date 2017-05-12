@@ -84,6 +84,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             dialogExtension : [],
             knowledgeId : "",
 
+            limitSave : false ,
+
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -714,8 +716,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         //  主页保存 获取参数
         function getParams(){
-            var params = {};
-            params =  {
+           var params =  {
                 "applicationId": $scope.vm.applicationId,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
@@ -731,33 +732,36 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         function save() {
-            if (!checkSave()) {
-                return false
-            } else {
-                var params = getParams();
-                var api;
-                if ($scope.vm.knowledgeId) {
-                    //编辑
-                    api = "/api/conceptKnowledge/editKnowledge";
-                    params.knowledgeId = $scope.vm.knowledgeId;
+            if(!$scope.vm.limitSave) {
+                $scope.vm.limitSave = true;
+                if (!checkSave()) {
+                    return false
                 } else {
-                    //新增
-                    api = "/api/conceptKnowledge/addConceptKnowledge"
-                }
-                httpRequestPost(api, params, function (data) {
-                    console.log(getParams());
-                    if (data.status == 200) {
-                        if ($scope.vm.docmentation) {
-                            $scope.vm.knowledgeClassifyCall();
-                        }
-                        else
-                            $state.go('custServScenaOverview.manage');
-                    } else if (data.status == 500) {
-                        layer.msg("保存失败")
+                    var params = getParams();   // 保存參數
+                    var api;                    // 返回編輯的 url
+                    if ($scope.vm.knowledgeId) {
+                        //编辑
+                        api = "/api/conceptKnowledge/editKnowledge";
+                        params.knowledgeId = $scope.vm.knowledgeId;
+                    } else {
+                        //新增
+                        api = "/api/conceptKnowledge/addConceptKnowledge"
                     }
-                },function(err){
-                    console.log(err)
-                });
+                    httpRequestPost(api, params, function (data) {
+                        console.log(getParams());
+                        if (data.status == 200) {
+                            if ($scope.vm.docmentation) {
+                                $scope.vm.knowledgeClassifyCall();
+                            }
+                            else
+                                $state.go('custServScenaOverview.manage');
+                        } else if (data.status == 500) {
+                            layer.msg("保存失败")
+                        }
+                    }, function (err) {
+                        console.log(err)
+                    });
+                }
             }
         }
         function scan(){
@@ -984,7 +988,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                                 if (all.channelId == v) {
                                                     channelTip = all.channelName
                                                 }
-                                                ;
+
                                             });
                                             layer.msg("重复添加" + "渠道 " + channelTip + " 维度 " + $scope.vm.dimensionArr.name[indexDimension]);
                                             $scope.vm.dimensionArr.id.remove(key);
