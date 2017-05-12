@@ -40,8 +40,8 @@ angular.module('homePage').controller('homePageNavController', [
             window.open('http://'+window.location.host+':7003/index.html');
         }
         $scope.checkShowCrumbs=function(){
-            if(!$scope.url.toString().indexOf("/homePage/define") > 0 || !$scope.url.toString().indexOf("/admin/manage") > 0){
-                return false;
+            if(!$scope.url.toString().indexOf("/homePage/define") > 0 || !$scope.url.toString().indexOf("/admin/manage") > 0 || !$scope.url.toString().indexOf("/admin/userManage") > 0){
+                return false;admin.userManage
             }
             else{
                 return true;
