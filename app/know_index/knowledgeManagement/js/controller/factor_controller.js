@@ -502,6 +502,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var obj = {} ;
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
+            if(!chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
+                layer.msg("扩展问和标题重复请重新输入扩展问")
+                return;
+            }
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
@@ -692,24 +696,56 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
         }
+
+        /**
+         * 校验标题和扩展问重复
+         */
+        function  chackTitleAndextEnsionQuestion(title,ensionQuestionTitle){
+            console.log(title);
+            console.log(ensionQuestionTitle);
+            if(title!=""){
+                if(title==ensionQuestionTitle){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            if(ensionQuestionTitle!=""){
+                if(ensionQuestionTitle==title){
+                    return false;
+                }else{
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
         //根據 標題 生成 bot
         function getBotByTitle(){
+            console.log(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle));
+            if(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
+                layer.msg("标题和扩展问重复请重新输入标题")
+                return;
+            }
             if($scope.vm.title){
                 httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId": $scope.vm.applicationId,
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
-                    }else if(data.status == 200){
-                        //console.log(data);
+                    }else if(data.status == 10002){
+                        $scope.vm.titleTip = data.info;
+                        $scope.$apply()
+                    } else if(data.status == 200){
+                        console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
