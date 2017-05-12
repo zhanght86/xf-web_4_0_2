@@ -10,8 +10,8 @@
  * 控制器
  */
 angular.module('myApplicationSettingModule').controller('robotSettingController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog",'$http', "$cookieStore",
-    function ($scope,localStorageService, $state,ngDialog,$http,$cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog",'$http', "$cookieStore","$rootScope",
+    function ($scope,localStorageService, $state,ngDialog,$http,$cookieStore,$rootScope) {
         $scope.robot = {
             classicHead:['touxiang1.png','touxiang2.png','touxiang3.png','touxiang4.png', 'touxiang5.png','touxiang6.png','touxiang7.png','touxiang8.png'], //经典头像列表
             applicationId: $cookieStore.get("applicationId"),
