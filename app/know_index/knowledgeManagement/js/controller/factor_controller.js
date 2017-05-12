@@ -616,7 +616,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"></i>'+
                                     '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -625,7 +625,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
+                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
                                     '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -649,7 +649,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 }
             }
         });
-
+        //自动转换图标类型
+        function styleSwitch(type,leaf,attrType){
+            var styleHidden = "display: inline-block;";
+            if(leaf==0){
+                styleHidden="display:none;";
+            }
+            if(attrType=="node"){
+                return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
+            }
+            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+            switch (type){
+                case 161:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                case 160:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                case 162:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+            }
+            return style;
+        }
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
         function replace(id){
                 var replace = ngDialog.openConfirm({
@@ -704,12 +723,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     }else if(data.status == 200){
-                        //console.log(data);
+                        console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
+                            //$scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
