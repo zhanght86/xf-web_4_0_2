@@ -29,20 +29,20 @@
                         <div class="row cl mb-10" ng-repeat="item in vm.extendedQuestionArr">
                             <label class="form-label col-xs-4 col-sm-2 text-r mileVs">扩展问题：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="L" style="width:279px;border:1px solid #eee;height:31px;overflow-x: auto;">
+                                <div class="L" style="width:312px;overflow-y: auto;">
                                    <!--{{typeOf item.chatQuestionTag}}-->
                                     <!--<span class="kz_span" ng-if="item.chatQuestionTag" ng-repeat="value in item.chatQuestionTag">{{value}}</span>-->
-                                    <span class="kz_span" ng-if="item.tagList" ng-repeat="val in item.tagList">{{val}}</span>
+                                    <span style="margin: 0 5px 5px 0;display: inline-block;background: #e1e1e1;padding: 4px" ng-if="item.tagList" ng-repeat="val in item.tagList">{{val}}</span>
                                 </div>
                                 <!--<input type="text" ng-model="item" readonly class="L input-text extended_query_txt"-->
                                        <!--style="width:279px;" >-->
-                                <span class="sel bd L mr-10" style="margin-left:-1px;text-indent: 26px">
+                                <span class="tag_s L mr-10">
                                     {{item.chatQuestionType | faqWeight}}
                                 </span>
-                                <a href="javascript:;" class="create_a L mr-10 mt-5" ng-click="vm.remove(item,vm.extendedQuestionArr)">
+                                <a href="javascript:;" class="create_a L mr-10 " ng-click="vm.remove(item,vm.extendedQuestionArr)">
                                     <img src="../../images/images/delete_img.png">
                                 </a>
-                                <span class="L mt-5"><b>来源于</b> <span>{{item.chatQuestionContent}}</span></span>
+                                <span class="L "><b>来源于</b> <span>{{item.chatQuestionContent}}</span></span>
 
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 <p class="L word_div bd mr-10" style="width:500px;height: auto;padding: 2px;text-indent: 4px;">{{item.chatKnowledgeContent}}</p>
                                 <div class="L word_div_r">
                                     <a href="javascript:;" class="delete_a L mb-20 ml-10" style="margin-top: 5px;" ng-click="vm.remove(item,vm.contentArr)"></a>
-                                    <a href="javascript:;" class="edit_a L mt-5 ml-10" ng-click="vm.knowledgeEdit()"></a>
+                                    <a href="javascript:;" class="edit_a L mt-5 ml-10" ng-click="vm.addContentDialog(item,$index)"></a>
                                 </div>
                             </div>
                         </div>
@@ -80,4 +80,13 @@
 </div>
 <style>
     .kz_span{border:1px solid #eee;height:25px;display:inline-block;margin-right:10px;padding:0 10px;}
+    .tag_s {
+        display: inline-block;
+        color: #46799b;
+        background: #e0eaf1;
+        border: 1px solid #eee;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 10px;
+        margin-right: 10px;
 </style>
