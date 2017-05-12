@@ -24,23 +24,8 @@ angular.module('materialManagement').controller('faqChatController', [
             scan : scan,
             scanData : $stateParams.scanData,
             type : $stateParams.scanData?$stateParams.scanData.type:1,
-            knowledgeEdit : knowledgeEdit,
         };
-        function knowledgeEdit(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/materialManagement/faqChatDialogEdit.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
 
-                    }
-                }
-            });
-        }
         //擴展問
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
@@ -69,7 +54,10 @@ angular.module('materialManagement').controller('faqChatController', [
 
             }
         }
-        function addContentDialog(){
+        function addContentDialog(item,index){
+            if(item){
+                $scope.vm.contentVal = item.chatKnowledgeContent
+            }
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/materialManagement/faq/addContentDialog.html",
                 scope: $scope,
@@ -79,13 +67,20 @@ angular.module('materialManagement').controller('faqChatController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        addContent()
+                        if(item){
+                            var val = angular.copy( $scope.vm.contentVal ) ;
+                            $scope.vm.contentArr[index].chatKnowledgeContent = val ;
+                            $scope.vm.contentVal = "" ;
+                        }else{
+                            addContent()  ;
+                        }
+                    }else{
+                        $scope.vm.contentVal = "" ;
                     }
                 }
             });
         }
         function addContent(){
-            console.log();
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
                 layer.msg("扩展不能为空");
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){

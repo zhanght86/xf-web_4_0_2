@@ -57,13 +57,15 @@
                         </div>
                     </div>
                     <!--bot  标题 点击生成  -->
+                    <!--{{vm.botClassfy}}-->
                     <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
                                 <div class="ipt-txt-box L mr-10" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;">
-                                    <div class="ipt-txt">
-                                        <span>{{item.className.join("/")}}</span>
+                                    <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                        <!--<span>{{item.className.join("/")}}</span>-->
+                                        <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                                     </div>
                                 </div>
                                 <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
@@ -76,8 +78,9 @@
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
                                 <div class="ipt-txt-box L" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;margin-right:10px;">
-                                    <div class="ipt-txt">
-                                        <span>{{item.className.join("/")}}</span>
+                                    <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                        <!--<span>{{item.className.join("/")}}</span>-->
+                                        <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                                     </div>
                                 </div>
                                 <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
