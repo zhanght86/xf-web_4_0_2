@@ -66,7 +66,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     console.log(obj)
                 });
             }else{
-                $scope.vm.selectAllCheckDialog = false
+                $scope.vm.selectAllCheckDialog = false ;
                 $scope.vm.seleceAddAll = [];
             }
             console.log( $scope.vm.seleceAddAll)
