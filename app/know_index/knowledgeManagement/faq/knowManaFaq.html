@@ -69,8 +69,8 @@
                     <div class="lable"> BOT路径：</div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
-                            <div class="ipt-txt">
-                                <span>{{item.className.join("/")}}</span>
+                            <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                             </div>
                         </div>
                         <a href="javascript:;" class="L mr-10 mt-5"  ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
