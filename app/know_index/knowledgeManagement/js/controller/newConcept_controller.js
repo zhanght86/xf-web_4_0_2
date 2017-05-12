@@ -730,13 +730,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
-                            //$scope.vm.frameCategoryId = item.id;
+                            $scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
                     }

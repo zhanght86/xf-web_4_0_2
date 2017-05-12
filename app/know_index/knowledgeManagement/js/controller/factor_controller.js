@@ -725,11 +725,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         //根據 標題 生成 bot
         function getBotByTitle(){
-            console.log(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle));
+           /* console.log(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle));
             if(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
                 layer.msg("标题和扩展问重复请重新输入标题")
                 return;
-            }
+            }*/
             if($scope.vm.title){
                 httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,

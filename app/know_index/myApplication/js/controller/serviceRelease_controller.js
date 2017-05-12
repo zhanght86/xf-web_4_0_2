@@ -110,7 +110,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                 angular.forEach($scope.vm.dimensionAll,function(dimension){
                                     if(dimensionId==dimension.dimensionId){
                                         dimensionSelected.push(dimension);
-                                        //$scope.vm.dimensionAll.remove(dimension);
+                                        $scope.vm.dimensionAll.remove(dimension);
                                     }
                                 });
                             });
@@ -150,7 +150,6 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             }
             return 1;
         }
-
         //添加并发布服务
         function addAndPublishService(){
             listNodeData(); //获取可用节点数据
