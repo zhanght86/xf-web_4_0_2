@@ -58,15 +58,16 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 $scope.vm.selectAllCheckDialog = true;
                 $scope.vm.seleceAddAll = [];
                 angular.forEach($scope.vm.listKnoData,function(item,index){
+                    //console.log(item)
                     var obj = {};
-                    obj.knowledgeId = item.knowledgeId;
-                    obj.knowledgeTitle = item.knowledgeTitle;
+                    obj.chatKnowledgeId = item.knowledgeId;
+                    obj.chatKnowledgeTopic = item.knowledgeTitle;
                     obj.index = index;
                     $scope.vm.seleceAddAll.push(obj);
                     console.log(obj)
                 });
             }else{
-                $scope.vm.selectAllCheckDialog = false
+                $scope.vm.selectAllCheckDialog = false ;
                 $scope.vm.seleceAddAll = [];
             }
             console.log( $scope.vm.seleceAddAll)
@@ -82,8 +83,9 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             var prop = self.prop("checked");
             console.log(prop);
             var obj = {};
-            obj.knowledgeId = id;
-            obj.knowledgeTitle = name;
+            console.log(id , name) ;
+            obj.chatKnowledgeId = id;
+            obj.chatKnowledgeTopic = name;
             obj.index = index;
             if(!prop){
                     angular.forEach($scope.vm.seleceAddAll,function(item,index){
@@ -161,21 +163,27 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //从聊天知识库查询知识
         function findKnowledge(index){
-            httpRequestPost("/api/knowledgeManage/overView/findChatKnowledgeByApplicationId",{
+            httpRequestPost("/api/knowledgeManage/overView/findKnowledgeByApplicationId",{
                 applicationId:$scope.vm.applicationId,
-                title : $scope.vm.knowledge,
+                knowledgeTitle : $scope.vm.knowledge,
                 pageSize : $scope.vm.pageSize,
                 index : (index - 1)*$scope.vm.pageSize,
             },function(data){
-                $scope.vm.listKnoData = data.data.objs;
-                $scope.vm.listKnoDataTotal = data.data.total;
-                $scope.vm.paginationConf1 = {
-                    currentPage: index,//当前页
-                    totalItems:data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply()
+                    if( data.data.total == 0){
+                        layer.msg("查询记录为空") ;
+                        vm.knowledge = "";
+                    }
+                        console.log(index ,data) ;
+                        $scope.vm.listKnoData = data.data.objs;
+                        $scope.vm.listKnoDataTotal = data.data.total;
+                        $scope.vm.paginationConf1 = {
+                            currentPage: index,//当前页
+                            totalItems:data.data.total, //总条数
+                            pageSize: $scope.vm.pageSize,//第页条目数
+                            pagesLength: 8,//分页框数量
+                        };
+                        $scope.$apply()
+
             },function(){
                 layer.msg("请求失败")
             })
@@ -230,7 +238,10 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         $scope.vm.listData = "";
                         $scope.vm.listDataTotal = 0;
                         $scope.$apply();
-                        layer.msg("没有查询到记录!")
+                        layer.msg("没有查询到记录!")  ;
+                        $scope.vm.listData = [];
+                        $scope.vm.listDataTotal = 0;
+                         return
                     }
                     $scope.vm.listData = data.data.hotQuestionList;
                     $scope.vm.listDataTotal = data.data.total;
@@ -301,6 +312,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             userId :  $scope.vm.userId,
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
+                            console.log( $scope.vm.seleceAddAll)
                             console.log(data);
                             //$state.reload();
                             getData(1);

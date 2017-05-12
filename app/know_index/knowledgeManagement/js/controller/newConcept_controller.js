@@ -87,7 +87,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             getFactorByTitle : []  ,     // 要素标题产生选项
             selelectTitle : selelectTitle ,
 
-            extensionByContentTitle : [] ,   // 内容生成扩展问
+            extensionByContentTitle : [] ,   // 内容生成扩展问 ,
+            limitSave : false //限制多次打标
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -735,7 +736,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 $scope.vm.titleTip = "知识标题不能为空"
             }
         }
-
         //  主页保存 获取参数
         function getParams(){
             var params = {};
@@ -755,35 +755,39 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
 
         function save(){
-            if(!checkSave()){
-                return false
-            }else{
-                var params = getParams() ;
-                var api ;
-                if($scope.vm.knowledgeId){
-                    //编辑
-                    api = "/api/marketingKnowledge/editKnowledge" ;
-                    params.knowledgeId = $scope.vm.knowledgeId ;
+            if(!$scope.vm.limitSave){
+                $scope.vm.limitSave = true ;
+                if(!checkSave()){
+                    return false
                 }else{
-                    //新增
-                    api = "/api/marketingKnowledge/addMarketingKnowledge"
-                }
-                httpRequestPost(api,params,function(data){
-                    //console.log(params);
-                    if (data.status == 200) {
-                        if ($scope.vm.docmentation) {
-                            $scope.vm.knowledgeClassifyCall();
-                        }
-                        else{
-                            $state.go('markServScenaOverview.manage');
-                        }
-                    } else if (data.status == 500) {
-                        layer.msg("保存失败")
+                    var params = getParams() ;
+                    var api ;
+                    if($scope.vm.knowledgeId){
+                        //编辑
+                        api = "/api/marketingKnowledge/editKnowledge" ;
+                        params.knowledgeId = $scope.vm.knowledgeId ;
+                    }else{
+                        //新增
+                        api = "/api/marketingKnowledge/addMarketingKnowledge"
                     }
-                },function(err){
-                    //console.log(err)
-                });
+                    httpRequestPost(api,params,function(data){
+                        //console.log(params);
+                        if (data.status == 200) {
+                            if ($scope.vm.docmentation) {
+                                $scope.vm.knowledgeClassifyCall();
+                            }
+                            else{
+                                $state.go('markServScenaOverview.manage');
+                            }
+                        } else if (data.status == 500) {
+                            layer.msg("保存失败")
+                        }
+                    },function(err){
+                        //console.log(err)
+                    });
+                }
             }
+
         }
         function scan(){
             if(!checkSave()){
