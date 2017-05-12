@@ -48,7 +48,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 }, function(error) {
                 });
             //修改
-            console.log(viewData.knowledgeType);
+            //console.log(viewData.knowledgeType);
             var editUrl,api;
             switch(viewData.knowledgeType){
                 case 100 :
@@ -56,7 +56,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     api = "/api/faqKnowledge/getKnowledge";
                     break;
                 case 101 :
-                    editUrl = "knowledgeManagement.singleAddConcept";
+                    editUrl = "knowledgeManagement.singleAddConcept" ;
                     api = "/api/conceptKnowledge/getKnowledge";
                     break;
                 case 102 :

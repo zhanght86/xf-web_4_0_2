@@ -102,7 +102,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
 
-                }   
+                }
             }, function(error) {
                 layer.msg("获取维度失败，请刷新页面")
             });
@@ -163,7 +163,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             });
                         }
                     },100) ;
-
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
