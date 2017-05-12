@@ -157,12 +157,21 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
 
         // 触发要素  知识标题
-        $scope.$watch("vm.factorTitle",function(val){
-            if(val != "" && $scope.vm.factor==0 && val != $scope.vm.getFactorByTitle[0] ){
-                 getDetailByTitle(val)
+        $scope.$watch("vm.factor",function(val){
+            if(val == 0){
+                $scope.$watch("vm.factorTitle",function(){
+                    if(val != "" && $scope.vm.factor==0 && val != $scope.vm.getFactorByTitle[0] ){
+                        $timeout(getDetailByTitle(val),300)
+                    }
+                })
             }
         });
-
+        //// 触发要素  知识标题
+        //$scope.$watch("vm.factorTitle",function(val){
+        //    if(val != "" && $scope.vm.factor==0 && val != $scope.vm.getFactorByTitle[0] ){
+        //         getDetailByTitle(val)
+        //    }
+        //});
         function selelectTitle(title){
             $scope.vm.factorTitle = title ;
             $scope.vm.getFactorByTitle = [] ;
@@ -423,6 +432,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 },function(data){
                     //console.log(data);
                     if(data.status == 500){
+                        console.log(question)
                         layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
@@ -977,7 +987,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title);
+                $timeout(getAppointRelative(title),300)
             }
         });
 

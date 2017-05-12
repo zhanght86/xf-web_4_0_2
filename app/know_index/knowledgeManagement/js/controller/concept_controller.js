@@ -1020,7 +1020,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title)
+                $timeout(getAppointRelative(title),300)
             }
         });
 

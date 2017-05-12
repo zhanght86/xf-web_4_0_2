@@ -363,7 +363,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 console.log("err or err")
             });
         }
-        $scope.$watch("vm.frameCategoryId",function(val,old){
+        $scope.$("vm.frameCategoryId",function(val,old){
             if(val&&val!=old){
                 getFrame( val )
             }
@@ -371,7 +371,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         //replace()
         //  根據框架添加擴展問  --》 替換原來的條件
-        $scope.$watch("vm.frameId",function(val,old){
+        $scope.$("vm.frameId",function(val,old){
             if(val&&val!=old){
                 if($scope.vm.extensionsByFrame.length){
                     //  替換條件
@@ -383,7 +383,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }
         });
         //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
+        $scope.$("vm.isTimeTable",function(val){
             if(val==true){
                 $scope.vm.timeFlag="禁用"
             }else{
@@ -946,7 +946,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title)
+                $timeout(getAppointRelative(title),300)
             }
         });
 

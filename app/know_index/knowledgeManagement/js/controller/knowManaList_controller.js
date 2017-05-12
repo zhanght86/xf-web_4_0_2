@@ -793,7 +793,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title)
+                $timeout(getAppointRelative(title),300)
             }
         });
 
