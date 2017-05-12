@@ -19,6 +19,7 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
             isSlide2 : isSlide2,
             sceneId : $cookieStore.get('sceneId'),
             applicationId: $cookieStore.get("applicationId"),
+            applicationName : $cookieStore.get("applicationName"),
 
             robotHead : "",//头像
             imgUrl : "", //文件服务器地址
