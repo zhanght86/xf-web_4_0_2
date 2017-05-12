@@ -449,13 +449,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
-            //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            $scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
-            //}
         });
         //点击bot分类的 加号
         function botSelectAdd(){
