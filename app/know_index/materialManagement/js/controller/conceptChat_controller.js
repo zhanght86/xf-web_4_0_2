@@ -23,8 +23,24 @@ angular.module('materialManagement').controller('conceptChatController', [
             save : save,
             scan : scan,
             scanData : $stateParams.scanData,
-            type : $stateParams.scanData?$stateParams.scanData.type:1
+            type : $stateParams.scanData?$stateParams.scanData.type:1,
+            knowledgeEdit : knowledgeEdit,
         };
+        function knowledgeEdit(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/materialManagement/conceptChatDialogEdit.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+
+                    }
+                }
+            });
+        }
         //擴展問
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
