@@ -676,7 +676,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;

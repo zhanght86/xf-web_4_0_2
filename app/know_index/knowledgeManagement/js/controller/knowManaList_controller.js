@@ -452,7 +452,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            //$scope.vm.frameCategoryId = id;
+            $scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
             //}
@@ -574,21 +574,18 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.vm.titleTip = data.info;
                         $scope.$apply();
                     }else if(data.status == 200){
-                        //console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
-                            //$scope.vm.frameCategoryId = item.id;
-                            $scope.$apply()
+                            $scope.vm.frameCategoryId = item.id;
+                            $scope.$apply();
                         });
-                        $scope.$apply()
                     }
                 },function(err){
                     layer.msg("标题打标失败，请重新打标")
