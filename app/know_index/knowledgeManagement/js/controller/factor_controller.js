@@ -704,12 +704,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     }else if(data.status == 200){
-                        //console.log(data);
+                        console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
+                            //$scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
