@@ -23,8 +23,9 @@ angular.module('materialManagement').controller('conceptChatController', [
             save : save,
             scan : scan,
             scanData : $stateParams.scanData,
-            type : $stateParams.scanData?$stateParams.scanData.type:1
+            type : $stateParams.scanData?$stateParams.scanData.type:1,
         };
+
         //擴展問
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
@@ -94,7 +95,10 @@ angular.module('materialManagement').controller('conceptChatController', [
                 })
             }
         }
-        function addContentDialog(){
+        function addContentDialog(item,index){
+            if(item){
+                $scope.vm.contentVal = item.chatKnowledgeContent
+            }
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/materialManagement/faq/addContentDialog.html",
                 scope: $scope,
@@ -104,7 +108,15 @@ angular.module('materialManagement').controller('conceptChatController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        addContent()
+                        if(item){
+                            var val = angular.copy( $scope.vm.contentVal ) ;
+                            $scope.vm.contentArr[index].chatKnowledgeContent = val ;
+                            $scope.vm.contentVal = "" ;
+                        }else{
+                            addContent()  ;
+                        }
+                    }else{
+                        $scope.vm.contentVal = "" ;
                     }
                 }
             });
