@@ -3,7 +3,8 @@
     <div class="content_wrap page-container" style="padding:0;">
         <div class="wrap mb30">
             <div class="content_box mb25 mt10">
-                <h3 class="f22 pl-10 mb15">列表型知识新增</h3>
+                <h3 class="f22 pl-10 mb15" ng-if="!vm.knowledgeId">列表型知识新增</h3>
+                <h3 class="f22 pl-10 mb15" ng-if="vm.knowledgeId">列表型知识编辑</h3>
                 <div class=" p10 ">
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
@@ -162,7 +163,7 @@
                                 <span class="channel_s">渠道：</span>
                                 <div>
                                     <label class="mr-10" ng-repeat="channel in vm.channels">
-                                        <input style="vertical-align: middle; margin:0px 0 0px 0;" type="checkbox" ng-click="vm.selectChannel(channel.channelId)">
+                                        <input style="vertical-align: middle; margin:0px 0 0px 0;" type="checkbox" ng-checked="vm.channel.inArray(channel.channelId)" ng-click="vm.selectChannel(channel.channelId)">
                                         {{channel.channelName}}
                                     </label>
                                 </div>

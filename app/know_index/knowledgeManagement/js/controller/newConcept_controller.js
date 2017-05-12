@@ -404,12 +404,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             });
         }
         //手动添加扩展问
-        function getExtension(title){
+        function getExtension(title,weight){
             var question = [];
             question.push(title);
             var obj = {} ;
             obj.extensionQuestionTitle = title;
-            obj.extensionQuestionType = "60";
+            obj.extensionQuestionType = weight;
             if(!title){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
@@ -428,7 +428,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     }else if(data.status==200){
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
-                        enten.extensionQuestionType = "60" ;
+                        enten.extensionQuestionType = weight ;
                         var listArr = [];
                         var listObj = {};
                         listObj.wholeDecorateTagName="";
@@ -620,7 +620,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
         function knowledgeAdd(data,index){
             if(!$scope.vm.title){
-                layer.msg("请先输入知识标题") ;
+                layer.msg("请先输入营销知识标题") ;
                 return false ;
             }else {
                 var dia = angular.element(".ngdialog ");

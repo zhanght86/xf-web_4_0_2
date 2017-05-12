@@ -1,19 +1,8 @@
 <div class="main warp">
-    <!--<div class="crumbs-nav bgwhite mt20">-->
-        <!--<span class="cn-lable">你曾经路过此地：</span>-->
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">首页</a><i class="close">x</i></span>-->
-        <!--<span class="cn-value"><a class="cn-a" href="javascript:;">我的应用</a><i class="close">x</i></span>-->
-        <!--&lt;!&ndash;<span class="cn-value"><a class="cn-a" href="javascript:;">评论列表</a><i class="close">x</i></span>-->
-        <!--<span class="cn-value active"><a class="cn-a" href="javascript:;">机器人设置</a><i class="close">x</i></span>&ndash;&gt;-->
-    <!--</div>-->
-    <!--<div class="tac libSearch">-->
-        <!--<div class="search-box">-->
-            <!--<input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;">-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span>营销知识新增</span>
+            <span ng-if="!vm.knowledgeId">营销知识新增</span>
+            <span ng-if="vm.knowledgeId">营销知识编辑</span>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
@@ -122,7 +111,7 @@
                             </select>
                             <input  onchange=""  type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">
                             <!--<input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle,60)"><img src="../../../images/images/add_img.png" alt=""></a>
                             <!--<a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getDetailByTitle(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>-->
                             <ul class="listItem" ng-if="vm.getFactorByTitle.length" style="position: absolute;
                             left: 100px;z-index: 2;height: 200px;overflow: auto ;box-sizing:border-box;top: 40px;">
@@ -179,7 +168,7 @@
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent track by $index">
                     <div class="item-line">
-                        <div class="lable" style="color: #0000cc">
+                        <div class="lable" style="color: #0000cc;padding-right:10px;box-sizing:border-box;">
                             内容{{index+1|  numberToWord}}:
                         </div>
                         <div class="value">
@@ -195,13 +184,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item-line" id="item-line">
+                    <div class="item-line item-lineId">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
                             <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
-                    <div class="item-line" id="item-line">
+                    <div class="item-line item-lineId">
                         <div class="left"></div>
                         <div class="optionDiv">维度:
                             <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>
@@ -211,9 +200,9 @@
                     <div class="item-line" ng-repeat="val in item.extensionByContentByTitle track by $index" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
-                                <input readonly class="ipt-txt" type="text"  ng-model="val" name="title" />
+                                <input class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
-                                <a href="javascript:;"  title="自动匹配BOT" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
+                                <a href="javascript:;"  title="点击生成扩展问" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>
                         </div>
                     </div>
