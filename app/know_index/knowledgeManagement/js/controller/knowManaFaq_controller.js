@@ -287,7 +287,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
-                console.log(data) ;
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
                     var obj = {};
@@ -346,13 +345,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //    "categoryPid": "root"
-        //}
+
         getBotRoot();
-        //    getDimensions();
-        //    getChannel();
+
         //点击 root 的下拉效果
         function  knowledgeBot(){
             $timeout(function(){
@@ -367,7 +362,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "categoryPid": "root"
             },function(data){
                 $scope.vm.botRoot = data.data;
-                //console.log( $scope.vm.$scope.vm.applicationId);
             },function(){
                 //layer.msg("err or err")
             });
@@ -398,29 +392,33 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
-                    //console.log(data)
+                    console.log(data) ;
                     if(data.data){
                         var  html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
+                            //var typeClass ;
+                            //// 叶子节点 node
+                            //if((data.data[i].categoryLeaf == 0)){
+                            //    typeClass = "bot-leaf"　;
+                            //}else if((data.data[i].categoryAttributeName == "edge" )){
+                            //    typeClass = "bot-edge"　;
+                            //}else if((data.data[i].categoryAttributeName == "node" )){
+                            //    typeClasss = "icon-jj"
+                            //}
+                             html+= '<li>' +
+                                    '<div class="slide-a">'+
+                                    ' <a class="ellipsis" href="javascript:;">' ;
                             if(data.data[i].categoryLeaf){
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj"'+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
+                                html+=
+                                    '<i class="icon-jj"'+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'
                             }else{
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
+                                html+=
+                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'
                             }
+                            html+= '<span>'+data.data[i].categoryName+'</span>'+
+                                        '</a>' +
+                                        '</div>' +
+                                     '</li>'
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
@@ -552,11 +550,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     "title" :  $scope.vm.title,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){
-                        if(data.data==10002){
-                            $scope.vm.titleTip = "标题重复";
-                        }
+                        //if(data.data==10002){
+                            $scope.vm.titleTip = "标题打标重复";
+                        //}
                         // $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     }else{
@@ -602,7 +600,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             return params
         }
         function save(){
-
                 if (!checkSave()) {
                     return false
                 } else {

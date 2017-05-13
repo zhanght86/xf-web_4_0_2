@@ -21,6 +21,21 @@
   outline: 0;
   border: 0;
 }
+.bot-leaf {
+  display: none ;
+}
+.bot-edge {
+  display: inline-block;
+  position: relative;
+  top: -1px;
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-image: url(../../images/pic-navs-lc.png);
+}
 .textIndent10 {
   text-indent: 10px;
 }
