@@ -125,34 +125,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //    }
         //}
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-        /*
-         params =  {
-         "applicationId": $scope.vm.applicationId,
-         "userId" : $scope.vm.userId ,
-         "sceneId" : $scope.vm.sceneId ,
-         "knowledgeTitle": $scope.vm.title,      //知识标题
-         "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-         "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-         "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-         };
-         var title = angular.copy($scope.vm.newTitle);
-         scanCotentByTitle(title) ;
-         var obj = {};
-         obj.knowledgeContent = getTableParams();
-         obj.channelIdList =  $scope.vm.channel;
-         obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-         obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-         obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
-         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
-         $scope.vm.scanContent=[];
-         $scope.vm.scanContent.push(obj);
-         params.knowledgeContents =  $scope.vm.scanContent;
-         params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
-         params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-         */
-
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
@@ -249,7 +221,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     }
                 }
             },function(){
-                layer.msg("err or err")
+                //layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -315,6 +287,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
+                console.log(data) ;
                 if(data.status = 10000){
                     var len = $scope.vm.botClassfy.length;
                     var obj = {};
@@ -396,7 +369,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.botRoot = data.data;
                 //console.log( $scope.vm.$scope.vm.applicationId);
             },function(){
-                layer.msg("err or err")
+                //layer.msg("err or err")
             });
         }
         //点击更改bot value
@@ -454,7 +427,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    layer.msg(err)
+                    //layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
