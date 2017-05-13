@@ -92,7 +92,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableList: "",
             listTableType: "",
             data : "",
-            column:""
+            column:"" ,
+
+            limitSave : false //限制多次打标
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -361,7 +363,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 console.log("err or err")
             });
         }
-        $scope.$watch("vm.frameCategoryId",function(val,old){
+        $scope.$("vm.frameCategoryId",function(val,old){
             if(val&&val!=old){
                 getFrame( val )
             }
@@ -369,7 +371,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         //replace()
         //  根據框架添加擴展問  --》 替換原來的條件
-        $scope.$watch("vm.frameId",function(val,old){
+        $scope.$("vm.frameId",function(val,old){
             if(val&&val!=old){
                 if($scope.vm.extensionsByFrame.length){
                     //  替換條件
@@ -381,7 +383,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }
         });
         //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
+        $scope.$("vm.isTimeTable",function(val){
             if(val==true){
                 $scope.vm.timeFlag="禁用"
             }else{
@@ -502,6 +504,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var obj = {} ;
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
+            if(!chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
+                layer.msg("扩展问和标题重复请重新输入扩展问")
+                return;
+            }
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
@@ -689,24 +695,56 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
         }
+
+        /**
+         * 校验标题和扩展问重复
+         */
+        function  chackTitleAndextEnsionQuestion(title,ensionQuestionTitle){
+            console.log(title);
+            console.log(ensionQuestionTitle);
+            if(title!=""){
+                if(title==ensionQuestionTitle){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            if(ensionQuestionTitle!=""){
+                if(ensionQuestionTitle==title){
+                    return false;
+                }else{
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
         //根據 標題 生成 bot
         function getBotByTitle(){
+           /* console.log(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle));
+            if(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
+                layer.msg("标题和扩展问重复请重新输入标题")
+                return;
+            }*/
             if($scope.vm.title){
                 httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId": $scope.vm.applicationId,
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
-                    }else if(data.status == 200){
-                        //console.log(data);
+                    }else if(data.status == 10002){
+                        $scope.vm.titleTip = data.info;
+                        $scope.$apply()
+                    } else if(data.status == 200){
+                        console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                         $scope.vm.knowledgeTitleTag = [];
                         $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
                         angular.forEach(data.data.classifyList, function (item) {
-                            $scope.vm.botClassfy.push(item.name);
                             var obj = {};
                             obj.className = item.fullPath;
                             obj.classificationId = item.id;
@@ -762,22 +800,25 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function save() {
-            if (!checkSave()) {
-                return false
-            } else {
-                //console.log(getParams());
-                $scope.vm.data = getParams();
-                httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
-                    //console.log(data);
-                    if (data.status == 200) {
-                        var url = $state.go('custServScenaOverview.manage');
-                        //window.open(url, '_blank');
-                    } else if (data.status == 500) {
-                        layer.msg("保存失败")
-                    }
-                }, function (err) {
-                    //console.log(err)
-                });
+            if(!$scope.vm.limitSave){
+                $scope.vm.limitSave = true ;
+                if (!checkSave()) {
+                    return false
+                } else {
+                    //console.log(getParams());
+                    $scope.vm.data = getParams();
+                    httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
+                        //console.log(data);
+                        if (data.status == 200) {
+                            var url = $state.go('custServScenaOverview.manage');
+                            //window.open(url, '_blank');
+                        } else if (data.status == 500) {
+                            layer.msg("保存失败")
+                        }
+                    }, function (err) {
+                        //console.log(err)
+                    });
+                }
             }
         }
         function scan(){
@@ -902,7 +943,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title)
+                $timeout(getAppointRelative(title),300)
             }
         });
 

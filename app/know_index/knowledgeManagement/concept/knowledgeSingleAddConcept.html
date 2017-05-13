@@ -69,8 +69,8 @@
                     <div class="lable"> BOT路径：</div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
-                            <div class="ipt-txt" >
-                                <span>{{item.className.join("/")}}</span>
+                            <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                             </div>
                         </div>
                         <a href="javascript:;" class="L mr-10 mt-5"  ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
@@ -81,8 +81,8 @@
                     <div class="lable"> BOT路径：</div>
                         <div class="value Div clearfix" id="Div">
                             <div class="ipt-txt-box mr-10 L">
-                            <div class="ipt-txt">
-                            <span>{{item.className.join("/")}}</span>
+                            <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                             </div>
                         </div>
                         <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
@@ -104,8 +104,8 @@
                 <!--预览内容-->
                 <div ng-repeat="(index,item) in vm.scanContent track by $index">
                     <div class="item-line">
-                        <div class="lable" style="color: #0000cc;padding-right:10px;box-sizing:border-box;">
-                            内容{{index+1|  numberToWord}}:
+                        <div class="lable" style="padding-right:10px;box-sizing:border-box;">
+                            内容{{index+1}}:
                         </div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
@@ -210,7 +210,7 @@
                 </div>
             </div>
             <div class="jqrsz-btn-box">
-                <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.save()">保存</a>
+                <input type="button" class="btn btn-blue mr10" value="保存" ng-disabled="vm.limitSave" ng-click="vm.save()">
                 <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>
             </div>
         </div>

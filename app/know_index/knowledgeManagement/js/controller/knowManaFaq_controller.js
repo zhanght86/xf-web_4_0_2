@@ -81,6 +81,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             enterEvent : enterEvent ,
             //selectEvent : selectEvent
+            limitSave : false //限制多次打标
         };
 
         //獲取渠道
@@ -432,7 +433,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                    '<i class="icon-jj"'+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                                     '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -441,7 +442,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
+                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
                                     '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -465,7 +466,26 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 }
             }
         });
-
+        //自动转换图标类型
+        function styleSwitch(type,leaf,attrType){
+            var styleHidden = "display: inline-block;";
+            if(leaf==0){
+                styleHidden="display:none;";
+            }
+            if(attrType=="node"){
+                return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
+            }
+            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+            switch (type){
+                case 161:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                case 160:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                case 162:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+            }
+            return style;
+        }
 ////////////////////////////////////////         Bot     //////////////////////////////////////////////////////
         function replace(id){
             var dia = angular.element(".ngdialog ");
@@ -609,35 +629,37 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             return params
         }
         function save(){
-            //console.log(getParams());
-            if(!checkSave()){
-                return false
-            }else{
-                httpRequestPost("/api/faqKnowledge/addFAQKnowledge",getParams(),function(data){
-                    console.log(data) ;
-                    if(data.status == 200){
-                        if($scope.vm.docmentation){
-                            //文档知识分类状态回掉
-                            $scope.vm.knowledgeClassifyCall()
-                        }else{
-                            //open
-                            $state.go("custServScenaOverview.manage");
+            if(!$scope.vm.limitSave) {
+                $scope.vm.limitSave = true;
+                if (!checkSave()) {
+                    return false
+                } else {
+                    httpRequestPost("/api/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
+                        console.log(data);
+                        if (data.status == 200) {
+                            if ($scope.vm.docmentation) {
+                                //文档知识分类状态回掉
+                                $scope.vm.knowledgeClassifyCall()
+                            } else {
+                                //open
+                                $state.go("custServScenaOverview.manage");
+                            }
                         }
-                    }
-                },function(err){
-                    //console.log(err)
-                });
-                //knowledgeAddServer.faqSave(getParams(),
-                //    function(data){
-                //        if(data.status == 200){
-                //            //open
-                //            //$state.go("custServScenaOverview.manage")
-                //        }
-                //    //console.log(data)
-                //},function(err) {
-                //    layer.msg("保存失败")
+                    }, function (err) {
+                        //console.log(err)
+                    });
+                    //knowledgeAddServer.faqSave(getParams(),
+                    //    function(data){
+                    //        if(data.status == 200){
+                    //            //open
+                    //            //$state.go("custServScenaOverview.manage")
+                    //        }
+                    //    //console.log(data)
+                    //},function(err) {
+                    //    layer.msg("保存失败")
 
-                //})
+                    //})
+                }
             }
         }
         // 知识文档分类回调
@@ -844,7 +866,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title)
+                $timeout(getAppointRelative(title),300)
             }
         });
 

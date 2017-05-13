@@ -84,6 +84,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             dialogExtension : [],
             knowledgeId : "",
 
+            limitSave : false ,
+
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -518,7 +520,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
+                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"></i>'+
                                     '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -527,7 +529,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                 html+= '<li>' +
                                     '<div class="slide-a">'+
                                     ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
+                                    '<i class="icon-jj" '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+'data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
                                     '<span>'+data.data[i].categoryName+'</span>'+
                                     '</a>' +
                                     '</div>' +
@@ -551,7 +553,26 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             }
         });
-
+        //自动转换图标类型
+        function styleSwitch(type,leaf,attrType){
+            var styleHidden = "display: inline-block;";
+            if(leaf==0){
+                styleHidden="display:none;";
+            }
+            if(attrType=="node"){
+                return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
+            }
+            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+            switch (type){
+                case 161:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                case 160:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                case 162:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+            }
+            return style;
+        }
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({
@@ -690,8 +711,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         //  主页保存 获取参数
         function getParams(){
-            var params = {};
-            params =  {
+           var params =  {
                 "applicationId": $scope.vm.applicationId,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
@@ -707,33 +727,36 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         function save() {
-            if (!checkSave()) {
-                return false
-            } else {
-                var params = getParams();
-                var api;
-                if ($scope.vm.knowledgeId) {
-                    //编辑
-                    api = "/api/conceptKnowledge/editKnowledge";
-                    params.knowledgeId = $scope.vm.knowledgeId;
+            if(!$scope.vm.limitSave) {
+                $scope.vm.limitSave = true;
+                if (!checkSave()) {
+                    return false
                 } else {
-                    //新增
-                    api = "/api/conceptKnowledge/addConceptKnowledge"
-                }
-                httpRequestPost(api, params, function (data) {
-                    console.log(getParams());
-                    if (data.status == 200) {
-                        if ($scope.vm.docmentation) {
-                            $scope.vm.knowledgeClassifyCall();
-                        }
-                        else
-                            $state.go('custServScenaOverview.manage');
-                    } else if (data.status == 500) {
-                        layer.msg("保存失败")
+                    var params = getParams();   // 保存參數
+                    var api;                    // 返回編輯的 url
+                    if ($scope.vm.knowledgeId) {
+                        //编辑
+                        api = "/api/conceptKnowledge/editKnowledge";
+                        params.knowledgeId = $scope.vm.knowledgeId;
+                    } else {
+                        //新增
+                        api = "/api/conceptKnowledge/addConceptKnowledge"
                     }
-                },function(err){
-                    console.log(err)
-                });
+                    httpRequestPost(api, params, function (data) {
+                        console.log(getParams());
+                        if (data.status == 200) {
+                            if ($scope.vm.docmentation) {
+                                $scope.vm.knowledgeClassifyCall();
+                            }
+                            else
+                                $state.go('custServScenaOverview.manage');
+                        } else if (data.status == 500) {
+                            layer.msg("保存失败")
+                        }
+                    }, function (err) {
+                        console.log(err)
+                    });
+                }
             }
         }
         function scan(){
@@ -960,7 +983,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                                 if (all.channelId == v) {
                                                     channelTip = all.channelName
                                                 }
-                                                ;
+
                                             });
                                             layer.msg("重复添加" + "渠道 " + channelTip + " 维度 " + $scope.vm.dimensionArr.name[indexDimension]);
                                             $scope.vm.dimensionArr.id.remove(key);
@@ -992,7 +1015,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         $scope.$watch("vm.appointRelative",function(title){
             //console.log(title);
             if(title){
-                getAppointRelative(title)
+                $timeout(getAppointRelative(title),300)
             }
         });
 
