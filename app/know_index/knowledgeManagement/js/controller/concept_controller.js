@@ -732,11 +732,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         function save() {
-            if(!$scope.vm.limitSave) {
-                $scope.vm.limitSave = true;
-                if (!checkSave()) {
-                    return false
-                } else {
+            if (!checkSave()) {
+                return false
+            } else {
+                if(!$scope.vm.limitSave) {
+                    $scope.vm.limitSave = true;
+                    $timeout(function(){
+                        $scope.vm.limitSave = false ;
+                    },180000) ;
                     var params = getParams();   // 保存參數
                     var api;                    // 返回編輯的 url
                     if ($scope.vm.knowledgeId) {
@@ -938,9 +941,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function checkSave(){
             var params = getParams();
             if(!params.knowledgeTitle){
-                /*layer.msg("知识标题不能为空，请填写");
-                return false*/
-                return true;
+                layer.msg("知识标题不能为空，请填写");
+                return false
+                //return true;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
