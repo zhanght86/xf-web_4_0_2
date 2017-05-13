@@ -22,6 +22,7 @@
 //    aLink.href = URL.createObjectURL(blob);
 //    aLink.dispatchEvent(evt);
 //}
+//键盘事件
 function enterEvent(e,callback) {
     var  srcObj = e.srcElement ? e.srcElement : e.target;
     var keycode = window.event?e.keyCode:e.which;
@@ -31,6 +32,7 @@ function enterEvent(e,callback) {
         //srcObj.focus()
     }
 }
+//请求方式
 function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
     ajaxType == "POST"? "POST" :ajaxType;
     //if(ajaxType === "post"){
@@ -117,6 +119,20 @@ function httpRequestPostAsync(url, data, sucCallBack,falCallback, needToken, aja
             }
         }
     })
+}
+//获取 当前时间
+function formsubmit() {
+    var Today = new Date();
+    var NowHour = Today.getHours();
+    var NowMinute = Today.getMinutes();
+    var NowSecond = Today.getSeconds();
+    var today = {
+        today: Today,
+        hour: NowHour,
+        minute: NowMinute,
+        second: NowSecond
+    } ;
+    return today
 }
 
 //// tooken 获取

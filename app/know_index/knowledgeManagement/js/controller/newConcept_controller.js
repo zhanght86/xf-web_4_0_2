@@ -766,38 +766,42 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
 
         function save(){
-            if(!$scope.vm.limitSave){
-                $scope.vm.limitSave = true ;
                 if(!checkSave()){
                     return false
                 }else{
-                    var params = getParams() ;
-                    var api ;
-                    if($scope.vm.knowledgeId){
-                        //编辑
-                        api = "/api/marketingKnowledge/editKnowledge" ;
-                        params.knowledgeId = $scope.vm.knowledgeId ;
-                    }else{
-                        //新增
-                        api = "/api/marketingKnowledge/addMarketingKnowledge"
-                    }
-                    httpRequestPost(api,params,function(data){
-                        //console.log(params);
-                        if (data.status == 200) {
-                            if ($scope.vm.docmentation) {
-                                $scope.vm.knowledgeClassifyCall();
-                            }
-                            else{
-                                $state.go('markServScenaOverview.manage');
-                            }
-                        } else if (data.status == 500) {
-                            layer.msg("保存失败")
+                    if(!$scope.vm.limitSave){
+                        $scope.vm.limitSave = true ;
+                        $timeout(function(){
+                            $scope.vm.limitSave = false ;
+                        },180000) ;
+                        var params = getParams() ;
+                        var api ;
+                        if($scope.vm.knowledgeId){
+                            //编辑
+                            api = "/api/marketingKnowledge/editKnowledge" ;
+                            params.knowledgeId = $scope.vm.knowledgeId ;
+                        }else{
+                            //新增
+                            api = "/api/marketingKnowledge/addMarketingKnowledge"
                         }
-                    },function(err){
-                        //console.log(err)
-                    });
+                        httpRequestPost(api,params,function(data){
+                            //console.log(params);
+                            if (data.status == 200) {
+                                if ($scope.vm.docmentation) {
+                                    $scope.vm.knowledgeClassifyCall();
+                                }
+                                else{
+                                    $state.go('markServScenaOverview.manage');
+                                }
+                            } else if (data.status == 500) {
+                                layer.msg("保存失败")
+                            }
+                        },function(err){
+                            //console.log(err)
+                        });
+                    }
                 }
-            }
+
 
         }
         function scan(){
@@ -904,7 +908,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
 //        提交 检验参数
         function checkSave(){
-            return true;
+            //return true;
             var params = getParams();
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");

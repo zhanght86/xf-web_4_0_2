@@ -629,36 +629,29 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             return params
         }
         function save(){
-            if(!$scope.vm.limitSave) {
-                $scope.vm.limitSave = true;
+
                 if (!checkSave()) {
                     return false
                 } else {
-                    httpRequestPost("/api/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
-                        console.log(data);
-                        if (data.status == 200) {
-                            if ($scope.vm.docmentation) {
-                                //文档知识分类状态回掉
-                                $scope.vm.knowledgeClassifyCall()
-                            } else {
-                                //open
-                                $state.go("custServScenaOverview.manage");
+                    if(!$scope.vm.limitSave) {
+                        $scope.vm.limitSave = true;
+                        $timeout(function(){
+                            $scope.vm.limitSave = false ;
+                        },180000) ;
+                        httpRequestPost("/api/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
+                            console.log(data);
+                            if (data.status == 200) {
+                                if ($scope.vm.docmentation) {
+                                    //文档知识分类状态回掉
+                                    $scope.vm.knowledgeClassifyCall()
+                                } else {
+                                    //open
+                                    $state.go("custServScenaOverview.manage");
+                                }
                             }
-                        }
-                    }, function (err) {
-                        //console.log(err)
-                    });
-                    //knowledgeAddServer.faqSave(getParams(),
-                    //    function(data){
-                    //        if(data.status == 200){
-                    //            //open
-                    //            //$state.go("custServScenaOverview.manage")
-                    //        }
-                    //    //console.log(data)
-                    //},function(err) {
-                    //    layer.msg("保存失败")
-
-                    //})
+                        }, function (err) {
+                            //console.log(err)
+                        });
                 }
             }
         }
