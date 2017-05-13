@@ -644,34 +644,37 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             return params
         }
         function save() {
-                if(!$scope.vm.limitSave){
-                    $scope.vm.limitSave = true ;
+
                 if (!checkSave()) {
                     return false
                 } else {
-                    var params = getParams();
-                    var api;
-                    if ($scope.vm.knowledgeId) {
-                        //编辑
-                        api = "/api/listKnowledge/editKnowledge";
-                        params.knowledgeId = $scope.vm.knowledgeId;
-                    } else {
-                        //新增
-                        api = "/api/listKnowledge/addListKnowledge"
-                    }
-                    console.log(getParams());
-                    httpRequestPost(api, params, function (data) {
-                        //console.log(getParams());
-                        if (data.status == 200) {
-                            console.log(data);
-                            var url = $state.go('custServScenaOverview.manage');
-                        } else if (data.status == 500) {
-                            layer.msg("保存失败")
+                    if(!$scope.vm.limitSave){
+                             $scope.vm.limitSave = true ;
+                            $timeout(function(){
+                                $scope.vm.limitSave = false ;
+                            },180000) ;
+                            var params = getParams();
+                            var api;
+                            if ($scope.vm.knowledgeId) {
+                                //编辑
+                                api = "/api/listKnowledge/editKnowledge";
+                                params.knowledgeId = $scope.vm.knowledgeId;
+                            } else {
+                                //新增
+                                api = "/api/listKnowledge/addListKnowledge"
+                            }
+                            httpRequestPost(api, params, function (data) {
+                                //console.log(getParams());
+                                if (data.status == 200) {
+                                    console.log(data);
+                                    var url = $state.go('custServScenaOverview.manage');
+                                } else if (data.status == 500) {
+                                    layer.msg("保存失败")
+                                }
+                            }, function (err) {
+                                console.log(err)
+                            });
                         }
-                    }, function (err) {
-                        console.log(err)
-                    });
-                }
             }
         }
         function scan(){
