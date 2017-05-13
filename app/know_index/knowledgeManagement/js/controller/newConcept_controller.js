@@ -283,10 +283,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
-                    var len = $scope.vm.botClassfy.length;
+                    var len = $scope.vm.creatSelectBot.length;
                     var obj = {};
                     if(len){
-                        angular.forEach($scope.vm.botClassfy,function(item){
+                        angular.forEach($scope.vm.creatSelectBot,function(item){
                             if(item.classificationId!=id){
                                 len-=1
                             }

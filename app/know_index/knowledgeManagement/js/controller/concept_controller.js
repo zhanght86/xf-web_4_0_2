@@ -264,14 +264,16 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         // 获取Bot全路径
         function getBotFullPath(id){
+            console.log(id ,$scope.vm.creatSelectBot) ;
             httpRequestPost("/api/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
+                console.log(data) ;
                 if(data.status = 10000){
-                    var len = $scope.vm.botClassfy.length;
+                    var len = $scope.vm.creatSelectBot.length;
                     var obj = {};
                     if(len){
-                        angular.forEach($scope.vm.botClassfy,function(item){
+                        angular.forEach($scope.vm.creatSelectBot,function(item){
                             if(item.classificationId!=id){
                                 len-=1
                             }
