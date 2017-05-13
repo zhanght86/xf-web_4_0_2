@@ -88,7 +88,20 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
                     $scope.vm.serviceType=data.data.serviceType;//服务类型
                     $scope.vm.serviceId=data.data.serviceId;//服务id
+                    var dimensionSelected=[];
+                    $scope.vm.dimensionAll=$scope.vm.originDimensionAll;  //所有的维度
+                    //console.log(dimensionSelected);
+                    //console.log($scope.vm.originDimensionAll);
+                    angular.forEach(data.data.dimensions,function(dimensionId){
+                        angular.forEach($scope.vm.dimensionAll,function(dimension){
+                            if(dimensionId==dimension.dimensionId){
+                                dimensionSelected.push(dimension);
+                            }
+                        });
+                    });
+                    $scope.vm.dimensionSelected=dimensionSelected;
                     $scope.$apply();
+
                     httpRequestPost("/api/application/node/findParentNodeInfo",{
                         "nodeCode" : data.data.nodeCode
                     },function(data){
@@ -100,38 +113,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                         }
                     },function(){
                         layer.msg("请求失败");
-                    })
-                    httpRequestPost("/api/application/service/listDimensionByServiceId",{
-                        "serviceId": serviceId
-                    },function(data1){
-                        if(data1.status==200){
-                            var dimensionSelected=[];
-
-                            $scope.vm.dimensionAll=$scope.vm.originDimensionAll;  //所有的维度
-                            console.log(dimensionSelected);
-                            console.log($scope.vm.originDimensionAll);
-
-                            angular.forEach(data1.data,function(dimensionId){
-                                angular.forEach($scope.vm.dimensionAll,function(dimension){
-                                    if(dimensionId==dimension.dimensionId){
-                                        dimensionSelected.push(dimension);
-                                        $scope.vm.dimensionAll.remove(dimension);
-                                    }
-                                });
-                            });
-
-                            $scope.vm.dimensionSelected=dimensionSelected;
-                            console.log("遍历后");
-                            console.log($scope.vm.dimensionSelected);
-                            console.log($scope.vm.dimensionAll);
-                            $scope.$apply();
-
-                        }else{
-                            layer.msg("查询失败");
-                        }
-                    },function(){
-                        layer.msg("请求失败");
-                    })
+                    }) ;
                 }else{
                     layer.msg("查询服务失败");
                 }
