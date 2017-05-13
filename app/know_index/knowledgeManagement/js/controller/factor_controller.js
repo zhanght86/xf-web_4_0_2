@@ -588,13 +588,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
-            //var value = $(this).html();
             var id = $(this).prev().attr("data-option");
             getBotFullPath(id);    //添加bot分類
-            //$scope.vm.frameCategoryId = id;
             angular.element(".rootClassfy,.menus").slideToggle();
             $scope.$apply();
-            //}
         });
         //添加BOT 分类  ==== 点击bot分类的 加号
         function botSelectAdd(){
@@ -753,7 +750,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             obj.classificationId = item.id;
                             obj.classificationType = item.type;
                             $scope.vm.botClassfy.push(obj);
-                            //$scope.vm.frameCategoryId = item.id;
+                            $scope.vm.frameCategoryId = item.id;
                             $scope.$apply()
                         });
                     }
