@@ -169,6 +169,7 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
         }
 
 
+
         //选择被关联的服务id
         function selectRelatedServiceId(relatedServiceId){
             if($scope.vm.relatedServiceIds==null){
@@ -184,17 +185,16 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
 
         //选择关联的服务id
         function selectServiceId(serviceId){
-            if($scope.vm.serviceIds==null){
-                $scope.vm.serviceIds=[];
-            }
-            var index=$scope.vm.serviceIds.inArray(serviceId);
-            if(index){
-                $scope.vm.serviceIds.remove(serviceId);
-            }else{
-                $scope.vm.serviceIds.push(serviceId);
-            }
+            //if($scope.vm.serviceIds==null){
+            //    $scope.vm.serviceIds=[];
+            //}
+            $scope.vm.serviceIds=[];
+            $scope.vm.serviceIds.push(serviceId);
+            //var index=$scope.vm.serviceIds.inArray(serviceId);
+            //if(!index){
+            //    $scope.vm.serviceIds.push(serviceId);
+            //}
         }
-
 
     }
 ]);
