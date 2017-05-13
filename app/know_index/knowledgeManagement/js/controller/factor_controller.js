@@ -885,7 +885,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 });
             }
         }
-        //检验扩展问是否重复    
+        //检验扩展问是否重复
         function checkExtension(item,arr){
             return true ;
             //    return true ;
@@ -912,7 +912,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false;
             }else if(!params.knowledgeTitleTag.length){
-                return true
+                return true ;
                 //layer.msg("知识标题未打标");
                 //return false;
             }else if(!params.classificationAndKnowledgeList.length){
