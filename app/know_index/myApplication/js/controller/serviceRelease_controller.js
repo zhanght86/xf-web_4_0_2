@@ -4,8 +4,8 @@
  * Date: 2017/4/10 9:59
  */
 angular.module('myApplicationSettingModule').controller('serviceReleaseController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$interval",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$interval) {
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             serviceData : "",   // 服务列表数据
@@ -106,6 +106,11 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     },function(data1){
                         if(data1.status==200){
                             var dimensionSelected=[];
+
+                            $scope.vm.dimensionAll=$scope.vm.originDimensionAll;  //所有的维度
+                            console.log(dimensionSelected);
+                            console.log($scope.vm.originDimensionAll);
+
                             angular.forEach(data1.data,function(dimensionId){
                                 angular.forEach($scope.vm.dimensionAll,function(dimension){
                                     if(dimensionId==dimension.dimensionId){
@@ -114,7 +119,11 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                     }
                                 });
                             });
+
                             $scope.vm.dimensionSelected=dimensionSelected;
+                            console.log("遍历后");
+                            console.log($scope.vm.dimensionSelected);
+                            console.log($scope.vm.dimensionAll);
                             $scope.$apply();
 
                         }else{
@@ -148,68 +157,79 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
+            if($scope.vm.serviceType==null||$scope.vm.serviceType==""){
+                layer.msg("发布服务时未选择发布类型!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+
             return 1;
         }
         //添加并发布服务
         function addAndPublishService(){
+            listDimensionData();
+            initPublishServiceInput();
             listNodeData(); //获取可用节点数据
             $scope.vm.dialogTitle="发布新服务";
-            initPublishServiceInput();
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1) {
-                        $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
+            var edit = $interval(function() {
+                if ($scope.vm.channels) {
+                    $interval.cancel(edit);
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                            if(e === 1) {
+                                $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
 
-                        if($scope.vm.channels==null||$scope.vm.channels.length==0){
-                            angular.forEach($scope.vm.channelData,function(channel){
-                                $scope.vm.channels.push(channel.channelId);
-                            });
-                            //layer.msg("发布服务时未选择渠道!");
-                            //$scope.vm.allowSubmit=0;
-                            //return;
-                        }
-                        if($scope.vm.dimensions==null||$scope.vm.dimensions.length==0){
-                            $scope.vm.dimensionSelected=[];
-                            angular.forEach($scope.vm.dimensionAll,function(dimension){
-                                $scope.vm.dimensionSelected.push(dimension);
-                            });
-                            $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
-                            //layer.msg("发布服务时未选择发布维度!");
-                            //$scope.vm.allowSubmit=0;
-                            //return;
-                        }
-
-                        if($scope.vm.allowSubmit){  //服务名称验证没有错误
-                            httpRequestPost("/api/application/service/addAndPublishService",{
-                                "applicationId": $scope.vm.applicationId,
-                                "categoryIds" : $scope.vm.categoryIds, //分类id列表
-                                "channels" : $scope.vm.channels, //渠道id列表
-                                "dimensions" : $scope.vm.dimensions, //维度id列表
-                                "nodeCode" : $scope.vm.nodeCode, //节点编号
-                                "serviceName": $scope.vm.serviceName, //服务名称
-                                "serviceType" : $scope.vm.serviceType, //服务类型
-                                "userId" : $scope.vm.userId //获取用户id
-                            },function(data){
-                                if(data.status==200){
-                                    listServiceData(1);
-                                }else{
-                                    layer.msg("新增发布服务失败");
+                                if($scope.vm.channels==null||$scope.vm.channels.length==0){
+                                    angular.forEach($scope.vm.channelData,function(channel){
+                                        $scope.vm.channels.push(channel.channelId);
+                                    });
+                                    //layer.msg("发布服务时未选择渠道!");
+                                    //$scope.vm.allowSubmit=0;
+                                    //return;
                                 }
-                            },function(){
-                                layer.msg("请求失败")
-                            })
+                                if($scope.vm.dimensions==null||$scope.vm.dimensions.length==0){
+                                    $scope.vm.dimensionAll=$scope.vm.originDimensionAll;
+                                    angular.forEach($scope.vm.dimensionAll,function(dimension){
+                                        $scope.vm.dimensions.push(dimension.dimensionId);
+                                    });
+                                }
+
+                                if($scope.vm.allowSubmit){  //服务名称验证没有错误
+                                    httpRequestPost("/api/application/service/addAndPublishService",{
+                                        "applicationId": $scope.vm.applicationId,
+                                        "categoryIds" : $scope.vm.categoryIds, //分类id列表
+                                        "channels" : $scope.vm.channels, //渠道id列表
+                                        "dimensions" : $scope.vm.dimensions, //维度id列表
+                                        "nodeCode" : $scope.vm.nodeCode, //节点编号
+                                        "serviceName": $scope.vm.serviceName, //服务名称
+                                        "serviceType" : $scope.vm.serviceType, //服务类型
+                                        "userId" : $scope.vm.userId //获取用户id
+                                    },function(data){
+                                        if(data.status==200){
+                                            listServiceData(1);
+                                        }else{
+                                            layer.msg("新增发布服务失败");
+                                        }
+                                    },function(){
+                                        layer.msg("请求失败")
+                                    })
+                                }
+                            }
+                            initPublishServiceInput();
                         }
-                    }
-                    initPublishServiceInput();
+                    });
                 }
-            });
+            },200) ;
+
         }
+
+
 
         function initPublishServiceInput(){
             $scope.vm.categoryIds=[]; //分类id列表
@@ -225,44 +245,53 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
         //编辑服务
         function editService(serviceId){
+            listDimensionData();
+            initPublishServiceInput();
             findServiceByServiceId(serviceId);
             listNodeData(); //获取可用节点数据
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1) {
-                        console.log($scope.vm.allowSubmit);
-                        if($scope.vm.allowSubmit){  //服务名称验证没有错误
-                            $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
-                            httpRequestPost("/api/application/service/editService",{
-                                "applicationId": $scope.vm.applicationId,
-                                "categoryIds" : $scope.vm.categoryIds, //分类id列表
-                                "channels" : $scope.vm.channels, //渠道id列表
-                                "dimensions" : $scope.vm.dimensions, //维度id列表
-                                "nodeCode" : $scope.vm.nodeCode, //节点编号
-                                "serviceName": $scope.vm.serviceName, //服务名称
-                                "serviceType" : $scope.vm.serviceType, //服务类型
-                                "userId" : $scope.vm.userId, //获取用户id
-                                "serviceId" : $scope.vm.serviceId //服务id
-                            },function(data){
-                                if(data.status==200){
-                                    listServiceData(1);
-                                }else{
-                                    layer.msg("新增发布服务失败");
+            var edit = $interval(function(){
+                if($scope.vm.channels){
+                    $interval.cancel(edit) ;
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                            if(e === 1) {
+                                console.log($scope.vm.allowSubmit);
+                                if($scope.vm.allowSubmit){  //服务名称验证没有错误
+                                    $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
+                                    httpRequestPost("/api/application/service/editService",{
+                                        "applicationId": $scope.vm.applicationId,
+                                        "categoryIds" : $scope.vm.categoryIds, //分类id列表
+                                        "channels" : $scope.vm.channels, //渠道id列表
+                                        "dimensions" : $scope.vm.dimensions, //维度id列表
+                                        "nodeCode" : $scope.vm.nodeCode, //节点编号
+                                        "serviceName": $scope.vm.serviceName, //服务名称
+                                        "serviceType" : $scope.vm.serviceType, //服务类型
+                                        "userId" : $scope.vm.userId, //获取用户id
+                                        "serviceId" : $scope.vm.serviceId //服务id
+                                    },function(data){
+                                        if(data.status==200){
+                                            listServiceData(1);
+                                        }else{
+                                            layer.msg("新增发布服务失败");
+                                        }
+                                    },function(){
+                                        layer.msg("请求失败")
+                                    })
                                 }
-                            },function(){
-                                layer.msg("请求失败")
-                            })
+                            }
+                            initPublishServiceInput();
                         }
-                    }
-                    initPublishServiceInput();
+                    });
                 }
-            });
+
+            },200) ;
+
 
 
 
