@@ -157,7 +157,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
 
         // 触发要素  知识标题
-        $scope.$watch("vm.factor",function(val){
+        $scope.$watch("vm.factor",function(val){ 
             if(val == 0){
                 $scope.$watch("vm.factorTitle",function(title){
                     if(title != "" && $scope.vm.factor==0 && title != $scope.vm.getFactorByTitle[0] ){
