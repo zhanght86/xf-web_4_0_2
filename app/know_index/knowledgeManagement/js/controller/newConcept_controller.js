@@ -519,44 +519,60 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }
         }
         //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'.icon-jj',function(){
+        $(".aside-navs").on("click",'i',function(){
             var id = $(this).attr("data-option");
             var that = $(this);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/modeling/category/listbycategorypid",{
-                    "categoryApplicationId": $scope.vm.applicationId,
+                    "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
+                    console.log(data) ;
                     if(data.data){
                         var  html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
-                            if(data.data[i].categoryLeaf){
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
-                            }else{
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
+                            var typeClass ;
+                            // 叶子节点 node
+                            if((data.data[i].categoryLeaf == 0)){
+                                typeClass = "bot-leaf"　;
+                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
+                                typeClass = "bot-edge"　;
+                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
+                                typeClass = "icon-jj"
                             }
+                            var  backImage ;
+                            switch(data.data[i].categoryTypeId){
+                                case 160 :
+                                    backImage = " bot-divide" ;
+                                    break  ;
+                                case 161 :
+                                    backImage = " bot-process";
+                                    break  ;
+                                case 162 :
+                                    backImage = " bot-attr" ;
+                                    break  ;
+                                case 163 :
+                                    backImage = " bot-default" ;
+                                    break  ;
+                            }
+                            html+= '<li>' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">' ;
+
+                            html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
+
+                            html+=             '<span>'+data.data[i].categoryName+'</span>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                    layer.msg(err)
+                    //layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
