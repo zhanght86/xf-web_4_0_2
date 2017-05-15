@@ -34,6 +34,23 @@
   vertical-align: middle;
   background-position: left top;
   background-repeat: no-repeat;
+}
+/*
+      160 ����
+      161 ����
+      162 ����
+      163 Ĭ��
+*/
+.bot-divide {
+  background-image: url(../../images/pic-navs-lc.png);
+}
+.bot-process {
+  background-image: url(../../images/pic-navs-sx.png);
+}
+.bot-attr {
+  background-image: url(../../images/pic-navs-dy.png);
+}
+.bot-default {
   background-image: url(../../images/pic-navs-lc.png);
 }
 .textIndent10 {
