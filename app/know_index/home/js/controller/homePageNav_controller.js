@@ -41,7 +41,7 @@ angular.module('homePage').controller('homePageNavController', [
         }
         $scope.checkShowCrumbs=function(){
             if(!$scope.url.toString().indexOf("/homePage/define") > 0 || !$scope.url.toString().indexOf("/admin/manage") > 0 || !$scope.url.toString().indexOf("/admin/userManage") > 0){
-                return false;admin.userManage
+                return false;
             }
             else{
                 return true;
@@ -136,5 +136,9 @@ angular.module('homePage').controller('homePageNavController', [
                 localStorage.removeItem('history');
             }
         }
+        window.onbeforeunload = function () {
+            localStorage.removeItem('history');
+        }
+
     }
 ]);

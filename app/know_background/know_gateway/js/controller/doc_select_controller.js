@@ -6,11 +6,12 @@
 
 angular.module('knowGatewayModule').controller('docSelectController', [
     '$scope', '$location', "$stateParams", "$interval", "$timeout", "ngDialog",
-    "TemplateService","localStorageService","$state","$sce",
+    "TemplateService","localStorageService","$state","$sce","$cookieStore",
     function ($scope, $location, $stateParams, $interval, $timeout, ngDialog,
-              TemplateService,localStorageService,$state,$sce) {
+              TemplateService,localStorageService,$state,$sce,$cookieStore) {
         var self = this;
 
+        $scope.userName = $cookieStore.get("userName");
         $scope.checkedRule = {};
         $scope.temId = $stateParams.temId;
         $scope.level = $stateParams.level;
@@ -155,6 +156,8 @@ angular.module('knowGatewayModule').controller('docSelectController', [
                 "inputText":$scope.titleText,
                 "selectText":$scope.checkedRule.lineWord,
                 "ruleId":$scope.roleId,
+                "templateCreater": $scope.userName,
+                "templateUpdater": $scope.userName,
                 "requestId":"String"
             };
             if($scope.roleId && $scope.roleId != null && $scope.roleId != "")

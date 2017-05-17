@@ -783,15 +783,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var params = {};
             params =  {
                 "applicationId": $scope.vm.applicationId,
-                 knowledgeId : $scope.vm.knowledgeId ,
-                "knowledgeUpdater": $scope.vm.userName, //操作人
-                "knowledgeCreator": $scope.vm.userName, //操作人
+                "knowledgeId": $scope.vm.knowledgeId ,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
+                "knowledgeUpdater": $scope.vm.userName, //操作人
+                "knowledgeCreator": $scope.vm.userName  //操作人
             };
 
                 var title = angular.copy($scope.vm.newTitle);
