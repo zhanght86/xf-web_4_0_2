@@ -9,6 +9,10 @@
 angular.module('businessModelingModule').controller('errorCorrectionConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
             applicationId : $cookieStore.get("applicationId"),
             addCorrection : addCorrection,
             editCorrection : editCorrection,
@@ -180,7 +184,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                                 addCorrectionConceptDialog(singleAddCorrectionConcept);
                             }
                         }, function () {
-                            layer.msg("添加失敗")
+                            layer.msg("添加失败")
                         })
                     } else {
                         $scope.vm.key = "";
@@ -290,14 +294,13 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 "correctionConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "correctionConceptKey":  $scope.vm.key,
-                "correctionConceptModifier": item.correctionConceptModifier,
-                "correctionConceptTerm": $scope.vm.term,
+                "correctionConceptModifier": $scope.vm.modifier,
+                "correctionConceptTerm": $scope.vm.term
             },function(data){
-                layer.msg("编辑成功");
-                $state.reload()
-            },function(){
-                layer.msg("编辑失败")
-            })
+                if(responseView(data)==true){
+                    loadCorrectionConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //单条新增
         function singleAddCorrectionConcept(){
@@ -307,24 +310,22 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 "applicationId": $scope.vm.applicationId,
                 "correctionConceptKey":  $scope.vm.key,
                 "correctionConceptModifier": $scope.vm.modifier,
-                "correctionConceptTerm": $scope.vm.term,
+                "correctionConceptTerm": $scope.vm.term
             },function(data){
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
-            })
+                if(responseView(data)==true){
+                    loadCorrectionConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //单条刪除
         function singleDelCorrectionConcept(id){
             httpRequestPost("/api/modeling/concept/correction/delete",{
                 "correctionConceptId":id
             },function(data){
-                layer.msg("刪除成功");
-                $state.reload()
-            },function(){
-                layer.msg("刪除失敗")
-            })
+                if(responseView(data)==true){
+                    loadCorrectionConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //初始化tagEditor插件
         function termSpliterTagEditor() {
@@ -358,6 +359,18 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                console.log("===success===");
+                return true;
+            }
+            return false;
         }
     }
 ]);
