@@ -10,6 +10,10 @@
 angular.module('businessModelingModule').controller('businessConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$interval","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$interval,$cookieStore) {
         $scope.vm = {
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
             applicationId : $cookieStore.get("applicationId"),
             addBusiness : addBusiness,
             editBusiness : editBusiness,
@@ -189,7 +193,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                 addBusinessConceptDialog(singleAddBusinessConcept);
                             }
                         },function(){
-                            layer.msg("添加失敗")
+                            layer.msg("添加失败")
                         })
                     }else{
                         $scope.vm.key = "";
@@ -297,18 +301,14 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "businessConceptKey":  $scope.vm.key,
-                "businessConceptModifier": item.businessConceptModifier,
+                "businessConceptModifier": $scope.vm.modifier,
                 "businessConceptTerm": $scope.vm.term,
                 "businessConceptWeight": $scope.vm.weight
             },function(data){
-                if (data) {
-                    console.log(data);
+                if(responseView(data)==true){
+                    loadBusinessConceptTable($scope.vm.paginationConf.currentPage);
                 }
-                layer.msg("编辑成功");
-                $state.reload();
-            },function(){
-                layer.msg("编辑失败");
-            })
+            });
         }
         //单条新增
         function singleAddBusinessConcept(){
@@ -321,28 +321,20 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 "businessConceptTerm": $scope.vm.term,
                 "businessConceptWeight": $scope.vm.weight
             },function(data){
-                if (data) {
-                    console.log(data);
+                if(responseView(data)==true){
+                    loadBusinessConceptTable($scope.vm.paginationConf.currentPage);
                 }
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
-            })
+            });
         }
         //单条刪除
         function singleDelBusinessConcept(id){
             httpRequestPost("/api/ms/modeling/concept/business/delete",{
                 "businessConceptId":id
             },function(data){
-                if (data) {
-                    console.log(data);
+                if(responseView(data)==true){
+                    loadBusinessConceptTable($scope.vm.paginationConf.currentPage);
                 }
-               layer.msg("刪除成功");
-                $state.reload();
-            },function(){
-                layer.msg("刪除失敗")
-            })
+            });
         }
         //初始化tagEditor插件
         function termSpliterTagEditor() {
@@ -377,6 +369,18 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                console.log("===success===");
+                return true;
+            }
+            return false;
         }
     }
 ]);

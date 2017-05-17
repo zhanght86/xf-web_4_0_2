@@ -43,7 +43,7 @@
                     欢迎语：
                 </div>
                 <div class="value">
-                    <textarea class="textarea" name="robotWelcome" check-welcome="robotWelcome" placeholder="小富机器人欢迎您"
+                    <textarea class="textarea" name="robotWelcome" check-welcome="robotWelcome" placeholder="请再次输入欢迎语!"
                               ng-model="robot.robotWelcome"
                               ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！\\r\n]+$/"/>>小富机器人欢迎您！</textarea>
                     <!--<div class="error-tip" ng-show="mySetting.robotWelcome.$dirty && mySetting.robotWelcome.$invalid">-->
@@ -59,6 +59,24 @@
                     </div>
                 </div>
             </div>
+
+            <div class="item-line">
+                <div class="lable">
+                    企业名称设置：
+                </div>
+                <div class="value">
+                    <div class="ipt-txt-box">
+                        <input class="ipt-txt" type="text" name="" placeholder=""
+                                style="width: 406px;"  >
+
+                    </div>
+                    <div class="error-tip" >
+                        错误提示
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
         <div class="jqrsz-item">

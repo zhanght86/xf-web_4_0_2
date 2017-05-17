@@ -8,6 +8,10 @@
 angular.module('businessModelingModule').controller('disableConceptManageController', [
 '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
             applicationId : $cookieStore.get("applicationId"),
             addStop : addStop,
             editStop : editStop,
@@ -181,7 +185,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                 addStopConceptDialog(singleAddStopConcept);
                             }
                         }, function () {
-                            layer.msg("添加失敗")
+                            layer.msg("添加失败")
                         })
                     } else {
                         $scope.vm.key = "";
@@ -288,17 +292,13 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 "stopConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
-                "stopConceptModifier": item.stopConceptModifier,
-                "stopConceptTerm": $scope.vm.term,
+                "stopConceptModifier": $scope.vm.modifier,
+                "stopConceptTerm": $scope.vm.term
             },function(data){
-                console.log(item);
-                console.log(item.stopConceptId,$scope.vm.applicationId,$scope.vm.key,typeof $scope.vm.modifier,$scope.vm.term);
-                console.log(data);
-                layer.msg("编辑成功");
-                $state.reload()
-            },function(){
-                layer.msg("编辑失败")
-            })
+                if(responseView(data)==true){
+                    loadStopConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //单条新增
         function singleAddStopConcept(){
@@ -308,24 +308,22 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
                 "stopConceptModifier": $scope.vm.modifier,
-                "stopConceptTerm": $scope.vm.term,
+                "stopConceptTerm": $scope.vm.term
             },function(data){
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
-            })
+                if(responseView(data)==true){
+                    loadStopConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //单条刪除
         function singleDelStopConcept(id){
             httpRequestPost("/api/ms/modeling/concept/stop/delete",{
                 "stopConceptId":id
             },function(data){
-                layer.msg("刪除成功");
-                $state.reload()
-            },function(){
-                layer.msg("刪除失敗")
-            })
+                if(responseView(data)==true){
+                    loadStopConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //初始化tagEditor插件
         function termSpliterTagEditor() {
@@ -359,6 +357,18 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                console.log("===success===");
+                return true;
+            }
+            return false;
         }
     }
 ]);
