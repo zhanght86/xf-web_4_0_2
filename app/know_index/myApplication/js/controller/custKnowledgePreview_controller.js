@@ -53,19 +53,19 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
             switch(viewData.knowledgeType){
                 case 100 :
                     editUrl = "knowledgeManagement.faqAdd";
-                    api = "/api/faqKnowledge/getKnowledge";
+                    api = "/api/ms/faqKnowledge/getKnowledge";
                     break;
                 case 101 :
                     editUrl = "knowledgeManagement.singleAddConcept" ;
-                    api = "/api/conceptKnowledge/getKnowledge";
+                    api = "/api/ms/conceptKnowledge/getKnowledge";
                     break;
                 case 102 :
                     editUrl = "knowledgeManagement.listAdd";
-                    api = "/api/conceptKnowledge/getKnowledge";
+                    api = "/api/ms/conceptKnowledge/getKnowledge";
                     break;
                 case 103 :
                     editUrl = "knowledgeManagement.factorAdd";
-                    api = "/api/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId";
+                    api = "/api/ms/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId";
                     break;
             }
             function edit(){

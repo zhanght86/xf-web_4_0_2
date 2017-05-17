@@ -44,7 +44,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         loadStopConceptTable(1);
         //请求列表
         function loadStopConceptTable(current){
-            httpRequestPost("/api/modeling/concept/stop/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/stop/listByAttribute",{
                 "stopConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -87,7 +87,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         //查询
         function searchStopConceptByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/stop/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/stop/listByModifier",{
                 "stopConceptModifier":$scope.vm.searchVal,
                 "stopConceptApplicationId": $scope.vm.applicationId,
                 "index" :($scope.vm.current-1)*$scope.vm.pageSize,
@@ -110,7 +110,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/stop/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/stop/listByAttribute",request,function(data){
                 loadStopConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息")
@@ -147,7 +147,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/stop/repeatCheck", {
+                        httpRequestPost("/api/ms/modeling/concept/stop/repeatCheck", {
                             "stopConceptApplicationId": $scope.vm.applicationId,
                             "stopConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
@@ -157,7 +157,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/stop/listByAttribute", {
+                                    httpRequestPost("/api/ms/modeling/concept/stop/listByAttribute", {
                                         "stopConceptApplicationId": $scope.vm.applicationId,
                                         "stopConceptKey": $scope.vm.key,
                                         "index": 0,
@@ -283,7 +283,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         //編輯事件
         function singleEditStopConcept(item){
             assembleStopConceptTerm();
-            httpRequestPost("/api/modeling/concept/stop/update",{
+            httpRequestPost("/api/ms/modeling/concept/stop/update",{
                 "stopConceptId":item.stopConceptId,
                 "stopConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
@@ -303,7 +303,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         //单条新增
         function singleAddStopConcept(){
             assembleStopConceptTerm();
-            httpRequestPost("/api/modeling/concept/stop/add",{
+            httpRequestPost("/api/ms/modeling/concept/stop/add",{
                 "stopConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "stopConceptKey":  $scope.vm.key,
@@ -318,7 +318,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         }
         //单条刪除
         function singleDelStopConcept(id){
-            httpRequestPost("/api/modeling/concept/stop/delete",{
+            httpRequestPost("/api/ms/modeling/concept/stop/delete",{
                 "stopConceptId":id
             },function(data){
                 layer.msg("刪除成功");

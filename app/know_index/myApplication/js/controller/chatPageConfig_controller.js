@@ -163,7 +163,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //从聊天知识库查询知识
         function findKnowledge(index){
-            httpRequestPost("/api/knowledgeManage/overView/findKnowledgeByApplicationId",{
+            httpRequestPost("/api/ms/knowledgeManage/overView/findKnowledgeByApplicationId",{
                 applicationId:$scope.vm.applicationId,
                 knowledgeTitle : $scope.vm.knowledge,
                 pageSize : $scope.vm.pageSize,

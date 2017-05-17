@@ -61,7 +61,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         console.log("========"+JSON.stringify(params));
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/modeling/category/searchbycategoryname",
+            serviceUrl: "/api/ms/modeling/category/searchbycategoryname",
             type:'POST',
             params:params,
             paramName:'categoryName',
@@ -174,7 +174,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //获取root 数据
         function initBot(){
             $(".aside-navs").empty();
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
             },function(data){
@@ -238,7 +238,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         if(repeatCheck("#editErrorView",1)==false){
                             return false;
                         }
-                        httpRequestPost("/api/modeling/category/updatebycategoryid",{
+                        httpRequestPost("/api/ms/modeling/category/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryId,
                             "categoryApplicationId": $scope.vm.categoryApplicationId,
                             "applicationId": categoryApplicationId,
@@ -308,7 +308,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        httpRequestPost("/api/modeling/category/deletebycategoryid",{
+                        httpRequestPost("/api/ms/modeling/category/deletebycategoryid",{
                             "categoryId": $scope.vm.categoryId,
                             "categoryApplicationId": $scope.vm.categoryApplicationId,
                             "categoryPid": $scope.vm.categoryPid,
@@ -338,7 +338,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPostAsync("/api/modeling/category/listbycategorypid",{
+                httpRequestPostAsync("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
                     "categoryPid": id
                 },function(data){
@@ -385,7 +385,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             if(repeatCheck(".c-error",0)==false){
                 return;
             }
-            httpRequestPost("/api/modeling/category/add",{
+            httpRequestPost("/api/ms/modeling/category/add",{
                 "categoryApplicationId": categoryApplicationId,
                 "applicationId": categoryApplicationId,
                 "categoryPid": $scope.vm.botSelectValue,
@@ -428,7 +428,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 request.categoryName=$("#category-name").val();
                 request.categorySceneId=categorySceneId;
             }
-            httpRequestPostAsync("/api/modeling/category/repeatcheck",request,function(data){
+            httpRequestPostAsync("/api/ms/modeling/category/repeatcheck",request,function(data){
                 if(responseWithoutView(data)==false){
                     if(data){
                         $(selector).html(data.info);

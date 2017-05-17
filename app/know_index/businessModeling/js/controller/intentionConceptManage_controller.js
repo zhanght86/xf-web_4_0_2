@@ -45,7 +45,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         loadForceSegmentConceptTable(1);
         //请求列表
         function loadForceSegmentConceptTable(current){
-            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute",{
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -88,7 +88,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         //查询
         function searchForceSegmentConceptByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/forceSegment/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/listByModifier",{
                 "forceSegmentConceptModifier":$scope.vm.searchVal,
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "index" :($scope.vm.current-1)*$scope.vm.pageSize,
@@ -111,7 +111,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute",request,function(data){
                 loadForceSegmentConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息");
@@ -148,7 +148,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck", {
+                        httpRequestPost("/api/ms/modeling/concept/forceSegment/repeatCheck", {
                             "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                             "forceSegmentConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
@@ -158,7 +158,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute", {
+                                    httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute", {
                                         "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                                         "forceSegmentConceptKey": $scope.vm.key,
                                         "index": 0,
@@ -287,7 +287,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         //編輯事件
         function singleEditForceSegmentConcept(item){
             assembleForceSegmentConceptTerm();
-            httpRequestPost("/api/modeling/concept/forceSegment/update",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/update",{
                 "forceSegmentConceptId":item.forceSegmentConceptId,
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
@@ -304,7 +304,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         //单条新增
         function singleAddForceSegmentConcept(){
             assembleForceSegmentConceptTerm();
-            httpRequestPost("/api/modeling/concept/forceSegment/add",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/add",{
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "forceSegmentConceptKey":  $scope.vm.key,
@@ -319,7 +319,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         }
         //单条刪除
         function singleDelForceSegmentConcept(id){
-            httpRequestPost("/api/modeling/concept/forceSegment/delete",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/delete",{
                 "forceSegmentConceptId":id
             },function(data){
                 layer.msg("刪除成功");
