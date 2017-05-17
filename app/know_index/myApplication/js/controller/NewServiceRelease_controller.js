@@ -314,7 +314,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
 
             //获取root 数据
             function getBotRoot(){
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId": $scope.vm.applicationId,
                     "categoryPid": "root"
                 },function(data){
@@ -346,7 +346,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
                 var that = $(this);
                 if(!that.parent().parent().siblings().length){
                     that.css("backgroundPosition","0% 100%");
-                    httpRequestPost("/api/modeling/category/listbycategorypid",{
+                    httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                         "categoryApplicationId": $scope.vm.applicationId,
                         "categoryPid": id
                     },function(data){

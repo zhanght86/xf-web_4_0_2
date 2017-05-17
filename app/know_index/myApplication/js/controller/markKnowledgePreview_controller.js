@@ -44,7 +44,7 @@ angular.module('knowledgeManagementModule').controller('markKnowledgePreviewCont
             }
             getData();
             function getData(){
-                httpRequestPost("/api/conceptKnowledge/getKnowledge",{
+                httpRequestPost("/api/ms/conceptKnowledge/getKnowledge",{
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){

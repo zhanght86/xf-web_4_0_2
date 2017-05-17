@@ -33,7 +33,7 @@ angular.module('materialManagement').controller('conceptChatController', [
             }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
-                httpRequestPost("/api/chatKnowledge/checkConceCptChatQuestion",{
+                httpRequestPost("/api/ms/chatKnowledge/checkConceCptChatQuestion",{
                     "chatQuestionContent" : $scope.vm.extendedQuestion,
                     "applicationId" :  $scope.vm.applicationId
                 },function(data){
@@ -128,7 +128,7 @@ angular.module('materialManagement').controller('conceptChatController', [
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
-                httpRequestPost("/api/chatKnowledge/checkChatKnowledgeContent",{
+                httpRequestPost("/api/ms/chatKnowledge/checkChatKnowledgeContent",{
                     "chatKnowledgeContent" : $scope.vm.contentVal
                 },function(data){
                     console.log(data);
@@ -153,7 +153,7 @@ angular.module('materialManagement').controller('conceptChatController', [
         }
         function saveScan(params){
 
-            httpRequestPost("/api/chatKnowledge/addConceCptChatKnowledge",{
+            httpRequestPost("/api/ms/chatKnowledge/addConceCptChatKnowledge",{
                 "applicationId": params.applicationId,
                 "chatKnowledgeModifier": params.chatKnowledgeModifier,
                 "chatKnowledgeTopic": params.standardQuestion,
@@ -190,7 +190,7 @@ angular.module('materialManagement').controller('conceptChatController', [
         function save(){
             if(check()){
                 console.log($scope.vm.extendedQuestionArr);
-                httpRequestPost("/api/chatKnowledge/addConceCptChatKnowledge",{
+                httpRequestPost("/api/ms/chatKnowledge/addConceCptChatKnowledge",{
                     "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     "applicationId": $scope.vm.applicationId,
                     "chatKnowledgeModifier": $scope.vm.userName,
