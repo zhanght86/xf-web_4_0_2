@@ -21,7 +21,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
             "tableList" : "="
         },
         template:
-        '<button  id="picker" >上传线下编辑场景知识</button><span class="f-14 pl-10">请先<a href="/api/elementKnowledgeAdd/download?fileName=factor_template.xlsx"  class="c-primary">下载模板</a>进行填写</span>'
+        '<button  id="picker" >上传线下编辑场景知识</button><span class="f-14 pl-10">请先<a href="/api/ms/elementKnowledgeAdd/download?fileName=factor_template.xlsx"  class="c-primary">下载模板</a>进行填写</span>'
         ,
         link:function(scope,element,attrs){
             //var $list = angular.element("#thelist");
@@ -34,7 +34,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
                 // 文件接收服务端。
                 //server: "/api/application/application/uploadHead",
 
-                server: "/api/elementKnowledgeAdd/upload",
+                server: "/api/ms/elementKnowledgeAdd/upload",
                 //accept: {
                 //    title: 'file',
                 //    extensions: 'xls,xlsx',

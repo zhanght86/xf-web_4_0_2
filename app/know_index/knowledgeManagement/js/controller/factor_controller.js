@@ -345,7 +345,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 // 通过类目id 获取框架
         function getFrame(id){
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
                 "frameTypeId":10013,
@@ -393,7 +393,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             //console.log(id);
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10013,
                 "frameId": id,
                 "index": 0,
@@ -462,7 +462,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            httpRequestPost("/api/modeling/category/getcategoryfullname",{
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
                 console.log(data) ;
@@ -514,7 +514,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
+                httpRequestPost("/api/ms/elementKnowledgeAdd/checkDistribute",{
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
@@ -575,7 +575,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //获取root 数据
         function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
@@ -603,44 +603,60 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }
         }
         //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'.icon-jj',function(){
+        $(".aside-navs").on("click",'i',function(){
             var id = $(this).attr("data-option");
             var that = $(this);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
+                    console.log(data) ;
                     if(data.data){
                         var  html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
-                            if(data.data[i].categoryLeaf){
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
-                            }else{
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"style="background-position:0% 100%"></i>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
+                            var typeClass ;
+                            // 叶子节点 node
+                            if((data.data[i].categoryLeaf == 0)){
+                                typeClass = "bot-leaf"　;
+                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
+                                typeClass = "bot-edge"　;
+                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
+                                typeClass = "icon-jj"
                             }
+                            var  backImage ;
+                            switch(data.data[i].categoryTypeId){
+                                case 160 :
+                                    backImage = " bot-divide" ;
+                                    break  ;
+                                case 161 :
+                                    backImage = " bot-process";
+                                    break  ;
+                                case 162 :
+                                    backImage = " bot-attr" ;
+                                    break  ;
+                                case 163 :
+                                    backImage = " bot-default" ;
+                                    break  ;
+                            }
+                            html+= '<li>' +
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">' ;
+
+                            html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
+
+                            html+=             '<span>'+data.data[i].categoryName+'</span>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
                         that.parent().parent().next().slideDown()
                     }
                 },function(err){
-                     console.log(err)
+                    //layer.msg(err)
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -728,7 +744,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return;
             }*/
             if($scope.vm.title){
-                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId": $scope.vm.applicationId,
                 },function(data){
@@ -767,15 +783,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var params = {};
             params =  {
                 "applicationId": $scope.vm.applicationId,
-                 knowledgeId : $scope.vm.knowledgeId ,
-                "knowledgeUpdater": $scope.vm.userName, //操作人
-                "knowledgeCreator": $scope.vm.userName, //操作人
+                "knowledgeId": $scope.vm.knowledgeId ,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
+                "knowledgeUpdater": $scope.vm.userName, //操作人
+                "knowledgeCreator": $scope.vm.userName  //操作人
             };
 
                 var title = angular.copy($scope.vm.newTitle);
@@ -809,7 +825,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             $scope.vm.limitSave = false ;
                         },180000) ;
                         $scope.vm.data = getParams();
-                        httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
+                        httpRequestPost("/api/ms/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                             //console.log(data);
                             if (data.status == 200) {
                                 var url = $state.go('custServScenaOverview.manage');
@@ -833,7 +849,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.editUrl = "knowledgeManagement.factorAdd";
                 obj.knowledgeType = 103 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/elementKnowledgeAdd/addElementKnowledge" ;
+                obj.api = "/api/ms/elementKnowledgeAdd/addElementKnowledge" ;
 
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
@@ -874,7 +890,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("标题不能为空");
                 return false
             }else{
-                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" : title
                 },function(data){
                     //console.log(data);
@@ -949,7 +965,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         });
 
         function getAppointRelative(title){
-            httpRequestPost("/api/listKnowledge/getKnowledgeTitle",{
+            httpRequestPost("/api/ms/listKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
                 if(data.status == 200){

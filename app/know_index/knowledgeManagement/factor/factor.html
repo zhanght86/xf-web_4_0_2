@@ -33,9 +33,9 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <div class="value Div clearfix" id="Div">
+                                <div class="value Div clearfix" >
                                     <div class="ipt-txt-box L mr-10">
-                                        <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 381px;border: solid 1px #ddd;"/>
+                                        <input class="ipt-txt bd" style="padding-right:25px;width:362px;" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 381px;border: solid 1px #ddd;"/>
                                         <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
                                         <div class="rootClassfy aside-navs aside-navs2" >
                                             <ul class="menus show">
@@ -61,7 +61,7 @@
                     <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="value Div clearfix" id="Div">
+                            <div class="value Div clearfix" >
                                 <div class="ipt-txt-box L mr-10" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;">
                                     <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
                                         <!--<span>{{item.className.join("/")}}</span>-->
@@ -77,7 +77,7 @@
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="value Div clearfix" id="Div">
+                            <div class="value Div clearfix" >
                                 <div class="ipt-txt-box L" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;margin-right:10px;">
                                     <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
                                         <!--<span>{{item.className.join("/")}}</span>-->
@@ -93,7 +93,7 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <select class="input-text" style="width:395px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
-                                <option value="" ng-if="vm.frames.length">--业务框架为空--</option>
+                                <option value="" ng-if="vm.frames.length">--请选择以上业务框架--</option>
                             </select>
                         </div>
                     </div>
@@ -154,8 +154,8 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容: &nbsp;</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">
                             <div class="clearfix mb-10">
-                                <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
-                                <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
+                                <span uploader-factor server="'api/ms/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
+                                <!--<input  type="button" class="btn1 btn1_blue mb-10" uploader-handle server="'api/ms/elementKnowledgeAdd/upload'" value="上传线下编辑场景知识">-->
                                 <!--<span class="f-14 pl-10">请先<a href="javascript:;" class="c-primary">下载模板</a>进行填写</span>-->
                                 <div class="essential_factor_div bd mt-10">
                                     <div class="mb-10">

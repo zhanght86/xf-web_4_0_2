@@ -86,7 +86,13 @@
         }else{
             $(this).next().hide();
         }
+        return false;
     });
+
+    $('.bgwhite').click(function(){
+        $('.chat_add_ul').hide();
+    });
+
     $('.chat_add_ul li a').click(function(){
         var str=$(this).html();
         $('.chat_add_p').html(str);

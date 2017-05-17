@@ -29,16 +29,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             //var api = "" ;
             //switch($scope.vm.editUrl){
             //    case "knowledgeManagement.faqAdd":
-            //        api = "/api/faqKnowledge/addFAQKnowledge";
+            //        api = "/api/ms/faqKnowledge/addFAQKnowledge";
             //        break;
             //    case "knowledgeManagement.singleAddConcept":
-            //        api = "/api/conceptKnowledge/addConceptKnowledge";
+            //        api = "/api/ms/conceptKnowledge/addConceptKnowledge";
             //        break;
             //    case "knowledgeManagement.listAdd":
-            //        api = "/api/listKnowledge/addListKnowledge";
+            //        api = "/api/ms/listKnowledge/addListKnowledge";
             //        break;
             //    case "knowledgeManagement.factorAdd":
-            //        api = "/api/elementKnowledgeAdd/addElementKnowledge";
+            //        api = "/api/ms/elementKnowledgeAdd/addElementKnowledge";
             //        break;
             //}
             console.log(knowledgeScan.api) ;

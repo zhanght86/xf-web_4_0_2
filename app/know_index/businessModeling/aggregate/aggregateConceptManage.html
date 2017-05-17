@@ -56,7 +56,7 @@
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.collectiveConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.collectiveConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
                 </td>
-                <td>{{item.collectiveConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                <td>{{item.collectiveConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td>{{item.collectiveConceptModifier}}</td>
                 <td>
                     <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editCollective(item)">修改</a> &nbsp;

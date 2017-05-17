@@ -8,6 +8,10 @@
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
             applicationId : $cookieStore.get("applicationId"),
             addSynonym : addSynonym,
             editSynonym : editSynonym,
@@ -45,7 +49,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         loadSynonymConceptTable(1);
         //请求列表
         function loadSynonymConceptTable(current){
-            httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/synonym/listByAttribute",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -88,7 +92,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //查询
         function searchSynonymConceptByUser(){
-            httpRequestPost("/api/modeling/concept/synonym/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/synonym/listByModifier",{
                 "synonymConceptModifier":$scope.vm.searchVal,
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index" :($scope.vm.current-1)*$scope.vm.pageSize,
@@ -111,7 +115,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/synonym/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/synonym/listByAttribute",request,function(data){
                 loadSynonymConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息")
@@ -148,7 +152,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/synonym/repeatCheck",{
+                        httpRequestPost("/api/ms/modeling/concept/synonym/repeatCheck",{
                             "synonymConceptApplicationId": $scope.vm.applicationId,
                             "synonymConceptKey": $scope.vm.key
                         },function(data){          //类名重複
@@ -158,7 +162,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/synonym/listByAttribute",{
+                                    httpRequestPost("/api/ms/modeling/concept/synonym/listByAttribute",{
                                         "synonymConceptApplicationId": $scope.vm.applicationId,
                                         "synonymConceptKey":$scope.vm.key,
                                         "index":0,
@@ -184,7 +188,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                                 addSynonymConceptDialog(singleAddSynonymConcept);
                             }
                         },function(){
-                            layer.msg("添加失敗")
+                            layer.msg("添加失败")
                         })
                     }else{
                         $scope.vm.key = "";
@@ -288,25 +292,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //編輯事件
         function singleEditSynonymConcept(item){
             assembleSynonymConceptTerm();
-            httpRequestPost("/api/modeling/concept/synonym/update",{
+            httpRequestPost("/api/ms/modeling/concept/synonym/update",{
                 "synonymConceptId":item.synonymConceptId,
-                "synonymConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "synonymConceptKey":  $scope.vm.key,
-                "synonymConceptModifier": item.synonymConceptModifier,
-                "synonymConceptTerm": $scope.vm.term,
-                "synonymConceptWeight": $scope.vm.weight
-            },function(data){
-                layer.msg("编辑成功");
-                $state.reload()
-            },function(){
-                layer.msg("编辑失败")
-            })
-        }
-        //单条新增
-        function singleAddSynonymConcept(){
-            assembleSynonymConceptTerm();
-            httpRequestPost("/api/modeling/concept/synonym/add",{
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "synonymConceptKey":  $scope.vm.key,
@@ -314,23 +301,36 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 "synonymConceptTerm": $scope.vm.term,
                 "synonymConceptWeight": $scope.vm.weight
             },function(data){
-                console.log(data);
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
+                if(responseView(data)==true){
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+        }
+        //单条新增
+        function singleAddSynonymConcept(){
+            assembleSynonymConceptTerm();
+            httpRequestPost("/api/ms/modeling/concept/synonym/add",{
+                "synonymConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
+                "synonymConceptKey":  $scope.vm.key,
+                "synonymConceptModifier": $scope.vm.modifier,
+                "synonymConceptTerm": $scope.vm.term,
+                "synonymConceptWeight": $scope.vm.weight
+            },function(data){
+                if(responseView(data)==true){
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                }
             })
         }
         //单条刪除
         function singleDelSynonymConcept(id){
-            httpRequestPost("/api/modeling/concept/synonym/delete",{
+            httpRequestPost("/api/ms/modeling/concept/synonym/delete",{
                 "synonymConceptId":id
             },function(data){
-                layer.msg("刪除成功");
-                $state.reload()
-            },function(){
-                layer.msg("刪除失敗")
-            })
+                if(responseView(data)==true){
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //初始化tagEditor插件
         function termSpliterTagEditor() {
@@ -364,6 +364,18 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                console.log("===success===");
+                return true;
+            }
+            return false;
         }
     }
 ]);
