@@ -216,7 +216,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(data);
                 if(data.status!=10005){
                     if(data.data.length){
-                        $scope.vm.frames = $scope.vm.frames.concat(data.data) ;
+                        $scope.vm.frames = $scope.vm.frames.concat(data.data);
                         $scope.$apply();
                     }
                 }
