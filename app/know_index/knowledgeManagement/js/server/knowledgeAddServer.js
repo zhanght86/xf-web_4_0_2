@@ -35,10 +35,10 @@
             return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);
         }
         //function faqSave(params, onSuccess, onError) {
-        //    return $resource('/api/faqKnowledge/addFAQKnowledge', {}, {});
+        //    return $resource('/api/ms/faqKnowledge/addFAQKnowledge', {}, {});
         //}
         function faqSave(params, onSuccess, onError) {
-            var url = '/api/faqKnowledge/addFAQKnowledge';
+            var url = '/api/ms/faqKnowledge/addFAQKnowledge';
             var _resource = $resource(url, {}, {
                 create: {
                     method: 'POST',
@@ -49,11 +49,11 @@
         }
 
         function getFrame(id){
-            return $resource("/api/modeling/frame/listbyattribute", {}, {}).save();
+            return $resource("/api/ms/modeling/frame/listbyattribute", {}, {}).save();
         }
 
         function conceptGetExtensionByDialogTitle(params, onSuccess, onError) {
-            var url = '/api/conceptKnowledge/productExtensionQuestion';
+            var url = '/api/ms/conceptKnowledge/productExtensionQuestion';
             var _resource = $resource(url, {}, {
                 create: {
                     method: 'POST',

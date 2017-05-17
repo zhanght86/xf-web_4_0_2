@@ -166,7 +166,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 // 通过类目id 获取框架
         function getFrame(id){
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
                 "frameTypeId":10012,
@@ -213,7 +213,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             console.log(id);
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10012,
                 "frameId": id,
                 "index": 0,
@@ -244,7 +244,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            httpRequestPost("/api/modeling/category/getcategoryfullname",{
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
@@ -282,7 +282,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             var title = oldWord.extensionQuestionTitle ;
             var weight = oldWord.extensionQuestionType ;
             //console.log(oldWord);
-            httpRequestPost("/api/listKnowledge/checkFrameTag",{
+            httpRequestPost("/api/ms/listKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
@@ -374,7 +374,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 layer.msg("扩展问重复");
                 return false
             } else {
-                httpRequestPost("/api/listKnowledge/checkExtensionQuestion", {
+                httpRequestPost("/api/ms/listKnowledge/checkExtensionQuestion", {
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList": question
                 }, function (data) {
@@ -437,7 +437,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //获取root 数据
         function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
@@ -470,7 +470,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             var that = $(this);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
@@ -598,7 +598,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //根據 標題 生成 bot
         function getBotByTitle(){
             if($scope.vm.title){
-                httpRequestPost("/api/listKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
+                httpRequestPost("/api/ms/listKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
@@ -675,11 +675,11 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             var api;
                             if ($scope.vm.knowledgeId) {
                                 //编辑
-                                api = "/api/listKnowledge/editKnowledge";
+                                api = "/api/ms/listKnowledge/editKnowledge";
                                 params.knowledgeId = $scope.vm.knowledgeId;
                             } else {
                                 //新增
-                                api = "/api/listKnowledge/addListKnowledge"
+                                api = "/api/ms/listKnowledge/addListKnowledge"
                             }
                             httpRequestPost(api, params, function (data) {
                                 //console.log(getParams());
@@ -706,7 +706,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 obj.params = params;
                 obj.knowledgeType = 102 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/listKnowledge/editKnowledge" ;
+                obj.api = "/api/ms/listKnowledge/editKnowledge" ;
                 obj.editUrl = "knowledgeManagement.listAdd";
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
@@ -745,7 +745,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 layer.msg("标题不能为空");
                 return false
             }else{
-                httpRequestPost("/api/listKnowledge/checkDistribute",{
+                httpRequestPost("/api/ms/listKnowledge/checkDistribute",{
                     "title" : title
                 },function(data){
                     console.log(data);
@@ -816,7 +816,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         });
 
         function getAppointRelative(title){
-            httpRequestPost("/api/listKnowledge/getKnowledgeTitle",{
+            httpRequestPost("/api/ms/listKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
                 if(data.status == 200){

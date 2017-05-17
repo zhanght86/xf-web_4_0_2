@@ -33,7 +33,7 @@ angular.module('materialManagement').controller('faqChatController', [
             }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
-                httpRequestPost("/api/chatKnowledge/checkFAQChatQuestion",{
+                httpRequestPost("/api/ms/chatKnowledge/checkFAQChatQuestion",{
                     "chatQuestionContent" : $scope.vm.extendedQuestion
                 },function(data){
                     console.log(data);
@@ -86,7 +86,7 @@ angular.module('materialManagement').controller('faqChatController', [
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
-                httpRequestPost("/api/chatKnowledge/checkChatKnowledgeContent",{
+                httpRequestPost("/api/ms/chatKnowledge/checkChatKnowledgeContent",{
                     "chatKnowledgeContent" : $scope.vm.contentVal
                 },function(data){
                     console.log(data);
@@ -111,7 +111,7 @@ angular.module('materialManagement').controller('faqChatController', [
         }
         function saveScan(params){
             if(check()){
-                httpRequestPost("/api/chatKnowledge/addFAQChatKnowledge",{
+                httpRequestPost("/api/ms/chatKnowledge/addFAQChatKnowledge",{
                     "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
                     "applicationId": params.applicationId,
                     "chatKnowledgeModifier": params.chatKnowledgeModifier,
@@ -148,7 +148,7 @@ angular.module('materialManagement').controller('faqChatController', [
         //保存  0 无验证   1  需要验证
         function save(){
                 if(check()){
-                    httpRequestPost("/api/chatKnowledge/addFAQChatKnowledge",{
+                    httpRequestPost("/api/ms/chatKnowledge/addFAQChatKnowledge",{
                         "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                         "applicationId": $scope.vm.applicationId,
                         "chatKnowledgeModifier": $scope.vm.userName,

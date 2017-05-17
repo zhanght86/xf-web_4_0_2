@@ -49,7 +49,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         loadSensitiveConceptTable(1);
         //请求列表
         function loadSensitiveConceptTable(current){
-            httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -91,7 +91,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         //查询
         function searchSensitiveConceptByUser(){
-            httpRequestPost("/api/modeling/concept/sensitive/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/listByModifier",{
                 "sensitiveConceptModifier":$scope.vm.searchVal,
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :($scope.vm.current-1)*$scope.vm.pageSize,
@@ -114,7 +114,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute",request,function(data){
                 loadSensitiveConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息");
@@ -151,7 +151,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/sensitive/repeatCheck", {
+                        httpRequestPost("/api/ms/modeling/concept/sensitive/repeatCheck", {
                             "sensitiveConceptApplicationId": $scope.vm.applicationId,
                             "sensitiveConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
@@ -161,7 +161,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/sensitive/listByAttribute", {
+                                    httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute", {
                                         "sensitiveConceptApplicationId": $scope.vm.applicationId,
                                         "sensitiveConceptKey": $scope.vm.key,
                                         "index": 0,
@@ -290,7 +290,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //編輯事件
         function singleEditSensitiveConcept(item){
             assembleSensitiveConceptTerm();
-            httpRequestPost("/api/modeling/concept/sensitive/update",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/update",{
                 "sensitiveConceptId":item.sensitiveConceptId,
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
@@ -306,7 +306,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //单条新增
         function singleAddSensitiveConcept(){
             assembleSensitiveConceptTerm();
-            httpRequestPost("/api/modeling/concept/sensitive/add",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/add",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "sensitiveConceptKey":  $scope.vm.key,
@@ -320,7 +320,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         //单条刪除
         function singleDelSensitiveConcept(id){
-            httpRequestPost("/api/modeling/concept/sensitive/delete",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/delete",{
                 "sensitiveConceptId":id
             },function(data){
                 if(responseView(data)==true){

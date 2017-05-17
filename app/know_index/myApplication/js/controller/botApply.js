@@ -79,7 +79,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         console.log("========"+JSON.stringify(params));
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/modeling/categorylibrary/searchbycategoryname",
+            serviceUrl: "/api/ms/modeling/categorylibrary/searchbycategoryname",
             type:'POST',
             params:params,
             paramName:'categoryName',
@@ -190,7 +190,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         //获取root 数据
         function initBot(){
             $("#category").empty();
-            httpRequestPostAsync("/api/modeling/category/listbycategorypid",{
+            httpRequestPostAsync("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
             },function(data){
@@ -220,7 +220,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         }
         function initBotLibrary(){
             $("#library").empty();
-            httpRequestPost("/api/modeling/categorylibrary/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/categorylibrary/listbycategorypid",{
                 "categoryPid": "root",
                 "categorySceneId": categorySceneId,
             },function(data){
@@ -280,7 +280,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
                     "categoryPid": id
                 },function(data){
@@ -319,7 +319,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPostAsync("/api/modeling/categorylibrary/listbycategorypid",{
+                httpRequestPostAsync("/api/ms/modeling/categorylibrary/listbycategorypid",{
                     "categoryPid": id
                 },function(data){
                     if(data.data){
@@ -386,7 +386,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         }
         //套用
         function applyCategory(){
-            httpRequestPost("/api/modeling/categorylibrary/applycategorybyid",{
+            httpRequestPost("/api/ms/modeling/categorylibrary/applycategorybyid",{
                 "categoryId": $scope.vm.botLibrarySelectValue,
                 "categoryPid": $scope.vm.botSelectValue,
                 "categoryApplicationId": categoryApplicationId,
@@ -430,7 +430,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        httpRequestPost("/api/modeling/category/deletebycategoryid",{
+                        httpRequestPost("/api/ms/modeling/category/deletebycategoryid",{
                             "categoryId": $scope.vm.categoryId,
                             "categoryApplicationId": $scope.vm.categoryApplicationId,
                             "categoryPid": $scope.vm.categoryPid,
@@ -578,7 +578,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             return false;
                         }
                         console.log("=========="+$("#categoryLibraryNameAdd").val());
-                        httpRequestPost("/api/modeling/categorylibrary/add",{
+                        httpRequestPost("/api/ms/modeling/categorylibrary/add",{
                             "categoryPid": $scope.vm.botLibrarySelectValue,
                             "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
                             "categoryName": $("#categoryLibraryNameAdd").val(),
@@ -632,7 +632,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 request.categoryName=$("#categoryLibraryNameAdd").val();
                 request.categorySceneId=categorySceneId;
             }
-            httpRequestPostAsync("/api/modeling/categorylibrary/repeatcheck",request,function(data){
+            httpRequestPostAsync("/api/ms/modeling/categorylibrary/repeatcheck",request,function(data){
                 if(responseWithoutView(data)==false){
                     if (data) {
                         $(selector).html(data.info);
@@ -662,7 +662,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         if(repeatCheckForCategory("#editErrorView",1)==false){
                             return false;
                         }
-                        httpRequestPost("/api/modeling/categorylibrary/updatebycategoryid",{
+                        httpRequestPost("/api/ms/modeling/categorylibrary/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryLibraryId,
                             "categoryPid": $scope.vm.categoryLibraryPid,
                             "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
@@ -729,7 +729,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        httpRequestPost("/api/modeling/categorylibrary/deletebycategoryid",{
+                        httpRequestPost("/api/ms/modeling/categorylibrary/deletebycategoryid",{
                             "categoryId": $scope.vm.categoryLibraryId,
                             "categoryPid": $scope.vm.categoryLibraryPid,
                             "categoryLeaf": $scope.vm.categoryLibraryLeaf

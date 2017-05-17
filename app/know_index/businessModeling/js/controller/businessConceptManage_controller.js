@@ -51,7 +51,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         loadBusinessConceptTable(1);
         //请求列表
         function loadBusinessConceptTable(current){
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/business/listByAttribute",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -95,7 +95,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
         //查询
         function searchBusinessConceptByUser(){
-            httpRequestPost("/api/modeling/concept/business/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/business/listByModifier",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "businessConceptModifier":$scope.vm.searchVal,
                 "index":($scope.vm.current-1)*$scope.vm.pageSize,
@@ -118,7 +118,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/business/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/business/listByAttribute",request,function(data){
                 loadBusinessConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息")
@@ -157,7 +157,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/business/repeatCheck",{
+                        httpRequestPost("/api/ms/modeling/concept/business/repeatCheck",{
                             "businessConceptApplicationId": $scope.vm.applicationId,
                             "businessConceptKey": $scope.vm.key
                         },function(data){          //类名重複
@@ -167,7 +167,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/business/listByAttribute",{
+                                    httpRequestPost("/api/ms/modeling/concept/business/listByAttribute",{
                                         "businessConceptApplicationId": $scope.vm.applicationId,
                                         "businessConceptKey":$scope.vm.key,
                                         "index":0,
@@ -296,7 +296,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         //編輯事件
         function singleEditBusinessConcept(item){
             assembleBusinessConceptTerm();
-            httpRequestPost("/api/modeling/concept/business/update",{
+            httpRequestPost("/api/ms/modeling/concept/business/update",{
                 "businessConceptId":item.businessConceptId,
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
@@ -313,7 +313,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         //单条新增
         function singleAddBusinessConcept(){
             assembleBusinessConceptTerm();
-            httpRequestPost("/api/modeling/concept/business/add",{
+            httpRequestPost("/api/ms/modeling/concept/business/add",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "businessConceptKey":  $scope.vm.key,
@@ -328,7 +328,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         }
         //单条刪除
         function singleDelBusinessConcept(id){
-            httpRequestPost("/api/modeling/concept/business/delete",{
+            httpRequestPost("/api/ms/modeling/concept/business/delete",{
                 "businessConceptId":id
             },function(data){
                 if(responseView(data)==true){

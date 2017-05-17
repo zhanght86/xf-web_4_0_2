@@ -91,7 +91,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         }
         function getData(index){
             //console.log((index-1)*$scope.vm.pageSize);
-            httpRequestPost("/api/knowledgeManage/overView/searchList",{
+            httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
                 "applicationId" : $scope.vm.applicationId,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
@@ -151,7 +151,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 return;
             }
             //console.log($scope.vm.knowledgeIds);
-            httpRequestPost("/api/knowledgeManage/overView/deleteKnowledge",{
+            httpRequestPost("/api/ms/knowledgeManage/overView/deleteKnowledge",{
                 "knowledgeIds":$scope.vm.knowledgeIds
             },function(data){
                 $state.reload();
@@ -168,7 +168,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             }
         }
         function getNewNumber(){
-            httpRequestPost(" /api/knowledgeManage/overView/searchTotalAndToday",{
+            httpRequestPost(" /api/ms/knowledgeManage/overView/searchTotalAndToday",{
                 "applicationId" : $scope.vm.applicationId,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
@@ -202,7 +202,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
 
         //获取root 数据
         function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
@@ -217,7 +217,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         $(".aside-nav").on("click","span",function(){
             var id = angular.element(this).attr("data-option-id");
             $scope.vm.sceneIds.push(id);
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId":$scope.vm.applicationId,
                 "categoryPid": id
             },function(data){
@@ -236,7 +236,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             var that = $(this);
             if(!that.parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
@@ -288,7 +288,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             //if(!that.parent().parent().siblings().length){
             //    that.css("backgroundPosition","0% 100%");
             if($(that).children().length==1){
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
