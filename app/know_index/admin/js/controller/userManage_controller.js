@@ -87,7 +87,6 @@ angular.module('adminModule').controller('userManageController', [
                 index:(index -1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
             },function(data){
-                console.log(data);
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
