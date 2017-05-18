@@ -730,7 +730,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //根據 標題 生成 bot
         function getBotByTitle(){
             if($scope.vm.title){
-                httpRequestPost("/api/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
+                httpRequestPost("/api/ms/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId" :  $scope.vm.applicationId
                 },function(data){
