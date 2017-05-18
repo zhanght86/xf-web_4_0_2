@@ -37,13 +37,8 @@
                         <span ng-if="application.statusId==40003" class="c-error">已停用</span>
                     </p>
             </div>
-<<<<<<< .mine
-            <p class="describe " >{{application.applicationDescription}}</p>
-
-=======
             <p title="{{application.applicationDescription}}" class="describe" ng-if="application.applicationDescription.length>8">{{application.applicationDescription | limitCheckFilter}}</p>
-            <p class="describe" ng-if="application.applicationDescription.length<=8">{{application.applicationDescription}}</p>
->>>>>>> .theirs
+            <p class="describe" ng-if="application.applicationDescription.length<=8">{{application.applicationDescription}}</p>s
         </div>
     </div>
 </div>
