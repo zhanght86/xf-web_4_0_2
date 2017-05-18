@@ -27,7 +27,8 @@
                 <img ng-if="application.sceneId==3" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../images/images/u33.png" width="80" height="80"/>
             </a>
             <div class="p10 mb-10 bd_bot" >
-                <p class="name">{{application.applicationName}}</p>
+                <p title="{{application.applicationName}}" class="name" ng-if="application.applicationName.length>8">{{application.applicationName | limitCheckFilter}}</p>
+                <p class="name" ng-if="application.applicationName.length<=8">{{application.applicationName}}</p>
                 <p class="scene" ng-repeat="licence in vm.selectLicence"
                    ng-if="application.sceneId==licence.sceneId">场景类型：<span>{{licence.sceneName}}</span></p>
                     <p class="status">应用状态：
@@ -36,13 +37,22 @@
                         <span ng-if="application.statusId==40003" class="c-error">已停用</span>
                     </p>
             </div>
+<<<<<<< .mine
             <p class="describe " >{{application.applicationDescription}}</p>
+
+=======
+            <p title="{{application.applicationDescription}}" class="describe" ng-if="application.applicationDescription.length>8">{{application.applicationDescription | limitCheckFilter}}</p>
+            <p class="describe" ng-if="application.applicationDescription.length<=8">{{application.applicationDescription}}</p>
+>>>>>>> .theirs
         </div>
     </div>
 </div>
 <style>
     .application_box{background:#fff;padding:20px 10px;}
     .application_box_list .describe{
+        width: 200px;
+        text-align: left;
+        text-indent:6em
         width: 100%;
         text-align: center;
 

@@ -49,7 +49,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         loadCollectiveConceptTable(1);
         //请求列表
         function loadCollectiveConceptTable(current){
-            httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",{
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -92,7 +92,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //查询
         function searchCollectiveConceptByUser(){
-            httpRequestPost("/api/modeling/concept/collective/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/collective/listByModifier",{
                 "collectiveConceptModifier":$scope.vm.searchVal,
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "index":($scope.vm.current-1)*$scope.vm.pageSize,
@@ -115,7 +115,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/collective/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",request,function(data){
                 loadCollectiveConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息");
@@ -153,7 +153,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/collective/repeatCheck",{
+                        httpRequestPost("/api/ms/modeling/concept/collective/repeatCheck",{
                             "collectiveConceptApplicationId": $scope.vm.applicationId,
                             "collectiveConceptKey": $scope.vm.key
                         },function(data){          //类名重複
@@ -163,7 +163,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/collective/listByAttribute",{
+                                    httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",{
                                         "collectiveConceptApplicationId": $scope.vm.applicationId,
                                         "collectiveConceptKey":$scope.vm.key,
                                         "index":0,
@@ -295,7 +295,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //編輯事件
         function singleEditCollectiveConcept(item){
             assembleCollectiveConceptTerm();
-            httpRequestPost("/api/modeling/concept/collective/update",{
+            httpRequestPost("/api/ms/modeling/concept/collective/update",{
                 "collectiveConceptId":item.collectiveConceptId,
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
@@ -312,7 +312,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         //单条新增
         function singleAddCollectiveConcept(){
             assembleCollectiveConceptTerm();
-            httpRequestPost("/api/modeling/concept/collective/add",{
+            httpRequestPost("/api/ms/modeling/concept/collective/add",{
                 "collectiveConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "collectiveConceptKey":  $scope.vm.key,
@@ -327,7 +327,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //单条刪除
         function singleDelCollectiveConcept(id){
-            httpRequestPost("/api/modeling/concept/collective/delete",{
+            httpRequestPost("/api/ms/modeling/concept/collective/delete",{
                 "collectiveConceptId":id
             },function(data){
                 if(responseView(data)==true){
