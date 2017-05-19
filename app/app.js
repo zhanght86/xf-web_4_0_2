@@ -297,17 +297,17 @@ knowledge_static_web
                     },
                 }
             })
-            .state("conceptManage.emotion", {
+            .state("conceptManage.sentiment", {
                 //params:{"userPermission" : null},
-                url: "/emotion",
+                url: "/sentiment",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/businessModeling/emotion/emotionConceptManage.html',
-                        controller: "emotionConceptManageController"
+                        templateUrl: 'know_index/businessModeling/sentiment/sentimentConceptManage.html',
+                        controller: "sentimentConceptManageController"
                     },
                 }
             })
@@ -322,6 +322,34 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/businessModeling/intention/intentionConceptManage.html',
                         controller: "intentionConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.bot", {
+                //params:{"userPermission" : null},
+                url: "/bot",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavContr   oller"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/bot/botConceptManage.html',
+                        controller: "botConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.semanticExpression", {
+                //params:{"userPermission" : null},
+                url: "/semanticExpression",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/businessModeling/semanticExpression/semanticExpressionConceptManage.html',
+                        controller: "semanticExpressionConceptManageController"
                     },
                 }
             })
