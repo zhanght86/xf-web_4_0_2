@@ -1664,6 +1664,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 },function(err){
                     console.log(err);
+                    $("#conceptExtendQuestionErrorObj").html("打标失败，请正确发布节点后再进行打标操作!");
                 });
             });
         }
