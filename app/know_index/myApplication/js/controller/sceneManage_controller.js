@@ -36,6 +36,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
             matchCompleteOn: 1, //完全匹配开关
             matchTagOn: 1,  //标签匹配开关
             userId: $cookieStore.get("userId"),
+            sceneId : $cookieStore.get("sceneId")
         };
 
 
