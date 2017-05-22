@@ -175,7 +175,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
         //标题失去焦点校验标题重复
         // function blur(){
-        //     httpRequestPost("/api/faqKnowledge/checkKnowledgeTitle",{
+        //     httpRequestPost("/api/ms/faqKnowledge/checkKnowledgeTitle",{
         //         "title":$scope.vm.title,
         //         "applicationId" : $scope.vm.applicationId
         //     },function(data){
@@ -206,7 +206,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //}
 // 通过类目id 获取框架
         function getFrame(id){
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
                 "frameTypeId":10011,
@@ -216,7 +216,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(data);
                 if(data.status!=10005){
                     if(data.data.length){
-                        $scope.vm.frames = $scope.vm.frames.concat(data.data) ;
+                        $scope.vm.frames = $scope.vm.frames.concat(data.data);
                         $scope.$apply();
                     }
                 }
@@ -253,7 +253,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             console.log(id);
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10011,
                 "frameId": id,
                 "index": 0,
@@ -284,7 +284,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         // 获取Bot全路径
         function getBotFullPath(id){
-            httpRequestPost("/api/modeling/category/getcategoryfullname",{
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
@@ -328,7 +328,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/faqKnowledge/checkExtensionQuestion",{
+                httpRequestPost("/api/ms/faqKnowledge/checkExtensionQuestion",{
                     title : title
                 },function(data){
                     if(data.status == 500){
@@ -357,7 +357,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
         //获取root 数据
         function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
@@ -395,7 +395,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             var that = $(this);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
@@ -564,7 +564,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //生成 bot
         function getCreatBot(){
             if($scope.vm.title){
-                httpRequestPost("/api/faqKnowledge/findClasssByKnowledgeTitle",{
+                httpRequestPost("/api/ms/faqKnowledge/findClasssByKnowledgeTitle",{
                     "title" :  $scope.vm.title,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
@@ -626,7 +626,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
-                        httpRequestPost("/api/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
+                        httpRequestPost("/api/ms/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
                             console.log(data);
                             if (data.status == 200) {
                                 if ($scope.vm.docmentation) {
@@ -645,7 +645,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         // 知识文档分类回调
         function knowledgeClassifyCall(){
-            httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
+            httpRequestPost("/api/ms/knowledgeDocumentation/documentationKnowledgeClassify",
                 {
                     knowledgeId: $scope.vm.docmentation.knowledgeId,
                     knowledgeStatus: 2
@@ -672,7 +672,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(params);
                 obj.params = params;
                 obj.editUrl = "knowledgeManagement.faqAdd";
-                obj.api = "/api/faqKnowledge/addFAQKnowledge" ;
+                obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
                 obj.knowledgeType = 101 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
                 $window.knowledgeScan = obj;
@@ -852,7 +852,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         });
 
         function getAppointRelative(title){
-            httpRequestPost("/api/conceptKnowledge/getKnowledgeTitle",{
+            httpRequestPost("/api/ms/conceptKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
                 if(data.status == 200){

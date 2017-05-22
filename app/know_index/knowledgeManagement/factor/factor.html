@@ -35,7 +35,7 @@
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
-                                        <input class="ipt-txt bd" style="padding-right:25px;width:362px;" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 381px;border: solid 1px #ddd;"/>
+                                        <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 381px;border: solid 1px #ddd;"/>
                                         <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
                                         <div class="rootClassfy aside-navs aside-navs2" >
                                             <ul class="menus show">
@@ -71,6 +71,7 @@
                                 <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                             </div>
                         </div>
+
                     </div>
                     <!--手选生成-->
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">

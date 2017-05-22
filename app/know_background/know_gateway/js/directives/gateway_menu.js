@@ -62,7 +62,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                                 //params.targetId = $scope.targetId;
                             }
                             uploader.setOption('multipart_params', params);
-                            uploader.setOption('url', '/api/knowledgeDocumentation/createDocumentation');
+                            uploader.setOption('url', '/api/ms/knowledgeDocumentation/createDocumentation');
                             uploader.start();
                             return false;
                         });
@@ -136,7 +136,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
             var uploader = new plupload.Uploader({
                 runtimes: 'html4,html5,flash,silverlight',
                 browse_button: 'tempickfile',
-                url:'/api/template/createTemplate',
+                url:'/api/ms/template/createTemplate',
 
                 //container: 'temcontainer',
                 max_file_count: 1,

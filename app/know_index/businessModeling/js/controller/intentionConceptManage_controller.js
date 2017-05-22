@@ -9,6 +9,10 @@
 angular.module('businessModelingModule').controller('intentionConceptManageController', [
 '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
             applicationId : $cookieStore.get("applicationId"),
             addForceSegment : addForceSegment,
             editForceSegment : editForceSegment,
@@ -45,7 +49,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         loadForceSegmentConceptTable(1);
         //请求列表
         function loadForceSegmentConceptTable(current){
-            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute",{
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -88,7 +92,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         //查询
         function searchForceSegmentConceptByUser(){
             console.log($scope.vm.searchVal);
-            httpRequestPost("/api/modeling/concept/forceSegment/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/listByModifier",{
                 "forceSegmentConceptModifier":$scope.vm.searchVal,
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "index" :($scope.vm.current-1)*$scope.vm.pageSize,
@@ -111,7 +115,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute",request,function(data){
                 loadForceSegmentConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息");
@@ -148,7 +152,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/forceSegment/repeatCheck", {
+                        httpRequestPost("/api/ms/modeling/concept/forceSegment/repeatCheck", {
                             "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                             "forceSegmentConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
@@ -158,7 +162,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/forceSegment/listByAttribute", {
+                                    httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute", {
                                         "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                                         "forceSegmentConceptKey": $scope.vm.key,
                                         "index": 0,
@@ -182,7 +186,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                 addForceSegmentConceptDialog(singleAddForceSegmentConcept);
                             }
                         }, function () {
-                            layer.msg("添加失敗")
+                            layer.msg("添加失败")
                         })
                     } else {
                         $scope.vm.key = "";
@@ -287,46 +291,43 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         //編輯事件
         function singleEditForceSegmentConcept(item){
             assembleForceSegmentConceptTerm();
-            httpRequestPost("/api/modeling/concept/forceSegment/update",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/update",{
                 "forceSegmentConceptId":item.forceSegmentConceptId,
-                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "forceSegmentConceptKey":  $scope.vm.key,
-                "forceSegmentConceptModifier": item.forceSegmentConceptModifier,
-                "forceSegmentConceptTerm": $scope.vm.term
-            },function(data){
-                layer.msg("编辑成功");
-                $state.reload()
-            },function(){
-                layer.msg("编辑失败")
-            })
-        }
-        //单条新增
-        function singleAddForceSegmentConcept(){
-            assembleForceSegmentConceptTerm();
-            httpRequestPost("/api/modeling/concept/forceSegment/add",{
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "forceSegmentConceptKey":  $scope.vm.key,
                 "forceSegmentConceptModifier": $scope.vm.modifier,
                 "forceSegmentConceptTerm": $scope.vm.term
             },function(data){
-                layer.msg("添加成功");
-                $state.reload()
-            },function(){
-                layer.msg("添加失败")
-            })
+                if(responseView(data)==true){
+                    loadForceSegmentConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+        }
+        //单条新增
+        function singleAddForceSegmentConcept(){
+            assembleForceSegmentConceptTerm();
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/add",{
+                "forceSegmentConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
+                "forceSegmentConceptKey":  $scope.vm.key,
+                "forceSegmentConceptModifier": $scope.vm.modifier,
+                "forceSegmentConceptTerm": $scope.vm.term
+            },function(data){
+                if(responseView(data)==true){
+                    loadForceSegmentConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //单条刪除
         function singleDelForceSegmentConcept(id){
-            httpRequestPost("/api/modeling/concept/forceSegment/delete",{
+            httpRequestPost("/api/ms/modeling/concept/forceSegment/delete",{
                 "forceSegmentConceptId":id
             },function(data){
-                layer.msg("刪除成功");
-                $state.reload()
-            },function(){
-                layer.msg("刪除失敗")
-            })
+                if(responseView(data)==true){
+                    loadForceSegmentConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //初始化tagEditor插件
         function termSpliterTagEditor() {
@@ -360,6 +361,18 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                console.log("===success===");
+                return true;
+            }
+            return false;
         }
     }
 ]);

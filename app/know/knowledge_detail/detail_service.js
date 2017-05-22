@@ -10,13 +10,13 @@ angular.module('know.detail').factory('DetailService',['$resource',function ($re
     detailService.queryCompareKnowItem = $resource('pre/KnowledgeDetail/queryCompareKnowItem', {}, {});
     //知识文档
     //查询文档知识详情
-    detailService.queryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationById', {}, {});
+    detailService.queryKnowDocByDocId = $resource('/api/ms/knowledgeDocumentation/selectDocumentationById', {}, {});
     //查询文档知识点
-    detailService.queryDocKnowItems = $resource('api/knowledgeDocumentation/selectDocumentationKnowledgeList', {}, {});
+    detailService.queryDocKnowItems = $resource('api/ms/knowledgeDocumentation/selectDocumentationKnowledgeList', {}, {});
     //忽略文档全部知识点
-    detailService.ignoreDocKnowAll = $resource('api/knowledgeDocumentation/ignoreDocumentationKnowledgeAll', {}, {});
+    detailService.ignoreDocKnowAll = $resource('api/ms/knowledgeDocumentation/ignoreDocumentationKnowledgeAll', {}, {});
     //忽略文档单个知识点
-    detailService.ignoreDocKnow = $resource('api/knowledgeDocumentation/ignoreDocumentationKnowledge', {}, {});
+    detailService.ignoreDocKnow = $resource('api/ms/knowledgeDocumentation/ignoreDocumentationKnowledge', {}, {});
 
     //查询知识条目
     detailService.queryKnowItem = $resource('pre/KnowledgeDetail/getKnowledgeDetail', {}, {});

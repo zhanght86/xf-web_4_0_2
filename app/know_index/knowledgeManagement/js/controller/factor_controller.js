@@ -345,7 +345,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 // 通过类目id 获取框架
         function getFrame(id){
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
                 "frameTypeId":10013,
@@ -393,7 +393,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             //console.log(id);
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10013,
                 "frameId": id,
                 "index": 0,
@@ -462,7 +462,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            httpRequestPost("/api/modeling/category/getcategoryfullname",{
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
                 console.log(data) ;
@@ -514,7 +514,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/elementKnowledgeAdd/checkDistribute",{
+                httpRequestPost("/api/ms/elementKnowledgeAdd/checkDistribute",{
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
@@ -575,7 +575,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //获取root 数据
         function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
@@ -608,7 +608,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var that = $(this);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
@@ -744,7 +744,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return;
             }*/
             if($scope.vm.title){
-                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId": $scope.vm.applicationId,
                 },function(data){
@@ -825,7 +825,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             $scope.vm.limitSave = false ;
                         },180000) ;
                         $scope.vm.data = getParams();
-                        httpRequestPost("/api/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
+                        httpRequestPost("/api/ms/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                             //console.log(data);
                             if (data.status == 200) {
                                 var url = $state.go('custServScenaOverview.manage');
@@ -849,7 +849,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.editUrl = "knowledgeManagement.factorAdd";
                 obj.knowledgeType = 103 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/elementKnowledgeAdd/addElementKnowledge" ;
+                obj.api = "/api/ms/elementKnowledgeAdd/addElementKnowledge" ;
 
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
@@ -890,7 +890,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("标题不能为空");
                 return false
             }else{
-                httpRequestPost("/api/elementKnowledgeAdd/byTitleGetClassify",{
+                httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" : title
                 },function(data){
                     //console.log(data);
@@ -965,7 +965,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         });
 
         function getAppointRelative(title){
-            httpRequestPost("/api/listKnowledge/getKnowledgeTitle",{
+            httpRequestPost("/api/ms/listKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
                 if(data.status == 200){

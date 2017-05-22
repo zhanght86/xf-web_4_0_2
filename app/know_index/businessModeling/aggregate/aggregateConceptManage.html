@@ -13,7 +13,7 @@
                     <option value="collectiveConceptModifyTime">更新时间</option>
                 </select>
                 <input type="text" ng-if="vm.searchType!='collectiveConceptModifyTime' || vm.searchType!='collectiveConceptWeight'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: -33px 0px 0px 88px;" ng-if="vm.searchType=='collectiveConceptModifyTime'">
+                <div style="margin: -33px 0px 0px 101px;" ng-if="vm.searchType=='collectiveConceptModifyTime'">
                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     -
                     <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -56,7 +56,7 @@
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.collectiveConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.collectiveConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
                 </td>
-                <td>{{item.collectiveConceptModifyTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                <td>{{item.collectiveConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td>{{item.collectiveConceptModifier}}</td>
                 <td>
                     <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editCollective(item)">修改</a> &nbsp;

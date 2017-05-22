@@ -163,7 +163,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
 
         //从聊天知识库查询知识
         function findKnowledge(index){
-            httpRequestPost("/api/knowledgeManage/overView/findKnowledgeByApplicationId",{
+            httpRequestPost("/api/ms/knowledgeManage/overView/findKnowledgeByApplicationId",{
                 applicationId:$scope.vm.applicationId,
                 knowledgeTitle : $scope.vm.knowledge,
                 pageSize : $scope.vm.pageSize,
@@ -215,7 +215,13 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             ids :  $scope.vm.deleteIds
                         },function(data){
                             //$state.reload();
-                            getData(1);
+                            if(data.status == 10013){
+                                getData(1);
+                                layer.msg("删除成功")
+                            }else{
+                                layer.msg("删除失败")
+                            }
+
                         },function(){
                             layer.msg("请求失败")
                         });

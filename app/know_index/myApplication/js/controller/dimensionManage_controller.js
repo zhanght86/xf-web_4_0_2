@@ -42,6 +42,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             dimensionIdArray:[],
 
             oldDimension : [],
+            oldDimensionName : []
         };
 
         getData(1);
@@ -196,6 +197,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 obj.dimensionName = data1.dimensionName;
                 obj.dimensionId = data1.dimensionId;
                 $scope.vm.oldDimension.push(obj);
+
+                $scope.vm.oldDimensionName.push(data1.dimensionName);
             });
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/dimensionManageDialog2.html",
@@ -212,8 +215,13 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             applicationId:$scope.vm.applicationId,
                             dimensionId:$scope.vm.dimensionId,
                             dimensionStatusId : $scope.vm.switchTurn,
-                            dimensionNameArray : $scope.vm.newDimensions
+                            dimensionNameArray : $scope.vm.newDimensions,
+                            dimensionParentId : 0
                         },function(data){
+                            if(data.status == 10002){
+                                layer.msg("该维度已经存在，请重新编辑!");
+                                return;
+                            }
                                 getData(1);
                                 layer.msg("维度修改成功!");
                         },function(){
@@ -232,14 +240,21 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         }
         //数组中添加数据
         function savePro(vm,arr){
+            if(arr.length > 0 && arr.indexOf(vm) != -1){
+                layer.msg("该维度表示已经存在，请重新添加");
+                return;
+            }
+            if($scope.vm.oldDimensionName.indexOf(vm) != -1){
+                layer.msg("该维度表示已经存在，请重新添加");
+                return;
+            }
             if(arr.indexOf(vm)){
                 arr.push(vm)
-                //添加
-                $scope.vm.getDimensionVal = "";
-                //编辑
-                $scope.vm.dimensionVal = "";
             }
-            console.log(arr)
+            //添加
+            $scope.vm.getDimensionVal = "";
+            //编辑
+            $scope.vm.dimensionVal = "";
         }
     }
 ]);

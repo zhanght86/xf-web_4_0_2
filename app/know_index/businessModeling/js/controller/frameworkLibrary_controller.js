@@ -86,7 +86,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/modeling/category/searchbycategoryname",
+            serviceUrl: "/api/ms/modeling/category/searchbycategoryname",
             type:'POST',
             params:params,
             paramName:'categoryName',
@@ -196,7 +196,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //获取root 数据
         function initBot(){
             $(".aside-navs").empty();
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": categoryApplicationId,
                 "categoryPid": "root"
             },function(data){
@@ -267,7 +267,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPostAsync("/api/modeling/category/listbycategorypid",{
+                httpRequestPostAsync("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId": categoryApplicationId,
                     "categoryPid": id
                 },function(data){
@@ -330,7 +330,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //加载对应类目下的框架库
         function loadFrameLibrary(current,type){
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": $scope.vm.botSelectValue,
                 "index":(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -406,7 +406,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             e.stopPropagation();
             var frameId = $(this).attr("data-option");
             console.log("======delete frame======"+frameId);
-            httpRequestPost("/api/modeling/frame/delete",{
+            httpRequestPost("/api/ms/modeling/frame/delete",{
                 "frameId":frameId
             },function(data){
                 if(responseView(data)==true){
@@ -490,7 +490,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if(type==1){
                 request.frameId=$scope.vm.frameId;
             }
-            httpRequestPostAsync("/api/modeling/frame/repeatcheck",request,function(data){
+            httpRequestPostAsync("/api/ms/modeling/frame/repeatcheck",request,function(data){
                 if(data){
                     if(responseWithoutView(data)==true){
                         $(selector).html('');
@@ -608,7 +608,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             shade:false
                         },function(){
                             console.log("======elementId======"+elementId);
-                            httpRequestPostAsync("/api/modeling/frame/deleteelementbyid",{
+                            httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
                             },function(data){
                                 if (responseView(data)==true) {
@@ -749,7 +749,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             return true;
         }
         function faqRequestAdd(){
-            httpRequestPost("/api/modeling/frame/add",{
+            httpRequestPost("/api/ms/modeling/frame/add",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -773,7 +773,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             });
         }
         function faqRequestUpdate(){
-            httpRequestPost("/api/modeling/frame/update",{
+            httpRequestPost("/api/ms/modeling/frame/update",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -908,7 +908,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //概念添加请求
         function conceptRequestAdd(){
-            httpRequestPost("/api/modeling/frame/add",{
+            httpRequestPost("/api/ms/modeling/frame/add",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -988,7 +988,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         },function(){
                             console.log("======elementId======"+elementId);
                             $(this).parent().parent().remove();
-                            httpRequestPost("/api/modeling/frame/deleteelementbyid",{
+                            httpRequestPost("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
                             },function(data){
                                 if (responseView(data)==true) {
@@ -1006,7 +1006,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //概念添加请求
         function conceptRequestUpdate(){
-            httpRequestPost("/api/modeling/frame/update",{
+            httpRequestPost("/api/ms/modeling/frame/update",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -1172,7 +1172,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             event.preventDefault();
                         }
                     }).autocomplete({
-                        serviceUrl: "/api/modeling/frame/searchconceptbykeyword",
+                        serviceUrl: "/api/ms/ms/modeling/frame/searchconceptbykeyword",
                         type:'POST',
                         params:conceptParams,
                         paramName:'conceptKeyword',
@@ -1288,7 +1288,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //元素类型添加请求
         function elementRequestAdd(){
-            httpRequestPost("/api/modeling/frame/add",{
+            httpRequestPost("/api/ms/modeling/frame/add",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -1313,7 +1313,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //元素类型修改请求
         function elementRequestUpdate(){
-            httpRequestPost("/api/modeling/frame/update",{
+            httpRequestPost("/api/ms/modeling/frame/update",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -1479,7 +1479,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             event.preventDefault();
                         }
                     }).autocomplete({
-                        serviceUrl: "/api/modeling/frame/searchconceptbykeyword",
+                        serviceUrl: "/api/ms/ms/modeling/frame/searchconceptbykeyword",
                         type:'POST',
                         params:conceptParams,
                         paramName:'conceptKeyword',
@@ -1564,7 +1564,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log("===="+conceptValueArr);
                 var conceptValue = "";
                 for(var j=0;j<conceptValueArr.length;j++){
-                    httpRequestPostAsync("/api/modeling/frame/searchconceptbyid",{
+                    httpRequestPostAsync("/api/ms/modeling/frame/searchconceptbyid",{
                         "conceptId":conceptValueArr[j]
                     },function(data){
                         if(data.status==10000){
@@ -1649,7 +1649,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $("#conceptExtendQuestionErrorObj").html('');
                 var arr = [];
                 arr[0]=$(value).val();
-                httpRequestPost("/api/modeling/frame/batchtag",{
+                httpRequestPost("/api/ms/modeling/frame/batchtag",{
                     "extendQuestionList":arr,
                     "applicationId":categoryApplicationId
                 },function(data){
@@ -1664,6 +1664,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 },function(err){
                     console.log(err);
+                    $("#conceptExtendQuestionErrorObj").html("打标失败，请正确发布节点后再进行打标操作!");
                 });
             });
         }
@@ -1800,7 +1801,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log($(value).prop("checked"));
                 if($(value).prop("checked")==true){
                     if ($(value).parent().parent().attr("element-id")!=null) {
-                        httpRequestPostAsync("/api/modeling/frame/deleteelementbyid",{
+                        httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
                             "elementId":$(value).parent().parent().attr("element-id")
                         },function(data){
                             if(responseView(data)==true){

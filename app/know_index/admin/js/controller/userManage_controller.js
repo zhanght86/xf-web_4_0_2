@@ -24,7 +24,7 @@ angular.module('adminModule').controller('userManageController', [
             search:search,
             stop:stop,
             userId:$cookieStore.get("userId"),
-
+            verifyRelease:verifyRelease,
             //添加用户所需要数据
             userName : "",
             userLonginName :  "",
@@ -33,6 +33,7 @@ angular.module('adminModule').controller('userManageController', [
             userPhoneNumber  :  "",
             userEmail :"",
             remark:"",
+            allowSubmit : 1, //是否允许提交
             //查询所需数据
             searchName:"",
             //查询当前所有应用
@@ -87,7 +88,6 @@ angular.module('adminModule').controller('userManageController', [
                 index:(index -1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
             },function(data){
-                console.log(data);
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;
                 $scope.vm.paginationConf = {
@@ -106,6 +106,41 @@ angular.module('adminModule').controller('userManageController', [
                 getData(current);
             }
         });
+        //添加用户校验
+        function verifyRelease(){
+            if($scope.vm.userName == null || $scope.vm.userName == ""){
+                layer.msg("用户名不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.userLoginName == null || $scope.vm.userLoginName == ""){
+                layer.msg("登录名不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.userPassword == null || $scope.vm.userPassword == ""){
+                layer.msg("密码不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.userPhoneNumber == null || $scope.vm.userPhoneNumber == ""){
+                layer.msg("手机号不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.userEmail == null || $scope.vm.userEmail == ""){
+                layer.msg("邮箱不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.prop.length == 0){
+                layer.msg("请至少选择一个应用!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            return 1;
+        }
+
         //添加用户
         function addUser(){
             var dialog = ngDialog.openConfirm({
@@ -122,29 +157,31 @@ angular.module('adminModule').controller('userManageController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        httpRequestPost("/api/user/addUser",{
-                            userId:$scope.vm.userId,
-                            userName:$scope.vm.userName,
-                            userLoginName:$scope.vm.userLoginName,
-                            userPassword:$scope.vm.userPassword,
-                            userPhoneNumber:$scope.vm.userPhoneNumber,
-                            userEmail:$scope.vm.userEmail,
-                            roleId:$scope.vm.roleId,
-                            applicationIds:$scope.vm.prop,
-                            remark:$scope.vm.remark,
-                        },function(data){
-                            //刷新页面
-                            $state.reload();
-                            if(data.status == 10009){
-                                layer.msg("该用户已经存在，请重新添加!")
-                            }else if(data.status == 10008){
-                                layer.msg("用户添加成功!");
-                            }else{
-                                layer.msg("用户添加失败!");
-                            }
-                        },function(){
-                            layer.msg("请求失败")
-                        })
+                        if($scope.vm.allowSubmit) {
+                            httpRequestPost("/api/user/addUser", {
+                                userId: $scope.vm.userId,
+                                userName: $scope.vm.userName,
+                                userLoginName: $scope.vm.userLoginName,
+                                userPassword: $scope.vm.userPassword,
+                                userPhoneNumber: $scope.vm.userPhoneNumber,
+                                userEmail: $scope.vm.userEmail,
+                                roleId: $scope.vm.roleId,
+                                applicationIds: $scope.vm.prop,
+                                remark: $scope.vm.remark,
+                            }, function (data) {
+                                //刷新页面
+                                $state.reload();
+                                if (data.status == 10009) {
+                                    layer.msg("该用户已经存在，请重新添加!")
+                                } else if (data.status == 10008) {
+                                    layer.msg("用户添加成功!");
+                                } else {
+                                    layer.msg("用户添加失败!");
+                                }
+                            }, function () {
+                                layer.msg("请求失败")
+                            })
+                        }
                     }
                 }
             });

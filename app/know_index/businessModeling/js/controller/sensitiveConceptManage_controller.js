@@ -9,6 +9,10 @@
 angular.module('businessModelingModule').controller('sensitiveConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
+            success : 10000,
+            illegal : 10003,
+            failed : 10004,
+            empty : 10005,
             applicationId : $cookieStore.get("applicationId"),
             addSensitive : addSensitive,
             editSensitive : editSensitive,
@@ -45,7 +49,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         loadSensitiveConceptTable(1);
         //请求列表
         function loadSensitiveConceptTable(current){
-            httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -87,7 +91,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         //查询
         function searchSensitiveConceptByUser(){
-            httpRequestPost("/api/modeling/concept/sensitive/listByModifier",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/listByModifier",{
                 "sensitiveConceptModifier":$scope.vm.searchVal,
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "index" :($scope.vm.current-1)*$scope.vm.pageSize,
@@ -110,7 +114,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }
-            httpRequestPost("/api/modeling/concept/sensitive/listByAttribute",request,function(data){
+            httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute",request,function(data){
                 loadSensitiveConcept($scope.vm.current,data);
             },function(){
                 layer.msg("查询没有对应信息");
@@ -147,7 +151,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/modeling/concept/sensitive/repeatCheck", {
+                        httpRequestPost("/api/ms/modeling/concept/sensitive/repeatCheck", {
                             "sensitiveConceptApplicationId": $scope.vm.applicationId,
                             "sensitiveConceptKey": $scope.vm.key
                         }, function (data) {          //类名重複
@@ -157,7 +161,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/modeling/concept/sensitive/listByAttribute", {
+                                    httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute", {
                                         "sensitiveConceptApplicationId": $scope.vm.applicationId,
                                         "sensitiveConceptKey": $scope.vm.key,
                                         "index": 0,
@@ -181,7 +185,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                                 addSensitiveConceptDialog(singleAddSensitiveConcept);
                             }
                         }, function () {
-                            layer.msg("添加失敗")
+                            layer.msg("添加失败")
                         })
                     } else {
                         $scope.vm.key = "";
@@ -286,46 +290,43 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         //編輯事件
         function singleEditSensitiveConcept(item){
             assembleSensitiveConceptTerm();
-            httpRequestPost("/api/modeling/concept/sensitive/update",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/update",{
                 "sensitiveConceptId":item.sensitiveConceptId,
-                "sensitiveConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "sensitiveConceptKey":  $scope.vm.key,
-                "sensitiveConceptModifier": item.sensitiveConceptModifier,
-                "sensitiveConceptTerm": $scope.vm.term
-            },function(data){
-                layer.msg("编辑成功");
-                $state.reload();
-            },function(){
-                layer.msg("编辑失败")
-            })
-        }
-        //单条新增
-        function singleAddSensitiveConcept(){
-            assembleSensitiveConceptTerm();
-            httpRequestPost("/api/modeling/concept/sensitive/add",{
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "sensitiveConceptKey":  $scope.vm.key,
                 "sensitiveConceptModifier": $scope.vm.modifier,
                 "sensitiveConceptTerm": $scope.vm.term
             },function(data){
-                layer.msg("添加成功");
-                $state.reload();
-            },function(){
-                layer.msg("添加失败")
-            })
+                if(responseView(data)==true){
+                    loadSensitiveConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+        }
+        //单条新增
+        function singleAddSensitiveConcept(){
+            assembleSensitiveConceptTerm();
+            httpRequestPost("/api/ms/modeling/concept/sensitive/add",{
+                "sensitiveConceptApplicationId": $scope.vm.applicationId,
+                "applicationId": $scope.vm.applicationId,
+                "sensitiveConceptKey":  $scope.vm.key,
+                "sensitiveConceptModifier": $scope.vm.modifier,
+                "sensitiveConceptTerm": $scope.vm.term
+            },function(data){
+                if(responseView(data)==true){
+                    loadSensitiveConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //单条刪除
         function singleDelSensitiveConcept(id){
-            httpRequestPost("/api/modeling/concept/sensitive/delete",{
+            httpRequestPost("/api/ms/modeling/concept/sensitive/delete",{
                 "sensitiveConceptId":id
             },function(data){
-                layer.msg("刪除成功");
-                $state.reload();
-            },function(){
-                layer.msg("刪除失敗")
-            })
+                if(responseView(data)==true){
+                    loadSensitiveConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
         }
         //初始化tagEditor插件
         function termSpliterTagEditor() {
@@ -359,6 +360,18 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        //返回状态显示
+        function responseView(data){
+            if(data==null){
+                return false;
+            }
+            layer.msg(data.info);
+            if(data.status==$scope.vm.success){
+                console.log("===success===");
+                return true;
+            }
+            return false;
         }
     }
 ]);

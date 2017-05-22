@@ -38,7 +38,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             }
         }
         function delKnowledge(){
-            httpRequestPost("/api/chatKnowledge/deleteConceCptChatKnowledge",{
+            httpRequestPost("/api/ms/chatKnowledge/deleteConceCptChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
                 "ids":$scope.vm.delArr
             },function(data){
@@ -59,7 +59,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         function search(index){
             $scope.vm.getType = 1;
             console.log($scope.vm.chatQuestionContent);
-            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+            httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
                 "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
@@ -96,7 +96,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         //请求列表
         function getData(index){
             $scope.vm.getType = 0 ;
-            httpRequestPost("/api/chatKnowledge/queryChatKnowledge",{
+            httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
                 "applicationId": $scope.vm.applicationId,
                 "index" :(index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize

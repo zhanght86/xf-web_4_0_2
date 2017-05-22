@@ -179,7 +179,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
 //        選擇知識标题
         function getDetailByTitle(title){
-                httpRequestPost("/api/marketingKnowledge/getKnowledgeTitle",{
+                httpRequestPost("/api/ms/marketingKnowledge/getKnowledgeTitle",{
                     "title" : title,
                     "applicationId": $scope.vm.applicationId,
                 },function(data){
@@ -201,7 +201,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
 // 通过类目id 获取框架
         function getFrame(id){
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
                 "frameEnableStatusId": 1,
                 "frameTypeId":10012,
@@ -248,7 +248,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             //console.log(id);
-            httpRequestPost("/api/modeling/frame/listbyattribute",{
+            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10012,
                 "frameId": id,
                 "index": 0,
@@ -279,7 +279,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            httpRequestPost("/api/modeling/category/getcategoryfullname",{
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
@@ -317,7 +317,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var title = oldWord.extensionQuestionTitle ;
             var weight = oldWord.extensionQuestionType ;
             //console.log(oldWord);
-            httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
+            httpRequestPost("/api/ms/marketingKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
@@ -355,7 +355,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
         //function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
         //    console.log(oldWord);
-        //    httpRequestPost("/api/marketingKnowledge/checkFrameTag",{
+        //    httpRequestPost("/api/ms/marketingKnowledge/checkFrameTag",{
         //        "applicationId": $scope.vm.applicationId,
         //        "extensionQuestionList" : extensionQuestionList,
         //        "frameQuestionTagList" : frameQuestionTagList
@@ -396,7 +396,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function scanCotentByTitle(title,index){
             var answerContentList = [];
             answerContentList.push(title);
-            httpRequestPost("/api/marketingKnowledge/productExtensionQuestion", {
+            httpRequestPost("/api/ms/marketingKnowledge/productExtensionQuestion", {
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.title,
                 "answerContentList": answerContentList
@@ -427,7 +427,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 //layer.msg("扩展问重复");
                 return false
             }else{
-                httpRequestPost("/api/marketingKnowledge/checkExtensionQuestion",{
+                httpRequestPost("/api/ms/marketingKnowledge/checkExtensionQuestion",{
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
@@ -489,7 +489,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
         //获取root 数据
         function getBotRoot(){
-            httpRequestPost("/api/modeling/category/listbycategorypid",{
+            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "title" : $scope.vm.title ,
                 "categoryPid": "root"
@@ -524,7 +524,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var that = $(this);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/modeling/category/listbycategorypid",{
+                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
@@ -606,7 +606,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 //        }
         // 知识文档分类回调
         function knowledgeClassifyCall() {
-            httpRequestPost("/api/knowledgeDocumentation/documentationKnowledgeClassify",
+            httpRequestPost("/api/ms/knowledgeDocumentation/documentationKnowledgeClassify",
                 {
                     knowledgeId: $scope.vm.docmentation.knowledgeId,
                     knowledgeStatus: 4
@@ -730,7 +730,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //根據 標題 生成 bot
         function getBotByTitle(){
             if($scope.vm.title){
-                httpRequestPost("/api/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
+                httpRequestPost("/api/ms/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId" :  $scope.vm.applicationId
                 },function(data){
@@ -793,11 +793,11 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         var api ;
                         if($scope.vm.knowledgeId){
                             //编辑
-                            api = "/api/marketingKnowledge/editKnowledge" ;
+                            api = "/api/ms/marketingKnowledge/editKnowledge" ;
                             params.knowledgeId = $scope.vm.knowledgeId ;
                         }else{
                             //新增
-                            api = "/api/marketingKnowledge/addMarketingKnowledge"
+                            api = "/api/ms/marketingKnowledge/addMarketingKnowledge"
                         }
                         httpRequestPost(api,params,function(data){
                             //console.log(params);
@@ -834,7 +834,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
-                    obj.api = "/api/marketingKnowledge/addMarketingKnowledge"
+                    obj.api = "/api/ms/marketingKnowledge/addMarketingKnowledge"
                 }
                 obj.params = params;
                 obj.knowledgeType = 104 ;
@@ -896,7 +896,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("标题不能为空");
                 return false ;
             }else{
-                httpRequestPost("/api/marketingKnowledge/checkDistribute",{
+                httpRequestPost("/api/ms/marketingKnowledge/checkDistribute",{
                     "title" : title
                 },function(data){
                     //console.log(data);
@@ -1011,7 +1011,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         });
 
         function getAppointRelative(title){
-            httpRequestPost("/api/marketingKnowledge/getKnowledgeTitle",{
+            httpRequestPost("/api/ms/marketingKnowledge/getKnowledgeTitle",{
                 "title" : title
             },function(data){
                 if(data.status == 200){
