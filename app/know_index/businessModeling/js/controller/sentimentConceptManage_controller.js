@@ -271,7 +271,7 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
         //   刪除 彈框
         function deleteSentiment(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/conceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
