@@ -47,6 +47,58 @@
         return this.replace(/(^\s*)|(\s*$)/g, "");
         }
         }
+
+
+        //forEach 問題
+        if ( !Array.prototype.forEach ) {
+
+    Array.prototype.forEach = function forEach( callback, thisArg ) {
+
+        var T, k;
+
+        if ( this == null ) {
+
+            throw new TypeError("this is null or not defined" );
+
+        }
+
+        var O = Object(this);
+
+        var len = O.length >>> 0;
+
+        if ( typeof callback !== "function" ) {
+
+            throw new TypeError( callback +" is not a function" );
+
+        }
+
+        if ( arguments.length > 1 ) {
+
+            T = thisArg;
+
+        }
+
+        k = 0;
+
+        while( k < len ) {
+
+            var kValue;
+
+            if ( k in O ) {
+
+                kValue = O[ k ];
+
+                callback.call( T, kValue, k, O );
+
+            }
+
+            k++;
+
+        }
+
+    };
+
+}
     /*IE8兼容end*/
     </script>
 
@@ -84,8 +136,8 @@
         <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.ie.css"/>
         <script type="text/javascript" src="js/plugins/html5.js"></script>
         <script type="text/javascript" src="js/plugins/respond.min.js"></script>
-
         <script type="text/javascript" src="js/plugins/PIE_IE678.js"></script>
+         <script  type="text/javascript" src="libs/H_ui/lib/html5shiv.js"></script>
     <![endif]-->
 
 
@@ -144,6 +196,7 @@
     <script src="js/plugins/jquery.placeholder.min.js"></script>
     <script src="js/plugins/layer.js"></script>
     <script src="bower_components/es5-shim/es5-sham.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
     <!--<script src="js/plugins/WdatePicker.js"></script>-->
 
     <!--上传图片-->
