@@ -171,7 +171,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             },function(data){
                     if( data.data.total == 0){
                         layer.msg("查询记录为空") ;
-                        vm.knowledge = "";
+                        $scope.vm.knowledge = "";
                     }
                         console.log(index ,data) ;
                         $scope.vm.listKnoData = data.data.objs;
