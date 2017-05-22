@@ -216,6 +216,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         },function(data){
                             //$state.reload();
                             if(data.status == 10013){
+                                $scope.vm.selectAllCheck = false;
                                 $state.reload();
                                 layer.msg("删除成功");
                             }else{
@@ -317,8 +318,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             userId :  $scope.vm.userId,
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
-                            console.log( $scope.vm.seleceAddAll)
-                            console.log(data);
+                            $scope.vm.selectAllCheck = false;
                             //$state.reload();
                             getData(1);
                             if(data.status == 10012){
