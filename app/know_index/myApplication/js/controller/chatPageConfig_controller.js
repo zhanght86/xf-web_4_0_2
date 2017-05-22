@@ -136,10 +136,10 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
-                if(data.status == 10005){
-                    layer.msg("查询到记录为空");
-                    return;
-                }
+                //if(data.status == 10005){
+                //    layer.msg("查询到记录为空");
+                //    return;
+                //}
                 $scope.vm.listData = data.data.hotQuestionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.listDataLength = data.data.total;
@@ -216,12 +216,11 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         },function(data){
                             //$state.reload();
                             if(data.status == 10013){
-                                getData(1);
-                                layer.msg("删除成功")
+                                $state.reload();
+                                layer.msg("删除成功");
                             }else{
                                 layer.msg("删除失败")
                             }
-
                         },function(){
                             layer.msg("请求失败")
                         });
