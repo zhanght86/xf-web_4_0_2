@@ -41,7 +41,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             removeOldSubNode : removeOldSubNode, //从旧的子节点中删除子节点
 
             dialogTitle : "",  //对话框标题
-            allowSubmit : 1, //是否允许提交
+            allowSubmit : 0, //是否允许提交
             errorTip : "", //错误访问地址提示
             errorNodeIdTip : "", //错误节点id提示
 
@@ -154,10 +154,10 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                                     layer.msg("编辑出错了");
                                 }
                             },function(){
-                                layer.msg("请求失敗");
+                                layer.msg("请求失败");
                             })
                         }else{
-                            layer.msg("访问地址或者节点编号重复了！");
+                            layer.msg("访问地址或者节点编号不合法！");
                         }
                     }
                     initNodeInput();
@@ -199,10 +199,10 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                                     layer.msg("添加出错了！");
                                 }
                             },function(){
-                                layer.msg("添加失敗");
+                                layer.msg("添加失败");
                             })
                         }else{
-                            layer.msg("访问地址或者节点编号重复了！");
+                            layer.msg("访问地址或者节点编号不合法！");
                         }
                     }
                     initNodeInput();
