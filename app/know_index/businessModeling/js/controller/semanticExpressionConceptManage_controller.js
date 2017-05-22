@@ -271,7 +271,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
         //   刪除 彈框
         function deleteSemanticExpression(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/conceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

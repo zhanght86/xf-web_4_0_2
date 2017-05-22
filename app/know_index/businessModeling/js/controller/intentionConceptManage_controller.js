@@ -274,7 +274,7 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
                 var dialog = ngDialog.openConfirm({
-                    template: "/know_index/businessModeling/ConceptManageDialog.html",
+                    template: "/know_index/businessModeling/conceptManageDialog.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,

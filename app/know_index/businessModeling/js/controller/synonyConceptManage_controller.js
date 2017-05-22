@@ -276,7 +276,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         //   刪除 彈框
         function deleteSynonym(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/conceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
