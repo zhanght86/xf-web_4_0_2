@@ -54,7 +54,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
 
             heighSarch : false ,
 
-            newKnowledge : 100,
+            newKnowledge : "false",
             jumpToNewKonwledge : jumpToNewKonwledge
         };
         function jumpToNewKonwledge(id){
@@ -73,9 +73,11 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                     addUrl = "knowledgeManagement.factorAdd";
                     break;
             }
+            if(!addUrl)
+                return ;
             var url = $state.href(addUrl);
             $window.open(url,'_blank');
-            console.log(addUrl)
+            $scope.vm.newKnowledge = "false";
         }
         napSearch();
         //高级搜索 开关
