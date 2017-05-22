@@ -26,7 +26,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             categoryTypeId: 163,
             botSelectType:163,
             categorySceneId: 0,
-            categoryAttributeName: "",
+            categoryAttributeName: "edge",
             categoryName: "",
             categoryPid: "",
             categoryApplicationId: "",
@@ -200,7 +200,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -252,8 +252,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
             clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
+            $scope.vm.categoryAttributeName = $(this).attr("node-option");
             $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
+            console.log($scope.vm.categoryAttributeName);
             $scope.$apply()
         });
         $("#library").on("click","span",function(){
@@ -291,7 +293,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -386,6 +388,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
         }
         //套用
         function applyCategory(){
+            console.log($scope.vm.botLibrarySelectValue);
+            console.log($scope.vm.botSelectValue);
+            if(applyValid()==false){
+                return;
+            }
             httpRequestPost("/api/ms/modeling/categorylibrary/applycategorybyid",{
                 "categoryId": $scope.vm.botLibrarySelectValue,
                 "categoryPid": $scope.vm.botSelectValue,
@@ -398,6 +405,24 @@ angular.module('myApplicationModule').controller('botApplyController', [
             },function(err){
                 console.log(err);
             });
+        }
+        //套用验证
+        function applyValid(){
+            //rule edge->node
+            if($scope.vm.botLibrarySelectValue=="root"){
+                layer.msg("请选择要套用的bot节点");
+                return false;
+            }
+            console.log($scope.vm.categoryAttributeName+"===="+$scope.vm.categoryLibraryAttributeName);
+            if($scope.vm.categoryAttributeName==$scope.vm.categoryLibraryAttributeName){
+                if($scope.vm.categoryAttributeName=="edge"){
+                    layer.msg("关系以下必须添加节点");
+                }else{
+                    layer.msg("节点以下必须添加关系");
+                }
+                return false;
+            }
+            return true;
         }
         $("#category").on("click",".delete",function(){
             console.log("delete");
