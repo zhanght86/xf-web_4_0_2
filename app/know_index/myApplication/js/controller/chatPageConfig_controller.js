@@ -31,7 +31,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             hotQuestionTitle : "",
             knowledge : "",
             listDataLength : "",
-            selectAllCheckDialog : false,
+            selectAllCheckDialog : false,         
             seleceAddAll : [],
             //knowledge : [],
             //========================方法=========================
