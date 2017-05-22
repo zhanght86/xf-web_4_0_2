@@ -40,6 +40,8 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
         };
 
 
+
+
         //加载知识类型
         listKnowledgeType();
         //加载交互方式
