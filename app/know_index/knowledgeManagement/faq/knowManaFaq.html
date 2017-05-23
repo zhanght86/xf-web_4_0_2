@@ -15,7 +15,7 @@
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
-                            <input class="ipt-txt" type="text"  ng-model="vm.title" name="title"    ng-keypress="vm.enterEvent($event,vm.getCreatBot)" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
+                            <input class="ipt-txt bd" type="text"  ng-model="vm.title" name="title"    ng-keypress="vm.enterEvent($event,vm.getCreatBot)" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
                             <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/match_img.png"  width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
@@ -108,8 +108,8 @@
                     </div>
                     <div class="value" style="overflow: visible">
                         <div class="clearfix" style="width: 500px;height: 34px;">
-                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="padding-left:6px;height: 98%;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
-                            <select  ng-model="vm.extensionWeight"  class="input-text L mr-10" style="display: inline-block;width: 84px;height: 35px;">
+                            <input type="text" class="L" placeholder="请输入问题" ng-keypress="enterEvent($event,vm.getExtension)" ng-model="vm.extensionTitle" style="padding-left:6px;height:33px;display: inline-block;width:321px;border: 1px solid #e1e1e1;border-right: 0;">
+                            <select  ng-model="vm.extensionWeight"  class="bd L mr-10" style="display: inline-block;width: 84px;height: 33px;line-height:33px;">
                                 <option value="60">普通</option>
                                 <option value="61">否定</option>
                             </select>
@@ -212,6 +212,8 @@
     }
     .ipt-txt{
         border: 1px  solid #e1e1e1;
+        height:34px;
+        box-sizing:border-box;
     }
     .tag_box{width:352px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
