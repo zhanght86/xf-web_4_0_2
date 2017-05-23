@@ -782,6 +782,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         //  主页保存 获取参数
         function getParams(){
+            console.log(getTableParams())
             var params = {};
             params =  {
                 "applicationId": $scope.vm.applicationId,
