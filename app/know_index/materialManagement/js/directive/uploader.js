@@ -8,23 +8,23 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
             accept:'=',
             server : '='   , //url
             //item  : '@'
-            type : "="   ,   //image£ºÍ¼Æ¬ video£ºÒôÊÓÆµ  flash£ºflash   file£º°ì¹«ÎÄµµ£¬Ñ¹ËõÎÄ¼şµÈµÈ
+            type : "="   ,   //imageï¼šå›¾ç‰‡ videoï¼šéŸ³è§†é¢‘  flashï¼šflash   fileï¼šåŠå…¬æ–‡æ¡£ï¼Œå‹ç¼©æ–‡ä»¶ç­‰ç­‰
             isAuto : "=",
             selectBtn : "=",
             "tableList" : "="
         },
         template:
-            '<button  id="picker" >ÉÏ´«ÏßÏÂ±à¼­³¡¾°ÖªÊ¶</button>'
+            '<button  id="picker" >ä¸Šä¼ çº¿ä¸‹ç¼–è¾‘åœºæ™¯çŸ¥è¯†</button>'
         ,
         link:function(scope,element,attrs){
             //var $list = angular.element("#thelist");
             var server = angular.copy(scope.server) ;
             var uploader = WebUploader.create({
-                auto: true, // Ñ¡ÍêÎÄ¼şºó£¬ÊÇ·ñ×Ô¶¯ÉÏ´«
-                // swfÎÄ¼şÂ·¾¶
+                auto: true, // é€‰å®Œæ–‡ä»¶åï¼Œæ˜¯å¦è‡ªåŠ¨ä¸Šä¼ 
+                // swfæ–‡ä»¶è·¯å¾„
                 swf: 'Uploader.swf',
-                //formData : {title:"is Image  ====   uploader"}  ,   // ÉÏ´«²ÎÊı
-                // ÎÄ¼ş½ÓÊÕ·şÎñ¶Ë¡£
+                //formData : {title:"is Image  ====   uploader"}  ,   // ä¸Šä¼ å‚æ•°
+                // æ–‡ä»¶æ¥æ”¶æœåŠ¡ç«¯ã€‚
                 //server: "/api/application/application/uploadHead",
 
                 server: "/api/ms/elementKnowledgeAdd/upload",
@@ -33,15 +33,15 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
                 //    extensions: 'xls,xlsx',
                 //    mimeTypes: 'file/*'
                 //},
-                // Ñ¡ÔñÎÄ¼şµÄ°´Å¥¡£¿ÉÑ¡¡£
-                // ÄÚ²¿¸ù¾İµ±Ç°ÔËĞĞÊÇ´´½¨£¬¿ÉÄÜÊÇinputÔªËØ£¬Ò²¿ÉÄÜÊÇflash.
+                // é€‰æ‹©æ–‡ä»¶çš„æŒ‰é’®ã€‚å¯é€‰ã€‚
+                // å†…éƒ¨æ ¹æ®å½“å‰è¿è¡Œæ˜¯åˆ›å»ºï¼Œå¯èƒ½æ˜¯inputå…ƒç´ ï¼Œä¹Ÿå¯èƒ½æ˜¯flash.
                 pick: '#picker',
-                // ²»Ñ¹Ëõimage, Ä¬ÈÏÈç¹ûÊÇjpeg£¬ÎÄ¼şÉÏ´«Ç°»áÑ¹ËõÒ»°ÑÔÙÉÏ´«£¡
+                // ä¸å‹ç¼©image, é»˜è®¤å¦‚æœæ˜¯jpegï¼Œæ–‡ä»¶ä¸Šä¼ å‰ä¼šå‹ç¼©ä¸€æŠŠå†ä¸Šä¼ ï¼
                 //resize: false,
-                //chunked: true,  // ·ÖÆ¬ÉÏ´«´óÎÄ¼ş
-                //chunkRetry: 10, // Èç¹ûÄ³¸ö·ÖÆ¬ÓÉÓÚÍøÂçÎÊÌâ³ö´í£¬ÔÊĞí×Ô¶¯ÖØ´«¶àÉÙ´Î£¿
-                //thread: 100,// ×î´óÉÏ´«²¢·¢Êı
-                //// ½ûµôÈ«¾ÖµÄÍÏ×§¹¦ÄÜ¡£ÕâÑù²»»á³öÏÖÎÄ¼şÍÏ½øÒ³ÃæµÄÊ±ºò£¬°ÑÎÄ¼ş´ò¿ª¡£
+                //chunked: true,  // åˆ†ç‰‡ä¸Šä¼ å¤§æ–‡ä»¶
+                //chunkRetry: 10, // å¦‚æœæŸä¸ªåˆ†ç‰‡ç”±äºç½‘ç»œé—®é¢˜å‡ºé”™ï¼Œå…è®¸è‡ªåŠ¨é‡ä¼ å¤šå°‘æ¬¡ï¼Ÿ
+                //thread: 100,// æœ€å¤§ä¸Šä¼ å¹¶å‘æ•°
+                //// ç¦æ‰å…¨å±€çš„æ‹–æ‹½åŠŸèƒ½ã€‚è¿™æ ·ä¸ä¼šå‡ºç°æ–‡ä»¶æ‹–è¿›é¡µé¢çš„æ—¶å€™ï¼ŒæŠŠæ–‡ä»¶æ‰“å¼€ã€‚
                 //disableGlobalDnd: true,
                 //
                 //fileNumLimit: 1,
@@ -54,23 +54,23 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
             uploader.on( 'uploadProgress', function( file, percentage ) {
                 var $li = $( '#'+file.id ),
                     $percent = $li.find('.progress .progress-bar');
-                // ±ÜÃâÖØ¸´´´½¨
+                // é¿å…é‡å¤åˆ›å»º
                 if ( !$percent.length ) {
                     $percent = $('<div class="progress progress-striped active" style="height: 50px;background: red; width: 200px;">' +
                         '<div class="progress-bar" role="progressbar" style="width: 0%">' +
                         '</div> ' +
                         '</div>').appendTo( $li ).find('.progress-bar');
                 }
-                $li.find('p.state').text('ÉÏ´«ÖĞ');
+                $li.find('p.state').text('ä¸Šä¼ ä¸­');
                 $percent.css( 'width', percentage * 100 + '%' );
                 console.log(percentage);
             });
             uploader.on('uploadError', function (file) {
-                console.log("ÉÏ´«Ê§°Ü")
+                console.log("ä¸Šä¼ å¤±è´¥")
             });
             uploader.on('uploadSuccess', function (file,response) {
                 if(response.status == 500){
-                    layer.msg("Ä£°å´íÎó")
+                    layer.msg("æ¨¡æ¿é”™è¯¯")
                 }else{
                     scope.tableList = response ;
                     scope.$apply();
