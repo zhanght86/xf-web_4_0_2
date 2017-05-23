@@ -609,10 +609,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
                 $scope.vm.knowledgeBotVal = "";
+                $(".icon-jj").eq(0).css("backgroundPosition","0 0");
             }
         }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'i',function(){
+            console.log(1) ;
             var id = $(this).attr("data-option");
             var that = $(this);
             if(!that.parent().parent().siblings().length){
