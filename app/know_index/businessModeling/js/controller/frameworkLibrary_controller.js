@@ -1739,30 +1739,64 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             $("#ele-asked-error").html('');
             $("#ele-asked-error").attr("style","display:none;");
-            var relateConceptIds = $(".ele-concept").attr("data-option");
-            var relateConceptVals = $(".ele-concept").val();
-            relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
-            var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
-            if(lengthCheck(sumConceptStr,0,255)==false){
-                $("#ele-concept-error").html('相关概念不能为空或超过长度限制');
-                $("#ele-concept-error").attr("style","display:inline-block;left: 10px;");
-                return;
+            var relateConceptIds = "";
+            var relateConceptVals = "";
+            if($(".ele-concept").attr("data-option")==undefined){
+
             }else{
-                $("#ele-concept-error").html('');
-                $("#ele-concept-error").attr("style","display:none;");
+                relateConceptIds = $(".ele-concept").attr("data-option");
+                console.log($(".ele-concept").attr("data-option"));
+                relateConceptVals = $(".ele-concept").val();
+                console.log($(".ele-concept").val());
+                relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
+                var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
+                if(lengthCheck(sumConceptStr,0,255)==false){
+                    $("#ele-concept-error").html('相关概念不能为空或超过长度限制');
+                    $("#ele-concept-error").attr("style","display:inline-block;left: 10px;");
+                    return;
+                }else{
+                    $("#ele-concept-error").html('');
+                    $("#ele-concept-error").attr("style","display:none;");
+                }
+                if(relateConceptVals==null){
+                    return;
+                }
+                if(relateConceptVals==""){
+                    return;
+                }
+                if(relateConceptIds==null){
+                    return;
+                }
+                if(relateConceptIds==""){
+                    return;
+                }            relateConceptIds = $(".ele-concept").attr("data-option");
+                console.log($(".ele-concept").attr("data-option"));
+                relateConceptVals = $(".ele-concept").val();
+                console.log($(".ele-concept").val());
+                relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
+                var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
+                if(lengthCheck(sumConceptStr,0,255)==false){
+                    $("#ele-concept-error").html('相关概念不能为空或超过长度限制');
+                    $("#ele-concept-error").attr("style","display:inline-block;left: 10px;");
+                    return;
+                }else{
+                    $("#ele-concept-error").html('');
+                    $("#ele-concept-error").attr("style","display:none;");
+                }
+                if(relateConceptVals==null){
+                    return;
+                }
+                if(relateConceptVals==""){
+                    return;
+                }
+                if(relateConceptIds==null){
+                    return;
+                }
+                if(relateConceptIds==""){
+                    return;
+                }
             }
-            if(relateConceptVals==null){
-                return;
-            }
-            if(relateConceptVals==""){
-                return;
-            }
-            if(relateConceptIds==null){
-                return;
-            }
-            if(relateConceptIds==""){
-                return;
-            }
+
             var html =  '<tr>'+
                         '   <td><input type="checkbox" class="sid"/></td>'+
                         '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-name-add" placeholder="地区" value="'+eleName+'" disabled="disabled"/></td>'+

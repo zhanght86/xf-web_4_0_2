@@ -13,7 +13,7 @@
             <div>渠道：</div>
             <!--{{vm.channel}}-->
             <label ng-repeat="channel in vm.channels track by $index">
-                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelId)" ng-checked="vm.channel.inArray(channel.channelId)">
+                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode)" ng-checked="vm.channel.inArray(channel.channelCode)">
                 {{channel.channelName}}
             </label>
         </div>
