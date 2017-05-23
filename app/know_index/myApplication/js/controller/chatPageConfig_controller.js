@@ -136,10 +136,10 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
-                if(data.status == 10005){
-                    layer.msg("查询到记录为空");
-                    return;
-                }
+                //if(data.status == 10005){
+                //    layer.msg("查询到记录为空");
+                //    return;
+                //}
                 $scope.vm.listData = data.data.hotQuestionList;
                 $scope.vm.listDataTotal = data.data.total;
                 $scope.vm.listDataLength = data.data.total;
@@ -171,7 +171,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             },function(data){
                     if( data.data.total == 0){
                         layer.msg("查询记录为空") ;
-                        vm.knowledge = "";
+                        $scope.vm.knowledge = "";
                     }
                         console.log(index ,data) ;
                         $scope.vm.listKnoData = data.data.objs;
@@ -216,12 +216,12 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         },function(data){
                             //$state.reload();
                             if(data.status == 10013){
-                                getData(1);
-                                layer.msg("删除成功")
+                                $scope.vm.selectAllCheck = false;
+                                $state.reload();
+                                layer.msg("删除成功");
                             }else{
                                 layer.msg("删除失败")
                             }
-
                         },function(){
                             layer.msg("请求失败")
                         });
@@ -318,8 +318,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             userId :  $scope.vm.userId,
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
-                            console.log( $scope.vm.seleceAddAll)
-                            console.log(data);
+                            $scope.vm.selectAllCheck = false;
                             //$state.reload();
                             getData(1);
                             if(data.status == 10012){

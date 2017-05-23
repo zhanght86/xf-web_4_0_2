@@ -1172,7 +1172,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             event.preventDefault();
                         }
                     }).autocomplete({
-                        serviceUrl: "/api/ms/ms/modeling/frame/searchconceptbykeyword",
+                        serviceUrl: "/api/ms/modeling/frame/searchconceptbykeyword",
                         type:'POST',
                         params:conceptParams,
                         paramName:'conceptKeyword',
@@ -1479,7 +1479,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             event.preventDefault();
                         }
                     }).autocomplete({
-                        serviceUrl: "/api/ms/ms/modeling/frame/searchconceptbykeyword",
+                        serviceUrl: "/api/ms/modeling/frame/searchconceptbykeyword",
                         type:'POST',
                         params:conceptParams,
                         paramName:'conceptKeyword',

@@ -73,6 +73,7 @@
                         </div>
                     </div>
                     <select class="sel bd L" ng-model="vm.newKnowledge" ng-change="vm.jumpToNewKonwledge(vm.newKnowledge)" style="width: 126px;">
+                        <option value="false" style="display:none;">单条知识新增</option>
                         <option value="100">FAQ型知识新增</option>
                         <option value="101">概念知识型新增</option>
                         <option value="102">列表型知识新增</option>
@@ -135,7 +136,7 @@
                                 <div class="csso-info oh">
                                     <div class="fr">
                                         <span>作者：{{item.knowledgeCreator}}</span>
-                                        <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd hh:mm:ss'}}</span>
+                                        <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</span>
                                     </div>
                                 </div>
                             </li>

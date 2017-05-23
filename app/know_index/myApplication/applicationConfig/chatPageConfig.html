@@ -38,7 +38,7 @@
                             <td><input type="checkbox" ng-checked="vm.selectAllCheck" ng-click="vm.selectSingle($event,item.hotQuestionId)"/></td>
                             <td>{{item.hotQuestionTitle}}</td>
                             <td>{{item.hotQuestionOrder}}</td>
-                            <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>
                                 <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary mr-10"  ng-click="vm.toTop(item)"  ng-if="item.hotQuestionOrder!=1" value="置顶">
                                 <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary mr-10"  ng-click="vm.move(item)"  ng-if="item.hotQuestionOrder!=1" value="上移">

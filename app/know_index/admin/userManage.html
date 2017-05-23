@@ -47,7 +47,7 @@
                         <td>{{item.userPhoneNumber}}</td>
                         <td>{{item.userEmail}}</td>
                         <td>{{item.roleName}}</td>
-                        <td>{{item.createTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                        <td>{{item.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td><span ng-repeat="val in item.applicationName[0].data">{{val.applicationName}}<i ng-if="$index!=item.applicationName[0].data.length-1">,</i></span></td>
                         <td>
                             <span class="btn1 btn_green2" ng-if="item.statusId==10001">已启用</span>
