@@ -8,23 +8,23 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
             accept:'=',
             server : '='   , //url
             //item  : '@'
-            type : "="   ,   //image£ºÍ¼Æ¬ video£ºÒôÊÓÆµ  flash£ºflash   file£º°ì¹«ÎÄµµ£¬Ñ¹ËõÎÄ¼þµÈµÈ
+            type : "="   ,   //imageï¿½ï¿½Í¼Æ¬ videoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµ  flashï¿½ï¿½flash   fileï¿½ï¿½ï¿½ì¹«ï¿½Äµï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Èµï¿½
             isAuto : "=",
             selectBtn : "=",
             "tableList" : "="
         },
         template:
-            '<button  id="picker" >ÅúÁ¿µ¼Èë</button>'
+            '<button  id="picker" >ï¿½Ï´ï¿½ï¿½ï¿½ï¿½Â±à¼­ï¿½ï¿½ï¿½ï¿½ÖªÊ¶</button>'
         ,
         link:function(scope,element,attrs){
             //var $list = angular.element("#thelist");
             var server = angular.copy(scope.server) ;
             var uploader = WebUploader.create({
-                auto: true, // Ñ¡ÍêÎÄ¼þºó£¬ÊÇ·ñ×Ô¶¯ÉÏ´«
-                // swfÎÄ¼þÂ·¾¶
+                auto: true, // Ñ¡ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ô¶ï¿½ï¿½Ï´ï¿½
+                // swfï¿½Ä¼ï¿½Â·ï¿½ï¿½
                 swf: 'Uploader.swf',
-                //formData : {title:"is Image  ====   uploader"}  ,   // ÉÏ´«²ÎÊý
-                // ÎÄ¼þ½ÓÊÕ·þÎñ¶Ë¡£
+                //formData : {title:"is Image  ====   uploader"}  ,   // ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Õ·ï¿½ï¿½ï¿½Ë¡ï¿½
                 //server: "/api/application/application/uploadHead",
 
                 server: "/api/ms/elementKnowledgeAdd/upload",
@@ -33,15 +33,15 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
                 //    extensions: 'xls,xlsx',
                 //    mimeTypes: 'file/*'
                 //},
-                // Ñ¡ÔñÎÄ¼þµÄ°´Å¥¡£¿ÉÑ¡¡£
-                // ÄÚ²¿¸ù¾Ýµ±Ç°ÔËÐÐÊÇ´´½¨£¬¿ÉÄÜÊÇinputÔªËØ£¬Ò²¿ÉÄÜÊÇflash.
+                // Ñ¡ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ä°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
+                // ï¿½Ú²ï¿½ï¿½ï¿½ï¿½Ýµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½inputÔªï¿½Ø£ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½flash.
                 pick: '#picker',
-                // ²»Ñ¹Ëõimage, Ä¬ÈÏÈç¹ûÊÇjpeg£¬ÎÄ¼þÉÏ´«Ç°»áÑ¹ËõÒ»°ÑÔÙÉÏ´«£¡
+                // ï¿½ï¿½Ñ¹ï¿½ï¿½image, Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jpegï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï´ï¿½Ç°ï¿½ï¿½Ñ¹ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½
                 //resize: false,
-                //chunked: true,  // ·ÖÆ¬ÉÏ´«´óÎÄ¼þ
-                //chunkRetry: 10, // Èç¹ûÄ³¸ö·ÖÆ¬ÓÉÓÚÍøÂçÎÊÌâ³ö´í£¬ÔÊÐí×Ô¶¯ÖØ´«¶àÉÙ´Î£¿
-                //thread: 100,// ×î´óÉÏ´«²¢·¢Êý
-                //// ½ûµôÈ«¾ÖµÄÍÏ×§¹¦ÄÜ¡£ÕâÑù²»»á³öÏÖÎÄ¼þÍÏ½øÒ³ÃæµÄÊ±ºò£¬°ÑÎÄ¼þ´ò¿ª¡£
+                //chunked: true,  // ï¿½ï¿½Æ¬ï¿½Ï´ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+                //chunkRetry: 10, // ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½Ù´Î£ï¿½
+                //thread: 100,// ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                //// ï¿½ï¿½ï¿½ï¿½È«ï¿½Öµï¿½ï¿½ï¿½×§ï¿½ï¿½ï¿½Ü¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï½ï¿½Ò³ï¿½ï¿½ï¿½Ê±ï¿½ò£¬°ï¿½ï¿½Ä¼ï¿½ï¿½ò¿ª¡ï¿½
                 //disableGlobalDnd: true,
                 //
                 //fileNumLimit: 1,
@@ -54,30 +54,29 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
             uploader.on( 'uploadProgress', function( file, percentage ) {
                 var $li = $( '#'+file.id ),
                     $percent = $li.find('.progress .progress-bar');
-                // ±ÜÃâÖØ¸´´´½¨
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
                 if ( !$percent.length ) {
                     $percent = $('<div class="progress progress-striped active" style="height: 50px;background: red; width: 200px;">' +
                         '<div class="progress-bar" role="progressbar" style="width: 0%">' +
                         '</div> ' +
                         '</div>').appendTo( $li ).find('.progress-bar');
                 }
-                $li.find('p.state').text('ÉÏ´«ÖÐ');
+                $li.find('p.state').text('ï¿½Ï´ï¿½ï¿½ï¿½');
                 $percent.css( 'width', percentage * 100 + '%' );
                 console.log(percentage);
             });
             uploader.on('uploadError', function (file) {
-                console.log("ÉÏ´«Ê§°Ü")
+                console.log("ï¿½Ï´ï¿½Ê§ï¿½ï¿½")
             });
             uploader.on('uploadSuccess', function (file,response) {
-                alert(22222222);
-                /*if(response.status == 500){
-                    layer.msg("Ä£°å´íÎó")
+                if(response.status == 500){
+                    layer.msg("Ä£ï¿½ï¿½ï¿½ï¿½ï¿½")
                 }else{
                     scope.tableList = response ;
                     scope.$apply();
                 }
 
-                console.log(response)*/
+                console.log(response)
             });
 
         }
