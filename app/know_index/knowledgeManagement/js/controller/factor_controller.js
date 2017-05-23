@@ -544,6 +544,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 tagTem.exist = item.exist ;
                                 tagTem.tagClass= item.tagClass;
                                 tagTem.tagName= item.tagName;
+
                                 tagTem.tagTypeList= [] ;
                                 tagTem.tagTypeList.push(item.tagType);
                                 //tag.push(tagTem)
@@ -590,10 +591,17 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
-            var id = $(this).prev().attr("data-option");
-            getBotFullPath(id);    //添加bot分類
-            angular.element(".rootClassfy,.menus").slideToggle();
-            $scope.$apply();
+            //类型节点
+            var pre = $(this).prev() ;
+            if(pre.hasClass("bot-edge")){
+                layer.msg("请可用选择节点") ;
+                return ;
+            }else{
+                var id = pre.attr("data-option");
+                getBotFullPath(id);    //添加bot分類
+                angular.element(".rootClassfy,.menus").slideToggle();
+                $scope.$apply();
+            }
         });
         //添加BOT 分类  ==== 点击bot分类的 加号
         function botSelectAdd(){
