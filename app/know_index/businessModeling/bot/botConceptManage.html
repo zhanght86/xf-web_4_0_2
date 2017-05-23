@@ -1,14 +1,14 @@
 <div class="r-cont pd30 L" style="min-width: 1000px;">
     <div class="r-cont-hd">
-        <span>bot概念管理</span>
+        <span>BOT概念管理</span>
     </div>
     <div>
         <div class="conceptSearch clearfix">
             <div class=" L bd mr-5">
 
                 <select id="searchType" ng-model="vm.searchType" style="height: 31px;">
-                    <option value="botConceptKey" selected>bot概念类名</option>
-                    <option value="botConceptTerm">bot概念集合</option>
+                    <option value="botConceptKey" selected>BOT概念类名</option>
+                    <option value="botConceptTerm">BOT概念集合</option>
                     <option value="botConceptModifier">修改人</option>
                     <option value="botConceptModifyTime">更新时间</option>
                 </select>
@@ -19,21 +19,21 @@
                     <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                 </div>
             </div>
-            <input type="button" value="查找" ng-click="vm.searchbotConcept()"  class="btn1 btn1_blue"/>
+            <input type="button" value="查找" ng-click="vm.searchBotConcept()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBot()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续情感库</a>-->
                 <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
-                <a class="btn btn-green2 mr10" href="javascript:;">导出情感库</a>
+                <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
             </div>
         </div>
         <table class="stop_word_tab">
             <thead>
                 <tr>
                     <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
-                    <th class="bold" width="10%">bot概念类名</th>
-                    <th class="bold" width="40%">bot概念集合</th>
+                    <th class="bold" width="10%">BOT概念类名</th>
+                    <th class="bold" width="40%">BOT概念集合</th>
                     <th class="bold" width="15%">更新时间</th>
                     <th class="bold" width="15%">修改人</th>
                     <th class="bold" width="10%">操作</th>
