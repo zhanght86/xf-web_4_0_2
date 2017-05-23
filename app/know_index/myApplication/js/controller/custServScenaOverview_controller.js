@@ -149,9 +149,12 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
         });
         function keySearch(e){
+                var  srcObj = e.srcElement ? e.srcElement : e.target;
                 var keycode = window.e?e.keyCode:e.which;
                 if(keycode==13){
-                    napSearch()
+                    srcObj.blur();
+                    napSearch();
+                    srcObj.blur();
                 }
         }
         function setParams(){

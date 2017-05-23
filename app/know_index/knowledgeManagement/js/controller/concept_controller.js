@@ -90,7 +90,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
-                console.log( $scope.vm.applicationId) ;
+                //console.log( $scope.vm.applicationId) ;
                 if(data.data){
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
@@ -145,7 +145,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         if ($stateParams.data != null && $stateParams.data.knowledgeBase) {
 
             var data = $stateParams.data ;
-            console.log($stateParams.data);
+            //console.log($stateParams.data);
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 标题打标结果
@@ -193,7 +193,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "index": 0,
                 "pageSize":999999
             },function(data){
-                console.log(data);
+                //console.log(data);
                 if(data.status!=10005){
                     if(data.data.length){
                         $scope.vm.frames = $scope.vm.frames.concat(data.data) ;
@@ -240,7 +240,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    console.log(data);
+                    //console.log(data);
                     var extensionQuestionList = [],
                         frameQuestionTagList = [];
                     var obj = {};
@@ -264,11 +264,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            console.log(id ,$scope.vm.creatSelectBot) ;
+            //console.log(id ,$scope.vm.creatSelectBot) ;
             httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
-                console.log(data) ;
+                //console.log(data) ;
                 if(data.status = 10000){
                     var len = $scope.vm.creatSelectBot.length;
                     var obj = {};
@@ -341,7 +341,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             var title = oldWord.extensionQuestionTitle ;
             var weight = oldWord.extensionQuestionType ;
-            console.log(oldWord);
+            //console.log(oldWord);
             httpRequestPost("/api/ms/conceptKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
@@ -349,17 +349,17 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             },function(data){
                 console.log(data);
                 if(data.status==200){
+                    var exten = {}  ;
+                    exten.extensionQuestionTitle = title;
+                    exten.extensionQuestionType = weight ;
+                    var listArr = [];
+                    var listObj = {};
+                    listObj.wholeDecorateTagName="";
+                    listObj.wholeDecorateTagType="";
+                    listArr.push(listObj);
+                    exten.wholeDecorateTagList = listArr;
+                    exten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        var exten = {}  ;
-                        exten.extensionQuestionTitle = title;
-                        exten.extensionQuestionType = weight ;
-                        var listArr = [];
-                        var listObj = {};
-                        listObj.wholeDecorateTagName="";
-                        listObj.wholeDecorateTagType="";
-                        listArr.push(listObj);
-                        exten.wholeDecorateTagList = listArr;
-                        exten.extensionQuestionTagList = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -369,10 +369,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             tagTem.tagTypeList.push(item.tagType);
                             exten.extensionQuestionTagList.push(tagTem) ;
                         });
-                        $scope.vm.extensionsByFrame.push(exten);
-                        console.log($scope.vm.extensionsByFrame);
-                        $scope.$apply();
                     });
+                    $scope.vm.extensionsByFrame.push(exten);
+                    console.log($scope.vm.extensionsByFrame);
+                    $scope.$apply();
                 }
             }, function () {
                 //layer.msg("err or err")
@@ -425,7 +425,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.$apply();
                     } else if (data.status == 200) {
                         if (!checkHeighExtension(data.data)) {
-                            //alert() ;
                             var enten = {};
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight;
@@ -471,7 +470,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //    getChannel();
         //点击 root 的下拉效果
         function  knowledgeBot(ev){
-            console.log(1) ;
+            //console.log(1) ;
             $timeout(function(){
                 angular.element(".rootClassfy").slideToggle();
             },50)
@@ -491,10 +490,17 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
-            var id = $(this).prev().attr("data-option");
-            getBotFullPath(id);    //添加bot分類
-            angular.element(".rootClassfy,.menus").slideToggle();
-            $scope.$apply();
+            //类型节点
+            var pre = $(this).prev() ;
+            if(pre.hasClass("bot-edge")){
+                layer.msg("请可用选择节点") ;
+                return ;
+            }else{
+                var id = pre.attr("data-option");
+                getBotFullPath(id);    //添加bot分類
+                angular.element(".rootClassfy,.menus").slideToggle();
+                $scope.$apply();
+            }
         });
         //点击bot分类的 加号
         function botSelectAdd(){
