@@ -14,7 +14,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
             "tableList" : "="
         },
         template:
-            '<button  id="picker" >上传线下编辑场景知识</button>'
+            '<button  id="picker" >批量导入</button>'
         ,
         link:function(scope,element,attrs){
             //var $list = angular.element("#thelist");
@@ -69,14 +69,15 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
                 console.log("上传失败")
             });
             uploader.on('uploadSuccess', function (file,response) {
-                if(response.status == 500){
+                alert(22222222);
+                /*if(response.status == 500){
                     layer.msg("模板错误")
                 }else{
                     scope.tableList = response ;
                     scope.$apply();
                 }
 
-                console.log(response)
+                console.log(response)*/
             });
 
         }
