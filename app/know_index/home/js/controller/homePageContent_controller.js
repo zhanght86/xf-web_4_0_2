@@ -9,4 +9,4 @@ angular.module('homePage').controller('homePageContentController', [
             sceneId : $cookieStore.get("sceneId")
         };
     }
-])
+]) ;

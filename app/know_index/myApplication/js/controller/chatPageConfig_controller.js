@@ -117,7 +117,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
         }
        function selectSingle(ev,id){
            var self = $(ev.target);
-           if(self.attr('checked')){   
+           if(self.attr('checked')){    
                self.attr('checked',false);
                $scope.vm.deleteIds.remove(id);
                $(".selectAllBtn").attr("checked",false)
