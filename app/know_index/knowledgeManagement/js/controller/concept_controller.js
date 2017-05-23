@@ -90,7 +90,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
-                console.log( $scope.vm.applicationId) ;
+                //console.log( $scope.vm.applicationId) ;
                 if(data.data){
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
@@ -145,7 +145,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         if ($stateParams.data != null && $stateParams.data.knowledgeBase) {
 
             var data = $stateParams.data ;
-            console.log($stateParams.data);
+            //console.log($stateParams.data);
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 标题打标结果
@@ -193,7 +193,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "index": 0,
                 "pageSize":999999
             },function(data){
-                console.log(data);
+                //console.log(data);
                 if(data.status!=10005){
                     if(data.data.length){
                         $scope.vm.frames = $scope.vm.frames.concat(data.data) ;
@@ -232,7 +232,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         });
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
-            console.log(id);
+            //console.log(id);
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10012,
                 "frameId": id,
@@ -240,7 +240,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    console.log(data);
+                    //console.log(data);
                     var extensionQuestionList = [],
                         frameQuestionTagList = [];
                     var obj = {};
@@ -264,11 +264,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            console.log(id ,$scope.vm.creatSelectBot) ;
+            //console.log(id ,$scope.vm.creatSelectBot) ;
             httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
-                console.log(data) ;
+                //console.log(data) ;
                 if(data.status = 10000){
                     var len = $scope.vm.creatSelectBot.length;
                     var obj = {};
@@ -341,13 +341,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             var title = oldWord.extensionQuestionTitle ;
             var weight = oldWord.extensionQuestionType ;
-            console.log(oldWord);
+            //console.log(oldWord);
             httpRequestPost("/api/ms/conceptKnowledge/checkFrameTag",{
                 "applicationId": $scope.vm.applicationId,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
-                console.log(data);
+                //console.log(data);
                 if(data.status==200){
                     angular.forEach(data.data,function(tagList){
                         var exten = {}  ;
@@ -471,7 +471,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //    getChannel();
         //点击 root 的下拉效果
         function  knowledgeBot(ev){
-            console.log(1) ;
+            //console.log(1) ;
             $timeout(function(){
                 angular.element(".rootClassfy").slideToggle();
             },50)
