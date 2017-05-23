@@ -16,7 +16,13 @@ angular.module('homePage').controller('homePageNavController', [
                 jump: jump
 
             };
-
+        if($scope.url == "/homePage/define"){
+            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/index-bg.jpg) repeat ";
+        }else if($scope.url == "/login"){
+            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) repeat";
+        }else{
+            document.getElementsByTagName("body")[0].style.cssText = "background: ";
+        }
         if(!$cookieStore.get('userId')){
             $state.go("login")
         }
@@ -46,7 +52,7 @@ angular.module('homePage').controller('homePageNavController', [
             else{
                 return true;
             }
-        }
+        } ;
         $scope.checkShowClose=function(url){
             if(url == 'homePage.define'){
                 return true;

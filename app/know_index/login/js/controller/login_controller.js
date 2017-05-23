@@ -6,7 +6,6 @@
 angular.module('loginModule').controller('loginController', [
     '$scope', '$location', 'localStorageService' ,"$state" ,"$cookieStore",
     function ($scope, $location, localStorageService, $state,$cookieStore) {
-
         $scope.vm = {
             userName: '',
             password: '',
@@ -16,6 +15,8 @@ angular.module('loginModule').controller('loginController', [
             login: login,
             keyLogin : keyLogin
         };
+        //设置 背景样式
+       document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) repeat";
        function keyLogin(e){
            var srcObj = e.srcElement ? e.srcElement : e.target;
            var keycode = window.event?e.keyCode:e.which;
