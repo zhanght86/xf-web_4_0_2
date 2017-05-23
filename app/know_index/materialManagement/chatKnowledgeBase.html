@@ -44,7 +44,10 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn1 R btn_delete  mr-20" ng-click="vm.delKnowledge()">刪除</button>
+                        <button class="btn1 L btn1_blue  mr-10" >批量导入</button>
+                        <button class="btn1 L btn_green  mr-10" >知识导出</button>
+                        <button class="btn1 L btn1_blue2  mr-10" >下载</button>
+                        <button class="btn1 R btn_delete " ng-click="vm.delKnowledge()">刪除</button>
                     </div>
                 </div>
                 <div class="clearfix csso-bd bd pl-20 pr-20 mt-30" style="min-height:400px;">
@@ -63,7 +66,7 @@
                                     <span>作者：{{item.chatKnowledgeModifier}}</span>
                                 </div>
                                 <div class="R">
-                                    <span>更新时间：{{item.chatKnowledgeModifyTime | date : 'yyyy-MM-dd hh:mm:ss' }}</span>
+                                    <span>更新时间：{{item.chatKnowledgeModifyTime | date : 'yyyy-MM-dd HH:mm:ss' }}</span>
                                 </div>
                             </div>
                         </li>

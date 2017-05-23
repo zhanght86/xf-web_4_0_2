@@ -7,19 +7,19 @@
             <div class=" L bd mr-5">
 
                 <select id="searchType" ng-model="vm.searchType" style="height: 31px;">
-                    <option value="BotConceptKey" selected>bot概念类名</option>
-                    <option value="BotConceptTerm">bot概念集合</option>
-                    <option value="BotConceptModifier">修改人</option>
-                    <option value="BotConceptModifyTime">更新时间</option>
+                    <option value="botConceptKey" selected>bot概念类名</option>
+                    <option value="botConceptTerm">bot概念集合</option>
+                    <option value="botConceptModifier">修改人</option>
+                    <option value="botConceptModifyTime">更新时间</option>
                 </select>
-                <input type="text" ng-if="vm.searchType!='BotConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: -31px 0px 0px 101px;" ng-if="vm.searchType=='BotConceptModifyTime'">
+                <input type="text" ng-if="vm.searchType!='botConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                <div style="margin: -31px 0px 0px 101px;" ng-if="vm.searchType=='botConceptModifyTime'">
                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     -
                     <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                 </div>
             </div>
-            <input type="button" value="查找" ng-click="vm.searchBotConcept()"  class="btn1 btn1_blue"/>
+            <input type="button" value="查找" ng-click="vm.searchbotConcept()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBot()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
@@ -41,15 +41,15 @@
             </thead>
             <tr ng-repeat="item in vm.listData">
                 <!--<td><input type="checkbox"></td>-->
-                <td>{{item.BotConceptKey}}</td>
+                <td>{{item.botConceptKey}}</td>
                 <td>
-                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.BotConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.BotConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
+                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.botConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.botConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
                 </td>
-                <td>{{item.BotConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
-                <td>{{item.BotConceptModifier}}</td>
+                <td>{{item.botConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{item.botConceptModifier}}</td>
                 <td>
                     <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBot(item)">修改</a> &nbsp;
-                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteBot(item.BotConceptId)">删除</a>
+                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteBot(item.botConceptId)">删除</a>
                 </td>
             </tr>
         </table>

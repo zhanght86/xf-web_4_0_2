@@ -331,7 +331,7 @@ knowledge_static_web
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavContr   oller"
+                        controller: "homePageNavController"
                     },
                     'content': {
                         templateUrl: 'know_index/businessModeling/bot/botConceptManage.html',

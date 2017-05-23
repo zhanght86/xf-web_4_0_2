@@ -23,7 +23,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
             findMultiInteractive: findMultiInteractive, //查询多轮交互设置
 
             turnOn : turnOn,//开关函数
-
+    
             settingId: "", //配置id
             categoryFuzzyOn: 1,  //类目模糊开关
             recommendedSimilarity: 0.5, //推荐问相似度
