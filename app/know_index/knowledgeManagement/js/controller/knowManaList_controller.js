@@ -289,17 +289,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(data){
                 console.log(data);
                 if(data.status==200){
+                    var exten = {}  ;
+                    exten.extensionQuestionTitle = title;
+                    exten.extensionQuestionType = weight ;
+                    var listArr = [];
+                    var listObj = {};
+                    listObj.wholeDecorateTagName="";
+                    listObj.wholeDecorateTagType="";
+                    listArr.push(listObj);
+                    exten.wholeDecorateTagList = listArr;
+                    exten.extensionQuestionTagList = [] ;
                     angular.forEach(data.data,function(tagList){
-                        var exten = {}  ;
-                        exten.extensionQuestionTitle = title;
-                        exten.extensionQuestionType = weight ;
-                        var listArr = [];
-                        var listObj = {};
-                        listObj.wholeDecorateTagName="";
-                        listObj.wholeDecorateTagType="";
-                        listArr.push(listObj);
-                        exten.wholeDecorateTagList = listArr;
-                        exten.extensionQuestionTagList = [] ;
                         angular.forEach(tagList.extensionQuestionTagList,function(item){
                             var tagTem = {};
                             tagTem.exist = item.exist ;
@@ -309,10 +309,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             tagTem.tagTypeList.push(item.tagType);
                             exten.extensionQuestionTagList.push(tagTem) ;
                         });
-                        $scope.vm.extensionsByFrame.push(exten);
-                        console.log($scope.vm.extensionsByFrame);
-                        $scope.$apply();
                     });
+                    $scope.vm.extensionsByFrame.push(exten);
+                    console.log($scope.vm.extensionsByFrame);
+                    $scope.$apply();
                 }
             }, function () {
                 //layer.msg("err or err")
@@ -450,10 +450,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
-            var id = $(this).prev().attr("data-option");
-            getBotFullPath(id);    //添加bot分類
-            angular.element(".rootClassfy,.menus").slideToggle();
-            $scope.$apply();
+            //类型节点
+            var pre = $(this).prev() ;
+            if(pre.hasClass("bot-edge")){
+                layer.msg("请可用选择节点") ;
+                return ;
+            }else{
+                var id = pre.attr("data-option");
+                getBotFullPath(id);    //添加bot分類
+                angular.element(".rootClassfy,.menus").slideToggle();
+                $scope.$apply();
+            }
         });
         //点击bot分类的 加号
         function botSelectAdd(){
