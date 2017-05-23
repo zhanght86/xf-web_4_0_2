@@ -193,7 +193,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
                 if($scope.vm.extensionsByFrame.length){
-                    //  替換條件
+                    //  替換條件gruntwatch
                     replace(val);
                 }else{
                     // 在未生成扩展问情況
@@ -228,7 +228,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         angular.forEach(data.data[0].elements,function(item,index){
                             if(index>0){
                                 obj.extensionQuestionType = 60;   //61
-                                obj.extensionQuestiontitle = data.data[0].frameTitle;
+                                obj.extensionQuestionTitle = data.data[0].frameTitle;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
                             }

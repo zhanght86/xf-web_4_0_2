@@ -94,7 +94,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             data : "",
             column:"" ,
 
-            limitSave : false //限制多次打标
+            limitSave : false ,//限制多次打标
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -181,7 +181,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             column.push(innerColumn);
             var listTable = {
                 "listTable":column
-            }
+            } ;
             $scope.vm.tableList.data = listTable;
             $scope.vm.listTableType = [];
             var newType = {};
@@ -299,7 +299,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 console.log("请上传表格知识") ;
                 return false ;
             }else{
+                //console.log()
                 var tabelData = angular.copy($scope.vm.tableList.data);
+                console.log(tabelData) ;
                 var params = {} ;
                 var ask = [] ;
                 var items = [];

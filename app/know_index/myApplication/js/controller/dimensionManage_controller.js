@@ -215,8 +215,13 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             applicationId:$scope.vm.applicationId,
                             dimensionId:$scope.vm.dimensionId,
                             dimensionStatusId : $scope.vm.switchTurn,
-                            dimensionNameArray : $scope.vm.newDimensions
+                            dimensionNameArray : $scope.vm.newDimensions,
+                            dimensionParentId : 0
                         },function(data){
+                            if(data.status == 10002){
+                                layer.msg("该维度已经存在，请重新编辑!");
+                                return;
+                            }
                                 getData(1);
                                 layer.msg("维度修改成功!");
                         },function(){

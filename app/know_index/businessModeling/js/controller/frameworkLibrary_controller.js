@@ -1172,7 +1172,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             event.preventDefault();
                         }
                     }).autocomplete({
-                        serviceUrl: "/api/ms/ms/modeling/frame/searchconceptbykeyword",
+                        serviceUrl: "/api/ms/modeling/frame/searchconceptbykeyword",
                         type:'POST',
                         params:conceptParams,
                         paramName:'conceptKeyword',
@@ -1479,7 +1479,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             event.preventDefault();
                         }
                     }).autocomplete({
-                        serviceUrl: "/api/ms/ms/modeling/frame/searchconceptbykeyword",
+                        serviceUrl: "/api/ms/modeling/frame/searchconceptbykeyword",
                         type:'POST',
                         params:conceptParams,
                         paramName:'conceptKeyword',
@@ -1664,6 +1664,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 },function(err){
                     console.log(err);
+                    $("#conceptExtendQuestionErrorObj").html("打标失败，请正确发布节点后再进行打标操作!");
                 });
             });
         }

@@ -280,7 +280,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         //   刪除 彈框
         function deleteBusiness(id){
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/businessModeling/ConceptManageDialog.html",
+                template:"/know_index/businessModeling/conceptManageDialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

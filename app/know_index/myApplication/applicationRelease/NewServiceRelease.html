@@ -5,13 +5,13 @@
         </div>
         <div>
             <form name="myService" class="css-form" novalidate>
-            <div class="row cl mb-10">
-                <label class="form-label col-xs-4 col-sm-2 text-r">发布名称：</label>
+            <div class=" mb-10 framework">
+                <span class=" text-r">发布名称：</span>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input  type="text" class="bk-gray input-text"
                             ng-model="vm.serviceName"
                             name="serviceName" check-service-name="serviceName"
-                            placeholder="" style="width:392px;" required>
+                            placeholder="" style="width:100%;" required>
                     <p class="c-red" ng-show="myService.serviceName.$dirty && myForm.serviceName.$invalid">
                         <!--<div class="c-red" ng-show="myService.serviceName.$error.required">服务名称不能为空！</div>-->
                         <div class="c-red" ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</div>
@@ -57,7 +57,7 @@
             <div class="row cl mb-10">
                 <label class="form-label col-xs-4 col-sm-2 text-r">发布节点：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <ul class="bd pd-10 node_ul L mr-10" >
+                    <ul class="bd pd-10 node_ul L mr-10" style="width:100%;min-height:30px;">
                         <li ng-repeat="node in vm.nodeData"  ng-class="{'btn1_blue':vm.nodeCode==node.nodeCode}"
                         ng-click="vm.nodeCode=node.nodeCode">{{node.nodeAccessIp}}</li>
                     </ul>
@@ -80,4 +80,5 @@
     .ngdialog.ngdialog-theme-default .ngdialog-content{
         width:700px;
     }
+    .miles-autoBar{width:100%;}
 </style>
