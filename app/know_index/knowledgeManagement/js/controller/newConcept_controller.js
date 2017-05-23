@@ -393,7 +393,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //        layer.msg("err or err")
         //    });
         //}
-        function scanCotentByTitle(title,index){
+        /*function scanCotentByTitle(title,index){
             var answerContentList = [];
             answerContentList.push(title);
             httpRequestPost("/api/ms/marketingKnowledge/productExtensionQuestion", {
@@ -413,7 +413,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }, function () {
                 //layer.msg("打标失败");
             });
-        }
+        }*/
         //手动添加扩展问
         function getExtension(title,weight){
             var question = [];
@@ -872,7 +872,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if($scope.vm.newTitle){
                 var title = angular.copy($scope.vm.newTitle);
                 var index = $scope.vm.scanContent.length ;
-                scanCotentByTitle(title,index) ;
+                //scanCotentByTitle(title,index) ;
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
                 //obj.knowledgeContentType = 0,  // 答案类型
