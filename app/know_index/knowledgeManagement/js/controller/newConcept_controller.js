@@ -81,7 +81,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             replaceType : 0 ,
             enterEvent : enterEvent,
 
-            factor : 0 ,  //触发要素，0 標題   1 擴展問
+            factor : 62 ,  //触发要素，62知识标题 63概念扩展
             factorTitle : "" , // 触发要素 标题
             getDetailByTitle : getDetailByTitle,
             getFactorByTitle : []  ,     // 要素标题产生选项
@@ -415,12 +415,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             });
         }*/
         //手动添加扩展问
-        function getExtension(title,weight){
+        function getExtension(title){
             var question = [];
             question.push(title);
             var obj = {} ;
             obj.extensionQuestionTitle = title;
-            obj.extensionQuestionType = weight;
+            obj.extensionQuestionType = $scope.vm.factor;
             if(!title){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
@@ -440,11 +440,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     }else if(data.status==200){
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
-                        enten.extensionQuestionType = weight ;
+                        enten.extensionQuestionType = $scope.vm.factor;
                         var listArr = [];
                         var listObj = {};
                         listObj.wholeDecorateTagName="";
                         listObj.wholeDecorateTagType="";
+
                         listArr.push(listObj);
                         enten.wholeDecorateTagList = listArr;
                         enten.extensionQuestionTagList = [] ;

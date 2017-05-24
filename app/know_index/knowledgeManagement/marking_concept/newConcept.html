@@ -106,12 +106,12 @@
                     <div class="value" style="overflow: visible">
                         <div class="clearfix mb-10" style="width: 500px;height: 34px;">
                             <select  ng-model="vm.factor" onchange="" class="bd L " style="width:102px;height:33px;line-height:33px;">
-                                <option value="0">知识标题</option>
-                                <option value="1">概念扩展</option>
+                                <option value="62">知识标题</option>
+                                <option value="63">概念扩展</option>
                             </select>
                             <input  onchange=""  type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height:33px;line-height:33px;display: inline-block;width: 302px;border: 1px solid #e1e1e1;border-left:0;">
                             <!--<input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle,60)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
                             <!--<a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getDetailByTitle(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>-->
                             <ul class="listItem" ng-if="vm.getFactorByTitle.length" style="position: absolute;
                             left: 100px;z-index: 2;height: 200px;overflow: auto ;box-sizing:border-box;top: 40px;">
@@ -136,8 +136,7 @@
                                 {{val.tagName}}
                             </span>
                         </div>
-                        <span class="tag_s mr-10 L">普通</span>
-                        <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
+                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==62?'知识标题':'概念扩展'}}</span>
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                         <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
@@ -156,7 +155,7 @@
                                 {{val.tagName}}
                             </span>
                         </div>
-                        <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
+                        <span class="tag_s mr-10 L">普通</span>
                         <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>
                         <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
@@ -202,7 +201,7 @@
                             <div class="ipt-txt-box">
                                 <input class="ipt-txt" type="text"  ng-model="val" name="title" />
                                 <i class="btn-empty"></i>
-                                <a href="javascript:;"  title="点击生成扩展问" ng-click="vm.getExtension(val,60)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
+                                <a href="javascript:;"  title="点击生成扩展问" ng-click="vm.getExtension(val)" class="mr-15"><img src="../../../images/images/add_img.png" ></a>
                             </div>
                         </div>
                     </div>
