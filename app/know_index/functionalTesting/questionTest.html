@@ -6,65 +6,38 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2 text-r">预期知识：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" class="input_text mr-20" placeholder="购买火车票能不能选择铺位"/>
-                <button type="button"   class="btn btn-primary radius mr-20" >测试</button>
+
+                <input type="text" class="input_text mr-20" placeholder="购买火车票能不能选择铺位" ng-model="vm.testTitle"/>
+                <button type="button"   class="btn btn-primary radius mr-20" ng-click="vm.test()">测试</button>
                 <button type="button"   class="btn btn-warning radius" >清空</button>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2 text-r">可能问法：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <textarea class="textarea" >购买火车票能不能选择铺位买火车票的时候铺位能自己选择吗网上买票能自己选择铺位吗
-我再网上买卧铺能选择铺位吗在网上买票时能选择铺位吗购买火车票能不能选择铺位</textarea>
+                <textarea class="textarea"  ng-model="vm.question" ng-keypress="vm.addArr($event)"></textarea>
             </div>
         </div>
-        <div class="mb-10 cl" style="min-height:25px;">
-            <label class="form-label col-xs-3 col-sm-2 text-r">选择服务：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <select class="bd" style="height:30px;">
-                    <option>长沙银行信用卡业务</option>
-                    <option>长沙银行基金营销业务</option>
-                </select>
-            </div>
-        </div>
-        <div class="mb-10 cl" style="min-height:25px;">
-            <label class="form-label col-xs-3 col-sm-2 text-r">渠道：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10"><input type="checkbox" /> 微信</label>
-                <label class="mr-10"><input type="checkbox" /> app</label>
-                <label class="mr-10"><input type="checkbox" /> 网页</label>
-            </div>
-        </div>
-        <div class="mb-10 cl" style="min-height:25px;">
-            <label class="form-label col-xs-3 col-sm-2 text-r">维度：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <div id="dimension_bar"></div>
-            </div>
-        </div>
+
+
         <div class="mb-10 cl" >
             <label class="form-label col-xs-3 col-sm-2 text-r">测试结果：</label>
             <div class="formControls col-xs-9 col-sm-9 pd-10" >
                 <div class="bd pd-10" style="height:200px;overflow:auto;" id="solution">
                     <div class="bd pd-10" style="height:200px;overflow:auto;">
-                        <div class="c-red bold">标准问答：key_1_购买 key_1_车票 key_1_选择 铺位</div>
-                        <div>测试问答1:
-                            <span class="c-red">key_1_购买,key_1_买入 </span>
-                            <span class="c-success">key_1_网上,key_1_互联网</span>                            <span class="c-blue">key_1_再,key_1_同时</span>
-                            <span class="c-orange">key_1_再,key_1_同时</span>
-                            <span class="c-green">key_1_再,key_1_同时</span>
+                        <div class="c-red bold">标准问答：<span >{{vm.answerRes.standardQueryResult[0].tagList.join(',')}}</span></div>
+                        <div ng-repeat="v in vm.answerRes.comparisonResult">测试问答{{$index+1}}:
+                            <span ng-repeat="i in v.wordTagResultList[0].tagList" ng-class="v.matchedWordTagResults[0].tagList.inArray(i)?'c-red':''">{{i}}<i ng-if="$index!=(v.wordTagResultList[0].tagList.length-1)">,</i></span>
+                            <span > ; 相似度：{{v.similarity}}</span>
                         </div>
-                        <div>测试问答1:
-                            <span class="c-red">key_1_购买,key_1_买入 </span>
-                            <span class="c-success">key_1_网上,key_1_互联网</span>                            <span class="c-blue">key_1_再,key_1_同时</span>
-                            <span class="c-orange">key_1_再,key_1_同时</span>
-                            <span class="c-green">key_1_再,key_1_同时</span>
-                        </div>
-                        <div>测试问答1:
-                            <span class="c-red">key_1_购买,key_1_买入 </span>
-                            <span class="c-success">key_1_网上,key_1_互联网</span>                            <span class="c-blue">key_1_再,key_1_同时</span>
-                            <span class="c-orange">key_1_再,key_1_同时</span>
-                            <span class="c-green">key_1_再,key_1_同时</span>
-                        </div>
+                        <!--<div>测试问答1:-->
+                            <!--<span class="c-red">key_1_购买,key_1_买入 </span>-->
+                            <!--<span class="c-success">key_1_网上,key_1_互联网</span>-->
+                            <!--<span class="c-blue">key_1_再,key_1_同时</span>-->
+                            <!--<span class="c-orange">key_1_再,key_1_同时</span>-->
+                            <!--<span class="c-green">key_1_再,key_1_同时</span>-->
+                        <!--</div>-->
+
                     </div>
                 </div>
             </div>
@@ -76,8 +49,7 @@
 
 </style>
 <script>
-    //插件
-    var widget = new AutoComplete('dimension_bar', ['Apple', 'Banana', 'Orange']);
+
 </script>
 
 

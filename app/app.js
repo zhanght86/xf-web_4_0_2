@@ -866,6 +866,32 @@ knowledge_static_web
                     }
                 }
             })
+            .state("functionalTest.batchTest", {
+                url: "/batchTest",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/functionalTesting/batchTest.html',
+                        controller: "batchTestController"
+                    }
+                }
+            })
+            .state("functionalTest.testResult", {
+                url: "/testResult",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/functionalTesting/testResult.html',
+                        controller: "testResultController"
+                    }
+                }
+            })
             //-----------------------
             //应用分析
             .state("applAnalysis", {
