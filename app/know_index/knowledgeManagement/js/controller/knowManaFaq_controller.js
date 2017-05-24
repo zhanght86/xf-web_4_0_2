@@ -340,16 +340,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-
         getBotRoot();
-
         //点击 root 的下拉效果
         function  knowledgeBot(){
             $timeout(function(){
                 angular.element(".rootClassfy").slideToggle();
             },50)
         }
-
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
@@ -358,7 +355,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             },function(data){
                 $scope.vm.botRoot = data.data;
             },function(){
-                //layer.msg("err or err")
+               console.log("获取bot类目失败")
             });
         }
         //点击更改bot value
@@ -369,10 +366,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
+                angular.element(".icon-jj").css("backgroundPosition","0 0");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
-
                 $scope.$apply();
             }
         });
