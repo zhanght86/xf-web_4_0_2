@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="application_box cl">
+    <div class="application_box clearfix">
         <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication">
             <a ui-sref="setting.Infor" >
                 <img ng-if="application.sceneId==2" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../images/marketing.png" width="80" height="80"/>
@@ -51,6 +51,7 @@
     .application_box_list .status .c-blue{
         color:lightblue;
     }
-    .application_box_list{padding:10px;box-sizing:border-box;height:220px;}
+    .application_box_list{padding:10px;box-sizing:border-box;width:271px;margin:0 10px 20px;height:220px;}
+    .application_box_list p{min-height:21px;}
     
 </style>

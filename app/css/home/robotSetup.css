@@ -55,9 +55,9 @@
 .r-cont-hd{font-size: 22px;}
 .jqrsz-item{padding: 30px 0; border-top: 1px dashed #dadada; margin-top: -1px;}
 
-.jqrsz-item .item-line{overflow: hidden; position: relative; padding-bottom: 6px; font-size: 14px; color: #666;}
+.jqrsz-item .item-line{ position: relative; padding-bottom: 6px; font-size: 14px; color: #666;}
 .jqrsz-item .item-line .lable{width: 230px; text-align: right; float: left;  line-height: 32px;}
-.jqrsz-item .item-line .value{position: relative; margin-left: 230px; overflow: hidden;}
+.jqrsz-item .item-line .value{position: relative; margin-left: 230px; }
 .jqrsz-item .item-line .value .ipt-txt{ width: 394px;}
 .jqrsz-item .item-line .value .error-tip{font-size: 12px; color: #e44242; line-height: 1em;position: absolute; left: 0; bottom: 0;}
 .jqrsz-item .item-line .value .poto-box{width: 104px; height: 104px; float: left; background: url(../../images/images/no-poto.jpg) no-repeat center; background-size: 100% 100%; border: none; margin-right: 20px;}
