@@ -88,7 +88,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             selelectTitle : selelectTitle ,
 
             extensionByContentTitle : [] ,   // 内容生成扩展问 ,
-            limitSave : false //限制多次打标
+            limitSave : false ,//限制多次打标
+            isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -658,6 +659,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }else {
                 var dia = angular.element(".ngdialog ");
                 if (data) {    //增加
+                    $scope.vm.isEdit = true ;
                     $scope.vm.newTitle = data.knowledgeContent;
                     $scope.vm.channel = data.channelIdList;
                     //$scope.vm.dimensionArr.id = data.dimensionIdList;
@@ -684,6 +686,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         obj.knowledgeCommonOn = $scope.vm.tail;   //弹出评价小尾巴
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                         $scope.vm.scanContent[index] = obj;
+                        $scope.vm.isEdit = false  ;
                         setDialog();
                     }
                 } else {
@@ -701,6 +704,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             if (e === 1) {
                                 callback()
                             } else {
+                                $scope.vm.isEdit = false  ;
                                 setDialog()
                             }
                         }
@@ -952,12 +956,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel.length){
+            if(val.id && $scope.vm.channel.length && (!$scope.vm.isEdit)){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id.length){
+            if(val.length && $scope.vm.dimensionArr.id.length && (!$scope.vm.isEdit)){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         },true);
@@ -972,15 +976,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                  //channel   == id
                                  //dimenssion   == id
                 angular.forEach($scope.vm.scanContent,function(item){
-                    angular.forEach(item.channelId,function(v){
+                    angular.forEach(item.channelIdList,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
                             if(val == v){
-                                angular.forEach(item.dimensionId,function(value){
+                                angular.forEach(item.dimensionIdList,function(value){
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
                                             angular.forEach($scope.vm.channels,function(all){
-                                                if(all.channelId==v){
+                                                if(all.channelCode==v){
                                                     channelTip = all.channelName;
                                                 }
                                             });
