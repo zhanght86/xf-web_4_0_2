@@ -366,7 +366,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
-                angular.element(".icon-jj").css("backgroundPosition","0 0");
+                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
