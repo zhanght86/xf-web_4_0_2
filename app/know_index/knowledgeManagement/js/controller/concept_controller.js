@@ -85,6 +85,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             knowledgeId : "",
 
             limitSave : false ,
+            isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
 
         };
         //獲取渠道
@@ -623,6 +624,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }else{
                 var dia = angular.element(".ngdialog ");
                 if(data){    //增加
+                    $scope.vm.isEdit = true ;
                     $scope.vm.newTitle = data.knowledgeContent;
                     $scope.vm.channel = data.channelIdList;
                     //$scope.vm.dimensionArr.id = data.dimensionIdList;
@@ -649,6 +651,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup ; //业务扩展问
                         $scope.vm.scanContent[index] = obj;
+                        $scope.vm.isEdit = false ;
                         setDialog() ;
                     }
                 } else {
@@ -666,6 +669,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             if (e === 1) {
                                 callback()
                             } else {
+                                $scope.vm.isEdit = false  ;
                                 setDialog()
                             }
                         }
@@ -981,12 +985,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel){
+            if(val.id && $scope.vm.channel && (!$scope.vm.isEdit)){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id){
+            if(val.length && $scope.vm.dimensionArr.id && (!$scope.vm.isEdit)){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         }, true);

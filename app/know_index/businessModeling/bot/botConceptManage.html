@@ -8,22 +8,32 @@
 
                 <select id="searchType" ng-model="vm.searchType" style="height: 31px;">
                     <option value="botConceptKey" selected>BOT概念类名</option>
+                    <option value="botConceptWeight">BOT概念权重</option>
                     <option value="botConceptTerm">BOT概念集合</option>
                     <option value="botConceptModifier">修改人</option>
                     <option value="botConceptModifyTime">更新时间</option>
                 </select>
-                <input type="text" ng-if="vm.searchType!='botConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: -31px 0px 0px 101px;" ng-if="vm.searchType=='botConceptModifyTime'">
+                <input type="text" ng-if="vm.searchType!='botConceptModifyTime' || vm.searchType!='botConceptWeight'" ng-model="vm.searchVal" class="input_text" style="border:0;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                <div style="margin: -33px 0px 0px 101px;" ng-if="vm.searchType=='botConceptModifyTime'">
                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     -
-                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    <input type="text" id="endTime"  onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                </div>
+                <div style="margin: -33px 0px 0px 107px;" ng-if="vm.searchType=='botConceptWeight'">
+                    <select class="input_text" id="botConceptWeight">
+                        <option value="31">极不重要</option>
+                        <option value="32">不重要</option>
+                        <option value="33" selected>一般</option>
+                        <option value="34">重要</option>
+                        <option value="35">极重要</option>
+                    </select>
                 </div>
             </div>
             <input type="button" value="查找" ng-click="vm.searchBotConcept()"  class="btn1 btn1_blue"/>
-            <div class=" conceptSearchRt">
+            <div class="conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBot()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
-                <!--<a class="btn btn-green mr10" href="javascript:;">继续情感库</a>-->
+                <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
                 <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
                 <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
             </div>
@@ -33,15 +43,17 @@
                 <tr>
                     <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
                     <th class="bold" width="10%">BOT概念类名</th>
+                    <th class="bold" width="10%">BOT概念权重</th>
                     <th class="bold" width="40%">BOT概念集合</th>
-                    <th class="bold" width="15%">更新时间</th>
-                    <th class="bold" width="15%">修改人</th>
+                    <th class="bold" width="20%">更新时间</th>
+                    <th class="bold" width="10%">修改人</th>
                     <th class="bold" width="10%">操作</th>
                 </tr>
             </thead>
             <tr ng-repeat="item in vm.listData">
                 <!--<td><input type="checkbox"></td>-->
                 <td>{{item.botConceptKey}}</td>
+                <td>{{item.botConceptWeight | weightFilter}}</td>
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.botConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.botConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
                 </td>
