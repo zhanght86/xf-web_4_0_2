@@ -1,16 +1,27 @@
-
 <div class="pd-20" >
     <div>
         <h3 class="mb-20 tc">{{vm.dialogTitle}}</h3>
         <div class="mb-20 concept_div">
-            <span class="concept_s">概念类名：</span>
-            <div >
-                <input id="botKeyTwo" type="text" ng-model="vm.key" class="input_text"/>
+            <span class="concept_s">BOT类名：</span>
+            <div>
+                <input id="botKeyTwo" type="text" ng-model="vm.key" class="input_text" placeholder="违禁品"/>
                 <p id="keyAddError" class="c-error pd-5"></p>
             </div>
         </div>
         <div class="mb-20 concept_div">
-            <span class="concept_s" >概念集合：</span>
+            <span class="concept_s">BOT权重：</span>
+            <div>
+                <select class="input_text" ng-model="vm.weight">
+                    <option value="35">极不重要</option>
+                    <option value="34">不重要</option>
+                    <option value="33">一般</option>
+                    <option value="32">重要</option>
+                    <option value="31">极重要</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-20 concept_div">
+            <span class="concept_s">BOT集合：</span>
             <div>
                 <div class="textarea" style="height: auto;width: 260px ;border: 0;padding: 0;">
                     <textarea id="term"></textarea>
@@ -28,7 +39,6 @@
     .ngdialog.ngdialog-theme-default .ngdialog-content{
         width:500px;
     }
-
     .ui-autocomplete {
         /* will be fixed by options.outHeight */
         max-height: 300px;
@@ -75,4 +85,5 @@
         color: red;
     }
 </style>
+
 <script></script>
