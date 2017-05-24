@@ -971,15 +971,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                  //channel   == id
                                  //dimenssion   == id
                 angular.forEach($scope.vm.scanContent,function(item){
-                    angular.forEach(item.channelId,function(v){
+                    angular.forEach(item.channelIdList,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
                             if(val == v){
-                                angular.forEach(item.dimensionId,function(value){
+                                angular.forEach(item.dimensionIdList,function(value){
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
                                             angular.forEach($scope.vm.channels,function(all){
-                                                if(all.channelId==v){
+                                                if(all.channelCode==v){
                                                     channelTip = all.channelName;
                                                 }
                                             });
