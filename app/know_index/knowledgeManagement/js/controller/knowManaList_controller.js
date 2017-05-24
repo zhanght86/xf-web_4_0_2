@@ -4,8 +4,8 @@
 
 
 angular.module('knowledgeManagementModule').controller('knowManaListController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$filter",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
         $scope.vm = {
 //主页
             applicationId : $cookieStore.get("applicationId"),
@@ -25,8 +25,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
-            timeFlag : "启用",
-
             //生成  知识标题 打标生成 BOT
             getBotByTitle : getBotByTitle,
             //creatBot : [],
@@ -119,8 +117,11 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             // 标题打标结果
             $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
             // 时间
-            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
-            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
+                $scope.vm.isTimeTable = true
+            }
+            $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
+            $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             //bot路径
             $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //knowledgeId
@@ -200,14 +201,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     getExtensionByFrame(val);
                 }
 
-            }
-        });
-        //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
-            if(val==true){
-                $scope.vm.timeFlag="禁用"
-            }else{
-                $scope.vm.timeFlag="启用"
             }
         });
         // 通过frame 获取扩展问
@@ -456,6 +449,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
+                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();

@@ -1,0 +1,96 @@
+<div ui-view="header"></div>
+
+<div class="wrap pr chat_test_wrap" style="padding-top:10px;">
+
+    <div class="p20 cl" style="background:#fff;height:100%;">
+        <div class="cl" style="width:510px;margin:0 auto 20px;">
+            <select class="L bd sel mr-10"id="answerCondition">
+                <option value="">回答正确</option>
+                <option value="">回答错误</option>
+                <option value="">推荐</option>
+                <option value="">不能回答</option>
+            </select>
+            <select class="L bd sel mr-10" id="matchCondition">
+                <option value="">匹配</option>
+                <option value="">不匹配</option>
+            </select>
+            <span class="">
+                <input type="text" class="input_text L" placeholder="测试问法/知识标题/相似度"  style="height:30px;">
+                <button class="btn1 btn1_blue L" type="button" >查询</button>
+            </span>
+        </div>
+        <div class="bd p20" style="background:#fcfdfd;">
+            <div class="mb-10 cl">
+                <span class="L">
+                    <button class="btn1 btn_green mr-10"> 批量测试</button>
+                    <button class="btn1 btn_green2" ng-click="vm.editQuestion()">修改</button>
+                </span>
+                <span class="R">
+                    <span class="c-999 pl-10">共有数据：<strong id="total"></strong> 条 </span>
+                </span>
+            </div>
+
+            <div class="mt-20">
+                <div class="dataTables_wrapper no-footer">
+                    <table class="stop_word_tab" id="knowledge_table">
+                        <thead>
+                        <tr>
+                            <th class="bold" width="3%"><input type="checkbox" /></th>
+                            <th class="bold" width="11%">编号</th>
+                            <th class="bold" width="8%">可能问法</th>
+                            <th class="bold" width="11%">标准知识</th>
+                            <th class="bold" width="11%">匹配知识</th>
+                            <th class="bold" width="9%">分词</th>
+                            <th class="bold" width="5%">回答类型</th>
+                            <th class="bold" width="7%">回答情况</th>
+                            <th class="bold" width="10%">答案</th>
+                            <th class="bold" width="5%">权重</th>
+                            <th class="bold" width="4%">相似度</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td>1</td>
+                            <td>12306怎么购票</td>
+                            <td>12306怎么购票</td>
+                            <td>12306怎么购票</td>
+                            <td>怎么、购票</td>
+                            <td>匹配</td>
+                            <td>回答正确</td>
+                            <td>先注册账号，在进行登录，选择需要买的票，提交支付。</td>
+                            <td>1</td>
+                            <td>80%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="page clearfix">
+                        <span class="page_span ">上一页</span>
+                        <a href="javascript:;" class="cura">1</a>
+                        <a href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <span class="page_span ">下一页</span>
+                        <span>共<b class="page_b">12</b>页</span>
+                        <span>跳转到</span>
+                        <input type="text" class="page_txt">
+                        <span>页</span>
+                        <span class="go_span">GO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+
+</script>
+
+
+
+
+

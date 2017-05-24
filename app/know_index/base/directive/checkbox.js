@@ -1,7 +1,6 @@
 /**
  * Created by 41212 on 2017/4/11.
  */
-
 knowledge_static_web.directive("checkbox", function($parse) {
     return {
         restrict:'EA',

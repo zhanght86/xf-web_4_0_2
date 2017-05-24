@@ -13,10 +13,10 @@
                         标准问题：
                     </div>
                     <div class="value">
-                        <div class="ipt-txt-box">
-                            <input class="ipt-txt bd" type="text" style="width:407px;" ng-model="vm.title" name="title"    ng-keypress="vm.enterEvent($event,vm.getCreatBot)" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
+                        <div class="ipt-txt-box" style="width:100%;">
+                            <input class="ipt-txt bd " type="text" style="width:407px;height:32px;" ng-model="vm.title" name="title"    ng-keypress="vm.enterEvent($event,vm.getCreatBot)" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
-                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/match_img.png"  width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" class=" mr-15"  ng-click="vm.getCreatBot()"><img src="../../../images/match_img.png"  width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -26,12 +26,13 @@
                         知识有效期：
                     </div>
                     <label style="line-height:32px;">
-                        <input style="margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                        <input style="margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> 启用
                     </label>
+                    <!--{{vm.timeStart}}{{vm.timeEnd}}-->
                     <div style="margin: 10px 0 10px  232px;" ng-show="vm.isTimeTable">
                         <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:196px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                         -
-                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:196px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({endDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:196px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     </div>
                 </div>
 
@@ -41,7 +42,7 @@
                     </div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
-                            <input class="ipt-txt" style="padding-right:25px;width:407px;" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
+                            <input class="ipt-txt bd" style="padding-right:25px;width:407px;height:32px;" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <!--<p class="ipt-txt" id="ipt-txt" >-->
                             <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
                             <!--</p>-->
@@ -171,7 +172,6 @@
                             </div>
                         </div>
                     </div>
-                    {{item}}
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：

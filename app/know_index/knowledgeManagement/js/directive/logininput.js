@@ -32,7 +32,7 @@ knowledge_static_web.directive("loginInput", function() {
         }
     }
 })
-    .directive('switchTurn',function(){
+.directive('switchTurn',function(){
         return{
             restrict:'EA',
             scope:{
@@ -52,5 +52,4 @@ knowledge_static_web.directive("loginInput", function() {
 
             }
         }
-    });
-
+})
