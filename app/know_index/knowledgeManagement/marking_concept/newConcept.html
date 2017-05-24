@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <!--bot  标题 点击生成  -->
-                <div class="item-line" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
+                <div class="item-line clearfix" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                     <div class="lable"> BOT分类：</div>
                     <div class="value Div clearfix" id="Div">
                         <div class="ipt-txt-box L mr-10">
@@ -76,10 +76,10 @@
                     </div>
                 </div>
                  <!--手选生成-->
-                <div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
+                <div class="item-line clearfix mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
                     <div class="lable"> BOT分类：</div>
-                        <div class="value Div" id="Div">
-                            <div class="ipt-txt-box L">
+                    <div class="value Div" id="Div">
+                        <div class="ipt-txt-box L">
                             <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
                                 <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                             </div>
@@ -87,11 +87,11 @@
                         <a href="javascript:;" class=" L ml-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
                     </div>
                 </div>
-                <div class="item-line">
-                    <div class="row cl mb-10">
+                <div class="item-line clearfix">
+                    <div class="row clearfix mb-10">
                         <div class="lable" style="width:245px;">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
-                        <div class="formControls col-xs-8 col-sm-9" style="padding-left:0;">
+                        <div class="value" style="padding-left:0;">
                             <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
                                 <option value="" ng-if="vm.frames.length">--请选择以上业务框架--</option>
                             </select>
