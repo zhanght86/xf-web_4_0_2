@@ -19,7 +19,7 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="dib">
                                 <label>
-                                    <input style=" margin-top:-2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                                    <input style=" margin-top:-2px;" type="checkbox" ng-model="vm.isTimeTable"> 启用
                                 </label>
                                 <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
