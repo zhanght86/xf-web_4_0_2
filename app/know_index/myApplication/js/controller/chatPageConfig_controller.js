@@ -318,7 +318,6 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             userId :  $scope.vm.userId,
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
-                            $scope.vm.selectAllCheck = false;
                             //$state.reload();
                             getData(1);
                             if(data.status == 10012){
@@ -328,6 +327,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             layer.msg("请求失败")
                         })
                         //保存的同时清空数据
+                        $scope.vm.selectAllCheck = false;
+                        $scope.vm.selectAllCheckDialog = false;
                         $scope.vm.seleceAddAll = [];
                         $scope.vm.listKnoData = [];
                         $scope.vm.knowledge = "";
@@ -335,6 +336,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         $scope.vm.paginationConf1 = ''
                     }else{
                         //取消的同时清空数据
+                        $scope.vm.selectAllCheckDialog = false;
                         $scope.vm.seleceAddAll = [];
                         $scope.vm.listKnoData = [];
                         $scope.vm.knowledge = "";
