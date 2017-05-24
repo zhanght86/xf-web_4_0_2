@@ -52,7 +52,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
             channels : [],     //所有渠道
-            channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
             dimensions : []
@@ -498,7 +497,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
-            console.log(data) ;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.newTitle = data.knowledgeContent;
@@ -795,27 +793,24 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         },true);
         function checkChannelDimension(channel,dimension){
-            console.log(channel,dimension);
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
             if(!channel.length){     //渠道不能为空
                 //layer.msg("请填写渠道");
                 return false
-            }else{               //渠道非空
-                                 //channel   == id
-                                 //dimenssion   == id
+            }else{               //渠道非空 channel   == code dimenssion   == id
                 angular.forEach($scope.vm.scanContent,function(item){
-                    angular.forEach(item.channelId,function(v){
+                    angular.forEach(item.channelIdList,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
                             if(val == v){
-                                angular.forEach(item.dimensionId,function(value){
+                                angular.forEach(item.dimensionIdList,function(value){
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
                                             angular.forEach($scope.vm.channels,function(all){
-                                                if(all.channelId==v){
+                                                if(all.channelCode==v){
                                                     channelTip = all.channelName
-                                                };
+                                                }
                                             });
                                             layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
                                             $scope.vm.dimensionArr.id.remove(key);

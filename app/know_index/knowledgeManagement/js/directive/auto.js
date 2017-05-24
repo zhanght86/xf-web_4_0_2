@@ -44,7 +44,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
                       });
                       //console.log($scope.result);
                       if($scope.result&&$scope.source.name){
-                          console.log($scope.result);
+                          //console.log($scope.result);
                           angular.forEach($scope.result,function(item){
                               $scope.source.name.remove(item.dimensionName);
                               $scope.source.id.remove(item.dimensionId);

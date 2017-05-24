@@ -207,7 +207,7 @@ angular.module('adminModule').controller('userManageController', [
                                 //刷新页面
                                 $state.reload();
                                 if (data.status == 10009) {
-                                    layer.msg("该用户已经存在，请重新添加!")
+                                    layer.msg("该登录名已经存在，请重新添加!")
                                 } else if (data.status == 10008) {
                                     layer.msg("用户添加成功!");
                                 } else {
@@ -286,6 +286,8 @@ angular.module('adminModule').controller('userManageController', [
                                 $state.reload();
                                 if (data.status == 10012) {
                                     layer.msg("用户修改成功!");
+                                }else if(data.status = 10009){
+                                    layer.msg("登录名重复!");
                                 } else {
                                     layer.msg("用户修改失败!");
                                 }
