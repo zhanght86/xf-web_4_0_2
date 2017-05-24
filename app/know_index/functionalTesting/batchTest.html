@@ -17,8 +17,8 @@
         <div class="bd p20" style="background:#fcfdfd;">
             <div class="mb-10 cl">
                 <span class="L">
-                    <button onclick="add_popup('批量上传','bulk_upload.html','500','300')" class="btn1  btn1_blue mr-10"> 批量上传</button>
-                    <button class="btn1 btn_delete" onclick="member_del(this)"> 删除</button>
+                    <button  ng-click="vm.uploadQuestion()" class="btn1  btn1_blue mr-10"> 批量上传</button>
+                    <button class="btn1 btn_delete" ng-click="vm.deleteQuestion()"> 删除</button>
                 </span>
                 <span class="R">
                     <span class="c-999 pl-10">共有数据：<strong >3</strong> 条 </span>
