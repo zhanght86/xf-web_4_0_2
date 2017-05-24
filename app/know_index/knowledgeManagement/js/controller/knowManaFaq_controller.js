@@ -3,8 +3,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope","$filter",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope,$filter) {
         //console.log($stateParams);
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
@@ -26,7 +26,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
-            timeFlag : "启用",
             //生成  BOT
             getCreatBot : getCreatBot,
             //creatBot : [],
@@ -135,8 +134,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 时间
-            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
-            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
+                $scope.vm.isTimeTable = true
+            }
+            $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
+            $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             // bot 路径
             $scope.vm.botClassfy = data.knowledgeBase.classificationAndKnowledgeList ;
 
@@ -242,14 +244,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             }
         });
-        //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
-            if(val==true){
-                $scope.vm.timeFlag="禁用"
-            }else{
-                $scope.vm.timeFlag="启用"
-            }
-        });
+
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             console.log(id);
