@@ -16,6 +16,19 @@
             <label class="form-label col-xs-3 col-sm-2 text-r">可能问法：</label>
             <div class="formControls col-xs-9 col-sm-9">
                 <textarea class="textarea"  ng-model="vm.question" ng-keypress="vm.addArr($event)"></textarea>
+                <!--<div class="textarea"  ng-model="vm.question" style="overflow-y:auto;">-->
+                    <!--<div>-->
+                        <!--<input type="text" ng-model="vm.questionList" class="bd input_text"/>-->
+                        <!--<a href="javascript:;" class="" ng-click="vm.getQuestionList()"><img src="../../../images/images/add_img.png" ></a>-->
+                    <!--</div>-->
+                    <!--<div class="question_box">-->
+                        <!--<div>-->
+                            <!--<span>信用卡</span>-->
+                            <!--<a href="javascript:;" class="" ng-click="vm.deleteQuestionList()"><img src="../../../images/images/delete_img.png" ></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
             </div>
         </div>
 
@@ -31,9 +44,9 @@
                         </div>
                         <div ng-repeat="v in vm.answerRes.comparisonResult">测试问答{{$index+1}}:
                             <!--<span ng-repeat="i in v.wordTagResultList[0].tagList" ng-class="v.matchedWordTagResults[0].tagList.inArray(i)?'c-red':'c-green'">{{i}}<i ng-if="$index!=(v.wordTagResultList[0].tagList.length-1)">,</i></span>-->
-                            <span ng-repeat="i in v.wordTagResultList" ng-class="">
-                                [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">"{{val}}"</span>]
-                            </span>
+                                <span ng-repeat="i in v.wordTagResultList" ng-class="">
+                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">"{{val}}"<i ng-if="$index!=i.tagList.length-1">，</i></span>]
+                                </span>
                             <span > ; 相似度：{{v.similarity}}</span>
                         </div>
                         <!--<div>测试问答1:-->

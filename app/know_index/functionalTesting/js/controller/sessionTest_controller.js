@@ -20,8 +20,6 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             serviceId : "" ,
             test : test
         };
-
-
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
