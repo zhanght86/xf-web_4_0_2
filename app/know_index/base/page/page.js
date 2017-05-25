@@ -115,10 +115,14 @@ angular.module('pagination',[]).directive('pagination',[function(){
                 if(scope.conf.currentPage < scope.conf.numberOfPages){
                     scope.conf.currentPage += 1;
                 }
-            }
+            }  
             //检查输入
             scope.checkInput=function(){
                 scope.jumpPageNum = scope.jumpPageNum.replace(/[^0-9]/g,'');
+                var val = angular.copy(scope.jumpPageNum) ;
+                if((scope.jumpPageNum > scope.conf.totalItems )||(scope.jumpPageNum < 0 ) ) {
+                    scope.jumpPageNum =  val;
+                }
             }
             // 跳转页
             scope.jumpToPage = function (e){
