@@ -70,11 +70,18 @@ angular.module('businessModelingModule').controller('botConceptManageController'
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadBotConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadBotConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
+
         //编辑
         function editBot(item){
             $scope.vm.dialogTitle="编辑BOT概念";

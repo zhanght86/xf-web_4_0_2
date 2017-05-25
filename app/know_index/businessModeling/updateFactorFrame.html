@@ -1,17 +1,19 @@
-<div class="wrap pt-20">
-    <div class="content_box mb25 ">
-        <input type="text" class="input-text f22 pl-10 mb15" id="elementFrameTitle" style="width: 300px;height: 34px;" value="{{vm.frameTitle}}"/>
-        <p id="elementFrameAddErrorObj" class="c-error pd-5"></p>
+<div class=" pt-20">
+    <div class=" mb25 ">
+        <div class="p10">
+            <input type="text" class="input-text f22 pl-10 mb15" id="elementFrameTitle" style="width: 300px;height: 34px;" value="{{vm.frameTitle}}"/>
+            <p id="elementFrameAddErrorObj" class="c-error pd-5"></p>
+        </div>
         <div class=" p10 ">
-            <div class="enable-bar mb-10">
-                <label class="form-label col-xs-4 col-sm-2 text-r">启用：</label>
-                <div class="mb-10">
+            <div class="enable-bar mb-10 clearfix">
+                <label class="L">启用：</label>
+                <div class="mb-10 L">
                     <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[vm.frameEnableStatusId]" ng-click="vm.turnOn(vm.frameEnableStatusId,'frameEnableStatusId')" style="float:left;margin-right:10px;" class="b_box open1">
                         <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[vm.frameEnableStatusId]" class="s_box open2"></div>
                     </div>
                 </div>
             </div>
-            <div class="framework mb-10">
+            <div class=" mb-10">
                 <div class="essential_factor_div bd">
                     <div class="mb-10">
                         <a href="javascript:;" class="add_line mr-10" ng-click="vm.addEle()"><img src="../images/ys_img1.png"></a>
@@ -52,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="framework mb-10 pt-10">
+            <div class="tc mb-10 pt-10">
                 <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
                 <input type="button" class="btn1 btn_green mr-20" ng-click="closeThisDialog(0)" value="返回"/>
             </div>
@@ -62,7 +64,7 @@
 
 <style>
     .ngdialog.ngdialog-theme-default .ngdialog-content {
-        min-width: 1000px;
+        min-width: 800px;
     }
     .content_box{
         width: 970px;

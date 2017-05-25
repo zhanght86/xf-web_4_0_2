@@ -69,11 +69,18 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadStopConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadStopConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
+
         //编辑
         function editStop(item){
             $scope.vm.dialogTitle="编辑停用概念";

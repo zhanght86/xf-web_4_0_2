@@ -19,7 +19,31 @@ angular.module('functionalTestModule').controller('questionTestController', [
             addArr : addArr,
             test : test,
             answerRes : '',
+            emptyInput : emptyInput,
+            check : check
+
         };
+        //比较测试回答有没有重的词；
+        function check(val,matchedWordTagResults){
+            var allLen = matchedWordTagResults.length ;
+            angular.forEach(matchedWordTagResults,function (tag) {
+                var len = tag.tagList.length ;
+                angular.forEach(tag.tagList,function (value) {
+                    if(value == val){
+                        len-=1 ;
+                    }
+                }) ;
+                if(len != tag.tagList.length){
+                    allLen-=1 ;
+                }
+            }) ;
+
+            if(allLen==matchedWordTagResults.length){
+                return false ;
+            }else{
+                return true ;
+            }
+        }
         //问法测试
         console.log($scope.vm.applicationId)
         function test(){
@@ -31,8 +55,7 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 //$scope.vm.botRoot = data.data;
                 console.log(data);
                 $scope.vm.answerRes=data.data.data;
-$scope.$apply()
-
+                $scope.$apply();
 
             },function(){
                 //layer.msg("err or err")
@@ -40,17 +63,23 @@ $scope.$apply()
         }
         // 添加问法
         function addArr(e){
-            var  srcObj = e.srcElement ? e.srcElement : e.target;
+            var  srcObj = e.srcElement ? e.srcElement : e.target;           //输入文字问题；
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
-                srcObj.blur();
+                srcObj.blur();                                              //
                //console.log( $scope.vm.question.substring($scope.vm.asklength+1));
                 $scope.vm.comparisonTextArray.push($scope.vm.question.substring($scope.vm.asklength+1));
                 $scope.vm.asklength = $scope.vm.question.length ;
 
                 console.log($scope.vm.comparisonTextArray);
-                srcObj.focus();
+                srcObj.focus();                                            //
             }
+        }
+        //清空问法；
+        function emptyInput(){
+            $scope.vm.testTitle='';
+            $scope.vm.question='';
+            $scope.vm.comparisonTextArray=[];
         }
 
         
