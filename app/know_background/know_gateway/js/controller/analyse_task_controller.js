@@ -20,7 +20,7 @@ angular.module('knowGatewayModule').controller('analyseTaskController', [
              * 加载分页条
              * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
              */
-            console.log()
+            console.log() ;
             $scope.paginationConf = {
                 currentPage: $scope.SearchPOJO.currentPage,//当前页
                 totalItems: 0, //总条数

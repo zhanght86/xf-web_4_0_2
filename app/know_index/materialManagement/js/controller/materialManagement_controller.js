@@ -1,11 +1,11 @@
 /**
- * Created by Administrator on 2016/6/3.
+ * Created by mileS on 2016/6/3.
  * 控制器
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
-    '$scope',"$state", "$cookieStore",
-    function ($scope,$state,$cookieStore) {
+    '$scope',"$state", "$cookieStore","$timeout",
+    function ($scope,$state,$cookieStore,$timeout) {
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
@@ -26,7 +26,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             "modifyTimeType": "",
             "chatKnowledgeTopic": "",
             "chatQuestionContent": "",
-             selectTimeType : selectTimeType
+            selectTimeType : selectTimeType
         };
 
         function getDel(ev,id){
@@ -72,10 +72,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }else{
                     console.log(data);
                     $scope.vm.listData = data.data.objs,
-                            $scope.vm.paginationConf = {
+                        $scope.vm.paginationConf = {
                             currentPage: index,//当前页
-                            totalItems: Math.ceil(data.data.total/5), //总条数
-                            pageSize: 1,//第页条目数
+                            totalItems: data.data.total, //总条数
+                            pageSize: $scope.vm.pageSize,//第页条目数
                             pagesLength: 8,//分页框数量
                         };
                     $scope.$apply();
@@ -101,11 +101,11 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index" :(index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-              $scope.vm.listData = data.data.objs;
+                $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.data.total/5), //总条数
-                    pageSize: 1,//第页条目数
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply();
@@ -113,13 +113,21 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 layer.msg("请求失败");
             })
         }
+
         //分页 查询
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current&&$scope.vm.getType==1){
-               search(current)
-            }else if(current&&$scope.vm.getType==0){
-                console.log(current);
-                getData(current);
+            if(current){
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    if($scope.vm.getType==1 ){
+                        search(current)
+                    }else if($scope.vm.getType==0){
+                        getData(current);
+                    }
+                }, 100)
             }
         });
         //点击标题预览内容

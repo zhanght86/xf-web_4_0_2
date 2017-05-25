@@ -591,6 +591,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
+                angular.element(".icon-jj").css("backgroundPosition","0 0");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
@@ -604,7 +605,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
                 $scope.vm.knowledgeBotVal = "";
-                $(".icon-jj").eq(0).css("backgroundPosition","0 0");
+                $(".icon-jj").eq(0).css("backgroundPosition","0% 0%");
             }
         }
         //点击下一级 bot 下拉数据填充以及下拉效果

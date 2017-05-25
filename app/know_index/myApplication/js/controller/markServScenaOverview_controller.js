@@ -109,10 +109,10 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 $scope.vm.knowledgeTotal = data.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.data.total/5), //总条数
-                    pageSize: 1,//第页条目数
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 10,//分页框数量
-                    numberOfPages  : Math.ceil(data.data.total/5)
+                    //numberOfPages  : Math.ceil(data.data.total/5)
                 };
                 $scope.$apply();
                 return true;
@@ -121,11 +121,17 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             });
 
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                getData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    getData(current);
+                }, 100)
             }
-        });
+        },true);
         function keySearch(e){
             var  srcObj = e.srcElement ? e.srcElement : e.target;
             var keycode = window.e?e.keyCode:e.which;

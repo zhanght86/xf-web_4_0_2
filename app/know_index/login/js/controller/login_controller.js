@@ -59,6 +59,9 @@ angular.module('loginModule').controller('loginController', [
                     }else if(data.status==10007){
                         setRandomNumber();
                         layer.msg("用户名或密码错误");
+                    }else if(data.status == 10002){
+                        setRandomNumber();
+                        layer.msg("该用户已停用!");
                     }
                     //console.log(data)
                 },function(err){

@@ -1,10 +1,7 @@
 /**
- * Created by 41212 on 2017/3/23.
+ * Created by mileS on 2017/3/23.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
+
 
 angular.module('businessModelingModule').controller('sensitiveConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
@@ -70,11 +67,18 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadSensitiveConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadSensitiveConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
+
         //编辑
         function editSensitive(item){
             $scope.vm.dialogTitle="编辑敏感概念";

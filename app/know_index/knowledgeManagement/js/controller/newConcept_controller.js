@@ -1,5 +1,5 @@
 /**
- * Created by dinfo on 2017/3/28.
+ * Created by mileS on 2017/3/28.
  */
 
 angular.module('knowledgeManagementModule').controller('newConceptController', [
@@ -427,7 +427,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){
                         console.log(question)
                         layer.msg("扩展问重复") ;
@@ -506,6 +506,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
+                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();

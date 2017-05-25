@@ -1,10 +1,7 @@
 /**
- * Created by 41212 on 2017/3/23.
+ * Created by mileS on 2017/3/23.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
+
 angular.module('businessModelingModule').controller('semanticExpressionConceptManageController', [
 '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
@@ -69,11 +66,18 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadSemanticExpressionConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadSemanticExpressionConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
+
         //编辑
         function editSemanticExpression(item){
             $scope.vm.dialogTitle="编辑语义表达概念";

@@ -1,10 +1,7 @@
 /**
- * Created by 41212 on 2017/3/23.
+ * Created by mileS on 2017/3/23.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
+
 angular.module('businessModelingModule').controller('synonyConceptManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
@@ -70,11 +67,17 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadSynonymConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadSynonymConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
         //编辑
         function editSynonym(item){
             $scope.vm.dialogTitle="编辑同义概念";

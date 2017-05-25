@@ -72,11 +72,17 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadBusinessConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadBusinessConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
         //编辑
         function editBusiness(item){
             $scope.vm.dialogTitle="编辑业务概念";

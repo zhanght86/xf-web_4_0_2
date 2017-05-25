@@ -70,11 +70,18 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadCorrectionConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadCorrectionConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
+
         //编辑
         function editCorrection(item){
             $scope.vm.dialogTitle="编辑纠错概念";

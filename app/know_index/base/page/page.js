@@ -119,6 +119,7 @@ angular.module('pagination',[]).directive('pagination',[function(){
             //检查输入
             scope.checkInput=function(){
                 scope.jumpPageNum = scope.jumpPageNum.replace(/[^0-9]/g,'');
+
             }
             // 跳转页
             scope.jumpToPage = function (e){
