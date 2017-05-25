@@ -61,8 +61,13 @@ angular.module('functionalTestModule').controller('sessionTestController', [
 
        function test(){
            if($scope.vm.serviceId){
-               httpRequestPost("/api/application/service/listServiceByApplicationId",{
+               httpRequestPost("/api/application/chatTest/passageway",{
                    applicationId:$scope.vm.applicationId,
+                   userId:$scope.vm.userId,
+                   content:$scope.vm.testAsking,
+                   channel:$scope.vm.channel,
+                   dimensionArray:$scope.vm.dimensionArray,
+                   serviceId:$scope.vm.serviceId
                },function(data){
 
                },function(){
