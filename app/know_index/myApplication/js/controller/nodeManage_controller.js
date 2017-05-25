@@ -4,8 +4,8 @@
  * Date: 2017/4/10 14:52
  */
 angular.module('myApplicationSettingModule').controller('nodeManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog", "$cookieStore",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog", "$cookieStore","$timeout",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             nodeData : "",   // 节点列表数据
@@ -76,12 +76,18 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                listNodeData(current);
-            }
-        });
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    listNodeData(current);
+                }, 100)
 
+            }
+        },true);
         //查询节点的基本信息
         function findNodeInfo(nodeCode){
             httpRequestPost("/api/application/node/findNodeInfo",{

@@ -4,7 +4,8 @@
  * Date: 2017/4/28 16:30
  */
 angular.module('myApplicationSettingModule').controller('AssociationManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout", function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"), //获取用户id
@@ -61,12 +62,18 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                listApplicationServiceData(current);
-            }
-        });
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    listApplicationServiceData(current);
+                }, 100)
 
+            }
+        },true);
         //请求其他应用本身的服务列表
         function listOtherApplicationServiceData(index){
             httpRequestPost("/api/application/relation/listOtherApplicationService",{
@@ -87,12 +94,17 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('other.paginationConf.currentPage', function(current){
             if(current){
-                listOtherApplicationServiceData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    listOtherApplicationServiceData(current);
+                }, 100)
             }
-        });
-
+        },true);
 
         function addRelatedService(){
             if($scope.vm.serviceIds==null||$scope.vm.serviceIds.length==0){

@@ -1,5 +1,5 @@
 /**
- * Created by 41212 on 2017/3/23.
+ * Created by mileS on 2017/3/23.
  */
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
     '$scope','$timeout',"$state", "$stateParams","$compile","ngDialog","$cookieStore",

@@ -1,13 +1,5 @@
 /**
- * Created by dinfo on 2017/3/28.
- */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
+ * Created by mileS on 2017/3/28.
  */
 
 angular.module('knowledgeManagementModule').controller('dimensionManageController', [
@@ -71,11 +63,18 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                getData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    getData(current);
+                }, 100)
+
             }
-        });
+        },true);
 
         //删除维度
         function deleteDimension(dimensionId){

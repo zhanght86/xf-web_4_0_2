@@ -132,7 +132,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: data.data.total, //总条数
-                    pageSize: 5,//第页条目数
+                    pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 10,//分页框数量
                 };
                 $scope.$apply();
@@ -142,11 +142,18 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             });
 
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                getData(current);
-            } 
-        });
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+              timeout = $timeout(function () {
+                    getData(current);
+              }, 100)
+
+            }
+        },true);
         function keySearch(e){
                 var  srcObj = e.srcElement ? e.srcElement : e.target;
                 var keycode = window.e?e.keyCode:e.which;

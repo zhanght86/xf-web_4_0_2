@@ -70,11 +70,17 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadCollectiveConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadCollectiveConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
         //编辑
         function editCollective(item){
             $scope.vm.dialogTitle="编辑集合概念";
