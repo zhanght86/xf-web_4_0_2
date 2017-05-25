@@ -16,11 +16,12 @@ angular.module('functionalTestModule').controller('questionTestController', [
             applicationId : $cookieStore.get('applicationId'),
             comparisonTextArray:[],
             asklength :0,
+            answerRes : '',
+            //questionList : questionList,
+            emptyInput : emptyInput,
             addArr : addArr,
             test : test,
-            answerRes : '',
-            emptyInput : emptyInput,
-            check : check
+            check : check,
 
         };
         //比较测试回答有没有重的词；
@@ -47,12 +48,19 @@ angular.module('functionalTestModule').controller('questionTestController', [
         //问法测试
         console.log($scope.vm.applicationId)
         function test(){
+            //不点回车判断
+            if($scope.vm.comparisonTextArray.length==0){
+                $scope.vm.comparisonTextArray.push($scope.vm.question.substring(0));
+                //alert($scope.vm.comparisonTextArray);
+            }
+
             httpRequestPost("api/application/questionTest/passageway",{
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.testTitle,
                 "comparisonTextArray": $scope.vm.comparisonTextArray
             },function(data){
                 //$scope.vm.botRoot = data.data;
+
                 console.log(data);
                 $scope.vm.answerRes=data.data.data;
                 $scope.$apply();
@@ -74,12 +82,15 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 console.log($scope.vm.comparisonTextArray);
                 srcObj.focus();                                            //
             }
+
+
         }
         //清空问法；
         function emptyInput(){
             $scope.vm.testTitle='';
             $scope.vm.question='';
             $scope.vm.comparisonTextArray=[];
+            $scope.vm.answerRes="";
         }
 
         
