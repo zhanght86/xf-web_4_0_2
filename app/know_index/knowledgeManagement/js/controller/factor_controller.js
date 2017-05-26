@@ -719,9 +719,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $(".senior_div").slideToggle();
         }
 
-        /**
-         * 校验标题和扩展问重复
-         */
+/**
+ * 校验标题和扩展问重复
+ */
         function  chackTitleAndextEnsionQuestion(title,ensionQuestionTitle){
             console.log(title);
             console.log(ensionQuestionTitle);
@@ -741,7 +741,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false;
             }
         }
-
 
         //根據 標題 生成 bot
         function getBotByTitle(){
