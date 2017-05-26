@@ -20,6 +20,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             serviceId : "" ,
             test : test,
             reset : reset,
+            result:'',
+            question : '',
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -59,15 +61,31 @@ angular.module('functionalTestModule').controller('sessionTestController', [
         }
 
        function test(){
+
            if($scope.vm.serviceId){
+               if($scope.vm.testAsking==''){
+                   alert('请输入测试问题!');
+                   return ;
+               }
+               if($scope.vm.channel==''){
+                   alert('请选择渠道!');
+                   return;
+               }
+
                httpRequestPost("/api/application/chatTest/passageway",{
                    applicationId:$scope.vm.applicationId,
                    userId:$scope.vm.userId,
                    content:$scope.vm.testAsking,
                    channel:$scope.vm.channel,
                    dimensionArray:$scope.vm.dimensionArray,
-                   serviceId:$scope.vm.serviceId
+                   //serviceId:$scope.vm.serviceId,
+                   serviceId:22
                },function(data){
+                   console.log(data);
+                   $scope.vm.result=data.data.data;
+                   $scope.vm.question= $scope.vm.testAsking;
+
+                   $scope.$apply();
 
                },function(){
 
