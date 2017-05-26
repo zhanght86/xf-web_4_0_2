@@ -8,6 +8,7 @@ angular.module('materialManagement').controller('faqChatController', [
         $state.go("materialManagement.faqChat");
         console.log($stateParams.scanDataList);
         $scope.vm = {
+             userId : $cookieStore.get("userId") ,
             userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:$cookieStore.get("userName"),
             applicationId : $cookieStore.get("applicationId"),
             standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
@@ -152,6 +153,7 @@ angular.module('materialManagement').controller('faqChatController', [
                         "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                         "applicationId": $scope.vm.applicationId,
                         "chatKnowledgeModifier": $scope.vm.userName,
+                        "userId":$scope.vm.userId,
                         "chatKnowledgeTopic": $scope.vm.standardQuestion,
                         "chatQuestionList" : $scope.vm.extendedQuestionArr,
                         "chatKnowledgeContentList" : $scope.vm.contentArr,

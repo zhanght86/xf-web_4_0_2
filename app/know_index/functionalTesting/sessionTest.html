@@ -8,22 +8,23 @@
 
                 <div class=" chat_test_ltopr">
                     <div class="mb-10" style="border-bottom:1px dashed #bdbdbd;" id="ask">
-                        <p class="c-primary bold">测试问法：<span id="question"></span></p>
+                        <p class="c-primary "><span class="bold mr-5">测试问法：</span><span ng-model="question">{{vm.question}}</span></p>
 
-                        <p>标签：<span id="question_tag"></span></p>
+                        <p><span class="mr-5">标签：</span><span ng-repeat="v in vm.result.questionTagSet track by $index">{{v}}<i ng-if="$index!=(vm.result.questionTagSet.length-1)">，</i></span></p>
 
-                        <p>分词：<span id="question_segmentation"></span></p>
+                        <!--<p>分词：<span ng-repeat="v in vm.result.questionSegmentation">{{v}}<i ng-if="$index!=vm.result.questionSegmentation.length-1">,</i></span></p>-->
+                        <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.questionSegmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.questionSegmentation.length-1)">，</i></span></p>
                     </div>
                     <div style="border-bottom:1px dashed #bdbdbd;" id="answer">
-                        <p class="c-primary bold">标准知识：<span id="answer_title"></span></p>
+                        <p class="c-primary "><span class="bold mr-5">标准知识：</span><span >{{vm.result.answerElement.matchExtendAsk}}</span></p>
 
-                        <p>标签：<span id="answer_tag"></span></p>
+                        <p><span class="mr-5">标签：</span><span ng-repeat="i in vm.result.answerElement.tags track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.tags.length-1)">，</i></span></p>
 
-                        <p>相似度：<span id="answer_similarity"></span></p>
+                        <p><span class="mr-5">相似度：</span><span >{{vm.result.similarity}}</span></p>
 
-                        <p>分词：<span id="answer_segmentation"></span></p>
+                        <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.answerElement.segmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.segmentation.length-1)">，</i></span></p>
 
-                        <p>答案：<span id="answer_content"></span></p>
+                        <p><span class="mr-5">答案：</span><span ng-repeat="i in vm.result.answer track by $index">{{i}}<i ng-if="$index!=(vm.result.answer.length-1)">，</i></p>
                     </div>
                     <div id="recommand">
                     </div>
@@ -52,20 +53,31 @@
                 </div>
                 <div class="text-r mt-10">
                     <button class="btn1 btn1_blue mr-10" ng-click="vm.test()">测试</button>
-                    <button class="btn1 btn_gray" >重置</button>
+                    <button class="btn1 btn_gray" ng-click="vm.reset()">重置</button>
                 </div>
             </div>
 
         </div>
-        <div class="R bd chat_test_r p20">
+        <div class="R bd chat_test_r p20" >
             <p>问答流程:</p>
             <div class="flow_chart_wrap" >
+                <ul>
+                    <li class="clearfix mb-10" ng-repeat="v in vm.result.flowInfo">
+                        <p class="flow_name L c-success">{{v.stepName}}</p>
+                        <span class="flow_span L ml-10 mr-10">→</span>
+                        <div class="flow_con L">{{v.stepInfo}}</div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
 <style>
-    .flow_chart_wrap{height:100%;}
+    #ask p,#answer p{margin-bottom:5px;}
+    .flow_chart_wrap{min-height:430px;overflow-y: auto;}
+    .flow_name{width:100px;height:50px;border:1px solid #eee;margin-top:25px;padding:10px;box-sizing:border-box;}
+    .flow_span{margin-top:40px;width:20px;display:block;}
+    .flow_con{width:290px;height:100px;border:1px solid #eee;overflow:auto;padding:10px;box-sizing:border-box;}
 </style>
 
 

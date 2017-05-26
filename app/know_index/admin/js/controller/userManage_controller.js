@@ -1,11 +1,6 @@
 /**
- * Created by 41212 on 2017/3/21.
+ * Created by mileS on 2017/3/21.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('adminModule').controller('userManageController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
 
@@ -101,11 +96,22 @@ angular.module('adminModule').controller('userManageController', [
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                getData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    if($scope.vm.searchName){
+                        search(current);
+                    }else{
+                        getData(current);
+                    }
+                }, 0)
             }
-        });
+        },true);
+
         //添加用户校验
         function verifyRelease(){
             if($scope.vm.userName == null || $scope.vm.userName == ""){
@@ -257,12 +263,6 @@ angular.module('adminModule').controller('userManageController', [
             //$scope.$apply()
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/userManageDialog2.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -310,12 +310,14 @@ angular.module('adminModule').controller('userManageController', [
             });
         }
         //查询用户
-        function search(){
+        function search(index){
             if($scope.vm.searchName == '' || $scope.vm.searchName == null){
                 getData(1);
             }else {
                 httpRequestPost("/api/user/queryUserByUserName", {
                     userName: $scope.vm.searchName,
+                    index:(index -1)*$scope.vm.pageSize,
+                    pageSize:$scope.vm.pageSize,
                 }, function (data) {
                     if (data.status == 10016) {
                         $scope.vm.listData = "";
@@ -325,22 +327,23 @@ angular.module('adminModule').controller('userManageController', [
                     }
                     $scope.vm.listData = data.data.userManageList;
                     $scope.vm.userDataTotal = data.data.total;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: data.data.total, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
                     $scope.$apply()
                 }, function () {
                     layer.msg("请求失败")
                 })
             }
         }
+
         //删除用户
         function deleteUser(userId){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/deleteDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
