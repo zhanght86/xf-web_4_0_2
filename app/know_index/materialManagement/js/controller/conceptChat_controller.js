@@ -8,6 +8,7 @@ angular.module('materialManagement').controller('conceptChatController', [
         $state.go("materialManagement.conceptChat");
         //console.log( $stateParams.scanDataList.extendedQuestionArr[0]);    //edit    -----taglist
         $scope.vm = {
+            userId : $cookieStore.get("userId") ,
             applicationId :  $cookieStore.get("applicationId"),
             userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:$cookieStore.get("userName"),
             standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
@@ -194,6 +195,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                     "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     "applicationId": $scope.vm.applicationId,
                     "chatKnowledgeModifier": $scope.vm.userName,
+                    "userId" : $scope.vm.userId ,
                     "chatKnowledgeTopic": $scope.vm.standardQuestion,
                     "chatQuestionList" : $scope.vm.extendedQuestionArr,
                     "chatKnowledgeContentList" : $scope.vm.contentArr

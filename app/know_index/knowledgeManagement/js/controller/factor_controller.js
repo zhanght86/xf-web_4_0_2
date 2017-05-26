@@ -540,6 +540,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 tagTem.exist = item.exist ;
                                 tagTem.tagClass= item.tagClass;
                                 tagTem.tagName= item.tagName;
+
                                 tagTem.tagTypeList= [] ;
                                 tagTem.tagTypeList.push(item.tagType);
                                 //tag.push(tagTem)

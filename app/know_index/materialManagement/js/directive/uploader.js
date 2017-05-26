@@ -73,7 +73,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
                 console.log("上传失败")
             });
             uploader.on('uploadSuccess', function (file,response) {
-                alert(22222222);
+                   console.log(response)
                 /*if(response.status == 500){
                  layer.msg("模板错误")
                  }else{
