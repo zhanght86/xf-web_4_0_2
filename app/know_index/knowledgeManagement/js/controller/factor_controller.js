@@ -1,5 +1,5 @@
 /**
- * Created by 41212 on 2017/3/28.
+ * Created by mileS on 2017/3/28.
  */
 angular.module('knowledgeManagementModule').controller('knowledgeEssentialController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$rootScope","$filter",
@@ -496,13 +496,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         //手动添加扩展问
         function getExtension(title,weight){
+            console.log(title,weight) ;
             var question = [];
             question.push(title);
             var obj = {} ;
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
-            if(!chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
-                layer.msg("扩展问和标题重复请重新输入扩展问")
+            if(!chackTitleAndextEnsionQuestion($scope.vm.title,$scope.vm.extensionTitle)){
+                layer.msg("扩展问和标题重复请重新输入扩展问") ;
                 return;
             }
             if(!$scope.vm.extensionTitle){
