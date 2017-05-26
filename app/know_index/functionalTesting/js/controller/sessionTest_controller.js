@@ -18,7 +18,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             //==============================================方法
             getService:getService,
             serviceId : "" ,
-            test : test
+            test : test,
+            reset : reset,
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -48,12 +49,12 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                 if(data.status == 10000){
                     $scope.vm.listService = data.data;
                     $scope.vm.serviceId = data.data[0].serviceId ;
-                    $scope.$apply()
+                    $scope.$apply();
                 }else if(data.status == 10005) {
                     //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
                 }
             },function(){
-                layer.msg("请求失败")
+                layer.msg("请求失败");
             })
         }
 
@@ -72,9 +73,14 @@ angular.module('functionalTestModule').controller('sessionTestController', [
 
                })
            }else{
-               layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
+               layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
            }
        }
+
+        //重置
+        function reset(){
+            $scope.vm.testAsking='';
+        }
 
     }
 ]);
