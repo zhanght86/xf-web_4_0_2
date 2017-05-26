@@ -433,6 +433,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
+                    }else if(data.status==11006){
+                        layer.msg("扩展问生成失败") ;
                     }else if(data.status==200){
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
