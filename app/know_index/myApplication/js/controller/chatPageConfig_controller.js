@@ -1,18 +1,9 @@
 /**
- * Created by dinfo on 2017/3/28.
+ * Created by mileS on 2017/3/28.
  */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('knowledgeManagementModule').controller('chatPageConfigController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog", "$cookieStore",
-    function ($scope,localStorageService, $state,ngDialog, $cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog", "$cookieStore","$timeout",
+    function ($scope,localStorageService, $state,ngDialog, $cookieStore,$timeout) {
         $scope.vm = {
             listData : "",   // table 数据
             listKnoData : "", //知识数据
@@ -154,13 +145,17 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                getData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    getData(current);
+                }, 100)
             }
-        });
-
-
+        },true);
         //从聊天知识库查询知识
         function findKnowledge(index){
             httpRequestPost("/api/ms/knowledgeManage/overView/findKnowledgeByApplicationId",{
@@ -188,12 +183,17 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 layer.msg("请求失败")
             })
         }
-
+        var timeout2 ;
         $scope.$watch('vm.paginationConf1.currentPage', function(current){
             if(current){
-                findKnowledge(current);
+                if (timeout2) {
+                    $timeout.cancel(timeout2)
+                }
+                timeout2 = $timeout(function () {
+                    findKnowledge(current);
+                }, 100)
             }
-        });
+        },true);
 
         //删除知识
         function deleteKnowledge(){
@@ -318,7 +318,6 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             userId :  $scope.vm.userId,
                             hotKnowledgeList : $scope.vm.seleceAddAll
                         },function(data){
-                            $scope.vm.selectAllCheck = false;
                             //$state.reload();
                             getData(1);
                             if(data.status == 10012){
@@ -328,6 +327,8 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                             layer.msg("请求失败")
                         })
                         //保存的同时清空数据
+                        $scope.vm.selectAllCheck = false;
+                        $scope.vm.selectAllCheckDialog = false;
                         $scope.vm.seleceAddAll = [];
                         $scope.vm.listKnoData = [];
                         $scope.vm.knowledge = "";
@@ -335,6 +336,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         $scope.vm.paginationConf1 = ''
                     }else{
                         //取消的同时清空数据
+                        $scope.vm.selectAllCheckDialog = false;
                         $scope.vm.seleceAddAll = [];
                         $scope.vm.listKnoData = [];
                         $scope.vm.knowledge = "";

@@ -304,12 +304,18 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                listServiceData(current);
-            }
-        });
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    listServiceData(current);
+                }, 100)
 
+            }
+        },true);
         //发布服务
         function publishService(serviceId){
             httpRequestPost("/api/application/service/publishService",{

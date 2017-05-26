@@ -3,8 +3,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('conceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$filter",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
         //console.log($stateParams.data);
         $scope.vm = {
             //主页
@@ -27,7 +27,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
-            timeFlag : "启用",
 
             //生成  知识标题 打标生成 BOT
             getBotByTitle : getBotByTitle,
@@ -85,6 +84,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             knowledgeId : "",
 
             limitSave : false ,
+            isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
 
         };
         //獲取渠道
@@ -109,41 +109,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("获取渠道失败，请刷新页面")
             });
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-        /*
-         params =  {
-         "applicationId": $scope.vm.applicationId,
-         "userId" : $scope.vm.userId ,
-         "sceneId" : $scope.vm.sceneId ,
-         "knowledgeTitle": $scope.vm.title,      //知识标题
-         "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-         "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-         "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-         };
-         var title = angular.copy($scope.vm.newTitle);
-         scanCotentByTitle(title) ;
-         var obj = {};
-         obj.knowledgeContent = getTableParams();
-         obj.channelIdList =  $scope.vm.channel;
-         obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-         obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-         obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
-         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
-         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
-         $scope.vm.scanContent=[];
-         $scope.vm.scanContent.push(obj);
-         params.knowledgeContents =  $scope.vm.scanContent;
-         params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
-         params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-         */
-
-
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
         if ($stateParams.data != null && $stateParams.data.knowledgeBase) {
-
             var data = $stateParams.data ;
             //console.log($stateParams.data);
             //标题
@@ -153,8 +123,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
             // 时间
-            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
-            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
+                $scope.vm.isTimeTable = true
+            }
+            $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
+            $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             //bot路径
             $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //扩展问
@@ -222,14 +195,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
             }
         });
-        //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
-            if(val==true){
-                $scope.vm.timeFlag="禁用"
-            }else{
-                $scope.vm.timeFlag="启用"
-            }
-        });
+
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             console.log(id);
@@ -496,6 +462,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
+                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
@@ -623,6 +590,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }else{
                 var dia = angular.element(".ngdialog ");
                 if(data){    //增加
+                    $scope.vm.isEdit = true ;
                     $scope.vm.newTitle = data.knowledgeContent;
                     $scope.vm.channel = data.channelIdList;
                     //$scope.vm.dimensionArr.id = data.dimensionIdList;
@@ -649,6 +617,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup ; //业务扩展问
                         $scope.vm.scanContent[index] = obj;
+                        $scope.vm.isEdit = false ;
                         setDialog() ;
                     }
                 } else {
@@ -666,6 +635,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             if (e === 1) {
                                 callback()
                             } else {
+                                $scope.vm.isEdit = false  ;
                                 setDialog()
                             }
                         }
@@ -981,12 +951,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel){
+            if(val.id && $scope.vm.channel && (!$scope.vm.isEdit)){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id){
+            if(val.length && $scope.vm.dimensionArr.id && (!$scope.vm.isEdit)){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         }, true);
@@ -1001,15 +971,15 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 //channel   == id
                 //dimenssion   == id
                 angular.forEach($scope.vm.scanContent, function (item) {
-                    angular.forEach(item.channelId, function (v) {
+                    angular.forEach(item.channelIdList, function (v) {
                         angular.forEach(channel, function (val, indexChannel) {
                             if (val == v) {
-                                angular.forEach(item.dimensionId, function (value) {
+                                angular.forEach(item.dimensionIdList, function (value) {
                                     angular.forEach(dimension, function (key, indexDimension) {
                                         if (key == value) {
                                             var channelTip;
                                             angular.forEach($scope.vm.channels, function (all) {
-                                                if (all.channelId == v) {
+                                                if (all.channelCode == v) {
                                                     channelTip = all.channelName
                                                 }
 

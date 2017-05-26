@@ -6,7 +6,7 @@
  * 控制器
  */
 angular.module('businessModelingModule').controller('botConceptManageController', [
-'$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$cookieStore",function ($scope,localStorageService, $state,ngDialog,$timeout,$cookieStore) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -31,6 +31,7 @@ angular.module('businessModelingModule').controller('botConceptManageController'
             key: "" ,
             modifier: $cookieStore.get("userId"),
             term: "",
+            weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
             inputVal : "",
@@ -55,7 +56,7 @@ angular.module('businessModelingModule').controller('botConceptManageController'
             },function(data){
                 loadBotConcept(current,data);
             },function(){
-                layer.msg("请求失败");
+                layer.msg("请求失败")
             })
         }
         function loadBotConcept(current,data){
@@ -69,16 +70,24 @@ angular.module('businessModelingModule').controller('botConceptManageController'
             };
             $scope.$apply();
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadBotConceptTable(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    loadBotConceptTable(current);
+                }, 100)
             }
-        });
+        },true);
+
         //编辑
         function editBot(item){
-            $scope.vm.dialogTitle="编辑bot概念";
+            $scope.vm.dialogTitle="编辑BOT概念";
             $scope.vm.key = item.botConceptKey;
             $scope.vm.term =  item.botConceptTerm;
+            $scope.vm.weight =  item.botConceptWeight;
             addBotConceptDialog(singleEditBotConcept,item);
         }
         function searchBotConcept(){
@@ -90,7 +99,6 @@ angular.module('businessModelingModule').controller('botConceptManageController'
         }
         //查询
         function searchBotConceptByUser(){
-            console.log($scope.vm.searchVal);
             httpRequestPost("/api/ms/modeling/concept/bot/listByModifier",{
                 "botConceptModifier":$scope.vm.searchVal,
                 "botConceptApplicationId": $scope.vm.applicationId,
@@ -120,7 +128,6 @@ angular.module('businessModelingModule').controller('botConceptManageController'
                 layer.msg("查询没有对应信息")
             });
         }
-
         /**
          * 转换查询类型
          * @param request
@@ -130,66 +137,70 @@ angular.module('businessModelingModule').controller('botConceptManageController'
         function switchBotConceptSearchType(request,value){
             if($("#searchType").val()=="botConceptKey"){
                 request.botConceptKey=$scope.vm.percent+value+$scope.vm.percent;
+            }else if($("#searchType").val()=="botConceptWeight"){
+                request.botConceptWeight=$("#botConceptWeight").val();
             }else if($("#searchType").val()=="botConceptTerm"){
                 request.botConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }
-
         //添加 窗口
         function addBot(){
             var dialog = ngDialog.openConfirm({
-                template: "/know_index/businessModeling/bot/botConceptManageDialog.html",
+                template:"/know_index/businessModeling/bot/botConceptManageDialog.html",
                 scope: $scope,
-                closeByDocument: false,
+                closeByDocument:false,
                 closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
                         if(lengthCheck($scope.vm.key,0,50)==false){
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/ms/modeling/concept/bot/repeatCheck", {
+                        httpRequestPost("/api/ms/modeling/concept/bot/repeatCheck",{
                             "botConceptApplicationId": $scope.vm.applicationId,
                             "botConceptKey": $scope.vm.key
-                        }, function (data) {          //类名重複
-                            if (data.status === 10002) {
+                        },function(data){          //类名重複
+                            if(data.status===10002){
                                 layer.confirm("您添加的概念类已经在，是否前往编辑？",{
                                     btn:['前往','取消'],
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/ms/modeling/concept/bot/listByAttribute", {
+                                    httpRequestPost("/api/ms/modeling/concept/bot/listByAttribute",{
                                         "botConceptApplicationId": $scope.vm.applicationId,
-                                        "botConceptKey": $scope.vm.key,
-                                        "index": 0,
-                                        "pageSize": 1
-                                    }, function (data) {
-                                        $scope.vm.dialogTitle = "编辑bot概念";
+                                        "botConceptKey":$scope.vm.key,
+                                        "index":0,
+                                        "pageSize":1
+                                    },function(data){
+                                        $scope.vm.dialogTitle="编辑BOT概念";
                                         console.log(data);
-                                        addBotConceptDialog(singleEditBotConcept, data.data[0]);
+                                        addBotConceptDialog(singleEditBotConcept,data.data[0]);
                                         $scope.vm.key = data.data[0].botConceptKey;
-                                        $scope.vm.term = data.data[0].botConceptTerm;
-                                    }, function () {
+                                        $scope.vm.term =  data.data[0].botConceptTerm;
+                                        $scope.vm.weight =  data.data[0].botConceptWeight;
+                                    },function(){
                                         console.log("cancel");
                                     });
                                 },function(){
                                     console.log("cancel");
                                 });
-                            } else {
+                            }else{
                                 //类名无冲突
-                                $scope.vm.dialogTitle = "增加bot概念";
-                                $scope.vm.term = "";
+                                $scope.vm.dialogTitle="增加BOT概念";
+                                $scope.vm.term="";
+                                $scope.vm.weight="33" ;   //默認權重
                                 addBotConceptDialog(singleAddBotConcept);
                             }
-                        }, function () {
+                        },function(){
                             layer.msg("添加失败")
                         })
-                    } else {
+                    }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -210,14 +221,14 @@ angular.module('businessModelingModule').controller('botConceptManageController'
         //編輯彈框   添加公用
         function addBotConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template: "/know_index/businessModeling/bot/botConceptManageDialog2.html",
+                template:"/know_index/businessModeling/bot/botConceptManageDialog2.html",
                 scope: $scope,
-                closeByDocument: false,
+                closeByDocument:false,
                 closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
                         if(lengthCheck($scope.vm.key,0,50)==false){
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
@@ -249,9 +260,10 @@ angular.module('businessModelingModule').controller('botConceptManageController'
                             $("#termAddError").html('');
                         }
                         callback(item);
-                    } else {
+                    }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
+                        $scope.vm.weight = 33;
                     }
                 }
             });
@@ -293,7 +305,8 @@ angular.module('businessModelingModule').controller('botConceptManageController'
                 "applicationId": $scope.vm.applicationId,
                 "botConceptKey":  $scope.vm.key,
                 "botConceptModifier": $scope.vm.modifier,
-                "botConceptTerm": $scope.vm.term
+                "botConceptTerm": $scope.vm.term,
+                "botConceptWeight": $scope.vm.weight
             },function(data){
                 if(responseView(data)==true){
                     loadBotConceptTable($scope.vm.paginationConf.currentPage);
@@ -308,12 +321,13 @@ angular.module('businessModelingModule').controller('botConceptManageController'
                 "applicationId": $scope.vm.applicationId,
                 "botConceptKey":  $scope.vm.key,
                 "botConceptModifier": $scope.vm.modifier,
-                "botConceptTerm": $scope.vm.term
+                "botConceptTerm": $scope.vm.term,
+                "botConceptWeight": $scope.vm.weight
             },function(data){
                 if(responseView(data)==true){
                     loadBotConceptTable($scope.vm.paginationConf.currentPage);
                 }
-            });
+            })
         }
         //单条刪除
         function singleDelBotConcept(id){

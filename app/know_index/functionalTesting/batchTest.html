@@ -1,0 +1,111 @@
+<div ui-view="header"></div>
+
+<div class="wrap pr chat_test_wrap" style="padding-top:10px;">
+
+    <div class="p20 cl" style="background:#fff;height:100%;">
+        <div class="cl" style="width:410px;height:30px;margin:0 auto 20px;">
+
+            <select class="sel bd L mr-10" id="selected">
+                <option value="待测试">待测试</option>
+                <option value="测试中">测试中</option>
+                <option value="已完成">已完成</option>
+            </select>
+            <input type="text" class="input-text L mr-10" placeholder="测试文件/渠道名称/测试人" style="width:250px;height:30px;" />
+            <input type="text" class="input-text L mr-10" style="display: none;" >
+            <button class="btn1 btn1_blue L" type="button" >查找</button>
+        </div>
+        <div class="bd p20" style="background:#fcfdfd;">
+            <div class="mb-10 cl">
+                <span class="L">
+                    <button  ng-click="vm.uploadQuestion()" class="btn1  btn1_blue mr-10"> 批量上传</button>
+                    <button class="btn1 btn_delete" ng-click="vm.deleteQuestion()"> 删除</button>
+                </span>
+                <span class="R">
+                    <span class="c-999 pl-10">共有数据：<strong >3</strong> 条 </span>
+                </span>
+            </div>
+
+            <div class="mt-20">
+                <div class="dataTables_wrapper no-footer">
+                    <table class="stop_word_tab" >
+                        <thead>
+                        <tr>
+                            <th class="bold" width="4%"><input type="checkbox" ></th>
+                            <th class="bold" width="6%">编号</th>
+                            <th class="bold" width="14%">测试文件</th>
+                            <th class="bold" width="10%">项目</th>
+                            <th class="bold" width="10%">状态</th>
+                            <th class="bold" width="10%">测试总数</th>
+                            <th class="bold" width="10%">准确率</th>
+                            <th class="bold" width="10%">上传时间</th>
+                            <th class="bold" width="9%">操作人</th>
+                            <th class="bold" width="12%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="checkbox" ></td>
+                            <td>1</td>
+                            <td><span class="c-primary">高铁管家第一版.xlsx</span></td>
+                            <td>高铁管家</td>
+                            <td>测试中</td>
+                            <td>100</td>
+                            <td>98%</td>
+                            <td>2016-8-17 13:45:23</td>
+                            <td>cuipeijun</td>
+                            <td>
+                                <a href="javascript:;" class="mr-10">暂停</a>
+                                <a  ui-sref="functionalTest.testResult">查看</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" ></td>
+                            <td>1</td>
+                            <td><span class="c-primary">高铁管家第一版.xlsx</span></td>
+                            <td>高铁管家</td>
+                            <td>测试中</td>
+                            <td>100</td>
+                            <td>98%</td>
+                            <td>2016-8-17 13:45:23</td>
+                            <td>cuipeijun</td>
+                            <td>
+                                <a href="javascript:;" class="mr-10">启动</a>
+                                <a  ui-sref="functionalTest.testResult">查看</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="page clearfix">
+                        <span class="page_span ">上一页</span>
+                        <a href="javascript:;" class="cura">1</a>
+                        <a href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <span class="page_span ">下一页</span>
+                        <span>共<b class="page_b">12</b>页</span>
+                        <span>跳转到</span>
+                        <input type="text" class="page_txt">
+                        <span>页</span>
+                        <span class="go_span">GO</span>
+                    </div>
+                    <div class="text-r pt-10">
+                        <button type="button" class="btn1 btn1_blue" >导出</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+
+</script>
+
+
+
+
+

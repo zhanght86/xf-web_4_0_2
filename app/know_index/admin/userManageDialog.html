@@ -1,12 +1,12 @@
 <div class="pd-20">
     <form action="" method="post" name="myForm" class="form form-horizontal" novalidate>
         <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2">用户名：</label>
+            <label class="form-label col-xs-3 col-sm-2">姓名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
                 <input name="userName" type="text" placeholder=" 显示在登录后的用户名称" ng-model="vm.userName" class="input-text" id="username" required>
                  <span style="color:red" ng-show="myForm.userName.$dirty && myForm.userName.$invalid">
-                    <span ng-show="myForm.userName.$error.required">用户名不能为空!</span>
+                    <span ng-show="myForm.userName.$error.required">姓名不能为空!</span>
                 </span>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="formControls col-xs-9 col-sm-9">
                 <input name="userPassWord" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
                  <span style="color:red" ng-show="(!myForm.userPassWord.$invalid)  ||  myForm.userPassWord.$dirty">
-                    <span ng-show="vm.userPassWord!=vm.userPassword">请确认密码!</span>
+                    <span ng-show="vm.userPassWord!=vm.userPassword">密码不一致!</span>
                 </span>
             </div>
         </div>

@@ -7,7 +7,7 @@ angular.module('knowledge_static_web').filter('channel', function () {
     return function (value,params) {
         var result;
         angular.forEach(params,function(item){
-            if(value == item.channelId){
+            if(value == item.channelCode){
                 result = item.channelName
             }
         });

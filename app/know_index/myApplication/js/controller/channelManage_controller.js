@@ -1,18 +1,10 @@
 /**
- * Created by dinfo on 2017/3/28.
- */
-/**
- * Created by 41212 on 2017/3/28.
- */
-
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
+ * Created by mileS on 2017/3/28.
  */
 
 angular.module('myApplicationSettingModule').controller('channelManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             channelData : "",   // 渠道数据
@@ -76,13 +68,17 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                listChannelData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    listChannelData(current);
+                }, 100)
             }
-        });
-
-
+        },true);
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -108,11 +104,17 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 layer.msg("请求失败")
             })
         }
+        var timeout2 ;
         $scope.$watch('vmo.paginationConf.currentPage', function(current){
             if(current){
-                listBlackListData(current);
+                if (timeout2) {
+                    $timeout.cancel(timeout2)
+                }
+                timeout2 = $timeout(function () {
+                    listBlackListData(current);
+                }, 100)
             }
-        });
+        },true);
 
         //获取状态列表
         function getStatusList(){

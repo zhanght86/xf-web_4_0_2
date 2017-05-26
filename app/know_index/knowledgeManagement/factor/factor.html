@@ -19,7 +19,7 @@
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div class="dib">
                                 <label>
-                                    <input style=" margin-top:-2px;" type="checkbox" ng-model="vm.isTimeTable"> {{vm.timeFlag}}
+                                    <input style=" margin-top:-2px;" type="checkbox" ng-model="vm.isTimeTable"> 启用
                                 </label>
                                 <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -35,8 +35,9 @@
                             <div class="formControls col-xs-8 col-sm-9">
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
-                                        <input class="ipt-txt" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 381px;border: solid 1px #ddd;"/>
+                                        <input class="ipt-txt bd" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 394px;height:32px;"/>
                                         <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
+
                                         <div class="rootClassfy aside-navs aside-navs2" >
                                             <ul class="menus show">
                                                 <!--//test-->
@@ -62,8 +63,8 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
-                                <div class="ipt-txt-box L mr-10" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;">
-                                    <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                <div class="ipt-txt-box L mr-10" style="width: 394px;border: 1px solid #e1e1e1;margin-left: 16px;">
+                                    <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                         <!--<span>{{item.className.join("/")}}</span>-->
                                         <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                                     </div>
@@ -78,8 +79,8 @@
                         <div class="row cl mb-10">
                             <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
                             <div class="value Div clearfix" id="Div">
-                                <div class="ipt-txt-box L" style="width: 393px;border: 1px solid #e1e1e1;margin-left: 16px;margin-right:10px;">
-                                    <div class="ipt-txt" style="overflow:hidden;line-height:22px;">
+                                <div class="ipt-txt-box L" style="width: 394px;border: 1px solid #e1e1e1;margin-left: 16px;margin-right:10px;">
+                                    <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                         <!--<span>{{item.className.join("/")}}</span>-->
                                         <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                                     </div>
@@ -254,6 +255,7 @@
 </div>
 <style>
     .Wdate{background-position:164px center;}
+    .ipt-txt{height:34px;box-sizing:border-box;}
 </style>
 
 

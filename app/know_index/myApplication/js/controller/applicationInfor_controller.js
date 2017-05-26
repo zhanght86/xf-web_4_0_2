@@ -4,8 +4,8 @@
  * Date: 2017/4/10 17:16
  */
 angular.module('myApplicationSettingModule').controller('applicationInforController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$rootScope",
-    function ($scope,localStorageService, $state, ngDialog,$cookieStore,$rootScope) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$rootScope","$timeout",
+    function ($scope,localStorageService, $state, ngDialog,$cookieStore,$rootScope,$timeout) {
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),   //用户id
@@ -62,8 +62,8 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 $scope.vm.dataTotal =data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: Math.ceil(data.total/$scope.vm.pageSize), //总页数
-                    pageSize: 1,//分页框的分组单位
+                    totalItems: data.total, //总页数
+                    pageSize: $scope.vm.pageSize,//分页框的分组单位
                     pagesLength: 8,//分页框显示数量
                 };
                 $scope.$apply();
@@ -71,11 +71,19 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                listServiceData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    listServiceData(current);
+                }, 100)
+
             }
-        });
+        },true);
+
 
         //发布服务
         function publishService(serviceId){

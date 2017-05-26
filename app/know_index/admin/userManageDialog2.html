@@ -1,12 +1,12 @@
 <div class="pd-20">
     <form action="" method="post" class="form form-horizontal" name="myForm" novalidate>
         <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2">用户名：</label>
+            <label class="form-label col-xs-3 col-sm-2">姓名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
                 <input type="text" name="userName" placeholder=" zhangsan" ng-model="vm.userName" class="input-text" id="username" required>
                 <span style="color:red" ng-show="myForm.userName.$dirty && myForm.userName.$invalid">
-                    <span ng-show="myForm.userName.$error.required">用户名不能为空!</span>
+                    <span ng-show="myForm.userName.$error.required">姓名不能为空!</span>
                 </span>
             </div>
         </div>
@@ -95,7 +95,7 @@
         </div>
         <div class="tc">
             <!--<button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>-->
-            <button  class="btn btn-primary radius mr-10" type="button" ng-disabled="myForm.$invalid || vm.userPassword!=vm.userPassWord || vm.applicationIds.length == 0"   ng-click="closeThisDialog(1)">保存</button>
+            <button  class="btn btn-primary radius mr-10" type="button" ng-click="vm.verifyRelease()?closeThisDialog(1):''">保存</button>
             <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
         </div>
     </form>

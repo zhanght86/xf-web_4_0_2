@@ -1,10 +1,10 @@
 /**
- * Created by dinfo on 2017/3/28.
+ * Created by mileS on 2017/3/28.
  */
 
 angular.module('knowledgeManagementModule').controller('newConceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$interval","$stateParams",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$interval","$stateParams","$filter",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams,$filter) {
         //$cookieStore.put("sceneId",1)
         $scope.vm = {
 //主页
@@ -28,7 +28,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
-            timeFlag : "启用",
             //生成  知识标题 打标生成 BOT
             getBotByTitle : getBotByTitle,
             //creatBot : [],
@@ -81,14 +80,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             replaceType : 0 ,
             enterEvent : enterEvent,
 
-            factor : 0 ,  //触发要素，0 標題   1 擴展問
+            factor : 62 ,  //触发要素，62知识标题 63概念扩展
             factorTitle : "" , // 触发要素 标题
             getDetailByTitle : getDetailByTitle,
             getFactorByTitle : []  ,     // 要素标题产生选项
             selelectTitle : selelectTitle ,
 
             extensionByContentTitle : [] ,   // 内容生成扩展问 ,
-            limitSave : false //限制多次打标
+            limitSave : false ,//限制多次打标
+            isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
@@ -125,8 +125,11 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
             // 时间
-            $scope.vm.knowledgeExpDateStart  =  data.knowledgeBase.knowledgeExpDateStart ;
-            $scope.vm.knowledgeExpDateEnd  =  data.knowledgeBase.knowledgeExpDateEnd ;
+            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
+                $scope.vm.isTimeTable = true
+            }
+            $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
+            $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             //bot路径
             $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //扩展问
@@ -237,14 +240,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
             }
         });
-        //检测时间表开关
-        $scope.$watch("vm.isTimeTable",function(val){
-            if(val==true){
-                $scope.vm.timeFlag="禁用"
-            }else{
-                $scope.vm.timeFlag="启用"
-            }
-        });
+
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
             //console.log(id);
@@ -393,7 +389,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //        layer.msg("err or err")
         //    });
         //}
-        function scanCotentByTitle(title,index){
+        /*function scanCotentByTitle(title,index){
             var answerContentList = [];
             answerContentList.push(title);
             httpRequestPost("/api/ms/marketingKnowledge/productExtensionQuestion", {
@@ -413,14 +409,14 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }, function () {
                 //layer.msg("打标失败");
             });
-        }
+        }*/
         //手动添加扩展问
-        function getExtension(title,weight){
+        function getExtension(title){
             var question = [];
             question.push(title);
             var obj = {} ;
             obj.extensionQuestionTitle = title;
-            obj.extensionQuestionType = weight;
+            obj.extensionQuestionType = $scope.vm.factor;
             if(!title){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtension(obj , $scope.vm.extensions)){
@@ -431,20 +427,23 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){
                         console.log(question)
                         layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
+                    }else if(data.status==11006){
+                        layer.msg("扩展问生成失败") ;
                     }else if(data.status==200){
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
-                        enten.extensionQuestionType = weight ;
+                        enten.extensionQuestionType = $scope.vm.factor;
                         var listArr = [];
                         var listObj = {};
                         listObj.wholeDecorateTagName="";
                         listObj.wholeDecorateTagType="";
+
                         listArr.push(listObj);
                         enten.wholeDecorateTagList = listArr;
                         enten.extensionQuestionTagList = [] ;
@@ -509,6 +508,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("请可用选择节点") ;
                 return ;
             }else{
+                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
@@ -657,6 +657,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }else {
                 var dia = angular.element(".ngdialog ");
                 if (data) {    //增加
+                    $scope.vm.isEdit = true ;
                     $scope.vm.newTitle = data.knowledgeContent;
                     $scope.vm.channel = data.channelIdList;
                     //$scope.vm.dimensionArr.id = data.dimensionIdList;
@@ -683,6 +684,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         obj.knowledgeCommonOn = $scope.vm.tail;   //弹出评价小尾巴
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                         $scope.vm.scanContent[index] = obj;
+                        $scope.vm.isEdit = false  ;
                         setDialog();
                     }
                 } else {
@@ -700,6 +702,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             if (e === 1) {
                                 callback()
                             } else {
+                                $scope.vm.isEdit = false  ;
                                 setDialog()
                             }
                         }
@@ -879,7 +882,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if($scope.vm.newTitle){
                 var title = angular.copy($scope.vm.newTitle);
                 var index = $scope.vm.scanContent.length ;
-                scanCotentByTitle(title,index) ;
+                //scanCotentByTitle(title,index) ;
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
                 //obj.knowledgeContentType = 0,  // 答案类型
@@ -951,12 +954,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
 //***************************    save check channel dimension  **********************************************
         $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel.length){
+            if(val.id && $scope.vm.channel.length && (!$scope.vm.isEdit)){
                 checkChannelDimension($scope.vm.channel,val.id)
             }
         },true);
         $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id.length){
+            if(val.length && $scope.vm.dimensionArr.id.length && (!$scope.vm.isEdit)){
                 checkChannelDimension(val,$scope.vm.dimensionArr.id)
             }
         },true);
@@ -971,15 +974,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                  //channel   == id
                                  //dimenssion   == id
                 angular.forEach($scope.vm.scanContent,function(item){
-                    angular.forEach(item.channelId,function(v){
+                    angular.forEach(item.channelIdList,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
                             if(val == v){
-                                angular.forEach(item.dimensionId,function(value){
+                                angular.forEach(item.dimensionIdList,function(value){
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
                                             angular.forEach($scope.vm.channels,function(all){
-                                                if(all.channelId==v){
+                                                if(all.channelCode==v){
                                                     channelTip = all.channelName;
                                                 }
                                             });

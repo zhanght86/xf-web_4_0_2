@@ -1,15 +1,10 @@
 
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('knowledgeManagementModule').controller('knowledgeScanController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","$location","$rootScope","knowledgeAddServer","$window",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,$location,$rootScope,knowledgeAddServer,$window) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
-        console.log($window.opener.knowledgeScan);
-        console.log($window.opener.knowledgeScan);
+        //console.log($window.opener.knowledgeScan);
+        //console.log($window.opener.knowledgeScan);
         var knowledgeScan =  $window.opener.knowledgeScan;
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),

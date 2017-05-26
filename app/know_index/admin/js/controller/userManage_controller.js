@@ -109,7 +109,18 @@ angular.module('adminModule').controller('userManageController', [
         //添加用户校验
         function verifyRelease(){
             if($scope.vm.userName == null || $scope.vm.userName == ""){
-                layer.msg("用户名不能为空!")
+                layer.msg("姓名不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            var name = /^[A-Za-z\u4e00-\u9fa5]+$/;
+            if(!name.test($scope.vm.userName)){
+                layer.msg("姓名只可以输入汉字或字母的组合!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.userName.length > 20){
+                layer.msg("姓名的长度不能超过20个字符!")
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -118,13 +129,37 @@ angular.module('adminModule').controller('userManageController', [
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
+            var reg = /^[0-9a-zA-Z_]{4,20}$/;
+            if(!reg.test($scope.vm.userLoginName)){
+                layer.msg("登录名只可以是数字、字母、下划线组合，4-20个字符!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+
             if($scope.vm.userPassword == null || $scope.vm.userPassword == ""){
                 layer.msg("密码不能为空!")
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
+            var password = /^[0-9a-zA-Z]+$/;
+            if(!password.test($scope.vm.userPassword)){
+                layer.msg("密码只可以是数字和字母组合!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.userPassword.length>20){
+                layer.msg("密码长度不能超过20个字符!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
             if($scope.vm.userPhoneNumber == null || $scope.vm.userPhoneNumber == ""){
                 layer.msg("手机号不能为空!")
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            var re = /^[1-9]{1}[0-9]{10}$/;
+            if (!re.test($scope.vm.userPhoneNumber)) {
+                layer.msg("手机号只可以不为0开头的11位数字!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -172,7 +207,7 @@ angular.module('adminModule').controller('userManageController', [
                                 //刷新页面
                                 $state.reload();
                                 if (data.status == 10009) {
-                                    layer.msg("该用户已经存在，请重新添加!")
+                                    layer.msg("该登录名已经存在，请重新添加!")
                                 } else if (data.status == 10008) {
                                     layer.msg("用户添加成功!");
                                 } else {
@@ -182,6 +217,25 @@ angular.module('adminModule').controller('userManageController', [
                                 layer.msg("请求失败")
                             })
                         }
+                        //保存的同时清空数据
+                        $scope.vm.userName = "";
+                        $scope.vm.userLoginName = "";
+                        $scope.vm.userPassword = "";
+                        $scope.vm.userPassWord = "";
+                        $scope.vm.userPhoneNumber = "";
+                        $scope.vm.userEmail = "";
+                        $scope.vm.prop = [];
+                        $scope.vm.remark = "";
+                    }else{
+                        //取消的同时清空数据
+                        $scope.vm.userName = "";
+                        $scope.vm.userLoginName = "";
+                        $scope.vm.userPassword = "";
+                        $scope.vm.userPassWord = "";
+                        $scope.vm.userPhoneNumber = "";
+                        $scope.vm.userEmail = "";
+                        $scope.vm.prop = [];
+                        $scope.vm.remark = "";
                     }
                 }
             });
@@ -216,27 +270,41 @@ angular.module('adminModule').controller('userManageController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        httpRequestPost("/api/user/updateUserById",{
-                            userId:data.userId,
-                            userName:$scope.vm.userName,
-                            userLoginName:$scope.vm.userLoginName,
-                            userPassword:$scope.vm.userPassword,
-                            userPhoneNumber:$scope.vm.userPhoneNumber,
-                            userEmail:$scope.vm.userEmail,
-                            roleId:$scope.vm.roleId,
-                            applicationIds:$scope.vm.applicationIds,
-                            remark:$scope.vm.remark
-                        },function(data){
-                            //刷新页面
-                            $state.reload();
-                            if(data.status == 10012){
-                                layer.msg("用户修改成功!");
-                            }else{
-                                layer.msg("用户修改失败!");
-                            }
-                        },function(){
-                            layer.msg("请求失败");
-                        })
+                        if($scope.vm.allowSubmit) {
+                            httpRequestPost("/api/user/updateUserById", {
+                                userId: data.userId,
+                                userName: $scope.vm.userName,
+                                userLoginName: $scope.vm.userLoginName,
+                                userPassword: $scope.vm.userPassword,
+                                userPhoneNumber: $scope.vm.userPhoneNumber,
+                                userEmail: $scope.vm.userEmail,
+                                roleId: $scope.vm.roleId,
+                                applicationIds: $scope.vm.applicationIds,
+                                remark: $scope.vm.remark
+                            }, function (data) {
+                                //刷新页面
+                                $state.reload();
+                                if (data.status == 10012) {
+                                    layer.msg("用户修改成功!");
+                                }else if(data.status = 10009){
+                                    layer.msg("登录名重复!");
+                                } else {
+                                    layer.msg("用户修改失败!");
+                                }
+                            }, function () {
+                                layer.msg("请求失败");
+                            })
+                        }
+                    }else{
+                        //取消的同时清空数据
+                        $scope.vm.userName = "";
+                        $scope.vm.userLoginName = "";
+                        $scope.vm.userPassword = "";
+                        $scope.vm.userPassWord = "";
+                        $scope.vm.userPhoneNumber = "";
+                        $scope.vm.userEmail = "";
+                        $scope.vm.prop = [];
+                        $scope.vm.remark = "";
                     }
                 }
             });
@@ -322,32 +390,62 @@ angular.module('adminModule').controller('userManageController', [
                 showClose : true,
                 backdrop : 'static',
                 preCloseCallback : function(e){
-                    httpRequestPost("/api/user/deleteUserByIds",{
-                        ids :  $scope.vm.deleteIds
-                    },function(data){
-                        $state.reload();
-                    },function(){
-                        layer.msg("请求失败")
-                    })
+                    if(e === 1) {
+                        httpRequestPost("/api/user/deleteUserByIds", {
+                            ids: $scope.vm.deleteIds
+                        }, function (data) {
+                            $state.reload();
+                        }, function () {
+                            layer.msg("请求失败")
+                        })
+                    }
                 }
             });
         }
 
         //改变用户状态
-        function stop(userId,statusId){
-            httpRequestPost("/api/user/updateStatus",{
-                userId:userId,
-                statusId:statusId
-            },function(data){
-                $state.reload();
-                if(data.status == 10012){
-                    layer.msg("用户状态修改成功!");
-                }else{
-                    layer.msg("用户状态修改失败!");
-                }
-            },function(){
-                layer.msg("请求失败")
-            })
+        function stop(userId,statusId) {
+            if(statusId == 10002){
+                httpRequestPost("/api/user/updateStatus", {
+                    userId: userId,
+                    statusId: statusId
+                }, function (data) {
+                    $state.reload();
+                    if (data.status == 10012) {
+                        layer.msg("用户状态修改成功!");
+                    } else {
+                        layer.msg("用户状态修改失败!");
+                    }
+                }, function () {
+                    layer.msg("请求失败")
+                })
+            }else {
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/admin/updateDialog.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {
+                        if (e === 1) {
+                            httpRequestPost("/api/user/updateStatus", {
+                                userId: userId,
+                                statusId: statusId
+                            }, function (data) {
+                                $state.reload();
+                                if (data.status == 10012) {
+                                    layer.msg("用户状态修改成功!");
+                                } else {
+                                    layer.msg("用户状态修改失败!");
+                                }
+                            }, function () {
+                                layer.msg("请求失败")
+                            })
+                        }
+                    }
+                });
+            }
         }
 
         getApplication();
