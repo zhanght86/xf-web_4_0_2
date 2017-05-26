@@ -68,7 +68,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
                 pageSize: $scope.vm.pageSize,//第页条目数
-                pagesLength: 8,//分页框数量
+                pagesLength: 8//分页框数量
             };
             $scope.$apply();
         }
