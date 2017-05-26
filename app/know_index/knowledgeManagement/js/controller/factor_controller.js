@@ -98,7 +98,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
-                console.log( $scope.vm.applicationId) ;
                 if(data.data){
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
@@ -502,13 +501,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var obj = {} ;
             obj.extensionQuestionTitle = $scope.vm.extensionTitle;
             obj.extensionQuestionType = $scope.vm.extensionWeight;
-            if(!chackTitleAndextEnsionQuestion($scope.vm.title,$scope.vm.extensionTitle)){
-                layer.msg("扩展问和标题重复请重新输入扩展问") ;
-                return;
-            }
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
-            }else if(!checkExtension(obj , $scope.vm.extensions)){
+            }else if(!chackTitleAndextEnsionQuestion($scope.vm.title,$scope.vm.extensionTitle)){
+                layer.msg("扩展问和标题重复请重新输入扩展问") ;
+                return;
+            }else if(checkExtensionByTitle(obj , $scope.vm.extensions) == 1){
                 layer.msg("扩展问重复");
                 return false
             }else{
@@ -721,9 +719,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $(".senior_div").slideToggle();
         }
 
-        /**
-         * 校验标题和扩展问重复
-         */
+/**
+ * 校验标题和扩展问重复
+ */
         function  chackTitleAndextEnsionQuestion(title,ensionQuestionTitle){
             console.log(title);
             console.log(ensionQuestionTitle);
@@ -743,7 +741,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false;
             }
         }
-
 
         //根據 標題 生成 bot
         function getBotByTitle(){
@@ -870,20 +867,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         };
 
         /* *********************              高级选项           **************************/ //
-//重置参数
-//        function setDialog(){
-//            $scope.vm.newTitle = "";
-//            $scope.vm.knowledgeContentNegative = "";
-//            $scope.vm.channel = [];
-//            $scope.vm.dimension = [];
-//            $scope.vm.question = 1,    //显示相关问
-//            $scope.vm.tip = 1,    //在提示
-//            $scope.vm.tail =1,    //弹出评价小尾巴
-//            $scope.vm.appointRelativeGroup = [] ;//业务扩展问
-//            $scope.vm.appointRelative = ""
-//            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-//            $scope.vm.dimensionArr = []
-//        }
 
         //选择渠道
         function selectChannel(channelId){
@@ -893,37 +876,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.channel.push(channelId);
             }
         }
-
-        // 检验标题是否符合
-        function checkTitle(title,type){
-            if(!title){
-                layer.msg("标题不能为空");
-                return false
-            }else{
-                httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
-                    "title" : title
-                },function(data){
-                    //console.log(data);
-                    return true;
-                },function(err){
-                    layer.msg("打标失败，请重新打标");
-                    return false
+        //检验扩展问 (标题 类型)是否重复
+        function checkExtensionByTitle(item,allExtension){
+            var result = 0;
+                angular.forEach(allExtension,function(val){
+                    if((val.extensionQuestionTitle == item.extensionQuestionTitle) && (val.extensionQuestionType == item.extensionQuestionType)){
+                        result = 1
+                    }
                 });
-            }
-        }
-        //检验扩展问是否重复
-        function checkExtension(item,arr){
-            return true ;
-            //    return true ;
-            //}else{
-            //    angular.forEach(arr,function(val){
-            //
-            //        if(val.extensionQuestionTitle == item.extensionQuestionTitle && val.extensionQuestionType == item.extensionQuestionType){
-            //            //console.log(val.extensionQuestionTitle == item.extensionQuestionTitle);
-            //            return false
-            //        }
-            //    })
-            //}
+            return result ;
         }
 //        提交 检验参数
         function checkSave(){
@@ -957,7 +918,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //    window.open(url, '_blank');
         //}
 //*************************************************************************
-
         function addAppoint(item,arr){
             if(arr.indexOf(item)==-1){
                 arr.push(item)
@@ -990,4 +950,19 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
     }
+    //重置参数
+//        function setDialog(){
+//            $scope.vm.newTitle = "";
+//            $scope.vm.knowledgeContentNegative = "";
+//            $scope.vm.channel = [];
+//            $scope.vm.dimension = [];
+//            $scope.vm.question = 1,    //显示相关问
+//            $scope.vm.tip = 1,    //在提示
+//            $scope.vm.tail =1,    //弹出评价小尾巴
+//            $scope.vm.appointRelativeGroup = [] ;//业务扩展问
+//            $scope.vm.appointRelative = ""
+//            $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+//            $scope.vm.dimensionArr = []
+//        }
+
 ]);

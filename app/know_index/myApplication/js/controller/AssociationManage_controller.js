@@ -94,13 +94,13 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                 layer.msg("请求失败")
             })
         }
-        var timeout ;
+        var timeout2 ;
         $scope.$watch('other.paginationConf.currentPage', function(current){
             if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
+                if (timeout2) {
+                    $timeout.cancel(timeout2)
                 }
-                timeout = $timeout(function () {
+                timeout2 = $timeout(function () {
                     listOtherApplicationServiceData(current);
                 }, 100)
             }

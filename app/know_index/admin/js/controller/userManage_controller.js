@@ -1,11 +1,6 @@
 /**
- * Created by 41212 on 2017/3/21.
+ * Created by mileS on 2017/3/21.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('adminModule').controller('userManageController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
 
@@ -101,11 +96,22 @@ angular.module('adminModule').controller('userManageController', [
                 layer.msg("请求失败")
             })
         }
+        var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                getData(current);
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    if($scope.vm.searchName){
+                        search(current);
+                    }else{
+                        getData(current);
+                    }
+                }, 0)
             }
-        });
+        },true);
+
         //添加用户校验
         function verifyRelease(){
             if($scope.vm.userName == null || $scope.vm.userName == ""){
@@ -257,12 +263,6 @@ angular.module('adminModule').controller('userManageController', [
             //$scope.$apply()
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/userManageDialog2.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -339,22 +339,11 @@ angular.module('adminModule').controller('userManageController', [
                 })
             }
         }
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                search(current);
-            }
-        });
 
         //删除用户
         function deleteUser(userId){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/deleteDialog.html",
-                //controller:function($scope){
-                //    $scope.show = function(){
-                //
-                //        console.log(6688688);
-                //        $scope.closeThisDialog(); //关闭弹窗
-                //    }},
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
