@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/21.
  */
 angular.module('homePage').controller('homePageNavController', [
-    '$scope', '$location', 'localStorageService', 'AuthService',"$timeout", "$cookieStore","$state",
-    function ($scope, $location, localStorageService, AuthService,$timeout,$cookieStore,$state) {
+    '$scope', '$location', 'localStorageService', 'ngDialog','AuthService',"$timeout", "$cookieStore","$state",
+    function ($scope, $location, localStorageService,ngDialog,AuthService,$timeout,$cookieStore,$state) {
         $scope.url = $location.url();
         $scope.urls=$state.current.name;
         
@@ -13,7 +13,8 @@ angular.module('homePage').controller('homePageNavController', [
                 loginout : loginout,
                 userName : $cookieStore.get('userName'),
                 logApplication : logApplication,
-                jump: jump
+                jump: jump,
+                jumpPopup : jumpPopup,
 
             };
         if($scope.url == "/homePage/define"){
@@ -41,7 +42,25 @@ angular.module('homePage').controller('homePageNavController', [
             $state.go("login");
             localStorage.removeItem('history');
         }
-        
+        //
+        function jumpPopup(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/home/homePageDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+                        $scope.vm.jump();
+                    } else {
+
+                    }
+                }
+            });
+        }
+        //
         function jump() {
             window.open('http://'+window.location.host+':7003/index.html');
         }

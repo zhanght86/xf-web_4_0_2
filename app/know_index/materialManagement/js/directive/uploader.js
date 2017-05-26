@@ -11,19 +11,23 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
             type : "="   ,   //image：图片 video：音视频  flash：flash   file：办公文档，压缩文件等等
             isAuto : "=",
             selectBtn : "=",
-            "tableList" : "="
+            "tableList" : "=" ,
+            userId : "=" ,
+            applicationId : "="
         },
         template:
-            '<button  id="picker" >批量导入</button>'
+            '<button  id="picker">批量导入</button>'
         ,
         link:function(scope,element,attrs){
+            var userId = scope.userId ,
+                applicationId = scope.applicationId ;
             //var $list = angular.element("#thelist");
             var server = angular.copy(scope.server) ;
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
                 swf: 'Uploader.swf',
-                //formData : {title:"is Image  ====   uploader"}  ,   // 上传参数
+                formData : {"userId":userId,"applicationId":applicationId}  ,   // 上传参数
                 // 文件接收服务端。
                 //server: "/api/application/application/uploadHead",
 
@@ -69,7 +73,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
                 console.log("上传失败")
             });
             uploader.on('uploadSuccess', function (file,response) {
-                alert(22222222);
+                   console.log(response)
                 /*if(response.status == 500){
                  layer.msg("模板错误")
                  }else{
