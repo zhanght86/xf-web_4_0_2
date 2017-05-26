@@ -52,7 +52,7 @@ angular.module('functionalTestModule').controller('questionTestController', [
             //     $scope.vm.comparisonTextArray.push($scope.vm.question.substring(0));
             //     //alert($scope.vm.comparisonTextArray);
             // }
-            $scope.vm.comparisonTextArray=$scope.vm.question.split("\n");
+            $scope.vm.comparisonTextArray=$scope.vm.question.split("\n");         //换行;
             console.log($scope.vm.comparisonTextArray);
 
             if($scope.vm.testTitle==''){
