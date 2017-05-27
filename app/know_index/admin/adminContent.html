@@ -38,12 +38,14 @@
                     </p>
             </div>
             <p title="{{application.applicationDescription}}" class="describe" ng-if="application.applicationDescription.length>8">{{application.applicationDescription | limitCheckFilter}}</p>
-            <p class="describe" ng-if="application.applicationDescription.length<=8">{{application.applicationDescription}}</p>
+            <p class="describe" ng-if="application.applicationDescription.length<=8">&nbsp;{{application.applicationDescription}}</p>
         </div>
     </div>
 </div>
 <style>
-    .application_box{background:#fff;padding:20px 10px;}
+    .application_box{background:#fff;padding:20px 0px 20px 20px; clear: both;}
+    .application_box_list{padding:10px;box-sizing:border-box;width:273px;margin:0 20px 20px 0;height:220px;}
+    .application_box_list p{min-height:21px;}
     .application_box_list .describe{
         width: 100%;
         text-align: center;
@@ -51,7 +53,6 @@
     .application_box_list .status .c-blue{
         color:lightblue;
     }
-    .application_box_list{padding:10px;box-sizing:border-box;width:271px;margin:0 10px 20px;height:220px;}
-    .application_box_list p{min-height:21px;}
+
     
 </style>

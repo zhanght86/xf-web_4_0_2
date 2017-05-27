@@ -3,12 +3,10 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
-        $state.go("custServScenaOverview.manage",{userPermission:$stateParams.userPermission});
-
+        $state.go("custServScenaOverview.manage");
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
