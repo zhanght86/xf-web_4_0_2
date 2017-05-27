@@ -531,7 +531,6 @@ knowledge_static_web
             })
             //应用开发-知识管理-客服场景知识总览
             .state("custServScenaOverview", {
-                //params:{"userPermission" : null},
                 url: "/custServScenaOverview",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/custServScenaOverview.html',
                 controller:"custServScenaOverviewController"

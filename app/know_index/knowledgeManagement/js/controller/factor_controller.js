@@ -95,6 +95,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
             limitSave : false ,//限制多次打标
         };
+
+
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
@@ -175,15 +177,17 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             init();
         }
         function init(){
-            $scope.vm.tableList = {};
-            var column = [];
-            var innerColumn = [];
-            innerColumn.push("产品名称");
-            column.push(innerColumn);
-            var listTable = {
-                "listTable":column
-            } ;
-            $scope.vm.tableList.data = listTable;
+            $scope.vm.tableList = {
+                "data": {"listTable" : new Array(new Array("产品名称"))}
+            };
+            //var column = [];
+            //var innerColumn = [];
+            //innerColumn.push("产品名称");
+            //column.push(innerColumn);
+            //var listTable = {
+            //    "listTable":column
+            //} ;
+            //$scope.vm.tableList.data =  listTable;
             $scope.vm.listTableType = [];
             var newType = {};
             newType.elementName = "产品名称";
@@ -253,12 +257,18 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                     $scope.vm.tableList.data.listTable[index].push(null)
                                 }
                             });
-                            var newType = {};
-                            newType.elementName = $scope.vm.factorName;
-                            newType.elementType = $scope.vm.tableType;
-                            newType.technology = $scope.vm.gorithm;
-                            newType.elementAsk = $scope.vm.elementAsk;
-                            newType.relatedQuestions = null;
+                            var newType = {
+                                "elementName" : $scope.vm.factorName ,
+                                "elementType" : $scope.vm.tableType ,
+                                "technology" : $scope.vm.gorithm ,
+                                "elementAsk" : $scope.vm.elementAsk ,
+                                "relatedQuestions" :null
+                            };
+                            //newType.elementName = $scope.vm.factorName;
+                            //newType.elementType = $scope.vm.tableType;
+                            //newType.technology = $scope.vm.gorithm;
+                            //newType.elementAsk = $scope.vm.elementAsk;
+                            //newType.relatedQuestions = null;
                             $scope.vm.tableList.data.listTableType.push(newType);
                             //$scope.$apply();
                             setDialogNew();
@@ -325,7 +335,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             if(cur>0){
                                 var slot = {} ;
                                 slot.name = val.elementName;
-                                //console.log(tabelData.listTable[icon][cur]);
                                 slot.value = tabelData.listTable[icon][cur];
                                 slot.type = val.elementType ;
                                 slot.algorithm = val.technology;

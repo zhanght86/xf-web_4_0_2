@@ -2,13 +2,13 @@
  * Created by mileS on 2017/5/23.
  */
 
-//        <!-- 数组重复判断 -->
+//        <!-- 鏁扮粍閲嶅鍒ゆ柇 -->
 Array.prototype.S=String.fromCharCode(2);
 Array.prototype.inArray=function(e){
     var r=new RegExp(this.S+e+this.S);
     return (r.test(this.S+this.join(this.S)+this.S));
 };
-//        <!-- 增加数组 remove方法-->
+//        <!-- 澧炲姞鏁扮粍 remove鏂规硶-->
 Array.prototype.indexOf = function (val) {
     for(var i = 0; i < this.length; i++){
         if(this[i] == val){return i;}
@@ -20,7 +20,7 @@ Array.prototype.remove = function (val) {
     if(index > -1){this.splice(index,1);}
 };
 
-/*IE8兼容start*/
+/*IE8鍏煎start*/
 if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function (item, i) {
         //alert("prototyping...");
@@ -46,7 +46,7 @@ if (!String.prototype.trim) {
         return this.replace(/(^\s*)|(\s*$)/g, "");
     }
 }
-//forEach 問題
+//forEach 鍟忛
 if ( !Array.prototype.forEach ) {
 
     Array.prototype.forEach = function forEach( callback, thisArg ) {
@@ -96,4 +96,41 @@ if ( !Array.prototype.forEach ) {
     };
 
 }
-/*IE8兼容end*/
+
+//bind 鏂规硶
+//Function.prototype.bind = function (oThis) {
+//    if (typeof this !== "function") {
+//        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+//    }
+//    var aArgs = Array.prototype.slice.call(arguments, 1),
+//        fToBind = this,
+//        fNOP = function () {},
+//        fBound = function () {
+//            return fToBind.apply(
+//                this instanceof fNOP && oThis ? this : oThis || window,
+//                aArgs.concat(Array.prototype.slice.call(arguments))
+//            );
+//        };
+//    fNOP.prototype = this.prototype;
+//    fBound.prototype = new fNOP();
+
+    //return fBound;
+//};
+Function.prototype.testBind = function(that){
+    var _this = this,
+        slice = Array.prototype.slice,
+        args = slice.apply(arguments,[1]),
+        fNOP = function () {},
+        bound = function(){
+            //杩欓噷鐨則his鎸囩殑鏄皟鐢ㄦ椂鍊欑殑鐜
+            return _this.apply(this instanceof  fNOP ?銆�this : that||window,
+                args.concat(Array.prototype.slice.apply(arguments,[0]))
+            )
+        }
+    fNOP.prototype = _this.prototype;
+
+    bound.prototype = new fNOP();
+
+    return bound;
+}
+/*IE8鍏煎end*/

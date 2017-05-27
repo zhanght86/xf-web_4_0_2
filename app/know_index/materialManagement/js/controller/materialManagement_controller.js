@@ -4,8 +4,10 @@
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
-    '$scope',"$state", "$cookieStore","$timeout",
-    function ($scope,$state,$cookieStore,$timeout) {
+    '$scope',"$state", "$cookieStore","$timeout","$location",
+    function ($scope,$state,$cookieStore,$timeout,$location) {
+        //$location.path('/chatKnowledgeBase');
+        alert()
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             userId : $cookieStore.get("userId"),
