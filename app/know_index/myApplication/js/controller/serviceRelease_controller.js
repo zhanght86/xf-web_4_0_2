@@ -318,81 +318,121 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
         },true);
         //发布服务
         function publishService(serviceId){
-            httpRequestPost("/api/application/service/publishService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("发布服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("发布服务失败");
-                }
+            layer.confirm("确认发布服务？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/publishService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("发布服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("发布服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //上线服务
         function startService(serviceId){
-            httpRequestPost("/api/application/service/startService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("上线服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("上线服务失败");
-                }
+            layer.confirm("确认上线服务？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/startService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("上线服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("上线服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
         //下线服务
         function stopService(serviceId){
-            httpRequestPost("/api/application/service/stopService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("下线服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("下线服务失败");
-                }
+            layer.confirm("确认下线服务？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/stopService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("下线服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("下线服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //重启服务
         function restartService(serviceId){
-            httpRequestPost("/api/application/service/restartService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("重启服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("重启服务失败");
-                }
+            layer.confirm("确认重启？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/restartService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("重启服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("重启服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //删除服务
         function deleteService(serviceId){
-            httpRequestPost("/api/application/service/deleteService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("删除服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("删除服务失败");
-                }
+            layer.confirm("确认删除当前服务？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/deleteService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("删除服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("删除服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //获取渠道数据
@@ -442,7 +482,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
         }
 
         //获取维度
-        function  listDimensionData(){
+        function listDimensionData(){
             httpRequestPost("/api/application/dimension/list",{
                 "applicationId" : $scope.vm.applicationId
             },function(data){
@@ -452,7 +492,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     $scope.$apply();
                 }
             },function(err){
-                layer.msg("获取维度失败，请刷新页面")
+                layer.msg("获取维度失败，请刷新页面");
             });
 
         }
