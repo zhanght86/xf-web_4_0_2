@@ -44,9 +44,11 @@
                                 </div>
                             </div>
                         </div>
-                        <uploader-base user-id="vm.userId" application-id="vm.applicationId"></uploader-base>
+                        <div class="L mr-10">
+                            <uploader-base user-id="vm.userId" application-id="vm.applicationId"></uploader-base>
+                        </div>
                         <button class="btn1 L btn_green  mr-10" >知识导出</button>
-                    <a href="/api/ms/chatKnowledge/download?fileName=chatKnowledgeTemplate.xls" class="btn1 L btn1_blue2  mr-10">下载模板</a>
+                        <a href="/api/ms/chatKnowledge/download?fileName=chatKnowledgeTemplate.xls" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>
                         <button class="btn1 R btn_delete " ng-click="vm.delKnowledge()">刪除</button>
                     </div>
                 </div>
@@ -79,7 +81,7 @@
 
 </div>
 <style>
-    
+    .webuploader-pick{padding:7px 15px;}
     .advanced_search {width:400px;background:#fff;}
 </style>
 <script>
