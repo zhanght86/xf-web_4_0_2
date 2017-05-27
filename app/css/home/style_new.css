@@ -179,3 +179,7 @@
 
 /*知识总览弹窗*/
 .advanced_search{position:absolute;left:0;top:31px;display:none;width:480px;background:#e3e8e7;z-index:100;padding:20px;box-sizing:border-box;}
+
+/*机器人设置样式修改*/
+.setting_div{position: relative;padding-left:233px;min-height:25px;margin-bottom:10px;}
+.setting_span{position:absolute;left:0;top:0;width:233px;display:block;text-align:right;}
