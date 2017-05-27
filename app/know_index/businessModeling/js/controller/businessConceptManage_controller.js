@@ -33,6 +33,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             key: "" ,
             modifier: $cookieStore.get("userId"),
             term: "",
+            relate: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
@@ -41,7 +42,9 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            relateNullOrBeyondLimit:"相关概念不能为空或超过长度限制2000",
+            relateBeyondLimit:"相关概念个数不能为0或超过20个"
         };
 
         /**
@@ -88,6 +91,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             $scope.vm.dialogTitle="编辑业务概念";
             $scope.vm.key = item.businessConceptKey;
             $scope.vm.term =  item.businessConceptTerm;
+            $scope.vm.relate =  item.businessConceptRelate;
             console.log($scope.vm.term);
             $scope.vm.weight = item.businessConceptWeight;
             addBusinessConceptDialog(singleEditBusinessConcept,item);
@@ -184,6 +188,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                         addBusinessConceptDialog(singleEditBusinessConcept,data.data[0]);
                                         $scope.vm.key = data.data[0].businessConceptKey;
                                         $scope.vm.term =  data.data[0].businessConceptTerm;
+                                        $scope.vm.relate =  data.data[0].businessConceptRelate;
                                         $scope.vm.weight =  data.data[0].businessConceptWeight;
                                     },function(){
                                         console.log("cancel");
@@ -195,6 +200,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加业务概念";
                                 $scope.vm.term="";
+                                $scope.vm.relate="";
                                 $scope.vm.weight="33" ;   //默認權重
                                 addBusinessConceptDialog(singleAddBusinessConcept);
                             }
@@ -204,6 +210,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     }else{
                         $scope.vm.key = "";
                         $scope.vm.term = "";
+                        $scope.vm.relate = "";
                         $scope.vm.weight = 33;
                     }
                 }
@@ -245,6 +252,15 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                         }else{
                             $("#termAddError").html('');
                         }
+                        var objRelate = $("#relate").next();
+                        var relate = "";
+                        var lengthRelate = objRelate.find("li").length;
+                        if(lengthRelate<=0 || lengthRelate>20){
+                            $("#relateAddError").html($scope.vm.relateBeyondLimit);
+                            return false;
+                        }else{
+                            $("#relateAddError").html('');
+                        }
                         $.each(obj.find("li"),function(index,value){
                             if(index>0){
                                 $.each($(value).find("div"),function(index1,value1){
@@ -256,16 +272,34 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                         });
                         term=term.substring(0,term.length-1);
                         $scope.vm.term=term;
-                        if(lengthCheck(term,0,500)==false){
+                        if(lengthCheck(term,0,5000)==false){
                             $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
                             return false;
                         }else{
                             $("#termAddError").html('');
                         }
+                        $.each(objRelate.find("li"),function(index,value){
+                            if(index>0){
+                                $.each($(value).find("div"),function(index1,value1){
+                                    if(index1==1){
+                                        relate+=$(value1).html()+$scope.vm.termSpliter;
+                                    }
+                                });
+                            }
+                        });
+                        relate=relate.substring(0,relate.length-1);
+                        $scope.vm.relate=relate;
+                        if(lengthCheck(relate,0,5000)==false){
+                            $("#relateAddError").html($scope.vm.relateNullOrBeyondLimit);
+                            return false;
+                        }else{
+                            $("#relateAddError").html('');
+                        }
                         callback(item);
                     }else{
                          $scope.vm.key = "";
                          $scope.vm.term = "";
+                         $scope.vm.relate = "";
                          $scope.vm.weight = 33;
                     }
                 }
@@ -273,6 +307,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor();
+                    relateSpliterTagEditor();
                     $("#businessKeyTwo").blur(function(){
                         if(lengthCheck($("#businessKeyTwo").val(),0,50)==false){
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
@@ -302,6 +337,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         //編輯事件
         function singleEditBusinessConcept(item){
             assembleBusinessConceptTerm();
+            assembleBusinessConceptRelate();
             httpRequestPost("/api/ms/modeling/concept/business/update",{
                 "businessConceptId":item.businessConceptId,
                 "businessConceptApplicationId": $scope.vm.applicationId,
@@ -309,6 +345,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 "businessConceptKey":  $scope.vm.key,
                 "businessConceptModifier": $scope.vm.modifier,
                 "businessConceptTerm": $scope.vm.term,
+                "businessConceptRelate": $scope.vm.relate,
                 "businessConceptWeight": $scope.vm.weight
             },function(data){
                 if(responseView(data)==true){
@@ -319,12 +356,14 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
         //单条新增
         function singleAddBusinessConcept(){
             assembleBusinessConceptTerm();
+            assembleBusinessConceptRelate();
             httpRequestPost("/api/ms/modeling/concept/business/add",{
                 "businessConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "businessConceptKey":  $scope.vm.key,
                 "businessConceptModifier": $scope.vm.modifier,
                 "businessConceptTerm": $scope.vm.term,
+                "businessConceptRelate": $scope.vm.relate,
                 "businessConceptWeight": $scope.vm.weight
             },function(data){
                 if(responseView(data)==true){
@@ -359,6 +398,24 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 });
             }
         }
+        //初始化tagEditor插件
+        function relateSpliterTagEditor() {
+            var relate = $scope.vm.relate;
+            if(relate=="" || relate==null){
+                console.log("===relate===");
+                $("#relate").tagEditor({
+                    forceLowercase: false
+                });
+            }else{
+                var relates = relate.split($scope.vm.termSpliter);
+                console.log(relates);
+                $("#relate").tagEditor({
+                    initialTags:relates,
+                    autocomplete: {delay: 0, position: {collision: 'flip'}, source: relates},
+                    forceLowercase: false
+                });
+            }
+        }
         //组装term数据
         function assembleBusinessConceptTerm(){
             var obj = $("#term").next();
@@ -375,6 +432,22 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
             term=term.substring(0,term.length-1);
             $scope.vm.term=term;
+        }
+        function assembleBusinessConceptRelate(){
+            var obj = $("#relate").next();
+            var relate = "";
+            var length = obj.find("li").length;
+            $.each(obj.find("li"),function(index,value){
+                if(index>0){
+                    $.each($(value).find("div"),function(index1,value1){
+                        if(index1==1){
+                            relate+=$(value1).html()+$scope.vm.termSpliter;
+                        }
+                    });
+                }
+            });
+            relate=relate.substring(0,relate.length-1);
+            $scope.vm.relate=relate;
         }
         //返回状态显示
         function responseView(data){

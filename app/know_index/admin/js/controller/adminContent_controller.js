@@ -83,7 +83,10 @@ angular.module('adminModule').controller('adminContentController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        addApplication()
+                        if(applicationValidate()==false){
+                            return false;
+                        }
+                        addApplication();
                     }else{
                         $scope.vm.newApplicationName="";
                         $scope.vm.newLicence="";
@@ -92,6 +95,17 @@ angular.module('adminModule').controller('adminContentController', [
                 }
 
             });
+        }
+        function applicationValidate(){
+            if(lengthCheck($scope.vm.newApplicationName,0,50)==false){
+                layer.msg("应用名称不能为空或超过长度限制50");
+                return false;
+            }
+            if(lengthCheck($scope.vm.newLicence,0,20)==false){
+                layer.msg("LICENSE不能为空或超过长度限制20");
+                return false;
+            }
+            return true;
         }
         //添加
         function addApplication(){
