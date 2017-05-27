@@ -23,7 +23,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             result:'',
             question : '',
         };
-        //獲取渠道
+        //獲取维度
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
                 console.log( $scope.vm.applicationId) ;
@@ -31,16 +31,16 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                     $scope.vm.listDimension = data.data;
                 }
             }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
+                layer.msg("获取维度失败，请刷新页面");
             });
-        //获取维度
+        //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
             function(data) {
                 if(data.data){
-                    $scope.vm.channelList = data.data
+                    $scope.vm.channelList = data.data;
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
+                layer.msg("获取渠道失败，请刷新页面");
             });
         //页面初始化加载已发布服务
         getService();
@@ -59,9 +59,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                 layer.msg("请求失败");
             })
         }
-
+        //
        function test(){
-
            if($scope.vm.serviceId){
                if($scope.vm.testAsking==''){
                    alert('请输入测试问题!');

@@ -184,7 +184,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -208,12 +208,25 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
             $scope.vm.categoryAttributeName = $(this).attr("node-option");
-            $(this).attr("style","color:black;font-weight:bold;");
+            if($scope.vm.categoryAttributeName=="node"){
+                $(this).attr("style","color:black;font-weight:bold;");
+            }else if($scope.vm.categoryAttributeName=="edge"){
+                $(this).attr("style","color:blue;font-weight:bold;");
+            }
+            updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
             console.log($scope.vm.botSelectValue);
             console.log($scope.vm.categoryAttributeName);
             disableAttributeType();
             $scope.$apply();
         });
+        //更新新建方法
+        function updateCreateMethod(knowledgeBotVal,categoryAttributeName){
+            if(categoryAttributeName=="node"){
+                $("#createMethod").html("新建关系到"+knowledgeBotVal+"下面");
+            }else if(categoryAttributeName=="edge"){
+                $("#createMethod").html("新建节点到"+knowledgeBotVal+"下面");
+            }
+        }
         $(".aside-navs").on("click",".edit",function(){
             console.log("edit");
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
@@ -349,7 +362,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -474,7 +487,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -489,7 +502,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -587,7 +600,11 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //清除已选颜色
         function clearColor(){
             $.each($(".aside-navs").find("span"),function(index,value){
-                $(value).attr("style","");
+                if($(this).attr("node-option")=="node"){
+                    $(this).attr("style","");
+                }else if($(this).attr("node-option")=="edge"){
+                    $(this).attr("style","color:blue;");
+                }
             });
         }
         //自动转换图标类型
@@ -609,6 +626,15 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
+        }
+        //节点样式转换
+        function nodeStyleSwitch(attrType){
+            console.log("===nodeStyleSwitch===");
+            if(attrType=="edge"){
+                return "style='color:blue;'";
+            }else{
+                return "";
+            }
         }
         $("#category-name").blur(function(){
             if(lengthCheck($("#category-name").val(),0,50)==false){

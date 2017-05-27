@@ -200,7 +200,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -230,7 +230,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -248,12 +248,25 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 console.log("err or err");
             });
         }
+        //节点样式转换
+        function nodeStyleSwitch(attrType){
+            console.log("===nodeStyleSwitch===");
+            if(attrType=="edge"){
+                return "style='color:blue;'";
+            }else{
+                return "";
+            }
+        }
         $("#category").on("click","span",function(){
             clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.categoryAttributeName = $(this).attr("node-option");
-            $(this).attr("style","color:black;font-weight:bold;");
+            if($scope.vm.categoryAttributeName=="node"){
+                $(this).attr("style","color:black;font-weight:bold;");
+            }else if($scope.vm.categoryAttributeName=="edge"){
+                $(this).attr("style","color:blue;font-weight:bold;");
+            }
             console.log($scope.vm.botSelectValue);
             console.log($scope.vm.categoryAttributeName);
             $scope.$apply()
@@ -264,7 +277,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
             $scope.vm.botLibrarySelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
             $scope.vm.categoryLibraryAttributeName = $(this).attr("node-option");
-            $(this).attr("style","color:black;font-weight:bold;");
+            if($scope.vm.categoryLibraryAttributeName=="node"){
+                $(this).attr("style","color:black;font-weight:bold;");
+            }else if($scope.vm.categoryLibraryAttributeName=="edge"){
+                $(this).attr("style","color:blue;font-weight:bold;");
+            }
             console.log($scope.vm.botLibrarySelectValue);
             console.log($scope.vm.categoryLibraryAttributeName);
             $scope.$apply()
@@ -293,7 +310,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -331,7 +348,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -357,13 +374,21 @@ angular.module('myApplicationModule').controller('botApplyController', [
         //清除已选颜色
         function clearColorLibrary(){
             $.each($("#library").find("span"),function(index,value){
-                $(value).attr("style","");
+                if($(this).attr("node-option")=="node"){
+                    $(this).attr("style","");
+                }else if($(this).attr("node-option")=="edge"){
+                    $(this).attr("style","color:blue;");
+                }
             });
         }
         //清除已选颜色
         function clearColor(){
             $.each($("#category").find("span"),function(index,value){
-                $(value).attr("style","");
+                if($(this).attr("node-option")=="node"){
+                    $(this).attr("style","");
+                }else if($(this).attr("node-option")=="edge"){
+                    $(this).attr("style","color:blue;");
+                }
             });
         }
         //自动转换图标类型
@@ -536,7 +561,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -551,7 +576,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -826,7 +851,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -841,7 +866,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +

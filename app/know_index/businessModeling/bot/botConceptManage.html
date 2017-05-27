@@ -31,11 +31,11 @@
             </div>
             <input type="button" value="查找" ng-click="vm.searchBotConcept()"  class="btn1 btn1_blue"/>
             <div class="conceptSearchRt">
-                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBot()">新增</a>
+                <!--<a class="btn btn-blue mr10" id="addCase" ng-click="vm.addBot()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
-                <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
+                <a class="btn btn-green mr10" href="javascript:;">继续概念库</a>
                 <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
-                <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
+                <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>-->
             </div>
         </div>
         <table class="stop_word_tab">
@@ -60,8 +60,8 @@
                 <td>{{item.botConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td>{{item.botConceptModifier}}</td>
                 <td>
-                    <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBot(item)">修改</a> &nbsp;
-                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteBot(item.botConceptId)">删除</a>
+                    <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editBot(item)">修改</a><!-- &nbsp;
+                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteBot(item.botConceptId)">删除</a>-->
                 </td>
             </tr>
         </table>

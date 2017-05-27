@@ -21,7 +21,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 currentPage: 1,//当前页
                 totalItems: 0, //总页数
                 pageSize: 1,//第页条目数
-                pagesLength: 8,//分页框数量
+                pagesLength: 8//分页框数量
             },
             pageSize:6,
             frameInfo:null,
@@ -59,16 +59,17 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             searchNodeForFrame:searchNodeForFrame,
             recursionForFrame:recursionForFrame,
             autoHeightForFrame:autoHeightForFrame,
-            locationForFrame:locationForFrame
-
+            locationForFrame:locationForFrame,
+            listData:"",
+            editFrame:editFrame,
+            deleteFrame:deleteFrame,
+            searchByFrameTitle:searchByFrameTitle,
+            current:1
         };
         $scope.categoryAttributeName;
-        //setCookie("categoryApplicationId","360619411498860544");
-        //setCookie("categoryModifierId","1");
-        //setCookie("categorySceneId","10023");
+
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
-        var categorySceneId = $cookieStore.get("sceneId");
 
         autoHeightForFrame();
 
@@ -206,7 +207,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;">'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span type-option="'+data.data[i].categoryTypeId+'"attribute-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'"attribute-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -232,20 +233,25 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
             var categoryAttributeName =$(this).attr("attribute-option");
-            var categoryAttribute;
-            console.log(22222,categoryAttributeName)
-            if($(this).attr("attribute-option")=='edge'){
-                categoryAttribute=1;
+            if(categoryAttributeName=="node"){
+                $(this).attr("style","color:black;font-weight:bold;");
+            }else if(categoryAttributeName=="edge"){
+                $(this).attr("style","color:blue;font-weight:bold;");
             }
-            else{
-                categoryAttribute=0;
-            }
-            $(this).attr("style","color:black;font-weight:bold;");
             console.log($scope.vm.botSelectValue);
             console.log($scope.vm.botSelectType);
-            loadFrameLibrary(1,categoryAttribute);
+            loadFrameLibrary(1,0);
             $scope.$apply();
         });
+        //节点样式转换
+        function nodeStyleSwitch(attrType){
+            console.log("===nodeStyleSwitch===");
+            if(attrType=="edge"){
+                return "style='color:blue;'";
+            }else{
+                return "";
+            }
+        }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'i',function(){
             appendTree(this);
@@ -278,7 +284,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;">'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span attribute-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' attribute-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -305,7 +311,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //清除已选颜色
         function clearColor(){
             $.each($(".aside-navs").find("span"),function(index,value){
-                $(value).attr("style","");
+                if($(this).attr("attribute-option")=="node"){
+                    $(this).attr("style","");
+                }else if($(this).attr("attribute-option")=="edge"){
+                    $(this).attr("style","color:blue;");
+                }
             });
         }
         //自动转换图标类型
@@ -330,62 +340,34 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //加载对应类目下的框架库
         function loadFrameLibrary(current,type){
+            $scope.vm.current=current;
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": $scope.vm.botSelectValue,
                 "index":(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                console.log(111,type);
-                $(".libraryRth").empty();
-                $scope.vm.paginationConf={
-                    currentPage: 1,//当前页
-                    totalItems: Math.ceil(data.total/6), //总页数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
-                console.log(type);
-                var html = "";
-                if(type == '0'){
-                    var aaaa ='<div class="tac mt10 btnWrap"style="margin: 0; text-align: left"><a class="btn btn-blue" href="javascript:;" ng-click="vm.addFrame()">新增框架</a>'+
-                        '<a class="btn btn-green ml15" href="javascript:;">批量导入框架</a>'+
-                        '<a class="btn btn-green2 ml15" href="javascript:;">导出框架</a></div>';
-                    var $html = $compile(aaaa)($scope);
-                    $(".libraryRth").append($html);
-                }
                 if(data.data){
-                    for(var i=0;i<data.data.length;i++){
-                        if(i%2==0){
-                            html += '<div class="libraryRthCnt edit" type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
-                        }else{
-                            html += '<div class="libraryRthCnt even edit" data-option='+data.data[i].frameId+' type-option='+data.data[i].frameTypeId+' frame-info='+JSON.stringify(data.data[i])+' data-option="'+data.data[i].frameId+'">';
-                        }
-                        html += '<a href="javascript:;" class="pa delete_a" data-option="'+data.data[i].frameId+'"></a>';
-                        if(data.data[i].frameTypeId == 10011){
-                            html+='<img src="../../images/faq.png"/><p>FAQ框架</p>';
-                        }
-                        else if(data.data[i].frameTypeId == 10012){
-                            html+='<img src="../../images/gn.png"/><p>概念框架</p>';
-                        }
-                        else if(data.data[i].frameTypeId == 10013){
-                            html+='<img src="../../images/images/libTxt_22.png"/><p>要素框架</p>';
-                        }
-
-                        html+='<div>' +
-                            '<a  href="javascript:;">'+data.data[i].frameTitle+'</a>' +
-                            '</div></div>';
-                    }
-
-                } $(".libraryRth").append(html);
+                    $scope.vm.listData = data.data;
+                    $scope.vm.paginationConf={
+                        currentPage: current,//当前页
+                        totalItems: data.total, //总页数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8  //分页框数量
+                    };
+                }else{
+                    $scope.vm.listData="";
+                }
+                $scope.$apply();
             },function(err){
                 console.log(err);
             });
         }
         //修改框架
-        $(".libraryRth").on("click",'.edit',function(){
-            $scope.vm.frameTypeId=$(this).attr("type-option");
+        function editFrame(item){
+            console.log("======"+$(item)+"======");
+            $scope.vm.frameTypeId=item.frameTypeId;
             console.log("======frameTypeId======"+$scope.vm.frameTypeId);
-            $scope.vm.frameInfo=$(this).attr("frame-info");
+            $scope.vm.frameInfo=JSON.stringify(item);
             var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
             console.log(frameInfo);
             //赋值
@@ -400,11 +382,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if($scope.vm.frameTypeId==10013){
                 updateElement();
             }
-        });
+        }
         //删除框架
-        $(".libraryRth").on("click",'.pa',function(e){
-            e.stopPropagation();
-            var frameId = $(this).attr("data-option");
+        function deleteFrame(item){
+            console.log("======"+item+"======");
+            var frameId = item.frameId;
             console.log("======delete frame======"+frameId);
             httpRequestPost("/api/ms/modeling/frame/delete",{
                 "frameId":frameId
@@ -415,7 +397,35 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             },function(err){
                 console.log(err);
             });
-        });
+        }
+
+        function searchByFrameTitle(current,type){
+            $scope.vm.current=current;
+            console.log("===searchByFrameTitle===");
+            if($("#keyWords").val()){
+                httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
+                    "frameCategoryId": $scope.vm.botSelectValue,
+                    "frameTitle": "%"+$("#keyWords").val()+"%",
+                    "index":(current-1)*$scope.vm.pageSize,
+                    "pageSize": $scope.vm.pageSize
+                },function(data){
+                    if(data.data){
+                        $scope.vm.listData = data.data;
+                        $scope.vm.paginationConf={
+                            currentPage: current,//当前页
+                            totalItems: data.total, //总页数
+                            pageSize: $scope.vm.pageSize,//第页条目数
+                            pagesLength: 8  //分页框数量
+                        };
+                    }else{
+                        $scope.vm.listData="";
+                    }
+                    $scope.$apply();
+                },function(err){
+                    console.log(err);
+                });
+            }
+        }
 
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -540,14 +550,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return;
                         }
                     });
-                    $("#standard_question").blur(function(){
-                        console.log("standard_question");
-                        if(lengthCheck($("#standard_question").val(),0,50)==false){
-                            $("#faqStandardQuestionErrorObj").html("标准问题为空或超过长度限制50");
-                        }else{
-                            $("#faqStandardQuestionErrorObj").html('');
-                        }
-                    });
                 },100);
             }
         }
@@ -587,14 +589,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return;
                         }
                     });
-                    $("#standard_question").blur(function(){
-                        console.log("standard_question");
-                        if(lengthCheck($("#standard_question").val(),0,50)==false){
-                            $("#faqStandardQuestionErrorObj").html("标准问题为空或超过长度限制50");
-                        }else{
-                            $("#faqStandardQuestionErrorObj").html('');
-                        }
-                    });
                     //单个删除元素
                     $("#faq_extension").on("click",'.del',function(){
                         console.log("======deletebyelementId======");
@@ -626,13 +620,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         function fillFaqUpdatePage(){
             for(var i=0;i<$scope.vm.elementIdArray.length;i++){
-                if($scope.vm.elementAttributeIdArray[i]==10025){
-                    $("#standard_question").val($scope.vm.elementContentArray[i]);
-                    $("#standard_question").attr("element-id",$scope.vm.elementIdArray[i]);
-                }else{
-                    var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;" disabled="disabled"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
-                    $(".exten_problem").append(html);
-                }
+                var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;" disabled="disabled"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
+                $(".exten_problem").append(html);
             }
         }
         function fillConceptUpdatePage(){
@@ -674,29 +663,19 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //表达式类型数据组装 0:新增 1:修改
         function faqAssemble(type){
             requestArrayReset();
-            $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
-            $scope.vm.elementAttributeIdArray[0]=10025;
-            $scope.vm.elementContentArray[0]=$("#standard_question").val();
-            $scope.vm.elementFrameIdArray[0]=$scope.vm.defaultString;
-            $scope.vm.elementMiningTypeIdArray[0]=$scope.vm.defaultInt;
-            $scope.vm.elementRelateConceptArray[0]=$scope.vm.defaultString;
-            $scope.vm.elementTypeIdArray[0]=$scope.vm.defaultInt;
-            if(type==1){
-                $scope.vm.elementIdArray[0]=$("#standard_question").attr("element-id");
-            }
             $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index,value){
-                $scope.vm.elementAskContentArray[index+1]=$scope.vm.defaultString;
-                $scope.vm.elementAttributeIdArray[index+1]=10026;
-                $scope.vm.elementContentArray[index+1]=$(value).val();
-                $scope.vm.elementFrameIdArray[index+1]=$scope.vm.defaultString;
-                $scope.vm.elementMiningTypeIdArray[index+1]=$scope.vm.defaultInt;
-                $scope.vm.elementRelateConceptArray[index+1]=$scope.vm.defaultString;
-                $scope.vm.elementTypeIdArray[index+1]=$scope.vm.defaultInt;
+                $scope.vm.elementAskContentArray[index]=$scope.vm.defaultString;
+                $scope.vm.elementAttributeIdArray[index]=10026;
+                $scope.vm.elementContentArray[index]=$(value).val();
+                $scope.vm.elementFrameIdArray[index]=$scope.vm.defaultString;
+                $scope.vm.elementMiningTypeIdArray[index]=$scope.vm.defaultInt;
+                $scope.vm.elementRelateConceptArray[index]=$scope.vm.defaultString;
+                $scope.vm.elementTypeIdArray[index]=$scope.vm.defaultInt;
                 if(type==1){
                     if($(value).attr("element-id")){
-                        $scope.vm.elementIdArray[index+1]=$(value).attr("element-id");
+                        $scope.vm.elementIdArray[index]=$(value).attr("element-id");
                     }else{
-                        $scope.vm.elementIdArray[index+1]=$scope.vm.defaultString;
+                        $scope.vm.elementIdArray[index]=$scope.vm.defaultString;
                     }
                 }
             });
@@ -732,11 +711,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 return false;
             }
             if(frameTitleRepeatCheck(type,"#faqFrameAddErrorObj")==false){
-                return false;
-            }
-            //标准问题校验
-            if(lengthCheck($("#standard_question").val(),0,50)==false){
-                $("#faqStandardQuestionErrorObj").html("标准问题为空或超过长度限制50");
                 return false;
             }
             //扩展问题校验
@@ -871,16 +845,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //组装概念数据 0:添加 1:修改
         function conceptAssemble(type){
             requestArrayReset();
-            $scope.vm.elementAskContentArray[0]=$scope.vm.defaultString;
-            $scope.vm.elementAttributeIdArray[0]=10025;
-            $scope.vm.elementContentArray[0]=$("#concept_title").val();
-            $scope.vm.elementFrameIdArray[0]=$scope.vm.defaultString;
-            $scope.vm.elementMiningTypeIdArray[0]=$scope.vm.defaultInt;
-            $scope.vm.elementRelateConceptArray[0]=$scope.vm.defaultString;
-            $scope.vm.elementTypeIdArray[0]=$scope.vm.defaultInt;
-            if(type==1){
-                $scope.vm.elementIdArray[0]=$("#concept_title").attr("element-id");
-            }
             $.each($("#concept_extension").find(".formControls").filter(":gt(0)"),function(index,value){
                 var contentInfo = $(value).find("input").val()+$scope.vm.textAndTagSplit;
                 $.each($(value).find("span"),function(index1,value1){
@@ -890,18 +854,18 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     contentInfo=contentInfo.substring(0,contentInfo.length-1);
                 }
                 console.log("==="+contentInfo);
-                $scope.vm.elementAskContentArray[index+1]=$scope.vm.defaultString;
-                $scope.vm.elementAttributeIdArray[index+1]=10026;
-                $scope.vm.elementContentArray[index+1]=contentInfo;
-                $scope.vm.elementFrameIdArray[index+1]=$scope.vm.defaultString;
-                $scope.vm.elementMiningTypeIdArray[index+1]=$scope.vm.defaultInt;
-                $scope.vm.elementRelateConceptArray[index+1]=$scope.vm.defaultString;
-                $scope.vm.elementTypeIdArray[index+1]=$scope.vm.defaultInt;
+                $scope.vm.elementAskContentArray[index]=$scope.vm.defaultString;
+                $scope.vm.elementAttributeIdArray[index]=10026;
+                $scope.vm.elementContentArray[index]=contentInfo;
+                $scope.vm.elementFrameIdArray[index]=$scope.vm.defaultString;
+                $scope.vm.elementMiningTypeIdArray[index]=$scope.vm.defaultInt;
+                $scope.vm.elementRelateConceptArray[index]=$scope.vm.defaultString;
+                $scope.vm.elementTypeIdArray[index]=$scope.vm.defaultInt;
                 if(type==1){
                     if($(value).attr("element-id")){
-                        $scope.vm.elementIdArray[index+1]=$(value).attr("element-id");
+                        $scope.vm.elementIdArray[index]=$(value).attr("element-id");
                     }else{
-                        $scope.vm.elementIdArray[index+1]=$scope.vm.defaultString;
+                        $scope.vm.elementIdArray[index]=$scope.vm.defaultString;
                     }
                 }
             });
@@ -1275,7 +1239,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $scope.vm.elementContentArray[index]=$(value).find(".ele-name-add").val();
                 $scope.vm.elementFrameIdArray[index]=$scope.vm.defaultString;
                 $scope.vm.elementMiningTypeIdArray[index]=$(value).find(".mining-type-add").val();
-                $scope.vm.elementRelateConceptArray[index]=$(value).find(".ele-concept-add").attr("data-option");
+                console.log("====="+$(value).find(".ele-concept-add").attr("data-option")+"===123");
+                if($(value).find(".ele-concept-add").attr("data-option")==""){
+                    $scope.vm.elementRelateConceptArray[index]=$scope.vm.defaultString;
+                }else{
+                    $scope.vm.elementRelateConceptArray[index]=$(value).find(".ele-concept-add").attr("data-option");
+                }
                 $scope.vm.elementTypeIdArray[index]=$(value).find(".ele-type-add").val();
                 if(type==1){
                     if($(value).attr("element-id")){
@@ -1556,25 +1525,26 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             for(var i=0;i<$scope.vm.elementIdArray.length;i++){
                 var originStr = $scope.vm.elementRelateConceptArray[i];
                 console.log("===="+originStr);
-                var idx1 = originStr.indexOf($scope.vm.textAndTagSplit);
-                if(idx1<=0){
-                    return;
-                }
-                var conceptValueArr = originStr.split($scope.vm.conceptSplit);
-                console.log("===="+conceptValueArr);
                 var conceptValue = "";
-                for(var j=0;j<conceptValueArr.length;j++){
-                    httpRequestPostAsync("/api/ms/modeling/frame/searchconceptbyid",{
-                        "conceptId":conceptValueArr[j]
-                    },function(data){
-                        if(data.status==10000){
-                            conceptValue+=data.conceptWithWeight.name+",";
-                        }
-                    },function(err){
-                        console.log(err);
-                    });
+                var idx1 = originStr.indexOf($scope.vm.textAndTagSplit);
+                if(idx1>=0){
+                    var conceptValueArr = originStr.split($scope.vm.conceptSplit);
+                    console.log("===="+conceptValueArr);
+
+                    for(var j=0;j<conceptValueArr.length;j++){
+                        httpRequestPostAsync("/api/ms/modeling/frame/searchconceptbyid",{
+                            "conceptId":conceptValueArr[j]
+                        },function(data){
+                            if(data.status==10000){
+                                conceptValue+=data.conceptWithWeight.name+",";
+                            }
+                        },function(err){
+                            console.log(err);
+                        });
+                    }
+                    conceptValue=conceptValue.substring(0,conceptValue.length-1);
                 }
-                conceptValue=conceptValue.substring(0,conceptValue.length-1);
+
                 console.log("===conceptValue==="+conceptValue);
                 var html =  '<tr element-id="'+$scope.vm.elementIdArray[i]+'">'+
                     '   <td><input type="checkbox" class="sid"/></td>'+
@@ -1745,31 +1715,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
             }else{
                 relateConceptIds = $(".ele-concept").attr("data-option");
-                console.log($(".ele-concept").attr("data-option"));
-                relateConceptVals = $(".ele-concept").val();
-                console.log($(".ele-concept").val());
-                relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
-                var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
-                if(lengthCheck(sumConceptStr,0,255)==false){
-                    $("#ele-concept-error").html('相关概念不能为空或超过长度限制');
-                    $("#ele-concept-error").attr("style","display:inline-block;left: 10px;");
-                    return;
-                }else{
-                    $("#ele-concept-error").html('');
-                    $("#ele-concept-error").attr("style","display:none;");
-                }
-                if(relateConceptVals==null){
-                    return;
-                }
-                if(relateConceptVals==""){
-                    return;
-                }
-                if(relateConceptIds==null){
-                    return;
-                }
-                if(relateConceptIds==""){
-                    return;
-                }            relateConceptIds = $(".ele-concept").attr("data-option");
                 console.log($(".ele-concept").attr("data-option"));
                 relateConceptVals = $(".ele-concept").val();
                 console.log($(".ele-concept").val());
