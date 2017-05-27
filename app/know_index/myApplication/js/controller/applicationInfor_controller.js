@@ -118,34 +118,50 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         }
         //下线服务
         function stopService(serviceId){
-            httpRequestPost("/api/application/service/stopService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("下线服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("下线服务失败");
-                }
+            layer.confirm("确认下线？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/stopService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("下线服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("下线服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //重启服务
         function restartService(serviceId){
-            httpRequestPost("/api/application/service/restartService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("重启服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("重启服务失败");
-                }
+            layer.confirm("确认重启？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/restartService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("重启服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("重启服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //查看应用信息
@@ -230,50 +246,65 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
 
         //下线应用的所有服务
         function stopAllServices(){
-            httpRequestPost("/api/application/service/stopAllService",{
-                "applicationId": $scope.vm.applicationId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("下线所有服务成功");
-                    listServiceData(1);
-                    findApplicationInfo(); //查看应用的基本信息
-                }else{
-                    layer.msg("下线所有服务失败")
-                }
+            layer.confirm("确认下线所有服务？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/stopAllService",{
+                    "applicationId": $scope.vm.applicationId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("下线所有服务成功");
+                        listServiceData(1);
+                        findApplicationInfo(); //查看应用的基本信息
+                    }else{
+                        layer.msg("下线所有服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败")
-            })
+                console.log("cancel");
+            });
+
         }
 
         //删除应用
         function deleteApplication(){
-            var dialog = ngDialog.openConfirm({
-                template:"/know_index/myApplication/applicationInfor/applicationInforDialog2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        httpRequestPost("/api/application/service/deleteAllServices",{
-                            "applicationId": $scope.vm.applicationId
-                        },function(data){
-                            if(data.status==200){
-                                layer.msg("删除成功");
-                                $state.go("admin.manage");
-                            }else{
-                                layer.msg("删除失败");
-                            }
-                        },function(){
-                            layer.msg("请求失败");
-                        })
+            layer.confirm("确认删除当前应用？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                var dialog = ngDialog.openConfirm({
+                    template:"/know_index/myApplication/applicationInfor/applicationInforDialog2.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
+                    preCloseCallback:function(e){    //关闭回掉
+                        if(e === 1){
+                            httpRequestPost("/api/application/service/deleteAllServices",{
+                                "applicationId": $scope.vm.applicationId
+                            },function(data){
+                                if(data.status==200){
+                                    layer.msg("删除成功");
+                                    $state.go("admin.manage");
+                                }else{
+                                    layer.msg("删除失败");
+                                }
+                            },function(){
+                                layer.msg("请求失败");
+                            })
+                        }
                     }
-                }
+                });
+            },function(){
+                console.log("cancel");
             });
         }
-      
-
     }
 ]).directive('checkName', function($http){
     return {
