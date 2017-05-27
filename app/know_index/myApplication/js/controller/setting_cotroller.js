@@ -2,7 +2,6 @@
 angular.module('myApplicationSettingModule').controller('myApplicationSettingController', [
     '$scope', "$state", "$stateParams","$cookieStore","$rootScope",
     function ($scope,$state, $stateParams,$cookieStore,$rootScope) {
-       // alert();
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             isSlide : isSlide,
