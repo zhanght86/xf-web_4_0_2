@@ -13,7 +13,9 @@ angular.module('functionalTestModule').controller('batchTestController', [
         $scope.vm = {
             deleteQuestion : deleteQuestion,
             uploadQuestion : uploadQuestion,
+            startUp : startUp,
         };
+        //批量上传
         function uploadQuestion(callback){
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/functionalTesting/batchUploadDialog.html",
@@ -31,9 +33,28 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 }
             });
         }
+        //删除
         function deleteQuestion(callback){
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/functionalTesting/batchTestDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+
+                    } else {
+
+                    }
+                }
+            });
+        }
+        //启动
+        function startUp(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/functionalTesting/startUpDialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
