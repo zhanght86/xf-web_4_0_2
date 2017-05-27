@@ -1,5 +1,5 @@
 
-<div class="pd-20" >
+<div class="pd-20">
     <!--<div class="mb-10 framework">-->
         <!--<span class="framework_s">项目：</span>-->
         <!--<div >-->
@@ -9,12 +9,16 @@
     <div class="mb-10 framework">
         <span class="framework_s">测试文档：</span>
         <div >
-            <div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
-            <div id="container">
-                <a id="pickfiles" href="javascript:;">选择文件</a>
-                <a id="uploadfiles" href="javascript:;" class="ml-20 c_blue">上传</a>
-            </div>
-            <div id="console"></div>
+            <!--<uploader-handle2></uploader-handle2>-->
+            <fetch-test server="'api/application/batchTest/upload'"  applicationId="vm.applicationId" userId="vm.userId"></fetch-test>
+
+            <!--batchTest/upload-->
+            <!--<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>-->
+            <!--<div id="container">-->
+                <!--<a id="pickfiles" href="javascript:;">选择文件</a>-->
+                <!--<a id="uploadfiles" href="javascript:;" class="ml-20 c_blue">上传</a>-->
+            <!--</div>-->
+            <!--<div id="console"></div>-->
         </div>
     </div>
     <div class="text-c pt-10 pb-10">
@@ -23,55 +27,54 @@
     </div>
 </div>
 <style>
-    #container{width:100%;margin:10px auto;}
+    /*#container{width:100%;margin:10px auto;}*/
 </style>
 <script>
     //
-    var uploader = new plupload.Uploader({
-        runtimes : 'html5,flash,silverlight,html4',
-        browse_button : 'pickfiles', // you can pass an id...
-        container: document.getElementById('container'), // ... or DOM Element itself
-        url : 'upload.php',
-        flash_swf_url : '../lib/plupload-2.3.1/js/Moxie.swf',
-        silverlight_xap_url : '../lib/plupload-2.3.1/js/Moxie.xap',
-
-        filters : {
-            max_file_size : '10mb',
-            mime_types: [
-                {title : " ", extensions : "xlsx"},
-                {title : " ", extensions : "docx"},
-                {title : "Image files", extensions : "jpg,gif,png"},
-                {title : "Zip files", extensions : "zip"}
-            ]
-        },
-
-        init: {
-            PostInit: function() {
-                document.getElementById('filelist').innerHTML = '';
-
-                document.getElementById('uploadfiles').onclick = function() {
-                    uploader.start();
-                    return false;
-                };
-            },
-
-            FilesAdded: function(up, files) {
-                plupload.each(files, function(file) {
-                    document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
-                });
-            },
-
-            UploadProgress: function(up, file) {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
-            },
-
-            Error: function(up, err) {
-                document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
-            }
-        }
-    });
-
-    uploader.init();
+//    var uploader = new plupload.Uploader({
+//        runtimes : 'html5,flash,silverlight,html4',
+//        browse_button : 'pickfiles', // you can pass an id...
+//        container: document.getElementById('container'), // ... or DOM Element itself
+//        url : 'upload.php',
+//        flash_swf_url : '../lib/plupload-2.3.1/js/Moxie.swf',
+//        silverlight_xap_url : '../lib/plupload-2.3.1/js/Moxie.xap',
+//
+//        filters : {
+//            max_file_size : '10mb',
+//            mime_types: [
+//                {title : " ", extensions : "xlsx"},
+//                {title : " ", extensions : "docx"},
+//                {title : "Image files", extensions : "jpg,gif,png"},
+//                {title : "Zip files", extensions : "zip"}
+//            ]
+//        },
+//
+//        init: {
+//            PostInit: function() {
+//                document.getElementById('filelist').innerHTML = '';
+//
+//                document.getElementById('uploadfiles').onclick = function() {
+//                    uploader.start();
+//                    return false;
+//                };
+//            },
+//
+//            FilesAdded: function(up, files) {
+//                plupload.each(files, function(file) {
+//                    document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+//                });
+//            },
+//
+//            UploadProgress: function(up, file) {
+//                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+//            },
+//
+//            Error: function(up, err) {
+//                document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+//            }
+//        }
+//    });
+//    uploader.init();
 </script>
 
 
