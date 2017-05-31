@@ -19,7 +19,7 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
             '<button  id="picker" >批量上传测试</button><span class="f-14 pl-10"></span>'
         ,
         link:function(scope,element,attrs){
-            console.log(1) ;
+            // console.log(1) ;
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
