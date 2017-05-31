@@ -18,7 +18,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
         },
         template:
             '<button  id="picker">批量导入</button>'
-        ,  
+        ,
         link:function(scope,element,attrs){
             var userId = scope.userId ,
                 applicationId = scope.applicationId ;
