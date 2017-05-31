@@ -12,10 +12,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
             deleteQuestion : deleteQuestion,
             uploadQuestion : uploadQuestion,
             startUp : startUp,
+            searchType : 0 ,
         };
         //批量上传
         function uploadQuestion(callback){
-            var timer = $timeout(function(){
                 var dialog = ngDialog.openConfirm({
                     template: "/know_index/functionalTesting/batchUploadDialog.html",
                     scope: $scope,
@@ -31,8 +31,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         }
                     }
                 });
-            },350)
-
         }
         //删除
         function deleteQuestion(callback){

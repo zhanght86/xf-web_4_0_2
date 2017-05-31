@@ -3,11 +3,11 @@
 <div class="wrap pr chat_test_wrap" style="padding-top:10px;">
     <div class="p20 cl" style="background:#fff;height:100%;">
         <div class="cl" style="width:410px;height:30px;margin:0 auto 20px;">
-
-            <select class="sel bd L mr-10" id="selected">
-                <option value="待测试">待测试</option>
-                <option value="测试中">测试中</option>
-                <option value="已完成">已完成</option>
+            <select class="sel bd L mr-10" ng-model="vm.searchType" id="selected">
+                <option value="0">全部</option>
+                <option value="21007">待测试</option>
+                <option value="21008">测试中</option>
+                <option value="21009">已完成</option>
             </select>
             <input type="text" class="input-text L mr-10" placeholder="测试文件/渠道名称/测试人" style="width:250px;height:30px;" />
             <input type="text" class="input-text L mr-10" style="display: none;" >
@@ -17,7 +17,6 @@
             <div class="mb-10 cl">
                 <span class="L">
                    <!--<fetch-test server="'api/application/batchTest/upload'"  applicationId="vm.applicationId" userId="vm.userId"></fetch-test>-->
-
                     <button  ng-click="vm.uploadQuestion()" class="btn1  btn1_blue mr-10"> 批量上传</button>
                     <button class="btn1 btn_delete" ng-click="vm.deleteQuestion()"> 删除</button>
                 </span>
@@ -76,7 +75,6 @@
                         </tr>
                         </tbody>
                     </table>
-
                     <div class="page clearfix">
                         <span class="page_span ">上一页</span>
                         <a href="javascript:;" class="cura">1</a>
@@ -99,12 +97,7 @@
         </div>
     </div>
 </div>
-<style>
 
-</style>
-<script>
-
-</script>
 
 
 
