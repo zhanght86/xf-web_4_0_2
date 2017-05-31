@@ -13,6 +13,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             applicationId : $cookieStore.get("applicationId"),
             title : "" ,           //知识标题
             search : search,  //查询
+            exportExcel:exportExcel,//知识导出
             seeDtails:seeDtails,//标题预览
             //searchList : "",   //查询数据结果
             paginationConf : ""  ,//分页条件
@@ -29,6 +30,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             "chatKnowledgeTopic": "",
             "chatQuestionContent": "",
             selectTimeType : selectTimeType
+
         };
 
         function getDel(ev,id){
@@ -85,6 +87,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }
 
             },function(err){})
+        }
+
+        /**
+         * 知识导出
+         */
+        function exportExcel(){
+
         }
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
