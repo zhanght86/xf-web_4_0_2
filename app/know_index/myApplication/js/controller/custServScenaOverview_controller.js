@@ -191,21 +191,17 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 layer.msg("刪除失败");
             });
         }
-        function selectAll(current,all,items){
+        function selectAll(items){
             if($scope.vm.isSelectAll){
                 $scope.vm.isSelectAll = false ;
-                current = []
+                $scope.vm.knowledgeIds = [] ;
             }else{
                 $scope.vm.isSelectAll = true ;
+                $scope.vm.knowledgeIds = [] ;
                 angular.forEach(items,function(val){
-                    current.push(val)
+                    $scope.vm.knowledgeIds.push(val.knowledgeId)
                 });
             }
-
-            if(current.length!==0 && all && current.length!==all.length){
-                current = []
-            }
-            console.log(current)
         }
         function addDelIds(id,arr){
             if(arr.inArray(id)){
