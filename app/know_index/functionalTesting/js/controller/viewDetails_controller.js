@@ -12,12 +12,29 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             addQuestion : addQuestion,
+            editQuestion : editQuestion,
 
         };
         function addQuestion(callback){
-
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/functionalTesting/viewDetailsDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+
+                    } else {
+
+                    }
+                }
+            });
+        }
+        function editQuestion(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/functionalTesting/viewDetailsEditDialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
