@@ -15,7 +15,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             
             pageSize : 5,
             listData :[],           //table 数据
-            listDataTotal :'',
+            listDataTotal : 0 ,      //共几条
           //  listDataLength : '',
             paginationConf : '',     //分页条件
             showData : showData,
@@ -26,7 +26,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchFile : searchFile,
             searchType : 0,
             selectInput :'',
-            
+
 
         };
 

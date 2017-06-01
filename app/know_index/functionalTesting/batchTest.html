@@ -31,9 +31,10 @@
                         <thead>
                         <tr>
                             <th class="bold" width="4%"><input class="selectAllBtn"  type="checkbox" ng-click="vm.selectAll($event)" ng-checked="vm.selectAllCheck"/></th>
-                            <th class="bold" width="25%">测试文件</th>
+                            <th class="bold" width="16%">测试文件</th>
+                            <th class="bold" width="10%">渠道</th>
                             <th class="bold" width="10%">测试总数</th>
-                            <th class="bold" width="10%">准确率</th>
+                            <th class="bold" width="9%">准确率</th>
                             <th class="bold" width="15%">上传时间</th>
                             <th class="bold" width="9%">测试人</th>
                             <th class="bold" width="10%">状态</th>
@@ -42,8 +43,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="v in vm.listData">
-                                <td><input type="checkbox" ng-checked="vm.selectAllCheck"  ng-click="vm.selectSingle($event,$event.batchNumberId)"></td>
+                                <td><input type="checkbox" ng-checked="vm.selectAllCheck"  ng-click="vm.selectSingle($event,v.batchNumberId)"></td>
                                 <td><span class="c-primary" >{{v.batchName}}</span></td>
+                                <td>{{v.channel}}</td>
                                 <td>{{v.batchAmount}}</td>
                                 <td>{{v.batchPrecision}}</td>
                                 <td >{{v.batchUploadingTime |date : 'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -52,10 +54,10 @@
                                 <td ng-if="v.batchStatusId==21008">测试中</td>
                                 <td ng-if="v.batchStatusId==21009">已完成</td>
                                 <td>
-                                <a href="javascript:;" class="c-green mr-10" ng-click="vm.startUp()" ng-if="v.batchStatusId==21007 || v.batchStatusId==21009">启动</a>
-                                <a href="javascript:;" class="mr-10" ng-if="v.batchStatusId==21008">暂停</a>
-                                <a  ui-sref="functionalTest.testResult" class="c-blue mr-10" ng-if="v.batchStatusId==21009">查看</a>
-                                <a  ui-sref="functionalTest.viewDetails" class="c-blue mr-10" ng-if="v.batchStatusId==21007">查看</a>
+                                    <a href="javascript:;" class="c-green mr-10" ng-click="vm.startUp()" ng-if="v.batchStatusId==21007 || v.batchStatusId==21009">启动</a>
+                                    <a href="javascript:;" class="mr-10" ng-if="v.batchStatusId==21008">暂停</a>
+                                    <a  ui-sref="functionalTest.testResult" class="c-blue mr-10" ng-if="v.batchStatusId==21009">查看</a>
+                                    <a  ui-sref="functionalTest.viewDetails" class="c-blue mr-10" ng-if="v.batchStatusId==21007">查看</a>
                                 </td>
                             </tr>
 
