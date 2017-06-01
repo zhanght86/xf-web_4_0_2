@@ -17,8 +17,6 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             userId : $cookieStore.get("userId"),
             listData:[],
             listDataTotal:0,
-
-
             //-----------------------------------------方法
             getData:getData,
             addKnow : addKnow,
