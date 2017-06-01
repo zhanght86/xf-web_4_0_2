@@ -7,8 +7,8 @@
  */
 
 angular.module('functionalTestModule').controller('viewDetailsController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             pageSize:5,
