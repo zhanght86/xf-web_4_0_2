@@ -32,7 +32,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             selectTimeType : selectTimeType
 
         };
-
+        //$.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
         function getDel(ev,id){
             var  self =$(ev.target);
             if(self.prop("checked")){
