@@ -26,7 +26,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchFile : searchFile,
             searchType : 0,
             selectInput :'',
-
+            
 
         };
 
