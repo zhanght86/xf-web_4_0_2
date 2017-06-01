@@ -1,7 +1,8 @@
 /**
  * Created by 41212 on 2017/5/23.
  */
-knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
+knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
+    function($parse,$cookieStore) {
     return {
         restrict:'EA',
         scope:{
@@ -27,7 +28,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse", function($parse) {
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
                 swf: 'Uploader.swf',
-                formData : {"userId":userId,"applicationId":applicationId}  ,   // 上传参数
+                formData : {"userId":userId,"applicationId":applicationId,"userName":$cookieStore.get("userName")}  ,   // 上传参数
                 // 文件接收服务端。
                 //server: "/api/application/application/uploadHead",
 

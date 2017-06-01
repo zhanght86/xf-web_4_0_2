@@ -5,8 +5,8 @@
  * webuploader  ====》》  指令
  */
 
-knowledge_static_web.directive("fetchTest", ["$parse","ngDialog",
-    function($parse,ngDialog) {
+knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
+    function($parse,ngDialog,$cookieStore) {
     return {
         restrict:'EA',
         scope:{
@@ -14,19 +14,17 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog",
             server : '='   , //url
             type : "="   ,   //image：图片 video：音视频  flash：flash   file：办公文档，压缩文件等等
             isAuto : "=",
-            userId : "=",
-            applicationId : "="
-
         },
         template:
             '<button  id="picker" >批量上传测试</button><span class="f-14 pl-10"></span>'
         ,
         link:function(scope,element,attrs){
+            // console.log(1) ;
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
                 swf: 'Uploader.swf',
-                formData : {"userId":scope.userId,"applicationId":scope.applicationId}  ,   // 上传参数
+                formData : {"userId":$cookieStore.get("userId"),"applicationId":$cookieStore.get("applicationId")}  ,   // 上传参数
                 // 文件接收服务端。
                 server: scope.server,
                 //accept: {
