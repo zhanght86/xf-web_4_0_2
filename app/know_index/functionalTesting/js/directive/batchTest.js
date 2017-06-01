@@ -5,8 +5,8 @@
  * webuploader  ====》》  指令
  */
 
-knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
-    function($parse,ngDialog,$cookieStore) {
+knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore","$state",
+    function($parse,ngDialog,$cookieStore,$state) {
     return {
         restrict:'EA',
         scope:{
@@ -72,7 +72,7 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
                 if(response.status == 500){
                     layer.msg("模板错误")
                 }else{
-
+                    $state.reload();
                 }
                 console.log(response)
             });

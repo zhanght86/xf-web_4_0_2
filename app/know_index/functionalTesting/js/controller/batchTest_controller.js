@@ -23,8 +23,35 @@ angular.module('functionalTestModule').controller('batchTestController', [
             selectAll : selectAll,
             selectSingle : selectSingle,
             deleteIds:[],
+            searchFile : searchFile,
+            searchType : 0,
+            selectInput :'',
+
 
         };
+
+        function selectAllDialog(ev){
+            //var self = $(ev.target);
+            if(!$scope.vm.selectAllCheckDialog){
+                $scope.vm.selectAllCheckDialog = true;
+                $scope.vm.seleceAddAll = [];
+                angular.forEach($scope.vm.listKnoData,function(item,index){
+                    //console.log(item)
+                    var obj = {};
+                    obj.chatKnowledgeId = item.knowledgeId;
+                    obj.chatKnowledgeTopic = item.knowledgeTitle;
+                    obj.index = index;
+                    $scope.vm.seleceAddAll.push(obj);
+                    console.log(obj);
+                });
+            }else{
+                $scope.vm.selectAllCheckDialog = false ;
+                $scope.vm.seleceAddAll = [];
+            }
+            console.log( $scope.vm.seleceAddAll)
+        }
+
+        
         showData(1);
         //加载表格
         function showData(index){
@@ -42,6 +69,41 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 $scope.vm.listData = data.data.batchTestList;
                 $scope.vm.listDataTotal = data.data.total;
                // $scope.vm.listDataLength = data.data.total;
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败");
+            })  ;
+        }
+        //查询
+        function searchFile(index){
+
+            httpRequestPost("/api/application/batchTest/findByValue",{
+                index:(index - 1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
+                applicationId:$scope.vm.applicationId,
+                batchStatusId :$scope.vm.searchType,
+                batchName: $scope.vm.selectInput,
+                channel: $scope.vm.selectInput,
+                batchOperator: $scope.vm.selectInput,
+
+            },function(data){
+                console.log(data);
+                if(data.status == 10005){
+                   layer.msg("查询到记录为空");
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                   return;
+                }
+                $scope.vm.listData = data.data.batchTestList;
+                $scope.vm.listDataTotal = data.data.total;
+                // $scope.vm.listDataLength = data.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
                     totalItems: data.data.total, //总条数
@@ -79,7 +141,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     backdrop: 'static',
                     preCloseCallback: function (e) {    //关闭回掉
                         if (e === 1) {
-
+                            
                         } else {
 
                         }
@@ -91,7 +153,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         //删除
         function deleteQuestion(callback){
             if($scope.vm.deleteIds == 0){
-                layer.msg("请选择要删除的知识！");
+                layer.msg("请选择要删除的文件！");
                 return;
             }
             var dialog = ngDialog.openConfirm({
@@ -113,10 +175,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
                                 $state.reload();
                                 layer.msg("删除成功");
                             }else{
-                                layer.msg("删除失败")
+                                layer.msg("删除失败");
                             }
                         },function(){
-                            layer.msg("请求失败")
+                            layer.msg("请求失败");
                         });
                     }
                 }
@@ -142,6 +204,35 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
 
         //批量删除
+        // function deleteDialog(item){
+        //     $scope.vm.seleceAddAll.remove(item);
+        //     $(".selectAllBtnDialog").prop("checked",false);
+        //     $(".selectSingle").eq(item.index).attr("checked",false);
+        // }
+
+        // function selectSingleDialog(ev,id,name,index){
+        //     var self = $(ev.target);
+        //     var prop = self.prop("checked");
+        //     console.log(prop);
+        //     var obj = {};
+        //     console.log(id , name) ;
+        //     obj.chatKnowledgeId = id;
+        //     obj.chatKnowledgeTopic = name;
+        //     obj.index = index;
+        //     if(!prop){
+        //         angular.forEach($scope.vm.seleceAddAll,function(item,index){
+        //             if(id==item.chatKnowledgeId){
+        //                 $scope.vm.seleceAddAll.splice(index,1)
+        //             }
+        //         });
+        //         //$scope.vm.seleceAddAll.remove(obj);
+        //         $(".selectAllBtnDialog").prop("checked",false)
+        //     }else{
+        //         $(".selectAllBtnDialog").prop("checked",false);
+        //         $scope.vm.seleceAddAll.push(obj)
+        //     }
+        // }
+
         function selectAll(ev){
             //var self = $(ev.target);
             if(!$scope.vm.selectAllCheck){
