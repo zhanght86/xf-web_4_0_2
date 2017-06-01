@@ -5,7 +5,7 @@
 angular.module('functionalTestModule').controller('batchTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
-        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+        //$state.go("admin.manage",{batchNumberId:$stateParams.userPermission});
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),
@@ -27,31 +27,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchType : 0,
             selectInput :'',
 
-
         };
-
-        function selectAllDialog(ev){
-            //var self = $(ev.target);
-            if(!$scope.vm.selectAllCheckDialog){
-                $scope.vm.selectAllCheckDialog = true;
-                $scope.vm.seleceAddAll = [];
-                angular.forEach($scope.vm.listKnoData,function(item,index){
-                    //console.log(item)
-                    var obj = {};
-                    obj.chatKnowledgeId = item.knowledgeId;
-                    obj.chatKnowledgeTopic = item.knowledgeTitle;
-                    obj.index = index;
-                    $scope.vm.seleceAddAll.push(obj);
-                    console.log(obj);
-                });
-            }else{
-                $scope.vm.selectAllCheckDialog = false ;
-                $scope.vm.seleceAddAll = [];
-            }
-            console.log( $scope.vm.seleceAddAll)
-        }
-
-        
         showData(1);
         //加载表格
         function showData(index){
@@ -202,39 +178,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 }
             });
         }
-
-        //批量删除
-        // function deleteDialog(item){
-        //     $scope.vm.seleceAddAll.remove(item);
-        //     $(".selectAllBtnDialog").prop("checked",false);
-        //     $(".selectSingle").eq(item.index).attr("checked",false);
-        // }
-
-        // function selectSingleDialog(ev,id,name,index){
-        //     var self = $(ev.target);
-        //     var prop = self.prop("checked");
-        //     console.log(prop);
-        //     var obj = {};
-        //     console.log(id , name) ;
-        //     obj.chatKnowledgeId = id;
-        //     obj.chatKnowledgeTopic = name;
-        //     obj.index = index;
-        //     if(!prop){
-        //         angular.forEach($scope.vm.seleceAddAll,function(item,index){
-        //             if(id==item.chatKnowledgeId){
-        //                 $scope.vm.seleceAddAll.splice(index,1)
-        //             }
-        //         });
-        //         //$scope.vm.seleceAddAll.remove(obj);
-        //         $(".selectAllBtnDialog").prop("checked",false)
-        //     }else{
-        //         $(".selectAllBtnDialog").prop("checked",false);
-        //         $scope.vm.seleceAddAll.push(obj)
-        //     }
-        // }
-
-        function selectAll(ev){
-            //var self = $(ev.target);
+        function selectAll(){
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
                 $scope.vm.deleteIds = [];
@@ -245,19 +189,19 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 $scope.vm.selectAllCheck = false;
                 $scope.vm.deleteIds = [];
             }
-            console.log( $scope.vm.deleteIds);
+            //console.log( $scope.vm.deleteIds);
         }
-        function selectSingle(ev,id){
-            var self = $(ev.target);
-            if(self.attr('checked')){
-                self.attr('checked',false);
+        function selectSingle(id){
+            if($scope.vm.deleteIds.inArray(id)){
                 $scope.vm.deleteIds.remove(id);
-                $(".selectAllBtn").attr("checked",false);
+                $scope.vm.selectAllCheck = false;
             }else{
-                $(".selectAllBtn").attr("checked",false);
                 $scope.vm.deleteIds.push(id);
             }
-            console.log( $scope.vm.deleteIds);
+            if($scope.vm.deleteIds.length==$scope.vm.listData.length){
+                $scope.vm.selectAllCheck = true;
+            }
+            //console.log( $scope.vm.deleteIds);
         }
         
     }
