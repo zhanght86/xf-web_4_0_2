@@ -34,13 +34,15 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
                 //},
                 // 选择文件的按钮。可选。
                 // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: '#picker',
-
+                pick: {
+                    id : '#picker',
+                    //multiple: false
+                } ,
                  //不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
                 resize: false,
                 chunked: true,  // 分片上传大文件
                 chunkRetry: 10, // 如果某个分片由于网络问题出错，允许自动重传多少次？
-                thread: 100,// 最大上传并发数
+                //thread: 100,// 最大上传并发数
                 // 禁掉全局的拖拽功能。这样不会出现文件拖进页面的时候，把文件打开。
                 disableGlobalDnd: true,
 
@@ -49,6 +51,7 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
                 fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
             });
             uploader.on( 'fileQueued', function( file ) {
+
                 console.log(file + "file  add success");
             });
             uploader.on( 'uploadProgress', function( file, percentage ) {
