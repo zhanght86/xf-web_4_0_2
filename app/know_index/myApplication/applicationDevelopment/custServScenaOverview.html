@@ -1,6 +1,5 @@
 <div ui-view="header"></div>
 <div class="main warp">
-
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
@@ -86,9 +85,10 @@
                     </div>
                 </div>
                 <div class="csso-cont mt30">
+
                     <div class="clearfix csso-hd">
                         <div class="fl">
-                            <span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
+                            <input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
                         </div>
                         <div class="fr" style="margin-right: 80px;" ng-click="vm.delData()">
                             <a class="ljtClose-btn" href="javascript:;" style="width: 50px;">
@@ -97,13 +97,11 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="clearfix csso-bd" style="min-height:300px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
-
                                 <div class="title">
-                                    <checkbox ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)"></checkbox>
+                                    <checkbox-overview ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)" result="vm.knowledgeIds.inArray(item.knowledgeId)"></checkbox-overview>
                                     <a href="javascript:;" ng-click="vm.scan(item)">{{item.knowledgeTitle}}</a>
                                 </div>
                                 <div class="txt-cont mt10">
