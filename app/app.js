@@ -18,7 +18,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ng.ueditor',
     'ngConfirm',
     'ng.shims.placeholder',
-    //前台模块
+    //先行
     'loginModule',
     'indexModule',
     "adminModule",
@@ -495,7 +495,12 @@ knowledge_static_web
                 }
             })
             //应用开发-业务建模
-
+            .state("relationalCatalog", {
+                //params:{"userPermission" : null},
+                url: "/relationalCatalog",
+                templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
+                controller:"relationalCatalogController"
+            })
             .state("relationalCatalog.manage", {
                 //params:{"userPermission" : null},
                 url: "/manage",
@@ -506,13 +511,6 @@ knowledge_static_web
                     },
                 }
             })
-            .state("relationalCatalog", {
-                //params:{"userPermission" : null},
-                url: "/relationalCatalog",
-                templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
-                controller:"relationalCatalogController"
-            })
-            
             .state("botApply.manage", {
                 //params:{"userPermission" : null},
                 url: "/manage",
@@ -542,7 +540,7 @@ knowledge_static_web
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         controller: "homePageNavController"
-                    },
+                    }
                 }
             })
             //应用开发-知识管理-营销场景知识总览
