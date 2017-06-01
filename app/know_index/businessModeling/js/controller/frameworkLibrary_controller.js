@@ -1711,7 +1711,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             $("#ele-asked-error").attr("style","display:none;");
             var relateConceptIds = "";
             var relateConceptVals = "";
-            if($(".ele-concept").attr("data-option")==undefined){
+            console.log("====="+$(".ele-concept").attr("data-option"));
+            if($(".ele-concept").attr("data-option")==undefined || $(".ele-concept").attr("data-option")==""){
 
             }else{
                 relateConceptIds = $(".ele-concept").attr("data-option");

@@ -5,8 +5,8 @@
  * webuploader  ====》》  指令
  */
 
-knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
-    function($parse,ngDialog,$cookieStore) {
+knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore","$state",
+    function($parse,ngDialog,$cookieStore,$state) {
     return {
         restrict:'EA',
         scope:{
@@ -19,7 +19,7 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
             '<button  id="picker" >批量上传测试</button><span class="f-14 pl-10"></span>'
         ,
         link:function(scope,element,attrs){
-            console.log(1) ;
+            // console.log(1) ;
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
@@ -34,13 +34,15 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
                 //},
                 // 选择文件的按钮。可选。
                 // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: '#picker',
-
+                pick: {
+                    id : '#picker',
+                    //multiple: false
+                } ,
                  //不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
                 resize: false,
                 chunked: true,  // 分片上传大文件
                 chunkRetry: 10, // 如果某个分片由于网络问题出错，允许自动重传多少次？
-                thread: 100,// 最大上传并发数
+                //thread: 100,// 最大上传并发数
                 // 禁掉全局的拖拽功能。这样不会出现文件拖进页面的时候，把文件打开。
                 disableGlobalDnd: true,
 
@@ -49,6 +51,7 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
                 fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
             });
             uploader.on( 'fileQueued', function( file ) {
+
                 console.log(file + "file  add success");
             });
             uploader.on( 'uploadProgress', function( file, percentage ) {
@@ -72,7 +75,7 @@ knowledge_static_web.directive("fetchTest", ["$parse","ngDialog","$cookieStore",
                 if(response.status == 500){
                     layer.msg("模板错误")
                 }else{
-
+                    $state.reload();
                 }
                 console.log(response)
             });

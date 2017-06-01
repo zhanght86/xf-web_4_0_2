@@ -6,7 +6,7 @@
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
-        $state.go("custServScenaOverview.manage");
+        //$state.go("custServScenaOverview");
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
@@ -53,7 +53,9 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             heighSarch : false ,
 
             newKnowledge : "false",
-            jumpToNewKonwledge : jumpToNewKonwledge
+            jumpToNewKonwledge : jumpToNewKonwledge,
+            isSelectAll  : false ,  // 全选 删除
+            selectAll : selectAll //選擇全部
         };
         function jumpToNewKonwledge(id){
             var addUrl=null;
@@ -189,12 +191,26 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 layer.msg("刪除失败");
             });
         }
+        function selectAll(items){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false ;
+                $scope.vm.knowledgeIds = [] ;
+            }else{
+                $scope.vm.isSelectAll = true ;
+                $scope.vm.knowledgeIds = [] ;
+                angular.forEach(items,function(val){
+                    $scope.vm.knowledgeIds.push(val.knowledgeId)
+                });
+            }
+        }
         function addDelIds(id,arr){
             if(arr.inArray(id)){
-                arr.remove(id)
+                arr.remove(id) ;
+                $scope.vm.isSelectAll = false ;
             }else{
                 arr.push(id)
             }
+            console.log(id,arr) ;
         }
         function getNewNumber(){
             httpRequestPost(" /api/ms/knowledgeManage/overView/searchTotalAndToday",{
