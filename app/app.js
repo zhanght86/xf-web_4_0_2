@@ -890,6 +890,7 @@ knowledge_static_web
                 }
             })
             .state("functionalTest.viewDetails", {
+                params : {batchNumberId : null},
                 url: "/viewDetails",
                 views: {
                     'header': {

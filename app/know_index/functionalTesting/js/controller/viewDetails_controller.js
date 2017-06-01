@@ -11,11 +11,46 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            addQuestion : addQuestion,
-            editQuestion : editQuestion,
+            pageSize:5,
+            batchNumberId:"",
+            applicationId : $cookieStore.get("applicationId"),
+            userId : $cookieStore.get("userId"),
+            listData:[],
+            listDataTotal:0,
+
+
+            //-----------------------------------------方法
+            getData:getData,
+            addKnow : addKnow,
+            editKnow : editKnow,
+            deleteKnow:deleteKnow,
 
         };
-        function addQuestion(callback){
+
+        getData(1);
+        function getData(index){
+            httpRequestPost("/api/application/detail/getDetailList",{
+                index:(index - 1)*$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize,
+                applicationId:$scope.vm.applicationId,
+                batchNumberId:$stateParams.batchNumberId,
+            },function(data){
+                console.log(data);
+                $scope.vm.listData = data.data.detailList;
+                $scope.vm.listDataTotal = data.data.total;
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply();
+            },function(){
+                layer.msg("请求失败");
+            })  ;
+        }
+
+        function addKnow(callback){
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/functionalTesting/viewDetailsDialog.html",
                 scope: $scope,
@@ -32,7 +67,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 }
             });
         }
-        function editQuestion(callback){
+        function editKnow(callback){
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/functionalTesting/viewDetailsEditDialog.html",
                 scope: $scope,
@@ -49,6 +84,24 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 }
             });
         }
+
+        function deleteKnow(){
+
+        }
+
+
+
+        var timeout ;
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                if (timeout) {
+                    $timeout.cancel(timeout);
+                }
+                timeout = $timeout(function () {
+                    getData(current);
+                }, 0);
+            }
+        },true);
         
     }
 ]);

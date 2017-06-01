@@ -5,14 +5,13 @@
 angular.module('functionalTestModule').controller('batchTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
-        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),
             deleteQuestion : deleteQuestion,
             uploadQuestion : uploadQuestion,
             startUp : startUp,
-            
+            jumpD:jumpD,
             pageSize : 5,
             listData :[],           //table 数据
             listDataTotal :'',
@@ -116,6 +115,11 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 layer.msg("请求失败");
             })  ;
         }
+
+        function jumpD(url,id){
+            $state.go(url,{batchNumberId:id});
+        }
+
         //分页定时器
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
