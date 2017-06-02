@@ -14,7 +14,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             jumpD:jumpD,
             pageSize : 5,
             listData :[],           //table 数据
-            listDataTotal :'',
+            listDataTotal : 0 ,      //共几条
           //  listDataLength : '',
             paginationConf : '',     //分页条件
             showData : showData,
@@ -25,6 +25,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchFile : searchFile,
             searchType : 0,
             selectInput :'',
+            upload : false  // 上传命令
         };
         showData(1);
         //加载表格
@@ -120,7 +121,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     backdrop: 'static',
                     preCloseCallback: function (e) {    //关闭回掉
                         if (e === 1) {
-                            
+                            $scope.vm.upload = true
                         } else {
 
                         }
