@@ -15,8 +15,7 @@
         <div class="bd p20" style="background:#fcfdfd;">
             <div class="mb-10 cl">
                 <span class="L">
-                   <fetch-test server="'api/application/batchTest/upload'"  applicationId="vm.applicationId" userId="vm.userId"></fetch-test>
-
+                   <!--<fetch-test server="'api/application/batchTest/upload'"  applicationId="vm.applicationId" userId="vm.userId"></fetch-test>-->
                     <button  ng-click="vm.uploadQuestion()" class="btn1  btn1_blue mr-10"> 批量上传</button>
                     <button class="btn1 btn_delete" ng-click="vm.deleteQuestion()"> 删除</button>
                 </span>
@@ -57,8 +56,8 @@
                                 <td>
                                 <a href="javascript:;" class="c-green mr-10" ng-click="vm.startUp()" ng-if="v.batchStatusId==21007 || v.batchStatusId==21009">启动</a>
                                 <a href="javascript:;" class="mr-10" ng-if="v.batchStatusId==21008">暂停</a>
-                                <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.testResult',vm.batchNumberId)" ng-if="v.batchStatusId==21009">查看</a>
-                                <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.viewDetails',vm.batchNumberId)" ng-if="v.batchStatusId==21007">查看</a>
+                                <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.testResult',v.batchNumberId)" ng-if="v.batchStatusId==21009">查看</a>
+                                <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.viewDetails',v.batchNumberId)" ng-if="v.batchStatusId==21007">查看</a>
                                 </td>
                             </tr>
 
