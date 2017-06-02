@@ -123,7 +123,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         if (e === 1) {
                             $scope.vm.upload = true
                         } else {
-
+                            $scope.vm.upload = false
                         }
                     }
                 });
