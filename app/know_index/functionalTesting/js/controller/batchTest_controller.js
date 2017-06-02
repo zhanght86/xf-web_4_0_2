@@ -92,7 +92,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
 
         function jumpD(url,id){
-            alert(id)
             $state.go(url,{batchNumberId:id});
         }
 
