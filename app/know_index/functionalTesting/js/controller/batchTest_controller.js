@@ -3,8 +3,8 @@
  */
 
 angular.module('functionalTestModule').controller('batchTestController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","knowledgeAddServer",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),
@@ -25,8 +25,43 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchFile : searchFile,
             searchType : 0,
             selectInput :'',
-            upload : false  // 上传命令
+            upload : false,  // 上传命令
+            //-----------------------------渠道   服务
+            listService:[],
+            serviceId : "" ,
+            channel:"",
+            channelList : [] ,
+            getService : getService,
+            //------------------------------渠道   服务end
+
         };
+        //获取渠道
+        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            function(data) {
+                if(data.data){
+                    $scope.vm.channelList = data.data;
+                }
+            }, function(error) {
+                layer.msg("获取渠道失败，请刷新页面");
+            });
+        //页面初始化加载已发布服务
+        getService();
+        function getService(){
+            httpRequestPost("/api/application/service/listServiceByApplicationId",{
+                applicationId:$scope.vm.applicationId,
+            },function(data){
+                if(data.status == 10000){
+                    $scope.vm.listService = data.data;
+                    $scope.vm.serviceId = data.data[0].serviceId ;
+                    $scope.$apply();
+                }else if(data.status == 10005) {
+                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+                }
+            },function(){
+                layer.msg("请求失败");
+            })
+        }
+
         showData(1);
         //加载表格
         function showData(index){
