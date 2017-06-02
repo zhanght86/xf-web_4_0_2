@@ -18,7 +18,7 @@ knowledge_static_web.directive("batchTest", ["$parse","ngDialog","$cookieStore",
         },
         template:
             '<div class="$container">' +
-                '<ul class="pick-list">' +
+                '<ul class="pick-list mb-10">' +
 
                  '</ul>' +
                  '<div  id="picker" style="background">请添加文件</div><span class="f-14 pl-10"></span>' +
@@ -65,7 +65,7 @@ knowledge_static_web.directive("batchTest", ["$parse","ngDialog","$cookieStore",
                 }) ;
                 //
                 uploader.on( 'fileQueued', function( file ) {
-                    var item = $('<li class="pick-item" style="width: 200px;height: 20px;background: red;">'+file.name+'</li>') ;
+                    var item = $('<li class="pick-item mb-5 pl-5 pr-5" style="line-height: 25px;background:#e8ebec;">'+file.name+'<a href="javascript:;" class="R">X</a></li>') ;
                     $(".pick-list").append(item) ;
                     console.log(file + "file  add success");
                 });
