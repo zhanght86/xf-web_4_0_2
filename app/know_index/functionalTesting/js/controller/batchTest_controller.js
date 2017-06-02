@@ -25,6 +25,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchFile : searchFile,
             searchType : 0,
             selectInput :'',
+            upload : false  // 上传命令
         };
         showData(1);
         //加载表格
@@ -92,7 +93,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
 
         function jumpD(url,id){
-            alert(id)
             $state.go(url,{batchNumberId:id});
         }
 
@@ -121,7 +121,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     backdrop: 'static',
                     preCloseCallback: function (e) {    //关闭回掉
                         if (e === 1) {
-                            
+                            $scope.vm.upload = true
                         } else {
 
                         }
