@@ -92,7 +92,25 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         /**
          * 知识导出
          */
-        function exportExcel(){
+        function exportExcel(index){
+            httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
+                "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
+                "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
+                "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
+                "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
+                "index": index==1?0:$scope.vm.pageSize*index,
+                "pageSize":$scope.vm.pageSize,
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    layer.msg("导出失败")
+                }else{
+                    alert(111)
+                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data);
+                }
+             console.log()
+
+            },function(err){})
 
         }
         function selectTimeType(type){

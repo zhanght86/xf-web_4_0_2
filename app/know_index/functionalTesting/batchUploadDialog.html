@@ -7,11 +7,11 @@
         <!--</div>-->
     <!--</div>-->
 
-    <div class="mb-10 framework">
+    <div class="mb-10 framework" style="padding-left:83px;">
         <span class="framework_s">测试文档：</span>
         <div>
             <!--<uploader-handle2></uploader-handle2>-->
-            <fetch-test server="'api/application/batchTest/upload'"></fetch-test>
+            <batch-test server="'api/application/batchTest/upload'" is-upload="vm.upload"></batch-test>
             <!--<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>-->
             <!--<div id="container">-->
                 <!--<a id="pickfiles" href="javascript:;">选择文件</a>-->
@@ -21,15 +21,16 @@
         </div>
     </div>
     <div class="text-c pt-10 pb-10">
-        <button class="btn1 btn1_blue mr-10">确定</button>
-        <button class="btn1 btn_gray">取消</button>
+        <button class="btn1 btn1_blue mr-10" ng-click="vm.upload = true">确定</button>
+        <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>
     </div>
 </div>
 <style>
     /*#container{width:100%;margin:10px auto;}*/
+    .ngdialog.ngdialog-theme-default .ngdialog-content{width:500px;}
+
 </style>
 <script>
-    alert()
 //
 //    var uploader = new plupload.Uploader({
 //        runtimes : 'html5,flash,silverlight,html4',

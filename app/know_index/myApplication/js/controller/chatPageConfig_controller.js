@@ -55,13 +55,13 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     obj.chatKnowledgeTopic = item.knowledgeTitle;
                     obj.index = index;
                     $scope.vm.seleceAddAll.push(obj);
-                    console.log(obj)
+                    console.log(obj);
                 });
             }else{
                 $scope.vm.selectAllCheckDialog = false ;
                 $scope.vm.seleceAddAll = [];
             }
-            console.log( $scope.vm.seleceAddAll)
+            console.log( $scope.vm.seleceAddAll);
         }
         function deleteDialog(item){
             $scope.vm.seleceAddAll.remove(item);

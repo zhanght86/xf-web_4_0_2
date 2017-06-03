@@ -7,17 +7,13 @@
                 <td width="30%" class="bold"></td>
                 <td width="70%" class="bold">服务名称</td>
             </tr>
-            <tr>
-                <td ><input type="radio" name="service"/></td>
-                <td >客服微信服务</td>
-            </tr>
-            <tr>
-                <td ><input type="radio" name="service"/></td>
-                <td >客服APP服务</td>
+            <tr ng-repeat="val in vm.serviceArray">
+                <td ><input type="radio" ng-model="vm.serviceUrl" value="{{val.nodeAccessIp}}" name="service" /></td>
+                <td >{{val.serviceName}}</td>
             </tr>
         </table>
     </div>
-    <div class="page clearfix">
+    <!--<div class="page clearfix">
         <span class="page_span ">上一页</span>
         <a href="javascript:;" class="cura">1</a>
         <a href="javascript:;">2</a>
@@ -27,7 +23,8 @@
         <input type="text" class="page_txt">
         <span>页</span>
         <span class="go_span">GO</span>
-    </div>
+    </div>-->
+    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
     <div class="tc">
         <input type="button" value="确定" class="btn1 btn1_blue" ng-click="closeThisDialog(1)"/>
     </div>

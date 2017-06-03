@@ -877,15 +877,29 @@ knowledge_static_web
                 }
             })
             .state("functionalTest.testResult", {
-                url: "/testResult",
+            url: "/testResult",
+            views: {
+                'header': {
+                    templateUrl: 'know_index/home/homePageNav.html',
+                    controller: "homePageNavController"
+                },
+                'content': {
+                    templateUrl: 'know_index/functionalTesting/testResult.html',
+                    controller: "testResultController"
+                    }
+                }
+            })
+            .state("functionalTest.viewDetails", {
+                params : {batchNumberId : null},
+                url: "/viewDetails",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/functionalTesting/testResult.html',
-                        controller: "testResultController"
+                        templateUrl: 'know_index/functionalTesting/viewDetails.html',
+                        controller: "viewDetailsController"
                     }
                 }
             })

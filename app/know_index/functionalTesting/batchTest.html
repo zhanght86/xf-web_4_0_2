@@ -3,21 +3,18 @@
 <div class="wrap pr chat_test_wrap" style="padding-top:10px;">
     <div class="p20 cl" style="background:#fff;height:100%;">
         <div class="cl" style="width:410px;height:30px;margin:0 auto 20px;">
-
-            <select class="sel bd L mr-10" id="selected">
+            <select class="sel bd L mr-10" id="selected" ng-model="vm.searchType">
                 <option value="0">全部</option>
                 <option value="21007">待测试</option>
                 <option value="21008">测试中</option>
                 <option value="21009">已完成</option>
             </select>
-            <input type="text" class="input-text L mr-10" placeholder="测试文件/渠道名称/测试人" style="width:250px;height:30px;" />
-            <button class="btn1 btn1_blue L" type="button" >查找</button>
+            <input type="text" class="input-text L mr-10" ng-model="vm.selectInput" placeholder="测试文件/渠道名称/测试人" style="width:250px;height:30px;" />
+            <button class="btn1 btn1_blue L" type="button"  ng-click="vm.searchFile(1)">查找</button>
         </div>
         <div class="bd p20" style="background:#fcfdfd;">
             <div class="mb-10 cl">
                 <span class="L">
-                   <fetch-test server="'api/application/batchTest/upload'"  applicationId="vm.applicationId" userId="vm.userId"></fetch-test>
-
                     <button  ng-click="vm.uploadQuestion()" class="btn1  btn1_blue mr-10"> 批量上传</button>
                     <button class="btn1 btn_delete" ng-click="vm.deleteQuestion()"> 删除</button>
                 </span>
@@ -31,10 +28,11 @@
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="4%"><input class="selectAllBtn" type="checkbox" ng-click="vm.selectAll($event)" ng-checked="vm.selectAllCheck"/></th>
-                            <th class="bold" width="25%">测试文件</th>
+                            <th class="bold" width="4%"><input class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/></th>
+                            <th class="bold" width="16%">测试文件</th>
+                            <th class="bold" width="10%">渠道</th>
                             <th class="bold" width="10%">测试总数</th>
-                            <th class="bold" width="10%">准确率</th>
+                            <th class="bold" width="9%">准确率</th>
                             <th class="bold" width="15%">上传时间</th>
                             <th class="bold" width="9%">测试人</th>
                             <th class="bold" width="10%">状态</th>
@@ -43,8 +41,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="v in vm.listData">
-                                <td><input type="checkbox" ng-checked="vm.selectAllCheck" ng-click="vm.selectSingle($event,item.hotQuestionId)"></td>
+                                
+                                <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.batchNumberId)"  ng-click="vm.selectSingle(v.batchNumberId)"></td>
                                 <td><span class="c-primary" >{{v.batchName}}</span></td>
+                                <td>{{v.channel}}</td>
                                 <td>{{v.batchAmount}}</td>
                                 <td>{{v.batchPrecision}}</td>
                                 <td >{{v.batchUploadingTime |date : 'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -53,8 +53,10 @@
                                 <td ng-if="v.batchStatusId==21008">测试中</td>
                                 <td ng-if="v.batchStatusId==21009">已完成</td>
                                 <td>
-                                <a href="javascript:;" class="mr-10">暂停</a>
-                                <a  ui-sref="functionalTest.testResult">查看</a>
+                                <a href="javascript:;" class="c-green mr-10" ng-click="vm.startUp()" ng-if="v.batchStatusId==21007 || v.batchStatusId==21009">启动</a>
+                                <a href="javascript:;" class="mr-10" ng-if="v.batchStatusId==21008">暂停</a>
+                                <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.testResult',v.batchNumberId)" ng-if="v.batchStatusId==21009">查看</a>
+                                <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.viewDetails',v.batchNumberId)" ng-if="v.batchStatusId==21007">查看</a>
                                 </td>
                             </tr>
 

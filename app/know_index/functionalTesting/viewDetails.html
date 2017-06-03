@@ -1,0 +1,64 @@
+<div ui-view="header"></div>
+
+<div class="wrap pr chat_test_wrap" style="padding-top:10px;">
+
+    <div class="p20 cl" style="background:#fff;height:100%;">
+        <div class="cl" style="width:510px;margin:0 auto 20px;">
+            <span class="">
+                <input type="text" class="input_text L" ng-model="vm.value" placeholder="测试问法/知识标题"  style="height:30px;">
+                <!--<button class="btn1 btn1_blue L" type="button" >查询</button>-->
+                <button class="btn1 btn1_blue L" type="button" ng-click="vm.search(1)">查询</button>
+            </span>
+        </div>
+        <div class="bd p20" style="background:#fcfdfd;">
+            <div class="mb-10 cl">
+                <span class="L">
+                    <button class="btn1 btn_green2 mr-10" ng-click="vm.addKnow()">添加</button>
+                    <button class="btn1 btn_green "> 导出</button>
+
+                </span>
+                <span class="R">
+                    <span class="c-999 pl-10">共有数据：<strong>{{vm.listDataTotal}}</strong> 条 </span>
+                </span>
+            </div>
+
+            <div class="mt-20">
+                <div class="dataTables_wrapper no-footer">
+                    <table class="stop_word_tab" >
+                        <thead>
+                        <tr>
+                            <th class="bold" width="5%"><input type="checkbox" /></th>
+                            <th class="bold" width="35%">测试问法</th>
+                            <th class="bold" width="20%">知识标题</th>
+                            <th class="bold" width="20%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in vm.listData">
+                            <td><input type="checkbox" /></td>
+                            <td>{{item.possibleKnowledge}}</td>
+                            <td>{{item.knowledgeTitle}}</td>
+                            <td>
+                                <a href="javascript:;" class="mr-10 c_green" ng-click="vm.editKnow(item)">编辑</a>
+                                <a href="javascript:;" class="c-error" ng-click="vm.deleteKnow(item.detailId)">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+
+</script>
+
+
+
+
+

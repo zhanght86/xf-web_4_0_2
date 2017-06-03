@@ -53,6 +53,8 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             scan : scan ,   // 点击标题预览
 
             heighSarch : false ,
+            selectAll : selectAll ,
+            isSelectAll  : false ,  // 全选 删除
 
         };
 
@@ -153,6 +155,29 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 $scope.vm.updateTimeType = 0 , //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
                 $scope.vm.heighSarch = false
         }
+
+
+        function selectAll(items){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false ;
+                $scope.vm.knowledgeIds = [] ;
+            }else{
+                $scope.vm.isSelectAll = true ;
+                $scope.vm.knowledgeIds = [] ;
+                angular.forEach(items,function(val){
+                    $scope.vm.knowledgeIds.push(val.knowledgeId)
+                });
+            }
+        }
+        function addDelIds(id,arr){
+            if(arr.inArray(id)){
+                arr.remove(id) ;
+                $scope.vm.isSelectAll = false ;
+            }else{
+                arr.push(id)
+            }
+        }
+
         function delData(){
             if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
             {
@@ -168,13 +193,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             },function(){
                 layer.msg("刪除失败");
             });
-        }
-        function addDelIds(id,arr){
-            if(arr.inArray(id)){
-                arr.remove(id)
-            }else{
-                arr.push(id)
-            }
         }
         function getNewNumber(){
             httpRequestPost(" /api/ms/knowledgeManage/overView/searchTotalAndToday",{
