@@ -1008,11 +1008,11 @@ knowledge_static_web
             //})
 
             //初始页
-            .state("index", {
-                url: "/index",
-                templateUrl: 'know_index/index/main.html',
-                controller: "indexController"
-            })
+            //.state("index", {
+            //    url: "/index",
+            //    templateUrl: 'know_index/index/main.html',
+            //    controller: "indexController"
+            //})
 
             //知识接入
             //任务分析
