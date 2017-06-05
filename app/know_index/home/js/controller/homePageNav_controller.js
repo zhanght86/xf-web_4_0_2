@@ -24,7 +24,7 @@ angular.module('homePage').controller('homePageNavController', [
         }else if($scope.url == "/login"){
             document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) no-repeat;background-size:100%;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/images/log-bg.jpg',sizingMethod='scale');";
         }else{
-            document.getElementsByTagName("body")[0].style.cssText = "background: #fff";
+            document.getElementsByTagName("body")[0].style.cssText = "background: #f8f8f8";
         }
         if(!$cookieStore.get('userId')){
             $state.go("login")
