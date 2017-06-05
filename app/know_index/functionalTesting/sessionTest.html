@@ -2,7 +2,7 @@
 <div class="wrap  session" >
     <div class="chat_test_wrap clearfix" style="background:#fff;">
         <div class="L chat_test_l" >
-            <div class="mb-20 bd chat_test_ltop p10" id="chat_recommend">
+            <div class=" bd chat_test_ltop p10" id="chat_recommend">
                 <div class="mb-10" style="border-bottom:1px dashed #bdbdbd;" id="ask">
                     <p class="c-primary "><span class="bold mr-5">测试问法：</span><span ng-model="question">{{vm.question}}</span></p>
 
@@ -10,7 +10,7 @@
 
                     <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.questionSegmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.questionSegmentation.length-1)">，</i></span></p>
                 </div>
-                <div style="border-bottom:1px dashed #bdbdbd;" id="answer">
+                <div  id="answer">
                     <p class="c-primary "><span class="bold mr-5">标准知识：</span><span >{{vm.result.answerElement.matchExtendAsk}}</span></p>
 
                     <p><span class="mr-5">标签：</span><span ng-repeat="i in vm.result.answerElement.tags track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.tags.length-1)">，</i></span></p>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="bd chat_test_lbot pd-10" >
-                <textarea class="chat_text_txta f-14 " ng-model="vm.testAsking"  placeholder="请输入测试问题" style="border:1px solid #eee;"></textarea>
+                <textarea class="chat_text_txta f-14 mb-5" ng-model="vm.testAsking"  placeholder="请输入测试问题" style="border:1px solid #eee;"></textarea>
                 <div class="framework mb-10 cl" style="min-height:25px;padding-left:100px;">
                     <span class="framework_s text-r">选择服务：</span>
                     <div class="">
