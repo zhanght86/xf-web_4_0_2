@@ -253,6 +253,43 @@ function lengthCheck(value,min,max){
     }
     return true;
 }
+
+/**
+ * 下载文件
+ * @param fPath 路径
+ * @param fName 文件名
+ */
+function downloadFile(url,filePath,fileName){
+    if(nullCheck(url)==false){
+        return;
+    }
+    if(nullCheck(fileName)==false){
+        return;
+    }
+    var form = $("<form>");   //定义一个form表单
+    form.attr('style', 'display:none');   //在form表单中添加查询参数
+    form.attr('target', '');
+    form.attr('method', 'get');
+    form.attr('action', url);
+
+    if(nullCheck(filePath)==true){
+        var input1 = $('<input>');
+        input1.attr('type', 'hidden');
+        input1.attr('name', 'filePath');
+        input1.attr('value', filePath);
+        form.append(input1);   //将查询参数控件提交到表单上
+    }
+
+    var input2 = $('<input>');
+    input2.attr('type', 'hidden');
+    input2.attr('name', 'fileName');
+    input2.attr('value', fileName);
+    $('body').append(form);  //将表单放置在web中
+
+    form.append(input2);   //将查询参数控件提交到表单上
+    form.submit();
+}
+
 /**
  * 字符串截取
  * @param value

@@ -76,6 +76,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             appointRelativeGroup : [],
             removeAppointRelative : removeAppointRelative,
             replaceType : 0,
+
             enterEvent : enterEvent ,
             //selectEvent : selectEvent
             limitSave : false , //限制多次打标

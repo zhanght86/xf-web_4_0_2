@@ -96,7 +96,7 @@
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
-                                    <span checkbox-overview ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)" result="vm.knowledgeIds.inArray(item.knowledgeId)"></span>
+                                    <checkbox-overview ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)" result="vm.knowledgeIds.inArray(item.knowledgeId)"></checkbox-overview>
                                     <a href="javascript:;" ng-click="vm.scan(item)">{{item.knowledgeTitle}}</a>
                                 </div>
                                 <div class="txt-cont mt10">

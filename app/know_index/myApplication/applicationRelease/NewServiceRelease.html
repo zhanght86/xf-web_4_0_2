@@ -12,10 +12,10 @@
                             ng-model="vm.serviceName"
                             name="serviceName" check-service-name="serviceName"
                             placeholder="" style="width:100%;" required>
-                    <div class="c-red" ng-show="myService.serviceName.$dirty && myForm.serviceName.$invalid">
+                    <p class="c-red" ng-show="myService.serviceName.$dirty && myForm.serviceName.$invalid">
                         <!--<div class="c-red" ng-show="myService.serviceName.$error.required">服务名称不能为空！</div>-->
-                        <p class="c-red" ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</p>
-                    </div>
+                        <div class="c-red" ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</div>
+                    </p>
 
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <!--{{vm.dimensions}}-->
                      <!--<auto-complete  source="vm.dimensionAll" result="vm.dimensions"></auto-complete>-->
                     <!--</div>-->
-                    <div auto-complete  source="vm.dimensionAll" result="vm.dimensionSelected"></div>
+                    <auto-complete  source="vm.dimensionAll" result="vm.dimensionSelected"></auto-complete>
                 </div>
             </div>
             <div class="row cl mb-10">

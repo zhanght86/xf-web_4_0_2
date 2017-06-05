@@ -4,7 +4,7 @@
 
 knowledge_static_web.directive("sort", function() {
     return {
-        //restrict:'EA',
+        restrict:'EA',
         scope:{
             //title:'=expanderTitle'
         },

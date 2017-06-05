@@ -13,7 +13,7 @@ knowledge_static_web.directive("loginInput", function() {
 })
 .directive('switch',function(){
     return{
-        //restrict:'EA',
+        restrict:'EA',
         scope:{
             title:'=expanderTitle',
             value : '='      // 1  true   0  false

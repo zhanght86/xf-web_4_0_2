@@ -26,6 +26,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             timeEnd : "",
             //新增
             key: "" ,
+            oldKey: "" ,
             modifier: $cookieStore.get("userId"),
             term: "",
             weight: "33" ,   //默認權重
@@ -36,7 +37,9 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll
         };
 
         /**
@@ -82,6 +85,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         function editSynonym(item){
             $scope.vm.dialogTitle="编辑同义概念";
             $scope.vm.key = item.synonymConceptKey;
+            $scope.vm.oldKey = item.synonymConceptKey;
             $scope.vm.term =  item.synonymConceptTerm;
             $scope.vm.weight =  item.synonymConceptWeight;
             addSynonymConceptDialog(singleEditSynonymConcept,item);
@@ -195,6 +199,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                         })
                     }else{
                         $scope.vm.key = "";
+                        $scope.vm.oldKey = "";
                         $scope.vm.term = "";
                         $scope.vm.weight = 33;
                     }
@@ -258,6 +263,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                         callback(item);
                     }else{
                         $scope.vm.key = "";
+                        $scope.vm.oldKey = "";
                         $scope.vm.term = "";
                         $scope.vm.weight = 33;
                     }
@@ -300,6 +306,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "synonymConceptKey":  $scope.vm.key,
+                "synonymConceptOldKey":  $scope.vm.oldKey,
                 "synonymConceptModifier": $scope.vm.modifier,
                 "synonymConceptTerm": $scope.vm.term,
                 "synonymConceptWeight": $scope.vm.weight
@@ -370,6 +377,10 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //返回状态显示
         function responseView(data){
+            $scope.vm.key = "";
+            $scope.vm.oldKey = "";
+            $scope.vm.term = "";
+            $scope.vm.weight = 33;
             if(data==null){
                 return false;
             }
@@ -379,6 +390,20 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 return true;
             }
             return false;
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","concept_with_weight_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/concept/synonym/export",{
+                "synonymConceptApplicationId":$scope.vm.applicationId
+            },function(data){
+                if(responseView(data)==true){
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                    }
+                }
+            });
         }
     }
 ]);

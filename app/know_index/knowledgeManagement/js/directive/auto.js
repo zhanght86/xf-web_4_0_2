@@ -1,3 +1,4 @@
+
 knowledge_static_web.directive("autoComplete", function($compile,$timeout,$interval) {
     //fanhui   {id : [],name : []}
     return {
