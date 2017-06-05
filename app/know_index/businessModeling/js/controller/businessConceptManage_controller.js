@@ -34,6 +34,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             modifier: $cookieStore.get("userId"),
             term: "",
             relate: "",
+
             weight: "33" ,   //默認權重
             dialogTitle : "",
             inputSelect : [],
