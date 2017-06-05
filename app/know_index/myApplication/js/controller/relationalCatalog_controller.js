@@ -35,7 +35,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             searchNode:searchNode,
             recursion:recursion,
             location:location,
-            autoHeight:autoHeight
+            autoHeight:autoHeight,
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
         //setCookie("categoryApplicationId","360619411498860544");
         //setCookie("categoryModifierId","1");
@@ -644,5 +647,39 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 repeatCheck(".c-error",0);
             }
         });
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","business_ontology_tree_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/category/export",{
+                "categoryApplicationId":categoryApplicationId
+            },function(data){
+                if(responseView(data)==true){
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                    }
+                }
+            });
+        }
+        function batchUpload(){
+            var pid = 'root';
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    initBot();
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/category/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&sceneId='+categorySceneId+'&pid='+pid);
+                }, 100);
+            }
+        }
     }
 ]);
