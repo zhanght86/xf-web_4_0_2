@@ -35,8 +35,8 @@
         </div>
     </div>
     <div class="text-c pt-10 pb-10">
-        <button class="btn1 btn1_blue mr-10">确定</button>
-        <button class="btn1 btn_gray">取消</button>
+        <input type="button" value="确定" ng-disabled="myForm.$invalid" ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
+        <input type="button" value="取消" ng-click="closeThisDialog(0)"  class="btn1 btn_gray"/>
     </div>
 </div>
 
