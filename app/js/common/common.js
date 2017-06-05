@@ -58,7 +58,7 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
     $.ajax(url, {
         dataType: 'json', //服务器返回json格式数据
         type: "POST", //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
+        timeout: timeout?timeout:10000, //超时时间设置为10秒；
         headers: header,
         data: data,
         success: function(data) {
