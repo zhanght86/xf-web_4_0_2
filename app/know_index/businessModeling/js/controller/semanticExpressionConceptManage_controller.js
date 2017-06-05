@@ -26,6 +26,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             timeEnd : "",
             //新增
             key: "" ,
+            synonym: "" ,
             modifier: $cookieStore.get("userId"),
             term: "",
             dialogTitle : "",
@@ -35,7 +36,10 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
+            synonymBeyondLimit:"同义概念不能超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll
         };
 
         /**
@@ -82,6 +86,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
         function editSemanticExpression(item){
             $scope.vm.dialogTitle="编辑语义表达概念";
             $scope.vm.key = item.semanticExpressionConceptKey;
+            $scope.vm.synonym = item.semanticExpressionSynonymConcept;
             $scope.vm.term =  item.semanticExpressionConceptTerm;
             addSemanticExpressionConceptDialog(singleEditSemanticExpressionConcept,item);
         }
@@ -136,6 +141,8 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                 request.semanticExpressionConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="semanticExpressionConceptTerm"){
                 request.semanticExpressionConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
+            }else if($("#searchType").val()=="semanticExpressionSynonymConcept"){
+                request.semanticExpressionSynonymConcept=$scope.vm.percent+value+$scope.vm.percent;
             }
             return request;
         }
@@ -176,6 +183,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                                         addSemanticExpressionConceptDialog(singleEditSemanticExpressionConcept, data.data[0]);
                                         $scope.vm.key = data.data[0].semanticExpressionConceptKey;
                                         $scope.vm.term = data.data[0].semanticExpressionConceptTerm;
+                                        $scope.vm.synonym = data.data[0].semanticExpressionSynonymConcept;
                                     }, function () {
                                         console.log("cancel");
                                     });
@@ -186,14 +194,16 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                                 //类名无冲突
                                 $scope.vm.dialogTitle = "增加语义表达概念";
                                 $scope.vm.term = "";
+                                $scope.vm.synonym = "";
                                 addSemanticExpressionConceptDialog(singleAddSemanticExpressionConcept);
                             }
                         }, function () {
                             layer.msg("添加失败")
-                        })
+                        });
                     } else {
                         $scope.vm.key = "";
                         $scope.vm.term = "";
+                        $scope.vm.synonym = "";
                     }
                 }
             });
@@ -226,6 +236,12 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
+                        if($scope.vm.synonym!=""){
+                            if(lengthCheck($scope.vm.synonym,0,50)==false){
+                                $("#synonymAddError").html($scope.vm.synonymBeyondLimit);
+                                return false;
+                            }
+                        }
                         var obj = $("#term").next();
                         var term = "";
                         var length = obj.find("li").length;
@@ -256,6 +272,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                     } else {
                         $scope.vm.key = "";
                         $scope.vm.term = "";
+                        $scope.vm.synonym = "";
                     }
                 }
             });
@@ -267,6 +284,15 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                         }else{
                             $("#keyAddError").html('');
+                        }
+                    });
+                    $("#semanticExpressionSynonymConcept").blur(function(){
+                        if(nullCheck($("#semanticExpressionSynonymConcept").val())==true){
+                            if(lengthCheck($("#semanticExpressionSynonymConcept").val(),0,50)==false){
+                                $("#synonymAddError").html($scope.vm.synonymBeyondLimit);
+                            }else{
+                                $("#synonymAddError").html('');
+                            }
                         }
                     });
                 }, 100);
@@ -296,6 +322,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                 "semanticExpressionConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "semanticExpressionConceptKey":  $scope.vm.key,
+                "semanticExpressionSynonymConcept":  $scope.vm.synonym,
                 "semanticExpressionConceptModifier": $scope.vm.modifier,
                 "semanticExpressionConceptTerm": $scope.vm.term
             },function(data){
@@ -311,6 +338,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                 "semanticExpressionConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "semanticExpressionConceptKey":  $scope.vm.key,
+                "semanticExpressionSynonymConcept":  $scope.vm.synonym,
                 "semanticExpressionConceptModifier": $scope.vm.modifier,
                 "semanticExpressionConceptTerm": $scope.vm.term
             },function(data){
@@ -364,6 +392,9 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
         }
         //返回状态显示
         function responseView(data){
+            $scope.vm.key = "";
+            $scope.vm.term = "";
+            $scope.vm.synonym = "";
             if(data==null){
                 return false;
             }
@@ -373,6 +404,20 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                 return true;
             }
             return false;
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","semantic_expression_concept_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/concept/semanticexpression/export",{
+                "semanticExpressionConceptApplicationId":$scope.vm.applicationId
+            },function(data){
+                if(responseView(data)==true){
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                    }
+                }
+            });
         }
     }
 ]);

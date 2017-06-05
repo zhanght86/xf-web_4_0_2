@@ -1,80 +1,47 @@
 
 <div class="pd-20" >
-    <div class="mb-10 framework">
-        <span class="framework_s">渠道：</span>
-        <div >
-            <select class="input-text" >
-                <option>app</option>
-                <option>web</option>
-                <option>微信</option>
+    <!--<div class="mb-10 framework">-->
+        <!--<span class="framework_s">渠道：</span>-->
+        <!--<div >-->
+            <!--<select class="input-text" >-->
+                <!--<option>app</option>-->
+                <!--<option>web</option>-->
+                <!--<option>微信</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="mb-10 framework">-->
+        <!--<span class="framework_s">选择服务：</span>-->
+        <!--<div >-->
+            <!--<select class="input-text" >-->
+                <!--<option>乔司龙引擎</option>-->
+                <!--<option></option>-->
+                <!--<option></option>-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="framework mb-10 cl" style="min-height:25px;">
+        <span class="framework_s text-r">选择服务：</span>
+        <div class="">
+            <select class="bd" style="height:30px;min-width: 50px" ng-model="vm.serviceId"  ng-options="service.serviceId as service.serviceName for service in vm.listService">
+                <option value="" ng-if="vm.listService.length==0">应用下服务为空</option>
             </select>
         </div>
     </div>
-    <div class="mb-10 framework">
-        <span class="framework_s">选择服务：</span>
-        <div >
-            <select class="input-text" >
-                <option>乔司龙引擎</option>
-                <option></option>
-                <option></option>
-            </select>
+    <div class="framework mb-10 cl" style="min-height:25px;">
+        <span class="framework_s text-r">渠道：</span>
+        <div class="">
+            <label class="mr-20" ng-repeat="channel in vm.channelList"><input type="radio" name="channel" ng-click="vm.channel=channel.channelId"/> {{channel.channelName}}</label>
         </div>
     </div>
     <div class="text-c pt-10 pb-10">
-        <button class="btn1 btn1_blue mr-10">确定</button>
-        <button class="btn1 btn_gray">取消</button>
+        <input type="button" value="确定" ng-disabled="myForm.$invalid" ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
+        <input type="button" value="取消" ng-click="closeThisDialog(0)"  class="btn1 btn_gray"/>
     </div>
 </div>
-<style>
-    #container{width:100%;margin:10px auto;}
-</style>
+
 <script>
-    //
-    var uploader = new plupload.Uploader({
-        runtimes : 'html5,flash,silverlight,html4',
-        browse_button : 'pickfiles', // you can pass an id...
-        container: document.getElementById('container'), // ... or DOM Element itself
-        url : 'upload.php',
-        flash_swf_url : '../lib/plupload-2.3.1/js/Moxie.swf',
-        silverlight_xap_url : '../lib/plupload-2.3.1/js/Moxie.xap',
 
-        filters : {
-            max_file_size : '10mb',
-            mime_types: [
-                {title : " ", extensions : "xlsx"},
-                {title : " ", extensions : "docx"},
-                {title : "Image files", extensions : "jpg,gif,png"},
-                {title : "Zip files", extensions : "zip"}
-            ]
-        },
-
-        init: {
-            PostInit: function() {
-                document.getElementById('filelist').innerHTML = '';
-
-                document.getElementById('uploadfiles').onclick = function() {
-                    uploader.start();
-                    return false;
-                };
-            },
-
-            FilesAdded: function(up, files) {
-                plupload.each(files, function(file) {
-                    document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
-                });
-            },
-
-            UploadProgress: function(up, file) {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
-            },
-
-            Error: function(up, err) {
-                document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
-            }
-        }
-    });
-
-    uploader.init();
 </script>
 
 
