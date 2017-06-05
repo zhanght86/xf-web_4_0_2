@@ -19,7 +19,6 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             listDataTotal:0,
             possibleKnowledge:"",
             knowledgeTitle:"",
-            value:"",
             allowSubmit:1, //是否允许提交
             //-----------------------------------------方法
             getData:getData,
@@ -27,7 +26,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             editKnow : editKnow,
             deleteKnow:deleteKnow,
             verifyRelease:verifyRelease, // 校验方法
-            search:search
+
         };
 
         getData(1);
@@ -163,63 +162,11 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             });
         }
 
-        function deleteKnow(detailId){
-            var dialog = ngDialog.openConfirm({
-                template: "/know_index/functionalTesting/batchTestDialog.html",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                            httpRequestPost("/api/application/detail/deleteById", {
-                                detailId:detailId
-                            }, function (data) {
-                                //刷新页面
-                                $state.reload();
-                                if (data.status == 10013) {
-                                    layer.msg("删除成功!")
-                                } else if (data.status == 10014) {
-                                    layer.msg("删除失败!");
-                                }
-                            }, function () {
-                                layer.msg("请求失败")
-                            })
-                    }
-                }
-            });
+        function deleteKnow(){
+
         }
 
-        function search(index){
-            httpRequestPost("/api/application/detail/findKnowledge",{
-                index:(index - 1)*$scope.vm.pageSize,
-                pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId,
-                batchNumberId:$stateParams.batchNumberId,
-                possibleKnowledge:$scope.vm.value,
-                knowledgeTitle:$scope.vm.value
-            },function(data){
-                console.log(data);
-                if(data.status == 10005){
-                    layer.msg("查询到记录为空");
-                    $scope.vm.listData = "";
-                    $scope.vm.listDataTotal = 0;
-                    return;
-                }
-                $scope.vm.listData = data.data.detailList;
-                $scope.vm.listDataTotal = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
-            },function(){
-                layer.msg("请求失败");
-            })  ;
-        }
+
 
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){

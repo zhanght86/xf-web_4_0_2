@@ -20,7 +20,7 @@
         <div class="checkboxAddress pr"  style="padding-left:50px;height:auto;">
             <span class="pa" style="top:0;left:0;">维度：</span>
             <!--{{vm.dimensionArr.id}}-->
-            <auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>
+            <span auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></span>
 
         </div>
         <!--<div class="Concept-Ipt-nxtDiv">-->
@@ -39,15 +39,15 @@
             <div class=" mb-20">
                 <span >知识配置：</span>
                 <div class="dib pt-5 mr-15">
-                    <switch value="vm.question"></switch>
+                    <span switch value="vm.question"></span>
                     <span>显示相关问题</span>
                 </div>
                 <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
-                    <switch value="vm.tip"></switch>
+                    <span switch value="vm.tip"></span>
                     <span>在相关问题内提示</span>
                 </div>
                 <div class="dib pt-5 mr-15" style="margin-left: 81px;">
-                    <switch value="vm.tail"></switch>
+                    <span switch value="vm.tail"></span>
                     <span>弹出评价小尾巴</span>
                 </div>
             </div>
