@@ -144,7 +144,6 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
-
             return 1;
         }
         //添加并发布服务
