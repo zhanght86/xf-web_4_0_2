@@ -1007,9 +1007,6 @@ knowledge_static_web
             //
             //})
 
-
-
-
             //初始页
             .state("index", {
                 url: "/index",
