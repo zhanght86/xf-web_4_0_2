@@ -17,7 +17,7 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                 },
                 template: '<div class="$container">' +
                 '<ul class="pick-list">' +
- 
+
                 '</ul>' +
                 '<div  id="picker" style="">请添加文件</div><span class=""></span>' +
                 '</div>'
