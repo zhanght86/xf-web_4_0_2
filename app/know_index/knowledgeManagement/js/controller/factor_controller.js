@@ -103,7 +103,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 if(data.data){
                     $scope.vm.dimensions = data.data;
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-
                 }
             }, function(error) {
                 layer.msg("获取维度失败，请刷新页面")
@@ -523,7 +522,17 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     "applicationId": $scope.vm.applicationId,
                     "extendQuestionList" : question
                 },function(data){
+                    // 判断扩展问标签是否重复
                     console.log(data);
+                    var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
+                    $scope.vm.listA = data
+                    $scope.vm.listB = allExtension
+                    console.log(allExtension) ;
+                    angular.forEach(allExtension,function(extension){
+                        angular.forEach(extension,function(item){
+
+                        })
+                    }) ;
                     if(data.status == 500){
                         layer.msg("扩展问重复") ;
                         $scope.vm.extensionTitle = "" ;
@@ -866,12 +875,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.knowledgeType = 103 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
                 obj.api = "/api/ms/elementKnowledgeAdd/addElementKnowledge" ;
-
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
-
-                //$state.go('knowledgeManagement.knowledgeScan',{knowledgeScan: 111},{reload:true},{blank:true});
             }
         };
 
