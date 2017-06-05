@@ -12,7 +12,7 @@
         <div>
             <!--<uploader-handle2></uploader-handle2>-->
 
-            <div batch-test server="'api/application/batchTest/upload'" is-upload="vm.upload"></div>
+            <div batch-test server="'api/application/batchTest/upload'" factor="vm.paginationConf.currentPage" is-upload="vm.upload"></div>
 
             <!--<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>-->
             <!--<div id="container">-->
@@ -30,7 +30,6 @@
 <style>
     /*#container{width:100%;margin:10px auto;}*/
     .ngdialog.ngdialog-theme-default .ngdialog-content{width:500px;}
-
 </style>
 <script>
 //

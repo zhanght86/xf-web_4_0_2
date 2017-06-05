@@ -72,21 +72,21 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
-                //if(data.status == 10005){
-                //    layer.msg("查询到记录为空");
-                //    return;
-                //}
-                $scope.vm.listData = data.data.batchTestList;
-                $scope.vm.listDataTotal = data.data.total;
-               // $scope.vm.listDataLength = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-
-                $scope.$apply();
+                if(data.status == 10005){
+                    layer.msg("查询到记录为空");
+                    return;
+                }else{
+                    $scope.vm.listData = data.data.batchTestList;
+                    $scope.vm.listDataTotal = data.data.total;
+                    // $scope.vm.listDataLength = data.data.total;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: data.data.total, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
+                    $scope.$apply();
+                }
             },function(){
                 layer.msg("请求失败");
             })  ;

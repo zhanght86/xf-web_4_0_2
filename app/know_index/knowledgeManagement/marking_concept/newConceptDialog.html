@@ -74,7 +74,7 @@
         </div>
 
         <div class="tc mb-10" >
-            <input ng-disabled="(!vm.newTitle)&&vm.channel" value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" >
+            <input (!vm.newTitle)||(!vm.channel.length) value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" >
             <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>
         </div>
     </div>

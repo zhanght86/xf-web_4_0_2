@@ -12,7 +12,8 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                     server: '=', //url
                     type: "=",   //image：图片 video：音视频  flash：flash   file：办公文档，压缩文件等等
                     isAuto: "=",
-                    isUpload: "="
+                    isUpload: "=",
+                    factor : "="
                 },
                 template: '<div class="$container">' +
                 '<ul class="pick-list">' +
@@ -61,12 +62,12 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                     if(isUpload){
                         uploader.upload() ;
                         ngDialog.closeAll();
-			scope.isUpload = false
+			            scope.isUpload = false
                     }
                 }) ;
                 //
                 uploader.on( 'fileQueued', function( file ) {
-                    var item = $('<li class="pick-item mb-5 pl-5 pr-5" style="line-height: 25px;background:#e8ebec;">'+file.name+'<a href="javascript:;" class="R">X</a></li>') ;
+                    var item = $('<li class="pick-item mb-5 pl-5 pr-5"  style="line-height: 25px;background:#e8ebec;">'+file.name+'<a href="javascript:;" data-id="'+file.id+'" class="R removeItem">X</a></li>') ;
                     $(".pick-list").append(item) ;
                     console.log(file + "file  add success");
                 });
@@ -93,37 +94,47 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                             break;
                     }
                 });
-
-                        uploader.on('uploadProgress', function (file, percentage) {
-                            var $li = $('#' + file.id),
-                                $percent = $li.find('.progress .progress-bar');
-                            // 避免重复创建
-                            if (!$percent.length) {
-                                $percent = $('<div class="progress progress-striped active" style="height: 50px;background: red; width: 200px;">' +
-                                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-                                    '</div> ' +
-                                    '</div>').appendTo($li).find('.progress-bar');
-                            }
-                            $li.find('p.state').text('上传中');
-                            $percent.css('width', percentage * 100 + '%');
-                            console.log(percentage);
-                        });
-                        uploader.on('uploadError', function (file) {
-                            console.log("上传失败")
-                        });
-                        uploader.on('uploadSuccess', function (file, response) {
-                            if (response.status == 500) {
-                                scope.isUpload = false;
-                                layer.msg("模板错误")
-                            } else {
-                                scope.isUpload = false;
-                                $state.reload();
-                            }
-                            console.log(response)
-                        });
-
-                    }, 0)
-
+                uploader.on('uploadProgress', function (file, percentage) {
+                    var $li = $('#' + file.id),
+                        $percent = $li.find('.progress .progress-bar');
+                    // 避免重复创建
+                    if (!$percent.length) {
+                        $percent = $('<div class="progress progress-striped active" style="height: 50px;background: red; width: 200px;">' +
+                            '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                            '</div> ' +
+                            '</div>').appendTo($li).find('.progress-bar');
+                    }
+                    $li.find('p.state').text('上传中');
+                    $percent.css('width', percentage * 100 + '%');
+                    console.log(percentage);
+                });
+                uploader.on('uploadError', function (file) {
+                    console.log("上传失败")
+                });
+                //        单个文件上传成功 之后 刷新数据列表
+                uploader.on('uploadSuccess', function (file, response) {
+                    if (response.status == 500) {
+                        scope.isUpload = false;
+                        layer.msg("模板错误")
+                    } else {
+                        scope.isUpload = false;
+                        scope.factor = 1 ;
+                        $state.reload();
+                    }
+                    console.log(response)
+                });
+                //        所有文件上传成功 之后 刷新数据列表
+                //uploader.on('uploadFinished', function (file) {
+                //        scope.isUpload = false;
+                //        $state.reload();
+                //});
+                //删除某个文件
+                $(".framework").delegate(".removeItem","click",function(){
+                    var self = $(this) ;
+                    uploader.removeFile(uploader.getFile(self.attr("data-id")),true);//队列中移除其中某个文件
+                    self.parent().remove() ;
+                }) ;
+             }, 0)
         }
     }
 }])
