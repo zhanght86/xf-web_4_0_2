@@ -22,7 +22,9 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             reset : reset,
             result:'',
             question : '',
+            txtFocus : txtFocus,
         };
+
         //獲取维度
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
@@ -98,6 +100,11 @@ angular.module('functionalTestModule').controller('sessionTestController', [
         function reset(){
             $scope.vm.testAsking='';
         }
+        //文本域自动获取焦点；
+        function txtFocus(){
+            $('.chat_text_txta').focus();
+        }
+        txtFocus();
 
     }
 ]);
