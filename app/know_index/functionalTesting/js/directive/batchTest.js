@@ -17,9 +17,9 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                 },
                 template: '<div class="$container">' +
                 '<ul class="pick-list">' +
-
+ 
                 '</ul>' +
-                '<div  id="picker" style="background">请添加文件</div><span class="f-14 pl-10"></span>' +
+                '<div  id="picker" style="">请添加文件</div><span class=""></span>' +
                 '</div>'
                 ,
                 link: function (scope, element, attrs) {
@@ -28,7 +28,8 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                         var uploader = WebUploader.create({
                             auto: false, // 选完文件后，是否自动上传
                             // swf文件路径
-                            swf: 'Uploader.swf',
+                            //sendAsBinary:true, //指明使用二进制的方式上传文件
+                            swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                             formData: {
                                 "userId": $cookieStore.get("userId"),
                                 "applicationId": $cookieStore.get("applicationId")
@@ -54,9 +55,9 @@ knowledge_static_web.directive("batchTest", ["$parse", "ngDialog", "$cookieStore
                             // 禁掉全局的拖拽功能。这样不会出现文件拖进页面的时候，把文件打开。
                             disableGlobalDnd: true,
 
-                    fileNumLimit: 10,
-                    fileSizeLimit: 200 * 1024 * 1024,    // 200 M    all
-                    fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
+                            fileNumLimit: 10,
+                            fileSizeLimit: 200 * 1024 * 1024,    // 200 M    all
+                            fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
                 });
                 scope.$watch("isUpload",function(isUpload){
                     if(isUpload){
