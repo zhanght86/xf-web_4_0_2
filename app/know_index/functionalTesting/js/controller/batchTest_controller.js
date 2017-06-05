@@ -3,8 +3,8 @@
  */
 
 angular.module('functionalTestModule').controller('batchTestController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","knowledgeAddServer",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),
@@ -14,7 +14,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             jumpD:jumpD,
             pageSize : 5,
             listData :[],           //table 数据
-            listDataTotal : 0 ,      //共几条
+            listDataTotal :'',
           //  listDataLength : '',
             paginationConf : '',     //分页条件
             showData : showData,
@@ -25,43 +25,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
             searchFile : searchFile,
             searchType : 0,
             selectInput :'',
-            upload : false,  // 上传命令
-            //-----------------------------渠道   服务
-            listService:[],
-            serviceId : "" ,
-            channel:"",
-            channelList : [] ,
-            getService : getService,
-            //------------------------------渠道   服务end
-
+            upload : false  // 上传命令
         };
-        //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channelList = data.data;
-                }
-            }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面");
-            });
-        //页面初始化加载已发布服务
-        getService();
-        function getService(){
-            httpRequestPost("/api/application/service/listServiceByApplicationId",{
-                applicationId:$scope.vm.applicationId,
-            },function(data){
-                if(data.status == 10000){
-                    $scope.vm.listService = data.data;
-                    $scope.vm.serviceId = data.data[0].serviceId ;
-                    $scope.$apply();
-                }else if(data.status == 10005) {
-                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
-                }
-            },function(){
-                layer.msg("请求失败");
-            })
-        }
-
         showData(1);
         //加载表格
         function showData(index){
@@ -200,57 +165,23 @@ angular.module('functionalTestModule').controller('batchTestController', [
             });
         }
         //启动
-        function startUp(id){
-            if($scope.vm.serviceId) {
-                //if($scope.vm.channel==''){
-                //    alert('请选择渠道!');
-                //    return;
-                //}
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/functionalTesting/startUpDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            httpRequestPost("/api/application/batchTest/getChannelAndUserName", {
-                                batchNumberId: id,
-                                userId: $scope.vm.userId,
-                                channel:$scope.vm.channel,
-                            }, function (data) {
-                                $state.reload();
-                                if(data.status == 21008){
-                                    startTest(id);
-                                }
-                            }, function () {
-                                layer.msg("请求失败");
-                            });
-                        }
+        function startUp(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/functionalTesting/startUpDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+
+                    } else {
+
                     }
-                });
-            }else{
-                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
-            }
-        }
-
-        function startTest(id){
-            httpRequestPost("/api/application/batchTest/startTest", {
-                batchNumberId: id,
-                userId: $scope.vm.userId,
-                channel:$scope.vm.channel,
-                applicationId:$scope.vm.applicationId,
-                //serviceId:$scope.vm.serviceId,
-                serviceId:22
-            }, function (data) {
-                $state.reload();
-
-            }, function () {
-                layer.msg("请求失败");
+                }
             });
         }
-
         function selectAll(){
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;

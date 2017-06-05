@@ -39,9 +39,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
-            downloadTemplate:downloadTemplate,
-            exportAll:exportAll
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
         };
 
         /**
@@ -371,8 +369,6 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
         //返回状态显示
         function responseView(data){
-            $scope.vm.key = "";
-            $scope.vm.term = "";
             if(data==null){
                 return false;
             }
@@ -382,20 +378,6 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                 return true;
             }
             return false;
-        }
-        function downloadTemplate(){
-            downloadFile("/api/ms/modeling/download","","concept_template.xlsx");
-        }
-        function exportAll(){
-            httpRequestPost("/api/ms/modeling/concept/correction/export",{
-                "correctionConceptApplicationId":$scope.vm.applicationId
-            },function(data){
-                if(responseView(data)==true){
-                    for(var i=0;i<data.exportFileNameList.length;i++){
-                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
-                    }
-                }
-            });
         }
     }
 ]);
