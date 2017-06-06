@@ -877,17 +877,18 @@ knowledge_static_web
                 }
             })
             .state("functionalTest.testResult", {
-            url: "/testResult",
-            views: {
-                'header': {
-                    templateUrl: 'know_index/home/homePageNav.html',
-                    controller: "homePageNavController"
-                },
-                'content': {
-                    templateUrl: 'know_index/functionalTesting/testResult.html',
-                    controller: "testResultController"
-                    }
-                }
+                    url: "/testResult",
+                    params : {"batchNumberId": null},    //给 $stateParams 定义参数；
+                    views: {
+                        'header': {
+                            templateUrl: 'know_index/home/homePageNav.html',
+                            controller: "homePageNavController"
+                        },
+                        'content': {
+                            templateUrl: 'know_index/functionalTesting/testResult.html',
+                            controller: "testResultController"
+                            }
+                        }
             })
             .state("functionalTest.viewDetails", {
                 params : {batchNumberId : null},

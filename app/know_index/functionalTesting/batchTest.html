@@ -53,7 +53,7 @@
                                 <td ng-if="v.batchStatusId==21008">测试中</td>
                                 <td ng-if="v.batchStatusId==21009">已完成</td>
                                 <td>
-                                <a href="javascript:;" class="c-green mr-10" ng-click="vm.startUp(v.batchNumberId)" ng-if="v.batchStatusId==21007 || v.batchStatusId==21009">启动</a>
+                                <a href="javascript:;" class="c-green mr-10" ng-click="vm.startUp(v.batchNumberId)" ng-if="v.batchStatusId==21007 ">启动</a>
                                 <a href="javascript:;" class="mr-10" ng-if="v.batchStatusId==21008" ng-click="vm.stopTest(v.batchNumberId)">暂停</a>
                                 <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.testResult',v.batchNumberId)" ng-if="v.batchStatusId==21009">查看</a>
                                 <a class="c-blue mr-10" ng-click="vm.jumpD('functionalTest.viewDetails',v.batchNumberId)" ng-if="v.batchStatusId==21007">查看</a>
