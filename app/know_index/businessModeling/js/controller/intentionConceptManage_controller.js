@@ -411,8 +411,28 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                 "forceSegmentConceptApplicationId":$scope.vm.applicationId
             },function(data){
                 if(responseView(data)==true){
+                    var html = "";
                     for(var i=0;i<data.exportFileNameList.length;i++){
-                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
                     }
                 }
             });
