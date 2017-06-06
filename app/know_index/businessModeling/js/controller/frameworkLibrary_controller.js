@@ -208,7 +208,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 for(var i=0;i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;">'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'"attribute-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                         '</a>' +
@@ -255,6 +255,14 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 return "";
             }
         }
+        //显示节点描述
+        function categoryDescribeView(describeStr){
+            console.log("===describe===");
+            if(nullCheck(describeStr)==true){
+                return "title='"+describeStr+"'";
+            }
+            return "";
+        }
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-navs").on("click",'i',function(){
             appendTree(this);
@@ -285,7 +293,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         for(var i=0;i<data.data.length;i++){
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                '<a class="ellipsis" href="javascript:;">'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' attribute-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
                                 '</a>' +
@@ -483,43 +491,41 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
 
         function exportAll(){
+            var frameType = 10011;
             if($scope.vm.botSelectValue=="root"){
                 layer.msg("请选择类目");
                 return;
             }
+            var dialog1 = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/frameSelectDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e==10011){
+                        frameType=10011;
+                        exportAllDialog(frameType)
+                    }else if(e==10012){
+                        frameType=10012;
+                        exportAllDialog(frameType)
+                    }else if(e==10013){
+                        frameType=10013;
+                        exportAllDialog(frameType)
+                    }
+                }
+            });
+        }
+
+        function exportAllDialog(frameType){
             httpRequestPost("/api/ms/modeling/frame/export",{
-                "frameCategoryId": $scope.vm.botSelectValue
+                "frameCategoryId": $scope.vm.botSelectValue,
+                "frameTypeId": frameType
             },function(data){
                 if(responseView(data)==true){
-                    var html = "";
-                    for(var i=0;i<data.exportFileNameList.length;i++){
-                        console.log("====="+i);
-                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
-                            '<p class="title"></p>' +
-                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
-                            '</li></a>';
-                        //if(i!=0){
-                        //    $timeout(function(){
-                        //        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
-                        //    },100);
-                        //}else{
-                        //    downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
-                        //}
-                    }
-                    var dialog = ngDialog.openConfirm({
-                        template:"/know_index/businessModeling/downloadList.html",
-                        scope: $scope,
-                        closeByDocument:false,
-                        closeByEscape: true,
-                        showClose : true,
-                        backdrop : 'static',
-                        preCloseCallback:function(e){    //关闭回掉
-                        }
-                    });
-                    if(dialog){
-                        $timeout(function () {
-                            $("#downloadList").append(html);
-                        }, 100);
+                    if(data.exportFileNameList.length>0){
+                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
                     }
                 }
             },function(err){
