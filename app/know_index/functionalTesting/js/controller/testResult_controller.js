@@ -24,6 +24,13 @@ angular.module('functionalTestModule').controller('testResultController', [
             selectInput :'',
             matchCondition :'40001',
             answerCondition :'40003',
+            selectAllCheck : false,   //checkbox默认你状态；
+            selectAll : selectAll,
+            selectSingle : selectSingle,
+            batchTest : batchTest,
+            serviceId :'',
+            deleteIds :[],
+
         //  弹框 参数
             editTitle : "" ,
             editKnow :  "",
@@ -55,6 +62,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     layer.msg("查询到记录为空");
                     return;
                 }else{
+
                     $scope.vm.listData = data.data.testResultList;
                     $scope.vm.listDataTotal = data.data.total;
                     // $scope.vm.listDataLength = data.data.total;
@@ -131,25 +139,20 @@ angular.module('functionalTestModule').controller('testResultController', [
         }
         //查询
         function searchFile(index){
+            //alert(1);
             httpRequestPost("/api/application/testResult/searchKnowledge",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
-                //applicationId:$scope.vm.applicationId,
+                applicationId:$scope.vm.applicationId,
                 batchNumberId : $scope.vm.batchNumberId,             //当前文件id
                 answerType : $scope.vm.matchCondition,
-                answerCodition : $scope.vm.answerCondition,
+                answerCondition : $scope.vm.answerCondition,
                 possibleKnowledge : $scope.vm.selectInput,
                 knowledgeTitle : $scope.vm.selectInput
+
             },function(data){
                 console.log(data);
-                // if(data.status == 10005){
-                //     layer.msg("查询到记录为空");
-                //     $scope.vm.listData = "";
-                //     $scope.vm.listDataTotal = 0;
-                //     return;
-                // }
                 if(data.status == 10014){
-
                     $scope.vm.listData = data.data.testResultList;
                     $scope.vm.listDataTotal = data.data.total;
                     // $scope.vm.listDataLength = data.data.total;
@@ -164,6 +167,59 @@ angular.module('functionalTestModule').controller('testResultController', [
             },function(){
                 layer.msg("请求失败");
             })  ;
+        }
+
+        //全选
+        function selectAll(){
+            if(!$scope.vm.selectAllCheck){
+                $scope.vm.selectAllCheck = true;
+                $scope.vm.deleteIds = [];
+                angular.forEach($scope.vm.listData,function(item){
+                    $scope.vm.deleteIds.push(item.batchNumberId);
+                });
+            }else{
+                $scope.vm.selectAllCheck = false;
+                $scope.vm.deleteIds = [];
+            }
+            //console.log( $scope.vm.deleteIds);
+        }
+        //
+        function selectSingle(id){
+            if($scope.vm.deleteIds.inArray(id)){
+                $scope.vm.deleteIds.remove(id);
+                $scope.vm.selectAllCheck = false;
+            }else{
+                $scope.vm.deleteIds.push(id);
+            }
+            if($scope.vm.deleteIds.length==$scope.vm.listData.length){
+                $scope.vm.selectAllCheck = true;
+            }
+            //console.log( $scope.vm.deleteIds);
+        }
+        //批量测试
+        function batchTest(){
+            if($scope.vm.deleteIds.length == 0){
+                layer.msg("请选择要测试的文件！");
+                return;
+            }
+            httpRequestPost("/api/application/testResult/batchTest",{
+                applicationId :  $scope.vm.applicationId,
+                ids :  $scope.vm.deleteIds,
+                serviceId : $scope.vm.listData[0].serviceId            //服务id,每条都一样；
+
+            },function(data){
+                console.log( $scope.vm.deleteIds);
+                if(data.status == 21009){
+                    $scope.vm.selectAllCheck = false;
+                    $state.reload();
+                    layer.msg("测试成功");
+                }else{
+                    layer.msg("测试失败");
+                }
+            },function(){
+                layer.msg("请求失败");
+            });
+
         }
     }
 ]);
