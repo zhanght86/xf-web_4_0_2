@@ -241,7 +241,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     channel : name
                 }, function (data) {
                     showData($scope.vm.paginationConf.currentPage)  ;
-                    $state.reload();
+                    //$state.reload();
                     if(data.status == 21008){
                         startTest(id,name,channelId);
                     }

@@ -46,7 +46,8 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             relateNullOrBeyondLimit:"相关概念不能超过长度限制2000",
             relateBeyondLimit:"相关概念个数不能超过20个",
             downloadTemplate:downloadTemplate,
-            exportAll:exportAll
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -339,6 +340,27 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadBusinessConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/business/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
+        }
+
         //編輯事件
         function singleEditBusinessConcept(item){
             assembleBusinessConceptTerm();

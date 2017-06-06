@@ -19,11 +19,12 @@ angular.module('homePage').controller('homePageNavController', [
                 serviceUrl: ""
             };
         if($scope.url == "/homePage/define"){
-            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/index-bg.jpg) repeat ";
+            document.getElementsByTagName("body")[0].style.cssText = "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/images/index-bg.jpg',sizingMethod='scale');background: url(../../images/images/index-bg.jpg) no-repeat;background-size:100%";
+            //document.getElementsByClassName("bodyBg")[0].src = "../../images/images/index-bg.jpg";
         }else if($scope.url == "/login"){
-            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) repeat";
+            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) no-repeat;background-size:100%;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/images/log-bg.jpg',sizingMethod='scale');";
         }else{
-            document.getElementsByTagName("body")[0].style.cssText = "background: ";
+            document.getElementsByTagName("body")[0].style.cssText = "background: #f8f8f8";
         }
         if(!$cookieStore.get('userId')){
             $state.go("login")

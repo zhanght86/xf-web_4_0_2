@@ -39,7 +39,8 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             synonymBeyondLimit:"同义概念不能超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
             downloadTemplate:downloadTemplate,
-            exportAll:exportAll
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -313,6 +314,26 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                     }
                 }
             });
+        }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadSemanticExpressionConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/semanticexpression/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
         }
         //編輯事件
         function singleEditSemanticExpressionConcept(item){

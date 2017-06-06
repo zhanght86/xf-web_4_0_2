@@ -64,7 +64,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             editFrame:editFrame,
             deleteFrame:deleteFrame,
             searchByFrameTitle:searchByFrameTitle,
-            current:1
+            current:1,
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
         $scope.categoryAttributeName;
 
@@ -388,11 +391,136 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("======"+item+"======");
             var frameId = item.frameId;
             console.log("======delete frame======"+frameId);
-            httpRequestPost("/api/ms/modeling/frame/delete",{
-                "frameId":frameId
+            layer.confirm('确认删除？', {
+                btn: ['确认','取消'], //按钮
+                shade: 0.3 //不显示遮罩
+            }, function(){
+                httpRequestPost("/api/ms/modeling/frame/delete",{
+                    "frameId":frameId
+                },function(data){
+                    if(responseView(data)==true){
+                        loadFrameLibrary(1,0);
+                    }
+                },function(err){
+                    console.log(err);
+                });
+            }, function(){
+                console.log("cancel");
+            });
+        }
+
+        //批量导入
+        function batchUpload(){
+            var frameType = 10011;
+            if($scope.vm.botSelectValue=="root"){
+                layer.msg("请选择类目");
+                return;
+            }
+            var dialog1 = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/frameSelectDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e==10011){
+                        frameType=10011;
+                        batchUploadFrame(frameType)
+                    }else if(e==10012){
+                        frameType=10012;
+                        batchUploadFrame(frameType)
+                    }else if(e==10013){
+                        frameType=10013;
+                        batchUploadFrame(frameType)
+                    }
+                }
+            });
+        }
+
+        function batchUploadFrame(frameType){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadFrameLibrary(1,0);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/frame/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&categoryId='+$scope.vm.botSelectValue+'&frameTypeId='+frameType);
+                }, 100);
+            }
+        }
+
+        function downloadTemplate(){
+            var frameTemplate = "frame_faq_template.xlsx";
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/frameSelectDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e==10011){
+                        frameTemplate="frame_faq_template.xlsx";
+                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                    }else if(e==10012){
+                        frameTemplate="frame_concept_template.xlsx";
+                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                    }else if(e==10013){
+                        frameTemplate="frame_element_template.xlsx";
+                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                    }
+                }
+            });
+        }
+
+        function exportAll(){
+            if($scope.vm.botSelectValue=="root"){
+                layer.msg("请选择类目");
+                return;
+            }
+            httpRequestPost("/api/ms/modeling/frame/export",{
+                "frameCategoryId": $scope.vm.botSelectValue
             },function(data){
                 if(responseView(data)==true){
-                    loadFrameLibrary(1,0);
+                    var html = "";
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                        //if(i!=0){
+                        //    $timeout(function(){
+                        //        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                        //    },100);
+                        //}else{
+                        //    downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                        //}
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
+                    }
                 }
             },function(err){
                 console.log(err);
@@ -701,7 +829,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $scope.vm.elementIdArray[i]=frameInfo.elements[i].elementId;
             }
         }
-        //
         //表达式类型数据校验
         function faqValidata(type){
             //框架标题校验
@@ -826,11 +953,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 return false;
             }
             if(frameTitleRepeatCheck(type,"#conceptFrameAddErrorObj")==false){
-                return false;
-            }
-            //标准问题校验
-            if(lengthCheck($("#concept_title").val(),0,50)==false){
-                $("#conceptTitleErrorObj").html("概念标题为空或超过长度限制50");
                 return false;
             }
             //扩展问题校验
