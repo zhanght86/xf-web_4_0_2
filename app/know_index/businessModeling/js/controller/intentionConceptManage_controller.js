@@ -38,7 +38,8 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
             downloadTemplate:downloadTemplate,
-            exportAll:exportAll
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -294,6 +295,26 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                 });
             }
         }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadForceSegmentConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/forceSegment/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
+        }
         //編輯事件
         function singleEditForceSegmentConcept(item){
             assembleForceSegmentConceptTerm();
@@ -390,8 +411,28 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                 "forceSegmentConceptApplicationId":$scope.vm.applicationId
             },function(data){
                 if(responseView(data)==true){
+                    var html = "";
                     for(var i=0;i<data.exportFileNameList.length;i++){
-                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[i]);
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
                     }
                 }
             });

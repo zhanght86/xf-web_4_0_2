@@ -24,8 +24,9 @@
         <div class="libraryRth" style="width:720px;">
             <div class="tac mt10" style="margin: 0; text-align: left">
                 <a class="btn btn-blue" ui-sref="botApply.manage">类目库套用</a>
-                <a class="btn btn-green ml15" href="javascript:;">批量导入类目库</a>
-                <a class="btn btn-green2 ml15" href="javascript:;">导出类目库</a>
+                <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.batchUpload()">批量导入类目库</a>
+                <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
+                <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.exportAll()">导出类目库</a>
             </div>
             <div class="HierarchyCnt">
                 <p id="createMethod" class="mb-20 f16">新建</p>
@@ -40,10 +41,15 @@
                 </div>
                 <div>
                     <span>名称: </span>
-                    <input id="category-name" type="text"/>
-                    <p class="c-error pd-5" style="margin-left: 98px;"></p>
+                    <input class="input_text" id="category-name" type="text"/>
+                    <p id="category-name-error" class="c-error pd-5" style="margin-left: 98px;"></p>
                 </div>
-                <div class="tac mt10" style="text-align: left;padding-left: 105px;">
+                <div style="margin-top: 12px;">
+                    <span>描述: </span>
+                    <textarea class="input_text" id="category-describe" style="width: 420px;height: 78px;"></textarea>
+                    <p id="category-describe-error" class="c-error pd-5" style="margin-left: 98px;"></p>
+                </div>
+                <div class="tac mt10" style="text-align: left;padding-left: 105px;margin-top: 60px;">
                     <a id="add" class="btn btn-blue" href="javascript:;" ng-click="vm.addBot()">保存</a>
                     <a id="cancel" class="btn btn-gray ml15" href="javascript:;">取消</a>
                 </div>
