@@ -12,7 +12,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             pageSize:5,
-            batchNumberId:"",
+            batchNumberId:$stateParams.batchNumberId,
             applicationId : $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),
             listData:[],
@@ -27,7 +27,8 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             editKnow : editKnow,
             deleteKnow:deleteKnow,
             verifyRelease:verifyRelease, // 校验方法
-            search:search
+            search:search,
+            exportExcel:exportExcel
         };
 
         getData(1);
@@ -205,6 +206,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     layer.msg("查询到记录为空");
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
+                    $scope.$apply();
                     return;
                 }
                 $scope.vm.listData = data.data.detailList;
@@ -219,6 +221,25 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             },function(){
                 layer.msg("请求失败");
             })  ;
+        }
+
+        /**
+         * 知识导出
+         */
+        function exportExcel(){
+            httpRequestPost("/api/application/detail/export",{
+                batchNumberId:$stateParams.batchNumberId,
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    layer.msg("导出失败")
+                }else{
+                    window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
+                }
+                console.log()
+
+            },function(err){})
+
         }
 
         var timeout ;

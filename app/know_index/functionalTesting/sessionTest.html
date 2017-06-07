@@ -1,4 +1,4 @@
-<!--<div ui-view="header"></div>-->
+<div ui-view="header"></div>
 <div class="wrap  session" >
     <div class="chat_test_wrap clearfix" style="background:#fff;">
         <div class="L chat_test_l" >
@@ -19,7 +19,7 @@
 
                     <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.answerElement.segmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.segmentation.length-1)">，</i></span></p>
 
-                    <p><span class="mr-5">答案：</span><span ng-repeat="i in vm.result.answer track by $index">{{i}}<i ng-if="$index!=(vm.result.answer.length-1)">，</i></p>
+                    <p><span class="mr-5">答案：</span><span ng-repeat="i in vm.result.answer track by $index">{{i}}<i ng-if="$index!=(vm.result.answer.length-1)">，</i></span></p>
                 </div>
             </div>
             <div class="bd chat_test_lbot pd-10" >

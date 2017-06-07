@@ -270,8 +270,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 channelName : name ,
                 channel:channelId,
                 applicationId:$scope.vm.applicationId,
-                //serviceId:$scope.vm.serviceId,
-                serviceId:22
+                serviceId:$scope.vm.serviceId,
+                //serviceId:22
             }, function (data) {
                 if(data.status=21009){
                     showData($scope.vm.paginationConf.currentPage) ;

@@ -1,0 +1,25 @@
+
+<div class="pd-20" >
+    <div class="framework mb-10 cl" style="min-height:25px;">
+        <span class="framework_s text-r">选择服务：</span>
+        <div class="">
+            <select class="bd" style="height:30px;min-width: 50px" ng-model="vm.serviceId"  ng-options="service.serviceId as service.serviceName for service in vm.listService">
+                <option value="" ng-if="vm.listService.length==0">应用下服务为空</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="text-c pt-10 pb-10">
+        <input type="button" value="确定"  ng-click="closeThisDialog(1)"  class="btn1 btn1_blue mr-10"/>
+        <input type="button" value="取消" ng-click="closeThisDialog(0)"  class="btn1 btn_gray"/>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+
+
+
+

@@ -16,6 +16,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             pageSize : 5,            //每页条数；
             paginationConf : '',     //分页条件
             applicationId : $cookieStore.get("applicationId"),
+            userId : $cookieStore.get("userId"),
             batchNumberId:$stateParams.batchNumberId,
             showData : showData,
             listData :[],           //table 数据
@@ -28,9 +29,12 @@ angular.module('functionalTestModule').controller('testResultController', [
             selectAll : selectAll,
             selectSingle : selectSingle,
             batchTest : batchTest,
-            serviceId :'',
             deleteIds :[],
-
+			testDialog :testDialog,
+            listService:[],
+            serviceId : "" ,
+            getService : getService,
+            exportExcel:exportExcel,
         //  弹框 参数
             editTitle : "" ,
             editKnow :  "",
@@ -162,11 +166,31 @@ angular.module('functionalTestModule').controller('testResultController', [
                         pageSize: $scope.vm.pageSize,//第页条目数
                         pagesLength: 8,//分页框数量
                     };
+                }else if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    layer.msg("没有查询到记录!")
                 }
                 $scope.$apply();
             },function(){
                 layer.msg("请求失败");
             })  ;
+        }
+
+        //导出功能
+        function exportExcel(){
+            httpRequestPost("/api/application/testResult/export",{
+                batchNumberId:$stateParams.batchNumberId,
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    layer.msg("导出失败")
+                }else{
+                    window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
+                }
+                console.log()
+
+            },function(err){})
         }
 
         //全选
@@ -175,7 +199,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 $scope.vm.selectAllCheck = true;
                 $scope.vm.deleteIds = [];
                 angular.forEach($scope.vm.listData,function(item){
-                    $scope.vm.deleteIds.push(item.batchNumberId);
+                    $scope.vm.deleteIds.push(item.testResultId);
                 });
             }else{
                 $scope.vm.selectAllCheck = false;
@@ -198,28 +222,68 @@ angular.module('functionalTestModule').controller('testResultController', [
         }
         //批量测试
         function batchTest(){
+            if($scope.vm.serviceId) {
+                //$scope.vm.batchNumberId = id;
+                httpRequestPost("/api/application/testResult/batchTest",{
+                    applicationId :  $scope.vm.applicationId,
+                    userId :  $scope.vm.userId,
+                    ids :  $scope.vm.deleteIds,
+                    serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
+                    //serviceId : 22
+                },function(data){
+                    console.log( $scope.vm.deleteIds);
+                    if(data.status == 20009){
+                        $scope.vm.selectAllCheck = false;
+                        $state.reload();
+                        layer.msg("测试成功");
+                    }else{
+                        layer.msg("测试失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
+            }else{
+                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+            }
+
+
+        }
+        //测试弹窗
+        function testDialog(){
             if($scope.vm.deleteIds.length == 0){
-                layer.msg("请选择要测试的文件！");
+                layer.msg("请选择要测试的知识！");
                 return;
             }
-            httpRequestPost("/api/application/testResult/batchTest",{
-                applicationId :  $scope.vm.applicationId,
-                ids :  $scope.vm.deleteIds,
-                serviceId : $scope.vm.listData[0].serviceId            //服务id,每条都一样；
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/functionalTesting/testDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    batchTest();
+                    //$scope.vm.serviceId = vm.listService[0].serviceId ;
+                }
+            });
 
+        }
+        //页面初始化加载已发布服务
+        getService();
+        function getService(){
+            httpRequestPost("/api/application/service/listServiceByApplicationId",{
+                applicationId:$scope.vm.applicationId,
             },function(data){
-                console.log( $scope.vm.deleteIds);
-                if(data.status == 21009){
-                    $scope.vm.selectAllCheck = false;
-                    $state.reload();
-                    layer.msg("测试成功");
-                }else{
-                    layer.msg("测试失败");
+                if(data.status == 10000){
+                    $scope.vm.listService = data.data;
+                    $scope.vm.serviceId = data.data[0].serviceId ;
+                    $scope.$apply();
+                }else if(data.status == 10005) {
+                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
                 }
             },function(){
                 layer.msg("请求失败");
-            });
-
+            })
         }
     }
 ]);
