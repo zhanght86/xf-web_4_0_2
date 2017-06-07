@@ -29,11 +29,10 @@ angular.module('functionalTestModule').controller('testResultController', [
             selectSingle : selectSingle,
             batchTest : batchTest,
             deleteIds :[],
-            testDialog :testDialog,
+			testDialog :testDialog,
             listService:[],
             serviceId : "" ,
-            getService : getService,
-
+            getService : getService,			exportExcel:exportExcel,
         //  弹框 参数
             editTitle : "" ,
             editKnow :  "",
@@ -170,6 +169,22 @@ angular.module('functionalTestModule').controller('testResultController', [
             },function(){
                 layer.msg("请求失败");
             })  ;
+        }
+
+        //导出功能
+        function exportExcel(){
+            httpRequestPost("/api/application/testResult/export",{
+                batchNumberId:$stateParams.batchNumberId,
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    layer.msg("导出失败")
+                }else{
+                    window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
+                }
+                console.log()
+
+            },function(err){})
         }
 
         //全选
