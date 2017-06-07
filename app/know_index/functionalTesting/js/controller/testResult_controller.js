@@ -16,6 +16,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             pageSize : 5,            //每页条数；
             paginationConf : '',     //分页条件
             applicationId : $cookieStore.get("applicationId"),
+            userId : $cookieStore.get("userId"),
             batchNumberId:$stateParams.batchNumberId,
             showData : showData,
             listData :[],           //table 数据
@@ -32,7 +33,8 @@ angular.module('functionalTestModule').controller('testResultController', [
 			testDialog :testDialog,
             listService:[],
             serviceId : "" ,
-            getService : getService,			exportExcel:exportExcel,
+            getService : getService,
+            exportExcel:exportExcel,
         //  弹框 参数
             editTitle : "" ,
             editKnow :  "",
@@ -164,6 +166,10 @@ angular.module('functionalTestModule').controller('testResultController', [
                         pageSize: $scope.vm.pageSize,//第页条目数
                         pagesLength: 8,//分页框数量
                     };
+                }else if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    layer.msg("没有查询到记录!")
                 }
                 $scope.$apply();
             },function(){
@@ -220,12 +226,13 @@ angular.module('functionalTestModule').controller('testResultController', [
                 //$scope.vm.batchNumberId = id;
                 httpRequestPost("/api/application/testResult/batchTest",{
                     applicationId :  $scope.vm.applicationId,
+                    userId :  $scope.vm.userId,
                     ids :  $scope.vm.deleteIds,
-                    serviceId : $scope.vm.serviceId            //服务id,每条都一样；
-
+                    //serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
+                    serviceId : 22
                 },function(data){
                     console.log( $scope.vm.deleteIds);
-                    if(data.status == 21009){
+                    if(data.status == 20009){
                         $scope.vm.selectAllCheck = false;
                         $state.reload();
                         layer.msg("测试成功");
