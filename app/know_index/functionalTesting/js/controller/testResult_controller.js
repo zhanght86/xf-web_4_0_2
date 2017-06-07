@@ -28,8 +28,11 @@ angular.module('functionalTestModule').controller('testResultController', [
             selectAll : selectAll,
             selectSingle : selectSingle,
             batchTest : batchTest,
-            serviceId :'',
             deleteIds :[],
+            testDialog :testDialog,
+            listService:[],
+            serviceId : "" ,
+            getService : getService,
 
         //  弹框 参数
             editTitle : "" ,
@@ -198,28 +201,67 @@ angular.module('functionalTestModule').controller('testResultController', [
         }
         //批量测试
         function batchTest(){
+            if($scope.vm.serviceId) {
+                //$scope.vm.batchNumberId = id;
+                httpRequestPost("/api/application/testResult/batchTest",{
+                    applicationId :  $scope.vm.applicationId,
+                    ids :  $scope.vm.deleteIds,
+                    serviceId : $scope.vm.serviceId            //服务id,每条都一样；
+
+                },function(data){
+                    console.log( $scope.vm.deleteIds);
+                    if(data.status == 21009){
+                        $scope.vm.selectAllCheck = false;
+                        $state.reload();
+                        layer.msg("测试成功");
+                    }else{
+                        layer.msg("测试失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
+            }else{
+                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+            }
+
+
+        }
+        //测试弹窗
+        function testDialog(){
             if($scope.vm.deleteIds.length == 0){
-                layer.msg("请选择要测试的文件！");
+                layer.msg("请选择要测试的知识！");
                 return;
             }
-            httpRequestPost("/api/application/testResult/batchTest",{
-                applicationId :  $scope.vm.applicationId,
-                ids :  $scope.vm.deleteIds,
-                serviceId : $scope.vm.listData[0].serviceId            //服务id,每条都一样；
+            var dialog = ngDialog.openConfirm({
+                template: "/know_index/functionalTesting/testDialog.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {    //关闭回掉
+                    batchTest();
+                    //$scope.vm.serviceId = vm.listService[0].serviceId ;
+                }
+            });
 
+        }
+        //页面初始化加载已发布服务
+        getService();
+        function getService(){
+            httpRequestPost("/api/application/service/listServiceByApplicationId",{
+                applicationId:$scope.vm.applicationId,
             },function(data){
-                console.log( $scope.vm.deleteIds);
-                if(data.status == 21009){
-                    $scope.vm.selectAllCheck = false;
-                    $state.reload();
-                    layer.msg("测试成功");
-                }else{
-                    layer.msg("测试失败");
+                if(data.status == 10000){
+                    $scope.vm.listService = data.data;
+                    $scope.vm.serviceId = data.data[0].serviceId ;
+                    $scope.$apply();
+                }else if(data.status == 10005) {
+                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
                 }
             },function(){
                 layer.msg("请求失败");
-            });
-
+            })
         }
     }
 ]);
