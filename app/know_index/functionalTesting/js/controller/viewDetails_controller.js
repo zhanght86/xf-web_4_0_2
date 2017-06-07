@@ -206,6 +206,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     layer.msg("查询到记录为空");
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
+                    $scope.$apply();
                     return;
                 }
                 $scope.vm.listData = data.data.detailList;
