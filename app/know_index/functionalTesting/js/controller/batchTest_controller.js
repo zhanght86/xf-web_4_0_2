@@ -148,24 +148,24 @@ angular.module('functionalTestModule').controller('batchTestController', [
 
         //批量上传
         function uploadQuestion(callback){
-            var timer = $timeout(function(){
-                var dialog = ngDialog.openConfirm({
-                    template: "/know_index/functionalTesting/batchUploadDialog.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {    //关闭回掉
-                        if (e === 1) {
-                            $scope.vm.upload = true
-                        } else {
 
-                        }
-                    }
-                });
-            },350)
-
+            //var timer = $timeout(function(){
+            //    var dialog = ngDialog.openConfirm({
+            //        template: "/know_index/functionalTesting/batchUploadDialog.html",
+            //        scope: $scope,
+            //        closeByDocument: false,
+            //        closeByEscape: true,
+            //        showClose: true,
+            //        backdrop: 'static',
+            //        preCloseCallback: function (e) {    //关闭回掉
+            //            if (e === 1) {
+            //                $scope.vm.upload = true
+            //            } else {
+            //
+            //            }
+            //        }
+            //    });
+            //},350)
         }
         //删除
         function deleteQuestion(callback){
@@ -204,7 +204,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         //启动
         function startUp(id){
             if($scope.vm.serviceId) {
-                $scope.vm.batchNumberId = id
+                $scope.vm.batchNumberId = id ;
                 var dialog = ngDialog.openConfirm({
                     template: "/know_index/functionalTesting/startUpDialog.html",
                     scope: $scope,
