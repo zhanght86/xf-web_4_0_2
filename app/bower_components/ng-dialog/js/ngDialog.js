@@ -194,7 +194,7 @@
 
 							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
 							$dialog.html((options.overlay ?
-								'<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>' :
+								'<div class="ngdialog-overlay" ></div><div class="ngdialog-content">' + template + '</div>' :
 								'<div class="ngdialog-content">' + template + '</div>'));
 
 							if (options.data && angular.isString(options.data)) {
@@ -403,7 +403,7 @@
 			}];
 	});
 
-	module.directive('ngDialog', ['ngDialog', function (ngDialog) {
+	module.directive('ngDialog', ['ngDialog', function (ngDialog , $interval) {
 		return {
 			restrict: 'A',
 			scope : {
@@ -430,6 +430,11 @@
 						preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
 					});
 				});
+				//scope.$interval(function(){
+                //
+				//	angular.element(".ngdialog-overlay").css("filter","progid:DXImageTransform.Microsoft.Gradient(startColorstr=#ffffff,endColorstr=#000000);" )
+				//},100)
+
 			}
 		};
 	}]);

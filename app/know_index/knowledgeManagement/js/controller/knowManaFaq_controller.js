@@ -497,14 +497,14 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //打开知识内容对话框
         function openContentConfirm(callback){
-
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
                 scope: $scope,
+                closeByNavigation: false,
+                overlay: true,
                 closeByDocument: false,
                 closeByEscape: true,
                 showClose: true,
-                backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
                         callback();

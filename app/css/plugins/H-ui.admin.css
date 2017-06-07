@@ -23,7 +23,7 @@ h4{line-height:30px}
 	.Hui-article{position: absolute;top:34px;bottom:0;left:0; right:0;overflow:auto;z-index:1}
 .Hui-container{ padding:45px 0 0}
 .Hui-aside,.Hui-article-box,.dislpayArrow{-moz-transition: all 0.2s ease 0s;-webkit-transition: all 0.2s ease 0s;-ms-transition: all 0.2s ease 0s;-o-transition: all 0.2s ease 0s;transition: all 0.2s ease 0s}
-.big-page .Hui-article-box,.big-page .dislpayArrow,.big-page .breadcrumb{left:0px}
+.big-page .Hui-article-box,.big-page .dislpayArrow,.big-page .breadcrumb{left:0}
 .big-page .Hui-aside{ left:-200px}
 .page-container{ padding:20px}
 @media (max-width: 767px) {
