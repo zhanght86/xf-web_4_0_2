@@ -32,7 +32,8 @@ angular.module('functionalTestModule').controller('testResultController', [
 			testDialog :testDialog,
             listService:[],
             serviceId : "" ,
-            getService : getService,			exportExcel:exportExcel,
+            getService : getService,
+            exportExcel:exportExcel,
         //  弹框 参数
             editTitle : "" ,
             editKnow :  "",
