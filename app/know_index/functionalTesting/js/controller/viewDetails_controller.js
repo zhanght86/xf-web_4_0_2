@@ -233,7 +233,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 if(data.status==500){
                     layer.msg("导出失败")
                 }else{
-                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data);
+                    window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
                 }
                 console.log()
 
