@@ -193,7 +193,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 $scope.vm.selectAllCheck = true;
                 $scope.vm.deleteIds = [];
                 angular.forEach($scope.vm.listData,function(item){
-                    $scope.vm.deleteIds.push(item.batchNumberId);
+                    $scope.vm.deleteIds.push(item.testResultId);
                 });
             }else{
                 $scope.vm.selectAllCheck = false;
