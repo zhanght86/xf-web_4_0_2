@@ -74,7 +74,7 @@ angular.module('homePage').controller('homePageNavController', [
                 if(resource.status == 200 && resource.data != null && resource.data.length >0){
                     $scope.paginationConf.totalItems = resource.total;
                     $scope.vm.serviceArray = resource.data;
-                    $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;
+                    $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;//设置默认选择
                     $scope.vm.openServiceConfirm();
                 }else{
                     layer.msg("无应用服务")
@@ -85,8 +85,9 @@ angular.module('homePage').controller('homePageNavController', [
         }
         //引擎跳转方法
         function openServiceConfirm(){
+            //对话框打开方法
             var dialog = ngDialog.openConfirm({
-                template: "/know_index/home/multiHomePageDialog.html",
+                template: "/know_index/home/homePageDialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -94,48 +95,10 @@ angular.module('homePage').controller('homePageNavController', [
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-                        var arr=document.getElementsByName("service");
-                        $.each(arr,function(index,value){
-                            if(value.checked==true){
-                                $scope.vm.jump($(value).val());
-                            }
-                        });
+                        $scope.vm.jump($scope.vm.serviceUrl);
                     }
                 }
             });
-            if(dialog){
-                $timeout(function () {
-                    $("#engineList").empty();
-                    var html="";
-                    if($scope.vm.serviceArray.length>0){
-                        for(var i=0;i<$scope.vm.serviceArray.length;i++){
-                            if($scope.vm.serviceArray[i].nodeAccessIp!=null){
-                                html+='<tr><td>'+$scope.vm.serviceArray[i].serviceName+'</td>';
-                                if(i==0){
-                                    html+='<td><input type="radio" ng-model="vm.serviceUrl" value="'+$scope.vm.serviceArray[i].nodeAccessIp+'" name="service" checked="checked"/></td>';
-                                }else{
-                                    html+='<td><input type="radio" ng-model="vm.serviceUrl" value="'+$scope.vm.serviceArray[i].nodeAccessIp+'" name="service" /></td>';
-                                }
-                                html+='<td>'+$scope.vm.serviceArray[i].nodeAccessIp+'</td></tr>';
-                            }else if($scope.vm.serviceArray[i].nodeAccessIpList!=null && $scope.vm.serviceArray[i].nodeAccessIpList.length>0){
-                                for(var j=0;j<$scope.vm.serviceArray[i].nodeAccessIpList.length;j++){
-                                    html+='<tr>';
-                                    if(j==0){
-                                        html+='<td rowspan="'+$scope.vm.serviceArray[i].nodeAccessIpList.length+'">'+$scope.vm.serviceArray[i].serviceName+'</td>'
-                                    }
-                                    if(i==0){
-                                        html+='<td><input type="radio" ng-model="vm.serviceUrl" value="'+$scope.vm.serviceArray[i].nodeAccessIpList[j]+'" name="service" checked="checked"/></td>';
-                                    }else{
-                                        html+='<td><input type="radio" ng-model="vm.serviceUrl" value="'+$scope.vm.serviceArray[i].nodeAccessIpList[j]+'" name="service" /></td>';
-                                    }
-                                    html+='<td>'+$scope.vm.serviceArray[i].nodeAccessIpList[j]+'</td></tr>';
-                                }
-                            }
-                        }
-                    }
-                    $("#engineList").append(html);
-                }, 100);
-            }
         }
         //打开引擎访问界面
         function jump(url) {
