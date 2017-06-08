@@ -245,7 +245,13 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                             if(e === 1) {
                                 console.log($scope.vm.allowSubmit);
                                 if($scope.vm.allowSubmit){  //服务名称验证没有错误
-                                    $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
+                                    if($scope.vm.dimensionSelected.id.length==0){
+                                        angular.forEach($scope.vm.originDimensionAll,function(item){
+                                            $scope.vm.dimensions.push(item.dimensionId)
+                                        })
+                                    }else{
+                                        $scope.vm.dimensions=$scope.vm.dimensionSelected.id;
+                                    }
                                     httpRequestPost("/api/application/service/editService",{
                                         "applicationId": $scope.vm.applicationId,
                                         "categoryIds" : $scope.vm.categoryIds, //分类id列表
@@ -480,7 +486,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 layer.msg("请求失败");
             })
         }
-
+ 
         //获取维度
         function listDimensionData(){
             httpRequestPost("/api/application/dimension/list",{
