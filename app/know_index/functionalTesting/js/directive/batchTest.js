@@ -55,7 +55,8 @@ knowledge_static_web.directive("batchTestOnly", ["$parse", "ngDialog", "$cookieS
                         fileSizeLimit: 200 * 1024 * 1024,    // 200 M    all
                         fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
                     });
-
+                    console.log(angular.element(".webuploader-pick")) ;
+                    angular.element(".webuploader-pick").addClass("btn1").css({"background":"#3e91e7","lineHeight":"20px"}) ;
                     uploader.on( 'fileQueued', function( file ) {
                         console.log(file + "file  add success");
                     });
