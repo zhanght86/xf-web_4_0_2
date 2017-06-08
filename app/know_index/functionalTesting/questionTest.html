@@ -25,12 +25,13 @@
             <div class="formControls col-xs-9 col-sm-9 pd-10" >
                 <div class="bd pd-10" style="min-height:200px;max-height:300px;overflow:auto;" id="solution">
                     <div class="c-red bold">标准问答：
-                        <span ng-repeat="v in vm.answerRes.standardQueryResult">{{v.tagList}}</span>
+                        <!--{{vm.answerRes.standardQueryResult}}-->
+                        <span ng-repeat="v in vm.answerRes.standardQueryResult">[ {{v.tagList.join(',')}} ]</span>
                     </div>
                     <div ng-repeat="v in vm.answerRes.comparisonResult">测试问答{{$index+1}}:
 
                                 <span ng-repeat="i in v.wordTagResultList" ng-class="">
-                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">"{{val}}"<i ng-if="$index!=i.tagList.length-1">，</i></span>]
+                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">{{val}}<i ng-if="$index!=i.tagList.length-1">，</i></span>]
                                 </span>
                         <span > ; 相似度：{{v.similarity}}</span>
                     </div>
