@@ -643,7 +643,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
                                 return false;
                             }else{
-                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
+                                $scope.vm.categoryLibraryDescribe=trimStr($("#categoryLibraryDescribe").val());
                             }
                         }
                         console.log("=========="+$("#categoryLibraryNameAdd").val());
@@ -738,7 +738,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
                                 return false;
                             }else{
-                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
+                                $scope.vm.categoryLibraryDescribe=trimStr($("#categoryLibraryDescribe").val());
                             }
                         }
                         httpRequestPost("/api/ms/modeling/categorylibrary/updatebycategoryid",{

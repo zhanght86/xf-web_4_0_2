@@ -244,7 +244,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回调
+                preCloseCallback:function(e){  //关闭回调
                     if(e===1){
                         if(lengthCheck($("#categoryName").val(),0,50)==false){
                             $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
@@ -258,7 +258,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 $("#categoryDescribeError").html($scope.vm.categoryDescribeBeyondLimit);
                                 return false;
                             }else{
-                                $scope.vm.categoryDescribe=$("#categoryDescribe").val();
+                                $scope.vm.categoryDescribe=trimStr($("#categoryDescribe").val());
                             }
                         }
                         httpRequestPost("/api/ms/modeling/category/updatebycategoryid",{
@@ -414,7 +414,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     $("#category-describe-error").html($scope.vm.categoryDescribeBeyondLimit);
                     return;
                 }else{
-                    $scope.vm.categoryDescribe=$("#category-describe").val();
+                    $scope.vm.categoryDescribe=trimStr($("#category-describe").val());
                 }
             }
             httpRequestPost("/api/ms/modeling/category/add",{

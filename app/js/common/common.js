@@ -346,6 +346,13 @@ function showElement(element) {
     newobj.focus();
 }
 
+function trimStr(str){
+    if(nullCheck(str)==false){
+        return "";
+    }
+    return str.replace(/[ \r\n]/g,"");
+}
+
 function initUpload(url){
     (function ($) {
         $(function () {
