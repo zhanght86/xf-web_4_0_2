@@ -230,7 +230,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             }else{
                 var name ;
                 angular.forEach($scope.vm.channelList,function(item){
-                    if(item.channelId == $scope.vm.channel){
+                    if(item.channelCode == $scope.vm.channel){
                         return name = item.channelName  ;
                     }
                 }) ;
@@ -242,7 +242,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 }, function (data) {
                     showData($scope.vm.paginationConf.currentPage)  ;
                     //$state.reload();
-                    if(data.status == 21008){
+                    if(data.status == 10018){
                         startTest(id,name,channelId);
                     }
                 }, function () {
@@ -254,9 +254,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
         function stopTest(id){
             httpRequestPost("/api/application/batchTest/startTest", {
                 batchNumberId: id,
-                batchStatusId : 21008
+                batchStatusId : 21007
             }, function (data) {
-                if(data.status=21009){
+                console.log(data);
+                if(data.status=10000){
                     showData($scope.vm.paginationConf.currentPage) ;
                 }
             }, function () {
@@ -270,10 +271,11 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 channelName : name ,
                 channel:channelId,
                 applicationId:$scope.vm.applicationId,
-                serviceId:$scope.vm.serviceId,
-                //serviceId:22
+                //serviceId:$scope.vm.serviceId,
+                serviceId:22
             }, function (data) {
-                if(data.status=21009){
+                console.log(data);
+                if(data.status=10000){
                     showData($scope.vm.paginationConf.currentPage) ;
                 }
             }, function () {
