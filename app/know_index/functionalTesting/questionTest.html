@@ -2,7 +2,7 @@
 
 <div class="wrap mt10">
 
-    <div class="pd-30" style="background:#fff;">
+    <div class="pd-30" style="background:#fff;height:80%;">
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2 text-r">预期知识：</label>
             <div class="formControls col-xs-9 col-sm-9">
@@ -23,28 +23,25 @@
         <div class="mb-10 cl" >
             <label class="form-label col-xs-3 col-sm-2 text-r">测试结果：</label>
             <div class="formControls col-xs-9 col-sm-9 pd-10" >
-                <div class="bd pd-10" style="height:200px;overflow:auto;" id="solution">
-                    <div class="bd pd-10" style="height:200px;overflow:auto;">
-
-                        <div class="c-red bold">标准问答：
-                            <span ng-repeat="v in vm.answerRes.standardQueryResult">{{v.tagList}}</span>
-                        </div>
-                        <div ng-repeat="v in vm.answerRes.comparisonResult">测试问答{{$index+1}}:
+                <div class="bd pd-10" style="min-height:200px;max-height:300px;overflow:auto;" id="solution">
+                    <div class="c-red bold">标准问答：
+                        <!--{{vm.answerRes.standardQueryResult}}-->
+                        <span ng-repeat="v in vm.answerRes.standardQueryResult">[ {{v.tagList.join(',')}} ]</span>
+                    </div>
+                    <div ng-repeat="v in vm.answerRes.comparisonResult">测试问答{{$index+1}}:
 
                                 <span ng-repeat="i in v.wordTagResultList" ng-class="">
-                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">"{{val}}"<i ng-if="$index!=i.tagList.length-1">，</i></span>]
+                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">{{val}}<i ng-if="$index!=i.tagList.length-1">，</i></span>]
                                 </span>
-                            <span > ; 相似度：{{v.similarity}}</span>
-                        </div>
-                        <!--<div>测试问答1:-->
-                            <!--<span class="c-red">key_1_购买,key_1_买入 </span>-->
-                            <!--<span class="c-success">key_1_网上,key_1_互联网</span>-->
-                            <!--<span class="c-blue">key_1_再,key_1_同时</span>-->
-                            <!--<span class="c-orange">key_1_再,key_1_同时</span>-->
-                            <!--<span class="c-green">key_1_再,key_1_同时</span>-->
-                        <!--</div>-->
-
+                        <span > ; 相似度：{{v.similarity}}</span>
                     </div>
+                    <!--<div>测试问答1:-->
+                    <!--<span class="c-red">key_1_购买,key_1_买入 </span>-->
+                    <!--<span class="c-success">key_1_网上,key_1_互联网</span>-->
+                    <!--<span class="c-blue">key_1_再,key_1_同时</span>-->
+                    <!--<span class="c-orange">key_1_再,key_1_同时</span>-->
+                    <!--<span class="c-green">key_1_再,key_1_同时</span>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
