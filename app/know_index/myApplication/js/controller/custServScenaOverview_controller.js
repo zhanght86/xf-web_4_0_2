@@ -290,23 +290,23 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                             angular.forEach(data.data,function(item){
                                 //1  存在叶节点   >
                                 if(item.categoryLeaf){
-                                    html+= '<li data-option-id="'+item.categoryId+'"class="slide-a  bg50 bgE3">' +
-                                            //'<div class="slide-a  bg50 bgE3">'+
+                                    html+= '<li data-option-id="'+item.categoryId+'">' +
+                                            '<div class="slide-a  bg50 bgE3">'+
                                                 ' <a class="ellipsis bg50" href="javascript:;">'+
                                                     '<i class="'+leafClassName+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
                                                     '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                                 '</a>' +
-                                            //'</div>' +
+                                            '</div>' +
                                          '</li>'
                                 }else{
                                     //不存在叶节点
-                                    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'"class="slide-a  bg50 bgE3">' +
-                                        //'<div class="slide-a  bg50 bgE3">'+
+                                    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'">' +
+                                        '<div class="slide-a  bg50 bgE3">'+
                                         ' <a class="ellipsis bg50" href="javascript:;">'+
                                         '<i class="'+leafClassName+'" style="background:0" data-option-id="'+item.categoryId+'"></i>'+
                                         '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                         '</a>' +
-                                        //'</div>' +
+                                        '</div>' +
                                         '</li>'
                                 }
                             });
