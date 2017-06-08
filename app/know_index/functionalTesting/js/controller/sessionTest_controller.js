@@ -65,10 +65,12 @@ angular.module('functionalTestModule').controller('sessionTestController', [
        function test(){
            if($scope.vm.serviceId){
                if($scope.vm.testAsking==''){
+                   layer.msg('请输入测试问题!');
                    layer.msg("请输入测试问题");
                    return ;
                }
                if($scope.vm.channel==''){
+                   layer.msg('请选择渠道!');
                    layer.msg("请选择渠道!");
                    return;
                }

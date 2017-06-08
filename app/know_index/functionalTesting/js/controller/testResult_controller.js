@@ -228,8 +228,8 @@ angular.module('functionalTestModule').controller('testResultController', [
                     applicationId :  $scope.vm.applicationId,
                     userId :  $scope.vm.userId,
                     ids :  $scope.vm.deleteIds,
-                    //serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
-                    serviceId : 22
+                    serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
+                    //serviceId : 22
                 },function(data){
                     console.log( $scope.vm.deleteIds);
                     if(data.status == 20009){

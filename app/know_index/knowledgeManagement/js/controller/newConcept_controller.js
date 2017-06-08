@@ -529,16 +529,16 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         $(".aside-navs").on("click","span",function(){
             //类型节点
             var pre = $(this).prev() ;
-            if(pre.hasClass("bot-edge")){
-                layer.msg("请可用选择节点") ;
-                return ;
-            }else{
+            //if(pre.hasClass("bot-edge")){
+            //    layer.msg("请可用选择节点") ;
+            //    return ;
+            //}else{
                 angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
                 $scope.$apply();
-            }
+            //}
         });
         //点击bot分类的 加号
         function botSelectAdd(){

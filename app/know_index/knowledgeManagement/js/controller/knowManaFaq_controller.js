@@ -347,16 +347,16 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         $(".aside-navs").on("click","span",function(){
             //类型节点
             var pre = $(this).prev() ;
-            if(pre.hasClass("bot-edge")){
-                layer.msg("请可用选择节点") ;
-                return ;
-            }else{
+            //if(pre.hasClass("bot-edge")){
+            //    layer.msg("请可用选择节点") ;
+            //    return ;
+            //}else{
                 angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
                 angular.element(".rootClassfy,.menus").slideToggle();
                 $scope.$apply();
-            }
+            //}
         });
         //添加bot分类的
         function botSelectAdd(){
@@ -497,14 +497,14 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //打开知识内容对话框
         function openContentConfirm(callback){
-
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
                 scope: $scope,
+                closeByNavigation: false,
+                overlay: true,
                 closeByDocument: false,
                 closeByEscape: true,
                 showClose: true,
-                backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
                         callback();

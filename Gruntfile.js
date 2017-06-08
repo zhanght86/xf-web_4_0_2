@@ -103,6 +103,7 @@ module.exports = function (grunt) {
                 tasks: ['concat:css', 'cssmin:css'],
                 options: {
                     spawn: true,
+
                     interrupt: true
                 }
             }
