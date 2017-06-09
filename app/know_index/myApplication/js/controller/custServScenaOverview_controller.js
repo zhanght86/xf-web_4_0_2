@@ -232,29 +232,27 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             });
         }
 
-////////////////////////////////////// ///          Bot      /////////////////////////////////////////////////////
-        getBotRoot();
-        //点击 root 的下拉效果
-        function  knowledgeBot(ev){
-            var ele = ev.target;
-            $timeout(function(){
-                $(ele).next().slideToggle();
-            },50)
-        }
+/////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
+       var html = '<div style="width: 100%;height: 100%;background:transparent;position: fixed;z-index: -1">'
+        $(html).appendTo("body");
+        $(html).click(function(){
+$(".aside-nav").hide()
+        }) ;
         //获取root 数据
-        function getBotRoot(){
+        void function(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
             },function(data){
-                //console.log(data);
                 $scope.vm.botRoot = data.data;
                 $scope.$apply()
             },function(){
                 console.log("getDate==failed")
             });
-        }
+        }() ;
         //点击更改bot value
+        //绑定点击空白隐藏（滚动条除外）
+        
         $(".aside-nav").on("click","span",function(){
             var id = angular.element(this).attr("data-option-id");
             $scope.vm.sceneIds.push(id);
@@ -273,7 +271,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         $(".aside-nav").on("click",'.ngBotAdd',function(){
             var id = $(this).attr("data-option-id");
             var that = $(this);
-            var isEdg = that.hasClass('icon-jj') ;
+            var isEdg = that.hasClass('icon-ngJj') ;
             // 侧边 只能有一个选项
             //非侧边 可以存在多个
             console.log(that.closest("ul").hasClass("pas-menu_1")) ;
@@ -284,17 +282,25 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                     $(item).find("ul").hide()
                 }) ;
             }
-            if(!that.parent().siblings().length){
-                if(isEdg){
+            if(!that.parent().siblings().length){   // 新增
+                if(!isEdg){   //加号
                     that.css("backgroundPosition","0% 100%");
+                }else{     //业务词
+                    that.closest("li").siblings().each(function(index,item){   //同级隐藏
+                        $(item).find("ul").hide().find(".icon-jj ").css("backgroundPosition","0% 0%") ;
+                    }) ;
+                    that.closest("ul.menu_1").parent().siblings().each(function(index,item){   //父级元素兄弟元素所有子集隐藏
+                        $(item).find("ul.pas-menu_1").hide() ;
+                    })
                 }
+                //请求BOT数据 组装DOM
                 httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
                     if(data.data){
-                            var itemClassName = isEdg?"menu_1":"pas-menu_1";
-                            var leafClassName = isEdg?"icon-ngJj":"icon-jj";
+                            var itemClassName = isEdg?"pas-menu_1":"menu_1";
+                            var leafClassName = isEdg?"icon-jj":"icon-ngJj";
                             var  html = '<ul class="'+itemClassName+'">';
                             angular.forEach(data.data,function(item){
                                 //1  存在叶节点   >
@@ -322,21 +328,26 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                         },50) ;
                     }
                 },function(err){
-                    console.log("getDate==failed");
+                    //console.log("getDate==failed");
                 });
-            }else{
-                if(isEdg){   //加号
+            }else{  //操作当前 DOM 隐藏显示
+                if(!isEdg){   //加号
                     if(that.css("backgroundPosition")=="0% 0%"){
                         that.css("backgroundPosition","0% 100%");
                         that.parent().next().slideDown()
                     }else{
                         that.css("backgroundPosition","0% 0%");
-                        that.parent().next().slideUp()
+                        that.parent().next().slideUp() ;
                     }
-                }else{
-                    that.parent().next().slideToggle()
+                }else{       //业务词
+                    that.parent().next().slideToggle() ;     //自身状态改变
+                    that.closest("li").siblings().each(function(index,item){   //同级隐藏
+                        $(item).find("ul").hide().find(".icon-jj ").css("backgroundPosition","0% 0%") ;
+                    }) ;
+                    that.closest("ul.menu_1").parent().siblings().each(function(index,item){   //父级元素兄弟元素所有子集隐藏
+                        $(item).find("ul.pas-menu_1").hide() ;
+                    })
                 }
-
             }
         });
         $(".aside-nav").on("mouseenter",'.ellipsis',function() {

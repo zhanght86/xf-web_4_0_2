@@ -28,6 +28,7 @@
             preCloseCallback: false,
             overlay: true,
             cache: true,
+            // 自定义宽度
             width : "450px"
         };
 
