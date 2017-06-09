@@ -160,12 +160,17 @@ angular.module('functionalTestModule').controller('testResultController', [
                                 knowledgeTitle: $scope.vm.editKnow,
                                 channel: $scope.vm.editChannel,
                                 testResultId: params.testResultId,
+                                batchNumberId:$scope.vm.batchNumberId,
                                 channelName: channelName
                             }, function (data) {
                                 console.log(data);
-                                if (data.status == 10000) {
+                                if(data.status == 10002){
+                                    layer.msg("该测试问法已经存在，请重新添加!")
+                                }else if (data.status == 10000) {
                                     layer.msg("修改成功");
                                     showData(1);
+                                }else if(data.status == 10004){
+                                    layer.msg("修改失败");
                                 }
                                 $scope.$apply();
                             }, function () {
@@ -266,8 +271,8 @@ angular.module('functionalTestModule').controller('testResultController', [
                     applicationId :  $scope.vm.applicationId,
                     userId :  $scope.vm.userId,
                     ids :  $scope.vm.deleteIds,
-                    //serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
-                    serviceId : 22
+                    serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
+                    //serviceId : 22
                 },function(data){
                     console.log( $scope.vm.deleteIds);
                     if(data.status == 20009){

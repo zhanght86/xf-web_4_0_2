@@ -25,8 +25,8 @@
                     <span class="framework_s text-r">发布渠道：</span>
                     <div >
                         <label class="mr-10" ng-repeat="channel in vm.channelData">
-                            <input type="checkbox" ng-checked="vm.channels.inArray(channel.channelId)"
-                                   ng-click="vm.selectChannel(channel.channelId)"/> {{channel.channelName}}
+                            <input type="checkbox" ng-checked="vm.channels.inArray(channel.channelCode)"
+                                   ng-click="vm.selectChannel(channel.channelCode)"/> {{channel.channelName}}
                         </label>
                     </div>
                 </div>
