@@ -117,7 +117,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "applicationId" : $scope.vm.applicationId,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
-                "categoryIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
                 "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
                 "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
@@ -233,11 +233,22 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }
 
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
-       var html = '<div style="width: 100%;height: 100%;background:transparent;position: fixed;z-index: -1">'
-        $(html).appendTo("body");
-        $(html).click(function(){
-$(".aside-nav").hide()
-        }) ;
+        $("body").one('click',function(e){//我的弹出层元素是动态载入的，使用过后就销毁了，所以用了one,可以使用bind
+            e = event || window.event;
+console.log()
+            if(e.target.className=="aside-nav"){
+                e.stopPropagation();
+            }else{
+                $(".aside-nav").hide()
+            }
+            //if(e.stopPropagation){
+            //    e.stopPropagation();
+            //}
+            //else {
+            //    e.cancelBubble = true;
+            //}
+            //$(".aside-nav").hide()
+        });
         //获取root 数据
         void function(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
