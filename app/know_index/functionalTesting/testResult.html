@@ -66,7 +66,8 @@
                             <td ng-if="v.answerCondition==40005 ">回答错误</td>
                             <td ng-if="v.answerCondition==40007 ">不能回答</td>
 
-                            <td>{{v.answerContent|replaceCode}}</td>
+                            <td ng-if="v.answerContent.length>20" title="{{v.answerContent|replaceCode}}">{{v.answerContent|replaceCodeCut}}</td>
+                            <td ng-if="v.answerContent.length<20">{{v.answerContent|replaceCode}}</td>
                             <td>{{v.similarity}}</td>
                             <td ><a href="javascript:;" class="c_green" ng-click="vm.editQuestion(v)">修改</a></td>
                         </tr>
