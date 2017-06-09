@@ -486,7 +486,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                 layer.msg("请求失败");
             })
         }
- 
+
         //获取维度
         function listDimensionData(){
             httpRequestPost("/api/application/dimension/list",{
