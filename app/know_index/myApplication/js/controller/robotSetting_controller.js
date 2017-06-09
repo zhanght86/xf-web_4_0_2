@@ -78,6 +78,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
         function addCustom(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/settingContentDialog2.html",
+                width:"500px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

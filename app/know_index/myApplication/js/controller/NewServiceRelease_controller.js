@@ -234,6 +234,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
         function listCategory(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NewServiceReleaseDialog.html",
+                
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

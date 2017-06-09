@@ -1,0 +1,50 @@
+
+<div class="wrap pt-10" >
+    <div class="know_batch_add pd30">
+        <h3 class="f16 mb-20 bold">知识批量新增</h3>
+        <div class="mb-20">知识批量新增目前只支持结构化上传，非结构化请<a href="javascript:;" class="c_blue"> 点击此处 </a>，进行文档加工</div>
+        <div class="clearfix">
+            <div class="L know_batch_left bd p20">
+                <div class="framework mb-10" style="padding-left: 148px;">
+                    <span class="framework_s ">选择上传的知识类型:</span>
+                    <div>
+                        <select class="bd ">
+                            <option>FAQ/概念型知识</option>
+                            <option>列表型知识</option>
+                            <option>要素型知识</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="framework mb-20" style="padding-left: 148px;">
+                    <span class="framework_s ">选择导入文件:</span>
+                    <div>
+                        <div class="mb-10">
+                            <button class="btn1 btn1_blue mr-20">选择文件</button>
+                            <button class="btn1 btn_green" ng-click="vm.upload()">上传</button>
+                        </div>
+                        <div>
+                            已选择：小富机器人上传模板1.xls
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    本知识库支持excel模板批量直接导入，请 <a class="c_blue" ng-click="vm.downTemplate();">下载模板</a> 进行填写
+                </div>
+            </div>
+            <div class="R know_batch_right bd p20">
+                <p class="bold mb-10">以下情况会上传失败</p>
+                <p class="mb-5">• 文件格式错误；</p>
+                <p class="mb-5">• 问题已经在知识库中存在；</p>
+                <p class="mb-5">• 问题所属的分类未被创建；</p>
+                <p class="mb-5">• 中文标点错误</p>
+                <p class="mb-5">• 要素知识格式错误</p>
+                <p class="mb-5">• 要素数量不符</p>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .know_batch_add{ background:#fff;box-sizing:border-box;min-height:500px;}
+    .know_batch_left{width:65%;box-sizing: border-box;}
+    .know_batch_right{width:32%;box-sizing: border-box;}
+</style>
