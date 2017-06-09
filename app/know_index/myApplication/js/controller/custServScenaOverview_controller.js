@@ -275,6 +275,16 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             var id = $(this).attr("data-option-id");
             var that = $(this);
             var isEdg = that.hasClass('icon-jj') ;
+            // 侧边 只能有一个选项
+            //非侧边 可以存在多个
+            console.log(that.closest("ul").hasClass("pas-menu_1")) ;
+            if(that.parent().hasClass('type1')){  //root bot
+                return false
+            }else if(!that.closest("ul").hasClass("pas-menu_1")){
+                that.parent().parent().parent().siblings().each(function(index,item){
+                    $(item).find("ul").hide()
+                }) ;
+            }
             if(!that.parent().siblings().length){
                 if(isEdg){
                     that.css("backgroundPosition","0% 100%");
@@ -290,24 +300,20 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                             angular.forEach(data.data,function(item){
                                 //1  存在叶节点   >
                                 if(item.categoryLeaf){
-                                    html+= '<li data-option-id="'+item.categoryId+'">' +
-                                            '<div class="slide-a  bg50 bgE3">'+
+                                    html+= '<li data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
                                                 ' <a class="ellipsis bg50" href="javascript:;">'+
                                                     '<i class="'+leafClassName+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
                                                     '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                                 '</a>' +
-                                            '</div>' +
-                                         '</li>'
+                                             '</li>'
                                 }else{
                                     //不存在叶节点
-                                    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'">' +
-                                        '<div class="slide-a  bg50 bgE3">'+
-                                        ' <a class="ellipsis bg50" href="javascript:;">'+
-                                        '<i class="'+leafClassName+'" style="background:0" data-option-id="'+item.categoryId+'"></i>'+
-                                        '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
-                                        '</a>' +
-                                        '</div>' +
-                                        '</li>'
+                                    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
+                                                ' <a class="ellipsis bg50" href="javascript:;">'+
+                                                    '<i class="'+leafClassName+'" style="background:0" data-option-id="'+item.categoryId+'"></i>'+
+                                                    '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
+                                                '</a>' +
+                                           '</li>'
                                 }
                             });
                         html+="</ul>";
@@ -320,16 +326,36 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                     console.log("getDate==failed");
                 });
             }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%");
-                    that.parent().next().slideDown()
+                if(isEdg){   //加号
+                    if(that.css("backgroundPosition")=="0% 0%"){
+                        that.css("backgroundPosition","0% 100%");
+                        that.parent().next().slideDown()
+                    }else{
+                        that.css("backgroundPosition","0% 0%");
+                        that.parent().next().slideUp()
+                    }
                 }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().next().slideUp()
+                    that.parent().next().slideToggle()
                 }
+
             }
         });
-
+        $(".aside-nav").on("mouseenter",'.ellipsis',function() {
+            var self = $(this) ;
+            if(self.parent().hasClass('type1')){
+                return false
+            }else{
+                $(this).css({"background":"#505767","color":"#ffffff"})
+            }
+        }) ;
+        $(".aside-nav").on("mouseout",'.ellipsis',function() {
+            var self = $(this) ;
+            if(self.parent().hasClass('type1')){
+                return  false
+            }else{
+                $(this).css({"background":"#f0f0f0","color":"#333333"})
+            }
+        }) ;
         //第二种  箭头添加 hover
         //$(".aside-nav").on("mouseenter",'.leafHover',function(){
         //    var id = $(this).attr("data-option-id");

@@ -665,13 +665,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     });
                 }
             }
-
         }
         function extensionEdit(){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
                  var extensionEdit = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
