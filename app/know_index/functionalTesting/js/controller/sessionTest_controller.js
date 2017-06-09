@@ -66,12 +66,10 @@ angular.module('functionalTestModule').controller('sessionTestController', [
            if($scope.vm.serviceId){
                if($scope.vm.testAsking==''){
                    layer.msg('请输入测试问题!');
-                   layer.msg("请输入测试问题");
                    return ;
                }
                if($scope.vm.channel==''){
                    layer.msg('请选择渠道!');
-                   layer.msg("请选择渠道!");
                    return;
                }
 
@@ -86,7 +84,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                },function(data){
                    console.log(data);
                    if(data.data.status == 500){
-                       layer.msg("测试失败");
+                       layer.msg(data.data.data);
                    }
                    $scope.vm.result=data.data.data;
                    $scope.vm.question= $scope.vm.testAsking;
