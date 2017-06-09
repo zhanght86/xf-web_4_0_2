@@ -116,6 +116,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             findNodeInfo(nodeCode);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
+                width:"550px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -175,6 +176,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         function addNode(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
+                width:"550px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

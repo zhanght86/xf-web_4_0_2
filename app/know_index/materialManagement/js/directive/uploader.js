@@ -75,14 +75,15 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
             });
             uploader.on('uploadSuccess', function (file,response) {
                    console.log(response)
-                /*if(response.status == 500){
+                if(response.status == 500){
                  layer.msg("模板错误")
-                 }else{
-                 scope.tableList = response ;
-                 scope.$apply();
-                 }
+                 }else if(response.status==10001){
+                    layer.msg("导入失败")
+                 }else {
+                    layer.msg("导入成功")
+                }
 
-                 console.log(response)*/
+
             });
 
         }
