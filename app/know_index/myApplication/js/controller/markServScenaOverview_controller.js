@@ -176,7 +176,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             }else{
                 arr.push(id)
             }
-        }
+        } 
 
         function delData(){
             if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
@@ -185,7 +185,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 return;
             }
             //console.log($scope.vm.knowledgeIds);
-            httpRequestPost("/api/ms/knowledgeManage/overView/deleteKnowledge",{
+            httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
                 "knowledgeIds":$scope.vm.knowledgeIds
             },function(data){
                 $state.reload();

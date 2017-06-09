@@ -182,7 +182,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 return;
             }
             //console.log($scope.vm.knowledgeIds);
-            httpRequestPost("/api/ms/knowledgeManage/overView/deleteKnowledge",{
+            httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
                 "knowledgeIds":$scope.vm.knowledgeIds
             },function(data){
                 $state.reload();
