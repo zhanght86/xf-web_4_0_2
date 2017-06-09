@@ -213,8 +213,8 @@
                                 $dialog.data('$ngDialogControllerController', controllerInstance);
                             }
                             //ÃÌº” width  Ù–‘
-                            if (options.width) {
-                                $dialog.css("width",options.width);
+                            if (options.width) { 
+                                $dialog.find(".ngdialog-content").css("width",options.width);
                             }
                             if (options.className) {
                                 $dialog.addClass(options.className);

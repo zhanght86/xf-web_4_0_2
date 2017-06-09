@@ -117,7 +117,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "applicationId" : $scope.vm.applicationId,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
-                "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                "categoryIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
                 "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
                 "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
@@ -268,7 +268,6 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 napSearch()
             },function(){});
             $scope.$apply();
-            //console.log( $scope.vm.sceneIds)
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-nav").on("click",'.ngBotAdd',function(){
