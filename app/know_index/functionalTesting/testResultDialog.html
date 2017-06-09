@@ -20,7 +20,8 @@
         </div>
     </div>
     <div class="tc mt-20">
-        <input type="button" value="确定" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)"/>
+        <!--<input type="button" value="确定" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)"/>-->
+        <button  class="btn btn-primary radius mr-10" type="button" ng-click="vm.verifyRelease()?closeThisDialog(1):''">确定</button>
         <input type="button" value="取消" class="btn1 btn_gray" ng-click="closeThisDialog(0)"/>
     </div>
 </div>

@@ -158,6 +158,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     $interval.cancel(edit);
                     var dialog = ngDialog.openConfirm({
                         template:"/know_index/myApplication/applicationRelease/NewServiceRelease.html",
+                        width:"700px",
                         scope: $scope,
                         closeByDocument:false,
                         closeByEscape: true,
@@ -169,7 +170,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
                                 if($scope.vm.channels==null||$scope.vm.channels.length==0){
                                     angular.forEach($scope.vm.channelData,function(channel){
-                                        $scope.vm.channels.push(channel.channelId);
+                                        $scope.vm.channels.push(channel.channelCode);
                                     });
                                     //layer.msg("发布服务时未选择渠道!");
                                     //$scope.vm.allowSubmit=0;

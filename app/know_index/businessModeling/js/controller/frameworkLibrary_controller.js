@@ -655,6 +655,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("addFaq");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/faqNewFrame.html",
+                width:"500px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -692,6 +693,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("updateFaq");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/updateFaqFrame.html",
+                width:"625px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -754,7 +756,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         function fillFaqUpdatePage(){
             for(var i=0;i<$scope.vm.elementIdArray.length;i++){
-                var html= '<div class="row cl mb-10"><label class="form-label col-xs-4 col-sm-2 text-r">扩展问题：</label><div class="formControls col-xs-8 col-sm-9"><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;" disabled="disabled"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
+                var html= '<div class="framework mb-10"><span class="framework_s text-r">扩展问题：</span><div class=""><input type="text" class="L input-text mr-10" element-id="'+$scope.vm.elementIdArray[i]+'" value="'+$scope.vm.elementContentArray[i]+'" style="width:300px;" disabled="disabled"><a element-id="'+$scope.vm.elementIdArray[i]+'" href="javascript:;" class="del"><img src="../../images/images/delete_img.png"></a></div></div>';
                 $(".exten_problem").append(html);
             }
         }
@@ -780,9 +782,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         tagHtml+='<span class="tag_s">'+tagArr[j]+'</span>';
                     }
                     tagHtml+='</div>';
-                    var html =  '<div class="row cl mb-10" element-id="'+$scope.vm.elementIdArray[i]+'">'+
-                        '   <label class="form-label col-xs-4 col-sm-2 text-r mt-7">概念扩展：</label>' +
-                        '   <div class="formControls col-xs-8 col-sm-9" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                    var html =  '<div class="framework mb-10" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                        '   <span class="framework_s text-r mt-7">概念扩展：</span>' +
+                        '   <div class="" element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '       <input type="hidden" value="'+originalText+'"/>'+
                         tagHtml+
                         '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button">'+
@@ -910,6 +912,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("addConcept");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/conceptNewFrame.html",
+                width:"625px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -1028,6 +1031,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("updateConcept");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/updateConceptFrame.html",
+                width:"625px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -1126,6 +1130,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("addElement");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/factorNewFrame.html",
+                width:"800px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -1440,6 +1445,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log("updateConcept");
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/businessModeling/updateFactorFrame.html",
+                width:"840px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -1774,9 +1780,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }
             }
             tagHtml+='</div>';
-            var html =  '<div class="row cl mb-10">'+
-                        '   <label class="form-label col-xs-4 col-sm-2 text-r mt-7">概念扩展：</label>' +
-                        '   <div class="formControls col-xs-8 col-sm-9">'+
+            var html =  '<div class="framework mb-10">'+
+                        '   <span class="framework_s mt-7">概念扩展：</span>' +
+                        '   <div >'+
                         '       <input type="hidden" value="'+originStr+'"/>'+
                         tagHtml+
                         '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+

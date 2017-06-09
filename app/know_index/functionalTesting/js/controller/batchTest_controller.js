@@ -271,8 +271,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 channelName : name ,
                 channel:channelId,
                 applicationId:$scope.vm.applicationId,
-                //serviceId:$scope.vm.serviceId,
-                serviceId:22
+                serviceId:$scope.vm.serviceId,
+                //serviceId:22
             }, function (data) {
                 console.log(data);
                 if(data.status=10000){

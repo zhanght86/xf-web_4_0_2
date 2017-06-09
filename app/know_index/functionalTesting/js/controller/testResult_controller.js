@@ -35,6 +35,8 @@ angular.module('functionalTestModule').controller('testResultController', [
             serviceId : "" ,
             getService : getService,
             exportExcel:exportExcel,
+            allowSubmit : 1, //是否允许提交
+            verifyRelease:verifyRelease, // 校验方法
         //  弹框 参数
             editTitle : "" ,
             editKnow :  "",
@@ -95,6 +97,41 @@ angular.module('functionalTestModule').controller('testResultController', [
                 }, 0);
             }
         },true);
+
+        //验证
+        function verifyRelease(){
+            if($scope.vm.editTitle == null || $scope.vm.editTitle == ""){
+                layer.msg("测试问法不能为空");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.editKnow == null || $scope.vm.editKnow == ""){
+                layer.msg("知识标题不能为空");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.editTitle.length > 50){
+                layer.msg("测试问法长度不能超过50个字符");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.editKnow.length > 50){
+                layer.msg("知识标题长度不能超过50个字符");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            var b = /^[\w+\u4e00-\u9fa5]+$/;     //限制特殊字符正则表达式
+            if(!b.test($scope.vm.editTitle)){
+                layer.msg("测试问法不能包含特殊字符!");
+                return 0;
+            };
+            if(!b.test($scope.vm.editKnow)){
+                layer.msg("知识标题不能包含特殊字符!");
+                return 0;
+            }
+            return 1;
+        }
+
         //修改
         function editQuestion(params){
             console.log(params)
@@ -110,29 +147,36 @@ angular.module('functionalTestModule').controller('testResultController', [
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-                        var channelName ;
-                        angular.forEach($scope.vm.channelList,function (item) {
-                            if(item.channelCode == $scope.vm.editChannel){
-                                channelName = item.channelName ;
-                            }
-                        }) ;
-                        console.log(channelName);
-                        httpRequestPost("/api/application/testResult/updateKnowledge",{
-                            possibleKnowledge: $scope.vm.editTitle,
-                            knowledgeTitle :  $scope.vm.editKnow,
-                            channel : $scope.vm.editChannel,
-                            testResultId : params.testResultId,
-                            channelName : channelName
-                        },function(data){
-                            console.log(data);
-                            if(data.status == 10000){
-                                layer.msg("修改成功");
-                                showData(1) ;
-                            }
-                            $scope.$apply();
-                        },function(){
-                            layer.msg("修改失败");
-                        })  ;
+                        if($scope.vm.allowSubmit) {
+                            var channelName;
+                            angular.forEach($scope.vm.channelList, function (item) {
+                                if (item.channelCode == $scope.vm.editChannel) {
+                                    channelName = item.channelName;
+                                }
+                            });
+                            console.log(channelName);
+                            httpRequestPost("/api/application/testResult/updateKnowledge", {
+                                possibleKnowledge: $scope.vm.editTitle,
+                                knowledgeTitle: $scope.vm.editKnow,
+                                channel: $scope.vm.editChannel,
+                                testResultId: params.testResultId,
+                                batchNumberId:$scope.vm.batchNumberId,
+                                channelName: channelName
+                            }, function (data) {
+                                console.log(data);
+                                if(data.status == 10002){
+                                    layer.msg("该测试问法已经存在，请重新添加!")
+                                }else if (data.status == 10000) {
+                                    layer.msg("修改成功");
+                                    showData(1);
+                                }else if(data.status == 10004){
+                                    layer.msg("修改失败");
+                                }
+                                $scope.$apply();
+                            }, function () {
+                                layer.msg("修改失败");
+                            });
+                        }
                         //$state.reload();
                     } else {
 
@@ -206,7 +250,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             }
             //console.log( $scope.vm.deleteIds);
         }
-        //
+        //单选
         function selectSingle(id){
             if($scope.vm.deleteIds.inArray(id)){
                 $scope.vm.deleteIds.remove(id);

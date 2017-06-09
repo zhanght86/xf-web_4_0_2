@@ -80,6 +80,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
             findMultiInteractive();
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/sceneManageDialog.html",
+                width:"600px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
