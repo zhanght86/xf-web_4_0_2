@@ -110,7 +110,6 @@ angular.module('functionalTestModule').controller('testResultController', [
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-
                         var channelName ;
                         angular.forEach($scope.vm.channelList,function (item) {
                             if(item.channelCode == $scope.vm.editChannel){
