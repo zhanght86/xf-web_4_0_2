@@ -27,8 +27,8 @@
             appendTo: false,
             preCloseCallback: false,
             overlay: true,
-            cache: true,
-            width : "auto"
+            cache: true,   
+            width : "450px"
         };
 
         this.setForceBodyReload = function (_useIt) {
@@ -213,7 +213,7 @@
                                 $dialog.data('$ngDialogControllerController', controllerInstance);
                             }
                             //ÃÌº” width  Ù–‘
-                            if (options.width) { 
+                            if (options.width) {
                                 $dialog.find(".ngdialog-content").css("width",options.width);
                             }
                             if (options.className) {
