@@ -233,21 +233,18 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }
 
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
-        $("body").one('click',function(e){//我的弹出层元素是动态载入的，使用过后就销毁了，所以用了one,可以使用bind
-            e = event || window.event;
-console.log()
-            if(e.target.className=="aside-nav"){
+        $("body").on('click',function(e){
+                  e = event || window.event;
+            var  srcObj = e.srcElement ? e.srcElement : e.target;
+            console.log($(srcObj).closest(".aside-nav").hasClass(".aside-nav")) ;
+            if($(srcObj).closest(".aside-nav").hasClass("aside-nav")){
                 e.stopPropagation();
             }else{
-                $(".aside-nav").hide()
+                $(".aside-nav").find(".type1").children("ul").slideUp() ;
+                $timeout(function(){
+                    $(".aside-nav").find(".type1").children("a").find(".icon-jj").css("backgroundPosition","0% 0%");
+                },50) ;
             }
-            //if(e.stopPropagation){
-            //    e.stopPropagation();
-            //}
-            //else {
-            //    e.cancelBubble = true;
-            //}
-            //$(".aside-nav").hide()
         });
         //获取root 数据
         void function(){
@@ -285,7 +282,6 @@ console.log()
             var isEdg = that.hasClass('icon-ngJj') ;
             // 侧边 只能有一个选项
             //非侧边 可以存在多个
-            console.log(that.closest("ul").hasClass("pas-menu_1")) ;
             if(that.parent().hasClass('type1')){  //root bot
                 return false
             }else if(!that.closest("ul").hasClass("pas-menu_1")){
@@ -309,28 +305,54 @@ console.log()
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
+                    console.log(data)  ;
                     if(data.data){
                             var itemClassName = isEdg?"pas-menu_1":"menu_1";
                             var leafClassName = isEdg?"icon-jj":"icon-ngJj";
                             var  html = '<ul class="'+itemClassName+'">';
                             angular.forEach(data.data,function(item){
+
+                                var typeClass ;
+                                // 叶子节点 node
+                                if((item.categoryLeaf == 0)){
+                                    typeClass = "bot-leaf"　;
+                                }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "edge" )){
+                                    typeClass = "bot-edge"　;
+                                }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "node" )){
+                                    typeClass = "icon-jj"
+                                }
+                                var  backImage ;
+                                switch(item.categoryTypeId){
+                                    case 160 :
+                                        backImage = " bot-divide" ;
+                                        break  ;
+                                    case 161 :
+                                        backImage = " bot-process";
+                                        break  ;
+                                    case 162 :
+                                        backImage = " bot-attr" ;
+                                        break  ;
+                                    case 163 :
+                                        backImage = " bot-default" ;
+                                        break  ;
+                                }
                                 //1  存在叶节点   >
-                                if(item.categoryLeaf){
+                                //if(item.categoryLeaf){
                                     html+= '<li data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
                                                 ' <a class="ellipsis bg50" href="javascript:;">'+
-                                                    '<i class="'+leafClassName+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
+                                                    '<i class="'+leafClassName+" "+typeClass+" "+backImage+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
                                                     '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                                 '</a>' +
-                                             '</li>'
-                                }else{
-                                    //不存在叶节点
-                                    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
-                                                ' <a class="ellipsis bg50" href="javascript:;">'+
-                                                    '<i class="'+leafClassName+'" style="background:0" data-option-id="'+item.categoryId+'"></i>'+
-                                                    '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
-                                                '</a>' +
-                                           '</li>'
-                                }
+                                             '</li>' ;
+                                //}else{
+                                //    //不存在叶节点
+                                //    html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
+                                //                ' <a class="ellipsis bg50" href="javascript:;">'+
+                                //                    '<i class="'+leafClassName+'" style="background:0" data-option-id="'+item.categoryId+'"></i>'+
+                                //                    '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
+                                //                '</a>' +
+                                //           '</li>'
+                                //}
                             });
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent()));

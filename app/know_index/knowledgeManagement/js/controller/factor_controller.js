@@ -588,13 +588,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             return isRepeat
         }
 ////////////////////////////////////// ///         Bot     /////////////////////////////////////////////////////
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //    "categoryPid": "root"
-        //}
-        getBotRoot();
-        //    getDimensions();
-        //    getChannel();
+
         //点击 root 的下拉效果
         function  knowledgeBot(ev){
             //console.log(1) ;
@@ -603,7 +597,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             },50)
         }
         //获取root 数据
-        function getBotRoot(){
+       void function(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
@@ -614,7 +608,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             },function(){
                  console.log("err or err")
             });
-        }
+        }() ;
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
             //类型节点
