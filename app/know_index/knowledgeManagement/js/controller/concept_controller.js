@@ -646,9 +646,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 } else {
                     var callback = saveAddNew;
                 }
-                if(dia.length==0) {  
+                if(dia.length==0) {
                     var dialog = ngDialog.openConfirm({
-                        width: "100px" ,
                         template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
                         scope: $scope,
                         closeByDocument: false,

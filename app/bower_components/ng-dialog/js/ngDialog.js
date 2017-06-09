@@ -27,7 +27,7 @@
             appendTo: false,
             preCloseCallback: false,
             overlay: true,
-            cache: true,   
+            cache: true,
             width : "450px"
         };
 
