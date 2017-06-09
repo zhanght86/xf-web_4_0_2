@@ -29,7 +29,7 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
             },
             css: {
     //            cwd: 'app/css/home/',
-                src: ['app/css/home/*.css','app/'] ,
+                src: ['app/css/home/*.css'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
             }
 
