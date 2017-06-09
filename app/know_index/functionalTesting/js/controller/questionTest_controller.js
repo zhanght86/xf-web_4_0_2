@@ -74,8 +74,10 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 "comparisonTextArray": $scope.vm.comparisonTextArray
             },function(data){
                 //$scope.vm.botRoot = data.data;
-
                 console.log(data);
+                if(data.data.status == 500){
+                    layer.msg(data.data.data);
+                }
                 $scope.vm.answerRes=data.data.data;
                 $scope.$apply();
 
