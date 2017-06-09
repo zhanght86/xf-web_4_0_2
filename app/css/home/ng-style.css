@@ -56,18 +56,6 @@
 .textIndent10 {
   text-indent: 10px;
 }
-.type1 .icon-ngJj {
-  position: relative;
-  top: -1px;
-  margin-right: 5px;
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  vertical-align: middle;
-  background-position: left top;
-  background-repeat: no-repeat;
-  background-image: url(../../images/pic-navs-lc.png);
-}
 .type2 .icon-ngJj {
   position: relative;
   top: -1px;

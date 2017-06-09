@@ -1,9 +1,13 @@
 module.exports = function (grunt) {     //wrapper  grunt 信息
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        beautify: {
+            //中文ascii化，非常有用！防止中文乱码的神配置
+            ascii_only: true
+        } ,
         concat: {
             options: {
-                separator: ';\n'
+                //separator: ';\n'  //文件间分隔符
             },
             allInOne: { //所有JS文件全部合并成一份文件
                 src: ['app/know*/**/*_module.js'],
@@ -24,7 +28,8 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 },
             },
             css: {
-                src: ['app/css/know_*.css'],
+    //            cwd: 'app/css/home/',
+                src: ['app/css/home/*.css'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
             }
 
@@ -99,7 +104,7 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 }
             },
             css: {
-                files: ['app/css/**/know_*.css'],
+                files: ['app/css/home/*.css'],
                 tasks: ['concat:css', 'cssmin:css'],
                 options: {
                     spawn: true,

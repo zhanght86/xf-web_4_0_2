@@ -60,7 +60,7 @@ html,body{font-family: "\5FAE\8F6F\96C5\9ED1"; min-width: 1280px;}
 .my-select dd:hover{color: #333; background-color: #f8f8f8;}
 
 /*多选*/
-.my-checkbox {overflow:hidden;display:  *zoom:1;}
+.my-checkbox {overflow:hidden;zoom:1;}
 .my-checkbox label {color: #666; display:inline-block;height:38px;line-height:38px;padding-left:23px;background:url(../../images/images/my-checkbox.png) 0 center no-repeat;margin-right:25px;cursor:pointer;}
 .my-checkbox label.my-checkbox-on {background-image:url(../../images/images/my-checkbox-on.png);}
 
