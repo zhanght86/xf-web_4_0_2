@@ -1,9 +1,9 @@
 <div class="" style="padding:15px 0;">
     <h3 class="f16 tc mb-20">添加热点问题</h3>
     <div style="height:320px;overflow:auto;">
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-2 col-sm-2 bold">已选知识：</label>
-            <div class="formControls col-xs-10 col-sm-9">
+        <div class="framework cl">
+            <span class="framework_s bold">已选知识：</span>
+            <div >
                 <ul id="already_select" ng-repeat="item in vm.seleceAddAll">
                     <!--{{item}}-->
                     <li><span class="mr-10">{{item.chatKnowledgeTopic}}</span>
@@ -12,9 +12,9 @@
                 </ul>
             </div>
         </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-2 col-sm-2 bold">未选知识：</label>
-            <div class="formControls col-xs-10 col-sm-9">
+        <div class="mb-10 framework">
+            <span class="framework_s bold">未选知识：</span>
+            <div >
                 <div class="mb-10">
                     <input id="inputValue" type="text" placeholder="请输入要查找的知识" ng-model="vm.knowledge" style="width:220px" class="input-text">
                     <!--<button class="btn1 btn1_blue" >查找</button>-->

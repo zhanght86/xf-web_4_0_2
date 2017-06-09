@@ -183,3 +183,16 @@
 /*机器人设置样式修改*/
 .setting_div{position: relative;padding-left:233px;min-height:25px;margin-bottom:10px;}
 .setting_span{position:absolute;left:0;top:0;width:233px;display:block;text-align:right;}
+.classic_head_ul li {
+    width: 23%;
+    height: 85px;
+    margin-right: 2%;
+    margin-bottom: 10px;
+    float: left;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    overflow:hidden;
+}
+.classic_head_ul li.active {
+    border-color: red;
+}
