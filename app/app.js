@@ -812,6 +812,22 @@ knowledge_static_web
                     }
                 }
             })
+            // //批量知识新增
+            .state("knowledgeManagement.knowBatchAdditions", {
+                url: "/knowBatchAdditions",
+                params : {data : null},
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/batchAdditions/knowBatchAdditions.html',
+                        controller: "knowBatchAdditionsController"
+                    }
+                }
+            })
+            
             //知識預覽
             .state("knowledgeManagement.knowledgeScan", {
                 url: "/knowledgeScan",
