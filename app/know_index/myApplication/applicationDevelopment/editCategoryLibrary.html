@@ -16,6 +16,11 @@
                 <input type="text" class="input_text" id="categoryLibraryName" ng-model="vm.categoryLibraryName"/>
                 <p id="editErrorView" class="c-error pd-5" style="margin-left: 76px;"></p>
             </div>
+            <div class="mb-20">
+                <span class="mr-10" style="vertical-align: top;">描述: </span>
+                <textarea type="text" class="input_text" style="height: 78px;" id="categoryLibraryDescribe" ng-model="vm.categoryLibraryDescribe"></textarea>
+                <p id="describeErrorView" class="c-error pd-5" style="margin-left: 76px;"></p>
+            </div>
             <div class="tac mt10">
                 <a class="btn btn-blue mr-10" href="javascript:;" ng-click="closeThisDialog(1)">确认修改</a>
                 <a class="btn btn-gray" href="javascript:;" ng-click="closeThisDialog(0)">取消</a>

@@ -4,13 +4,13 @@
     <div>
         <table class="table1">
             <tr>
-                <td width="30%" class="bold"></td>
-                <td width="70%" class="bold">服务名称</td>
+                <td width="30%" class="bold">服务名称</td>
+                <td width="20%" class="bold"></td>
+                <td width="50%" class="bold">服务地址</td>
             </tr>
-            <tr ng-repeat="val in vm.serviceArray">
-                <td ><input type="radio" ng-model="vm.serviceUrl" value="{{val.nodeAccessIp}}" name="service" /></td>
-                <td >{{val.serviceName}}</td>
-            </tr>
+            <tbody id="engineList">
+
+            </tbody>
         </table>
     </div>
     <!--<div class="page clearfix">

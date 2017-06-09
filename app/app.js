@@ -20,7 +20,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ng.shims.placeholder',
     //先行
     'loginModule',
-    'indexModule',
+    //'indexModule',
     "adminModule",
 
     //首页 模块
@@ -877,17 +877,18 @@ knowledge_static_web
                 }
             })
             .state("functionalTest.testResult", {
-            url: "/testResult",
-            views: {
-                'header': {
-                    templateUrl: 'know_index/home/homePageNav.html',
-                    controller: "homePageNavController"
-                },
-                'content': {
-                    templateUrl: 'know_index/functionalTesting/testResult.html',
-                    controller: "testResultController"
-                    }
-                }
+                    url: "/testResult",
+                    params : {"batchNumberId": null},    //给 $stateParams 定义参数；
+                    views: {
+                        'header': {
+                            templateUrl: 'know_index/home/homePageNav.html',
+                            controller: "homePageNavController"
+                        },
+                        'content': {
+                            templateUrl: 'know_index/functionalTesting/testResult.html',
+                            controller: "testResultController"
+                            }
+                        }
             })
             .state("functionalTest.viewDetails", {
                 params : {batchNumberId : null},
@@ -981,41 +982,7 @@ knowledge_static_web
                 }
             })
 
-            //我的应用myApplication
 
-            //.state("myApplication", {
-            //    url: "/myApplication",
-            //    templateUrl: 'know_index/myApplication/myApplication.html',
-            //    controller: "myApplicationController"
-            //})
-            //.state("myApplication.robot", {
-            //    url: "/robot",
-            //    views: {
-            //        'myApplicationHeader': {
-            //            templateUrl: 'know_index/myApplication/myApplicationHeader.html',
-            //            //controller: "myApplicationController"
-            //        },
-            //        'myApplicationContent': {
-            //            templateUrl: 'know_index/home/chatKnowledgeBase.html',
-            //            //controller: "homePageNavController"
-            //        },
-            //        //'myApplicationSidebar': {
-            //        //    templateUrl: 'know_index/home/chatKnowledgeBase.html',
-            //        //    //controller: "homePageNavController"
-            //        //}
-            //    }
-            //
-            //})
-
-
-
-
-            //初始页
-            .state("index", {
-                url: "/index",
-                templateUrl: 'know_index/index/main.html',
-                controller: "indexController"
-            })
 
             //知识接入
             //任务分析

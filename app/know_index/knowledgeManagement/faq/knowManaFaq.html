@@ -93,8 +93,8 @@
                         <div class="lable" style="width:245px;">业务框架：</div>
                         <!--<label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>-->
                         <div class="formControls col-xs-8 col-sm-9" style="padding-left:0;">
-                            <select class="input-text" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
-                                <option value="" ng-if="vm.frames.length">--请选择以上业务框架--</option>
+                            <select  class="input-text pickFrame" style="width:407px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
+                                <!--<option value="" ng-if="vm.frames.length">&#45;&#45;请选择以上业务框架&#45;&#45;</option>-->
                             </select>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
                         <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
-                        <!--<span class="L"><b>来源于</b> <span>信用卡如何办理</span></span>-->
+                        <!--<span class="L" ng-if="item.source"><b>来源于: </b> <span>{{item.source}}</span></span>-->
                     </div>
                 </div>
 <!-- 業務框架 生成 -->

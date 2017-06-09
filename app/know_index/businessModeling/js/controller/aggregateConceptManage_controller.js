@@ -39,7 +39,10 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -59,6 +62,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 layer.msg("请求失败")
             })
         }
+
         function loadCollectiveConcept(current,data){
             $scope.vm.listData = data.data;
             $scope.vm.current=current;
@@ -298,6 +302,26 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 }
             });
         }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadCollectiveConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/collective/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
+        }
         //編輯事件
         function singleEditCollectiveConcept(item){
             assembleCollectiveConceptTerm();
@@ -376,6 +400,9 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
         //返回状态显示
         function responseView(data){
+            $scope.vm.key = "";
+            $scope.vm.term = "";
+            $scope.vm.weight = 33;
             if(data==null){
                 return false;
             }
@@ -385,6 +412,40 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 return true;
             }
             return false;
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","concept_with_weight_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/concept/collective/export",{
+                "collectiveConceptApplicationId":$scope.vm.applicationId
+            },function(data){
+                if(responseView(data)==true){
+                    var html = "";
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
+                    }
+                }
+            });
         }
     }
 ]);

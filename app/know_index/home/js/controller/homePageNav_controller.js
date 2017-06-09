@@ -14,15 +14,18 @@ angular.module('homePage').controller('homePageNavController', [
                 userName : $cookieStore.get('userName'),
                 logApplication : logApplication,
                 jump: jump,
-                jumpPopup : jumpPopup,
-
+                openServiceConfirm : openServiceConfirm,
+                queryServiceList: queryServiceList,
+                serviceUrl: "",
+                serviceUrlList: ""
             };
         if($scope.url == "/homePage/define"){
-            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/index-bg.jpg) repeat ";
+            document.getElementsByTagName("body")[0].style.cssText = "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/images/index-bg.jpg',sizingMethod='scale');background: url(../../images/images/index-bg.jpg) no-repeat;background-size:100%";
+            //document.getElementsByClassName("bodyBg")[0].src = "../../images/images/index-bg.jpg";
         }else if($scope.url == "/login"){
-            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) repeat";
+            document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) no-repeat;background-size:100%;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/images/log-bg.jpg',sizingMethod='scale');";
         }else{
-            document.getElementsByTagName("body")[0].style.cssText = "background: ";
+            document.getElementsByTagName("body")[0].style.cssText = "background: #f8f8f8";
         }
         if(!$cookieStore.get('userId')){
             $state.go("login")
@@ -42,8 +45,47 @@ angular.module('homePage').controller('homePageNavController', [
             $state.go("login");
             localStorage.removeItem('history');
         }
-        //
-        function jumpPopup(callback){
+        //初始化分页配置
+        self.initSearch = function (column) {
+            if (!$scope.SearchPOJO) {
+                $scope.SearchPOJO = $scope.initSearchPOJO();
+            }
+            /**
+             * 加载分页条
+             * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
+             */
+            $scope.paginationConf = {
+                currentPage: $scope.SearchPOJO.currentPage,//当前页
+                totalItems: 0, //总条数
+                pageSize: $scope.SearchPOJO.pageSize,//第页条目数
+                pagesLength: 6,//分页框数量
+
+            };
+        }
+        self.initSearch();
+
+        function queryServiceList(){
+            //服务列表请求
+            httpRequestPost("/api/application/service/listServiceByPage",{
+                "applicationId" :  $scope.vm.applicationId,
+                "index": ($scope.SearchPOJO.currentPage-1)*$scope.SearchPOJO.pageSize,
+                "pageSize": $scope.SearchPOJO.pageSize
+            },function(resource){
+                if(resource.status == 200 && resource.data != null && resource.data.length >0){
+                    $scope.paginationConf.totalItems = resource.total;
+                    $scope.vm.serviceArray = resource.data;
+                    $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;//设置默认选择
+                    $scope.vm.openServiceConfirm();
+                }else{
+                    layer.msg("无应用服务")
+                }
+            },function(){
+                layer.msg("无法加载服务列表")
+            });
+        }
+        //引擎跳转方法
+        function openServiceConfirm(){
+            //对话框打开方法
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/home/homePageDialog.html",
                 scope: $scope,
@@ -53,16 +95,14 @@ angular.module('homePage').controller('homePageNavController', [
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-                        $scope.vm.jump();
-                    } else {
-
+                        $scope.vm.jump($scope.vm.serviceUrl);
                     }
                 }
             });
         }
-        //
-        function jump() {
-            window.open('http://'+window.location.host+':7003/index.html');
+        //打开引擎访问界面
+        function jump(url) {
+            window.open('http://'+url+'/index.html');
         }
         $scope.checkShowCrumbs=function(){
             if(!$scope.url.toString().indexOf("/homePage/define") > 0 || !$scope.url.toString().indexOf("/admin/manage") > 0 || !$scope.url.toString().indexOf("/admin/userManage") > 0){

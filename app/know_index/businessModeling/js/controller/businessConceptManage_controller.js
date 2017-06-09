@@ -43,8 +43,11 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
-            relateNullOrBeyondLimit:"相关概念不能为空或超过长度限制2000",
-            relateBeyondLimit:"相关概念个数不能为0或超过20个"
+            relateNullOrBeyondLimit:"相关概念不能超过长度限制2000",
+            relateBeyondLimit:"相关概念个数不能超过20个",
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -255,7 +258,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                         var objRelate = $("#relate").next();
                         var relate = "";
                         var lengthRelate = objRelate.find("li").length;
-                        if(lengthRelate<=0 || lengthRelate>20){
+                        if(lengthRelate>20){
                             $("#relateAddError").html($scope.vm.relateBeyondLimit);
                             return false;
                         }else{
@@ -287,13 +290,16 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                 });
                             }
                         });
-                        relate=relate.substring(0,relate.length-1);
-                        $scope.vm.relate=relate;
-                        if(lengthCheck(relate,0,5000)==false){
-                            $("#relateAddError").html($scope.vm.relateNullOrBeyondLimit);
-                            return false;
-                        }else{
-                            $("#relateAddError").html('');
+                        console.log("====="+relate);
+                        if(relate!=""){
+                            relate=relate.substring(0,relate.length-1);
+                            $scope.vm.relate=relate;
+                            if(lengthCheck(relate,0,5000)==false){
+                                $("#relateAddError").html($scope.vm.relateNullOrBeyondLimit);
+                                return false;
+                            }else{
+                                $("#relateAddError").html('');
+                            }
                         }
                         callback(item);
                     }else{
@@ -334,6 +340,27 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
         }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadBusinessConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/business/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
+        }
+
         //編輯事件
         function singleEditBusinessConcept(item){
             assembleBusinessConceptTerm();
@@ -447,10 +474,15 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 }
             });
             relate=relate.substring(0,relate.length-1);
+            console.log("====="+relate);
             $scope.vm.relate=relate;
         }
         //返回状态显示
         function responseView(data){
+            $scope.vm.key = "";
+            $scope.vm.term = "";
+            $scope.vm.relate = "";
+            $scope.vm.weight = 33;
             if(data==null){
                 return false;
             }
@@ -460,6 +492,40 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                 return true;
             }
             return false;
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","business_concept_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/concept/business/export",{
+                "businessConceptApplicationId":$scope.vm.applicationId
+            },function(data){
+                if(responseView(data)==true){
+                    var html = "";
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
+                    }
+                }
+            });
         }
     }
 ]);

@@ -26,6 +26,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             timeEnd : "",
             //新增
             key: "" ,
+            oldKey: "" ,
             modifier: $cookieStore.get("userId"),
             term: "",
             weight: "33" ,   //默認權重
@@ -36,7 +37,10 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -82,6 +86,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         function editSynonym(item){
             $scope.vm.dialogTitle="编辑同义概念";
             $scope.vm.key = item.synonymConceptKey;
+            $scope.vm.oldKey = item.synonymConceptKey;
             $scope.vm.term =  item.synonymConceptTerm;
             $scope.vm.weight =  item.synonymConceptWeight;
             addSynonymConceptDialog(singleEditSynonymConcept,item);
@@ -195,6 +200,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                         })
                     }else{
                         $scope.vm.key = "";
+                        $scope.vm.oldKey = "";
                         $scope.vm.term = "";
                         $scope.vm.weight = 33;
                     }
@@ -258,6 +264,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                         callback(item);
                     }else{
                         $scope.vm.key = "";
+                        $scope.vm.oldKey = "";
                         $scope.vm.term = "";
                         $scope.vm.weight = 33;
                     }
@@ -292,6 +299,26 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 }
             });
         }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/synonym/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
+        }
         //編輯事件
         function singleEditSynonymConcept(item){
             assembleSynonymConceptTerm();
@@ -300,6 +327,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "applicationId": $scope.vm.applicationId,
                 "synonymConceptKey":  $scope.vm.key,
+                "synonymConceptOldKey":  $scope.vm.oldKey,
                 "synonymConceptModifier": $scope.vm.modifier,
                 "synonymConceptTerm": $scope.vm.term,
                 "synonymConceptWeight": $scope.vm.weight
@@ -370,6 +398,10 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
         }
         //返回状态显示
         function responseView(data){
+            $scope.vm.key = "";
+            $scope.vm.oldKey = "";
+            $scope.vm.term = "";
+            $scope.vm.weight = 33;
             if(data==null){
                 return false;
             }
@@ -379,6 +411,40 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 return true;
             }
             return false;
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","concept_with_weight_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/concept/synonym/export",{
+                "synonymConceptApplicationId":$scope.vm.applicationId
+            },function(data){
+                if(responseView(data)==true){
+                    var html = "";
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
+                    }
+                }
+            });
         }
     }
 ]);

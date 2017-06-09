@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function (grunt) {     //wrapper  grunt 信息
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
@@ -103,6 +103,7 @@ module.exports = function (grunt) {
                 tasks: ['concat:css', 'cssmin:css'],
                 options: {
                     spawn: true,
+
                     interrupt: true
                 }
             }

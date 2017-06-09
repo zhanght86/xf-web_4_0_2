@@ -36,7 +36,10 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload
         };
 
         /**
@@ -291,6 +294,26 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 });
             }
         }
+        //批量导入
+        function batchUpload(){
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadSensitiveConceptTable($scope.vm.paginationConf.currentPage);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/concept/sensitive/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                }, 100);
+            }
+        }
         //編輯事件
         function singleEditSensitiveConcept(item){
             assembleSensitiveConceptTerm();
@@ -367,6 +390,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         //返回状态显示
         function responseView(data){
+            $scope.vm.key = "";
+            $scope.vm.term = "";
             if(data==null){
                 return false;
             }
@@ -376,6 +401,40 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 return true;
             }
             return false;
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","concept_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/concept/sensitive/export",{
+                "sensitiveConceptApplicationId":$scope.vm.applicationId
+            },function(data){
+                if(responseView(data)==true){
+                    var html = "";
+                    for(var i=0;i<data.exportFileNameList.length;i++){
+                        console.log("====="+i);
+                        html+='<a href="'+"/api/ms/modeling/downloadWithPath?filePath="+data.filePath+"&fileName="+data.exportFileNameList[i]+'"><li title="'+data.exportFileNameList[i]+'">' +
+                            '<p class="title"></p>' +
+                            '<p class="imgWrap"><img src="../images/excel.png"></p>' +
+                            '</li></a>';
+                    }
+                    var dialog = ngDialog.openConfirm({
+                        template:"/know_index/businessModeling/downloadList.html",
+                        scope: $scope,
+                        closeByDocument:false,
+                        closeByEscape: true,
+                        showClose : true,
+                        backdrop : 'static',
+                        preCloseCallback:function(e){    //关闭回掉
+                        }
+                    });
+                    if(dialog){
+                        $timeout(function () {
+                            $("#downloadList").append(html);
+                        }, 100);
+                    }
+                }
+            });
         }
     }
 ]);

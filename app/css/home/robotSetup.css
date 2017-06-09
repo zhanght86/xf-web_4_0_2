@@ -35,8 +35,8 @@
 .aside-navn .slide-a:hover{color: #666;}
 .aside-navn .slide-a.slideActive .icon-jj{background-position: left bottom;}
 .aside-navn .pas-menu_1{position: absolute; left: 100%; top: 0; z-index: 9; width: 100%; border: 1px solid #dadada;  display: none;}
-.aside-navn .menu_1>li>a:hover{background-color: #505767; color: #fff;}
-.aside-navn .menu_1>li:hover>.pas-menu_1{display: block;}
+/*.aside-navn .menu_1>li>a:hover{background-color: #505767; color: #fff;}*/
+/*.aside-navn .menu_1>li:hover>.pas-menu_1{display: block;}*/
 
 /*aside s树形菜单*/
 .aside-navs{line-height: 30px; overflow: auto; margin: 20px;}

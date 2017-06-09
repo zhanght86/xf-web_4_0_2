@@ -22,10 +22,10 @@
             <input type="button" value="查找" ng-click="vm.searchSensitiveConcept()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addSensitive()">新增</a>
-                <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
+                <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.batchUpload()">批量新增</a>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
-                <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
-                <a class="btn btn-green2 mr10" href="javascript:;">导出概念库</a>
+                <a class="btn btn-green mr10" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
+                <a class="btn btn-green2 mr10" href="javascript:;" ng-click="vm.exportAll()">导出概念库</a>
             </div>
         </div>
         <table class="stop_word_tab">

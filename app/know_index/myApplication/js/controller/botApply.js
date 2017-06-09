@@ -42,21 +42,21 @@ angular.module('myApplicationModule').controller('botApplyController', [
             categoryLibraryAttributeName: "edge",
             categoryLibraryName: "",
             categoryLibraryPid: "",
+            categoryLibraryDescribe: "",
             categoryLibraryLeaf: 1,
             reloadBotLibrary:reloadBotLibrary,
             reloadBot:reloadBot,
             disableAttributeTypeForApply:disableAttributeTypeForApply,
             repeatCheckForCategory:repeatCheckForCategory,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            categoryDescribeBeyondLimit:"描述超过长度限制2000",
             responseView:responseView,
             searchNodeForBot:searchNodeForBot,
             recursionForBot:recursionForBot,
             autoHeightForBot:autoHeightForBot,
             locationForBot:locationForBot
         };
-        //setCookie("applicationId","360619411498860544");
-        //setCookie("userId","1");
-        //setCookie("sceneId","10023");
+
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
@@ -76,7 +76,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             "categoryAttributeName":"node",
             "categorySceneId":categorySceneId
         };
-        console.log("========"+JSON.stringify(params));
+        console.log("========"+toCategoryLibraryString(params));
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
             serviceUrl: "/api/ms/modeling/categorylibrary/searchbycategoryname",
@@ -198,10 +198,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;">'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -228,10 +228,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;">'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -256,6 +256,14 @@ angular.module('myApplicationModule').controller('botApplyController', [
             }else{
                 return "";
             }
+        }
+        //显示节点描述
+        function categoryDescribeView(describeStr){
+            console.log("===describe===");
+            if(nullCheck(describeStr)==true){
+                return "title='"+describeStr+"'";
+            }
+            return "";
         }
         $("#category").on("click","span",function(){
             clearColor();
@@ -308,10 +316,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         for(var i=0;i<data.data.length;i++){
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                '<a class="ellipsis" href="javascript:;">'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'" node-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -346,10 +354,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         for(var i=0;i<data.data.length;i++){
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                '<a class="ellipsis" href="javascript:;">'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -501,7 +509,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         //属性填充
         function botInfoToCategoryAttribute(){
             if($scope.vm.botInfo){
-                var category = eval('(' + $scope.vm.botInfo + ')');
+                var category = JSON.parse($scope.vm.botInfo);
                 $scope.vm.botSelectValue=category.categoryId;
                 $scope.vm.categoryId=category.categoryId;
                 $scope.vm.categoryTypeId=category.categoryTypeId;
@@ -516,7 +524,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         //属性填充
         function botLibraryInfoToCategoryAttribute(){
             if($scope.vm.botLibraryInfo){
-                var category = eval('(' + $scope.vm.botLibraryInfo + ')');
+                var category = JSON.parse($scope.vm.botLibraryInfo);
                 $scope.vm.botLibrarySelectValue=category.categoryId;
                 $scope.vm.categoryLibraryId=category.categoryId;
                 $scope.vm.categoryLibraryTypeId=category.categoryTypeId;
@@ -524,6 +532,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 $scope.vm.categoryLibraryAttributeName=category.categoryAttributeName;
                 $scope.vm.categoryLibraryName=category.categoryName;
                 $scope.vm.categoryLibraryPid=category.categoryPid;
+                if(nullCheck(category.categoryDescribe)==true){
+                    $scope.vm.categoryLibraryDescribe=underlineToWhiteSpace(category.categoryDescribe);
+                }
                 $scope.vm.categoryLibraryLeaf=category.categoryLeaf;
             }
         }
@@ -536,7 +547,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         var length = $(value).parent().find("li").length-1;
                         //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
                         console.log("==========="+length+"=====");
-                        if(length==0){
+                        if(length==0 && type==1){
                             $(value).parent().prev().find("i").attr("style","display:none");
                         }
                         //移除指定元素
@@ -559,10 +570,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -574,10 +585,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -627,6 +638,14 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         if(repeatCheckForCategory("#addErrorView",0)==false){
                             return false;
                         }
+                        if(nullCheck($("#categoryLibraryDescribe").val())==true){
+                            if(lengthCheck($("#categoryLibraryDescribe").val(),0,2000)==false){
+                                $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
+                                return false;
+                            }else{
+                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
+                            }
+                        }
                         console.log("=========="+$("#categoryLibraryNameAdd").val());
                         httpRequestPost("/api/ms/modeling/categorylibrary/add",{
                             "categoryPid": $scope.vm.botLibrarySelectValue,
@@ -634,6 +653,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             "categoryName": $("#categoryLibraryNameAdd").val(),
                             "categoryTypeId": $("#categoryLibraryTypeIdAdd").val(),
                             "categoryModifierId": categoryModifierId,
+                            "categoryDescribe": $scope.vm.categoryLibraryDescribe,
                             "categorySceneId": categorySceneId,
                             "categoryLeaf": 0
                         },function(data){
@@ -641,6 +661,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 //重新加载
                                 reloadBotLibrary(data,0);
                             }
+                            $("#categoryLibraryDescribe").val('');
                         },function(err){
                             console.log(err);
                         });
@@ -712,6 +733,14 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         if(repeatCheckForCategory("#editErrorView",1)==false){
                             return false;
                         }
+                        if(nullCheck($("#categoryLibraryDescribe").val())==true){
+                            if(lengthCheck($("#categoryLibraryDescribe").val(),0,2000)==false){
+                                $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
+                                return false;
+                            }else{
+                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
+                            }
+                        }
                         httpRequestPost("/api/ms/modeling/categorylibrary/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryLibraryId,
                             "categoryPid": $scope.vm.categoryLibraryPid,
@@ -719,6 +748,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             "categoryName": $("#categoryLibraryName").val(),
                             "categoryTypeId": $("#categoryLibraryTypeId").val(),
                             "categoryModifierId": categoryModifierId,
+                            "categoryDescribe": $scope.vm.categoryLibraryDescribe,
                             "categorySceneId": categorySceneId,
                             "categoryLeaf": $scope.vm.categoryLibraryLeaf
                         },function(data){
@@ -726,6 +756,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 //重新加载
                                 reloadBotLibrary(data,2);
                             }
+                            $("#categoryLibraryDescribe").val('')
                         },function(err){
                             console.log(err);
                         });
@@ -826,7 +857,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     if($(value).find("i").attr("data-option")==$scope.vm.botLibrarySelectValue){
                         //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
                         console.log("==========="+length+"=====");
-                        if(length==0){
+                        if(length==0 && type==1){
                             $(value).parent().prev().find("i").attr("style","display:none");
                         }
                         //移除指定元素
@@ -849,10 +880,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -864,10 +895,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';

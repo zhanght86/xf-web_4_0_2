@@ -32,14 +32,16 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             clearColor:clearColor,
             repeatCheck:repeatCheck,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            categoryDescribeBeyondLimit:"描述内容超过长度限制2000",
             searchNode:searchNode,
             recursion:recursion,
             location:location,
-            autoHeight:autoHeight
+            autoHeight:autoHeight,
+            downloadTemplate:downloadTemplate,
+            exportAll:exportAll,
+            batchUpload:batchUpload,
+            categoryDescribe:""
         };
-        //setCookie("categoryApplicationId","360619411498860544");
-        //setCookie("categoryModifierId","1");
-        //setCookie("categorySceneId","10023");
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
         var categorySceneId = $cookieStore.get("sceneId");
@@ -182,10 +184,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;">'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -242,7 +244,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回调
+                preCloseCallback:function(e){  //关闭回调
                     if(e===1){
                         if(lengthCheck($("#categoryName").val(),0,50)==false){
                             $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
@@ -250,6 +252,14 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         }
                         if(repeatCheck("#editErrorView",1)==false){
                             return false;
+                        }
+                        if(nullCheck($("#categoryDescribe").val())==true){
+                            if(lengthCheck($("#categoryDescribe").val(),0,2000)==false){
+                                $("#categoryDescribeError").html($scope.vm.categoryDescribeBeyondLimit);
+                                return false;
+                            }else{
+                                $scope.vm.categoryDescribe=$("#categoryDescribe").val();
+                            }
                         }
                         httpRequestPost("/api/ms/modeling/category/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryId,
@@ -260,6 +270,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             "categoryName": $("#categoryName").val(),
                             "categoryTypeId": $("#categoryTypeId").val(),
                             "categoryModifierId": categoryModifierId,
+                            "categoryDescribe": $scope.vm.categoryDescribe,
                             "categorySceneId": categorySceneId,
                             "categoryLeaf": $scope.vm.categoryLeaf
                         },function(data){
@@ -360,10 +371,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         for(var i=0;i<data.data.length;i++){
                             html+= '<li data-option="'+data.data[i].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                '<a class="ellipsis" href="javascript:;">'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -392,11 +403,19 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 return;
             }
             if(lengthCheck($("#category-name").val(),0,50)==false){
-                $(".c-error").html($scope.vm.categoryNameNullOrBeyondLimit);
+                $("#category-name-error").html($scope.vm.categoryNameNullOrBeyondLimit);
                 return;
             }
-            if(repeatCheck(".c-error",0)==false){
+            if(repeatCheck("#category-name-error",0)==false){
                 return;
+            }
+            if(nullCheck($("#category-describe").val())==true){
+                if(lengthCheck($("#category-describe").val(),0,2000)==false){
+                    $("#category-describe-error").html($scope.vm.categoryDescribeBeyondLimit);
+                    return;
+                }else{
+                    $scope.vm.categoryDescribe=$("#category-describe").val();
+                }
             }
             httpRequestPost("/api/ms/modeling/category/add",{
                 "categoryApplicationId": categoryApplicationId,
@@ -407,6 +426,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 "categoryTypeId": $("#category-type").val(),
                 "categoryModifierId": categoryModifierId,
                 "categorySceneId": categorySceneId,
+                "categoryDescribe": $scope.vm.categoryDescribe,
                 "categoryLeaf": 0
             },function(data){
                 if(responseView(data)==true){
@@ -414,6 +434,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     $("#category-name").val('');
                     reloadBot(data,0);
                 }
+                $("#category-describe").val('')
             },function(err){
                 console.log(err);
             });
@@ -462,7 +483,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         var length = $(value).parent().find("li").length-1;
                         //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
                         console.log("==========="+length+"=====");
-                        if(length==0){
+                        if(length==0 && type==1){
                             $(value).parent().prev().find("i").attr("style","display:none");
                         }
                         //移除指定元素
@@ -485,10 +506,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -500,10 +521,10 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             count++;
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -566,7 +587,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //属性填充
         function botInfoToCategoryAttribute(){
             if($scope.vm.botInfo){
-                var category = eval('(' + $scope.vm.botInfo + ')');
+                var category = JSON.parse($scope.vm.botInfo);
                 $scope.vm.botSelectValue=category.categoryId;
                 $scope.vm.categoryId=category.categoryId;
                 $scope.vm.categoryTypeId=category.categoryTypeId;
@@ -575,6 +596,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.categoryAttributeName=category.categoryAttributeName;
                 $scope.vm.categoryPid=category.categoryPid;
                 $scope.vm.categoryApplicationId=category.categoryApplicationId;
+                if(nullCheck(category.categoryDescribe)==true){
+                    $scope.vm.categoryDescribe=underlineToWhiteSpace(category.categoryDescribe);
+                }
                 $scope.vm.categoryLeaf=category.categoryLeaf;
             }
         }
@@ -636,13 +660,55 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 return "";
             }
         }
+        //显示节点描述
+        function categoryDescribeView(describeStr){
+            console.log("===describe===");
+            if(nullCheck(describeStr)==true){
+                return "title='"+describeStr+"'";
+            }
+            return "";
+        }
         $("#category-name").blur(function(){
             if(lengthCheck($("#category-name").val(),0,50)==false){
-                $(".c-error").html($scope.vm.categoryNameNullOrBeyondLimit);
+                $("#category-name-error").html($scope.vm.categoryNameNullOrBeyondLimit);
             }else{
-                $(".c-error").html('');
-                repeatCheck(".c-error",0);
+                $("#category-name-error").html('');
+                repeatCheck("#category-name-error",0);
             }
         });
+        function downloadTemplate(){
+            downloadFile("/api/ms/modeling/download","","business_ontology_tree_template.xlsx");
+        }
+        function exportAll(){
+            httpRequestPost("/api/ms/modeling/category/export",{
+                "categoryApplicationId":categoryApplicationId
+            },function(data){
+                if(responseView(data)==true){
+                    if(data.exportFileNameList.length>0){
+                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
+                    }
+                }
+            });
+        }
+        function batchUpload(){
+            var pid = 'root';
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/businessModeling/batchUpload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    initBot();
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/category/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&sceneId='+categorySceneId+'&pid='+pid);
+                }, 100);
+            }
+        }
     }
 ]);

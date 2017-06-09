@@ -8,6 +8,7 @@
 
                 <select id="searchType" ng-model="vm.searchType" style="height: 31px;">
                     <option value="semanticExpressionConceptKey" selected>语义表达概念类名</option>
+                    <option value="semanticExpressionSynonymConcept">同义概念</option>
                     <option value="semanticExpressionConceptTerm">语义表达概念集合</option>
                     <option value="semanticExpressionConceptModifier">修改人</option>
                     <option value="semanticExpressionConceptModifyTime">更新时间</option>
@@ -22,10 +23,10 @@
             <input type="button" value="查找" ng-click="vm.searchSemanticExpressionConcept()"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addSemanticExpression()">新增</a>
-                <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
+                <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.batchUpload()">批量新增</a>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续情感库</a>-->
-                <a class="btn btn-green mr10" href="javascript:;">下载模板</a>
-                <a class="btn btn-green2 mr10" href="javascript:;">导出情感库</a>
+                <a class="btn btn-green mr10" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
+                <a class="btn btn-green2 mr10" href="javascript:;" ng-click="vm.exportAll()">导出情感库</a>
             </div>
         </div>
         <table class="stop_word_tab">
@@ -33,7 +34,8 @@
                 <tr>
                     <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
                     <th class="bold" width="10%">语义表达概念类名</th>
-                    <th class="bold" width="40%">语义表达概念集合</th>
+                    <th class="bold" width="10%">同义概念</th>
+                    <th class="bold" width="30%">语义表达概念集合</th>
                     <th class="bold" width="15%">更新时间</th>
                     <th class="bold" width="15%">修改人</th>
                     <th class="bold" width="10%">操作</th>
@@ -42,6 +44,7 @@
             <tr ng-repeat="item in vm.listData">
                 <!--<td><input type="checkbox"></td>-->
                 <td>{{item.semanticExpressionConceptKey}}</td>
+                <td>{{item.semanticExpressionSynonymConcept}}</td>
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.semanticExpressionConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.semanticExpressionConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
                 </td>

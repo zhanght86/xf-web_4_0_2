@@ -22,7 +22,9 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             reset : reset,
             result:'',
             question : '',
+            txtFocus : txtFocus,
         };
+
         //獲取维度
         knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
             function(data) {
@@ -63,11 +65,13 @@ angular.module('functionalTestModule').controller('sessionTestController', [
        function test(){
            if($scope.vm.serviceId){
                if($scope.vm.testAsking==''){
-                   alert('请输入测试问题!');
+                   layer.msg('请输入测试问题!');
+                   layer.msg("请输入测试问题");
                    return ;
                }
                if($scope.vm.channel==''){
-                   alert('请选择渠道!');
+                   layer.msg('请选择渠道!');
+                   layer.msg("请选择渠道!");
                    return;
                }
 
@@ -77,10 +81,13 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                    content:$scope.vm.testAsking,
                    channel:$scope.vm.channel,
                    dimensionArray:$scope.vm.dimensionArray,
-                   //serviceId:$scope.vm.serviceId,
-                   serviceId:22
+                   serviceId:$scope.vm.serviceId,
+                   //serviceId:22
                },function(data){
                    console.log(data);
+                   if(data.data.status == 500){
+                       layer.msg("测试失败");
+                   }
                    $scope.vm.result=data.data.data;
                    $scope.vm.question= $scope.vm.testAsking;
 
@@ -98,6 +105,11 @@ angular.module('functionalTestModule').controller('sessionTestController', [
         function reset(){
             $scope.vm.testAsking='';
         }
+        //文本域自动获取焦点；
+        function txtFocus(){
+            $('.chat_text_txta').focus();
+        }
+        txtFocus();
 
     }
 ]);
