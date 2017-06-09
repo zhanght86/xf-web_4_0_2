@@ -499,6 +499,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         function openContentConfirm(callback){
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                width:"650px",
                 scope: $scope,
                 closeByNavigation: false,
                 overlay: true,
