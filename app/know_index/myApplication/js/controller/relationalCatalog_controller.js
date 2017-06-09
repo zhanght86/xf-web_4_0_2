@@ -187,7 +187,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -244,7 +244,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回调
+                preCloseCallback:function(e){  //关闭回调
                     if(e===1){
                         if(lengthCheck($("#categoryName").val(),0,50)==false){
                             $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
@@ -374,7 +374,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -509,7 +509,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -524,7 +524,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
                                 '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'">'+data.data[0].categoryName+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+JSON.stringify(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="images/bot-edit.png"/><img class="delete" style="width: 12px;" src="images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -587,7 +587,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         //属性填充
         function botInfoToCategoryAttribute(){
             if($scope.vm.botInfo){
-                var category = eval('(' + $scope.vm.botInfo + ')');
+                var category = JSON.parse($scope.vm.botInfo);
                 $scope.vm.botSelectValue=category.categoryId;
                 $scope.vm.categoryId=category.categoryId;
                 $scope.vm.categoryTypeId=category.categoryTypeId;
@@ -597,7 +597,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.categoryPid=category.categoryPid;
                 $scope.vm.categoryApplicationId=category.categoryApplicationId;
                 if(nullCheck(category.categoryDescribe)==true){
-                    $scope.vm.categoryDescribe=category.categoryDescribe;
+                    $scope.vm.categoryDescribe=underlineToWhiteSpace(category.categoryDescribe);
                 }
                 $scope.vm.categoryLeaf=category.categoryLeaf;
             }
