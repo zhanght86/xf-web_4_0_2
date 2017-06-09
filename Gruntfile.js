@@ -4,10 +4,10 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
         beautify: {
             //中文ascii化，非常有用！防止中文乱码的神配置
             ascii_only: true
-        } , 
+        } ,
         concat: {
             options: {
-                //separator: ';\n'
+                //separator: ';\n'  //文件间分隔符
             },
             allInOne: { //所有JS文件全部合并成一份文件
                 src: ['app/know*/**/*_module.js'],
@@ -28,17 +28,8 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 },
             },
             css: {
-    //<link rel="stylesheet" href="css/home/nav.css"/>
-    //<link rel="stylesheet" href="css/home/login.css"/>
-    //    <link rel="stylesheet" href="css/home/index.css"/>
-    //    <link rel="stylesheet" type="text/css" href="css/home/style_new.css">
-    //    <link rel="stylesheet" href="css/home/base.css"/>
-    //    <link rel="stylesheet" href="css/home/common.css"/>
-    //    <link rel="stylesheet" href="css/home/robotSetup.css"/>
-    //    <link rel="stylesheet" href="css/home/ng-style.css"/>
-    //    <link rel="stylesheet" href="css/home/addContent.css"/>
     //            cwd: 'app/css/home/',
-                src: ['app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css','app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css'],
+                src: ['app/css/home/*.css','app/'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
             }
 
