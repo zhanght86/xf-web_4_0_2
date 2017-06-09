@@ -345,6 +345,148 @@ function showElement(element) {
     //设置获得光标
     newobj.focus();
 }
+/**
+ * 替换所有空格回车
+ * @param str
+ * @returns {*}
+ */
+function trimStr(str){
+    if(nullCheck(str)==false){
+        return "";
+    }
+    return str.replace(/[ \r\n]/g,"");
+}
+/**
+ * 填充空格为下划线
+ * @param str
+ * @returns {*}
+ */
+function fillWhiteSpace(str){
+    if(nullCheck(str)==false){
+        return "";
+    }
+    return str.replace(/[ \r\n]/g,"_");
+}
+/**
+ * 下划线替换为空格
+ * @param str
+ * @returns {*}
+ */
+function underlineToWhiteSpace(str){
+    if(nullCheck(str)==false){
+        return "";
+    }
+    return str.replace(/[\_]/g," ");
+}
+/**
+ * CategoryLibrary对象转换为JSON字符串
+ * @param obj
+ * @returns {*}
+ */
+function toCategoryLibraryString(obj){
+    if(obj==null || obj==undefined){
+        return "";
+    }
+    var str='{';
+    str+='"categoryId":"'+obj.categoryId+'",';
+    str+='"categoryTypeId":'+obj.categoryTypeId+',';
+    str+='"categoryAttributeName":"'+obj.categoryAttributeName+'",';
+    str+='"categoryName":"'+obj.categoryName+'",';
+    str+='"categoryModifierId":"'+obj.categoryModifierId+'",';
+    str+='"categoryModifyTime":'+obj.categoryModifyTime+',';
+    str+='"categoryPid":"'+obj.categoryPid+'",';
+    str+='"categorySceneId":'+obj.categorySceneId+',';
+    str+='"categoryLeaf":'+obj.categoryLeaf+',';
+    if(obj.categoryDescribe==null){
+        str+='"categoryDescribe":null';
+    }else{
+        str+='"categoryDescribe":"'+fillWhiteSpace(obj.categoryDescribe)+'"';
+    }
+    str+='}';
+    return str;
+}
+/**
+ * Category对象转换为JSON字符串
+ * @param obj
+ * @returns {*}
+ */
+function toCategoryString(obj){
+    if(obj==null || obj==undefined){
+        return "";
+    }
+    var str='{';
+    str+='"categoryId":"'+obj.categoryId+'",';
+    str+='"categoryTypeId":'+obj.categoryTypeId+',';
+    str+='"categoryAttributeName":"'+obj.categoryAttributeName+'",';
+    str+='"categoryName":"'+obj.categoryName+'",';
+    str+='"categoryModifierId":"'+obj.categoryModifierId+'",';
+    str+='"categoryModifyTime":'+obj.categoryModifyTime+',';
+    str+='"categoryPid":"'+obj.categoryPid+'",';
+    str+='"categoryApplicationId":"'+obj.categoryApplicationId+'",';
+    str+='"categorySceneId":'+obj.categorySceneId+',';
+    str+='"categoryLeaf":'+obj.categoryLeaf+',';
+    if(obj.categoryDescribe==null){
+        str+='"categoryDescribe":null';
+    }else{
+        str+='"categoryDescribe":"'+fillWhiteSpace(obj.categoryDescribe)+'"';
+    }
+    str+='}';
+    return str;
+}
+/**
+ * Frame对象转换为JSON字符串
+ * @param obj
+ * @returns {*}
+ */
+function toFrameString(obj){
+    if(obj==null || obj==undefined){
+        return "";
+    }
+    var str='{';
+    str+='"frameId":"'+obj.frameId+'",';
+    str+='"frameTypeId":'+obj.frameTypeId+',';
+    str+='"frameTitle":"'+obj.frameTitle+'",';
+    str+='"frameModifierId":"'+obj.frameModifierId+'",';
+    str+='"frameModifyTime":'+obj.frameModifyTime+',';
+    str+='"frameCategoryId":"'+obj.frameCategoryId+'",';
+    str+='"frameEnableStatusId":'+obj.frameEnableStatusId+',';
+    if(obj.elements!=null && obj.elements != undefined && obj.elements.length>0){
+        var strElement = "";
+        for(var i=0;i<obj.elements.length;i++){
+            if(i==obj.elements.length-1){
+                strElement+=toElementString(obj.elements[i]);
+            }else{
+                strElement+=toElementString(obj.elements[i])+',';
+            }
+        }
+        str+='"elements":['+strElement+']';
+    }else{
+        str+='"elements":[]';
+    }
+    str+='}';
+    return str;
+}
+/**
+ * Element对象转换为JSON字符串
+ * @param obj
+ * @returns {*}
+ */
+function toElementString(obj){
+    if(obj==null || obj==undefined){
+        return "";
+    }
+    var str='{';
+    str+='"elementId":"'+obj.elementId+'",';
+    str+='"elementTypeId":'+obj.elementTypeId+',';
+    str+='"elementAttributeId":'+obj.elementAttributeId+',';
+    str+='"elementContent":"'+obj.elementContent+'",';
+    str+='"elementMiningTypeId":'+obj.elementMiningTypeId+',';
+    str+='"elementAskContent":"'+obj.elementAskContent+'",';
+    str+='"elementFrameId":"'+obj.elementFrameId+'",';
+    str+='"elementRelateConcept":"'+obj.elementRelateConcept+'"';
+    str+='}';
+    return str;
+}
 
 function initUpload(url){
     (function ($) {
