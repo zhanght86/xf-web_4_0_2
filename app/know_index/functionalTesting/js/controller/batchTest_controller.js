@@ -224,7 +224,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
         function start(){
             var id = $scope.vm.batchNumberId ;
-            var channelId = angular.copy($scope.vm.channel)
+            var channelId = angular.copy($scope.vm.channel) ;
             if(!$scope.vm.channel){
                 layer.msg("选择渠道")
             }else{

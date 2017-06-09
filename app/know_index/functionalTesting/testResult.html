@@ -37,8 +37,8 @@
                         <thead>
                         <tr>
                             <th class="bold" width="3%"><input type="checkbox" class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/></th>
-                            <th class="bold" width="10%">可能问法</th>
-                            <th class="bold" width="11%">标准知识</th>
+                            <th class="bold" width="10%">测试问法</th>
+                            <th class="bold" width="11%">知识标题</th>
                             <th class="bold" width="11%">匹配知识</th>
                             <th class="bold" width="6%">渠道</th>
                             <th class="bold" width="7%">标签</th>
@@ -66,7 +66,8 @@
                             <td ng-if="v.answerCondition==40005 ">回答错误</td>
                             <td ng-if="v.answerCondition==40007 ">不能回答</td>
 
-                            <td>{{v.answerContent|replaceCode}}</td>
+                            <td ng-if="v.answerContent.length>20" title="{{v.answerContent|replaceCode}}">{{v.answerContent|replaceCodeCut}}</td>
+                            <td ng-if="v.answerContent.length<20">{{v.answerContent|replaceCode}}</td>
                             <td>{{v.similarity}}</td>
                             <td ><a href="javascript:;" class="c_green" ng-click="vm.editQuestion(v)">修改</a></td>
                         </tr>
