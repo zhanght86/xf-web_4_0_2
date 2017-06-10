@@ -242,6 +242,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(dia.length==0) {
                 var dialog = ngDialog.openConfirm({
                     template: "/know_index/knowledgeManagement/factor/factorDialog.html",
+                    width:"695px",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,
