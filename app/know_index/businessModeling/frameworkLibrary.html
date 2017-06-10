@@ -21,23 +21,24 @@
             </div>
         </div>
 
-        <div class="libraryRth aaa">
-            <div class="tac mt10" style="margin: 0; text-align: left">
+        <div class="libraryRth aaa ">
+            <div class="tac mt10 mb-20" style="text-align: left">
                 <a class="btn btn-blue" href="javascript:;" ng-click="vm.addFrame()">新增框架</a>
                 <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.batchUpload()">批量导入框架</a>
                 <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
                 <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.exportAll()">导出框架</a>
             </div>
-            <div class="tac mt10" style="margin-top: 8px; text-align: left">
-                <span class="bold">框架名称:</span> <input type="text" class="input_text" id="keyWords"/>
+            <div class="tac mt10 mb-20" style="margin-top: 8px; text-align: left">
+                <!--<span class="bold">框架名称:</span> -->
+                <input type="text" class="input_text" id="keyWords" placeholder="框架名称"/>
                 <input type="button" value="查找" ng-click="vm.searchByFrameTitle(1,0)" class="btn1 btn1_blue"/>
             </div>
             <table class="stop_word_tab" style="margin-top: 10px;">
                 <thead>
                 <tr>
                     <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
-                    <th class="bold" width="10%">概念名称</th>
-                    <th class="bold" width="10%">概念类型</th>
+                    <th class="bold" width="10%">框架名称</th>
+                    <th class="bold" width="10%">框架类型</th>
                     <th class="bold" width="10%">操作</th>
                 </tr>
                 </thead>

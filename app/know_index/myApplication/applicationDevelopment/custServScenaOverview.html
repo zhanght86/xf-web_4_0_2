@@ -25,7 +25,14 @@
             <div class="r-cont-bd">
 
                 <div class="csso-cz-box clearfix mt30 ">
-                    <div class="L pr mr-20">
+                    <select class="sel bd L mr-10" ng-model="vm.newKnowledge" ng-change="vm.jumpToNewKonwledge(vm.newKnowledge)" style="width: 126px;">
+                        <option value="false" style="display:none;">单条知识新增</option>
+                        <option value="100">FAQ型知识新增</option>
+                        <option value="101">概念知识型新增</option>
+                        <option value="102">列表型知识新增</option>
+                        <option value="103">要素型知识新增</option>
+                    </select>
+                    <div class="L pr ">
                         <div>
                             <div style="position: relative;display: inline-block">
                                 <input type="text" class="cust_searchModel" ng-model="vm.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)"  />
@@ -72,13 +79,7 @@
                             </div>
                         </div>
                     </div>
-                    <select class="sel bd L" ng-model="vm.newKnowledge" ng-change="vm.jumpToNewKonwledge(vm.newKnowledge)" style="width: 126px;">
-                        <option value="false" style="display:none;">单条知识新增</option>
-                        <option value="100">FAQ型知识新增</option>
-                        <option value="101">概念知识型新增</option>
-                        <option value="102">列表型知识新增</option>
-                        <option value="103">要素型知识新增</option>
-                    </select>
+
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions">批量导入</a>
                         <a class="btn btn-green" href="javascript:;">知识加工</a>

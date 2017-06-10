@@ -284,6 +284,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     }else{
                     }
                     //还原类目属性类型
+                    $scope.vm.categoryDescribe="";
                     $scope.vm.categoryAttributeName="edge";
                 }
             });
@@ -438,6 +439,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             },function(err){
                 console.log(err);
             });
+            $scope.vm.categoryDescribe="";
         }
 
         /**
