@@ -310,12 +310,12 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                             var itemClassName = isEdg?"pas-menu_1":"menu_1";
                             var leafClassName = isEdg?"icon-jj":"icon-ngJj";
                             var  html = '<ul class="'+itemClassName+'">';
+                            //已经移除 icon-ngJj  ngBotAdd 样式 所有的应用于选择
                             angular.forEach(data.data,function(item){
-
                                 var typeClass ;
                                 // 叶子节点 node
-                                if((item.categoryLeaf == 0)){
-                                    typeClass = "bot-leaf"　;
+                                if((item.categoryLeaf == 0) && (item.categoryAttributeName != "edge" )){
+                                    typeClass = "bot-noBg"　;
                                 }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "edge" )){
                                     typeClass = "bot-edge"　;
                                 }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "node" )){
@@ -339,8 +339,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                                 //1  存在叶节点   >
                                 //if(item.categoryLeaf){
                                     html+= '<li data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
-                                                ' <a class="ellipsis bg50" href="javascript:;">'+
-                                                    '<i class="'+leafClassName+" "+typeClass+" "+backImage+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
+                                                '<a class="ellipsis bg50" href="javascript:;">'+
+                                                    '<i class="'+leafClassName+" "+backImage+" "+typeClass+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
                                                     '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                                 '</a>' +
                                              '</li>' ;

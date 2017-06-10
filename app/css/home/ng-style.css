@@ -24,6 +24,9 @@
 .bot-leaf {
   display: none ;
 }
+.bot-noBg {
+  background-image: none!important;
+}
 .bot-edge {
   display: inline-block;
   position: relative;

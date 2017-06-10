@@ -831,7 +831,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 var obj = {};
                 obj.knowledgeContent = getTableParams();
                 obj.channelIdList =  $scope.vm.channel;
-                obj.dimensionIdList =  $scope.vm.dimensionArr.id;
+                obj.dimensionIdList =  $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
