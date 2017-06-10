@@ -30,7 +30,12 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
             },
             css: {
     //            cwd: 'app/css/home/',
-                src: ['app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css','app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css','app/css/home/back/*.css'],
+                src: [
+                    //'css/base.css','css/common.css','css/style.css',
+                    //'css/home/back/*.css' ,
+                    //'libs/tagEditor/css/jquery.tag-editor.css','libs/H_ui/static/h-ui/css/H-ui.css','libs/H_ui/static/h-ui/css/H-ui.reset.css','css/plugins/1.0.8/iconfont.css',
+                    'app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css','app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css'
+                ],
                 //src: ['app/css/home/*.css'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
             }
