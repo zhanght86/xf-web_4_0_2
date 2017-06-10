@@ -49,11 +49,11 @@
                             <p>{{item.knowledgeContentNegative}}</p>
                             <span>&nbsp;</span>
                         </div>
-                        <div ng-if="vm.knowledgeType==103" style="height:300px;overflow:auto;">
-                                <table class="essential_factor_tab">
+                        <div ng-if="vm.knowledgeType==103" style="width:920px;max-height:500px;overflow:auto;">
+                                <table class="essential_factor_tab" style="width:auto;">
                                     <tr ng-repeat="(indexRow,row) in item.knowledgeContent.listTable track by $index">
                                         <td ng-repeat="(indexColumn,item) in row track by $index" >
-                                            <div style="max-width:100%;">{{item}}</div>
+                                            <div style="min-width:80px;max-width:300px;height:40px;overflow: auto;text-align: center;">{{item}}</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -70,8 +70,6 @@
                     <span>{{indexVal}}{{val}}</span>
                 </p>
             </li>
-
-
             <div class="jqrsz-btn-box" style="padding-left: 150px;margin-top: 4px;">
                 <a class="btn btn-blue mr10" ui-sref="custServScenaOverview.manage">返回</a>
                 <a class="btn btn-gray" href="javascript:;" ng-click="vm.edit()" style="background: #2bcacc; color: #fff;">修改</a>
@@ -79,7 +77,3 @@
         </ul>
     </div>
 </div>
-<style>
-
-
-</style>
