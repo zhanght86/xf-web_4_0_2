@@ -556,7 +556,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
             }
-
         }
         //  主页保存 获取参数
         function getParams(){
