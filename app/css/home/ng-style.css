@@ -181,3 +181,41 @@
 /*margin: 10px 0 0 0;*/
 /*}*/
 /*************************      autocomplete  **************************************/
+.custOver .cust_searchModel {
+  width: 280px;
+  font-size: 14px;
+  height: 31px;
+  line-height: 1.42857;
+  padding: 4px;
+  border: 1px solid #e3e3e3;
+}
+.custOver .cust_searchTip {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  display: block;
+  right: 10px;
+  top: 50%;
+  margin-top: -10px;
+  cursor: pointer;
+  background: url(../../images/images/icon-search_03.png) no-repeat right center;
+}
+.markOver .cust_searchModel {
+  width: 280px;
+  font-size: 14px;
+  height: 31px;
+  line-height: 1.42857;
+  padding: 4px;
+  border: 1px solid #e3e3e3;
+}
+.markOver .cust_searchTip {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  display: block;
+  right: 10px;
+  top: 50%;
+  margin-top: -10px;
+  cursor: pointer;
+  background: url(../../images/images/icon-search_03.png) no-repeat right center;
+}

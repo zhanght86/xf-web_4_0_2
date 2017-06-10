@@ -19,17 +19,19 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 options: {
                     banner: "'use strict';\n",
                     process: function (src, filepath) {
-                        if (filepath.indexOf('module') > 0)
+                        if (filepath.indexOf('module') > 0){
                             return "";
-                        else
+                        }else{
                             return '// Source: ' + filepath + '\n' +
                                 src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                        }
                     },
                 },
             },
             css: {
     //            cwd: 'app/css/home/',
-                src: ['app/css/home/*.css'] ,
+                src: ['app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css','app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css','app/css/home/back/*.css'],
+                //src: ['app/css/home/*.css'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
             }
 
