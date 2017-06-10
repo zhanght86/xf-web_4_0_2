@@ -17,13 +17,19 @@
                     </li>
                 </ul>
             </div>
+            <div class="sideBotFullPath">
+                <ul>
+                    <li class="fullpath" ng-repeat="item in vm.selectedBot">
+                       {{item}}
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="r-cont pd30">
             <div class="r-cont-hd">
                 <span>客服型场景知识总览</span>
             </div>
             <div class="r-cont-bd">
-
                 <div class="csso-cz-box clearfix mt30 ">
                     <select class="sel bd L mr-10" ng-model="vm.newKnowledge" ng-change="vm.jumpToNewKonwledge(vm.newKnowledge)" style="width: 126px;">
                         <option value="false" style="display:none;">单条知识新增</option>
