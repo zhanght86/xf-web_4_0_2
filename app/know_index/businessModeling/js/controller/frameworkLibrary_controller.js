@@ -67,7 +67,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             current:1,
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
-            batchUpload:batchUpload
+            batchUpload:batchUpload,
+            batchDelete:batchDelete
         };
         $scope.categoryAttributeName;
 
@@ -239,7 +240,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if(categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if(categoryAttributeName=="edge"){
-                $(this).attr("style","color:blue;font-weight:bold;");
+                $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
             console.log($scope.vm.botSelectValue);
             console.log($scope.vm.botSelectType);
@@ -250,7 +251,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         function nodeStyleSwitch(attrType){
             console.log("===nodeStyleSwitch===");
             if(attrType=="edge"){
-                return "style='color:blue;'";
+                return "style='color:#ED7D31;'";
             }else{
                 return "";
             }
@@ -267,6 +268,52 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         $(".aside-navs").on("click",'i',function(){
             appendTree(this);
         });
+        //全选
+        $("#selectAll").on("click",function(){
+            var ids = document.getElementsByName("sid");
+            var flag = false;
+            if(this.checked){
+                flag = true;
+            }
+            $.each(ids,function(index,value){
+                if(flag){
+                    $(value).attr("checked",true);
+                    $(value).prop("checked",true);
+                }else{
+                    $(value).attr("checked",false);
+                    $(value).prop("checked",false);
+                }
+            });
+        });
+        //清空全选
+        function clearSelectAll(){
+            console.log("=====clearSelectAll=====");
+            $("#selectAll").attr("checked",false);
+            $("#selectAll").prop("checked",false);
+        }
+        //批量删除
+        function batchDelete(){
+            var ids = document.getElementsByName("sid");
+            var id_array = [];
+            for (var i = 0; i < ids.length; i++) {
+                if (ids[i].checked) {
+                    id_array.push(ids[i].value);
+                }
+            }
+            if (id_array.length == 0) {
+                layer.msg("请选择要删除的记录！");
+                return;
+            }
+            layer.confirm('确认要删除吗？', function () {
+                var request = new Object();
+                request.ids=id_array;
+                httpRequestPost("/api/ms/modeling/frame/batchdelete",request,function(data){
+                    if(responseView(data)==true){
+                        loadFrameLibrary(1,0);
+                    }
+                });
+            });
+        }
         //重设请求数组
         function requestArrayReset(){
             $scope.vm.elementAskContentArray=[];
@@ -325,7 +372,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 if($(this).attr("attribute-option")=="node"){
                     $(this).attr("style","");
                 }else if($(this).attr("attribute-option")=="edge"){
-                    $(this).attr("style","color:blue;");
+                    $(this).attr("style","color:#ED7D31;");
                 }
             });
         }
@@ -1707,6 +1754,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //返回状态显示
         function responseView(data){
+            clearSelectAll();
             if(data==null){
                 return false;
             }

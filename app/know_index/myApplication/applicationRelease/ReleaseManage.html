@@ -35,7 +35,7 @@
                             <td>{{item.serviceName}}</td>
                             <td ng-if="item.serviceType==10">生产服务</td>
                             <td ng-if="item.serviceType==11">测试服务</td>
-                            <td>{{item.serviceCreateTime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{item.serviceCreateTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td ng-if="item.serviceStatus==30001">未发布</td>
                             <td ng-if="item.serviceStatus==30002">已发布</td>
                             <td ng-if="item.serviceStatus==30003">已下线</td>
