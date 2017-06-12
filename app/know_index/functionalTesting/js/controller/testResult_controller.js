@@ -23,8 +23,8 @@ angular.module('functionalTestModule').controller('testResultController', [
             listDataTotal : 0 ,      //共几条
             searchFile : searchFile,
             selectInput :'',
-            matchCondition :'40001',
-            answerCondition :'40003',
+            matchCondition :'0',
+            answerCondition :'0',
             selectAllCheck : false,   //checkbox默认你状态；
             selectAll : selectAll,
             selectSingle : selectSingle,

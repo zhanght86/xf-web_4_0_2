@@ -111,7 +111,7 @@ knowledge_static_web.directive("batchTestOnly", ["$parse", "ngDialog", "$cookieS
                         }else if(response.status == 60000){
                             scope.isUpload = false;
                             layer.msg("文件内容错误!")
-                        }else {
+                        }  else {
                             scope.isUpload = false;
                             scope.factor = 1 ;
                             $state.reload();
