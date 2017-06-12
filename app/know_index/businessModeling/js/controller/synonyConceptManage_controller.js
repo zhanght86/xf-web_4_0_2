@@ -40,7 +40,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
-            batchUpload:batchUpload
+            batchUpload:batchUpload,
+            batchDelete:batchDelete
         };
 
         /**
@@ -82,7 +83,57 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 }, 100)
             }
         },true);
-        //编辑
+        //全选
+        $("#selectAll").on("click",function(){
+            var ids = document.getElementsByName("sid");
+            var flag = false;
+            if(this.checked){
+                flag = true;
+            }
+            $.each(ids,function(index,value){
+                if(flag){
+                    $(value).attr("checked",true);
+                    $(value).prop("checked",true);
+                }else{
+                    $(value).attr("checked",false);
+                    $(value).prop("checked",false);
+                }
+            });
+        });
+        //清空全选
+        function clearSelectAll(){
+            console.log("=====clearSelectAll=====");
+            $("#selectAll").attr("checked",false);
+            $("#selectAll").prop("checked",false);
+        }
+        //批量删除
+        function batchDelete(){
+            var ids = document.getElementsByName("sid");
+            var id_array = [];
+            var key_array = [];
+            for (var i = 0; i < ids.length; i++) {
+                if (ids[i].checked) {
+                    id_array.push(ids[i].value);
+                    key_array.push($(ids[i]).attr("synonymkey"));
+                }
+            }
+            if (id_array.length == 0) {
+                layer.msg("请选择要删除的记录！");
+                return;
+            }
+            layer.confirm('确认要删除吗？', function () {
+                var request = new Object();
+                request.synonymConceptModifier=$scope.vm.modifier;
+                request.synonymConceptApplicationId=$scope.vm.applicationId;
+                request.ids=id_array;
+                request.keyArray=key_array;
+                httpRequestPost("/api/ms/modeling/concept/synonym/batchDelete",request,function(data){
+                    if(responseView(data)==true){
+                        loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                    }
+                });
+            });
+        }
         function editSynonym(item){
             $scope.vm.dialogTitle="编辑同义概念";
             $scope.vm.key = item.synonymConceptKey;
@@ -402,6 +453,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             $scope.vm.oldKey = "";
             $scope.vm.term = "";
             $scope.vm.weight = 33;
+            clearSelectAll();
             if(data==null){
                 return false;
             }
