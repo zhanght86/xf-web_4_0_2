@@ -213,7 +213,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             if($scope.vm.categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryAttributeName=="edge"){
-                $(this).attr("style","color:blue;font-weight:bold;");
+                $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
             updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
             console.log($scope.vm.botSelectValue);
@@ -629,7 +629,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 if($(this).attr("node-option")=="node"){
                     $(this).attr("style","");
                 }else if($(this).attr("node-option")=="edge"){
-                    $(this).attr("style","color:blue;");
+                    $(this).attr("style","color:#ED7D31;");
                 }
             });
         }
@@ -657,7 +657,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         function nodeStyleSwitch(attrType){
             console.log("===nodeStyleSwitch===");
             if(attrType=="edge"){
-                return "style='color:blue;'";
+                return "style='color:#ED7D31;'";
             }else{
                 return "";
             }

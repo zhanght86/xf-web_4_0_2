@@ -41,7 +41,8 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
-            batchUpload:batchUpload
+            batchUpload:batchUpload,
+            batchDelete:batchDelete
         };
 
         /**
@@ -83,7 +84,52 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
                 }, 100)
             }
         },true);
-
+        //全选
+        $("#selectAll").on("click",function(){
+            var ids = document.getElementsByName("sid");
+            var flag = false;
+            if(this.checked){
+                flag = true;
+            }
+            $.each(ids,function(index,value){
+                if(flag){
+                    $(value).attr("checked",true);
+                    $(value).prop("checked",true);
+                }else{
+                    $(value).attr("checked",false);
+                    $(value).prop("checked",false);
+                }
+            });
+        });
+        //清空全选
+        function clearSelectAll(){
+            console.log("=====clearSelectAll=====");
+            $("#selectAll").attr("checked",false);
+            $("#selectAll").prop("checked",false);
+        }
+        //批量删除
+        function batchDelete(){
+            var ids = document.getElementsByName("sid");
+            var id_array = [];
+            for (var i = 0; i < ids.length; i++) {
+                if (ids[i].checked) {
+                    id_array.push(ids[i].value);
+                }
+            }
+            if (id_array.length == 0) {
+                layer.msg("请选择要删除的记录！");
+                return;
+            }
+            layer.confirm('确认要删除吗？', function () {
+                var request = new Object();
+                request.ids=id_array;
+                httpRequestPost("/api/ms/modeling/concept/stop/batchDelete",request,function(data){
+                    if(responseView(data)==true){
+                        loadStopConceptTable($scope.vm.paginationConf.currentPage);
+                    }
+                });
+            });
+        }
         //编辑
         function editStop(item){
             $scope.vm.dialogTitle="编辑停用概念";
@@ -392,6 +438,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
         function responseView(data){
             $scope.vm.key = "";
             $scope.vm.term = "";
+            clearSelectAll();
             if(data==null){
                 return false;
             }
