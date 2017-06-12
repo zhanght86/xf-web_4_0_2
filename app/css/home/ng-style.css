@@ -24,6 +24,9 @@
 .bot-leaf {
   display: none ;
 }
+.bot-noBg {
+  background-image: none!important;
+}
 .bot-edge {
   display: inline-block;
   position: relative;
@@ -181,3 +184,62 @@
 /*margin: 10px 0 0 0;*/
 /*}*/
 /*************************      autocomplete  **************************************/
+.custOver .cust_searchModel {
+  width: 280px;
+  font-size: 14px;
+  height: 31px;
+  line-height: 1.42857;
+  padding: 4px;
+  border: 1px solid #e3e3e3;
+}
+.custOver .cust_searchTip {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  display: block;
+  right: 10px;
+  top: 50%;
+  margin-top: -10px;
+  cursor: pointer;
+  background: url(../../images/images/icon-search_03.png) no-repeat right center;
+}
+.sideBotFullPath {
+  border-bottom: 1px solid #dadada;
+}
+.sideBotFullPath .fullpath {
+  border-top: 1px solid #dadada;
+  margin-top: -1px;
+  line-height: 48px;
+  display: block;
+  position: relative;
+  font-size: 14px;
+  color: #666;
+  padding-left: 20px;
+}
+.botPathactiveMouse {
+  background: #505760;
+  color: #fff;
+}
+.botPathactiveClick {
+  background: #505760;
+  color: #fff!important;
+}
+.markOver .cust_searchModel {
+  width: 280px;
+  font-size: 14px;
+  height: 31px;
+  line-height: 1.42857;
+  padding: 4px;
+  border: 1px solid #e3e3e3;
+}
+.markOver .cust_searchTip {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  display: block;
+  right: 10px;
+  top: 50%;
+  margin-top: -10px;
+  cursor: pointer;
+  background: url(../../images/images/icon-search_03.png) no-repeat right center;
+}

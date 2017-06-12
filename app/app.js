@@ -1102,7 +1102,7 @@ knowledge_static_web
                         controller: "docSelectController"
                     }
                 }
-                
+
                 // templateUrl: 'know_background/know_gateway/doc_select.html',
                 // controller: "docSelectController"
             })

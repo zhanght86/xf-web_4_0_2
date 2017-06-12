@@ -9,8 +9,14 @@
         <!--{{vm.listData}}-->
         <ul class="Preview">
             <li>
-                <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeTitle">{{vm.listData.knowledgeBase.knowledgeTitle}}</p>
-                <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart"><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
+                <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeTitle">
+                    <span>知识标题：</span>
+                    {{vm.listData.knowledgeBase.knowledgeTitle}}
+                </p>
+                <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart">
+                    <span>知识有效期：</span>
+                    {{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}
+                </p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span><b  style="font-weight:normal;">{{item.className.join("/")}}</b></p>
             </li>
 
@@ -20,7 +26,10 @@
                 <p ng-if="vm.knowledgeType==100"><span ng-class="$index!=0?'milesVh':''">扩展问题：</span>{{item.extensionQuestionTitle}}</p>
             </li>
 
-
+            <!-- 概念知识 位置-->
+            <li class="borderN"  ng-if="vm.knowledgeType==101" ng-repeat="item in vm.listData.extensionQuestions" >
+                <p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
+            </li>
             <li ng-class="vm.knowledgeType==101?'':'borderN'" style="border-bottom: 0">
                 <div class="knowContent mb-10" ng-repeat="item in vm.listData.knowledgeContents track by $index">
                     <span ng-class="$index!=0?'mileVs':''">知识内容：</span>
@@ -40,11 +49,11 @@
                             <p>{{item.knowledgeContentNegative}}</p>
                             <span>&nbsp;</span>
                         </div>
-                        <div ng-if="vm.knowledgeType==103" style="height:300px;overflow:auto;">
-                                <table class="essential_factor_tab">
+                        <div ng-if="vm.knowledgeType==103" style="width:920px;max-height:500px;overflow:auto;">
+                                <table class="essential_factor_tab" style="width:auto;">
                                     <tr ng-repeat="(indexRow,row) in item.knowledgeContent.listTable track by $index">
-                                        <td ng-repeat="(indexColumn,item) in row track by $index">
-                                            {{item}}
+                                        <td ng-repeat="(indexColumn,item) in row track by $index" >
+                                            <div style="min-width:80px;max-width:300px;height:40px;overflow: auto;text-align: center;">{{item}}</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -61,11 +70,6 @@
                     <span>{{indexVal}}{{val}}</span>
                 </p>
             </li>
-        <!-- 概念知识 位置-->
-            <li class="borderN"  ng-if="vm.knowledgeType==101" ng-repeat="item in vm.listData.extensionQuestions" >
-                <p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
-            </li>
-
             <div class="jqrsz-btn-box" style="padding-left: 150px;margin-top: 4px;">
                 <a class="btn btn-blue mr10" ui-sref="custServScenaOverview.manage">返回</a>
                 <a class="btn btn-gray" href="javascript:;" ng-click="vm.edit()" style="background: #2bcacc; color: #fff;">修改</a>
@@ -73,7 +77,3 @@
         </ul>
     </div>
 </div>
-<style>
-
-
-</style>

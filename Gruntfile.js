@@ -19,17 +19,24 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 options: {
                     banner: "'use strict';\n",
                     process: function (src, filepath) {
-                        if (filepath.indexOf('module') > 0)
+                        if (filepath.indexOf('module') > 0){
                             return "";
-                        else
+                        }else{
                             return '// Source: ' + filepath + '\n' +
                                 src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                        }
                     },
                 },
             },
             css: {
     //            cwd: 'app/css/home/',
-                src: ['app/css/home/*.css'] ,
+                src: [
+                    //'css/base.css','css/common.css','css/style.css',
+                    //'css/home/back/*.css' ,
+                    //'libs/tagEditor/css/jquery.tag-editor.css','libs/H_ui/static/h-ui/css/H-ui.css','libs/H_ui/static/h-ui/css/H-ui.reset.css','css/plugins/1.0.8/iconfont.css',
+                    'app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css','app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css'
+                ],
+                //src: ['app/css/home/*.css'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
             }
 

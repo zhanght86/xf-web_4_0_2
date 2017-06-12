@@ -9,6 +9,7 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
         $scope.vm = {
             downTemplate: downTemplate,  //新增点击事件
             upload : upload,
+            fileName :'',
         };
 
         //上传

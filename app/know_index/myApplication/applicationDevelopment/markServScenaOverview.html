@@ -1,5 +1,5 @@
 <div ui-view="header"></div>
-<div class="main warp">
+<div class="main warp markOver">
 
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
@@ -16,7 +16,13 @@
                             <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
                         </a>
                     </li>
-
+                </ul>
+            </div>
+            <div class="sideBotFullPath">
+                <ul>
+                    <li class="fullpath" ng-repeat="item in vm.selectedBot">
+                        {{item}}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -29,8 +35,9 @@
                 <div class="csso-cz-box clearfix mt30 ">
                     <div class="L pr mr-20">
                         <div>
-                            <div class="search-box">
-                                <input class="input-text" type="text" ng-model="vm.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)" style="width: 280px;" />
+                            <div style="position: relative;display: inline-block">
+                                <input type="text" class="cust_searchModel" ng-model="vm.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)"  />
+                                <span ng-click="vm.napSearch()" class="cust_searchTip"></span>
                             </div>
                             <button class="btn1 btn1_blue advanced_sear_btn" ng-click="vm.heighSarch=!vm.heighSarch">高级查找</button>
                         </div>

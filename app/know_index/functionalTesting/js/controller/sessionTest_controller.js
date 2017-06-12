@@ -72,7 +72,6 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                    layer.msg('请选择渠道!');
                    return;
                }
-
                httpRequestPost("/api/application/chatTest/passageway",{
                    applicationId:$scope.vm.applicationId,
                    userId:$scope.vm.userId,

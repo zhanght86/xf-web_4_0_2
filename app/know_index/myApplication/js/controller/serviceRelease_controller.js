@@ -10,7 +10,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             applicationId: $cookieStore.get("applicationId"),
             serviceData : "",   // 服务列表数据
             paginationConf : ""  ,//分页条件
-            pageSize : 2 , //默认每页数量
+            pageSize : 5 , //默认每页数量
             dataTotal: "", //发布服务数据记录总数
 
             publishService : publishService,  //发布服务

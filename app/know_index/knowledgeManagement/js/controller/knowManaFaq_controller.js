@@ -474,6 +474,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.tail = data.knowledgeCommonOn;
                 $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
                 var callback = function(){
+
                     var obj = {};
                     obj.knowledgeContent = $scope.vm.newTitle;
                     obj.knowledgeContentType = 0;  // 答案类型
@@ -485,14 +486,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup ; //业务扩展问
                     $scope.vm.scanContent[index] = obj;
                     $scope.vm.isEdit = false  ;
-                    setDialog() ;
+                    setDialog();
                 }
             }else{
                 var  callback = saveAddNew ;
             }
             if(dia.length==0) {
                 $scope.vm.openContentConfirm(callback);
-
             }
         }
         //打开知识内容对话框
@@ -556,7 +556,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
             }
-
         }
         //  主页保存 获取参数
         function getParams(){
@@ -675,13 +674,13 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             if($scope.vm.newTitle){
                 var obj = {};
                 obj.knowledgeContent = $scope.vm.newTitle;
-                obj.knowledgeContentType = 0,  // 答案类型
-                    obj.channelIdList =  $scope.vm.channel;
-                obj.dimensionIdList =  $scope.vm.dimensionArr.id;
-                obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
-                    obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
+                obj.knowledgeContentType = 0;  // 答案类型
+                obj.channelIdList =  $scope.vm.channel;
+                obj.dimensionIdList =  $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id;
+                obj.knowledgeRelatedQuestionOn = $scope.vm.question;    //显示相关问
+                obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-                obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
+                obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  ;//业务扩展问
                 //高級 選項
                 $scope.vm.scanContent.push(obj);
                 setDialog()

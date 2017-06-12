@@ -55,7 +55,9 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             newKnowledge : "false",
             jumpToNewKonwledge : jumpToNewKonwledge,
             isSelectAll  : false ,  // 全选 删除
-            selectAll : selectAll //選擇全部
+            selectAll : selectAll  ,//選擇全部
+
+            selectedBot : []
         };
         function jumpToNewKonwledge(id){
             var addUrl=null;
@@ -75,8 +77,9 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             }
             if(!addUrl)
                 return ;
-            var url = $state.href(addUrl);
-            $window.open(url,'_blank');
+            $state.go(addUrl) ;
+            //var url = $state.href(addUrl);
+            //$window.open(url,'_blank');
             $scope.vm.newKnowledge = "false";
         }
         napSearch();
@@ -260,17 +263,34 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }() ;
         //点击更改bot value
         //绑定点击空白隐藏（滚动条除外）
-        
-        $(".aside-nav").on("click","span",function(){
-            var id = angular.element(this).attr("data-option-id");
+
+        $(".aside-nav").on("click","a",function(e){
+            var  srcObj = e.srcElement ? e.srcElement : e.target;
+            if(srcObj.tagName=='I'){
+                return
+            }else if(!$(this).parent().hasClass('type1')){
+                $(".botPathactiveMouse").removeClass("botPathactiveMouse") ;
+                $(".botPathactiveClick").removeClass("botPathactiveClick") ;
+                $(this).addClass("botPathactiveClick") ;
+            }
+
+            var id = angular.element(this).find("span").attr("data-option-id");
             $scope.vm.sceneIds.push(id);
+            //获取bot全路径
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
+                "categoryId": id
+            },function(data){
+                $scope.vm.selectedBot = data.categoryFullName.split("/") ;
+                console.log(data)
+            },function(){});
+            // 获取知识数据
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId":$scope.vm.applicationId,
                 "categoryPid": id
             },function(data){
-                    angular.forEach(data.data,function(item){
-                        $scope.vm.sceneIds.push(item.categoryId)
-                    });
+                angular.forEach(data.data,function(item){
+                    $scope.vm.sceneIds.push(item.categoryId)
+                });
                 napSearch()
             },function(){});
             $scope.$apply();
@@ -280,6 +300,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             var id = $(this).attr("data-option-id");
             var that = $(this);
             var isEdg = that.hasClass('icon-ngJj') ;
+
             // 侧边 只能有一个选项
             //非侧边 可以存在多个
             if(that.parent().hasClass('type1')){  //root bot
@@ -310,12 +331,12 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                             var itemClassName = isEdg?"pas-menu_1":"menu_1";
                             var leafClassName = isEdg?"icon-jj":"icon-ngJj";
                             var  html = '<ul class="'+itemClassName+'">';
+                            //已经移除 icon-ngJj  ngBotAdd 样式 所有的应用于选择
                             angular.forEach(data.data,function(item){
-
                                 var typeClass ;
                                 // 叶子节点 node
-                                if((item.categoryLeaf == 0)){
-                                    typeClass = "bot-leaf"　;
+                                if((item.categoryLeaf == 0) && (item.categoryAttributeName != "edge" )){
+                                    typeClass = "bot-noBg"　;
                                 }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "edge" )){
                                     typeClass = "bot-edge"　;
                                 }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "node" )){
@@ -338,9 +359,11 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                                 }
                                 //1  存在叶节点   >
                                 //if(item.categoryLeaf){
-                                    html+= '<li data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
-                                                ' <a class="ellipsis bg50" href="javascript:;">'+
-                                                    '<i class="'+leafClassName+" "+typeClass+" "+backImage+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
+                                //    html+= '<li data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
+                                //    '<a class="ellipsis bg50" href="javascript:;">'+
+                                    html+= '<li data-option-id="'+item.categoryId+'" class="slide-a">' +
+                                                '<a class="ellipsis bg50" href="javascript:;">'+
+                                                    '<i class="'+leafClassName+" "+backImage+" "+typeClass+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
                                                     '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
                                                 '</a>' +
                                              '</li>' ;
@@ -388,7 +411,11 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             if(self.parent().hasClass('type1')){
                 return false
             }else{
-                $(this).css({"background":"#505767","color":"#ffffff"})
+                if(self.hasClass("botPathactiveClick")){
+                    return
+                }else{
+                    $(this).addClass("botPathactiveMouse")
+                }
             }
         }) ;
         $(".aside-nav").on("mouseout",'.ellipsis',function() {
@@ -396,7 +423,11 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             if(self.parent().hasClass('type1')){
                 return  false
             }else{
-                $(this).css({"background":"#f0f0f0","color":"#333333"})
+                if(self.hasClass("botPathactiveClick")){
+                    return
+                }else{
+                    self.removeClass("botPathactiveMouse")
+                }
             }
         }) ;
         //第二种  箭头添加 hover

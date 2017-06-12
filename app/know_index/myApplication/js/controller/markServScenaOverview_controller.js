@@ -106,7 +106,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                 "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             },function(data){
-                console.log(data);
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.knowledgeTotal = data.data.total;
                 $scope.vm.paginationConf = {
@@ -119,7 +118,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 $scope.$apply();
                 return true;
             },function(){
-                //alert("err or err")
             });
 
         }
@@ -214,7 +212,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             });
         }
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
-        $("body").on('click',function(e){  // 点击空白 收起bot
+        $("body").on('click',function(e){
             e = event || window.event;
             var  srcObj = e.srcElement ? e.srcElement : e.target;
             console.log($(srcObj).closest(".aside-nav").hasClass(".aside-nav")) ;
@@ -242,9 +240,26 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         //点击更改bot value
         //绑定点击空白隐藏（滚动条除外）
 
-        $(".aside-nav").on("click","span",function(){
-            var id = angular.element(this).attr("data-option-id");
+        $(".aside-nav").on("click","a",function(e){
+            var  srcObj = e.srcElement ? e.srcElement : e.target;
+            if(srcObj.tagName=='I'){
+                return
+            }else if(!$(this).parent().hasClass('type1')){
+                $(".botPathactiveMouse").removeClass("botPathactiveMouse") ;
+                $(".botPathactiveClick").removeClass("botPathactiveClick") ;
+                $(this).addClass("botPathactiveClick") ;
+            }
+
+            var id = angular.element(this).find("span").attr("data-option-id");
             $scope.vm.sceneIds.push(id);
+            //获取bot全路径
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
+                "categoryId": id
+            },function(data){
+                $scope.vm.selectedBot = data.categoryFullName.split("/") ;
+                console.log(data)
+            },function(){});
+            // 获取知识数据
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId":$scope.vm.applicationId,
                 "categoryPid": id
@@ -286,29 +301,45 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                     "categoryApplicationId":$scope.vm.applicationId,
                     "categoryPid": id
                 },function(data){
-
+                    console.log(data)  ;
                     if(data.data){
                         var itemClassName = isEdg?"pas-menu_1":"menu_1";
                         var leafClassName = isEdg?"icon-jj":"icon-ngJj";
                         var  html = '<ul class="'+itemClassName+'">';
+                        //已经移除 icon-ngJj  ngBotAdd 样式 所有的应用于选择
                         angular.forEach(data.data,function(item){
-                            //1  存在叶节点   >
-                            if(item.categoryLeaf){
-                                html+= '<li data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
-                                    ' <a class="ellipsis bg50" href="javascript:;">'+
-                                    '<i class="'+leafClassName+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
-                                    '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
-                                    '</a>' +
-                                    '</li>'
-                            }else{
-                                //不存在叶节点
-                                html+= '<li class="bg50 bgE3" data-option-id="'+item.categoryId+'" class="slide-a  bg50 bgE3">' +
-                                    ' <a class="ellipsis bg50" href="javascript:;">'+
-                                    '<i class="'+leafClassName+'" style="background:0" data-option-id="'+item.categoryId+'"></i>'+
-                                    '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
-                                    '</a>' +
-                                    '</li>'
+                            var typeClass ;
+                            // 叶子节点 node
+                            if((item.categoryLeaf == 0) && (item.categoryAttributeName != "edge" )){
+                                typeClass = "bot-noBg"　;
+                            }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "edge" )){
+                                typeClass = "bot-edge"　;
+                            }else if((item.categoryLeaf != 0) && (item.categoryAttributeName == "node" )){
+                                typeClass = "icon-jj"
                             }
+                            var  backImage ;
+                            switch(item.categoryTypeId){
+                                case 160 :
+                                    backImage = " bot-divide" ;
+                                    break  ;
+                                case 161 :
+                                    backImage = " bot-process";
+                                    break  ;
+                                case 162 :
+                                    backImage = " bot-attr" ;
+                                    break  ;
+                                case 163 :
+                                    backImage = " bot-default" ;
+                                    break  ;
+                            }
+                            //1  存在叶节点   >
+                            html+= '<li data-option-id="'+item.categoryId+'" class="slide-a">' +
+                                '<a class="ellipsis bg50" href="javascript:;">'+
+                                '<i class="'+leafClassName+" "+backImage+" "+typeClass+' ngBotAdd" data-option-id="'+item.categoryId+'"></i>'+
+                                '<span data-option-id="'+item.categoryId+'">'+item.categoryName+'</span>'+
+                                '</a>' +
+                                '</li>' ;
+
                         });
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent()));
@@ -344,7 +375,11 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             if(self.parent().hasClass('type1')){
                 return false
             }else{
-                $(this).css({"background":"#505767","color":"#ffffff"})
+                if(self.hasClass("botPathactiveClick")){
+                    return
+                }else{
+                    $(this).addClass("botPathactiveMouse")
+                }
             }
         }) ;
         $(".aside-nav").on("mouseout",'.ellipsis',function() {
@@ -352,8 +387,13 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             if(self.parent().hasClass('type1')){
                 return  false
             }else{
-                $(this).css({"background":"#f0f0f0","color":"#333333"})
+                if(self.hasClass("botPathactiveClick")){
+                    return
+                }else{
+                    self.removeClass("botPathactiveMouse")
+                }
             }
         }) ;
+
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
     }]);
