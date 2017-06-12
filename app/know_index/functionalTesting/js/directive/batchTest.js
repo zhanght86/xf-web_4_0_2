@@ -108,7 +108,10 @@ knowledge_static_web.directive("batchTestOnly", ["$parse", "ngDialog", "$cookieS
                         if (response.status == 500) {
                             scope.isUpload = false;
                             layer.msg("模板错误")
-                        } else {
+                        }else if(response.status == 60000){
+                            scope.isUpload = false;
+                            layer.msg("文件内容错误!")
+                        }  else {
                             scope.isUpload = false;
                             scope.factor = 1 ;
                             $state.reload();
@@ -241,9 +244,14 @@ knowledge_static_web.directive("batchTestOnly", ["$parse", "ngDialog", "$cookieS
                 });
                 //        单个文件上传成功 之后 刷新数据列表
                 uploader.on('uploadSuccess', function (file, response) {
+                    console.log(response)
                     if (response.status == 500) {
                         scope.isUpload = false;
                         layer.msg("模板错误")
+                    }else if(response.status == 60000){
+                        console.log(1)
+                        scope.isUpload = false;
+                        layer.msg("文件内容错误!")
                     } else {
                         scope.isUpload = false;
                         scope.factor = 1 ;

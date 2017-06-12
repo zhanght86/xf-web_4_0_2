@@ -5,8 +5,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custKnowledgePreviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer","$window",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer,$window) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer","$window","$http",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer,$window,$http) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
              var viewData =  $window.opener.knowledgeScan ;
         if(!viewData){
@@ -71,6 +71,26 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
             function edit(){
                 $state.go(editUrl,{data:$scope.vm.listData})
             }
+            //knowledgeAddServer.getKnowledge({
+            //        "knowledgeId" : $scope.vm.knowledgeId,
+            //        "applicationId" : $scope.vm.applicationId
+            //    },
+            //    function(data) {
+            //        console.log(data) ;
+            //    }, function(error) {
+            //    });
+            //$http.post({
+            //    url: '/api/ms/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId',
+            //    data : {
+            //        "applicationId":"377525996116508672",
+            //        "knowledgeId":"390950719538073600"
+            //    }
+            //}).then(function successCallback(response) {
+            //    console.log(response) ;
+            //    // 请求成功执行代码
+            //}, function errorCallback(response) {
+            //    // 请求失败执行代码
+            //});
             getData();
             function getData(){
                 httpRequestPost(api,{

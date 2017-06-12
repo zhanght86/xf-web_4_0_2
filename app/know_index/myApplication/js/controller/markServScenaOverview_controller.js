@@ -106,7 +106,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                 "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             },function(data){
-                console.log(data);
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.knowledgeTotal = data.data.total;
                 $scope.vm.paginationConf = {
@@ -119,7 +118,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 $scope.$apply();
                 return true;
             },function(){
-                //alert("err or err")
             });
 
         }
