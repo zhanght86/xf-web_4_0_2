@@ -55,7 +55,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             heighSarch : false ,
             selectAll : selectAll ,
             isSelectAll  : false ,  // 全选 删除
-
+            paramsReset : paramsReset //搜索重置参数
         };
 
         napSearch();
@@ -68,11 +68,18 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             }
         });
         function napSearch(){
-            getData(1);
-            getNewNumber();
-            $timeout(function(){
-                setParams();
-            },500);
+            function napSearch(type){
+                if(!type){
+                    getData(1);
+                    getNewNumber();
+                }else{
+                    getData(1);
+                    getNewNumber();
+                    $timeout(function(){
+                        $scope.vm.paramsReset();
+                    },500);
+                }
+            }
         }
         function scan(item){
 
@@ -141,7 +148,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 srcObj.blur();
             }
         }
-        function setParams(){
+        function paramsReset(){
             //重置 参数 问题
             $scope.vm.sceneIds = [],						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 $scope.vm.knowledgeTitle = null,         //知识标题默认值null
@@ -150,11 +157,8 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
                 $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
                 $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                $scope.vm.updateTimeType = 0 , //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                $scope.vm.heighSarch = false
+                $scope.vm.updateTimeType = 0  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
         }
-
-
         function selectAll(items){
             if($scope.vm.isSelectAll){
                 $scope.vm.isSelectAll = false ;
@@ -241,6 +245,8 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         //绑定点击空白隐藏（滚动条除外）
 
         $(".aside-nav").on("click","a",function(e){
+            //初始化
+            $scope.vm.paramsReset();
             var  srcObj = e.srcElement ? e.srcElement : e.target;
             if(srcObj.tagName=='I'){
                 return
