@@ -104,11 +104,11 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                         data.knowledgeContents[0].knowledgeContent = table;
                         delete data.knowledgeContents[0].knowledgeTable;
                         $scope.vm.listData = data;
-                        console.log(data)
+                        //console.log(data)
                     }else{
                         $scope.vm.listData = data.data;
                     }
-                    console.log(data);
+                    //console.log(data);
                         $scope.$apply();
                 },function(){
                     layer.msg("获取失败")

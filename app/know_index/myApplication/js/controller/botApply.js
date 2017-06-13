@@ -252,7 +252,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         function nodeStyleSwitch(attrType){
             console.log("===nodeStyleSwitch===");
             if(attrType=="edge"){
-                return "style='color:blue;'";
+                return "style='color:#ED7D31;'";
             }else{
                 return "";
             }
@@ -273,7 +273,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             if($scope.vm.categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryAttributeName=="edge"){
-                $(this).attr("style","color:blue;font-weight:bold;");
+                $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
             console.log($scope.vm.botSelectValue);
             console.log($scope.vm.categoryAttributeName);
@@ -288,7 +288,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             if($scope.vm.categoryLibraryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryLibraryAttributeName=="edge"){
-                $(this).attr("style","color:blue;font-weight:bold;");
+                $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
             console.log($scope.vm.botLibrarySelectValue);
             console.log($scope.vm.categoryLibraryAttributeName);
@@ -385,7 +385,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 if($(this).attr("node-option")=="node"){
                     $(this).attr("style","");
                 }else if($(this).attr("node-option")=="edge"){
-                    $(this).attr("style","color:blue;");
+                    $(this).attr("style","color:#ED7D31;");
                 }
             });
         }
@@ -395,7 +395,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 if($(this).attr("node-option")=="node"){
                     $(this).attr("style","");
                 }else if($(this).attr("node-option")=="edge"){
-                    $(this).attr("style","color:blue;");
+                    $(this).attr("style","color:#ED7D31;");
                 }
             });
         }

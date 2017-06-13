@@ -1044,19 +1044,19 @@ knowledge_static_web
                 }
             })
             //文档列表
-            .state("back.doclist", {
-                url: "/gateway/doclist",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                    'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_doclist_container.html',
-                        controller: "knowGatewayController"
-                    }
-                }
-            })
+            //.state("back.doclist", {
+            //    url: "/gateway/doclist",
+            //    views: {
+            //        'header': {
+            //            templateUrl: 'know_index/home/homePageNav.html',
+            //            controller: "homePageNavController"
+            //        },
+            //        'main_container': {
+            //            templateUrl: 'know_background/know_gateway/main_doclist_container.html',
+            //            controller: "knowGatewayController"
+            //        }
+            //    }
+            //})
             //模板管理
             .state("back.template", {
                 url: "/gateway/template",

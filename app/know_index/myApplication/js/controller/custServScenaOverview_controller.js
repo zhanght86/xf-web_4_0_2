@@ -57,7 +57,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             isSelectAll  : false ,  // 全选 删除
             selectAll : selectAll  ,//選擇全部
 
-            selectedBot : []
+            selectedBot : [] ,
+            paramsReset : paramsReset //搜索重置参数
         };
         function jumpToNewKonwledge(id){
             var addUrl=null;
@@ -82,7 +83,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             //$window.open(url,'_blank');
             $scope.vm.newKnowledge = "false";
         }
-        napSearch();
+        // 初始化 数据
+        napSearch(false);
         //高级搜索 开关
         $scope.$watch("vm.heighSarch",function(val){
             if(val){
@@ -91,12 +93,23 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 angular.element(".advanced_search").slideUp()
             }
         });
-        function napSearch(){
-            getData(1);
-            getNewNumber();
-            $timeout(function(){
-                setParams();
-            },500);
+        // 1 scenesIds
+        // 2 title
+        // 3 heighsearch
+
+        //是否清空 搜索内容  true  清空 false 不清空
+        //@1 分頁 false   @2初始化 true
+        function napSearch(type){
+            if(!type){
+                getData(1);
+                getNewNumber();
+            }else{
+                getData(1);
+                getNewNumber();
+                $timeout(function(){
+                    $scope.vm.paramsReset();
+                },500);
+            }
         }
         function scan(item){
             var obj = {};
@@ -166,17 +179,16 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                     srcObj.blur();
                 }
         }
-        function setParams(){
+        function paramsReset(){
             //重置 参数 问题
-            $scope.vm.sceneIds = [],						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-            $scope.vm.knowledgeTitle = null,         //知识标题默认值null
-            $scope.vm.knowledgeContent = null,        //知识内容默认值null
-            $scope.vm.knowledgeCreator = null,        //作者默认值null
-            $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
-            $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
-            $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-            $scope.vm.updateTimeType = 0 , //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-            $scope.vm.heighSarch = false
+                $scope.vm.sceneIds = [],						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                $scope.vm.knowledgeTitle = null,         //知识标题默认值null
+                $scope.vm.knowledgeContent = null,        //知识内容默认值null
+                $scope.vm.knowledgeCreator = null,        //作者默认值null
+                $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
+                $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
+                $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                $scope.vm.updateTimeType = 0  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
         }
         function delData(){
             if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
@@ -239,7 +251,6 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         $("body").on('click',function(e){
                   e = event || window.event;
             var  srcObj = e.srcElement ? e.srcElement : e.target;
-            console.log($(srcObj).closest(".aside-nav").hasClass(".aside-nav")) ;
             if($(srcObj).closest(".aside-nav").hasClass("aside-nav")){
                 e.stopPropagation();
             }else{
@@ -265,6 +276,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //绑定点击空白隐藏（滚动条除外）
 
         $(".aside-nav").on("click","a",function(e){
+            //初始化
+            $scope.vm.paramsReset();
             var  srcObj = e.srcElement ? e.srcElement : e.target;
             if(srcObj.tagName=='I'){
                 return

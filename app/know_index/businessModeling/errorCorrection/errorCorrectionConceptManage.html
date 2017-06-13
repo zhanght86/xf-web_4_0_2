@@ -26,21 +26,22 @@
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
                 <a class="btn btn-green mr10" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
                 <a class="btn btn-green2 mr10" href="javascript:;" ng-click="vm.exportAll()">导出概念库</a>
+                <a class="btn btn-green2 mr10" href="javascript:;" ng-click="vm.batchDelete()">删除</a>
             </div>
         </div>
         <table class="stop_word_tab">
             <thead>
                 <tr>
-                    <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
+                    <th class="bold" width="5%"><input id="selectAll" type="checkbox"/></th>
                     <th class="bold" width="10%">纠错概念类名</th>
-                    <th class="bold" width="40%">纠错概念集合</th>
+                    <th class="bold" width="35%">纠错概念集合</th>
                     <th class="bold" width="15%">更新时间</th>
                     <th class="bold" width="15%">修改人</th>
                     <th class="bold" width="10%">操作</th>
                 </tr>
             </thead>
             <tr ng-repeat="item in vm.listData">
-                <!--<td><input type="checkbox" style="width: 18px;height: 18px;"></td>-->
+                <td><input type="checkbox" value="{{item.correctionConceptKId}}" name="sid"></td>
                 <td>{{item.correctionConceptKey}}</td>
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.correctionConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.correctionConceptTerm.split('；').length-1" style="color: #333;">,</i></span>

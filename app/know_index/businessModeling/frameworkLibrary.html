@@ -27,6 +27,7 @@
                 <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.batchUpload()">批量导入框架</a>
                 <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
                 <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.exportAll()">导出框架</a>
+                <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.batchDelete()">删除</a>
             </div>
             <div class="tac mt10 mb-20" style="margin-top: 8px; text-align: left">
                 <!--<span class="bold">框架名称:</span> -->
@@ -36,14 +37,14 @@
             <table class="stop_word_tab" style="margin-top: 10px;">
                 <thead>
                 <tr>
-                    <!--<th class="bold" width="5%"><input type="checkbox"/></th>-->
-                    <th class="bold" width="10%">框架名称</th>
-                    <th class="bold" width="10%">框架类型</th>
-                    <th class="bold" width="10%">操作</th>
+                    <th class="bold" width="10%"><input id="selectAll" type="checkbox"/></th>
+                    <th class="bold" width="30%">框架名称</th>
+                    <th class="bold" width="30%">框架类型</th>
+                    <th class="bold" width="30%">操作</th>
                 </tr>
                 </thead>
                 <tr ng-repeat="item in vm.listData">
-                    <!--<td><input type="checkbox"></td>-->
+                    <td><input type="checkbox" name="sid" value="{{item.frameId}}"></td>
                     <td>{{item.frameTitle}}</td>
                     <td>{{item.frameTypeId | frameTypeFilter}}</td>
                     <td>
