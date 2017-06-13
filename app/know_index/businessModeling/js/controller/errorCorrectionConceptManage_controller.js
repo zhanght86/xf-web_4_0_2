@@ -36,7 +36,6 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
@@ -65,7 +64,6 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
         }
         function loadCorrectionConcept(current,data){
             $scope.vm.listData = data.data;
-            $scope.vm.current=current;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
@@ -81,8 +79,12 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    loadCorrectionConceptTable(current);
-                }, 100)
+                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                        searchCorrectionConcept(current);
+                    }else{
+                        loadCorrectionConceptTable(current);
+                    }
+                }, 100);
             }
         },true);
         //全选
@@ -138,39 +140,42 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             $scope.vm.term =  item.correctionConceptTerm;
             addCorrectionConceptDialog(singleEditCorrectionConcept,item);
         }
-        function searchCorrectionConcept(){
+        function searchCorrectionConcept(current){
             if($scope.vm.searchType == "correctionConceptModifier"){
-                searchCorrectionConceptByUser();
+                searchCorrectionConceptByUser(current);
             }else{
-                searchCorrectionConceptByType();
+                searchCorrectionConceptByType(current);
             }
         }
         //查询
-        function searchCorrectionConceptByUser(){
+        function searchCorrectionConceptByUser(current){
             httpRequestPost("/api/ms/modeling/concept/correction/listByModifier",{
                 "correctionConceptModifier":$scope.vm.searchVal,
                 "correctionConceptApplicationId": $scope.vm.applicationId,
-                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                loadCorrectionConcept($scope.vm.current,data);
+                loadCorrectionConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
         }
-        function searchCorrectionConceptByType(){
+        function searchCorrectionConceptByType(current){
             var request = new Object();
             request.correctionConceptApplicationId=$scope.vm.applicationId;
-            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.index=(current-1)*$scope.vm.pageSize;
             request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "correctionConceptModifyTime"){
                 request=switchCorrectionConceptSearchType(request,$scope.vm.searchVal);
-            }else{
+            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
+            }else{
+                layer.msg("请选择时间段");
+                return;
             }
             httpRequestPost("/api/ms/modeling/concept/correction/listByAttribute",request,function(data){
-                loadCorrectionConcept($scope.vm.current,data);
+                loadCorrectionConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });

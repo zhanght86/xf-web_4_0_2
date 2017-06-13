@@ -19,7 +19,7 @@
                     <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                 </div>
             </div>
-            <input type="button" value="查找" ng-click="vm.searchSentimentConcept()"  class="btn1 btn1_blue"/>
+            <input type="button" value="查找" ng-click="vm.searchSentimentConcept(1)"  class="btn1 btn1_blue"/>
             <div class=" conceptSearchRt">
                 <!--<a class="btn btn-blue mr10" id="addCase" ng-click="vm.addSentiment()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>

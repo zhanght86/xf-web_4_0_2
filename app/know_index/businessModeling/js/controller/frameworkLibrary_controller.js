@@ -64,7 +64,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             editFrame:editFrame,
             deleteFrame:deleteFrame,
             searchByFrameTitle:searchByFrameTitle,
-            current:1,
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
@@ -398,7 +397,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //加载对应类目下的框架库
         function loadFrameLibrary(current,type){
-            $scope.vm.current=current;
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": $scope.vm.botSelectValue,
                 "index":(current-1)*$scope.vm.pageSize,
@@ -581,7 +579,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
 
         function searchByFrameTitle(current,type){
-            $scope.vm.current=current;
             console.log("===searchByFrameTitle===");
             if($("#keyWords").val()){
                 httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
@@ -610,7 +607,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                loadFrameLibrary(current,0);
+                if($("#keyWords").val()){
+                    loadFrameLibrary(current,0);
+                }else{
+                    searchByFrameTitle(current,0);
+                }
+
             }
         });
         //添加框架

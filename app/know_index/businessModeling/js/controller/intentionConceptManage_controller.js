@@ -33,7 +33,6 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
@@ -62,7 +61,6 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
         }
         function loadForceSegmentConcept(current,data){
             $scope.vm.listData = data.data;
-            $scope.vm.current=current;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
@@ -78,8 +76,12 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    loadForceSegmentConceptTable(current);
-                }, 100)
+                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                        searchForceSegmentConcept(current);
+                    }else{
+                        loadForceSegmentConceptTable(current);
+                    }
+                }, 100);
             }
         },true);
         //全选
@@ -135,41 +137,43 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             $scope.vm.term =  item.forceSegmentConceptTerm;
             addForceSegmentConceptDialog(singleEditForceSegmentConcept,item);
         }
-        function searchForceSegmentConcept(){
+        function searchForceSegmentConcept(current){
             if($scope.vm.searchType == "forceSegmentConceptModifier"){
-                searchForceSegmentConceptByUser();
+                searchForceSegmentConceptByUser(current);
             }else{
-                searchForceSegmentConceptByType();
+                searchForceSegmentConceptByType(current);
             }
         }
         //查询
-        function searchForceSegmentConceptByUser(){
+        function searchForceSegmentConceptByUser(current){
             console.log($scope.vm.searchVal);
             httpRequestPost("/api/ms/modeling/concept/forceSegment/listByModifier",{
                 "forceSegmentConceptModifier":$scope.vm.searchVal,
                 "forceSegmentConceptApplicationId": $scope.vm.applicationId,
-                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                loadForceSegmentConcept($scope.vm.current,data);
+                loadForceSegmentConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
         }
-        function searchForceSegmentConceptByType(){
+        function searchForceSegmentConceptByType(current){
             var request = new Object();
             request.forceSegmentConceptApplicationId=$scope.vm.applicationId;
-            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.index=(current-1)*$scope.vm.pageSize;
             request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "forceSegmentConceptModifyTime"){
                 request=switchForceSegmentConceptSearchType(request,$scope.vm.searchVal);
-            }else{
-                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
+            }else{
+                layer.msg("请选择时间段");
+                return;
             }
             httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute",request,function(data){
-                loadForceSegmentConcept($scope.vm.current,data);
+                loadForceSegmentConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });

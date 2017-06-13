@@ -36,7 +36,6 @@ angular.module('businessModelingModule').controller('botConceptManageController'
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
@@ -61,7 +60,6 @@ angular.module('businessModelingModule').controller('botConceptManageController'
         }
         function loadBotConcept(current,data){
             $scope.vm.listData = data.data;
-            $scope.vm.current=current;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
@@ -77,8 +75,12 @@ angular.module('businessModelingModule').controller('botConceptManageController'
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    loadBotConceptTable(current);
-                }, 100)
+                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                        searchBotConcept(current);
+                    }else{
+                        loadBotConceptTable(current);
+                    }
+                }, 100);
             }
         },true);
 
@@ -90,40 +92,42 @@ angular.module('businessModelingModule').controller('botConceptManageController'
             $scope.vm.weight =  item.botConceptWeight;
             addBotConceptDialog(singleEditBotConcept,item);
         }
-        function searchBotConcept(){
+        function searchBotConcept(current){
             if($scope.vm.searchType == "botConceptModifier"){
-                searchBotConceptByUser();
+                searchBotConceptByUser(current);
             }else{
-                searchBotConceptByType();
+                searchBotConceptByType(current);
             }
         }
         //查询
-        function searchBotConceptByUser(){
+        function searchBotConceptByUser(current){
             httpRequestPost("/api/ms/modeling/concept/bot/listByModifier",{
                 "botConceptModifier":$scope.vm.searchVal,
                 "botConceptApplicationId": $scope.vm.applicationId,
-                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                loadBotConcept($scope.vm.current,data);
+                loadBotConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
         }
-        function searchBotConceptByType(){
+        function searchBotConceptByType(current){
             var request = new Object();
             request.botConceptApplicationId=$scope.vm.applicationId;
-            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.index=(current-1)*$scope.vm.pageSize;
             request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "botConceptModifyTime"){
                 request=switchBotConceptSearchType(request,$scope.vm.searchVal);
-            }else{
-                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
+            }else{
+                layer.msg("请选择时间段");
+                return;
             }
             httpRequestPost("/api/ms/modeling/concept/bot/listByAttribute",request,function(data){
-                loadBotConcept($scope.vm.current,data);
+                loadBotConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });
