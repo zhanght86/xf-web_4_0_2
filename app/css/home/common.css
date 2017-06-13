@@ -5,6 +5,7 @@ html,body{font-family: "\5FAE\8F6F\96C5\9ED1"; min-width: 1280px;}
 .btn.btn-blue{background-color: #3ea9fb; color: #fff;}
 .btn.btn-green{background-color: #2bcacc; color: #fff;}
 .btn.btn-green2{background-color: #63d197; color: #fff;}
+.btn.btn-red{background-color: red; color: #fff;}
 .btn.btn-blue{background-color: #3ea9fb; color: #fff;}
 .btn.btn-gray{background-color: #e2e2e2; color: #666;}
 .icoimg{position: relative;top: -0.15em; margin-right: 0.2em; vertical-align: middle;}

@@ -820,6 +820,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 "knowledgeId": $scope.vm.knowledgeId ,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
+                "knowledgeType": 103,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
@@ -856,6 +857,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             $scope.vm.limitSave = false ;
                         },180000) ;
                         $scope.vm.data = getParams();
+                         console.log(getParams())
                         httpRequestPost("/api/ms/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
                             //console.log(data);
                             if (data.status == 200) {

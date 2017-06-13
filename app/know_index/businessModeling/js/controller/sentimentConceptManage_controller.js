@@ -32,7 +32,6 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000"
@@ -57,7 +56,6 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
         }
         function loadSentimentConcept(current,data){
             $scope.vm.listData = data.data;
-            $scope.vm.current=current;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
@@ -73,8 +71,12 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    loadSentimentConceptTable(current);
-                }, 100)
+                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                        searchSentimentConcept(current);
+                    }else{
+                        loadSentimentConceptTable(current);
+                    }
+                }, 100);
             }
         },true);
         //编辑
@@ -84,41 +86,43 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
             $scope.vm.term =  item.sentimentConceptTerm;
             addSentimentConceptDialog(singleEditSentimentConcept,item);
         }
-        function searchSentimentConcept(){
+        function searchSentimentConcept(current){
             if($scope.vm.searchType == "sentimentConceptModifier"){
-                searchSentimentConceptByUser();
+                searchSentimentConceptByUser(current);
             }else{
-                searchSentimentConceptByType();
+                searchSentimentConceptByType(current);
             }
         }
         //查询
-        function searchSentimentConceptByUser(){
+        function searchSentimentConceptByUser(current){
             console.log($scope.vm.searchVal);
             httpRequestPost("/api/ms/modeling/concept/sentiment/listByModifier",{
                 "sentimentConceptModifier":$scope.vm.searchVal,
                 "sentimentConceptApplicationId": $scope.vm.applicationId,
-                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                loadSentimentConcept($scope.vm.current,data);
+                loadSentimentConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
         }
-        function searchSentimentConceptByType(){
+        function searchSentimentConceptByType(current){
             var request = new Object();
             request.sentimentConceptApplicationId=$scope.vm.applicationId;
-            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.index=(current-1)*$scope.vm.pageSize;
             request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "sentimentConceptModifyTime"){
                 request=switchSentimentConceptSearchType(request,$scope.vm.searchVal);
-            }else{
-                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
+            }else{
+                layer.msg("请选择时间段");
+                return;
             }
             httpRequestPost("/api/ms/modeling/concept/sentiment/listByAttribute",request,function(data){
-                loadSentimentConcept($scope.vm.current,data);
+                loadSentimentConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });

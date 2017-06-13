@@ -33,7 +33,6 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             synonymBeyondLimit:"同义概念不能超过长度限制50",
@@ -63,7 +62,6 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
         }
         function loadSemanticExpressionConcept(current,data){
             $scope.vm.listData = data.data;
-            $scope.vm.current=current;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
@@ -79,8 +77,12 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    loadSemanticExpressionConceptTable(current);
-                }, 100)
+                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                        searchSemanticExpressionConcept(current);
+                    }else{
+                        loadSemanticExpressionConceptTable(current);
+                    }
+                }, 100);
             }
         },true);
         //全选
@@ -137,41 +139,43 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             $scope.vm.term =  item.semanticExpressionConceptTerm;
             addSemanticExpressionConceptDialog(singleEditSemanticExpressionConcept,item);
         }
-        function searchSemanticExpressionConcept(){
+        function searchSemanticExpressionConcept(current){
             if($scope.vm.searchType == "semanticExpressionConceptModifier"){
-                searchSemanticExpressionConceptByUser();
+                searchSemanticExpressionConceptByUser(current);
             }else{
-                searchSemanticExpressionConceptByType();
+                searchSemanticExpressionConceptByType(current);
             }
         }
         //查询
-        function searchSemanticExpressionConceptByUser(){
+        function searchSemanticExpressionConceptByUser(current){
             console.log($scope.vm.searchVal);
             httpRequestPost("/api/ms/modeling/concept/semanticexpression/listByModifier",{
                 "semanticExpressionConceptModifier":$scope.vm.searchVal,
                 "semanticExpressionConceptApplicationId": $scope.vm.applicationId,
-                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                loadSemanticExpressionConcept($scope.vm.current,data);
+                loadSemanticExpressionConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
         }
-        function searchSemanticExpressionConceptByType(){
+        function searchSemanticExpressionConceptByType(current){
             var request = new Object();
             request.semanticExpressionConceptApplicationId=$scope.vm.applicationId;
-            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.index=(current-1)*$scope.vm.pageSize;
             request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "semanticExpressionConceptModifyTime"){
                 request=switchSemanticExpressionConceptSearchType(request,$scope.vm.searchVal);
-            }else{
-                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
+            }else{
+                layer.msg("请选择时间段");
+                return;
             }
             httpRequestPost("/api/ms/modeling/concept/semanticexpression/listByAttribute",request,function(data){
-                loadSemanticExpressionConcept($scope.vm.current,data);
+                loadSemanticExpressionConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息")
             });
