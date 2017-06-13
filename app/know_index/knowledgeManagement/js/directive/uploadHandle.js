@@ -359,10 +359,11 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                     templateType : "=",
                     fileName : "="
                 },
-                template:"<div>" +
-                '<span  class=""  id="picker">选择文件</span>' +
-                '<span class="btn1 btn_green" ng-click="upload()">上传</span>' +
-                "</div>",
+                template:   '<div style="overflow: hidden">'+
+                                '<span style="float: left" id="picker">选择文件</span>' +
+                                '<span style=" margin-top: 6px; margin-left: 10px; float: left; line-height: 22px;" class="btn1 btn_green"  ng-click="upload()">上传</span>' +
+                             '</div>',
+
                 link: function (scope, element, attrs) {
                     var userId = $cookieStore.get("userId") ,
                         applicationId = $cookieStore.get("applicationId") ,
@@ -408,8 +409,12 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             console.log(uploader) ;
                             uploader.upload()
                         } ;
-                        uploader.on( 'fileQueued', function( file ) {
+                        uploader.on( 'beforeFileQueued', function( file ) {
                             uploader.reset();
+                        })
+                        uploader.on( 'fileQueued', function( file ) {
+                            //uploader.reset();
+                            //console.log(uploader.getfiles())
                             scope.$apply(function(){
                                 scope.fileName=file.name;
                             })
