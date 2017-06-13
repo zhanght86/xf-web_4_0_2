@@ -632,6 +632,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "applicationId": $scope.vm.applicationId,
                 "userId" : $scope.vm.userId ,
                 "sceneId" : $scope.vm.sceneId ,
+                "knowledgeType": 102,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
