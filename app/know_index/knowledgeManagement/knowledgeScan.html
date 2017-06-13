@@ -48,7 +48,7 @@
                     </tr>
                 </table>
                 <!--   其他   -->
-                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103 OR vm.knowledgeType != 102" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
+                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103 || vm.knowledgeType != 102" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
                     <li class="preview_li pr" style="padding-left: 80px;">
                         <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
                         <p>{{item.knowledgeContent}}</p>
