@@ -33,7 +33,6 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             inputSelect : [],
             inputVal : "",
             termSpliter: "；",
-            current:1,
             percent:"%",
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
@@ -62,7 +61,6 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
         }
         function loadSensitiveConcept(current,data){
             $scope.vm.listData = data.data;
-            $scope.vm.current=current;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
                 totalItems: data.total, //总条数
@@ -78,8 +76,12 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    loadSensitiveConceptTable(current);
-                }, 100)
+                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                        searchSensitiveConcept(current);
+                    }else{
+                        loadSensitiveConceptTable(current);
+                    }
+                }, 100);
             }
         },true);
         //全选
@@ -135,40 +137,42 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             $scope.vm.term =  item.sensitiveConceptTerm;
             addSensitiveConceptDialog(singleEditSensitiveConcept,item);
         }
-        function searchSensitiveConcept(){
+        function searchSensitiveConcept(current){
             if($scope.vm.searchType == "sensitiveConceptModifier"){
-                searchSensitiveConceptByUser();
+                searchSensitiveConceptByUser(current);
             }else{
-                searchSensitiveConceptByType();
+                searchSensitiveConceptByType(current);
             }
         }
         //查询
-        function searchSensitiveConceptByUser(){
+        function searchSensitiveConceptByUser(current){
             httpRequestPost("/api/ms/modeling/concept/sensitive/listByModifier",{
                 "sensitiveConceptModifier":$scope.vm.searchVal,
                 "sensitiveConceptApplicationId": $scope.vm.applicationId,
-                "index" :($scope.vm.current-1)*$scope.vm.pageSize,
+                "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
-                loadSensitiveConcept($scope.vm.current,data);
+                loadSensitiveConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
         }
-        function searchSensitiveConceptByType(){
+        function searchSensitiveConceptByType(current){
             var request = new Object();
             request.sensitiveConceptApplicationId=$scope.vm.applicationId;
-            request.index=($scope.vm.current-1)*$scope.vm.pageSize;
+            request.index=(current-1)*$scope.vm.pageSize;
             request.pageSize=$scope.vm.pageSize;
             if($scope.vm.searchType != "sensitiveConceptModifyTime"){
                 request=switchSensitiveConceptSearchType(request,$scope.vm.searchVal);
-            }else{
-                console.log("time"+$scope.vm.timeStart,$scope.vm.timeStart);
+            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
+            }else{
+                layer.msg("请选择时间段");
+                return;
             }
             httpRequestPost("/api/ms/modeling/concept/sensitive/listByAttribute",request,function(data){
-                loadSensitiveConcept($scope.vm.current,data);
+                loadSensitiveConcept(current,data);
             },function(){
                 layer.msg("查询没有对应信息");
             });
