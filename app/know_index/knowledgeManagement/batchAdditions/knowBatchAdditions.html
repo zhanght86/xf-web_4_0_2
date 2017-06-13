@@ -8,10 +8,10 @@
                 <div class="framework mb-10" style="padding-left: 148px;">
                     <span class="framework_s ">选择上传的知识类型:</span>
                     <div>
-                        <select class="bd ">
-                            <option>FAQ/概念型知识</option>
-                            <option>列表型知识</option>
-                            <option>要素型知识</option>
+                        <select class="bd" ng-model="vm.templateType">
+                            <option value="190">FAQ/概念型知识</option>
+                            <option value="192">列表型知识</option>
+                            <option value="191">要素型知识</option>
                         </select>
                     </div>
                 </div>
@@ -19,15 +19,18 @@
                     <span class="framework_s ">选择导入文件:</span>
                     <div>
                         <div class="mb-10">
-                            <button class="btn1 btn1_blue mr-20" >选择文件</button>
-                            <!--<div class="L mr-10" style="display:inline-block;"  batch-test-three server="'api/application/batchTest/upload'" factor="vm.paginationConf.currentPage"  file-name="vm.fileName"></div>-->
-                            <button class="btn1 btn_green" ng-click="vm.upload()">上传</button>
+                            <!--<button class="btn1 btn1_blue mr-20" >选择文件</button>-->
+                            <div know-batch-up
+                                 server="/api/ms/kowledgeManage/uploadFaqAndConceptExecl"
+                                 template-type="vm.templateType"  file-name="vm.fileName">
+                            </div>
+                            <!--<button class="btn1 btn_green" ng-click="vm.upload()">上传</button>-->
                         </div>
-                        <div >
-                            <!--{{vm.fileName}}-->
-                            已选择：小富机器人上传模板1.xls
+                        <div ng-if="vm.fileName">
+                            已选文件 ： {{vm.fileName}}
                         </div>
                     </div>
+
                 </div>
                 <div>
                     本知识库支持excel模板批量直接导入，请 <a class="c_blue" ng-click="vm.downTemplate();">下载模板</a> 进行填写

@@ -10,6 +10,7 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
             downTemplate: downTemplate,  //新增点击事件
             upload : upload,
             fileName :'',
+            templateType : "191",
         };
 
         //上传
