@@ -56,10 +56,12 @@
                             <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.testResultId)"  ng-click="vm.selectSingle(v.testResultId)"/></td>
                             <td>{{v.possibleKnowledge}}</td>
                             <td>{{v.knowledgeTitle}}</td>
-                            <td>{{v.matchKnowledge}}</td>
+                            <td ng-if="v.matchKnowledge == null"></td>
+                            <td ng-if="v.matchKnowledge != null">{{v.matchKnowledge}}</td>
                             <td>{{v.channelName}}</td>
                             <!--<td>{{v.tags}}</td>-->
-                            <td>{{v.tags.substring(1,v.tags.length-1)}}</td>
+                            <td ng-if="v.tags == null"></td>
+                            <td ng-if="v.tags != null">{{v.tags.substring(1,v.tags.length-1)}}</td>
                             <td ng-if="v.answerType==40001">匹配</td>
                             <td ng-if="v.answerType==40002">不匹配</td>
 

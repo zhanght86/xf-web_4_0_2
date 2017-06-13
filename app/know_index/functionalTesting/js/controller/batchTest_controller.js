@@ -254,10 +254,11 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     }
                 }, function () {
                     layer.msg("请求失败");
-                });
+                },"","",60000);
                 ngDialog.closeAll() ;
             }
         }
+
         function stopTest(id){
             httpRequestPost("/api/application/batchTest/startTest", {
                 batchNumberId: id,
@@ -271,6 +272,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 //layer.msg("请求失败");
             });
         }
+
         function startTest(id,name,channelId){
             httpRequestPost("/api/application/batchTest/startTest", {
                 batchNumberId: id,
