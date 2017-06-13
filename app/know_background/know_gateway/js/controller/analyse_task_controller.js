@@ -2,8 +2,6 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
-
 angular.module('knowGatewayModule').controller('analyseTaskController', [
     '$scope', '$location', "$routeParams", "$interval", "$timeout", "ngDialog",
     "KnowDocService","SearchService","TemplateService","TipService",
