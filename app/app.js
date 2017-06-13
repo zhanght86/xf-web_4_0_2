@@ -998,8 +998,6 @@ knowledge_static_web
                 }
             })
 
-
-
             //知识接入
             //任务分析
             .state("back", {
@@ -1043,20 +1041,6 @@ knowledge_static_web
                     }
                 }
             })
-            //文档列表
-            //.state("back.doclist", {
-            //    url: "/gateway/doclist",
-            //    views: {
-            //        'header': {
-            //            templateUrl: 'know_index/home/homePageNav.html',
-            //            controller: "homePageNavController"
-            //        },
-            //        'main_container': {
-            //            templateUrl: 'know_background/know_gateway/main_doclist_container.html',
-            //            controller: "knowGatewayController"
-            //        }
-            //    }
-            //})
             //模板管理
             .state("back.template", {
                 url: "/gateway/template",
@@ -1134,68 +1118,18 @@ knowledge_static_web
                     }
                 }
             })
-
-
     }]);
+    knowledge_static_web.config(function ($httpProvider) {
+        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
 
-knowledge_static_web.config(function ($httpProvider) {
-    $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-    $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
-
-    if (!$httpProvider.defaults.headers.get) {
-        $httpProvider.defaults.headers.get = {};
-    }
-    //不起作用
-    // $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
-    // $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
-
-    // Override $http service's default transformRequest
-    // $httpProvider.defaults.transformRequest = [function (data) {
-    //     /**
-    //      * The workhorse; converts an object to x-www-form-urlencoded serialization.
-    //      * @param {Object} obj
-    //      * @return {String}
-    //      */
-    //     var param = function (obj) {
-    //         var query = '';
-    //         var name, value, fullSubName, subName, subValue, innerObj, i;
-    //
-    //         for (name in obj) {
-    //             value = obj[name];
-    //             // if (isNaN(value) && (!value || value == null)){
-    //             //     break;
-    //             // }
-    //             if (value instanceof Array) {
-    //                 for (i = 0; i < value.length; ++i) {
-    //                     subValue = value[i];
-    //                     fullSubName = name + '[' + i + ']';
-    //                     innerObj = {};
-    //                     innerObj[fullSubName] = subValue;
-    //                     query += param(innerObj) + '&';
-    //                 }
-    //             } else if (value instanceof Object) {
-    //                 for (subName in value) {
-    //                     subValue = value[subName];
-    //                     fullSubName = name + '[' + subName + ']';
-    //                     innerObj = {};
-    //                     innerObj[fullSubName] = subValue;
-    //                     query += param(innerObj) + '&';
-    //                 }
-    //             } else if (value !== undefined && value !== null) {
-    //                 query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
-    //             }
-    //         }
-    //         return query.length ? query.substr(0, query.length - 1) : query;
-    //     };
-    //     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
-    // }];
-
-    $httpProvider.interceptors.push([
-        '$injector',
-        function ($injector) {
-            return $injector.get('AuthInterceptor');
+        if (!$httpProvider.defaults.headers.get) {
+            $httpProvider.defaults.headers.get = {};
         }
-    ]);
-
-    
-});
+        $httpProvider.interceptors.push([
+            '$injector',
+            function ($injector) {
+                return $injector.get('AuthInterceptor');
+            }
+        ]);
+    });
