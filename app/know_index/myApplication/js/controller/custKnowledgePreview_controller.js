@@ -10,7 +10,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         var viewData =  $window.opener.knowledgeScan ;
         if(!viewData){
-                $state.go("custServScenaOverview.manage")
+            $state.go("custServScenaOverview.manage")
         }else{
             //console.log($stateParams.scanKnowledge);
             $scope.vm = {

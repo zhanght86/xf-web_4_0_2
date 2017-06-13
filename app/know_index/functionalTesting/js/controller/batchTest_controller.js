@@ -238,11 +238,18 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     batchNumberId:  id,
                     userId: $scope.vm.userId,
                     //channel:$scope.vm.channel,
-                    channel : name
+                    channelName : name,
+                    channel:channelId,
+                    applicationId:$scope.vm.applicationId,
+                    serviceId:$scope.vm.serviceId,
                 }, function (data) {
-                    showData($scope.vm.paginationConf.currentPage)  ;
+                    console.log(data);
                     //$state.reload();
+                    if(data.status == 20002){
+                        layer.msg(data.data);
+                    }
                     if(data.status == 10018){
+                        showData($scope.vm.paginationConf.currentPage);
                         startTest(id,name,channelId);
                     }
                 }, function () {
