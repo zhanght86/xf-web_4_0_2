@@ -34,7 +34,9 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                     //'css/base.css','css/common.css','css/style.css',
                     //'css/home/back/*.css' ,
                     //'libs/tagEditor/css/jquery.tag-editor.css','libs/H_ui/static/h-ui/css/H-ui.css','libs/H_ui/static/h-ui/css/H-ui.reset.css','css/plugins/1.0.8/iconfont.css',
-                    'app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css','app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css'
+                    'app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css',
+                    'app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css',
+                    //'css/plugins/base.css','css/plugins/common.css','css/plugins/common2.css'
                 ],
                 //src: ['app/css/home/*.css'] ,
                 dest: 'app/dest/css/<%= pkg.name %>.css'
@@ -47,6 +49,22 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 dest: 'app/dest/css/<%= pkg.name %>-min.css'
             }
         },
+        //imagemin: {
+        //    /* 压缩图片大小 */
+        //    dist: {
+        //        options: {
+        //            optimizationLevel: 3 //定义 PNG 图片优化水平
+        //        },
+        //        files: [
+        //            {
+        //                expand: true,
+        //                cwd: 'images/',
+        //                src: ['**/*.{png,jpg,jpeg}'], // 优化 img 目录下所有 png/jpg/jpeg 图片
+        //                dest: 'images/' // 优化后的图片保存位置，覆盖旧图片，并且不作提示
+        //            }
+        //        ]
+        //    }
+        //},
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -128,9 +146,10 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-contrib-connect');
-
+//grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-css');
 
     //grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
     grunt.registerTask('default', ['concat', 'newer:uglify', 'cssmin']);
+    //grunt.registerTask('img', ['imagemin']);
 };
