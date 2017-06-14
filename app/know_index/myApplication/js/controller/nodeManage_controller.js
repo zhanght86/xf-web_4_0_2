@@ -90,7 +90,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         },true);
         //查询节点的基本信息
         function findNodeInfo(nodeCode){
-            httpRequestPost("/api/application/node/findNodeInfo",{
+            httpRequestPostAsync("/api/application/node/findNodeInfo",{
                 "nodeCode" : nodeCode
             },function(data){
                 if(data.status==200){
