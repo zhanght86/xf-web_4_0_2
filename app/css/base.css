@@ -130,7 +130,7 @@ textarea{resize:none;}
 .mb30{margin-bottom: 30px;}
 .pt30{padding-top: 30px;}
 .pb30{padding-bottom: 30px;}
-.unl{text-decoration:underlline;} 
+.unl{text-decoration:underline;}
 .no_unl{text-decoration:none;}
 
 /*定位及排版*/  
@@ -163,18 +163,18 @@ textarea{resize:none;}
 .my-radio2 label.my-radio-on {background-image:url(../images/my-radio-on2.png);}
 
 /*多选*/
-.my-checkbox {overflow:hidden;display:  *zoom:1;}
+.my-checkbox {overflow:hidden;zoom:1;}
 .my-checkbox label {color: #666; display:inline-block;height:38px;line-height:38px;padding-left:23px;background:url(../images/my-checkbox.png) 0 10px no-repeat;margin-right:25px;cursor:pointer;}
 .my-checkbox label.my-checkbox-on {background-image:url(../images/my-checkbox-on.png);}
 
 /*多选2*/
-.my-checkbox2 {overflow:hidden;display:  *zoom:1;}
+.my-checkbox2 {overflow:hidden;zoom:1;}
 .my-checkbox2 label {color: #666; display:inline-block;height:38px;line-height:38px;padding-left:28px;background:url(../images/my-checkbox2.png) 0 10px no-repeat;margin-right:25px;cursor:pointer;}
 .my-checkbox2 label.my-checkbox-on {background-image:url(../images/my-checkbox2-on.png);}
 
 
 /*多选3*/
-.my-checkbox3 {overflow:hidden;display:  *zoom:1;}
+.my-checkbox3 {overflow:hidden;zoom:1;}
 .my-checkbox3 label {color: #666; display:inline-block;height:38px;line-height:38px;padding-left:28px;background:url(../images/my-checkbox3.png) 0 10px no-repeat;margin-right:25px;cursor:pointer;}
 .my-checkbox3 label.my-checkbox-on {background-image:url(../images/my-checkbox3-on.png);}
 
