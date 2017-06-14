@@ -361,7 +361,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                 },
                 template:   '<div style="overflow: hidden">'+
                                 '<span style="float: left" id="picker">选择文件</span>' +
-                                '<span style=" margin-top: 6px; margin-left: 10px; float: left; line-height: 22px;" class="btn1 btn_green"  ng-click="upload()">上传</span>' +
+                                '<span style=" margin-left: 10px; float: left; color:#fff;line-height: 22px;" class="btn1 btn_green"  ng-click="upload()">上传</span>' +
                              '</div>',
 
                 link: function (scope, element, attrs) {
