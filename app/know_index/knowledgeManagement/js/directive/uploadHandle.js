@@ -369,6 +369,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                         applicationId = $cookieStore.get("applicationId") ,
                         templateType = scope.templateType ,
                         server = scope.server ;
+                    //console.log(userId,templateType,applicationId)
                     $timeout(function () {
                         var uploader = WebUploader.create({
                             auto: false, // 选完文件后，是否自动上传
@@ -406,12 +407,12 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
                         });
                         scope.upload = function(){
-                            console.log(uploader) ;
+                            //console.log(uploader) ;
                             uploader.upload()
                         } ;
                         uploader.on( 'beforeFileQueued', function( file ) {
                             uploader.reset();
-                        })
+                        }) ;
                         uploader.on( 'fileQueued', function( file ) {
                             //uploader.reset();
                             //console.log(uploader.getfiles())

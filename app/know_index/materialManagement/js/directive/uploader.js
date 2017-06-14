@@ -82,8 +82,6 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
                  }else {
                     layer.msg("导入成功")
                 }
-
-
             });
 
         }
