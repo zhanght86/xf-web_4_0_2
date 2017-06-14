@@ -833,7 +833,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     tagHtml+='</div>';
                     var html =  '<div class="framework mb-10" element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '   <span class="framework_s text-r mt-7">概念扩展：</span>' +
-                        '   <div class="" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                        '   <div class="formControlsForConcept" element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '       <input type="hidden" value="'+originalText+'"/>'+
                         tagHtml+
                         '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button">'+
@@ -1025,7 +1025,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //组装概念数据 0:添加 1:修改
         function conceptAssemble(type){
             requestArrayReset();
-            $.each($("#concept_extension").find(".formControls").filter(":gt(0)"),function(index,value){
+            $.each($("#concept_extension").find(".formControlsForConcept").filter(":gt(0)"),function(index,value){
                 var contentInfo = $(value).find("input").val()+$scope.vm.textAndTagSplit;
                 $.each($(value).find("span"),function(index1,value1){
                     contentInfo+=$(value1).html()+$scope.vm.conceptSplit;
@@ -1832,7 +1832,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             tagHtml+='</div>';
             var html =  '<div class="framework mb-10">'+
                         '   <span class="framework_s mt-7">概念扩展：</span>' +
-                        '   <div >'+
+                        '   <div class="formControlsForConcept">'+
                         '       <input type="hidden" value="'+originStr+'"/>'+
                         tagHtml+
                         '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+
