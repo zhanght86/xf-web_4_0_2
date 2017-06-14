@@ -93,7 +93,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 angular.element(".advanced_search").slideUp()
             }
         });
-        // 1 scenesIds
+        // 1 scenesIds  
         // 2 title
         // 3 heighsearch
 

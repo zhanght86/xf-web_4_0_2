@@ -496,13 +496,11 @@ knowledge_static_web
             })
             //应用开发-业务建模
             .state("relationalCatalog", {
-                //params:{"userPermission" : null},
                 url: "/relationalCatalog",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
                 controller:"relationalCatalogController"
             })
             .state("relationalCatalog.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -512,7 +510,6 @@ knowledge_static_web
                 }
             })
             .state("botApply.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -522,7 +519,6 @@ knowledge_static_web
                 }
             })
             .state("botApply", {
-                //params:{"userPermission" : null},
                 url: "/botApply",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/botApply.html',
                 controller:"botApplyController"
@@ -534,7 +530,6 @@ knowledge_static_web
                 controller:"custServScenaOverviewController"
             })
             .state("custServScenaOverview.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -545,7 +540,6 @@ knowledge_static_web
             })
             //应用开发-知识管理-营销场景知识总览
             .state("markServScenaOverview", {
-                //params:{"userPermission" : null},
                 url: "/markServScenaOverview",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/markServScenaOverview.html',
                 controller:"markServScenaOverviewController"
@@ -662,20 +656,7 @@ knowledge_static_web
                     }
                 }
             })
-            //.state("materialManagement.chatKnowledgeScan", {
-            //    params:{"chatKnowledgeId" : null},
-            //    url: "/chatKnowledgeScan",
-            //    views: {
-            //        'header': {
-            //            templateUrl: 'know_index/home/homePageNav.html',
-            //            controller: "homePageNavController"
-            //        },
-            //        'content': {
-            //            templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
-            //            controller: "chatKnowledgeScanController"
-            //        }
-            //    }
-            //})
+
             .state("materialManagement.chatKnowledgeBasePreview", {
                 params:{"scanData" : null,"id":null},
                 url: "/chatKnowledgeBasePreview",
@@ -908,7 +889,7 @@ knowledge_static_web
             })
             .state("functionalTest.viewDetails", {
                 params : {batchNumberId : null},
-                url: "/viewDetails",
+                url: "/viewDetails/:batchNumberId",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
