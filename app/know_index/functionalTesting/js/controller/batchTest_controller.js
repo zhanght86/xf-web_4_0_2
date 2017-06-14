@@ -111,18 +111,18 @@ angular.module('functionalTestModule').controller('batchTestController', [
                    layer.msg("查询到记录为空");
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
-                   return;
+                    //return;
+                }else{
+                    $scope.vm.listData = data.data.batchTestList;
+                    $scope.vm.listDataTotal = data.data.total;
+                    // $scope.vm.listDataLength = data.data.total;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: data.data.total, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
                 }
-                $scope.vm.listData = data.data.batchTestList;
-                $scope.vm.listDataTotal = data.data.total;
-                // $scope.vm.listDataLength = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-
                 $scope.$apply();
             },function(){
                 layer.msg("请求失败");
