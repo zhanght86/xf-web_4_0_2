@@ -144,16 +144,16 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                                 detailId:$scope.vm.detailId
                             }, function (data) {
                                 //刷新页面
-                                $state.reload();
-                                if (data.status == 10012) {
+                                if (data.status == 10002) {
                                     layer.msg("该测试问法已经存在，请重新添加!")
                                 } else if (data.status == 10018) {
+                                    $state.reload();
                                     layer.msg("修改成功!");
                                 } else {
                                     layer.msg("修改失败!");
                                 }
                             }, function () {
-                                layer.msg("请求失败")
+                                layer.msg("请求失败");
                             })
                         }
                     } else {
