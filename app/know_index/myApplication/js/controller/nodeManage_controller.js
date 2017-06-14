@@ -114,6 +114,11 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         //编辑节点弹出框
         function editNode(nodeCode){
             findNodeInfo(nodeCode);
+            //如果当前节点正在使用中
+            if($scope.vm.statusId==60002){
+                layer.msg("当前节点正在使用中!");
+                return;
+            }
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
                 width:"550px",
