@@ -120,10 +120,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if($stateParams.data!=null){
-
-            var data = $stateParams.data ;
-            console.log($stateParams.data);
+        if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
+            var data = angular.fromJson($stateParams.data) ;
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 标题打标结果

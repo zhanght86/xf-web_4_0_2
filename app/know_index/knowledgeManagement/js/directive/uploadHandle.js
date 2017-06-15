@@ -365,7 +365,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                              '</div>',
 
                 link: function (scope, element, attrs) {
-                    var userId = $cookieStore.get("userId") ,
+                    var userName = $cookieStore.get("userName") ,
                         applicationId = $cookieStore.get("applicationId") ,
                         templateType = scope.templateType ,
                         server = scope.server ;
@@ -376,7 +376,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             // swf文件路径
                             swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                             formData : {
-                                "userId":userId,
+                                "userId":userName,
                                 "applicationId":applicationId,
                                 "templateType": templateType
                             }  ,   // 上传参数

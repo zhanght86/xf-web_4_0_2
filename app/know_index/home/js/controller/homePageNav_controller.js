@@ -6,7 +6,7 @@ angular.module('homePage').controller('homePageNavController', [
     function ($scope, $location, localStorageService,ngDialog,AuthService,$timeout,$cookieStore,$state) {
         $scope.url = $location.url();
         $scope.urls=$state.current.name;
-        
+
         $scope.vm = {
                 applicationId : $cookieStore.get('applicationId'),
                 sceneId : $cookieStore.get('sceneId'),

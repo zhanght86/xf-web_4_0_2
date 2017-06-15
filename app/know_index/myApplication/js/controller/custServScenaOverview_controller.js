@@ -1,12 +1,12 @@
 
 /**
  * Created by mileS on 2017/4/3.
- * 控制器
+ * 客服 知识 总览
  */
 angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
-        //$state.go("custServScenaOverview");
+        $state.go("custServScenaOverview.manage");
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
@@ -93,7 +93,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 angular.element(".advanced_search").slideUp()
             }
         });
-        // 1 scenesIds  
+        // 1 scenesIds
         // 2 title
         // 3 heighsearch
 

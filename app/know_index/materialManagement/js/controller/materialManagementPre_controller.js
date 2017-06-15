@@ -5,20 +5,20 @@
 
 angular.module('materialManagement').controller('chatKnowledgeBasePreController', [
     '$scope',"$state","$stateParams", function ($scope,$state,$stateParams) {
-        console.log($stateParams.scanData);
-        //$state.go("materialManagement.chatKnowledgeBasePreview");
+        //console.log($stateParams.scanData);
+        $state.go("materialManagement.chatKnowledgeBasePreview");
         $scope.vm = {
-            scanData : $stateParams.scanData,
+            scanData : angular.fromJson($stateParams.scanData),
             save : save ,
             edit : edit ,
         };
 
         function save(){
-            $stateParams.scanData.save($stateParams.scanData)
+            $scope.vm.scanData.save($scope.vm.scanData)
         }
         function edit(){
-            console.log($stateParams.scanData);
-            $state.go($stateParams.scanData.editUrl,{scanDataList: $stateParams.scanData});
+            //console.log($stateParams.scanData);
+            $state.go($scope.vm.scanData.editUrl,{scanDataList: $stateParams.scanData});
         }
 
     }
