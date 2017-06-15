@@ -17,6 +17,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             getData : getData, //返回维度列表
             savePro : savePro, //x向数组中添加数据
             verifyRelease:verifyRelease,  //校验方法
+            check:check,
             allowSubmit:1, //是否允许提交
             userId: $cookieStore.get("userId"),
             applicationId: $cookieStore.get("applicationId"),
@@ -144,15 +145,15 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
             }
         }
 
-        //添加校验
+        //添加添加校验
         function verifyRelease(){
             if($scope.vm.dimension == null || $scope.vm.dimension == ""){
                 layer.msg("维度名称不能为空!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
-            if($scope.vm.dimension.length > 20){
-                layer.msg("维度名称长度不能超过20个字符!");
+            if($scope.vm.dimension.length > 50){
+                layer.msg("维度名称长度不能超过50个字符!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -202,6 +203,21 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 }
             });
         }
+        //编辑添加校验
+        function check(){
+            if($scope.vm.dimensionName == null || $scope.vm.dimensionName == ""){
+                layer.msg("维度名称不能为空!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            if($scope.vm.dimensionName.length > 50){
+                layer.msg("维度名称长度不能超过50个字符!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
+            return 1;
+        }
+
         function editDimension(data){
             console.log(data);
             $scope.vm.applicationId = data.applicationId;
@@ -225,25 +241,26 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        httpRequestPost("/api/application/dimension/updateDimensionById",{
-                            dimensionName : $scope.vm.dimensionName,
-                            userId:$scope.vm.userId,
-                            applicationId:$scope.vm.applicationId,
-                            dimensionId:$scope.vm.dimensionId,
-                            dimensionStatusId : $scope.vm.switchTurn,
-                            dimensionNameArray : $scope.vm.newDimensions,
-                            dimensionParentId : 0
-                        },function(data){
-                            if(data.status == 10002){
-                                layer.msg("该维度已经存在，请重新编辑!");
-                                return;
-                            }
+                        if($scope.vm.allowSubmit) {
+                            httpRequestPost("/api/application/dimension/updateDimensionById", {
+                                dimensionName: $scope.vm.dimensionName,
+                                userId: $scope.vm.userId,
+                                applicationId: $scope.vm.applicationId,
+                                dimensionId: $scope.vm.dimensionId,
+                                dimensionStatusId: $scope.vm.switchTurn,
+                                dimensionNameArray: $scope.vm.newDimensions,
+                                dimensionParentId: 0
+                            }, function (data) {
+                                if (data.status == 10002) {
+                                    layer.msg("该维度已经存在，请重新编辑!");
+                                    return;
+                                }
                                 getData(1);
                                 layer.msg("维度修改成功!");
-                        },function(){
-                            layer.msg("请求失败")
-                        })
-
+                            }, function () {
+                                layer.msg("请求失败")
+                            })
+                        }
                         //添加成功后清空数组数据
                         $scope.vm.newDimensions = [];
                         $scope.vm.oldDimension = [];
