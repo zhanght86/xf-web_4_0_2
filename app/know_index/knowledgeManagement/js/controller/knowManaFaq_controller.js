@@ -1,11 +1,12 @@
 /**
- * Created by dinfo on 2017/3/28.
+ * Created by mileS on 2017/3/28.
  */
-
 angular.module('knowledgeManagementModule').controller('knowManaFaqController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams","knowledgeAddServer","$window","$rootScope","$filter",
-    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,knowledgeAddServer,$window,$rootScope,$filter) {
-        //console.log($stateParams);
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams",
+    "knowledgeAddServer","$window","$rootScope","$filter","myService","$location",
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
+              knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
+        //console.log(angular.fromJson($stateParams.data));
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),
             userName :  $cookieStore.get("userName"),
@@ -128,9 +129,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if($stateParams.data!=null && $stateParams.data.knowledgeBase){
-            var data = $stateParams.data ;
-            console.log(data);
+        //if(!$stateParams.data!=null && $stateParams.data.knowledgeBase){
+        if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
+            var data = angular.fromJson($stateParams.data);
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 时间
@@ -139,7 +140,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
             $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
             $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
-            // bot 路径
+            // bot 路径 s
             $scope.vm.botClassfy = data.knowledgeBase.classificationAndKnowledgeList ;
 
             //knowledgeId
@@ -163,8 +164,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(obj)
             });
             //
-        }else if($stateParams.data != null && $stateParams.data.docmentation){
-            $scope.vm.docmentation = $stateParams.data.docmentation;
+        }else if($stateParams.data && angular.fromJson($stateParams.data).docmentation){
+            $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
@@ -325,7 +326,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        getBotRoot();
         //点击 root 的下拉效果
         function  knowledgeBot(){
             $timeout(function(){
@@ -333,7 +333,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             },50)
         }
         //获取root 数据
-        function getBotRoot(){
+        void function(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
                 "categoryApplicationId": $scope.vm.applicationId,
                 "categoryPid": "root"
@@ -342,7 +342,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             },function(){
                console.log("获取bot类目失败")
             });
-        }
+        }() ;
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
             //类型节点
@@ -559,11 +559,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //  主页保存 获取参数
         function getParams(){
-            var params = {};
-            params =  {
+          var  params =  {
                 "applicationId": $scope.vm.applicationId,
                 "knowledgeId" : $scope.vm.knowledgeId ,
-                "knowledgeType": 100,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间

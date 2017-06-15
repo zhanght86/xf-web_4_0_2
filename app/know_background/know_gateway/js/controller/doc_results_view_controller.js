@@ -87,7 +87,7 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
                     preCloseCallback:function(e){    //关闭回掉
                         if(e === 1){
                             $state.go($scope.vm.stateUrlVal,{
-                                data:{
+                                data:angular.toJson({
                                     'docmentation': {
                                         'documentationId': $scope.knowDocId,
                                         'knowDocCreateTime': $scope.knowDocCreateTime,
@@ -96,7 +96,7 @@ angular.module('knowGatewayModule').controller('doc_results_viewController', [
                                         'documentationTitle': knowledgeTitle,
                                         'documentationContext': knowledgeContent
                                     }
-                                }
+                                })
                             });
                         }
                     }

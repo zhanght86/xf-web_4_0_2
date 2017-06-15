@@ -1,14 +1,13 @@
 
 /**
- * Created by Administrator on 2016/6/3.
+ * Created by mileS on 2017/6/3
  * 控制器
  */
 
 angular.module('knowledgeManagementModule').controller('markServScenaOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window ) {
-        $state.go("markServScenaOverview.manage",{userPermission:$stateParams.userPermission});
-
+        $state.go("markServScenaOverview.manage");
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//

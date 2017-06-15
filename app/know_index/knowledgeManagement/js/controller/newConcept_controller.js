@@ -1,7 +1,6 @@
 /**
  * Created by mileS on 2017/3/28.
  */
-
 angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$interval","$stateParams","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams,$filter) {
@@ -115,7 +114,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if ($stateParams.data != null && $stateParams.data.knowledgeBase) {
+        if ($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase) {
             var data = $stateParams.data;
             //console.log($stateParams.data);
             //标题
@@ -150,8 +149,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 $scope.vm.scanContent.push(obj);
                 //console.log(obj)
             });
-        } else if ($stateParams.data != null && $stateParams.data.docmentation) {
-            $scope.vm.docmentation = $stateParams.data.docmentation;
+        } else if ($stateParams.data  && angular.fromJson($stateParams.data).docmentation) {
+            $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
