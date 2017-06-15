@@ -203,6 +203,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     $scope.vm.listData = data.data.testResultList;
                     $scope.vm.listDataTotal = data.data.total;
                     // $scope.vm.listDataLength = data.data.total;
+
                     $scope.vm.paginationConf = {
                         currentPage: index,//当前页
                         totalItems: data.data.total, //总条数
@@ -213,6 +214,12 @@ angular.module('functionalTestModule').controller('testResultController', [
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
                     layer.msg("没有查询到记录!")
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: 0, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
                 }
                 $scope.$apply();
             },function(){
