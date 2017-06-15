@@ -280,6 +280,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     ids :  $scope.vm.deleteIds,
                     serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
                     //serviceId : 22
+                    batchNumberId : $scope.vm.batchNumberId,
                 },function(data){
                     console.log( $scope.vm.deleteIds);
                     if(data.status == 20009){
