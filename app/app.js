@@ -4,9 +4,7 @@
  */
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
-    //'ui.autocomplete',
     'ui.router',
-    //"ui.bootstrap",
     'ngDialog',
     'ngCookies',
     'ngTextTruncate',
@@ -18,6 +16,9 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ng.ueditor',
     'ngConfirm',
     'ng.shims.placeholder',
+    'pagination',
+    //上傳功能
+    'angularFileUpload',
     //先行
     'loginModule',
     //'indexModule',
@@ -32,22 +33,13 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     "myApplicationSettingModule",
     //业务建模
     "businessModelingModule",
-
     //知识管理
     "knowledgeManagementModule",
-
-    'pagination',
-    'knowDetailsModule',
-    //上傳功能
-    'angularFileUpload',
     //测试功能
     'functionalTestModule',
     //应用分析
     'applAnalysisModule',
-
-    //后台模块
-    'backModule',
-    'knowGatewayModule'
+    'knowDetailsModule',
 ]);
 
 /**
@@ -901,7 +893,7 @@ knowledge_static_web
             //任务分析
             .state("back", {
                 url: "/back",
-                templateUrl: 'know_background/back/main.html',
+                templateUrl: 'know_index/knowledgeManagement/document_know_process/main.html',
                 controller: "backController"
             })
             .state("back.gateway", {
@@ -912,7 +904,8 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_container.html',
+
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_container.html',
                         controller: "analyseTaskController"
                     }
                 }
@@ -925,7 +918,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/doc_results_view.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/doc_results_view.html',
                         controller: "doc_results_viewController"
                     }
                 }
@@ -939,7 +932,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_template_container.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_template_container.html',
                         controller: "temController"
                     }
                 }
@@ -953,7 +946,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_create_template_container.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_create_template_container.html',
                         controller: "createTemController"
                     }
                 }
@@ -967,7 +960,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/doc_select.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/doc_select.html',
                         controller: "docSelectController"
                     }
                 }
