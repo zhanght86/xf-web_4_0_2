@@ -6,6 +6,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
     "knowledgeAddServer","$window","$rootScope","$filter","myService","$location",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
               knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
+        console.log(typeof USER_ID);
         //console.log(angular.fromJson($stateParams.data));
         $scope.vm = {
             applicationId : $cookieStore.get("applicationId"),

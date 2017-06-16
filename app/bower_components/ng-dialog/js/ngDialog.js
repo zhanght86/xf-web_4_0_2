@@ -274,8 +274,8 @@
                             if (options.closeByEscape) {
                                 $body.bind('keydown', privateMethods.onDocumentKeydown);
                             }
-
-                            if (options.closeByNavigation) {
+                            // 修改 地址变化 关闭弹框
+                            if (!options.closeByNavigation) {
                                 $rootScope.$on('$locationChangeSuccess', function () {
                                     privateMethods.closeDialog($dialog);
                                 });
