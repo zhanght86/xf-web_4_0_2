@@ -24,6 +24,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             type : true,
             listData : [],                  //页面展示内容
             //fn
+            exportExcel:exportExcel,
             getData : getData ,             //数据获取
             delData : delData ,             //删除
             knowledgeTotal : null,         //知识总条数
@@ -127,6 +128,44 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         function getUpdateTimeType(val){
             $scope.vm.updateTimeType = val
         }
+
+        /**
+         * 知识导出
+         * @param index
+         */
+        function exportExcel(){
+            DownLoadFile({
+                url:'/api/ms/knowledgeManage/exportExcel', //请求的url
+                data:{
+                    "applicationId" : $scope.vm.applicationId,
+                    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+                    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                }//要发送的数据
+            });
+            //httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
+            //    "applicationId" : $scope.vm.applicationId,
+            //    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+            //    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+            //    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+            //    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+            //    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+            //    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+            //    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            //    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            //},function(data){
+            //  alert(1111)
+            //},function(){
+            //    console.log("getDate==failed");
+            //});
+
+        }
+
         function getData(index){
             //console.log((index-1)*$scope.vm.pageSize);
             httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
@@ -193,18 +232,23 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         function delData(){
             if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
             {
-                layer.msg("请选择删除知识");
+                layer.msg("请选择删除知识",{time:800});
                 return;
+            }else{
+                layer.confirm('是否删除当前选中知识？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
+                        "knowledgeIds":$scope.vm.knowledgeIds
+                    },function(data){
+                        $state.reload();
+                        layer.msg("刪除成功",{time:1000});
+                    },function(){
+                        layer.msg("刪除失败",{time:1000});
+                    });
+                }, function(){
+                });
             }
-            //console.log($scope.vm.knowledgeIds);
-            httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
-                "knowledgeIds":$scope.vm.knowledgeIds
-            },function(data){
-                $state.reload();
-                layer.msg("刪除成功");
-            },function(){
-                layer.msg("刪除失败");
-            });
         }
         function selectAll(items){
             if($scope.vm.isSelectAll){
@@ -242,8 +286,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 //console.log(data)
                 return true;
 
-            },function(){
-                layer.msg("查找今日新增条数失败")
+            },function(err){
+               console.log(err)
             });
         }
 

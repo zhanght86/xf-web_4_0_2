@@ -1,6 +1,7 @@
 /**
  * Created by 41212 on 2017/5/23.
  */
+// 聊天知识库 上传
 knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
     function($parse,$cookieStore) {
     return {
@@ -13,25 +14,23 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
             isAuto : "=",
             selectBtn : "=",
             "tableList" : "=" ,
-            userId : "=" ,
-            applicationId : "="
         },
         template:
             '<button  id="picker">批量导入</button>'
         ,
         link:function(scope,element,attrs){
-            var userId = scope.userId ,
-                applicationId = scope.applicationId ;
             //var $list = angular.element("#thelist");
-            var server = angular.copy(scope.server) ;
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
                 swf: 'Uploader.swf',
-                formData : {"userId":userId,"applicationId":applicationId,"userName":$cookieStore.get("userName")}  ,   // 上传参数
+                formData : {
+                    "userId":USER_ID,
+                    "applicationId":APPLICATION_ID,
+                    "userName":USER_NAME
+                }  ,   // 上传参数
                 // 文件接收服务端。
                 //server: "/api/application/application/uploadHead",
-
                 server: "/api/ms/chatKnowledge/upload",
                 //accept: {
                 //    title: 'file',

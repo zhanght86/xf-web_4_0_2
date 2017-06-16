@@ -6,11 +6,8 @@
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
     '$scope',"$state", "$cookieStore","$timeout","$location",
     function ($scope,$state,$cookieStore,$timeout,$location) {
-        //$location.path('/chatKnowledgeBase');
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
-            userId : $cookieStore.get("userId"),
-            applicationId : $cookieStore.get("applicationId"),
             title : "" ,           //知识标题
             search : search,  //查询
             exportExcel:exportExcel,//知识导出
@@ -26,11 +23,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
 //高级查询
             searchHeighFlag : false ,
             "chatKnowledgeModifier": "",
-            "modifyTimeType": "",
+            "modifyTimeType": 0,
             "chatKnowledgeTopic": "",
             "chatQuestionContent": "",
             selectTimeType : selectTimeType
-
         };
         //$.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
         function getDel(ev,id){
@@ -43,12 +39,12 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         }
         function delKnowledge(){
             httpRequestPost("/api/ms/chatKnowledge/deleteConceCptChatKnowledge",{
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "ids":$scope.vm.delArr
             },function(data){
                 $state.reload();
             },function(err){
-                layer.msg("删除失败")
+                console.log(err)
             })
         }
         $scope.$watch("vm.searchHeighFlag",function(val){
@@ -72,7 +68,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "pageSize":$scope.vm.pageSize,
             },function(data){
                 if(data.data==10005){
-                    layer.msg("查询无次相关知识")
+                    layer.msg("查询无次相关知识",{time:1000})
                 }else{
                     console.log(data);
                     $scope.vm.listData = data.data.objs,
@@ -93,7 +89,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
          * 知识导出
          */
         function exportExcel(currentPage){
-            alert(currentPage)
             httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
@@ -102,32 +97,24 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index": (currentPage-1)*$scope.vm.pageSize,
                 "pageSize":$scope.vm.pageSize,
             },function(data){
-                console.log(data)
+                //console.log(data)
                 if(data.status==500){
-                    layer.msg("导出失败")
+                    layer.msg("导出失败",{time:1000})
                 }else{
-
                     window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data);
                 }
-             console.log()
-
             },function(err){})
 
         }
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
-            console.log($scope.vm.modifyTimeType)
         }
-
-        init();
-        function init(){
-            getData(1)
-        }
+         getData(1) ;
         //请求列表
         function getData(index){
             $scope.vm.getType = 0 ;
             httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "index" :(index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
@@ -140,7 +127,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败");
+                console.log(err)
             })
         }
 

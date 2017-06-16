@@ -85,47 +85,5 @@ angular.module('loginModule').controller('loginController', [
             }
                 return rnd;
         }
-        //$scope.loginFailed = false;
-      //
-      //  $scope.login = function () {
-      //      //校验表单数据
-      //      var credentials = $scope.credentials;
-      //      // console.log(credentials)
-      //      if(!credentials.loginName){
-      //          loginControllerScope.errMsg = '用户名不能为空';
-      //          return;
-      //      }
-      //      if(!credentials.loginPwd){
-      //          loginControllerScope.errMsg = '密码不能为空';
-      //          return;
-      //      }
-      //      if(!credentials.randCheckCode){
-      //          loginControllerScope.errMsg = '验证码不能为空';
-      //          return;
-      //      }
-      //      AuthService.login($scope.credentials, function (data) {
-      //          // console.log(data);
-      //          loginControllerScope.setCurrentUser(data);
-      //      }, function (errMsg) {
-      //          loginControllerScope.loginFailed = true;
-      //          loginControllerScope.errMsg = errMsg;
-      //          credentials.randCheckCode='';
-      //          $scope.reloadRandCheckCode();
-      //      });
-      //  }
-      //
-      //  $scope.reloadRandCheckCode = function () {
-      //      document.getElementById("CreateCheckCode").src = document.getElementById("CreateCheckCode").src + "?nocache=" + new Date().getTime();
-      //  }
-      //
-      //  $scope.reloadRandCheckCode();
-      //
-      //  $scope.enterEvent = function(e){
-      //      loginControllerScope.errMsg = '';
-      //      var keycode = window.event?e.keyCode:e.which;
-      //      if(keycode==13){
-      //          $scope.login();
-      //      }
-      //  }
     }
 ])

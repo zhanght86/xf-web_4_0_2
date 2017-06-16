@@ -29,10 +29,10 @@
                                 <div class="framework mb-10" style="padding-left: 85px;">
                                     <span class="framework_s">更新时间:</span>
                                     <div>
-                                        <label class="mr-10"><input name="time"  type="radio"/>不限</label>
-                                        <label class="mr-10"><input name="time" ng-click="vm.selectTimeType(1)" type="radio"/>近三天</label>
-                                        <label class="mr-10"><input name="time" ng-click="vm.selectTimeType(2)" type="radio"/>近七天</label>
-                                        <label><input name="time" ng-click="vm.selectTimeType(3)" type="radio"/>近一月</label>
+                                        <label class="mr-10"><input name="time" ng-checked="vm.modifyTimeType==0" ng-click="vm.selectTimeType(0)" type="radio"/>不限</label>
+                                        <label class="mr-10"><input name="time" ng-checked="vm.modifyTimeType==1" ng-click="vm.selectTimeType(1)" type="radio"/>近三天</label>
+                                        <label class="mr-10"><input name="time" ng-checked="vm.modifyTimeType==2" ng-click="vm.selectTimeType(2)" type="radio"/>近七天</label>
+                                        <label><input name="time" ng-checked="vm.modifyTimeType==3" ng-click="vm.selectTimeType(3)" type="radio"/>近一月</label>
                                     </div>
                                 </div>
                                 <div class="framework mb-10" style="padding-left: 85px;">
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="L mr-10">
-                            <div uploader-base user-id="vm.userId" application-id="vm.applicationId"></div>
+                            <div uploader-base ></div>
                         </div>
                         <button class="btn1 L btn_green  mr-10"  ng-click="vm.exportExcel(vm.paginationConf.currentPage)">知识导出</button>
                         <a href="/api/ms/chatKnowledge/download?fileName=chatKnowledgeTemplate.xls" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>
@@ -103,6 +103,4 @@
         $('.chat_add_p').html(str);
         $(this).parent().parent().hide();
     });
-
-
 </script>

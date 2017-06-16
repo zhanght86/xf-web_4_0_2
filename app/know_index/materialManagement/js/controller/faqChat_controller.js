@@ -1,15 +1,14 @@
 /**
- * Created by Administrator on 2016/6/3.
+ * Created by mileS on 2017/6/3.
  * 控制器
  */
 angular.module('materialManagement').controller('faqChatController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams",function ($scope,$state,ngDialog,$cookieStore,$stateParams) {
+    '$scope',"$state","ngDialog", "$cookieStore","$stateParams",
+    function ($scope,$state,ngDialog,$cookieStore,$stateParams) {
         $state.go("materialManagement.faqChat");
         var paraData = $stateParams.scanDataList?angular.fromJson($stateParams.scanDataList):"" ;
         $scope.vm = {
-             userId : $cookieStore.get("userId") ,
             userName :  paraData?paraData.chatKnowledgeModifier:$cookieStore.get("userName"),
-            applicationId : $cookieStore.get("applicationId"),
             standardQuestion :  paraData?paraData.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
             extendedQuestionArr : paraData?paraData.extendedQuestionArr:[],  //扩展问数组
@@ -29,9 +28,9 @@ angular.module('materialManagement').controller('faqChatController', [
         //擴展問
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
-                layer.msg("扩展不能为空");
+                layer.msg("扩展不能为空",{time:1000});
             }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
-                layer.msg("扩展问题重复，请重新输入");
+                layer.msg("扩展问题重复，请重新输入",{time:1000});
             }else{
                 httpRequestPost("/api/ms/chatKnowledge/checkFAQChatQuestion",{
                     "chatQuestionContent" : $scope.vm.extendedQuestion
@@ -46,10 +45,10 @@ angular.module('materialManagement').controller('faqChatController', [
                         $scope.$apply();
                         console.log($scope.vm.extendedQuestionArr)
                     }else{
-                        layer.msg("扩展问重复")
+                        layer.msg("扩展问重复",{time:1000})
                     }
                 },function(err){
-                    layer.msg("连接网路失败")
+                    console.log(err)
                 })
 
             }
@@ -82,14 +81,14 @@ angular.module('materialManagement').controller('faqChatController', [
         }
         function addContent(){
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
-                layer.msg("扩展不能为空");
+                layer.msg("扩展不能为空",{time:1000});
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
-                layer.msg("扩展问题重复，请重新输入");
+                layer.msg("扩展问题重复，请重新输入",{time:1000});
             }else{
                 httpRequestPost("/api/ms/chatKnowledge/checkChatKnowledgeContent",{
                     "chatKnowledgeContent" : $scope.vm.contentVal
                 },function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.status == 10000){
                         var obj = {};
                         obj.chatKnowledgeContent = angular.copy($scope.vm.contentVal);
@@ -97,10 +96,10 @@ angular.module('materialManagement').controller('faqChatController', [
                         $scope.vm.contentVal = "";
                         $scope.$apply();
                     }else{
-                        layer.msg("扩展问重复")
+                        layer.msg("扩展问重复",{time:1000})
                     }
                 },function(err){
-                    layer.msg("连接网路失败")
+                    console.log(err)
                 })
             }
 
@@ -120,7 +119,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     "chatKnowledgeContentList" : params.contentArr,
                 },function(data){
                     if(data.data==10004){
-                        layer.msg("标准问重复")
+                        layer.msg("标准问重复",{time:1000})
                     }else{
                         $state.go("materialManagement.chatKnowledgeBase");
                     }
@@ -136,7 +135,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     standardQuestion : $scope.vm.standardQuestion,
                     extendedQuestionArr : $scope.vm.extendedQuestionArr,
                     contentArr : $scope.vm.contentArr,
-                    applicationId: $scope.vm.applicationId,
+                    applicationId: APPLICATION_ID,
                     chatKnowledgeModifier : $scope.vm.userName,
                     save : saveScan,
                     editUrl : "materialManagement.faqChat",
@@ -150,16 +149,16 @@ angular.module('materialManagement').controller('faqChatController', [
                 if(check()){
                     httpRequestPost("/api/ms/chatKnowledge/addFAQChatKnowledge",{
                         "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
-                        "applicationId": $scope.vm.applicationId,
+                        "applicationId": APPLICATION_ID,
                         "chatKnowledgeModifier": $scope.vm.userName,
-                        "userId":$scope.vm.userId,
+                        "userId":USER_ID,
                         "chatKnowledgeTopic": $scope.vm.standardQuestion,
                         "chatQuestionList" : $scope.vm.extendedQuestionArr,
                         "chatKnowledgeContentList" : $scope.vm.contentArr,
                         "knoweledgeId" : $scope.vm.knoweledgeId
                     },function(data){
                         if(data.data==10004){
-                            layer.msg("标准问重复")
+                            layer.msg("标准问重复",{time:1000})
                         }else{
                             $state.go("materialManagement.chatKnowledgeBase");
                         }
@@ -188,13 +187,13 @@ angular.module('materialManagement').controller('faqChatController', [
         //验证 所有数据是否合格
         function check(){
             if($scope.vm.standardQuestion==""){
-                layer.msg("标准问不能为空");
+                layer.msg("标准问不能为空",{time:1000});
                 return false
             }else if($scope.vm.extendedQuestionArr.length==0){
-                layer.msg("扩展问不能为空");
+                layer.msg("扩展问不能为空",{time:1000});
                 return false;
             }else if($scope.vm.contentArr.length==0){
-                layer.msg("知识内容不能为空");
+                layer.msg("知识内容不能为空",{time:1000});
                 return false
             }else{
                 return true

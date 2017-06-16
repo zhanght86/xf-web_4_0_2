@@ -7,11 +7,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
         $scope.vm = {
-//主页
-            applicationId : $cookieStore.get("applicationId"),
-            userName :  $cookieStore.get("userName"),
-            userId : $cookieStore.get("userId") ,
-            sceneId :  $cookieStore.get("sceneId") ,
             knowledgeId : "" ,
             frames : [],      //业务框架
             frameId : "",
@@ -82,7 +77,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             limitSave : false //限制多次打标
         };
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.dimensions = data.data;
@@ -92,7 +87,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 layer.msg("获取维度失败，请刷新页面")
             });
         //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.channels = data.data
@@ -276,7 +271,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             var weight = oldWord.extensionQuestionType ;
             //console.log(oldWord);
             httpRequestPost("/api/ms/listKnowledge/checkFrameTag",{
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -362,7 +357,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 return false
             } else {
                 httpRequestPost("/api/ms/listKnowledge/checkExtensionQuestion", {
-                    "applicationId": $scope.vm.applicationId,
+                    "applicationId": APPLICATION_ID,
                     "extendQuestionList": question
                 }, function (data) {
                     console.log(data);
@@ -447,12 +442,12 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": $scope.vm.applicationId,
+                "categoryApplicationId": APPLICATION_ID,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
                 $scope.vm.botRoot = data.data;
-                //console.log( $scope.vm.applicationId);
+                //console.log( APPLICATION_ID);
             },function(){
                 layer.msg("err or err")
             });
@@ -488,7 +483,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":$scope.vm.applicationId,
+                    "categoryApplicationId":APPLICATION_ID,
                     "categoryPid": id
                 },function(data){
                     console.log(data) ;
@@ -597,7 +592,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if($scope.vm.title){
                 httpRequestPost("/api/ms/listKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : $scope.vm.applicationId
+                    "applicationId" : APPLICATION_ID
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
@@ -627,18 +622,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
         //  主页保存 获取参数
         function getParams(){
-            var params = {};
-            params =  {
-                "applicationId": $scope.vm.applicationId,
-                "userId" : $scope.vm.userId ,
-                "sceneId" : $scope.vm.sceneId ,
+           var params =  {
+                "applicationId": APPLICATION_ID,
+                "userId" : USER_ID ,
+                "sceneId" : SCENE_ID ,
                 "knowledgeType": 102,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-                "knowledgeUpdater": $scope.vm.userName, //操作人
-                "knowledgeCreator": $scope.vm.userName  //操作人
+                "knowledgeUpdater": USER_NAME, //操作人
+                "knowledgeCreator": USER_NAME  //操作人
             };
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
@@ -648,14 +642,12 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
             obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
             obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
             obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent = [] ;
             $scope.vm.scanContent.push(obj);
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-            //console.log(params)
             return params
         }
         function save() {

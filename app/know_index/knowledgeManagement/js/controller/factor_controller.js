@@ -5,10 +5,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$rootScope","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$rootScope,$filter) {
         $scope.vm = {
-            //userName :  $cookieStore.get("userName"),
-            //userId : $cookieStore.get("userId") ,
-            //sceneId :  $cookieStore.get("sceneId") ,
-            //applicationId : $cookieStore.get("applicationId"),
             knowledgeId : "" ,
             frames : [],      //业务框架
             frameId : "",
@@ -808,7 +804,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.titleTip = "知识标题不能为空"
             }
         }
-
         //  主页保存 获取参数
         function getParams(){
             //console.log(getTableParams())

@@ -7,7 +7,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
         //console.log($window.opener.knowledgeScan);
         var knowledgeScan =  $window.opener.knowledgeScan;
         $scope.vm = {
-            applicationId :$cookieStore.get("applicationId"),
             knowledgeId : knowledgeScan.knowledgeId,
             knowledgeType : knowledgeScan.knowledgeType,
             listData : null,
@@ -48,7 +47,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
         }
         // 展示渠道维度使用
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.dimensions = data.data;
@@ -56,7 +55,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             }, function(error) {
             });
         //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.channels = data.data

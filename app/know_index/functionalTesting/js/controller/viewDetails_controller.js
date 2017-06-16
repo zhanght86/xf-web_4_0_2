@@ -214,7 +214,6 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
                     $scope.$apply();
-                    return;
                 }
                 $scope.vm.listData = data.data.detailList;
                 $scope.vm.listDataTotal = data.data.total;
