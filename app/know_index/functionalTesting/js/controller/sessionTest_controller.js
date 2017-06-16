@@ -60,7 +60,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                     //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
                 }
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求请求失败');
             })
         }
         //
