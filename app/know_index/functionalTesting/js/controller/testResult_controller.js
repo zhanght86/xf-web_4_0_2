@@ -66,7 +66,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             },function(data){
                 console.log(data);
                 if(data.status == 10005){
-                    layer.msg("查询到记录为空");
+                    layer.msg("查询到记录为空",{time:1000});
                     return;
                 }else{
 
@@ -103,32 +103,32 @@ angular.module('functionalTestModule').controller('testResultController', [
         //验证
         function verifyRelease(){
             if($scope.vm.editTitle == null || $scope.vm.editTitle == ""){
-                layer.msg("测试问法不能为空");
+                layer.msg("测试问法不能为空",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.editKnow == null || $scope.vm.editKnow == ""){
-                layer.msg("知识标题不能为空");
+                layer.msg("知识标题不能为空",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.editTitle.length > 50){
-                layer.msg("测试问法长度不能超过50个字符");
+                layer.msg("测试问法长度不能超过50个字符",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.editKnow.length > 50){
-                layer.msg("知识标题长度不能超过50个字符");
+                layer.msg("知识标题长度不能超过50个字符",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             var b = /^[\w+\u4e00-\u9fa5]+$/;     //限制特殊字符正则表达式
             if(!b.test($scope.vm.editTitle)){
-                layer.msg("测试问法不能包含特殊字符!");
+                layer.msg("测试问法不能包含特殊字符!",{time:1000});
                 return 0;
             };
             if(!b.test($scope.vm.editKnow)){
-                layer.msg("知识标题不能包含特殊字符!");
+                layer.msg("知识标题不能包含特殊字符!",{time:1000});
                 return 0;
             }
             return 1;
@@ -167,9 +167,9 @@ angular.module('functionalTestModule').controller('testResultController', [
                             }, function (data) {
                                 console.log(data);
                                 if(data.status == 10002){
-                                    layer.msg("该测试问法已经存在，请重新添加!")
+                                    layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
                                 }else if (data.status == 10000) {
-                                    layer.msg("修改成功");
+                                    layer.msg("修改成功",{time:1000});
                                     showData(1);
                                 }else if(data.status == 10004){
                                     //layer.msg("修改失败");
@@ -217,7 +217,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 }else if(data.status == 10005){
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
-                    layer.msg("没有查询到记录!")
+                    layer.msg("没有查询到记录!",{time:1000})
                     $scope.vm.paginationConf = {
                         currentPage: index,//当前页
                         totalItems: 0, //总条数
@@ -292,7 +292,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     if(data.status == 20009){
                         $scope.vm.selectAllCheck = false;
                         $state.reload();
-                        layer.msg("测试成功");
+                        layer.msg("测试成功",{time:1000});
                     }else{
                         //layer.msg("测试失败");
                         console.log("测试失败");
@@ -302,7 +302,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     console.log("测试失败");
                 });
             }else{
-                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+                layer.msg("当前应用下没有发布服务，请发布服务后进行测试",{time:1000});
             }
 
 
@@ -310,7 +310,7 @@ angular.module('functionalTestModule').controller('testResultController', [
         //测试弹窗
         function testDialog(){
             if($scope.vm.deleteIds.length == 0){
-                layer.msg("请选择要测试的知识！");
+                layer.msg("请选择要测试的知识！",{time:1000});
                 return;
             }
             var dialog = ngDialog.openConfirm({

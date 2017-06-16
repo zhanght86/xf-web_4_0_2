@@ -56,7 +56,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             },function(data){
                 loadSensitiveConcept(current,data);
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求失败');
             });
         }
         function loadSensitiveConcept(current,data){
@@ -242,7 +243,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                                 addSensitiveConceptDialog(singleAddSensitiveConcept);
                             }
                         }, function () {
-                            layer.msg("添加失败")
+                           // layer.msg("添加失败")
+                            console.log('添加失败');
                         })
                     } else {
                         $scope.vm.key = "";

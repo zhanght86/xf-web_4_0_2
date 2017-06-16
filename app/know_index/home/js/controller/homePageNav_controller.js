@@ -77,10 +77,10 @@ angular.module('homePage').controller('homePageNavController', [
                     $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;//设置默认选择
                     $scope.vm.openServiceConfirm();
                 }else{
-                    layer.msg("无应用服务")
+                    layer.msg("无应用服务",{time:1000});
                 }
             },function(){
-                layer.msg("无法加载服务列表")
+                layer.msg("无法加载服务列表",{time:1000});
             });
         }
         //引擎跳转方法

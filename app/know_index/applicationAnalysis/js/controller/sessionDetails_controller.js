@@ -185,7 +185,8 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                     $scope.$apply()
                 }
             },function(err){
-                layer.msg("获取维度失败，请刷新页面")
+                //layer.msg("获取维度失败，请刷新页面")
+                console.log("获取维度失败，请刷新页面");
             });
         }
         //渠道
@@ -199,7 +200,8 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                     $scope.$apply()
                 }
             },function(err){
-                layer.msg("获取渠道失败，请刷新页面")
+                //layer.msg("获取渠道失败，请刷新页面")
+                console.log("获取渠道失败，请刷新页面");
             });
         }
     }
