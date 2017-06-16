@@ -174,7 +174,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 editUrl : data.chatKnowledgeSource==100?"materialManagement.faqChat":"materialManagement.conceptChat",
                 type : 0
             };
-            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
+            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
         }
     }
 ]);

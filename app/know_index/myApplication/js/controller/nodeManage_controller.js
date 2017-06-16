@@ -90,7 +90,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         },true);
         //查询节点的基本信息
         function findNodeInfo(nodeCode){
-            httpRequestPost("/api/application/node/findNodeInfo",{
+            httpRequestPostAsync("/api/application/node/findNodeInfo",{
                 "nodeCode" : nodeCode
             },function(data){
                 if(data.status==200){
@@ -114,6 +114,11 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         //编辑节点弹出框
         function editNode(nodeCode){
             findNodeInfo(nodeCode);
+            //如果当前节点正在使用中
+            if($scope.vm.statusId==60002){
+                layer.msg("当前节点正在使用中!");
+                return;
+            }
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationRelease/NodeManageDialog.html",
                 width:"550px",

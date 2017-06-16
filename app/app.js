@@ -4,9 +4,7 @@
  */
 var knowledge_static_web = angular.module('knowledge_static_web', [
     //公共模块
-    //'ui.autocomplete',
     'ui.router',
-    //"ui.bootstrap",
     'ngDialog',
     'ngCookies',
     'ngTextTruncate',
@@ -18,6 +16,9 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ng.ueditor',
     'ngConfirm',
     'ng.shims.placeholder',
+    'pagination',
+    //上傳功能
+    'angularFileUpload',
     //先行
     'loginModule',
     //'indexModule',
@@ -32,22 +33,13 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     "myApplicationSettingModule",
     //业务建模
     "businessModelingModule",
-
     //知识管理
     "knowledgeManagementModule",
-
-    'pagination',
-    'knowDetailsModule',
-    //上傳功能
-    'angularFileUpload',
     //测试功能
     'functionalTestModule',
     //应用分析
     'applAnalysisModule',
-
-    //后台模块
-    'backModule',
-    'knowGatewayModule'
+    'knowDetailsModule',
 ]);
 
 /**
@@ -133,7 +125,6 @@ knowledge_static_web
                 templateUrl: 'know_index/login/login.html',
                 controller: "loginController"
             })
-
             // 首页路由
             .state("homePage", {
                     url: "/homePage",
@@ -156,7 +147,6 @@ knowledge_static_web
             })
             //业务建模---框架库
             .state("frameworkLibrary.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -166,14 +156,12 @@ knowledge_static_web
                 }
             })
             .state("frameworkLibrary", {
-                //params:{"userPermission" : null},
                 url: "/frameworkLibrary",
                 templateUrl: 'know_index/businessModeling/frameworkLibrary.html',
                 controller:"frameworkLibraryController"
             })
             //业务建模---框架库--faq框架新增
             .state("faqNewFrame.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -183,14 +171,12 @@ knowledge_static_web
                 }
             })
             .state("faqNewFrame", {
-                //params:{"userPermission" : null},
                 url: "/faqNewFrame",
                 templateUrl: 'know_index/businessModeling/faqNewFrame.html',
                 controller:"faqNewFrameController"
             })
             //业务建模---框架库--要素框架新增
             .state("factorNewFrame.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -200,21 +186,17 @@ knowledge_static_web
                 }
             })
             .state("factorNewFrame", {
-                //params:{"userPermission" : null},
                 url: "/factorNewFrame",
                 templateUrl: 'know_index/businessModeling/factorNewFrame.html',
                 controller:"factorNewFrameController"
             })
-
             //业务建模---概念管理
             .state("conceptManage", {
-                //params:{"userPermission" : null},
                 url: "/conceptManage",
                 templateUrl: 'know_index/businessModeling/conceptManage.html',
                 controller:"businessModelingController"
             })
             .state("conceptManage.synony", {
-                //params:{"userPermission" : null},
                 url: "/synony",
                 views: {
                     'header': {
@@ -228,7 +210,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.aggregate", {
-                //params:{"userPermission" : null},
                 url: "/aggregate",
                 views: {
                     'header': {
@@ -242,7 +223,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.business", {
-                //params:{"userPermission" : null},
                 url: "/business",
                 views: {
                     'header': {
@@ -256,7 +236,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.sensitive", {
-                //params:{"userPermission" : null},
                 url: "/sensitive",
                 views: {
                     'header': {
@@ -270,7 +249,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.errorCorrection", {
-                //params:{"userPermission" : null},
                 url: "/errorCorrection",
                 views: {
                     'header': {
@@ -284,7 +262,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.disable", {
-                //params:{"userPermission" : null},
                 url: "/disable",
                 views: {
                     'header': {
@@ -298,7 +275,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.sentiment", {
-                //params:{"userPermission" : null},
                 url: "/sentiment",
                 views: {
                     'header': {
@@ -312,7 +288,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.intention", {
-                //params:{"userPermission" : null},
                 url: "/intention",
                 views: {
                     'header': {
@@ -326,7 +301,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.bot", {
-                //params:{"userPermission" : null},
                 url: "/bot",
                 views: {
                     'header': {
@@ -340,7 +314,6 @@ knowledge_static_web
                 }
             })
             .state("conceptManage.semanticExpression", {
-                //params:{"userPermission" : null},
                 url: "/semanticExpression",
                 views: {
                     'header': {
@@ -355,34 +328,17 @@ knowledge_static_web
             })
             // 我的应用myApplication
             .state("myApplication", {
-                params:{"userPermission" : null},
-                url: "/myApplication",
+                url: "/myApplication/:userPermission",
                 templateUrl: 'know_index/myApplication/myApplication.html',
                 controller: "myApplicationController"
             })
 
-            //.state("myApplication.manage", {
-            //    params:{"userPermission" : null},
-            //    url: "/manage",
-            //    views: {
-            //        'header': {
-            //            templateUrl: 'know_index/home/homePageNav.html',
-            //            controller: "homePageNavController"
-            //        },
-            //        'content': {
-            //            templateUrl: 'know_index/myApplication/adminContent.html',
-            //            controller: "adminContentController"
-            //        }
-            //    }
-            //})
             .state("setting", {
-                //params:{"userPermission" : null},
                 url: "/setting",
                 templateUrl: 'know_index/myApplication/setting.html',
                 controller:"myApplicationSettingController"
             })
             .state("setting.robot", {
-                //params:{"userPermission" : null},
                 url: "/robot",
                 views: {
                     'header': {
@@ -396,7 +352,6 @@ knowledge_static_web
                 }
             })        
             .state("setting.parameter", {
-                //params:{"userPermission" : null},
                 url: "/parameter",
                 views: {
                     'header': {
@@ -410,7 +365,6 @@ knowledge_static_web
                 }
             })
             .state("setting.chatPageConfig", {
-                //params:{"userPermission" : null},
                 url: "/chatPageConfig",
                 views: {
                     'header': {
@@ -424,7 +378,6 @@ knowledge_static_web
                 }
             })
             .state("setting.sceneManage", {
-                //params:{"userPermission" : null},
                 url: "/sceneManage",
                 views: {
                     'header': {
@@ -438,7 +391,6 @@ knowledge_static_web
                 }
             })
             .state("setting.dimension", {
-                //params:{"userPermission" : null},
                 url: "/dimension",
                 views: {
                     'header': {
@@ -452,7 +404,6 @@ knowledge_static_web
                 }
             })
             .state("setting.channel", {
-                //params:{"userPermission" : null},
                 url: "/channel",
                 views: {
                     'header': {
@@ -466,7 +417,6 @@ knowledge_static_web
                 }
             })
             .state("setting.association", {
-                //params:{"userPermission" : null},
                 url: "/association",
                 views: {
                     'header': {
@@ -481,7 +431,6 @@ knowledge_static_web
             })
             //应用信息
             .state("setting.Infor", {
-                //params:{"userPermission" : null},
                 url: "/Infor",
                 views: {
                     'header': {
@@ -496,13 +445,11 @@ knowledge_static_web
             })
             //应用开发-业务建模
             .state("relationalCatalog", {
-                //params:{"userPermission" : null},
                 url: "/relationalCatalog",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/relationalCatalog.html',
                 controller:"relationalCatalogController"
             })
             .state("relationalCatalog.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -512,7 +459,6 @@ knowledge_static_web
                 }
             })
             .state("botApply.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -522,7 +468,6 @@ knowledge_static_web
                 }
             })
             .state("botApply", {
-                //params:{"userPermission" : null},
                 url: "/botApply",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/botApply.html',
                 controller:"botApplyController"
@@ -534,7 +479,6 @@ knowledge_static_web
                 controller:"custServScenaOverviewController"
             })
             .state("custServScenaOverview.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -545,13 +489,11 @@ knowledge_static_web
             })
             //应用开发-知识管理-营销场景知识总览
             .state("markServScenaOverview", {
-                //params:{"userPermission" : null},
                 url: "/markServScenaOverview",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/markServScenaOverview.html',
                 controller:"markServScenaOverviewController"
             })
             .state("markServScenaOverview.manage", {
-                //params:{"userPermission" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -562,13 +504,11 @@ knowledge_static_web
             })
             //应用开发-知识管理-营销知识预览
             .state("markKnowledgePreview", {
-                params:{"scanKnowledge" : null},
-                url: "/markKnowledgePreview",
+                url: "/markKnowledgePreview/:scanKnowledge",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/markKnowledgePreview.html',
                 controller:"markKnowledgePreviewController"
             })
             .state("markKnowledgePreview.manage", {
-                params:{"scanKnowledge" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -580,13 +520,11 @@ knowledge_static_web
 
             //应用开发-知识管理-客服知识预览
             .state("custKnowledgePreview", {
-                params:{"scanKnowledge" : null},
                 url: "/custKnowledgePreview",
                 templateUrl: 'know_index/myApplication/applicationDevelopment/custKnowledgePreview.html',
                 controller:"custKnowledgePreviewController"
             })
             .state("custKnowledgePreview.manage", {
-                params:{"scanKnowledge" : null},
                 url: "/manage",
                 views: {
                     'header': {
@@ -598,7 +536,6 @@ knowledge_static_web
 
             //应用发布
             .state("setting.releaseMan", {
-                //params:{"userPermission" : null},
                 url: "/releaseMan",
                 views: {
                     'header': {
@@ -612,8 +549,7 @@ knowledge_static_web
                 }
             })
             .state("setting.newService", {
-                params:{"serviceId" : null},
-                url: "/newService",
+                url: "/newService/:serviceId",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -626,7 +562,6 @@ knowledge_static_web
                 }
             })
             .state("setting.nodeMan", {
-                //params:{"userPermission" : null},
                 url: "/nodeMan",
                 views: {
                     'header': {
@@ -642,15 +577,13 @@ knowledge_static_web
 
             //materialManagement
             .state("materialManagement", {
-                params:{"userPermission" : null},
-                url: "/materialManagement",
+                url: "/materialManagement/:userPermission",
                 templateUrl: 'know_index/materialManagement/materialManagement.html',
                 controller: "adminController"
             })
 
             .state("materialManagement.chatKnowledgeBase", {
-                params:{"userPermission" : null},
-                url: "/chatKnowledgeBase",
+                url: "/chatKnowledgeBase/:userPermission",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -662,23 +595,8 @@ knowledge_static_web
                     }
                 }
             })
-            //.state("materialManagement.chatKnowledgeScan", {
-            //    params:{"chatKnowledgeId" : null},
-            //    url: "/chatKnowledgeScan",
-            //    views: {
-            //        'header': {
-            //            templateUrl: 'know_index/home/homePageNav.html',
-            //            controller: "homePageNavController"
-            //        },
-            //        'content': {
-            //            templateUrl: 'know_index/materialManagement/chatKnowledgeScan.html',
-            //            controller: "chatKnowledgeScanController"
-            //        }
-            //    }
-            //})
             .state("materialManagement.chatKnowledgeBasePreview", {
-                params:{"scanData" : null,"id":null},
-                url: "/chatKnowledgeBasePreview",
+                url: "/chatKnowledgeBasePreview/:scanData/:id",
                 //cache:'true',
                 views: {
                     'header': {
@@ -692,8 +610,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.faqChat", {
-                params:{"scanDataList" : null},
-                url: "/faqChat",
+                url: "/faqChat/:scanDataList",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -706,8 +623,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.conceptChat", {
-                params:{"scanDataList" : null},
-                url: "/conceptChat",
+                url: "/conceptChat/:scanDataList",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -727,8 +643,7 @@ knowledge_static_web
 
             })
             .state("knowledgeManagement.singleAddConcept", {
-                url: "/singleAddConcept",
-                params : {data : null},
+                url: "/singleAddConcept/:data",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -742,8 +657,7 @@ knowledge_static_web
             })
             //营销场景-概念新增
             .state("knowledgeManagement.conceptAdd", {
-                url: "/ConceptAdd",
-                params : {data : null},
+                url: "/ConceptAdd/:data",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -755,24 +669,8 @@ knowledge_static_web
                     }
                 }
             })
-            ////客服場景
-            //.state("knowledgeManagement.customKnowledge", {
-            //    url: "/customKnowledge",
-            //    params : {data : null},
-            //    views: {
-            //        'header': {
-            //            templateUrl: 'know_index/home/homePageNav.html',
-            //            controller: "homePageNavController"
-            //        },
-            //        'content': {
-            //            templateUrl: 'know_index/knowledgeManagement/customKnowledge/customKnowledge.html',
-            //            controller: "customKnowledge"
-            //        }
-            //    }
-            //})
             .state("knowledgeManagement.faqAdd", {
-                url: "/faqAdd",
-                params : {data : null},
+                url: "/faqAdd/:data",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -785,8 +683,7 @@ knowledge_static_web
                 }
             })
             .state("knowledgeManagement.listAdd", {
-                url: "/listAdd",
-                params : {data : null},
+                url: "/listAdd/:data",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -799,8 +696,7 @@ knowledge_static_web
                 }
             })
             .state("knowledgeManagement.factorAdd", {
-                url: "/factorAdd",
-                params : {data : null},
+                url: "/factorAdd/:data",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -815,7 +711,6 @@ knowledge_static_web
             // //批量知识新增
             .state("knowledgeManagement.knowBatchAdditions", {
                 url: "/knowBatchAdditions",
-                params : {data : null},
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -830,8 +725,7 @@ knowledge_static_web
             
             //知識預覽
             .state("knowledgeManagement.knowledgeScan", {
-                url: "/knowledgeScan",
-                params : {knowledgeScan : null},
+                url: "/knowledgeScan/:knowledgeScan",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -893,8 +787,7 @@ knowledge_static_web
                 }
             })
             .state("functionalTest.testResult", {
-                    url: "/testResult",
-                    params : {"batchNumberId": null},    //给 $stateParams 定义参数；
+                    url: "/testResult/:batchNumberId",
                     views: {
                         'header': {
                             templateUrl: 'know_index/home/homePageNav.html',
@@ -907,8 +800,7 @@ knowledge_static_web
                         }
             })
             .state("functionalTest.viewDetails", {
-                params : {batchNumberId : null},
-                url: "/viewDetails",
+                url: "/viewDetails/:batchNumberId",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
@@ -941,7 +833,6 @@ knowledge_static_web
                     }
                 }
             })
-            
             .state("applAnalysis.satisfactionDegree", {
                 url: "/satisfactionDegree",
                 views: {
@@ -1002,41 +893,32 @@ knowledge_static_web
             //任务分析
             .state("back", {
                 url: "/back",
-                templateUrl: 'know_background/back/main.html',
+                templateUrl: 'know_index/knowledgeManagement/document_know_process/main.html',
                 controller: "backController"
             })
             .state("back.gateway", {
-                url: "/gateway",
-                params: {
-                    isGo: null,
-                    knowDocId: null
-                },
+                url: "/gateway/:isGo/:knowDocId",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_container.html',
+
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_container.html',
                         controller: "analyseTaskController"
                     }
                 }
             })
             .state("back.doc_results_view", {
-                url: "/doc_results_view",
-                params: {
-                    isGo: null,
-                    knowDocId: null,
-                    knowDocCreateTime: null,
-                    knowDocUserName: null
-                },
+                url: "/doc_results_view/:isGo/:knowDocId/:knowDocCreateTime/:knowDocUserName",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/doc_results_view.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/doc_results_view.html',
                         controller: "doc_results_viewController"
                     }
                 }
@@ -1050,25 +932,21 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_template_container.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_template_container.html',
                         controller: "temController"
                     }
                 }
             })
             //创建模板
             .state("back.createTemplate", {
-                url: "/gateway/create_template",
-                params: {
-                    isGo: null,
-                    temId : null
-                },
+                url: "/gateway/create_template/:isGo/:temId",
                 views: {
                     'header': {
                         templateUrl: 'know_index/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_create_template_container.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_create_template_container.html',
                         controller: "createTemController"
                     }
                 }
@@ -1082,7 +960,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'main_container': {
-                        templateUrl: 'know_background/know_gateway/doc_select.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/doc_select.html',
                         controller: "docSelectController"
                     }
                 }

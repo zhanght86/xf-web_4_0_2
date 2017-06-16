@@ -1,17 +1,10 @@
 /**
  * Created by mileS on 2017/3/28.
  */
-
 angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$interval","$stateParams","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams,$filter) {
-        //$cookieStore.put("sceneId",1)
         $scope.vm = {
-//主页
-            applicationId: $cookieStore.get("applicationId"),
-            userName: $cookieStore.get("userName"),
-            userId: $cookieStore.get("userId"),
-            sceneId: $cookieStore.get("sceneId"),
             knowledgeId: "",
             frames: [],      //业务框架
             frameId: "",
@@ -91,7 +84,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
         };
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.dimensions = data.data;
@@ -101,7 +94,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("获取维度失败，请刷新页面")
             });
         //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.channels = data.data
@@ -115,7 +108,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if ($stateParams.data != null && $stateParams.data.knowledgeBase) {
+        if ($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase) {
             var data = $stateParams.data;
             //console.log($stateParams.data);
             //标题
@@ -150,8 +143,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 $scope.vm.scanContent.push(obj);
                 //console.log(obj)
             });
-        } else if ($stateParams.data != null && $stateParams.data.docmentation) {
-            $scope.vm.docmentation = $stateParams.data.docmentation;
+        } else if ($stateParams.data  && angular.fromJson($stateParams.data).docmentation) {
+            $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
@@ -184,7 +177,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function getDetailByTitle(title){
                 httpRequestPost("/api/ms/marketingKnowledge/getKnowledgeTitle",{
                     "title" : title,
-                    "applicationId": $scope.vm.applicationId,
+                    "applicationId": APPLICATION_ID,
                 },function(data){
                     //console.log(title);
                     //console.log(data.data);
@@ -314,7 +307,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var weight = oldWord.extensionQuestionType ;
             //console.log(oldWord);
             httpRequestPost("/api/ms/marketingKnowledge/checkFrameTag",{
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
@@ -351,7 +344,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
         //    console.log(oldWord);
         //    httpRequestPost("/api/ms/marketingKnowledge/checkFrameTag",{
-        //        "applicationId": $scope.vm.applicationId,
+        //        "applicationId": APPLICATION_ID,
         //        "extensionQuestionList" : extensionQuestionList,
         //        "frameQuestionTagList" : frameQuestionTagList
         //    },function(data){
@@ -392,7 +385,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var answerContentList = [];
             answerContentList.push(title);
             httpRequestPost("/api/ms/marketingKnowledge/productExtensionQuestion", {
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "title": $scope.vm.title,
                 "answerContentList": answerContentList
             }, function (data) {
@@ -423,7 +416,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 return false
             }else{
                 httpRequestPost("/api/ms/marketingKnowledge/checkExtensionQuestion",{
-                    "applicationId": $scope.vm.applicationId,
+                    "applicationId": APPLICATION_ID,
                     "extendQuestionList" : question
                 },function(data){
                     console.log(data);
@@ -514,13 +507,13 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //获取root 数据
         function getBotRoot(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": $scope.vm.applicationId,
+                "categoryApplicationId": APPLICATION_ID,
                 "title" : $scope.vm.title ,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
                 $scope.vm.botRoot = data.data;
-                //console.log( $scope.vm.applicationId);
+                //console.log( APPLICATION_ID);
             },function(){
                 layer.msg("err or err")
             });
@@ -557,7 +550,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":$scope.vm.applicationId,
+                    "categoryApplicationId":APPLICATION_ID,
                     "categoryPid": id
                 },function(data){
                     console.log(data) ;
@@ -659,6 +652,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //打开知识内容对话框
         function openContentConfirm(callback) {
             var dialog = ngDialog.openConfirm({
+                width : "521px" ,
                 template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
                 scope: $scope,
                 closeByDocument: false,
@@ -718,6 +712,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 }
                 if (dia.length == 0) {
                     var dialog = ngDialog.openConfirm({
+                        width : "521px" ,
                         template: "/know_index/knowledgeManagement/marking_concept/newConceptDialog.html",
                         scope: $scope,
                         closeByDocument: false,
@@ -742,6 +737,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
                 var extensionEdit = ngDialog.openConfirm({
+                    width :"521px" ,
                     template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
                     scope: $scope,
                     closeByDocument: false,
@@ -768,7 +764,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if($scope.vm.title){
                 httpRequestPost("/api/ms/marketingKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" :  $scope.vm.applicationId
+                    "applicationId" :  APPLICATION_ID
                 },function(data){
                     //console.log(data);
                     if(data.status == 500){    //标题打标失败
@@ -800,15 +796,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function getParams(){
             var params = {};
             params =  {
-                "applicationId": $scope.vm.applicationId,
-                "userId" : $scope.vm.userId ,
-                "sceneId" : $scope.vm.sceneId ,
+                "applicationId": APPLICATION_ID,
+                "userId" : USER_ID ,
+                "sceneId" : SCENE_ID ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-                "knowledgeUpdater": $scope.vm.userName, //操作人
-                "knowledgeCreator": $scope.vm.userName  //操作人
+                "knowledgeUpdater": USER_NAME, //操作人
+                "knowledgeCreator": USER_NAME  //操作人
             };
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;

@@ -7,24 +7,25 @@ angular.module('materialManagement').controller('conceptChatController', [
     function ($scope,$state,ngDialog,$stateParams,$cookieStore) {
         $state.go("materialManagement.conceptChat");
         //console.log( $stateParams.scanDataList.extendedQuestionArr[0]);    //edit    -----taglist
+        var paraOfData = $stateParams.scanDataList?angular.fromJson($stateParams.scanDataList):"" ;
         $scope.vm = {
             userId : $cookieStore.get("userId") ,
             applicationId :  $cookieStore.get("applicationId"),
-            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:$cookieStore.get("userName"),
-            standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
+            userName :  paraOfData?paraOfData.chatKnowledgeModifier:$cookieStore.get("userName"),
+            standardQuestion :  paraOfData?paraOfData.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
-            extendedQuestionArr : $stateParams.scanDataList?$stateParams.scanDataList.extendedQuestionArr:[],  //扩展问数组
-            chatKnowledgeId : $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeId:null,
+            extendedQuestionArr : paraOfData?paraOfData.extendedQuestionArr:[],  //扩展问数组
+            chatKnowledgeId : paraOfData?paraOfData.chatKnowledgeId:null,
             remove : remove ,
             weight : "60" ,         //  权重
             addExtension : addExtension ,  //添加扩展
             contentVal : "",
-            contentArr : $stateParams.scanDataList?$stateParams.scanDataList.contentArr:[] ,
+            contentArr : paraOfData?paraOfData.contentArr:[] ,
             addContentDialog : addContentDialog,// 添加知识内容
             save : save,
             scan : scan,
             scanData : $stateParams.scanData,
-            type : $stateParams.scanData?$stateParams.scanData.type:1,
+            type : paraOfData?paraOfData.type:1,
         };
 
         //擴展問
@@ -64,28 +65,21 @@ angular.module('materialManagement').controller('conceptChatController', [
                                     return false
                                 }else{
                                     obj.chatQuestionContent = data.data;
-                                    console.log(data);
-                                    obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion)
+                                    obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion) ;
                                     obj.tagList = data.data;
                                     obj.chatQuestionType = angular.copy($scope.vm.weight);
                                     $scope.vm.extendedQuestionArr.push(obj);
-                                    console.log( $scope.vm.extendedQuestionArr)
                                     $scope.vm.extendedQuestion = "";
-                                    $scope.$apply();
-                                    console.log($scope.vm.extendedQuestionArr)
                                 }
                             });
                         }else{
                             obj.chatQuestionContent = data.data;
-                            console.log(data);
-                            obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion)
+                            obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion) ;
                             obj.tagList = data.data;
                             obj.chatQuestionType = angular.copy($scope.vm.weight);
                             $scope.vm.extendedQuestionArr.push(obj);
-                            console.log( $scope.vm.extendedQuestionArr)
                             $scope.vm.extendedQuestion = "";
                             $scope.$apply();
-                            console.log($scope.vm.extendedQuestionArr)
                         }
 
                     }else{
@@ -184,7 +178,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                 editUrl : "materialManagement.conceptChat",
                 type : 1
             };
-            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
+            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
         }
         }
         //保存  0 无验证   1  需要验证

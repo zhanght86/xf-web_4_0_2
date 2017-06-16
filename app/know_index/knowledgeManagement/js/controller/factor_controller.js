@@ -5,12 +5,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$rootScope","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$rootScope,$filter) {
         $scope.vm = {
-//主页
-            applicationId : $cookieStore.get("applicationId"),
+            //userName :  $cookieStore.get("userName"),
+            //userId : $cookieStore.get("userId") ,
+            //sceneId :  $cookieStore.get("sceneId") ,
+            //applicationId : $cookieStore.get("applicationId"),
             knowledgeId : "" ,
-            userName :  $cookieStore.get("userName"),
-            userId : $cookieStore.get("userId") ,
-            sceneId :  $cookieStore.get("sceneId") ,
             frames : [],      //业务框架
             frameId : "",
             botRoot : "",      //根节点
@@ -98,7 +97,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
 
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.dimensions = data.data;
@@ -108,7 +107,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("获取维度失败，请刷新页面")
             });
         //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.channels = data.data
@@ -120,10 +119,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        if($stateParams.data!=null){
-
-            var data = $stateParams.data ;
-            console.log($stateParams.data);
+        if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
+            var data = angular.fromJson($stateParams.data) ;
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             // 标题打标结果
@@ -520,7 +517,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return false
             }else{
                 httpRequestPost("/api/ms/elementKnowledgeAdd/checkDistribute",{
-                    "applicationId": $scope.vm.applicationId,
+                    "applicationId": APPLICATION_ID,
                     "extendQuestionList" : question
                 },function(data){
                     if(data.status == 500){
@@ -600,12 +597,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //获取root 数据
        void function(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": $scope.vm.applicationId,
+                "categoryApplicationId": APPLICATION_ID,
                 "categoryPid": "root"
             },function(data){
                 //console.log(data);
                 $scope.vm.botRoot = data.data;
-                //console.log( $scope.vm.applicationId);
+                //console.log( APPLICATION_ID);
             },function(){
                  console.log("err or err")
             });
@@ -643,7 +640,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
                 httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":$scope.vm.applicationId,
+                    "categoryApplicationId":APPLICATION_ID,
                     "categoryPid": id
                 },function(data){
                     console.log(data) ;
@@ -779,7 +776,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if($scope.vm.title){
                 httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId": $scope.vm.applicationId,
+                    "applicationId": APPLICATION_ID,
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
@@ -816,17 +813,17 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function getParams(){
             //console.log(getTableParams())
            var  params =  {
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "knowledgeId": $scope.vm.knowledgeId ,
-                "userId" : $scope.vm.userId ,
-                "sceneId" : $scope.vm.sceneId ,
+                "userId" : USER_ID ,
+                "sceneId" : SCENE_ID ,
                 "knowledgeType": 103,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-                "knowledgeUpdater": $scope.vm.userName, //操作人
-                "knowledgeCreator": $scope.vm.userName  //操作人
+                "knowledgeUpdater": USER_NAME, //操作人
+                "knowledgeCreator": USER_NAME  //操作人
             };
                 var title = angular.copy($scope.vm.newTitle);
                 //scanCotentByTitle(title) ;
@@ -856,9 +853,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
-                        $scope.vm.data = getParams();
-                         console.log(getParams())
-                        httpRequestPost("/api/ms/elementKnowledgeAdd/addElementKnowledge", getParams(), function (data) {
+                        $scope.vm.data = getParams(); 
+                        var api = $scope.vm.knowledgeId?"/api/ms/elementKnowledgeAdd/editElementKnowledge":"/api/ms/elementKnowledgeAdd/addElementKnowledge";
+                        httpRequestPost(api, getParams(), function (data) {
                             //console.log(data);
                             if (data.status == 200) {
                                 var url = $state.go('custServScenaOverview.manage');

@@ -45,7 +45,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     $scope.vm.channelList = data.data;
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面");
+                console.log(error);
+                //layer.msg("获取渠道失败，请刷新页面");
             });
         //页面初始化加载已发布服务
         getService();
@@ -61,7 +62,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
                 }
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求失败');
             })
         }
 
@@ -91,7 +93,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     $scope.$apply();
                 }
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求失败');
             })  ;
         }
         //查询
@@ -111,21 +114,22 @@ angular.module('functionalTestModule').controller('batchTestController', [
                    layer.msg("查询到记录为空");
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
-                   return;
+                    //return;
+                }else{
+                    $scope.vm.listData = data.data.batchTestList;
+                    $scope.vm.listDataTotal = data.data.total;
+                    // $scope.vm.listDataLength = data.data.total;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: data.data.total, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
                 }
-                $scope.vm.listData = data.data.batchTestList;
-                $scope.vm.listDataTotal = data.data.total;
-                // $scope.vm.listDataLength = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败");
+               // layer.msg("请求失败");
+                console.log('请求失败');
             })  ;
         }
 
@@ -192,10 +196,12 @@ angular.module('functionalTestModule').controller('batchTestController', [
                                 $state.reload();
                                 layer.msg("删除成功");
                             }else{
-                                layer.msg("删除失败");
+                                //layer.msg("删除失败");
+                                console.log('删除失败');
                             }
                         },function(){
-                            layer.msg("请求失败");
+                            //layer.msg("请求失败");
+                            console.log('请求失败');
                         });
                     }
                 }

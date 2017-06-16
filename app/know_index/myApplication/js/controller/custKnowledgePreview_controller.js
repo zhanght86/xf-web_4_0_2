@@ -5,8 +5,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('custKnowledgePreviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer","$window","$http",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer,$window,$http) {
+    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer","$window","$http","myService",
+    function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer,$window,$http,myService) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         var viewData =  $window.opener.knowledgeScan ;
         if(!viewData){
@@ -59,71 +59,31 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     break;
             }
             function edit(){
-                $state.go(editUrl,{data:$scope.vm.listData})
+
+                $state.go(editUrl,{data:angular.toJson($scope.vm.listData)})
             }
-            //knowledgeAddServer.getKnowledge({
-            //        "knowledgeId" : $scope.vm.knowledgeId,
-            //        "applicationId" : $scope.vm.applicationId
-            //    },
-            //    function(data) {
-            //        console.log(data) ;
-            //    }, function(error) {
-            //    });
-            //$http.post({
-            //    url: '/api/ms/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId',
-            //    data : {
-            //        "applicationId":"377525996116508672",
-            //        "knowledgeId":"390950719538073600"
-            //    }
-            //}).then(function successCallback(response) {
-            //    console.log(response) ;
-            //    // 请求成功执行代码
-            //}, function errorCallback(response) {
-            //    // 请求失败执行代码
-            //});
-            getData();
-            function getData(){
+            void function(){
                 knowledgeAddServer.getDataServer(api,{
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : $scope.vm.applicationId
                 },function(data){
-                    console.log(data) ;
+                    //console.log(data) ;
                     if(viewData.knowledgeType == 103){
                         var data = data.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;
                         data.knowledgeContents[0].knowledgeContent = table;
                         delete data.knowledgeContents[0].knowledgeTable;
                         $scope.vm.listData = data;
-                        console.log(data)
+                        //console.log(data)
                     }else{
                         $scope.vm.listData = data.data;
                     }
-                    console.log(data);
+                    //console.log(data);
                     //$scope.$apply();
                 },function(){
                     layer.msg("获取失败")
                 }) ;
-                //httpRequestPost(api,{
-                //    "knowledgeId" : $scope.vm.knowledgeId,
-                //    "applicationId" : $scope.vm.applicationId
-                //},function(data){
-                //    console.log(data) ;
-                //    if(viewData.knowledgeType == 103){
-                //        var data = data.data ;
-                //        var table = data.knowledgeContents[0].knowledgeTable ;
-                //        data.knowledgeContents[0].knowledgeContent = table;
-                //        delete data.knowledgeContents[0].knowledgeTable;
-                //        $scope.vm.listData = data;
-                //        console.log(data)
-                //    }else{
-                //        $scope.vm.listData = data.data;
-                //    }
-                //    console.log(data);
-                //        $scope.$apply();
-                //},function(){
-                //    layer.msg("获取失败")
-                //});
-            }
+            }()
         }
     }
 ]);

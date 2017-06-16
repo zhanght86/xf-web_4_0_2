@@ -125,7 +125,8 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 tasks: ['concat:allInOne', 'concat:othersInOne', 'uglify:buildrelease'],
                 options: {
                     spawn: true,
-                    interrupt: true
+                    interrupt: true ,
+                   //livereload:true
                 }
             },
             css: {
@@ -133,7 +134,7 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 tasks: ['concat:css', 'cssmin:css'],
                 options: {
                     spawn: true,
-
+                    //livereload: true ,
                     interrupt: true
                 }
             }

@@ -2,24 +2,23 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
 angular.module('materialManagement').controller('faqChatController', [
     '$scope',"$state","ngDialog", "$cookieStore","$stateParams",function ($scope,$state,ngDialog,$cookieStore,$stateParams) {
         $state.go("materialManagement.faqChat");
-        console.log($stateParams.scanDataList);
+        var paraData = $stateParams.scanDataList?angular.fromJson($stateParams.scanDataList):"" ;
         $scope.vm = {
              userId : $cookieStore.get("userId") ,
-            userName :  $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeModifier:$cookieStore.get("userName"),
+            userName :  paraData?paraData.chatKnowledgeModifier:$cookieStore.get("userName"),
             applicationId : $cookieStore.get("applicationId"),
-            standardQuestion :  $stateParams.scanDataList?$stateParams.scanDataList.standardQuestion:null,   //标准问
+            standardQuestion :  paraData?paraData.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
-            extendedQuestionArr : $stateParams.scanDataList?$stateParams.scanDataList.extendedQuestionArr:[],  //扩展问数组
+            extendedQuestionArr : paraData?paraData.extendedQuestionArr:[],  //扩展问数组
             remove : remove ,
             weight : "60" ,         //  权重
             addExtension : addExtension ,  //添加扩展
-            chatKnowledgeId : $stateParams.scanDataList?$stateParams.scanDataList.chatKnowledgeId:null,
+            chatKnowledgeId : paraData?paraData.chatKnowledgeId:null,
             contentVal : "",
-            contentArr : $stateParams.scanDataList?$stateParams.scanDataList.contentArr:[] ,
+            contentArr : paraData?paraData.contentArr:[] ,
             addContentDialog : addContentDialog,// 添加知识内容
             save : save ,
             scan : scan,
@@ -143,7 +142,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     editUrl : "materialManagement.faqChat",
                     type : 1
                 };
-                $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:params});
+                $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
             //}
         }
         //保存  0 无验证   1  需要验证
