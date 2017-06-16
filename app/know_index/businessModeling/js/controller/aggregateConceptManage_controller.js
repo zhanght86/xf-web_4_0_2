@@ -59,7 +59,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             },function(data){
                 loadCollectiveConcept(current,data);
             },function(){
-                layer.msg("请求失败")
+               // layer.msg("请求失败")
+                console.log('请求失败');
             })
         }
 
@@ -121,7 +122,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 }
             }
             if (id_array.length == 0) {
-                layer.msg("请选择要删除的记录！");
+                layer.msg("请选择要删除的记录！",{time:1000});
                 return;
             }
             layer.confirm('确认要删除吗？', function () {
@@ -159,7 +160,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             },function(data){
                 loadCollectiveConcept(current,data);
             },function(){
-                layer.msg("查询没有对应信息")
+                layer.msg("查询没有对应信息",{time:1000});
             });
         }
         function searchCollectiveConceptByType(current){
@@ -173,7 +174,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                 request.startTimeRequest=$scope.vm.timeStart;
                 request.endTimeRequest=$scope.vm.timeEnd;
             }else{
-                layer.msg("请选择时间段");
+                layer.msg("请选择时间段",{time:1000});
                 return;
             }
             httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",request,function(data){
@@ -250,7 +251,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
                                 addCollectiveConceptDialog(singleAddCollectiveConcept);
                             }
                         },function(){
-                            layer.msg("添加失败")
+                            //layer.msg("添加失败")
+                            console.log('添加失败');
                         })
                     }else{
                         $scope.vm.key = "";

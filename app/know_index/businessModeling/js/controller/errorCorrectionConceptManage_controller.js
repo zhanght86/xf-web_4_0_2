@@ -59,7 +59,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             },function(data){
                 loadCorrectionConcept(current,data);
             },function(){
-                layer.msg("请求失败")
+               // layer.msg("请求失败")
+                console.log('请求失败');
             });
         }
         function loadCorrectionConcept(current,data){
@@ -245,7 +246,8 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
                                 addCorrectionConceptDialog(singleAddCorrectionConcept);
                             }
                         }, function () {
-                            layer.msg("添加失败")
+                            //layer.msg("添加失败")
+                            console.log('添加失败');
                         })
                     } else {
                         $scope.vm.key = "";

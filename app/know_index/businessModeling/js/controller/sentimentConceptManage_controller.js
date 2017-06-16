@@ -51,7 +51,8 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
             },function(data){
                 loadSentimentConcept(current,data);
             },function(){
-                layer.msg("请求失败");
+               // layer.msg("请求失败");
+                console.log('请求失败');
             })
         }
         function loadSentimentConcept(current,data){
@@ -192,7 +193,8 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
                                 addSentimentConceptDialog(singleAddSentimentConcept);
                             }
                         }, function () {
-                            layer.msg("添加失败")
+                            //layer.msg("添加失败")
+                            console.log('添加失败');
                         })
                     } else {
                         $scope.vm.key = "";

@@ -56,7 +56,8 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
             },function(data){
                 loadForceSegmentConcept(current,data);
             },function(){
-                layer.msg("请求失败");
+               // layer.msg("请求失败");
+                console.log('请求失败');
             });
         }
         function loadForceSegmentConcept(current,data){
@@ -243,7 +244,8 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
                                 addForceSegmentConceptDialog(singleAddForceSegmentConcept);
                             }
                         }, function () {
-                            layer.msg("添加失败")
+                            //layer.msg("添加失败")
+                            console.log('添加失败');
                         })
                     } else {
                         $scope.vm.key = "";
