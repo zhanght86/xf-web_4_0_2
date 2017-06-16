@@ -3,7 +3,6 @@
  * Created by mileS on 2017/6/3
  * 控制器
  */
-
 angular.module('knowledgeManagementModule').controller('markServScenaOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window ) {
@@ -16,8 +15,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             applicationName : $cookieStore.get("applicationName"),
             imgUrl : $cookieStore.get("imgUrl"),
             robotHead : $cookieStore.get("robotHead"),
-            //editName : editName
-            //getCreatBot : getCreatBot,
+            exportExcel : exportExcel ,
             creatBot : [],
             frameCategoryId : "",
 
@@ -49,14 +47,33 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             getSourceType : getSourceType,
             getUpdateTimeType : getUpdateTimeType,
 
-            scan : scan ,   // 点击标题预览
+            scan : scan ,   // 点击标题预览  
 
             heighSarch : false ,
             selectAll : selectAll ,
             isSelectAll  : false ,  // 全选 删除
             paramsReset : paramsReset //搜索重置参数
         };
-
+        /**
+         * 知识导出
+         * @param index
+         */
+        function exportExcel(){
+            DownLoadFile({
+                url:'/api/ms/knowledgeManage/exportExcel', //请求的url
+                data:{
+                    "applicationId" : $scope.vm.applicationId,
+                    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+                    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                }//要发送的数据
+            });
+        }
         napSearch();
         //高级搜索 开关
         $scope.$watch("vm.heighSarch",function(val){

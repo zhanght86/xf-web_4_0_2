@@ -134,7 +134,6 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
          * @param index
          */
         function exportExcel(){
-            alert(111)
             httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
                 "applicationId" : $scope.vm.applicationId,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
@@ -146,10 +145,25 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                 "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             },function(data){
-              alert(1111)
+
             },function(){
                 console.log("getDate==failed");
             });
+            //httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
+            //    "applicationId" : $scope.vm.applicationId,
+            //    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+            //    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+            //    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+            //    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+            //    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+            //    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+            //    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+            //    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            //},function(data){
+            //  alert(1111)
+            //},function(){
+            //    console.log("getDate==failed");
+            //});
 
         }
 
