@@ -365,9 +365,8 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                              '</div>',
 
                 link: function (scope, element, attrs) {
-                    var userName = $cookieStore.get("userName") ,
-                        applicationId = $cookieStore.get("applicationId") ,
-                        templateType = scope.templateType ,
+                    console .log(typeof USER_NAME) ;
+                    var templateType = scope.templateType ,
                         server = scope.server ;
                     //console.log(userId,templateType,applicationId)
                     $timeout(function () {
@@ -376,8 +375,8 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             // swf文件路径
                             swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                             formData : {
-                                "userId":userName,
-                                "applicationId":applicationId,
+                                "userId":USER_NAME,
+                                "applicationId":APPLICATION_ID,
                                 "templateType": templateType
                             }  ,   // 上传参数
                             // 文件接收服务端。
@@ -485,7 +484,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                         //});
                         //        单个文件上传成功 之后 刷新数据列表
                         uploader.on('uploadSuccess', function (file, response) {
-                            console.log(response)
+                            console.log(response) ;
                             if(response.status == 500){
                                 layer.msg("模板错误")
                             }else if(response.status==10001){

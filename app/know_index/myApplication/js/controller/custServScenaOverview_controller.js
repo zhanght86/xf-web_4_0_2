@@ -193,18 +193,23 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         function delData(){
             if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
             {
-                layer.msg("请选择删除知识");
+                layer.msg("请选择删除知识",{time:800});
                 return;
+            }else{
+                layer.confirm('是否删除当前选中知识？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
+                        "knowledgeIds":$scope.vm.knowledgeIds
+                    },function(data){
+                        $state.reload();
+                        layer.msg("刪除成功",{time:1000});
+                    },function(){
+                        layer.msg("刪除失败",{time:1000});
+                    });
+                }, function(){
+                });
             }
-            //console.log($scope.vm.knowledgeIds);
-            httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
-                "knowledgeIds":$scope.vm.knowledgeIds
-            },function(data){
-                $state.reload();
-                layer.msg("刪除成功");
-            },function(){
-                layer.msg("刪除失败");
-            });
         }
         function selectAll(items){
             if($scope.vm.isSelectAll){
@@ -242,8 +247,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 //console.log(data)
                 return true;
 
-            },function(){
-                layer.msg("查找今日新增条数失败")
+            },function(err){
+               console.log(err)
             });
         }
 
