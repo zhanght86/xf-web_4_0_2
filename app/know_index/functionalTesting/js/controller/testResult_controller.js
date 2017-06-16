@@ -50,7 +50,8 @@ angular.module('functionalTestModule').controller('testResultController', [
                     $scope.vm.channelList = data.data
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
+                console.log(error);
+                //layer.msg("获取渠道失败，请刷新页面")
             });
         // 389249262623391744
         showData(1);
@@ -81,7 +82,8 @@ angular.module('functionalTestModule').controller('testResultController', [
                     $scope.$apply();
                 }
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求失败');
             })  ;
         }
 
@@ -170,11 +172,13 @@ angular.module('functionalTestModule').controller('testResultController', [
                                     layer.msg("修改成功");
                                     showData(1);
                                 }else if(data.status == 10004){
-                                    layer.msg("修改失败");
+                                    //layer.msg("修改失败");
+                                    console.log("修改失败");
                                 }
                                 $scope.$apply();
                             }, function () {
-                                layer.msg("修改失败");
+                                //layer.msg("修改失败");
+                                console.log("修改失败");
                             });
                         }
                         //$state.reload();
@@ -223,7 +227,8 @@ angular.module('functionalTestModule').controller('testResultController', [
                 }
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败");
+               // layer.msg("请求失败");
+                console.log("修改失败");
             })  ;
         }
 
@@ -234,7 +239,8 @@ angular.module('functionalTestModule').controller('testResultController', [
             },function(data){
                 console.log(data)
                 if(data.status==500){
-                    layer.msg("导出失败")
+                    //layer.msg("导出失败")
+                    console.log("导出失败");
                 }else{
                     window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
                 }
@@ -288,10 +294,12 @@ angular.module('functionalTestModule').controller('testResultController', [
                         $state.reload();
                         layer.msg("测试成功");
                     }else{
-                        layer.msg("测试失败");
+                        //layer.msg("测试失败");
+                        console.log("测试失败");
                     }
                 },function(){
-                    layer.msg("请求失败");
+                   // layer.msg("请求失败");
+                    console.log("测试失败");
                 });
             }else{
                 layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
@@ -333,7 +341,8 @@ angular.module('functionalTestModule').controller('testResultController', [
                     //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
                 }
             },function(){
-                layer.msg("请求失败");
+               // layer.msg("请求失败");
+                console.log('请求失败');
             })
         }
     }

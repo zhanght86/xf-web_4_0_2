@@ -23,7 +23,6 @@ angular.module('know.home').factory('HomeService',['$resource',function ($resour
     // */
     //
     //homeService.queryMyTask = $resource('/back/Workflow/queryUserTask', {}, {});
-
-
+    
     return homeService;
 }])

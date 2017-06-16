@@ -33,7 +33,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                     $scope.vm.listDimension = data.data;
                 }
             }, function(error) {
-                layer.msg("获取维度失败，请刷新页面");
+                console.log(error);
+                //layer.msg("获取维度失败，请刷新页面");
             });
         //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
@@ -42,7 +43,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                     $scope.vm.channelList = data.data;
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面");
+                console.log(error);
+                //layer.msg("获取渠道失败，请刷新页面");
             });
         //页面初始化加载已发布服务
         getService();
@@ -58,7 +60,8 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                     //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
                 }
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求请求失败');
             })
         }
         //
