@@ -147,7 +147,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 if(data.status==500){
                     layer.msg("导出失败")
                 }else{
-                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data);
+                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
                 }
             },function(err){
                 console.log(err);

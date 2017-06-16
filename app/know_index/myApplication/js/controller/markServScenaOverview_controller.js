@@ -70,9 +70,9 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             },function(data){
                 if(data.status==500){
-                    layer.msg("导出失败")
+                    layer.msg("导出失败") 
                 }else{
-                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data); 
+                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
                 }
             },function(err){
                 console.log(err);
