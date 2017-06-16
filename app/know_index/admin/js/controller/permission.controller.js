@@ -92,7 +92,8 @@ angular.module('adminModule').controller('userManageController', [
                 };
                 $scope.$apply()
             },function(){
-                layer.msg("请求失败")
+                //layer.msg("请求失败")
+                console.log("请求失败");
             })
         }
         var timeout ;
@@ -136,7 +137,7 @@ angular.module('adminModule').controller('userManageController', [
             }
             var reg = /^[0-9a-zA-Z_]{4,20}$/;
             if(!reg.test($scope.vm.userLoginName)){
-                layer.msg("登录名只可以是数字、字母、下划线组合，4-20个字符!")
+                layer.msg("登录名只可以是数字、字母、下划线组合，4-20个字符!",{time:1000})
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -216,10 +217,12 @@ angular.module('adminModule').controller('userManageController', [
                                 } else if (data.status == 10008) {
                                     layer.msg("用户添加成功!");
                                 } else {
-                                    layer.msg("用户添加失败!");
+                                    //layer.msg("用户添加失败!");
+                                    console.log("用户添加失败!");
                                 }
                             }, function () {
-                                layer.msg("请求失败")
+                                //layer.msg("请求失败")
+                                console.log("请求失败");
                             })
                         }
                         //保存的同时清空数据
@@ -288,10 +291,12 @@ angular.module('adminModule').controller('userManageController', [
                                 }else if(data.status = 10009){
                                     layer.msg("登录名重复!");
                                 } else {
-                                    layer.msg("用户修改失败!");
+                                    //layer.msg("用户修改失败!");
+                                    console.log("用户修改失败!");
                                 }
                             }, function () {
-                                layer.msg("请求失败");
+                                //layer.msg("请求失败");
+                                console.log("请求失败");
                             })
                         }
                     }else{
@@ -334,7 +339,8 @@ angular.module('adminModule').controller('userManageController', [
                     };
                     $scope.$apply()
                 }, function () {
-                    layer.msg("请求失败")
+                    //layer.msg("请求失败")
+                    console.log("请求失败");
                 })
             }
         }
@@ -356,11 +362,13 @@ angular.module('adminModule').controller('userManageController', [
                             if(data.status == 10010){
                                 layer.msg("用户删除成功!");
                             }else{
-                                layer.msg("用户删除失败!");
+                                //layer.msg("用户删除失败!");
+                                console.log("用户删除失败!");
                             }
                             $state.reload()
                         },function(){
-                            layer.msg("请求失败")
+                            //layer.msg("请求失败")
+                            console.log("请求失败");
                         })
                     }
                 }
@@ -398,7 +406,8 @@ angular.module('adminModule').controller('userManageController', [
                         }, function (data) {
                             $state.reload();
                         }, function () {
-                            layer.msg("请求失败")
+                            //layer.msg("请求失败")
+                            console.log("请求失败");
                         })
                     }
                 }
@@ -416,10 +425,12 @@ angular.module('adminModule').controller('userManageController', [
                     if (data.status == 10012) {
                         layer.msg("用户状态修改成功!");
                     } else {
-                        layer.msg("用户状态修改失败!");
+                        //layer.msg("用户状态修改失败!");
+                        console.log("用户状态修改失败!");
                     }
                 }, function () {
-                    layer.msg("请求失败")
+                    //layer.msg("请求失败")
+                    console.log("请求失败");
                 })
             }else {
                 var dialog = ngDialog.openConfirm({
@@ -439,10 +450,12 @@ angular.module('adminModule').controller('userManageController', [
                                 if (data.status == 10012) {
                                     layer.msg("用户状态修改成功!");
                                 } else {
-                                    layer.msg("用户状态修改失败!");
+                                    //layer.msg("用户状态修改失败!");
+                                    console.log("用户状态修改失败!");
                                 }
                             }, function () {
-                                layer.msg("请求失败")
+                                //layer.msg("请求失败")
+                                console.log("请求失败");
                             })
                         }
                     }
@@ -457,7 +470,8 @@ angular.module('adminModule').controller('userManageController', [
             },function(data){
                 $scope.vm.listApplication = data.data
             },function(){
-                layer.msg("请求失败")
+                //layer.msg("请求失败")
+                console.log("请求失败");
             })
         }
 
@@ -468,7 +482,8 @@ angular.module('adminModule').controller('userManageController', [
             },function(data){
                 $scope.vm.listRole = data.data
             },function(){
-                layer.msg("请求失败")
+                //layer.msg("请求失败")
+                console.log("请求失败");
             })
         }
 
