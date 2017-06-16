@@ -51,36 +51,36 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败");
+                layer.msg("请求失败",{time:1000});
             })  ;
         }
 
         function verifyRelease(){
             if($scope.vm.possibleKnowledge == null || $scope.vm.possibleKnowledge == ""){
-                layer.msg("测试问法不能为空!")
+                layer.msg("测试问法不能为空!",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.knowledgeTitle == null || $scope.vm.knowledgeTitle == ""){
-                layer.msg("知识标题不能为空!")
+                layer.msg("知识标题不能为空!",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             var b = /^[\w+\u4e00-\u9fa5]+$/;     //限制特殊字符正则表达式
             if(!b.test($scope.vm.possibleKnowledge)){
-                layer.msg("测试问法不能包含特殊字符!");
+                layer.msg("测试问法不能包含特殊字符!",{time:1000});
                 return 0;
             };
             if(!b.test($scope.vm.knowledgeTitle)){
-                layer.msg("知识标题不能包含特殊字符!");
+                layer.msg("知识标题不能包含特殊字符!",{time:1000});
                 return 0;
             }
             if($scope.vm.possibleKnowledge.length > 50){
-                layer.msg("测试问法长度不能超过50个字符!");
+                layer.msg("测试问法长度不能超过50个字符!",{time:1000});
                 return 0;
             }
             if($scope.vm.knowledgeTitle.length > 50){
-                layer.msg("知识标题长度不能超过50个字符!",{icon:2,time:2000});
+                layer.msg("知识标题长度不能超过50个字符!",{icon:2,time:1000});
                 return 0;
             }
             return 1;
@@ -106,9 +106,9 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                                 //刷新页面
                                 $state.reload();
                                 if (data.status == 10012) {
-                                    layer.msg("该测试问法已经存在，请重新添加!")
+                                    layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
                                 } else if (data.status == 10011) {
-                                    layer.msg("添加成功!");
+                                    layer.msg("添加成功!",{time:1000});
                                 } else {
                                     //layer.msg("添加失败!");
                                     console.log("添加失败!");
@@ -148,10 +148,10 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                             }, function (data) {
                                 //刷新页面
                                 if (data.status == 10002) {
-                                    layer.msg("该测试问法已经存在，请重新添加!")
+                                    layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
                                 } else if (data.status == 10018) {
                                     $state.reload();
-                                    layer.msg("修改成功!");
+                                    layer.msg("修改成功!",{time:1000});
                                 } else {
                                     //layer.msg("修改失败!");
                                     console.log("修改失败!");
@@ -185,7 +185,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                                 //刷新页面
                                 $state.reload();
                                 if (data.status == 10013) {
-                                    layer.msg("删除成功!")
+                                    layer.msg("删除成功!",{time:1000})
                                 } else if (data.status == 10014) {
                                     //layer.msg("删除失败!");
                                     console.log("删除失败!");
@@ -210,7 +210,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             },function(data){
                 console.log(data);
                 if(data.status == 10005){
-                    layer.msg("查询到记录为空");
+                    layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
                     $scope.$apply();

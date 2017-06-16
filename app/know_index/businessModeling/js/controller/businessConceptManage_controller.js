@@ -64,7 +64,8 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             },function(data){
                 loadBusinessConcept(current,data);
             },function(){
-                layer.msg("请求失败");
+                //layer.msg("请求失败");
+                console.log('请求失败');
             });
         }
         function loadBusinessConcept(current,data){
@@ -259,7 +260,8 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                                 addBusinessConceptDialog(singleAddBusinessConcept);
                             }
                         },function(){
-                            layer.msg("添加失败")
+                            //layer.msg("添加失败")
+                            console.log('添加失败');
                         })
                     }else{
                         $scope.vm.key = "";

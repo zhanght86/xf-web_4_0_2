@@ -72,7 +72,7 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 //$scope.vm.botRoot = data.data;
                 console.log(data);
                 if(data.data.status == 500){
-                    layer.msg(data.data.data);
+                    layer.msg(data.data.data,{time:1000});
                 }
                 $scope.vm.answerRes=data.data.data;
                 $scope.$apply();

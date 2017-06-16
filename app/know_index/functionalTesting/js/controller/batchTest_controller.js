@@ -78,7 +78,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             },function(data){
                 console.log(data);
                 if(data.status == 10005){
-                    layer.msg("查询到记录为空");
+                    layer.msg("查询到记录为空",{time:1000});
                     return;
                 }else{
                     $scope.vm.listData = data.data.batchTestList;
@@ -111,7 +111,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             },function(data){
                 console.log(data);
                 if(data.status == 10005){
-                   layer.msg("查询到记录为空");
+                   layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
                     //return;
@@ -174,7 +174,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         //删除
         function deleteQuestion(callback){
             if($scope.vm.deleteIds == 0){
-                layer.msg("请选择要删除的文件！");
+                layer.msg("请选择要删除的文件！",{time:1000});
                 return;
             }
             var dialog = ngDialog.openConfirm({
@@ -194,7 +194,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                             if(data.status == 10013){
                                 $scope.vm.selectAllCheck = false;
                                 $state.reload();
-                                layer.msg("删除成功");
+                                layer.msg("删除成功",{time:1000});
                             }else{
                                 //layer.msg("删除失败");
                                 console.log('删除失败');
@@ -224,7 +224,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     }
                 });
             }else{
-                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+                layer.msg("当前应用下没有发布服务，请发布服务后进行测试",{time:1000});
             }
 
         }
@@ -232,7 +232,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             var id = $scope.vm.batchNumberId ;
             var channelId = angular.copy($scope.vm.channel) ;
             if(!$scope.vm.channel){
-                layer.msg("选择渠道")
+                layer.msg("选择渠道",{time:1000})
             }else{
                 var name ;
                 angular.forEach($scope.vm.channelList,function(item){
@@ -252,14 +252,15 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     console.log(data);
                     //$state.reload();
                     if(data.status == 20002){
-                        layer.msg(data.data);
+                        layer.msg(data.data,{time:1000});
                     }
                     if(data.status == 10018){
                         showData($scope.vm.paginationConf.currentPage);
                         startTest(id,name,channelId);
                     }
                 }, function () {
-                    layer.msg("请求失败");
+                    //layer.msg("请求失败");
+                    console.log('请求失败');
                 },"","",60000);
                 ngDialog.closeAll() ;
             }

@@ -68,11 +68,11 @@ angular.module('functionalTestModule').controller('sessionTestController', [
        function test(){
            if($scope.vm.serviceId){
                if($scope.vm.testAsking==''){
-                   layer.msg('请输入测试问题!');
+                   layer.msg('请输入测试问题!',{time:1000});
                    return ;
                }
                if($scope.vm.channel==''){
-                   layer.msg('请选择渠道!');
+                   layer.msg('请选择渠道!',{time:1000});
                    return;
                }
                httpRequestPost("/api/application/chatTest/passageway",{
@@ -86,7 +86,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                },function(data){
                    console.log(data);
                    if(data.data.status == 500){
-                       layer.msg(data.data.data);
+                       layer.msg(data.data.data,{time:1000});
                    }
                    $scope.vm.result=data.data.data;
                    $scope.vm.question= $scope.vm.testAsking;
@@ -97,7 +97,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
 
                })
            }else{
-               layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+               layer.msg("当前应用下没有发布服务，请发布服务后进行测试",{time:1000});
            }
        }
 
