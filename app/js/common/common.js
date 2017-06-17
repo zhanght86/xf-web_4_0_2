@@ -23,6 +23,38 @@
 //    aLink.dispatchEvent(evt);
 //}
 //键盘事件
+function onput(e,updateCall,specialKeyCall,inputCall){
+    /* 必写
+    *   e
+    *   updataCall  $scope.$apply(function(){
+                         model = angular.element(self).val();
+                    })
+    * */
+    //     {{ this  keycode  val }}    //
+    //enter
+    //输入更新
+    //
+    var  self = e.srcElement ? e.srcElement : e.target;
+    var keycode = window.event?e.keyCode:e.which;
+    var val = angular.element(self).val() ;
+    //chrome  兼容 输入汉字更新model问题
+    angular.element(self).on({
+        compositionend:function(val) {
+            updateCall();
+            if (inputCall) {
+                inputCall()
+            }
+            if (specialKeyCall) {
+                specialKeyCall();
+                //if(keycode==13){
+                //    srcObj.blur();
+                //    callback();
+                //    //srcObj.focus()
+                //}
+            }
+        }
+    })
+   });
 function enterEvent(e,callback) {
     var  srcObj = e.srcElement ? e.srcElement : e.target;
     var keycode = window.event?e.keyCode:e.which;

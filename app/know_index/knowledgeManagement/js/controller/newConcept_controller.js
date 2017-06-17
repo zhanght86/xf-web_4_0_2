@@ -5,6 +5,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$interval","$stateParams","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams,$filter) {
         $scope.vm = {
+
             knowledgeId: "",
             frames: [],      //业务框架
             frameId: "",
