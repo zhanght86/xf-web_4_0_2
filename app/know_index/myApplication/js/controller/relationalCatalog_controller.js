@@ -106,6 +106,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
                 $scope.vm.categoryAttributeName = $(firstNode).next().attr("node-option");
                 $(firstNode).next().attr("style","color:black;font-weight:bold;");
+                updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
                 console.log($scope.vm.botSelectValue);
                 console.log($scope.vm.categoryAttributeName);
                 disableAttributeType();
@@ -128,22 +129,23 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         $scope.vm.botSelectType = $(currNode).next().attr("type-option");
                         $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
                         $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
                         console.log($scope.vm.botSelectValue);
                         console.log($scope.vm.categoryAttributeName);
                         disableAttributeType();
                         $scope.$apply();
                         flag = true;
                         //跳出
-                        return true;
+                        return false;
                     }else{
-                        if(flag==true){
-                            return true;
-                        }
                         //展开
                         if($(currNode).css("backgroundPosition")=="0% 0%"){
                             appendTree(currNode);
                         }else if($(currNode).parent().parent().next()==null){
                             appendTree(currNode);
+                        }
+                        if(flag==true){
+                            return false;
                         }
                         //递归
                         recursion(suggestion,currNode);
@@ -158,13 +160,19 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             var sum = $(".aside-navs").find("i").length;
             $.each($(".aside-navs").find("i"),function(index,value){
                 if($(value).attr("data-option")==currentNodeId){
-                    var sumHeight = sum*$(value).outerHeight();
-                    var offset = (initHeight+1/sum)*sumHeight;
-                    console.log(sumHeight+"========"+offset);
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    var offset = 0;
+                    if(scrollHeight-100>0){
+                        offset = (((initHeight+1)/sum)*(scrollHeight-100));
+                    }
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
-                    return true;
+                    return false;
                 }else{
                     initHeight++;
                 }
