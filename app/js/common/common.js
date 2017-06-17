@@ -54,7 +54,7 @@ function onput(e,updateCall,specialKeyCall,inputCall){
             }
         }
     })
-   });
+   };
 function enterEvent(e,callback) {
     var  srcObj = e.srcElement ? e.srcElement : e.target;
     var keycode = window.event?e.keyCode:e.which;

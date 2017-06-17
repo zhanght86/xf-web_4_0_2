@@ -10,8 +10,7 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
             downTemplate: downTemplate,  //新增点击事件
             upload : upload,
             fileName :'',
-            changeKonwledge:changeKonwledge,
-            templateType : 191,
+            templateType : 190,
         };
 
         //上传
@@ -35,19 +34,6 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
             });
         }
 
-        function changeKonwledge(id){
-            switch(id){
-                case "190" :
-                    $scope.vm.templateType = "190";
-                    break;
-                case "192":
-                    $scope.vm.templateType = "192";
-                    break;
-                case "191" :
-                    $scope.vm.templateType = "191";
-            }
-
-        }
 
         //打开下载模板
         function downTemplate(callback){
