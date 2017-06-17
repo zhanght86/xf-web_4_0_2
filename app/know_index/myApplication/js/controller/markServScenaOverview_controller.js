@@ -63,7 +63,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                                 "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
                                 "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
                 var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
-
                 $window.open(url,"_blank") ;
                 //data:{
                 //    "applicationId" : APPLICATION_ID,
