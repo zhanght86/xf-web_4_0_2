@@ -11,7 +11,6 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         var n = 1;   // 定義淚目數  類別
         //********************************************//
         $scope.vm = {
-            applicationId : $cookieStore.get("applicationId"),
             applicationName : $cookieStore.get("applicationName"),
             imgUrl : $cookieStore.get("imgUrl"),
             robotHead : $cookieStore.get("robotHead"),
@@ -114,7 +113,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }
         function scan(item){
             var obj = {};
-            obj.applicationId = $scope.vm.applicationId ;
+            obj.applicationId = APPLICATION_ID ;
             obj.knowledgeId = item.knowledgeId;
             obj.knowledgeType = item.knowledgeType;
             $window.knowledgeScan = obj ;
@@ -134,22 +133,16 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
          * @param index
          */
         function exportExcel(){
-            DownLoadFile({
-                url:'/api/ms/knowledgeManage/exportExcel', //请求的url
-                data:{
-                    "applicationId" : $scope.vm.applicationId,
-                    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-                    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
-                    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-                    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
-                    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
-                    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
-                    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                }//要发送的数据
-            });
+            var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:null ;
+            var urlParams =
+                "?applicationId="+APPLICATION_ID+"&sceneIds="+scenceId+"&knowledgeTitle="+$scope.vm.knowledgeTitle +
+                "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
+                "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
+                "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
+            var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
+            $window.open(url,"_blank") ;
             //httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
-            //    "applicationId" : $scope.vm.applicationId,
+            //    "applicationId" : APPLICATION_ID,
             //    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
             //    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
             //    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
@@ -159,9 +152,13 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             //    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
             //    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             //},function(data){
-            //  alert(1111)
-            //},function(){
-            //    console.log("getDate==failed");
+            //    if(data.status==500){
+            //        layer.msg("导出失败")
+            //    }else{
+            //        window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
+            //    }
+            //},function(err){
+            //    console.log(err);
             //});
 
         }
@@ -169,7 +166,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         function getData(index){
             //console.log((index-1)*$scope.vm.pageSize);
             httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
-                "applicationId" : $scope.vm.applicationId,
+                "applicationId" : APPLICATION_ID,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
@@ -192,8 +189,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 };
                 $scope.$apply();
                 return true;
-            },function(){
-                console.log("getDate==failed");
+            },function(err){
+                console.log(err);
             });
 
         }
@@ -273,7 +270,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }
         function getNewNumber(){
             httpRequestPost(" /api/ms/knowledgeManage/overView/searchTotalAndToday",{
-                "applicationId" : $scope.vm.applicationId,
+                "applicationId" : APPLICATION_ID,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
                 "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
@@ -307,7 +304,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //获取root 数据
         void function(){
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": $scope.vm.applicationId,
+                "categoryApplicationId": APPLICATION_ID,
                 "categoryPid": "root"
             },function(data){
                 $scope.vm.botRoot = data.data;
@@ -342,7 +339,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
             },function(){});
             // 获取知识数据
             httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId":$scope.vm.applicationId,
+                "categoryApplicationId":APPLICATION_ID,
                 "categoryPid": id
             },function(data){
                 angular.forEach(data.data,function(item){
@@ -380,7 +377,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 }
                 //请求BOT数据 组装DOM
                 httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":$scope.vm.applicationId,
+                    "categoryApplicationId":APPLICATION_ID,
                     "categoryPid": id
                 },function(data){
                     console.log(data)  ;
@@ -495,7 +492,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //    var that = $(this);
         //    if($(that).children().length==1){
         //        httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-        //            "categoryApplicationId":$scope.vm.applicationId,
+        //            "categoryApplicationId":APPLICATION_ID,
         //            "categoryPid": id
         //        },function(data){
         //            //console.log(data);

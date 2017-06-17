@@ -58,6 +58,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
 // 时间   1   仅三天   2  近七天   3  近一个月
         function search(index){
             $scope.vm.getType = 1;
+            $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
             httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
@@ -68,9 +69,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "pageSize":$scope.vm.pageSize,
             },function(data){
                 if(data.data==10005){
-                    layer.msg("查询无次相关知识",{time:1000})
+                    layer.msg("查询无次相关知识")
                 }else{
-                    console.log(data);
                     $scope.vm.listData = data.data.objs,
                         $scope.vm.paginationConf = {
                             currentPage: index,//当前页
@@ -97,11 +97,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index": (currentPage-1)*$scope.vm.pageSize,
                 "pageSize":$scope.vm.pageSize,
             },function(data){
-                //console.log(data)
                 if(data.status==500){
-                    layer.msg("导出失败",{time:1000})
+                    layer.msg("导出失败")
                 }else{
-                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data);
+                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
                 }
             },function(err){})
 
