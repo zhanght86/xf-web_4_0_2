@@ -2,8 +2,8 @@
  * Created by mileS on 2017/3/23.
  */
 angular.module('businessModelingModule').controller('frameworkLibraryController', [
-    '$scope','$timeout',"$state", "$stateParams","$compile","ngDialog","$cookieStore",
-    function ($scope,$timeout,$state, $stateParams,$compile,ngDialog,$cookieStore) {
+    '$scope','$timeout',"$state", "$stateParams","$compile","ngDialog","$cookieStore","$interval",
+    function ($scope,$timeout,$state, $stateParams,$compile,ngDialog,$cookieStore,$interval) {
         $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -67,7 +67,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
-            batchDelete:batchDelete
+            batchDelete:batchDelete,
+            suggestionValue:"",
+            suggestionData:""
         };
         $scope.categoryAttributeName;
 
@@ -112,9 +114,23 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNodeForFrame(suggestion);
-                locationForFrame(suggestion);
+                $scope.vm.suggestionValue=suggestion.value;
+                $scope.vm.suggestionData=suggestion.data;
             }
         });
+        $interval(function(){
+            console.log("===suggestionData===:"+$scope.vm.suggestionData);
+            if($scope.vm.suggestionData){
+                var suggestion = new Object();
+                suggestion.value=$scope.vm.suggestionValue;
+                suggestion.data=$scope.vm.suggestionData;
+                if(locationForFrameFlag(suggestion)){
+                    locationForFrame(suggestion);
+                    $scope.vm.suggestionValue="";
+                    $scope.vm.suggestionData="";
+                }
+            }
+        },100);
         //定位
         function locationForFrame(suggestion){
             var currentNodeId = suggestion.data;
@@ -122,17 +138,46 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var sum = $(".aside-navs").find("i").length;
             $.each($(".aside-navs").find("i"),function(index,value){
                 if($(value).attr("data-option")==currentNodeId){
-                    var sumHeight = sum*$(value).outerHeight();
-                    var offset = (initHeight+1/sum)*sumHeight;
-                    console.log(sumHeight+"========"+offset);
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    var offset = 0;
+                    if(scrollHeight-100>0){
+                        offset = (((initHeight+1)/sum)*(scrollHeight-100));
+                    }
+                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
-                    return true;
+                    return false;
                 }else{
                     initHeight++;
                 }
             });
+        }
+        function locationForFrameFlag(suggestion){
+            var currentNodeId = suggestion.data;
+            var flag = false;
+            var sum = $(".aside-navs").find("i").length;
+            $.each($(".aside-navs").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    console.log(currentNodeId+"===exists===");
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    if(sum>=10 && scrollHeight>=474.75){
+                        flag = true;
+                    }else if(sum<10){
+                        flag = true;
+                    }
+                    return false;
+                }
+            });
+            return flag;
         }
         //搜寻节点
         function searchNodeForFrame(suggestion){
@@ -176,10 +221,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         $scope.$apply();
                         flag = true;
                         //跳出
-                        return true;
+                        return false;
                     }else{
                         if(flag==true){
-                            return true;
+                            return false;
                         }
                         //展开
                         console.log("==="+$(currNode).css("backgroundPosition"));

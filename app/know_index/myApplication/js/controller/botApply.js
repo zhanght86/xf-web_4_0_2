@@ -3,7 +3,7 @@
  * 控制器
  */
 angular.module('myApplicationModule').controller('botApplyController', [
-    '$scope', 'localStorageService','$timeout',"$state" ,"$stateParams","ngDialog","$cookieStore",function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore) {
+    '$scope', 'localStorageService','$timeout',"$state" ,"$stateParams","ngDialog","$cookieStore",'$interval',function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore,$interval) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -54,7 +54,9 @@ angular.module('myApplicationModule').controller('botApplyController', [
             searchNodeForBot:searchNodeForBot,
             recursionForBot:recursionForBot,
             autoHeightForBot:autoHeightForBot,
-            locationForBot:locationForBot
+            locationForBot:locationForBot,
+            suggestionValue:"",
+            suggestionData:""
         };
 
         var categoryApplicationId = $cookieStore.get("applicationId");
@@ -101,26 +103,94 @@ angular.module('myApplicationModule').controller('botApplyController', [
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNodeForBot(suggestion);
-                locationForBot(suggestion);
+                $scope.vm.suggestionValue=suggestion.value;
+                $scope.vm.suggestionData=suggestion.data;
             }
         });
+        $interval(function(){
+            console.log("===suggestionData===:"+$scope.vm.suggestionData);
+            if($scope.vm.suggestionData){
+                var suggestion = new Object();
+                suggestion.value=$scope.vm.suggestionValue;
+                suggestion.data=$scope.vm.suggestionData;
+                if(locationForBotFlag(suggestion)){
+                    locationForBot(suggestion);
+                    $scope.vm.suggestionValue="";
+                    $scope.vm.suggestionData="";
+                }
+            }
+        },100);
         function locationForBot(suggestion){
             var currentNodeId = suggestion.data;
             var initHeight = 0;
             var sum = $("#library").find("i").length;
             $.each($("#library").find("i"),function(index,value){
                 if($(value).attr("data-option")==currentNodeId){
-                    var sumHeight = sum*$(value).outerHeight();
-                    var offset = (initHeight+1/sum)*sumHeight;
-                    console.log(sumHeight+"========"+offset);
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    var offset = 0;
+                    if(scrollHeight-100>0){
+                        offset = (((initHeight+1)/sum)*(scrollHeight-100));
+                    }
+                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
-                    return true;
+                    return false;
                 }else{
                     initHeight++;
                 }
             });
+        }
+        function locationForBot(suggestion){
+            var currentNodeId = suggestion.data;
+            var initHeight = 0;
+            var sum = $("#library").find("i").length;
+            $.each($("#library").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    var offset = 0;
+                    if(scrollHeight-100>0){
+                        offset = (((initHeight+1)/sum)*(scrollHeight-100));
+                    }
+                    console.log("===location==="+offset+"===="+sum);
+                    $(".libraryFt").animate({
+                        scrollTop:offset+"px"
+                    },800);
+                    return false;
+                }else{
+                    initHeight++;
+                }
+            });
+        }
+        function locationForBotFlag(suggestion){
+            var currentNodeId = suggestion.data;
+            var flag = false;
+            var sum = $("#library").find("i").length;
+            $.each($("#library").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    console.log(currentNodeId+"===exists===");
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    if(sum>=10 && scrollHeight>=474.75){
+                        flag = true;
+                    }else if(sum<10){
+                        flag = true;
+                    }
+                    return false;
+                }
+            });
+            return flag;
         }
         //搜寻节点
         function searchNodeForBot(suggestion){

@@ -4,7 +4,7 @@
  * 控制器
  */
 angular.module('myApplicationModule').controller('relationalCatalogController',[
-    '$scope','localStorageService','$timeout', '$state','$stateParams','ngDialog','$cookieStore',function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore) {
+    '$scope','localStorageService','$timeout', '$state','$stateParams','ngDialog','$cookieStore','$interval',function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore,$interval) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -40,7 +40,9 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
-            categoryDescribe:""
+            categoryDescribe:"",
+            suggestionValue:"",
+            suggestionData:""
         };
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
@@ -85,9 +87,23 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             onSelect: function(suggestion) {
                 console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNode(suggestion);
-                location(suggestion);
+                $scope.vm.suggestionValue=suggestion.value;
+                $scope.vm.suggestionData=suggestion.data;
             }
         });
+        $interval(function(){
+            console.log("===suggestionData===:"+$scope.vm.suggestionData);
+                if($scope.vm.suggestionData){
+                    var suggestion = new Object();
+                    suggestion.value=$scope.vm.suggestionValue;
+                    suggestion.data=$scope.vm.suggestionData;
+                    if(locationFlag(suggestion)){
+                        location(suggestion);
+                        $scope.vm.suggestionValue="";
+                        $scope.vm.suggestionData="";
+                    }
+                }
+        },100);
         //搜寻节点
         function searchNode(suggestion){
             var currentNodeId = suggestion.data;
@@ -169,6 +185,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     if(scrollHeight-100>0){
                         offset = (((initHeight+1)/sum)*(scrollHeight-100));
                     }
+                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
@@ -177,6 +194,28 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     initHeight++;
                 }
             });
+        }
+        function locationFlag(suggestion){
+            var currentNodeId = suggestion.data;
+            var flag = false;
+            var sum = $(".aside-navs").find("i").length;
+            $.each($(".aside-navs").find("i"),function(index,value){
+                if($(value).attr("data-option")==currentNodeId){
+                    console.log(currentNodeId+"===exists===");
+                    var lib = $(".libraryFt");
+                    var scrollHeight=0;
+                    if(lib.length>0){
+                        scrollHeight = lib[0].scrollHeight;
+                    }
+                    if(sum>=10 && scrollHeight>=474.75){
+                        flag = true;
+                    }else if(sum<10){
+                        flag = true;
+                    }
+                    return false;
+                }
+            });
+            return flag;
         }
         //加载业务树
         initBot();
