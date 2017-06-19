@@ -133,7 +133,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
          * @param index
          */
         function exportExcel(){
-            var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:null ;
+            var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:[];
             var urlParams =
                 "?applicationId="+APPLICATION_ID+"&sceneIds="+scenceId+"&knowledgeTitle="+$scope.vm.knowledgeTitle +
                 "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
