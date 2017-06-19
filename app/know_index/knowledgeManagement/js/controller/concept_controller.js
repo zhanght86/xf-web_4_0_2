@@ -677,7 +677,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 preCloseCallback:function(e){     //关闭回掉
                     if(e === 1){
                         //getExtensionByFrame( id ,1 )
-                    }else if(e === 0){  
+                    }else if(e === 0){
                         //getExtensionByFrame( id ,0 )
                     }
                 }
