@@ -169,7 +169,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     if(lib.length>0){
                         scrollHeight = lib[0].scrollHeight;
                     }
-                    if(sum>=10 && scrollHeight>=474.75){
+                    if(sum>=10 && scrollHeight>=480){
                         flag = true;
                     }else if(sum<10){
                         flag = true;
@@ -255,7 +255,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                         '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'"attribute-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' type-option="'+data.data[i].categoryTypeId+'"attribute-option="'+data.data[i].categoryAttributeName+'" data-option="'+data.data[i].categoryId+'" title="'+data.data[i].categoryName+'">'+subStringWithTail(data.data[i].categoryName,10,"...")+'</span>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -386,7 +386,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 '<div class="slide-a">'+
                                 '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
                                 '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' attribute-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'">'+data.data[i].categoryName+'</span>'+
+                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' attribute-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'" title="'+data.data[i].categoryName+'">'+subStringWithTail(data.data[i].categoryName,10,"...")+'</span>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
