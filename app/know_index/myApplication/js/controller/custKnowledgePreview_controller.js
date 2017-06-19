@@ -59,7 +59,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     break;
             }
             function edit(){
-
+               console.log($scope.vm.listData)
                 $state.go(editUrl,{data:angular.toJson($scope.vm.listData)})
             }
             void function(){

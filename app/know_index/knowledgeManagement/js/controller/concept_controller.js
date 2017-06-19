@@ -702,7 +702,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     "title" :  $scope.vm.title,
                     "applicationId" : APPLICATION_ID
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()

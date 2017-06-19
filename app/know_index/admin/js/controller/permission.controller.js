@@ -163,9 +163,9 @@ angular.module('adminModule').controller('userManageController', [
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
-            var re = /^[1-9]{1}[0-9]{10}$/;
+            var re = /^1[0-9]{10}$/;
             if (!re.test($scope.vm.userPhoneNumber)) {
-                layer.msg("手机号只可以不为0开头的11位数字!");
+                layer.msg("手机号只可以为1开头的11位数字!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }

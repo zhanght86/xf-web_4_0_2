@@ -411,7 +411,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
                         });
                         scope.upload = function(){
-                            //console.log(uploader.options) ;
+                            console.log(uploader.options) ;
                             //uploader.options.format = format;
                             //console.log(uploader) ;
                             uploader.upload();
