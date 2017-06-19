@@ -191,7 +191,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 return true;
             },function(err){
                 console.log(err);
-            },"","",60000);
+            },"","");
 
         }
         var timeout ;
@@ -285,7 +285,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
 
             },function(err){
                 console.log(err);
-            },"","",60000);;
+            },"","");
         }
 
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
@@ -315,7 +315,6 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }() ;
         //点击更改bot value
         //绑定点击空白隐藏（滚动条除外）
-
         $(".aside-nav").on("click","a",function(e){
             //初始化
             $scope.vm.paramsReset();
