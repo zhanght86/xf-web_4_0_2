@@ -57,7 +57,8 @@
                     <li class="clearfix mb-10" ng-repeat="v in vm.result.flowInfo">
                         <p class="flow_name L c-success">{{v.stepName}}</p>
                         <span class="flow_span L ml-10 mr-10">→</span>
-                        <div class="flow_con L">{{v.stepInfo}}</div>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>
                     </li>
                 </ul>
             </div>
