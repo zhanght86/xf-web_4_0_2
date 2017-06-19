@@ -161,6 +161,21 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 标题生成-->
+                    <div class="exten_problem"  ng-if="vm.knowledgeTitleTag" >
+                        <div class="row cl mb-10">
+                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <div class="L extended_query_txt" style="width:345px;border:0;" >
+                                   <span ng-repeat="val in vm.knowledgeTitleTag track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;">
+                                       {{val}}
+                                    </span>
+                                </div>
+                                <span class="tag_s mr-10 L bd" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">普通</span>
+                                <span class="L"><b>来源于</b> <span>知识标题 : {{vm.title}}</span></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row cl mb-50">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容: &nbsp;</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">

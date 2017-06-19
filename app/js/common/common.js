@@ -22,7 +22,7 @@
 //    aLink.href = URL.createObjectURL(blob);
 //    aLink.dispatchEvent(evt);
 //}
-//键盘事件
+//提供keySearch 使用方法
 function onput(e,updateCall,specialKeyCall,inputCall){
     /* 必写
     *   e
@@ -36,11 +36,13 @@ function onput(e,updateCall,specialKeyCall,inputCall){
     //
     var  self = e.srcElement ? e.srcElement : e.target;
     var keycode = window.event?e.keyCode:e.which;
-    var val = angular.element(self).val() ;
+    var val  ;
     //chrome  兼容 输入汉字更新model问题
     angular.element(self).on({
-        compositionend:function(val) {
-            updateCall();
+        compositionend:function(value) {
+            val = angular.element(self).val() ; //得到数值
+            updateCall();                       //更新数值
+            console.log(val) ;
             if (inputCall) {
                 inputCall()
             }
