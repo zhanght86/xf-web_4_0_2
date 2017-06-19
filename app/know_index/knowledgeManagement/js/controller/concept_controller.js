@@ -689,12 +689,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
         }
-        $scope.down =onput() ;
-        $scope.updata = function(){
-             $scope.$apply(function(){
-                $scope.vm = angular.element(self).val();
-            })
-        } ;
+        //$scope.down =onput() ;
+        //$scope.updata = function(){
+        //     $scope.$apply(function(){
+        //        $scope.vm = angular.element(self).val();
+        //    })
+        //} ;
         //    function(e){
         //    var  self = e.srcElement ? e.srcElement : e.target;
         //    var keycode = window.event?e.keyCode:e.which;
@@ -711,7 +711,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     "title" :  $scope.vm.title,
                     "applicationId" : APPLICATION_ID
                 },function(data){
-                    //console.log(data);
+                    console.log(data);
                     if(data.status == 500){    //标题打标失败
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()

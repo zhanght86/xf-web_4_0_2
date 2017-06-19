@@ -191,7 +191,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 return true;
             },function(err){
                 console.log(err);
-            });
+            },"","",60000);
 
         }
         var timeout ;
@@ -284,8 +284,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 return true;
 
             },function(err){
-               console.log(err)
-            });
+                console.log(err);
+            },"","",60000);;
         }
 
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
