@@ -677,7 +677,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 preCloseCallback:function(e){     //关闭回掉
                     if(e === 1){
                         //getExtensionByFrame( id ,1 )
-                    }else if(e === 0){
+                    }else if(e === 0){  
                         //getExtensionByFrame( id ,0 )
                     }
                 }
@@ -689,6 +689,21 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
         }
+        //$scope.down =onput() ;
+        //$scope.updata = function(){
+        //     $scope.$apply(function(){
+        //        $scope.vm = angular.element(self).val();
+        //    })
+        //} ;
+        //    function(e){
+        //    var  self = e.srcElement ? e.srcElement : e.target;
+        //    var keycode = window.event?e.keyCode:e.which;
+        //    angular.element(self).on({
+        //        compositionend:function(val){
+        //            console.log( angular.element(self).val())
+        //        }
+        //    }) ;
+        //} ;
         //根據 標題 生成 bot
         function getBotByTitle(){
             if($scope.vm.title){

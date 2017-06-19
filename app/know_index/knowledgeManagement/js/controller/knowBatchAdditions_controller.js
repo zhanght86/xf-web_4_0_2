@@ -10,7 +10,7 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
             downTemplate: downTemplate,  //新增点击事件
             upload : upload,
             fileName :'',
-            templateType : "191",
+            templateType : 190,
         };
 
         //上传
@@ -33,6 +33,8 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
                 }
             });
         }
+
+
         //打开下载模板
         function downTemplate(callback){
             var dialog = ngDialog.openConfirm({

@@ -28,7 +28,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             knowledgeTotal : null,         //知识总条数
             newNumber : null ,              //更新条数
             getNewNumber : getNewNumber ,  //获取更新条数
-
             knowledgeIds : [], //刪除 id ，
             addDelIds : addDelIds ,
             // params set
@@ -46,9 +45,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             napSearch : napSearch ,
             getSourceType : getSourceType,
             getUpdateTimeType : getUpdateTimeType,
-
-            scan : scan ,   // 点击标题预览  
-
+            scan : scan ,   // 点击标题预览
             heighSarch : false ,
             selectAll : selectAll ,
             isSelectAll  : false ,  // 全选 删除
@@ -59,20 +56,26 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
          * @param index
          */
         function exportExcel(){
-            DownLoadFile({
-                url:'/api/ms/knowledgeManage/exportExcel', //请求的url
-                data:{
-                    "applicationId" : $scope.vm.applicationId,
-                    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-                    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
-                    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-                    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
-                    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
-                    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
-                    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                }//要发送的数据
-            });
+                var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:[];
+                var urlParams =
+                                "?applicationId="+APPLICATION_ID+"&sceneIds="+scenceId+"&knowledgeTitle="+$scope.vm.knowledgeTitle +
+                                "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
+                                "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
+                                "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
+                var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
+                $window.open(url,"_blank") ;
+                //data:{
+                //    "applicationId" : APPLICATION_ID,
+                //    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                //    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                //    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                //    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+                //    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                //    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                //    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                //    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                //}//要发送的数据
+            //});
         }
         napSearch();
         //高级搜索 开关
@@ -100,7 +103,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         function scan(item){
 
             var obj = {};
-            obj.applicationId = $scope.vm.applicationId ;
+            obj.applicationId = APPLICATION_ID ;
             obj.knowledgeId = item.knowledgeId;
             obj.knowledgeType = "104";
             $window.knowledgeScan = obj ;
