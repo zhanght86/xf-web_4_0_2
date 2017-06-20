@@ -460,6 +460,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
+            debugger;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.isEdit = true ;
@@ -478,7 +479,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.tail = data.knowledgeCommonOn;
                 $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
                 var callback = function(){
-
                     var obj = {};
                     obj.knowledgeContent = $scope.vm.newTitle;
                     obj.knowledgeContentType = 0;  // 答案类型

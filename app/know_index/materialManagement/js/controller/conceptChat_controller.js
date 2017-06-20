@@ -113,7 +113,6 @@ angular.module('materialManagement').controller('conceptChatController', [
             });
         }
         function addContent(){
-            console.log();
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
                 layer.msg("扩展不能为空");
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
@@ -142,24 +141,6 @@ angular.module('materialManagement').controller('conceptChatController', [
         function remove(item,arr){
             arr.remove(item);
         }
-        function saveScan(params){
-            httpRequestPost("/api/ms/chatKnowledge/addConceCptChatKnowledge",{
-                "applicationId": params.applicationId,
-                "chatKnowledgeModifier": params.chatKnowledgeModifier,
-                "chatKnowledgeTopic": params.standardQuestion,
-                "chatQuestionList" : params.extendedQuestionArr,
-                "chatKnowledgeContentList" : params.contentArr,
-                "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null
-            },function(data){
-                if(data.data==10004){
-                    layer.msg("标准问重复")
-                }else{
-                    $state.go("materialManagement.chatKnowledgeBase");
-                }
-            },function(err){
-                console.log(err)
-            })
-        };
         //预览
         function scan(){
             if(check()){
@@ -168,10 +149,8 @@ angular.module('materialManagement').controller('conceptChatController', [
                 standardQuestion : $scope.vm.standardQuestion,
                 extendedQuestionArr : $scope.vm.extendedQuestionArr,
                 contentArr : $scope.vm.contentArr,
-                applicationId: APPLICATION_ID,
                 chatKnowledgeModifier : $scope.vm.userName,
-                save : saveScan,
-                editUrl : "materialManagement.conceptChat",
+                //editUrl : "materialManagement.conceptChat",
                 type : 1
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
