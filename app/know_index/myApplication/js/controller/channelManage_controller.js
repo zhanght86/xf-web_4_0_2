@@ -284,6 +284,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         function addBlacklist(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/blacklistManageDialog.html",
+                width:"500px" ,
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

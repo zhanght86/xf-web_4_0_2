@@ -133,33 +133,25 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
          * @param index
          */
         function exportExcel(){
-            var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:[];
-            var urlParams =
-                "?applicationId="+APPLICATION_ID+"&sceneIds="+scenceId+"&knowledgeTitle="+$scope.vm.knowledgeTitle +
-                "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
-                "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
-                "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
-            var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
-            $window.open(url,"_blank") ;
-            //httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
-            //    "applicationId" : APPLICATION_ID,
-            //    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-            //    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
-            //    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-            //    "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
-            //    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
-            //    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
-            //    "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-            //    "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-            //},function(data){
-            //    if(data.status==500){
-            //        layer.msg("导出失败")
-            //    }else{
-            //        window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
-            //    }
-            //},function(err){
-            //    console.log(err);
-            //});
+            httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
+                "applicationId" : APPLICATION_ID,
+                "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
+                "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            },function(data){
+                if(data.status==500){
+                    layer.msg("导出失败")
+                }else{
+                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
+                }
+            },function(err){
+                console.log(err);
+            });
 
         }
 
@@ -191,7 +183,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 return true;
             },function(err){
                 console.log(err);
-            },"","");
+            });
 
         }
         var timeout ;
@@ -284,8 +276,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 return true;
 
             },function(err){
-                console.log(err);
-            },"","");
+               console.log(err)
+            });
         }
 
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
@@ -315,6 +307,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }() ;
         //点击更改bot value
         //绑定点击空白隐藏（滚动条除外）
+
         $(".aside-nav").on("click","a",function(e){
             //初始化
             $scope.vm.paramsReset();

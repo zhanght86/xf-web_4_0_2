@@ -64,7 +64,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
                 "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
-                "chatQuestionContent": $scope.vm.chatQuestionContent,
+                "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize":$scope.vm.pageSize,
             },function(data){
@@ -125,7 +125,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply();
-            },function(){
+            },function(err){
                 console.log(err)
             })
         }

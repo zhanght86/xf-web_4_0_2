@@ -19,6 +19,7 @@ information :
        Services 	lowerCamelCase 	dataFactory 	others
 
 @2 目录结构 业务级优先原则
+    html 统一 规定在文件夹分类中
   web/
       app/
           bower-components/

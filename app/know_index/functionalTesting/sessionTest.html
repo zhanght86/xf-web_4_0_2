@@ -69,11 +69,15 @@
             <div class="flow_chart_wrap" >
                 <ul>
                     <li class="clearfix mb-10" ng-repeat="v in vm.result.flowInfo">
-                        <p class="flow_name L c-success">{{v.stepName}}</p>
-                        <span class="flow_span L ml-10 mr-10">→</span>
+                        <div class=" L" style="width:100px;height:100px;">
+                            <p class="flow_name c-success">{{v.stepName}}</p>
+                            <div class="tc" ng-if="$index!=vm.result.flowInfo.length-1" style="font-size:30px;color:green;margin-top:10px;">↓</div>
+                        </div>
+                        <span class="flow_span L ml-10 mr-10">-</span>
                         <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>
                         <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>
                     </li>
+
                 </ul>
             </div>
         </div>

@@ -400,10 +400,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 if(data.status==10000){
                     if(data.data[0].elements){
                         $.each(data.data[0].elements,function(index,value){
-                            //console.log("===="+value.elementContent);
+                            console.log("===="+value.elementContent);
                             var addFlag = true;
                             for(var i=0;i<$scope.vm.tableList.data.listTable[0].length;i++){
-                                //console.log("==="+$scope.vm.tableList.data.listTable[0][i]);
+                                console.log("==="+$scope.vm.tableList.data.listTable[0][i]);
                                 if($scope.vm.tableList.data.listTable[0][i]==value.elementContent){
                                     addFlag=false;
                                 }
