@@ -217,7 +217,6 @@ angular.module('materialManagement').controller('conceptChatController', [
         }
         //验证 所有数据是否合格
         function check(){
-            console.log($scope.vm.standardQuestion) ;
             if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
                 layer.msg("标准问不能为空");
                 return false

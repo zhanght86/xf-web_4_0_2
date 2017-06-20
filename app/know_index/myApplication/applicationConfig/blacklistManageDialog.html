@@ -9,10 +9,10 @@
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">渠道：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" value="x.channelId" ng-init="vmo.channelId = vmo.channelList[0]"
+            <div class="formControls col-xs-9 col-sm-9"> 
+                <select class="input-text" value="x.channelName" ng-init="vmo.channelId = vmo.channelList[0].channelCode"
                         ng-model="vmo.channelId"
-                        ng-options="x.channelName for x in vmo.channelList">
+                        ng-options="x.channelCode as x.channelName for x in vmo.channelList">
                 </select>
             </div>
         </div>

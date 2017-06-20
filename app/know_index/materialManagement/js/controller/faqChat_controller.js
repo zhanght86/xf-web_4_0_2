@@ -162,9 +162,7 @@ angular.module('materialManagement').controller('faqChatController', [
                         }else{
                             $state.go("materialManagement.chatKnowledgeBase");
                         }
-                    },function(err){
-
-                    })
+                    },function(err){console.log(err)})
                 }
             }
 
@@ -186,7 +184,7 @@ angular.module('materialManagement').controller('faqChatController', [
         }
         //验证 所有数据是否合格
         function check(){
-            if($scope.vm.standardQuestion==""){
+            if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
                 layer.msg("标准问不能为空",{time:1000});
                 return false
             }else if($scope.vm.extendedQuestionArr.length==0){
