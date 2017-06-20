@@ -975,16 +975,16 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var params = getParams();
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
-                return false
-                //return true;
+                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标")
+            //    else if(!params.knowledgeTitleTag.length){
+            //    layer.msg("知识标题未打标")
+            //} 
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空")
             }else{
