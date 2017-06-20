@@ -26,12 +26,12 @@
                     <p class="mr-5"><span class="bold mr-5">向您推荐其他问题</span></p>
                 <div ng-repeat="i in vm.result.recommendAnswerElementList track by $index">
                     <p class="c-primary" ><span >{{$index+1}} . {{i.knowledge_title}}</span></p>
-
-                    <p><span class="mr-5">标签：</span><span >{{i.tags}}<i ng-if="$index!=(i.tags.length-1)">，</i></span></p>
+                    <p><span class="mr-5">标签：</span><span >{{i.tags.join(',')}}</span></p>
+                    <!--<p><span class="mr-5">标签：</span><span >{{i.tags}}<i ng-if="$index!=(i.tags.length-1)">，</i></span></p>-->
 
                     <p><span class="mr-5">相似度：</span><span >{{i.similarity}}</span></p>
-
-                    <p><span class="mr-5">分词：</span><span >{{i.segmentation}}<i ng-if="$index!=(i.segmentation.length-1)">，</i></span></p>
+                    <p><span class="mr-5">分词：</span><span >{{i.segmentation.join(',')}}</span></p>
+                    <!--<p><span class="mr-5">分词：</span><span >{{i.segmentation}}<i ng-if="$index!=(i.segmentation.length-1)">，</i></span></p>-->
 
                 </div>
                 </div>
