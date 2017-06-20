@@ -29,9 +29,9 @@ angular.module('materialManagement').controller('conceptChatController', [
         //擴展問
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
-                layer.msg("扩展不能为空",{time:1000});
+                layer.msg("扩展不能为空");
             }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
-                layer.msg("扩展问题重复，请重新输入",{time:1000});
+                layer.msg("扩展问题重复，请重新输入");
             }else{
                 httpRequestPost("/api/ms/chatKnowledge/checkConceCptChatQuestion",{
                     "chatQuestionContent" : $scope.vm.extendedQuestion,
@@ -52,12 +52,12 @@ angular.module('materialManagement').controller('conceptChatController', [
                                     });
                                     if(len!=data.data.length){
                                         lenArr -= 1;
-                                        layer.msg("扩展问题重复，请重新输入",{time:1000});
+                                        layer.msg("扩展问题重复，请重新输入");
                                         return false
                                     };
                                 });
                                 if(lenArr != $scope.vm.extendedQuestionArr.length){
-                                    layer.msg("扩展问题重复，请重新输入",{time:1000});
+                                    layer.msg("扩展问题重复，请重新输入");
                                     return false
                                 }else{
                                     obj.chatQuestionContent = data.data;
@@ -79,7 +79,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                         }
 
                     }else{
-                        layer.msg("扩展问重复",{time:1000})
+                        layer.msg("扩展问重复")
                     }
                 },function(err){
                     console.log(err)
@@ -115,9 +115,9 @@ angular.module('materialManagement').controller('conceptChatController', [
         function addContent(){
             console.log();
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
-                layer.msg("扩展不能为空",{time:1000});
+                layer.msg("扩展不能为空");
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
-                layer.msg("扩展问题重复，请重新输入",{time:1000});
+                layer.msg("扩展问题重复，请重新输入");
             }else{
                 httpRequestPost("/api/ms/chatKnowledge/checkChatKnowledgeContent",{
                     "chatKnowledgeContent" : $scope.vm.contentVal
@@ -130,7 +130,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                         $scope.vm.contentVal = "";
                         $scope.$apply();
                     }else{
-                        layer.msg("扩展问重复",{time:1000})
+                        layer.msg("扩展问重复")
                     }
                 },function(err){
                     console.log(err)
@@ -143,7 +143,6 @@ angular.module('materialManagement').controller('conceptChatController', [
             arr.remove(item);
         }
         function saveScan(params){
-
             httpRequestPost("/api/ms/chatKnowledge/addConceCptChatKnowledge",{
                 "applicationId": params.applicationId,
                 "chatKnowledgeModifier": params.chatKnowledgeModifier,
@@ -153,7 +152,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                 "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null
             },function(data){
                 if(data.data==10004){
-                    layer.msg("标准问重复",{time:1000})
+                    layer.msg("标准问重复")
                 }else{
                     $state.go("materialManagement.chatKnowledgeBase");
                 }
@@ -181,7 +180,6 @@ angular.module('materialManagement').controller('conceptChatController', [
         //保存  0 无验证   1  需要验证
         function save(){
             if(check()){
-                console.log($scope.vm.extendedQuestionArr);
                 httpRequestPost("/api/ms/chatKnowledge/addConceCptChatKnowledge",{
                     "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     "applicationId": APPLICATION_ID,
@@ -192,7 +190,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                     "chatKnowledgeContentList" : $scope.vm.contentArr
                 },function(data){
                     if(data.data==10004){
-                        layer.msg("标准问重复",{time:1000})
+                        layer.msg("标准问重复")
                     }else{
                         $state.go("materialManagement.chatKnowledgeBase");
                     }
@@ -219,14 +217,15 @@ angular.module('materialManagement').controller('conceptChatController', [
         }
         //验证 所有数据是否合格
         function check(){
-            if($scope.vm.standardQuestion==""){
-                layer.msg("标准问不能为空",{time:1000});
+            console.log($scope.vm.standardQuestion) ;
+            if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
+                layer.msg("标准问不能为空");
                 return false
             }else if($scope.vm.extendedQuestionArr.length==0){
-                layer.msg("扩展问不能为空",{time:1000});
+                layer.msg("扩展问不能为空");
                 return false;
             }else if($scope.vm.contentArr.length==0){
-                layer.msg("知识内容不能为空",{time:1000});
+                layer.msg("知识内容不能为空");
                 return false
             }else{
                 return true

@@ -125,7 +125,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     pagesLength: 8,//分页框数量
                 };
                 $scope.$apply();
-            },function(){
+            },function(err){
                 console.log(err)
             })
         }
