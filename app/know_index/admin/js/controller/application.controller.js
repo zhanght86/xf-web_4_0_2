@@ -23,6 +23,7 @@ angular.module('adminModule').controller('adminContentController', [
         function selectScene(id,applicationId){
             $cookieStore.put("sceneId",id);
             $cookieStore.put("applicationId",applicationId);
+            $.getScript('/js/common/config.js');
         }
         getUserInfo();
         myApplication();
