@@ -21,6 +21,20 @@
 
                     <p><span class="mr-5">答案：</span><span ng-repeat="i in vm.result.answer track by $index">{{i}}<i ng-if="$index!=(vm.result.answer.length-1)">，</i></span></p>
                 </div>
+                <!--推荐问-->
+                <div  id="recommendElements" ng-if="vm.result.recommendAnswerElementList.length>0" style="border-top:1px dashed #bdbdbd;padding-top:5px;margin-top:5px;">
+                    <p class="mr-5"><span class="bold mr-5">向您推荐其他问题</span></p>
+                <div ng-repeat="i in vm.result.recommendAnswerElementList track by $index">
+                    <p class="c-primary" ><span >{{$index+1}} . {{i.knowledge_title}}</span></p>
+                    <p><span class="mr-5">标签：</span><span >{{i.tags.join(',')}}</span></p>
+                    <!--<p><span class="mr-5">标签：</span><span >{{i.tags}}<i ng-if="$index!=(i.tags.length-1)">，</i></span></p>-->
+
+                    <p><span class="mr-5">相似度：</span><span >{{i.similarity}}</span></p>
+                    <p><span class="mr-5">分词：</span><span >{{i.segmentation.join(',')}}</span></p>
+                    <!--<p><span class="mr-5">分词：</span><span >{{i.segmentation}}<i ng-if="$index!=(i.segmentation.length-1)">，</i></span></p>-->
+
+                </div>
+                </div>
             </div>
             <div class="bd chat_test_lbot pd-10" >
                 <textarea class="chat_text_txta f-14 mb-5" ng-model="vm.testAsking"  placeholder="请输入测试问题" style="border:1px solid #eee;"></textarea>
@@ -55,10 +69,15 @@
             <div class="flow_chart_wrap" >
                 <ul>
                     <li class="clearfix mb-10" ng-repeat="v in vm.result.flowInfo">
-                        <p class="flow_name L c-success">{{v.stepName}}</p>
-                        <span class="flow_span L ml-10 mr-10">→</span>
-                        <div class="flow_con L">{{v.stepInfo}}</div>
+                        <div class=" L" style="width:100px;height:100px;">
+                            <p class="flow_name c-success">{{v.stepName}}</p>
+                            <div class="tc" ng-if="$index!=vm.result.flowInfo.length-1" style="font-size:30px;color:green;margin-top:10px;">↓</div>
+                        </div>
+                        <span class="flow_span L ml-10 mr-10">-</span>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>
                     </li>
+
                 </ul>
             </div>
         </div>
