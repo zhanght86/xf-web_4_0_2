@@ -1,4 +1,4 @@
-<div class="pd-20">
+<div class="pt-10 pb-10">
     <form action="" method="post" class="form form-horizontal" name="myForm" novalidate>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">姓名：</label>
@@ -81,8 +81,8 @@
 
             <label class="form-label col-xs-3 col-sm-2">所属应用：</label>
             <!--{{vm.applicationIds}}-->
-            <div class="formControls col-xs-9 col-sm-9">
-                <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="margin-left: 5px;">
+            <div class="formControls col-xs-9 col-sm-9" style="height:200px;overflow-y: auto;">
+                <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="width:47%;display:inline-block;margin-right: 2%;">
                     <input type="checkbox" ng-checked="vm.filter(item.applicationId,vm.applicationIds)"  ng-click="vm.saveProp($event,item.applicationId)"   />{{item.applicationName}}
                 </label>
             </div>

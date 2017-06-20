@@ -191,6 +191,7 @@ angular.module('adminModule').controller('userManageController', [
                 //        console.log(6688688);
                 //        $scope.closeThisDialog(); //关闭弹窗
                 //    }},
+                width:'640px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -265,6 +266,7 @@ angular.module('adminModule').controller('userManageController', [
             //$scope.$apply()
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/userManageDialog2.html",
+                width:'640px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
