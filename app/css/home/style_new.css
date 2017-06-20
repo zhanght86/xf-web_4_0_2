@@ -142,7 +142,7 @@
 .node_ul li:hover{background:#3ea9fb;color:#fff;}
 
 /*FAQ知识*/
-.content_box{box-sizing:border-box;padding:30px 20px;background:#fff;}
+.content_box{box-sizing:border-box;padding:30px;background:#fff;}
 .qiyong_span{background:url(../../images/my-checkbox.png) no-repeat left center;padding-left:25px;}
 .qiyong_span_on{background:url(../../images/my-checkbox-on.png) no-repeat left center;padding-left:25px;}
 .channel_div{position: relative;padding-left:50px;min-height:25px;}
@@ -196,4 +196,7 @@
 .classic_head_ul li.active {
     border-color: red;
 }
+
+.list_facContent{position: relative;padding-left:230px;min-height:25px;box-sizing:border-box;}
+.list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:25px;text-align:right;}
 
