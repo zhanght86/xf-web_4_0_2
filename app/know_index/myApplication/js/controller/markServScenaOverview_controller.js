@@ -119,6 +119,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
         function getUpdateTimeType(val){
             $scope.vm.updateTimeType = val
         }
+        getData(1) ;
         function getData(index){
             //console.log((index-1)*$scope.vm.pageSize);
             httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{

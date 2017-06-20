@@ -528,7 +528,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     console.log(data);
                     if(data.status == 500){
                         //if(data.data==10002){
-                            $scope.vm.titleTip = "标题打标重复";
+                            $scope.vm.titleTip = "标题重复";
                         //}
                         // $scope.vm.titleTip = data.info;
                         $scope.$apply()
@@ -547,7 +547,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     }
                     //console.log(data);
                 },function(err){
-                    layer.msg("打标失败，请重新打标")
+                   console.log(err)
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
