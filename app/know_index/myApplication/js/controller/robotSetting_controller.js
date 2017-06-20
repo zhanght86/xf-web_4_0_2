@@ -133,7 +133,24 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             editApplication : editApplication,  //编辑应用参数
             findApplicationSetting : findApplicationSetting, //查询应用参数
             turnOn : turnOn,//开关函数
+            parameterLimit : parameterLimit
         };
+        function parameterLimit(type,val){
+            // type 0   lt1
+            //type 1    0-1
+           if(type){
+               if($scope.app[val]<1){
+                   $scope.app[val] = 1 ;
+               }
+           }else{
+               if($scope.app[val]>1 ){
+                   $scope.app[val] = 1
+               }else if($scope.app[val]<0){
+                   $scope.app[val] = 0
+               }
+           }
+        }
+
         //查看应用参数设置
         findApplicationSetting();
         //查看机器人设置
