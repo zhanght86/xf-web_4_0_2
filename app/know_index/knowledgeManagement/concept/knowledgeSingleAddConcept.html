@@ -1,11 +1,17 @@
-<div class="main warp">
+<!--引导页头部遮罩-->
+<div class="shadow_div dn" style="height:60px;" ></div>
+<!--引导页头部遮罩end-->
+<div class="main warp knowledgeConcepe">
     <div class="addContent pd30">
-        <div class="r-cont-hd">
-            <span ng-if="!vm.knowledgeId">概念知识新增</span>
-            <span ng-if="vm.knowledgeId">概念知识编辑</span>
+        <div class="cl">
+            <div class="r-cont-hd L">
+                <span ng-if="!vm.knowledgeId">概念知识新增</span>
+                <span ng-if="vm.knowledgeId">概念知识编辑</span>
+            </div>
+            <a href="javascript:;" class="c_green R" ng-click="vm.showTip();">使用帮助</a>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
-        <div class="r-cont-bd oh">
+        <div class="r-cont-bd oh pr">
             <!--<form novalidate="novalidate" name="form">-->
             <div class="jqrsz-item">
                 <div class="item-line">
@@ -209,10 +215,87 @@
                     </div>
                 </div>
             </div>
-            <div class="jqrsz-btn-box">
+            <div class="jqrsz-btn-box" style="margin-bottom:100px;">
                 <input type="button" class="btn btn-blue mr10" value="保存" ng-disabled="vm.limitSave" ng-click="vm.save()">
                 <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>
             </div>
+            <!--引导-->
+            <div class="shadow_div dn" ></div>
+            <div class="step_div " >
+                <div class="step_one dn" id="step_one" >
+                    <div class="step_one_s">1</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>第一步点这</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  disabled class="c-999 introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_two dn" id="step_two">
+                    <div class="step_one_s">2</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>第二步点这</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_three dn" id="step_three">
+                    <div class="step_one_s">3</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>第三步点这</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_four dn" id="step_four">
+                    <div class="step_one_s">4</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>第四步点这</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_five dn" id="step_five">
+                    <div class="step_one_s">5</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>第五步点这</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_six dn" id="step_six">
+                    <div class="step_one_s">6</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>第六步点这</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">完成</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  disabled class="c-999 introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--引导end-->
         </div>
     </div>
 </div>
@@ -233,7 +316,10 @@
     .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
     .tagRepeat{
         background: #fff;
-        color: #ed;
+
     }
     .Wdate{background-position:164px center;}
+
+
 </style>
+

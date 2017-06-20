@@ -295,7 +295,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                         httpRequestPost("/api/application/channel/checkBlackList",{
                             "applicationId": $scope.vmo.applicationId,
                             "blackListIdentify": $scope.vmo.blackListIdentify,
-                            "channelId": $scope.vmo.channelId.channelId
+                            "channelId": $scope.vmo.channelId
                         },function(data){          //类名重複
                             if(data.data===10002){
                                 layer.msg("黑名单重复！");

@@ -55,7 +55,8 @@
                     关联个数：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="number" ng-model="app.settingRelateNumber" placeholder="命中答案时，关联问题的个数，只限正整数"
+                    <input class="input-text" type="number" ng-model="app.settingRelateNumber"
+                           ng-change="app.parameterLimit(1,'settingRelateNumber')" step="1"
                            placeholder="配置关联问题的个数，标准格式为数字型" style="width: 350px;" required>
                 </div>
             </div>
@@ -66,7 +67,8 @@
                     推荐个数：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="number" ng-model="app.settingRecommendNumber" placeholder="未命中答案时，推荐问题的个数，只限正整数"
+                    <input class="input-text" type="number" ng-model="app.settingRecommendNumber"
+                           ng-change="app.parameterLimit(1,'settingRecommendNumber')" step="1"
                            placeholder="配置推荐问题个数，标准格式为数字型" style="width: 350px;" required>
                 </div>
             </div>
@@ -78,6 +80,7 @@
                 </div>
                 <div class="value">
                     <input class="input-text" type="number" ng-model="app.settingDataTimeoutLimit"
+                           ng-change="app.parameterLimit(1,'settingDataTimeoutLimit')" step="1"
                            placeholder="获取数据时间限制，标准格式为数字型" style="width: 350px;" required>
                 </div>
             </div>
@@ -88,7 +91,8 @@
                     上限阈值：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="number" ng-model="app.settingUpperLimit" placeholder="推出答案的相似度"
+                    <input class="input-text" type="number" ng-model="app.settingUpperLimit"
+                           ng-change="app.parameterLimit(0,'settingUpperLimit')" step="0.1"
                            placeholder="配置上限阈值，标准格式为float型" style="width: 350px;" required>
                 </div>
             </div>
@@ -99,7 +103,9 @@
                     下限阈值：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="number" ng-model="app.settingLowerLimit" placeholder="推出推荐问题的相似度"
+
+                    <input class="input-text" type="number" ng-model="app.settingLowerLimit"
+                           ng-change="app.parameterLimit(0,'settingLowerLimit')" step="0.1"
                            placeholder="配置下线阈值，标准格式为float型" style="width: 350px;" required>
                 </div>
             </div>
@@ -110,7 +116,8 @@
                     寒暄阈值：
                 </div>
                 <div class="value">
-                    <input class="input-text" type="number" ng-model="app.settingGreetingThreshold" placeholder="推出寒暄问答的最低相似度"
+                    <input class="input-text" type="number" ng-model="app.settingGreetingThreshold"
+                           ng-change="app.parameterLimit(0,'settingGreetingThreshold')" step="0.1"
                            placeholder="配置寒暄阈值，标准格式为float型" style="width: 350px;" required>
                 </div>
             </div>

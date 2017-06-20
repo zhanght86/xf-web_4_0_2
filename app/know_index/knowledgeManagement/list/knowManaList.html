@@ -1,22 +1,31 @@
-
-<div class="wrap">
+<!--引导页头部遮罩-->
+<div class="shadow_div dn" style="height:60px;" ></div>
+<!--引导页头部遮罩end-->
+<div class="wrap knowledgeList">
     <div class="content_wrap page-container" style="padding:0;">
         <div class="wrap mb30">
             <div class="content_box mb25 mt10">
-                <h3 class="f22 pl-10 mb15" ng-if="!vm.knowledgeId">列表型知识新增</h3>
-                <h3 class="f22 pl-10 mb15" ng-if="vm.knowledgeId">列表型知识编辑</h3>
-                <div class=" p10 ">
-                    <div class="row cl mb-10">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">知识标题：</label>
-                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+                <div class="cl mb-20">
+                    <div class="L">
+                        <h3 class="f22 pl-10 mb15" ng-if="!vm.knowledgeId">列表型知识新增</h3>
+                        <h3 class="f22 pl-10 mb15" ng-if="vm.knowledgeId">列表型知识编辑</h3>
+                    </div>
+                    <a href="javascript:;" class="c_green R" ng-click="vm.showTip();">使用帮助</a>
+                </div>
+                <div class=" pr">
+
+                    <div class="list_facContent mb-10">
+                        <div class="list_facContent_L">知识标题：</div>
+                        <div >
                             <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
                             <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
-                    <div class="row cl mb-10">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">知识有效期：</label>
-                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+
+                    <div class="list_facContent mb-10">
+                        <div class="list_facContent_L">知识有效期：</div>
+                        <div >
                             <div class="dib">
                                 <label>
                                     <input style=" margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> 启用
@@ -29,10 +38,11 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="bot_box">
-                        <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="formControls col-xs-8 col-sm-9">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">BOT路径：</div>
+                            <div >
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
                                         <input class="ipt-txt bd" style="padding-right:25px;width:395px;height:32px;" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 380px;border: solid 1px #ddd;"/>
@@ -61,10 +71,10 @@
                     </div>
                     <!--bot  标题 点击生成  -->
                     <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
-                        <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="value Div clearfix" id="Div">
-                                <div class="ipt-txt-box L " style="width: 395px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 10px;">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">BOT路径：</div>
+                            <div class=" clearfix" id="Div">
+                                <div class="ipt-txt-box L " style="width: 395px;border: 1px solid #e1e1e1;margin-right: 10px;">
                                     <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                         <!--<span>{{item.className.join("/")}}</span>-->
                                         <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
@@ -75,11 +85,25 @@
                         </div>
                     </div>
                     <!--手选生成-->
+                    <!--<div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">-->
+                        <!--<div class="row cl mb-10">-->
+                            <!--<label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>-->
+                            <!--<div class="value Div clearfix" >-->
+                                <!--<div class="ipt-txt-box L" style="width: 395px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 10px;">-->
+                                    <!--<div class="ipt-txt" style="overflow:hidden;line-height:24px;">-->
+                                        <!--&lt;!&ndash;<span>{{item.className.join("/")}}</span>&ndash;&gt;-->
+                                        <!--<a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
-                        <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>
-                            <div class="value Div clearfix" >
-                                <div class="ipt-txt-box L" style="width: 395px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 10px;">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">BOT路径：</div>
+                            <div class=" clearfix" >
+                                <div class="ipt-txt-box L" style="width: 395px;border: 1px solid #e1e1e1;margin-right: 10px;">
                                     <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                         <!--<span>{{item.className.join("/")}}</span>-->
                                         <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
@@ -90,9 +114,9 @@
                         </div>
                     </div>
 
-                    <div class="row cl mb-10">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">业务框架：</label>
-                        <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
+                    <div class="list_facContent mb-10">
+                        <div class="list_facContent_L">业务框架：</div>
+                        <div >
                                 <select class="input-text" style="width:395px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
                                     <option value="" ng-if="vm.frames.length">--请选择以上业务框架--</option>
                                 </select>
@@ -100,9 +124,9 @@
                     </div>
 
                     <div class="exten_problem" >
-                        <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
-                            <div class="formControls col-xs-8 col-sm-9">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">概念扩展：</div>
+                            <div >
                                 <input type="text" class="L input-text extended_query_txt" ng-model="vm.extensionTitle" placeholder="请输入问题"
                                        style="width:312px;" >
                                 <select class="sel bd L mr-10" style="margin-left:-1px;"  ng-model="vm.extensionWeight" >
@@ -115,9 +139,9 @@
                     </div>
                     <!--sshoudong  tinajia -->
                     <div class="exten_problem"  style="overflow: visible" ng-repeat="item in vm.extensions track by $index">
-                        <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
-                            <div class="formControls col-xs-8 col-sm-9">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">概念扩展：</div>
+                            <div >
                                 <div class="L extended_query_txt" style="width:345px;height:34px;border:0;" >
                                     <!--{{item.extensionQuestionTagList}}-->
                                        <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="background: #e1e1e1;padding: 4px;margin:0 5px 5px 0;display:inline-block;" ng-class="val.exist?'':'tagRepeat'">
@@ -145,9 +169,9 @@
                     </div>
                     <!-- 業務框架 生成 -->
                     <div class="exten_problem"  ng-repeat="item in vm.extensionsByFrame">
-                        <div class="row cl mb-10">
-                            <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
-                            <div class="formControls col-xs-8 col-sm-9">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">概念扩展：</div>
+                            <div >
                                 <div class="L extended_query_txt" style="width:345px;height:34px;border:0;" >
                                     <!--{{item.extensionQuestionTagList}}-->
                                    <span ng-repeat="val in item.extensionQuestionTagList" style="background: #e1e1e1;padding: 4px;margin:0 5px 5px 0;display:inline-block;" ng-class="val.exist?'':'tagRepeat'">
@@ -161,9 +185,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row cl mb-50">
-                        <label class="form-label col-xs-4 col-sm-2 text-r">知识内容: &nbsp;</label>
-                        <div class="formControls col-xs-8 col-sm-9" style="padding-right: 22px;">
+                    <div class="list_facContent mb-50">
+                        <div class="list_facContent_L">知识内容: &nbsp;</div>
+                        <div >
                             <div class="clearfix mb-10">
                                 <p class="mb-10 f-16">肯定回答:</p>
                                 <!--{{vm.newTitle}}-->
@@ -232,13 +256,102 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row cl mb-10 ">
-                        <label class="form-label col-xs-4 col-sm-2 text-r"></label>
-                        <div class="formControls col-xs-8 col-sm-9">
+                    <div class="list_facContent mb-10 ">
+                        <div class="list_facContent_L"></div>
+                        <div >
                             <input type="button" class="btn1 btn1_blue mr-20" value="预览" ng-click="vm.scan()"/>
                             <input type="button" class="btn1 btn_green" ng-disabled="vm.limitSave"  ng-click="vm.save()" value="保存"/>
                         </div>
                     </div>
+                    <!--引导-->
+                    <div class="shadow_div dn" ></div>
+                    <div class="step_div " >
+                        <div class="step_one dn" id="step_one" >
+                            <div class="step_one_s">1</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第一步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                                    <button  disabled class="c-999 introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step_one step_two dn" id="step_two">
+                            <div class="step_one_s">2</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第二步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                                    <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step_one step_three dn" id="step_three">
+                            <div class="step_one_s">3</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第三步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                                    <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step_one step_four dn" id="step_four">
+                            <div class="step_one_s">4</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第四步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                                    <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step_one step_five dn" id="step_five">
+                            <div class="step_one_s">5</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第五步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                                    <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step_one step_six dn" id="step_six">
+                            <div class="step_one_s">6</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第六步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                                    <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step_one step_seven dn" id="step_seven">
+                            <div class="step_one_s">7</div>
+                            <div class="step_one_arrow"></div>
+                            <div class="step_one_con">
+                                <p>第七步点这</p>
+                                <div class="tr introjs-tooltipbuttons">
+                                    <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">完成</button>
+                                    <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                                    <button  disabled class="c-999 introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--引导end-->
                 </div>
             </div>
         </div>
@@ -248,4 +361,7 @@
 <style>
     .Wdate{background-position:164px center;}
     .ipt-txt{height:34px;box-sizing:border-box;}
+
+
+
 </style>
