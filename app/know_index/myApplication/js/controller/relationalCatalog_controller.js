@@ -42,7 +42,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             batchUpload:batchUpload,
             categoryDescribe:"",
             suggestionValue:"",
-            suggestionData:""
+            suggestionData:"",
+            winHeight:0
         };
         var categoryApplicationId = $cookieStore.get("applicationId");
         var categoryModifierId = $cookieStore.get("userId");
@@ -53,6 +54,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         function autoHeight(){
             var $win = $(window);
             var winHeight = $win.height()*0.75;
+            $scope.vm.winHeight=winHeight+5;
             $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;");
             $(".libraryRth").attr("style","width: 720px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;");
         }
@@ -207,7 +209,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     if(lib.length>0){
                         scrollHeight = lib[0].scrollHeight;
                     }
-                    if(sum>=10 && scrollHeight>=480){
+                    if(sum>=10 && scrollHeight>=$scope.vm.winHeight){
                         flag = true;
                     }else if(sum<10){
                         flag = true;
