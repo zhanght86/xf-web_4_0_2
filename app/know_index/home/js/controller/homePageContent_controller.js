@@ -6,7 +6,7 @@ angular.module('homePage').controller('homePageContentController', [
     '$scope', '$location', 'localStorageService', 'AuthService',"$state","$cookieStore",
     function ($scope, $location, localStorageService, AuthService,$state,$cookieStore) {
         $scope.vm = {
-            sceneId : SCENE_ID
+            sceneId : $cookieStore.get("sceneId")
         };
     }
 ]) ;

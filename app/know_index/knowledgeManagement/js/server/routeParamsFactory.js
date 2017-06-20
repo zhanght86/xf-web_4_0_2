@@ -13,4 +13,4 @@ knowledge_static_web.factory('myService', function() {
         set: set,
         get: get
     }
-})
+});

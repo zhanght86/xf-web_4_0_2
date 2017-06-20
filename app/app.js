@@ -690,7 +690,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/knowledgeManagement/list/list.html',
+                        templateUrl: 'know_index/knowledgeManagement/list/knowManaList.html',
                         controller: "knowManaListController"
                     }
                 }
