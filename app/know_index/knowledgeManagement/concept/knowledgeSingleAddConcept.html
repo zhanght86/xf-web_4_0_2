@@ -1,9 +1,10 @@
 <div class="main warp">
     <div class="addContent pd30">
         <div class="r-cont-hd">
-            <span ng-if="!vm.knowledgeId">概念知识新增 </span>
+            <span ng-if="!vm.knowledgeId">概念知识新增</span>
             <span ng-if="vm.knowledgeId">概念知识编辑</span>
         </div>
+        <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
         <div class="r-cont-bd oh">
             <!--<form novalidate="novalidate" name="form">-->
             <div class="jqrsz-item">
@@ -20,6 +21,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="item-line">
                     <div class="lable">
                         知识有效期：
@@ -130,7 +132,7 @@
                             <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>
                         </div>
                     </div>
-                    <!-- 生成标签-->
+                    <!-- 扩展问生成标签-->
                     <div class="item-line" ng-repeat="val in item.extensionByContentByTitle track by $index" style="margin-top: 4px;">
                         <div class="value">
                             <div class="ipt-txt-box">
@@ -176,10 +178,7 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10" style="width:353px;padding:0;">
-                            <!--<span ng-if="(vm.test | limitTo:2) == 'e_' || (vm.test | limitTo:2) == 'c_'">{{vm.test }}</span>-->
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index"
-                                  style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;"
-                                  ng-class="tag.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -238,4 +237,3 @@
     }
     .Wdate{background-position:164px center;}
 </style>
-                                                                                                                                                                                                                                                                                                           

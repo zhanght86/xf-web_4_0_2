@@ -364,28 +364,23 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                                 '<span style=" margin-left: 10px; float: left; color:#fff;line-height: 22px;" class="btn1 btn_green"  ng-click="upload()">上传</span>' +
                              '</div>',
 
-                link: function (scope, element, attrs) { ;
-                    var uploader   ;
-                    var format = {
-                        "userId":USER_NAME,
-                        "applicationId":APPLICATION_ID,
-                        "templateType": scope.templateType
-                    } ;
-                    scope.$watch("templateType",function(val){
-                        if(uploader){
-                            format.templateType = val
-                            uploader.options.format = format;
-                        }
-                    }) ;
+                link: function (scope, element, attrs) {
+                    console .log(typeof USER_NAME) ;
+                    var templateType = scope.templateType ,
+                        server = scope.server ;
                     //console.log(userId,templateType,applicationId)
                     $timeout(function () {
-                        uploader = WebUploader.create({
+                        var uploader = WebUploader.create({
                             auto: false, // 选完文件后，是否自动上传
                             // swf文件路径
                             swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
-                            formData :format  ,   // 上传参数
+                            formData : {
+                                "userId":USER_NAME,
+                                "applicationId":APPLICATION_ID,
+                                "templateType": templateType
+                            }  ,   // 上传参数
                             // 文件接收服务端。
-                            server: scope.server ,
+                            server: server ,
                             accept: {
                                 title: 'file',
                                 extensions: 'xls,xlsx',
@@ -411,10 +406,8 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
                         });
                         scope.upload = function(){
-                            //console.log(uploader.options) ;
-                            //uploader.options.format = format;
                             //console.log(uploader) ;
-                            uploader.upload();
+                            uploader.upload()
                         } ;
                         uploader.on( 'beforeFileQueued', function( file ) {
                             uploader.reset();

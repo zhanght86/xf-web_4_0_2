@@ -12,7 +12,7 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             save : save ,
             edit : edit ,
         };
-
+        console.log($scope.vm.scanData ) ;
         function save(){
             $scope.vm.scanData.save($scope.vm.scanData)
         }
