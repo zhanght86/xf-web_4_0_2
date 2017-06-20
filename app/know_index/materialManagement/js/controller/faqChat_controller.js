@@ -108,41 +108,20 @@ angular.module('materialManagement').controller('faqChatController', [
         function remove(item,arr){
             arr.remove(item);
         }
-        function saveScan(params){
-            if(check()){
-                httpRequestPost("/api/ms/chatKnowledge/addFAQChatKnowledge",{
-                    "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
-                    "applicationId": params.applicationId,
-                    "chatKnowledgeModifier": params.chatKnowledgeModifier,
-                    "chatKnowledgeTopic": params.standardQuestion,
-                    "chatQuestionList" : params.extendedQuestionArr,
-                    "chatKnowledgeContentList" : params.contentArr,
-                },function(data){
-                    if(data.data==10004){
-                        layer.msg("标准问重复",{time:1000})
-                    }else{
-                        $state.go("materialManagement.chatKnowledgeBase");
-                    }
-                },function(err){
-                })
-            }
-        };
         //预览
         function scan(){
-            //if(check()){    // 方便测试  后期放开
+            if(check()){    // 方便测试  后期放开
                 var params = {
                     chatKnowledgeId : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     standardQuestion : $scope.vm.standardQuestion,
                     extendedQuestionArr : $scope.vm.extendedQuestionArr,
                     contentArr : $scope.vm.contentArr,
-                    applicationId: APPLICATION_ID,
                     chatKnowledgeModifier : $scope.vm.userName,
-                    save : saveScan,
-                    editUrl : "materialManagement.faqChat",
+                    //editUrl : "materialManagement.faqChat",
                     type : 1
                 };
                 $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
-            //}
+            }
         }
         //保存  0 无验证   1  需要验证
         function save(){

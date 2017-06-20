@@ -10,9 +10,13 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
             downTemplate: downTemplate,  //新增点击事件
             upload : upload,
             fileName :'',
-            templateType : "191",
+            templateType : SCENE_ID==1?"190":"192",
+            sceneId : SCENE_ID
         };
-
+        //$.getScript('/js/common/config.js',function(e){
+        //console.log(e)
+        //    //newFun('"Checking new script"');//这个函数是在new.js里面的，当点击click后运行这个函数
+        //});
         //上传
         function upload(callback){
             var dialog = ngDialog.openConfirm({
