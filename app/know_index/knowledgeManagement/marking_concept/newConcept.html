@@ -160,6 +160,22 @@
                         <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
                 </div>
+                <!-- 标题生成-->
+                <div class="item-line"  style="overflow: visible"  ng-if="vm.knowledgeTitleTag" >
+                    <div class="lable">
+                        概念扩展：
+                    </div>
+                    <div class="value clearfix">
+                        <div class=" tag_box L mr-10" style="width:353px;padding:0;">
+                            <!--{{item.extensionQuestionTagList}}-->
+                            <span ng-repeat="val in vm.knowledgeTitleTag track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;">
+                                {{val}}
+                            </span>
+                        </div>
+                        <span class="tag_s L" style="margin-right:10px;">普通</span>
+                        <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于:</b> <span>知识标题 : {{vm.title}}</span></span>
+                    </div>
+                </div>
             </div>
 
             <div class="jqrsz-item" style="padding-top:0;">

@@ -452,6 +452,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
+            debugger;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.isEdit = true ;
@@ -470,7 +471,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.tail = data.knowledgeCommonOn;
                 $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
                 var callback = function(){
-
                     var obj = {};
                     obj.knowledgeContent = $scope.vm.newTitle;
                     obj.knowledgeContentType = 0;  // 答案类型
@@ -494,7 +494,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //打开知识内容对话框
         function openContentConfirm(callback){
             var dialog = ngDialog.openConfirm({
-                template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                 width:"650px",
                 scope: $scope,
                 closeByNavigation: false,

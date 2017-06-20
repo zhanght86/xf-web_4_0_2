@@ -150,7 +150,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
 
-        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 
 // 通过类目id 获取框架
         function getFrame(id){
