@@ -22,41 +22,7 @@
 //    aLink.href = URL.createObjectURL(blob);
 //    aLink.dispatchEvent(evt);
 //}
-//提供keySearch 使用方法
-function onput(e,updateCall,specialKeyCall,inputCall){
-    /* 必写
-    *   e
-    *   updataCall  $scope.$apply(function(){
-                         model = angular.element(self).val();
-                    })
-    * */
-    //     {{ this  keycode  val }}    //
-    //enter
-    //输入更新
-    //
-    var  self = e.srcElement ? e.srcElement : e.target;
-    var keycode = window.event?e.keyCode:e.which;
-    var val  ;
-    //chrome  兼容 输入汉字更新model问题
-    angular.element(self).on({
-        compositionend:function(value) {
-            val = angular.element(self).val() ; //得到数值
-            updateCall();                       //更新数值
-            console.log(val) ;
-            if (inputCall) {
-                inputCall()
-            }
-            if (specialKeyCall) {
-                specialKeyCall();
-                //if(keycode==13){
-                //    srcObj.blur();
-                //    callback();
-                //    //srcObj.focus()
-                //}
-            }
-        }
-    })
-   };
+//键盘事件
 function enterEvent(e,callback) {
     var  srcObj = e.srcElement ? e.srcElement : e.target;
     var keycode = window.event?e.keyCode:e.which;
@@ -92,7 +58,7 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
     $.ajax(url, {
         dataType: 'json', //服务器返回json格式数据
         type: "POST", //HTTP请求类型
-        timeout: timeout?timeout:100000, //超时时间设置为10秒；
+        timeout: timeout?timeout:10000, //超时时间设置为10秒；
         headers: header,
         data: data,
         success: function(data) {

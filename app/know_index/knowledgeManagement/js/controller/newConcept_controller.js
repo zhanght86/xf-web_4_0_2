@@ -5,7 +5,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$interval","$stateParams","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams,$filter) {
         $scope.vm = {
-
             knowledgeId: "",
             frames: [],      //业务框架
             frameId: "",
@@ -654,7 +653,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function openContentConfirm(callback) {
             var dialog = ngDialog.openConfirm({
                 width : "521px" ,
-                template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
+                template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -714,7 +713,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 if (dia.length == 0) {
                     var dialog = ngDialog.openConfirm({
                         width : "521px" ,
-                        template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
+                        template: "/know_index/knowledgeManagement/marking_concept/newConceptDialog.html",
                         scope: $scope,
                         closeByDocument: false,
                         closeByEscape: true,
@@ -732,12 +731,14 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 }
             }
         }
+
+
         function extensionEdit(){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
                 var extensionEdit = ngDialog.openConfirm({
                     width :"521px" ,
-                    template: "/know_index/knowledgeManagement/public-html/extension_edit.html",
+                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,
