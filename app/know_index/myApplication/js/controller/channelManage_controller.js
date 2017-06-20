@@ -312,7 +312,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                                         "blackListIdentify": $scope.vmo.blackListIdentify,
                                         "blackListRemark": $scope.vmo.blackListRemark,
                                         "blackListUpdateId": $scope.vmo.blackListUpdateId,
-                                        "channelId": $scope.vmo.channelId.channelId
+                                        "channelId": $scope.vmo.channelId
                                     },function(data){
                                         layer.msg("添加成功");
                                         //$state.reload();
