@@ -54,7 +54,8 @@ angular.module('loginModule').controller('loginController', [
                     if(data.status==10006){
                         // cookie  userId userName
                         $cookieStore.put("userId" , data.data.userId);
-                        $cookieStore.put("userName" , data.data.userName);
+                        $cookieStore.put("userName" , $scope.vm.userName);
+                        //$cookieStore.put("userName" , data.data.userName);
                         $state.go("admin");
                     }else if(data.status==10007){
                         setRandomNumber();
