@@ -17,6 +17,11 @@
 .btn_delete{background:#d95353;}
 .btn_delete:hover{background:#be5353;}
 
+/*select*/
+
+@media \0screen {
+    select{padding-bottom:5px;}
+}
 
 /*我的应用*/
 .my_appbox{box-sizing:border-box;background:#fff;}
@@ -197,8 +202,8 @@
     border-color: red;
 }
 /*6/20-add*/
-.list_facContent{position: relative;padding-left:230px;min-height:25px;box-sizing:border-box;}
-.list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:25px;text-align:right;}
+.list_facContent{position: relative;padding-left:230px;min-height:30px;box-sizing:border-box;}
+.list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:30px;text-align:right;line-height:30px;}
 /*------------引导页样式-----------------*/
 .shadow_div{
     top: 0;
@@ -279,7 +284,7 @@
 .knowledgeFaq #step_four{background-image:url(../../images/faq_yd4.png);top:258px;}
 .knowledgeFaq #step_five{background-image:url(../../images/faq_yd5.png);top:373px;}
 .knowledgeFaq #step_six{background-image:url(../../images/faq_yd6.png);top:438px;left:224px;}
-/*----*/
+/*--概念--*/
 .knowledgeConcepe .step_one{width:600px;height:40px;position:absolute;top:29px;left: 150px;
     z-index:10000000;
     background:url(../../images/faq_yd1.png) no-repeat 0px center;
@@ -289,7 +294,7 @@
 .knowledgeConcepe #step_four{background-image:url(../../images/faq_yd5.png);top:267px;}
 .knowledgeConcepe #step_five{background-image:url(../../images/faq_yd4.png);top:373px;}
 .knowledgeConcepe #step_six{background-image:url(../../images/faq_yd6.png);top:438px;left:224px;}
-/*----*/
+/*--列表--*/
 .knowledgeList .step_one{width:600px;height:40px;position:absolute;top:0px;left: 138px;
     z-index:10000000;
     background:url(../../images/faq_yd1.png) no-repeat 0px top;
@@ -297,9 +302,9 @@
 .knowledgeList #step_two{background-image:url(../../images/faq_yd2.png);top:68px;}
 .knowledgeList #step_three{background-image:url(../../images/faq_yd3.png);top:118px;}
 .knowledgeList #step_four{background-image:url(../../images/faq_yd4.png);top:158px;}
-.knowledgeList #step_five{height:328px;background-image:url(../../images/table_yd5.png);top:198px;}
-.knowledgeList #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:685px;left:228px;}
-.knowledgeList #step_seven{background-image:url(../../images/faq_yd6.png);top:832px;left:228px;}
+.knowledgeList #step_five{height:328px;background-image:url(../../images/table_yd5.png);top:204px;}
+.knowledgeList #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:703px;left:228px;}
+.knowledgeList #step_seven{background-image:url(../../images/faq_yd6.png);top:852px;left:228px;}
 
 .knowledgeList #step_five .step_one_arrow{
     top: 329px;
@@ -313,7 +318,7 @@
 .knowledgeList #step_six .step_one_con{
     top: 113px;
 }
-/*------*/
+/*---要素---*/
 .knowledgeFactor .step_one{width:600px;height:40px;position:absolute;top:0px;left: 153px;
     z-index:10000000;
     background:url(../../images/faq_yd1.png) no-repeat 0px top;
@@ -321,9 +326,9 @@
 .knowledgeFactor #step_two{background-image:url(../../images/faq_yd2.png);top:70px;}
 .knowledgeFactor #step_three{background-image:url(../../images/faq_yd3.png);top:112px;}
 .knowledgeFactor #step_four{background-image:url(../../images/faq_yd4.png);top:154px;}
-.knowledgeFactor #step_five{height:328px;background-image:url(../../images/fac_yd5.png);top:192px;}
-.knowledgeFactor #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:446px;left:228px;}
-.knowledgeFactor #step_seven{background-image:url(../../images/faq_yd6.png);top:587px;left:228px;}
+.knowledgeFactor #step_five{height:328px;background-image:url(../../images/fac_yd5.png);top:202px;}
+.knowledgeFactor #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:452px;left:228px;}
+.knowledgeFactor #step_seven{background-image:url(../../images/faq_yd6.png);top:598px;left:228px;}
 
 .knowledgeFactor #step_five .step_one_arrow{
     top: 242px;
@@ -337,3 +342,28 @@
 .knowledgeFactor #step_six .step_one_con{
     top: 113px;
 }
+/*批量知识新增*/
+.know_batch_add{ background:#fff;box-sizing:border-box;min-height:500px;}
+.know_batch_add .know_batch_left{width:65%;box-sizing: border-box;}
+.know_batch_add .know_batch_right{width:32%;box-sizing: border-box;}
+
+/*概念*/
+.knowledgeConcepe .ipt-txt{
+    border: 1px  solid #e1e1e1;
+    height:34px;
+    box-sizing:border-box;
+}
+.knowledgeConcepe .jqrsz-item .item-line .value .ipt-txt{width:407px;}
+.knowledgeConcepe .tag_box{width:346px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
+
+.knowledgeConcepe .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
+.knowledgeConcepe .tagRepeat{
+    background: #fff;
+
+}
+.knowledgeConcepe .Wdate{background-position:164px center;}
+/*列表-要素*/
+.knowledgeList .Wdate,.knowledgeFactor .Wdate{background-position:164px center;}
+.knowledgeList .ipt-txt,.knowledgeFactor .ipt-txt{height:34px;box-sizing:border-box;}
+
+

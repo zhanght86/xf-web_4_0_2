@@ -3,26 +3,25 @@
 <div class="wrap mt10">
 
     <div class="pd-30" style="background:#fff;height:80%;">
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2 text-r">标准问法：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-
+        <div class="mb-10 cl list_facContent">
+            <div class="list_facContent_L">标准问法：</div>
+            <div >
                 <input type="text" class="input_text mr-20" placeholder="购买火车票能不能选择铺位" ng-model="vm.testTitle"/>
                 <button type="button"   class="btn btn-primary radius mr-20" ng-click="vm.test()">测试</button>
                 <button type="button"   class="btn btn-warning radius" ng-click="vm.emptyInput()">清空</button>
             </div>
         </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2 text-r">测试问法：</label>
-            <div class="formControls col-xs-9 col-sm-9">
+        <div class="mb-10 cl list_facContent">
+            <div class="list_facContent_L">测试问法：</div>
+            <div >
                 <!--<textarea class="textarea"  ng-model="vm.question" ng-keypress="vm.addArr($event)"></textarea>-->
                 <textarea class="textarea"  ng-model="vm.question" ></textarea>
             </div>
         </div>
 
-        <div class="mb-10 cl" >
-            <label class="form-label col-xs-3 col-sm-2 text-r">打标结果：</label>
-            <div class="formControls col-xs-9 col-sm-9 " >
+        <div class="mb-10 cl list_facContent" >
+            <div class="list_facContent_L">打标结果：</div>
+            <div  >
                 <div class="bd pd-10" style="min-height:200px;max-height:300px;overflow:auto;" id="solution">
                     <div class="c-red bold">标准问法：
                         <!--{{vm.answerRes.standardQueryResult}}-->

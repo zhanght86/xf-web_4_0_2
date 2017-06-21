@@ -502,7 +502,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //打开知识内容对话框
         function openContentConfirm(callback){
             var dialog = ngDialog.openConfirm({
-                template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                 width:"650px",
                 scope: $scope,
                 closeByNavigation: false,
@@ -588,7 +588,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
-                        httpRequestPost("/api/ms/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
+                        $scope.vm.data = getParams();
+                        var api = $scope.vm.knowledgeId?"/api/ms/faqKnowledge/editFAQKnowledge":"/api/ms/faqKnowledge/addFAQKnowledge";
+                        httpRequestPost(api, getParams(), function (data) {
                             console.log(data);
                             if (data.status == 200) {
                                 if ($scope.vm.docmentation) {

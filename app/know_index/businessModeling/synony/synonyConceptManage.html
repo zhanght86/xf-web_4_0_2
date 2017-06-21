@@ -1,10 +1,10 @@
-<div class="r-cont pd30 L" style="min-width: 1000px;">
+<div class="r-cont pd30 L" style="width: 100%;box-sizing:border-box;">
     <div class="r-cont-hd">
         <span>同义概念管理</span>
     </div>
     <div>
         <div class="conceptSearch clearfix">
-            <div class=" L bd mr-5" style="height:32px;max-width:467px;padding:1px;">
+            <div class=" L bd mr-5" style="height:34px;max-width:477px;padding:0 1px;">
                 <select id="searchType" ng-model="vm.searchType" style="height: 29px;">
                     <option value="synonymConceptKey" selected>同义概念类名</option>
                     <option value="synonymConceptWeight">同义概念权重</option>
@@ -12,8 +12,8 @@
                     <option value="synonymConceptModifier">修改人</option>
                     <option value="synonymConceptModifyTime">更新时间</option>
                 </select>
-                <input type="text" ng-if="vm.searchType!='synonymConceptModifyTime' || vm.searchType!='synonymConceptWeight'" ng-model="vm.searchVal" class="input_text" style="border:0;height:25px;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: -30px 0px 0px 107px;" ng-if="vm.searchType=='synonymConceptModifyTime'">
+                <input type="text" ng-if="vm.searchType!='synonymConceptModifyTime' || vm.searchType!='synonymConceptWeight'" ng-model="vm.searchVal" class="input_text" style="border:0;height:19px;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                <div style="margin: -30px 0px 0px 110px;" ng-if="vm.searchType=='synonymConceptModifyTime'">
                     <input type="text" id="startTime" onchange="" ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
                     -
                     <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>

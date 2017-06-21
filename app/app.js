@@ -734,8 +734,6 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/knowledgeManagement/knowledgeScan.html',
                         controller: "knowledgeScanController"
-
-
                     }
                 }
             })

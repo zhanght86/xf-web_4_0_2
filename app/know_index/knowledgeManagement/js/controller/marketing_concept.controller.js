@@ -653,7 +653,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         function openContentConfirm(callback) {
             var dialog = ngDialog.openConfirm({
                 width : "521px" ,
-                template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -713,7 +713,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 if (dia.length == 0) {
                     var dialog = ngDialog.openConfirm({
                         width : "521px" ,
-                        template: "/know_index/knowledgeManagement/marking_concept/newConceptDialog.html",
+                        template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                         scope: $scope,
                         closeByDocument: false,
                         closeByEscape: true,
@@ -738,7 +738,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             if(dia.length==0) {
                 var extensionEdit = ngDialog.openConfirm({
                     width :"521px" ,
-                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                    template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,
