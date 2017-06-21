@@ -148,7 +148,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 return true;
             },function(){
             });
-
         }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
