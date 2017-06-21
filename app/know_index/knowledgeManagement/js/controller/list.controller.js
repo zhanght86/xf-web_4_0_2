@@ -365,9 +365,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList": question
                 }, function (data) {
-                    console.log(data);
+                    //console.log(data);
                     if (data.status == 500) {
-                        layer.msg("扩展问打标结果为空 请重新打标");
+                        layer.msg("概念扩展打标失败，请检查服务，重新打标");
                         $scope.vm.extensionTitle = "";
                         $scope.$apply();
                     } else if (data.status == 200) {

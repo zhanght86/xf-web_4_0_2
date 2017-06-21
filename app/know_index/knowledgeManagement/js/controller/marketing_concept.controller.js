@@ -419,10 +419,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList" : question
                 },function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data.status == 500){
                         //console.log(question) ;
-                        layer.msg("扩展问重复") ;
+                        layer.msg("改成概念扩展打标失败，请检查服务，重新打标") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==11006){
