@@ -99,7 +99,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
                 }
             }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
+                console.log(error)
             });
         //获取维度
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
@@ -108,7 +108,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
+                console.log(error)
             });
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
@@ -148,7 +148,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
                 $scope.vm.scanContent.push(obj);
-                //console.log(obj)
             });
         } else if ($stateParams.data  && angular.fromJson($stateParams.data).docmentation) {
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
@@ -224,8 +223,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                     $scope.$apply();
                 }
-            }, function () {
-                layer.msg("err or err")
+            }, function (error) {
+                console.log(error)
             });
         }
 
@@ -262,8 +261,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.vm.botFullPath=obj ;
                     $scope.$apply()
                 }
-            },function(){
-                layer.msg("添加扩展问失败")
+            },function(error){
+                console.log(error)
             });
         }
         // 知识文档分类回调
@@ -415,8 +414,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }
-                }, function () {
-                    layer.msg("添加扩展问失败")
+                }, function (error) {
+                    console.log(error)
                 });
             }
         }
@@ -475,8 +474,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 console.log(data);
                 $scope.vm.botRoot = data.data;
                 //console.log( APPLICATION_ID);
-            },function(){
-                layer.msg("err or err")
+            },function(error){
+                console.log(error)
             });
         }
         //点击更改bot value
@@ -736,8 +735,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             $scope.$apply()
                         });
                     }
-                },function(err){
-                    layer.msg("标题打标失败，请重新打标")
+                },function(error){
+                    console.log(error)
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
@@ -886,8 +885,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 },function(data){
                     console.log(data);
                     return true;
-                },function(err){
-                    layer.msg("打标失败，请重新打标");
+                },function(error){
+                    console.log(error) ;
                     return false
                 });
             }
@@ -981,7 +980,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 return false
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
-                return false
+                return false ;
             //    else if(!params.knowledgeTitleTag.length){
             //    layer.msg("知识标题未打标")
             //} 
@@ -1070,8 +1069,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }else{
                 }
                 console.log(data);
-            },function(err){
-                layer.msg("获取指定相关知识失败")
+            },function(error){
+                console.log(error)
             });
         }
         //引导页方法
