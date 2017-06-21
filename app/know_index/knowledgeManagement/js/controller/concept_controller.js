@@ -754,8 +754,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-                "knowledgeUpdater": USER_NAME, //操作人
-                "knowledgeCreator": USER_NAME  //操作人
+                "knowledgeUpdater": USER_LOGIN_NAME, //操作人
+                "knowledgeCreator": USER_LOGIN_NAME  //操作人
             };
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
