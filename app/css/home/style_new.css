@@ -17,6 +17,11 @@
 .btn_delete{background:#d95353;}
 .btn_delete:hover{background:#be5353;}
 
+/*select*/
+
+@media \0screen {
+    select{padding-bottom:5px;}
+}
 
 /*我的应用*/
 .my_appbox{box-sizing:border-box;background:#fff;}
