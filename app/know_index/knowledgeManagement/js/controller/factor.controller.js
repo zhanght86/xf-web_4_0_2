@@ -285,6 +285,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                width:'695px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -436,15 +437,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function switchMiningType(type){
-            var returnStr = "OEC";
-            switch(type){
-                case 10017:
-                    returnStr = "OEC";
-                    break;
-                case 10018:
-                    returnStr = "GATE";
-                    break;
-            }
+            var returnStr = "NLP";
+            //var returnStr = "OEC";                   //nnf-6.21修改
+            // switch(type){
+            //     case 10017:
+            //         returnStr = "OEC";
+            //         break;
+            //     case 10018:
+            //         returnStr = "GATE";
+            //         break;
+            // }
             return returnStr;
         }
 

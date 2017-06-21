@@ -178,12 +178,20 @@
                                         <!--{{vm.tableList.data.listTable}}-->
                                         <!--{{vm.tableRow}}{{vm.tableColumn}}-->
                                         <table class="essential_factor_tab">
+                                            <!--<tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">-->
+                                                <!--<td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">-->
+                                                    <!--&lt;!&ndash;{{item}}&ndash;&gt;-->
+                                                    <!--<input type="text" ng-if="indexRow==0" ng-model="item" value="{{item}}"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="width:100%;background:inherit;cursor:pointer"/>-->
+                                                    <!--&lt;!&ndash;<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>&ndash;&gt;-->
+                                                    <!--<input type="text" ng-if="indexRow!=0" ng-model="item" value="{{item}}" ng-change="vm.tableChange(indexRow,indexColumn,item)" style="width:100%;"/>-->
+                                                <!--</td>-->
+                                            <!--</tr>-->
                                             <tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">
                                                 <td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">
                                                     <!--{{item}}-->
-                                                    <input type="text" ng-if="indexRow==0" ng-model="item" value="{{item}}"  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="width:100%;background:inherit;cursor:pointer"/>
+                                                    <textarea ng-if="indexRow==0" ng-model="item" value=""  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="width:100%;background:inherit;cursor:pointer">{{item}}</textarea>
                                                     <!--<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>-->
-                                                    <input type="text" ng-if="indexRow!=0" ng-model="item" value="{{item}}" ng-change="vm.tableChange(indexRow,indexColumn,item)" style="width:100%;"/>
+                                                    <textarea  ng-if="indexRow!=0" ng-model="item" value="" ng-change="vm.tableChange(indexRow,indexColumn,item)" style="width:100%;">{{item}}</textarea>
                                                 </td>
                                             </tr>
                                         </table>

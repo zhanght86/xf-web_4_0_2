@@ -55,6 +55,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             delEle:delEle,
             relateConcept:null,
             frameTitleNullErrorInfo:"框架标题为空或超过长度限制50",
+            notContainHtmlLabel:"不能包含HTML标签",
             frameTitleRepeatCheck:frameTitleRepeatCheck,
             searchNodeForFrame:searchNodeForFrame,
             recursionForFrame:recursionForFrame,
@@ -684,6 +685,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                             return false;
                         }
+                        if(isHtmlLabel($("#frameTitle").val())){
+                            $("#frameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                            return false;
+                        }
                         if(frameTitleRepeatCheck(0,"#frameAddErrorObj")==false){
                             return false;
                         }
@@ -706,6 +711,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         $scope.vm.frameTitle=$("#frameTitle").val();
                         if(lengthCheck($("#frameTitle").val(),0,50)==false){
                             $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                        }else if(isHtmlLabel($("#frameTitle").val())){
+                            $("#frameAddErrorObj").html($scope.vm.notContainHtmlLabel);
                         }else{
                             $("#frameAddErrorObj").html('');
                             frameTitleRepeatCheck(0,"#frameAddErrorObj");
@@ -777,6 +784,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                             return;
                         }
+                        if(isHtmlLabel($("#faqFrameTitle").val())){
+                            $("#faqFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                            return;
+                        }
                         if(frameTitleRepeatCheck(0,"#faqFrameAddErrorObj")==false){
                             return;
                         }
@@ -815,6 +826,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         $scope.vm.frameTitle=$("#faqFrameTitle").val();
                         if(lengthCheck($("#faqFrameTitle").val(),0,50)==false){
                             $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                            return;
+                        }
+                        if(isHtmlLabel($("#faqFrameTitle").val())){
+                            $("#faqFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
                             return;
                         }
                         if(frameTitleRepeatCheck(1,"#faqFrameAddErrorObj")==false){
@@ -941,6 +956,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                 return false;
             }
+            if(isHtmlLabel($scope.vm.frameTitle)){
+                $("#faqFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                return false;
+            }
             if(frameTitleRepeatCheck(type,"#faqFrameAddErrorObj")==false){
                 return false;
             }
@@ -1034,6 +1053,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#conceptFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                             return;
                         }
+                        if(isHtmlLabel($("#conceptFrameTitle").val())){
+                            $("#conceptFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                            return;
+                        }
                         if(frameTitleRepeatCheck(0,"#conceptFrameAddErrorObj")==false){
                             return;
                         }
@@ -1042,6 +1065,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         console.log("concept_title");
                         if(lengthCheck($("#concept_title").val(),0,50)==false){
                             $("#conceptTitleErrorObj").html("概念标题为空或超过长度限制50");
+                        }else if(isHtmlLabel($("#concept_title").val())){
+                            $("#conceptTitleErrorObj").html($scope.vm.notContainHtmlLabel);
                         }else{
                             $("#conceptTitleErrorObj").html('');
                         }
@@ -1055,6 +1080,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             console.log($scope.vm.frameTitle);
             if(lengthCheck($scope.vm.frameTitle,0,50)==false){
                 $("#conceptFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                return false;
+            }
+            if(isHtmlLabel($scope.vm.frameTitle)){
+                $("#conceptFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
                 return false;
             }
             if(frameTitleRepeatCheck(type,"#conceptFrameAddErrorObj")==false){
@@ -1154,6 +1183,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#conceptFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                             return;
                         }
+                        if(isHtmlLabel($("#conceptFrameTitle").val())){
+                            $("#conceptFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                            return;
+                        }
                         if(frameTitleRepeatCheck(1,"#conceptFrameAddErrorObj")==false){
                             return;
                         }
@@ -1162,6 +1195,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         console.log("concept_title");
                         if(lengthCheck($("#concept_title").val(),0,50)==false){
                             $("#conceptTitleErrorObj").html("概念标题为空或超过长度限制50");
+                        }else if(isHtmlLabel($("#concept_title").val())){
+                            $("#conceptTitleErrorObj").html($scope.vm.notContainHtmlLabel);
                         }else{
                             $("#conceptTitleErrorObj").html('');
                         }
@@ -1258,12 +1293,15 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             });
                         }
                     });
-
                     $("#elementFrameTitle").blur(function(){
                         console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#elementFrameTitle").val();
                         if(lengthCheck($("#elementFrameTitle").val(),0,50)==false){
                             $("#elementFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
+                            return;
+                        }
+                        if(isHtmlLabel($("#elementFrameTitle").val())){
+                            $("#elementFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
                             return;
                         }
                         if(frameTitleRepeatCheck(0,"#elementFrameAddErrorObj")==false){
@@ -1287,6 +1325,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
                             $("#ele-name-error").attr("style","display:inline-block;left: 10px;");
                             return;
+                        }else if(isHtmlLabel($(".ele-name").val())){
+                            $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
+                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;");
+                            return;
                         }else{
                             $("#ele-name-error").html('');
                             $("#ele-name-error").attr("style","display:none;");
@@ -1306,6 +1348,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $(".ele-asked").blur(function(){
                         if(lengthCheck($(".ele-asked").val(),0,255)==false){
                             $("#ele-asked-error").html('反问不能为空或超过长度限制255');
+                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;");
+                            return;
+                        }else if(isHtmlLabel($(".ele-asked").val())){
+                            $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
                             $("#ele-asked-error").attr("style","display:inline-block;left: 10px;");
                             return;
                         }else{
@@ -1445,6 +1491,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $("#elementFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                 return false;
             }
+            if(isHtmlLabel($("#elementFrameTitle").val())){
+                $("#elementFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                return false;
+            }
             if(frameTitleRepeatCheck(type,"#elementFrameAddErrorObj")==false){
                 return false;
             }
@@ -1579,6 +1629,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#elementFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                             return;
                         }
+                        if(isHtmlLabel($("#elementFrameTitle").val())){
+                            $("#elementFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
+                            return;
+                        }
                         if(frameTitleRepeatCheck(1,"#elementFrameAddErrorObj")==false){
                             return;
                         }
@@ -1600,6 +1654,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
                             $("#ele-name-error").attr("style","display:inline-block;left: 148px;");
                             return;
+                        }else if(isHtmlLabel($(".ele-name").val())){
+                            $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
+                            $("#ele-name-error").attr("style","display:inline-block;left: 148px;");
+                            return;
                         }else{
                             $("#ele-name-error").html('');
                             $("#ele-name-error").attr("style","display:none;");
@@ -1619,6 +1677,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $(".ele-asked").blur(function(){
                         if(lengthCheck($(".ele-asked").val(),0,255)==false){
                             $("#ele-asked-error").html('反问不能为空或超过长度限制255');
+                            $("#ele-asked-error").attr("style","display:inline-block;left: 496px;");
+                            return;
+                        }else if(isHtmlLabel($(".ele-asked").val())){
+                            $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
                             $("#ele-asked-error").attr("style","display:inline-block;left: 496px;");
                             return;
                         }else{
@@ -1836,6 +1898,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $("#conceptExtendQuestionErrorObj").html("概念扩展不能为空或长度超过255");
                     return true;
                 }
+                if(isHtmlLabel($(value).val())){
+                    $("#conceptExtendQuestionErrorObj").html($scope.vm.notContainHtmlLabel);
+                    return true;
+                }
                 if($(value).val()==$("#concept_title").val()){
                     $("#conceptExtendQuestionErrorObj").html("概念标题不能与概念扩展重复");
                     return true;
@@ -1897,6 +1963,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
                 $("#ele-name-error").attr("style","display:inline-block;left: 10px;");
                 return;
+            }else if(isHtmlLabel(eleName)){
+                $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
+                $("#ele-name-error").attr("style","display:inline-block;left: 10px;");
+                return;
             }else{
                 $("#ele-name-error").html('');
                 $("#ele-name-error").attr("style","display:none;");
@@ -1920,6 +1990,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var eleAsked = $(".ele-asked").val();
             if(lengthCheck(eleAsked,0,255)==false){
                 $("#ele-asked-error").html('反问不能为空或超过长度限制255');
+                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;");
+                return;
+            }else if(isHtmlLabel(eleAsked)){
+                $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
                 $("#ele-asked-error").attr("style","display:inline-block;left: 10px;");
                 return;
             }else{

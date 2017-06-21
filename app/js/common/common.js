@@ -535,6 +535,18 @@ function toElementString(obj){
     str+='}';
     return str;
 }
+/**
+ * 校验是否含有html标签
+ * @param str
+ * @returns {boolean}
+ */
+function isHtmlLabel(str){
+    var  reg = /<[^>]+>/g;
+    if(nullCheck(str)==false){
+        return false;
+    }
+    return reg.test(str);
+}
 
 function initUpload(url){
     (function ($) {

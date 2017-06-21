@@ -39,7 +39,7 @@
                             <td ng-if="item.serviceStatus==30001">未发布</td>
                             <td ng-if="item.serviceStatus==30002">已发布</td>
                             <td ng-if="item.serviceStatus==30003">已下线</td>
-                            <td ng-if="item.serviceStatus==null">&nbsp;</td>       <!--nnf-6.1-add-->
+                            <td ng-if="item.serviceStatus!=30001 && item.serviceStatus!=30002 && item.serviceStatus!=30003">&nbsp;</td>
                             <td>
                                 <a ng-if="item.serviceStatus==30001"
                                    ng-click="vm.publishService(item.serviceId)" class="mr-10 c-orange">发布</a>
