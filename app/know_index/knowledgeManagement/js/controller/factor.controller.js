@@ -525,7 +525,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     "extendQuestionList" : question
                 },function(data){
                     if(data.status == 500){
-                        layer.msg("扩展问重复") ;
+                        layer.msg("改成概念扩展打标失败，请检查服务，重新打标") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==200){
