@@ -55,6 +55,10 @@
             $("#faqExtendQuestionErrorObj").html("扩展问题不能为空或长度超过255");
             return;
         }
+        if(isHtmlLabel(oVal)){
+            $("#faqExtendQuestionErrorObj").html("不能包含HTML标签");
+            return;
+        }
         var flag = true;
         $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index,value){
             console.log($(value).val()==oVal);
