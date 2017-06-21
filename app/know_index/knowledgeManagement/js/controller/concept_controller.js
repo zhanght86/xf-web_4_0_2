@@ -287,7 +287,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         //打开知识内容对话框
         function openContentConfirm(callback) {
-            var dialog = ngDialog.openConfirm({ 
+            var dialog = ngDialog.openConfirm({
                 template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                 width:"650px",
                 scope: $scope,

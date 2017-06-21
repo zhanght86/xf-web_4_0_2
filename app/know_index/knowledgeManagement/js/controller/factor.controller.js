@@ -726,7 +726,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         function extensionEdit(){
             var extensionEdit = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
