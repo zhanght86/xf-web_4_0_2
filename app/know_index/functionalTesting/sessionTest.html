@@ -6,18 +6,18 @@
                 <div class="mb-10" style="border-bottom:1px dashed #bdbdbd;" id="ask">
                     <p class="c-primary "><span class="bold mr-5">测试问法：</span><span ng-model="question">{{vm.question}}</span></p>
 
-                    <p><span class="mr-5">标签：</span><span ng-repeat="v in vm.result.questionTagSet track by $index">{{v}}<i ng-if="$index!=(vm.result.questionTagSet.length-1)">，</i></span></p>
-
                     <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.questionSegmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.questionSegmentation.length-1)">，</i></span></p>
+
+                    <p><span class="mr-5">标签：</span><span ng-repeat="v in vm.result.questionTagSet track by $index">{{v}}<i ng-if="$index!=(vm.result.questionTagSet.length-1)">，</i></span></p>
                 </div>
                 <div  id="answer">
                     <p class="c-primary "><span class="bold mr-5">标准知识：</span><span >{{vm.result.answerElement.matchExtendAsk}}</span></p>
 
+                    <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.answerElement.segmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.segmentation.length-1)">，</i></span></p>
+
                     <p><span class="mr-5">标签：</span><span ng-repeat="i in vm.result.answerElement.tags track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.tags.length-1)">，</i></span></p>
 
                     <p><span class="mr-5">相似度：</span><span >{{vm.result.similarity}}</span></p>
-
-                    <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.answerElement.segmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.segmentation.length-1)">，</i></span></p>
 
                     <p><span class="mr-5">答案：</span><span ng-repeat="i in vm.result.answer track by $index">{{i}}<i ng-if="$index!=(vm.result.answer.length-1)">，</i></span></p>
                 </div>
@@ -26,11 +26,12 @@
                     <p class="mr-5"><span class="bold mr-5">向您推荐其他问题</span></p>
                 <div ng-repeat="i in vm.result.recommendAnswerElementList track by $index">
                     <p class="c-primary" ><span >{{$index+1}} . {{i.knowledge_title}}</span></p>
+
+                    <p><span class="mr-5">分词：</span><span >{{i.segmentation.join(',')}}</span></p>
+
                     <p><span class="mr-5">标签：</span><span >{{i.tags.join(',')}}</span></p>
                     <!--<p><span class="mr-5">标签：</span><span >{{i.tags}}<i ng-if="$index!=(i.tags.length-1)">，</i></span></p>-->
-
                     <p><span class="mr-5">相似度：</span><span >{{i.similarity}}</span></p>
-                    <p><span class="mr-5">分词：</span><span >{{i.segmentation.join(',')}}</span></p>
                     <!--<p><span class="mr-5">分词：</span><span >{{i.segmentation}}<i ng-if="$index!=(i.segmentation.length-1)">，</i></span></p>-->
 
                 </div>

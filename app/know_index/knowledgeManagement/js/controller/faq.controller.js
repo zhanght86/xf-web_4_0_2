@@ -96,7 +96,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
                 }
             }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
+                console.log(error)
             });
         //获取维度
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
@@ -105,7 +105,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
+               console.log(error)
             });
         // 相关问题 键盘选择
         //function selectEvent(e){
@@ -295,8 +295,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.vm.botFullPath=obj ;
                     $scope.$apply()
                 }
-            },function(){
-                layer.msg("添加扩展问失败")
+            },function(error){
+                console.log(error)
             });
         }
         //添加扩展问
@@ -324,8 +324,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $scope.$apply()
                     }
                     //console.log(data);
-                },function(){
-                    layer.msg("添加扩展问失败")
+                },function(error){
+                    console.log(error)
                 });
             }
         }
@@ -460,6 +460,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
+            debugger;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.isEdit = true ;
@@ -478,7 +479,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.tail = data.knowledgeCommonOn;
                 $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
                 var callback = function(){
-
                     var obj = {};
                     obj.knowledgeContent = $scope.vm.newTitle;
                     obj.knowledgeContentType = 0;  // 答案类型
@@ -821,9 +821,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.$apply()
                 }else{
                 }
-                console.log(data);
-            },function(err){
-                layer.msg("获取指定相关知识失败")
+            },function(error){
+                console.log(error)
             });
         }
 

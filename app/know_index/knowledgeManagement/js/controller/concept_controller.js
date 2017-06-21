@@ -79,7 +79,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             knowledgeId : "",
 
             limitSave : false ,
-            isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
+            isEdit : false,  // 知识内容 弹框 编辑  不验证渠道维度重复
+
+            //引到页
+            showTip : showTip,
+            hideTip : hideTip,
+            prevDiv : prevDiv,
+            nextDiv : nextDiv,
+            //引到页end
 
         };
         //獲取渠道
@@ -92,7 +99,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
                 }
             }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
+                console.log(error)
             });
         //获取维度
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
@@ -101,7 +108,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
+                console.log(error)
             });
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
@@ -141,7 +148,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
                 $scope.vm.scanContent.push(obj);
-                //console.log(obj)
             });
         } else if ($stateParams.data  && angular.fromJson($stateParams.data).docmentation) {
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
@@ -150,7 +156,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
 
-        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 
 // 通过类目id 获取框架
         function getFrame(id){
@@ -218,8 +223,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                     $scope.$apply();
                 }
-            }, function () {
-                layer.msg("err or err")
+            }, function (error) {
+                console.log(error)
             });
         }
 
@@ -256,8 +261,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.vm.botFullPath=obj ;
                     $scope.$apply()
                 }
-            },function(){
-                layer.msg("添加扩展问失败")
+            },function(error){
+                console.log(error)
             });
         }
         // 知识文档分类回调
@@ -409,8 +414,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }
-                }, function () {
-                    layer.msg("添加扩展问失败")
+                }, function (error) {
+                    console.log(error)
                 });
             }
         }
@@ -469,8 +474,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 console.log(data);
                 $scope.vm.botRoot = data.data;
                 //console.log( APPLICATION_ID);
-            },function(){
-                layer.msg("err or err")
+            },function(error){
+                console.log(error)
             });
         }
         //点击更改bot value
@@ -689,6 +694,21 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
         }
+        //$scope.down =onput() ;
+        //$scope.updata = function(){
+        //     $scope.$apply(function(){
+        //        $scope.vm = angular.element(self).val();
+        //    })
+        //} ;
+        //    function(e){
+        //    var  self = e.srcElement ? e.srcElement : e.target;
+        //    var keycode = window.event?e.keyCode:e.which;
+        //    angular.element(self).on({
+        //        compositionend:function(val){
+        //            console.log( angular.element(self).val())
+        //        }
+        //    }) ;
+        //} ;
         //根據 標題 生成 bot
         function getBotByTitle(){
             if($scope.vm.title){
@@ -715,8 +735,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             $scope.$apply()
                         });
                     }
-                },function(err){
-                    layer.msg("标题打标失败，请重新打标")
+                },function(error){
+                    console.log(error)
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
@@ -865,8 +885,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 },function(data){
                     console.log(data);
                     return true;
-                },function(err){
-                    layer.msg("打标失败，请重新打标");
+                },function(error){
+                    console.log(error) ;
                     return false
                 });
             }
@@ -954,16 +974,16 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var params = getParams();
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
-                return false
-                //return true;
+                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
-                return false
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标")
+                return false ;
+            //    else if(!params.knowledgeTitleTag.length){
+            //    layer.msg("知识标题未打标")
+            //} 
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空")
             }else{
@@ -1049,10 +1069,51 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }else{
                 }
                 console.log(data);
-            },function(err){
-                layer.msg("获取指定相关知识失败")
+            },function(error){
+                console.log(error)
             });
         }
+        //引导页方法
+        function showTip(){
+            $('.shadow_div').show();
+            $('.step_div').show();
+            $('#step_one').show().siblings().hide();
+
+        }
+        function hideTip(){
+            $('.shadow_div').hide();
+            $('.step_div').hide();
+        }
+
+        //上一个
+        function prevDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().prev()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().prev().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().prev().offset().top-20
+                }, 500);
+            }else{
+                // $(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //下一个
+        function nextDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().next()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().next().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().next().offset().top-20
+                }, 500);
+            }else{
+                //$(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //引导页方法end
 
     }
 ]);
