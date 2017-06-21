@@ -437,15 +437,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function switchMiningType(type){
-            var returnStr = "OEC";
-            switch(type){
-                case 10017:
-                    returnStr = "OEC";
-                    break;
-                case 10018:
-                    returnStr = "GATE";
-                    break;
-            }
+            var returnStr = "NLP";
+            //var returnStr = "OEC";                   //nnf-6.21修改
+            // switch(type){
+            //     case 10017:
+            //         returnStr = "OEC";
+            //         break;
+            //     case 10018:
+            //         returnStr = "GATE";
+            //         break;
+            // }
             return returnStr;
         }
 
