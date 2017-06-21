@@ -566,7 +566,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 //                    }
 //                });
 //        }
-
         function extensionEdit(){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
