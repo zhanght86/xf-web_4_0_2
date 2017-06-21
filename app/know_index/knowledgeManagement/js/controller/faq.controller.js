@@ -588,7 +588,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
-                        httpRequestPost("/api/ms/faqKnowledge/addFAQKnowledge", getParams(), function (data) {
+                        $scope.vm.data = getParams();
+                        var api = $scope.vm.knowledgeId?"/api/ms/faqKnowledge/editFAQKnowledge":"/api/ms/faqKnowledge/addFAQKnowledge";
+                        httpRequestPost(api, getParams(), function (data) {
                             console.log(data);
                             if (data.status == 200) {
                                 if ($scope.vm.docmentation) {
