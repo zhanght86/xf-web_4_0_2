@@ -32,6 +32,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             clearColor:clearColor,
             repeatCheck:repeatCheck,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            notContainHtmlLabel:"不能包含HTML标签",
             categoryDescribeBeyondLimit:"描述内容超过长度限制2000",
             searchNode:searchNode,
             recursion:recursion,
@@ -302,9 +303,16 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         if(repeatCheck("#editErrorView",1)==false){
                             return false;
                         }
+                        if(isHtmlLabel($("#categoryName").val())){
+                            $("#editErrorView").html($scope.vm.notContainHtmlLabel);
+                            return false;
+                        }
                         if(nullCheck($("#categoryDescribe").val())==true){
                             if(lengthCheck($("#categoryDescribe").val(),0,2000)==false){
                                 $("#categoryDescribeError").html($scope.vm.categoryDescribeBeyondLimit);
+                                return false;
+                            }else if(isHtmlLabel($("#categoryDescribe").val())){
+                                $("#categoryDescribeError").html($scope.vm.notContainHtmlLabel);
                                 return false;
                             }else{
                                 $scope.vm.categoryDescribe=$("#categoryDescribe").val();
@@ -456,12 +464,19 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $("#category-name-error").html($scope.vm.categoryNameNullOrBeyondLimit);
                 return;
             }
+            if(isHtmlLabel($("#category-name").val())){
+                $("#category-name-error").html($scope.vm.notContainHtmlLabel);
+                return;
+            }
             if(repeatCheck("#category-name-error",0)==false){
                 return;
             }
             if(nullCheck($("#category-describe").val())==true){
                 if(lengthCheck($("#category-describe").val(),0,2000)==false){
                     $("#category-describe-error").html($scope.vm.categoryDescribeBeyondLimit);
+                    return;
+                }else if(isHtmlLabel($("#category-describe").val())){
+                    $("#category-describe-error").html($scope.vm.notContainHtmlLabel);
                     return;
                 }else{
                     $scope.vm.categoryDescribe=$("#category-describe").val();

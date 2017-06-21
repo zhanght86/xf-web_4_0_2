@@ -21,7 +21,7 @@
                         <a href="javascript:;" class="create_a" onclick="add_ques();">
                             <img src="../../images/images/add_img.png" >
                         </a>
-                            <p id="faqExtendQuestionErrorObj" style="display: inline-block;" class="c-error pd-5"></p>
+                        <p id="faqExtendQuestionErrorObj" style="display: inline-block;" class="c-error pd-5"></p>
                     </div>
                 </div>
             </div>
@@ -49,6 +49,10 @@
         var oVal=$('.extended_query_txt').val();
         if(lengthCheck(oVal,0,255)==false){
             $("#faqExtendQuestionErrorObj").html("扩展问题不能为空或长度超过255");
+            return;
+        }
+        if(isHtmlLabel(oVal)){
+            $("#faqExtendQuestionErrorObj").html("不能包含HTML标签");
             return;
         }
         var flag = true;

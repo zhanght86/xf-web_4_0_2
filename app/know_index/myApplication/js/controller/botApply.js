@@ -49,6 +49,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
             disableAttributeTypeForApply:disableAttributeTypeForApply,
             repeatCheckForCategory:repeatCheckForCategory,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
+            notContainHtmlLabel:"不能包含HTML标签",
             categoryDescribeBeyondLimit:"描述超过长度限制2000",
             responseView:responseView,
             searchNodeForBot:searchNodeForBot,
@@ -707,12 +708,19 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             $("#addErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
                             return false;
                         }
+                        if(isHtmlLabel($("#categoryLibraryNameAdd").val())){
+                            $("#addErrorView").html($scope.vm.notContainHtmlLabel);
+                            return false;
+                        }
                         if(repeatCheckForCategory("#addErrorView",0)==false){
                             return false;
                         }
                         if(nullCheck($("#categoryLibraryDescribe").val())==true){
                             if(lengthCheck($("#categoryLibraryDescribe").val(),0,2000)==false){
                                 $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
+                                return false;
+                            }else if(isHtmlLabel($("#categoryLibraryDescribe").val())) {
+                                $("#describeErrorView").html($scope.vm.notContainHtmlLabel);
                                 return false;
                             }else{
                                 $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
@@ -747,6 +755,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     $("#categoryLibraryNameAdd").blur(function(){
                         if(lengthCheck($("#categoryLibraryNameAdd").val(),0,50)==false){
                             $("#addErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
+                        }else if(isHtmlLabel($("#categoryLibraryNameAdd").val())){
+                            $("#addErrorView").html($scope.vm.notContainHtmlLabel);
                         }else{
                             $("#addErrorView").html('');
                             repeatCheckForCategory("#addErrorView",0);
@@ -802,12 +812,19 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
                             return false;
                         }
+                        if(isHtmlLabel($("#categoryLibraryName").val())){
+                            $("#editErrorView").html($scope.vm.notContainHtmlLabel);
+                            return false;
+                        }
                         if(repeatCheckForCategory("#editErrorView",1)==false){
                             return false;
                         }
                         if(nullCheck($("#categoryLibraryDescribe").val())==true){
                             if(lengthCheck($("#categoryLibraryDescribe").val(),0,2000)==false){
                                 $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
+                                return false;
+                            }else if(isHtmlLabel($("#categoryLibraryDescribe").val())){
+                                $("#describeErrorView").html($scope.vm.notContainHtmlLabel);
                                 return false;
                             }else{
                                 $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
@@ -843,6 +860,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     $("#categoryLibraryName").blur(function(){
                         if(lengthCheck($("#categoryLibraryName").val(),0,50)==false){
                             $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
+                        }else if(isHtmlLabel($("#categoryLibraryName").val())){
+                            $("#editErrorView").html($scope.vm.notContainHtmlLabel);
                         }else{
                             $("#editErrorView").html('');
                             repeatCheckForCategory("#editErrorView",1);

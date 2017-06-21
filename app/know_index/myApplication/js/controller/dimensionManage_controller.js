@@ -278,7 +278,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 return;
             }
             if($scope.vm.oldDimensionName.indexOf(vm) != -1){
-                layer.msg("该维度表示已经存在，请重新添加");
+                layer.msg("该维度表示已经存在，请重新添加!");
                 return;
             }
             if(vm.length == 0){

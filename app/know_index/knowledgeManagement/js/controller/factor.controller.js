@@ -106,7 +106,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
                 }
             }, function(error) {
-                layer.msg("获取维度失败，请刷新页面")
+                console.log(error)
             });
         //获取维度
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
@@ -115,7 +115,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     $scope.vm.channels = data.data
                 }
             }, function(error) {
-                layer.msg("获取渠道失败，请刷新页面")
+                console.log(error)
             });
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
@@ -285,6 +285,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                width:'695px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -552,8 +553,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }
-                },function(){
-                    layer.msg("添加扩展问失败")
+                },function(error){
+                    console.log(error)
                 });
             }
         }
@@ -803,8 +804,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             $scope.$apply()
                         });
                     }
-                },function(err){
-                    layer.msg("标题打标失败，请重新打标")
+                },function(error){
+                    console.log(error)
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"

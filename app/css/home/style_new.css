@@ -196,7 +196,144 @@
 .classic_head_ul li.active {
     border-color: red;
 }
-
+/*6/20-add*/
 .list_facContent{position: relative;padding-left:230px;min-height:25px;box-sizing:border-box;}
 .list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:25px;text-align:right;}
+/*------------引导页样式-----------------*/
+.shadow_div{
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    background:#000;
+    opacity:0.6;filter:alpha(opacity=60);
+    z-index:999999;
+}
+.step_one_s{
+    width: 23px;
+    height: 23px;
+    line-height: 20px;
+    border: 3px solid white;
+    background:#be2924;
+    border-radius: 50%;
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    z-index: 9999999999!important;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+.step_one_arrow{
+    border: 5px solid white;
+    content: '';
+    position: absolute;
+    top: 38px;
+    left:5px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: white;
+    border-left-color: transparent;
+}
+.step_one_con{
+    min-width: 200px;
+    max-width: 300px;
+    left: 0px;
+    top: 48px;
+    position: absolute;
+    padding: 10px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.4);
+}
+.introjs-tooltipbuttons .introjs-button.c-999{color:#999;}
+.introjs-tooltipbuttons .introjs-button{
+    width:58px;
+    height:26px;
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+    padding: .3em .8em;
+    border: 1px solid #d4d4d4;
+    margin: 0;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #fff;
+    color: green;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: #ccc;
+    border:1px solid #eee;
+    -webkit-border-radius: .2em;
+    -moz-border-radius: .2em;
+    border-radius: .2em;
+    margin-top: 10px;
+}
+.knowledgeFaq .step_one{width:600px;height:40px;position:absolute;top:29px;left: 150px;
+    z-index:10000000;
+    background:url(../../images/faq_yd1.png) no-repeat 0px center;
+}
+.knowledgeFaq #step_two{background-image:url(../../images/faq_yd2.png);top:102px;}
+.knowledgeFaq #step_three{background-image:url(../../images/faq_yd3.png);top:150px;}
+.knowledgeFaq #step_four{background-image:url(../../images/faq_yd4.png);top:258px;}
+.knowledgeFaq #step_five{background-image:url(../../images/faq_yd5.png);top:373px;}
+.knowledgeFaq #step_six{background-image:url(../../images/faq_yd6.png);top:438px;left:224px;}
+/*----*/
+.knowledgeConcepe .step_one{width:600px;height:40px;position:absolute;top:29px;left: 150px;
+    z-index:10000000;
+    background:url(../../images/faq_yd1.png) no-repeat 0px center;
+}
+.knowledgeConcepe #step_two{background-image:url(/../../images/faq_yd2.png);top:102px;}
+.knowledgeConcepe #step_three{background-image:url(../../images/faq_yd3.png);top:150px;}
+.knowledgeConcepe #step_four{background-image:url(../../images/faq_yd5.png);top:267px;}
+.knowledgeConcepe #step_five{background-image:url(../../images/faq_yd4.png);top:373px;}
+.knowledgeConcepe #step_six{background-image:url(../../images/faq_yd6.png);top:438px;left:224px;}
+/*----*/
+.knowledgeList .step_one{width:600px;height:40px;position:absolute;top:0px;left: 138px;
+    z-index:10000000;
+    background:url(../../images/faq_yd1.png) no-repeat 0px top;
+}
+.knowledgeList #step_two{background-image:url(../../images/faq_yd2.png);top:68px;}
+.knowledgeList #step_three{background-image:url(../../images/faq_yd3.png);top:118px;}
+.knowledgeList #step_four{background-image:url(../../images/faq_yd4.png);top:158px;}
+.knowledgeList #step_five{height:328px;background-image:url(../../images/table_yd5.png);top:198px;}
+.knowledgeList #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:685px;left:228px;}
+.knowledgeList #step_seven{background-image:url(../../images/faq_yd6.png);top:832px;left:228px;}
 
+.knowledgeList #step_five .step_one_arrow{
+    top: 329px;
+}
+.knowledgeList #step_five .step_one_con{
+    top: 339px;
+}
+.knowledgeList #step_six .step_one_arrow{
+    top: 103px;
+}
+.knowledgeList #step_six .step_one_con{
+    top: 113px;
+}
+/*------*/
+.knowledgeFactor .step_one{width:600px;height:40px;position:absolute;top:0px;left: 153px;
+    z-index:10000000;
+    background:url(../../images/faq_yd1.png) no-repeat 0px top;
+}
+.knowledgeFactor #step_two{background-image:url(../../images/faq_yd2.png);top:70px;}
+.knowledgeFactor #step_three{background-image:url(../../images/faq_yd3.png);top:112px;}
+.knowledgeFactor #step_four{background-image:url(../../images/faq_yd4.png);top:154px;}
+.knowledgeFactor #step_five{height:328px;background-image:url(../../images/fac_yd5.png);top:192px;}
+.knowledgeFactor #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:446px;left:228px;}
+.knowledgeFactor #step_seven{background-image:url(../../images/faq_yd6.png);top:587px;left:228px;}
+
+.knowledgeFactor #step_five .step_one_arrow{
+    top: 242px;
+}
+.knowledgeFactor #step_five .step_one_con{
+    top: 252px;
+}
+.knowledgeFactor #step_six .step_one_arrow{
+    top: 103px;
+}
+.knowledgeFactor #step_six .step_one_con{
+    top: 113px;
+}

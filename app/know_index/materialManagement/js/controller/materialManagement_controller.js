@@ -63,8 +63,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.chatKnowledgeModifier,
-                "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
-                "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
+                "modifyTimeType":  $scope.vm.modifyTimeType,
+                "chatQuestionContent": $scope.vm.chatQuestionContent,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize":$scope.vm.pageSize,
             },function(data){
