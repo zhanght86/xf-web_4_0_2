@@ -79,7 +79,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             });
 
         }
-        napSearch();
+        napSearch(false);
         //高级搜索 开关
         $scope.$watch("vm.heighSarch",function(val){
             if(val){
@@ -88,19 +88,15 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 angular.element(".advanced_search").slideUp()
             }
         });
-        function napSearch(){
-            function napSearch(type){
-                if(!type){
-                    getData(1);
-                    getNewNumber();
-                }else{
-                    getData(1);
-                    getNewNumber();
-                    $timeout(function(){
-                        $scope.vm.paramsReset();
-                    },500);
-                }
+        function napSearch(type){
+            getData(1);
+            getNewNumber();
+            if(type){
+                $timeout(function(){
+                    $scope.vm.paramsReset();
+                },500);
             }
+            $scope.vm.heighSarch = false ;
         }
         function scan(item){
 

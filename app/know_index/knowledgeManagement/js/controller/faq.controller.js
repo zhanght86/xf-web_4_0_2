@@ -502,7 +502,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //打开知识内容对话框
         function openContentConfirm(callback){
             var dialog = ngDialog.openConfirm({
-                template: "/know_index/knowledgeManagement/faq/knowManaFaqDialog.html",
+                template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                 width:"650px",
                 scope: $scope,
                 closeByNavigation: false,

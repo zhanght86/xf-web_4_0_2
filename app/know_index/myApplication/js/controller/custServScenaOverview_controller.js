@@ -100,16 +100,14 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         //是否清空 搜索内容  true  清空 false 不清空
         //@1 分頁 false   @2初始化 true
         function napSearch(type){
-            if(!type){
-                getData(1);
-                getNewNumber();
-            }else{
-                getData(1);
-                getNewNumber();
+            getData(1);
+            getNewNumber();
+            if(type){
                 $timeout(function(){
                     $scope.vm.paramsReset();
                 },500);
             }
+            $scope.vm.heighSarch = false ;
         }
         function scan(item){
             var obj = {};

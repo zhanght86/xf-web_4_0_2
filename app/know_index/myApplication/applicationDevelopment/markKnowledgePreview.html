@@ -9,75 +9,47 @@
         <!--{{vm.listData}}-->
         <ul class="Preview">
             <li>
-                <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeTitle">{{vm.listData.knowledgeBase.knowledgeTitle}}</p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart"><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index!=0?'milesVh':''">BOT路径：</span><b style="font-weight:normal;">{{item.className.join("/")}}</b></p>
             </li>
             <li>
-                <p ng-if="vm.knowledgeType!=100" ng-repeat="item in vm.listData.extensionQuestions track by $index">
+                <p  ng-repeat="item in vm.listData.extensionQuestions track by $index">
                     <span ng-class="$index!=0?'milesVh':''">概念扩展：</span>
                     <span style="width: auto;background: #f1f1f1;" ng-repeat="val in item.extensionQuestionTagList track by $index">
                         {{val.tagName}}
                     </span>
                     <span></span>
                 </p>
-                <!--<p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>-->
             </li>
-
             <li ng-class="vm.knowledgeType==101?'':'borderN'" style="border-bottom: 0">
                 <div class="knowContent" ng-repeat="item in vm.listData.knowledgeContents track by $index">
                     <span ng-class="$index!=0?'mileVs':''">知识内容：</span>
                     <div class="PreviewRight">
-                        <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
-                        <div  ng-if="vm.knowledgeType!=103">
+                        <p >内容 {{$index+1 | numberToWord}}</p>
+                        <div>
                             <p>{{item.knowledgeContent}}</p>
-                            <!--<p><i>渠道：</i>  <span ng-repeat="val in item.channelId">{{val | channel:vm.channels}}</span></p>-->
-                            <!--<p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionId">{{val | dimension:vm.dimensions}}</span></p>-->
-                            <!--<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>-->
-                            <span>&nbsp;</span>
-                        </div>
-                        <div ng-if="vm.knowledgeType==103" style="height:300px;overflow:auto;">
-                            <table class="essential_factor_tab">
-                                <tr ng-repeat="(indexRow,row) in item.knowledgeContent.listTable track by $index">
-                                    <td ng-repeat="(indexColumn,item) in row track by $index">
-                                        {{item}}
-                                    </td>
-                                </tr>
-                            </table>
                             <span>&nbsp;</span>
                         </div>
                     </div>
+                    <p><span>知识配置：</span>
+                        <b style="font-weight:normal;margin-right:10px;" ng-show="item.knowledgeRelatedQuestionOn">显示相关问题</b>
+                        <b style="font-weight:normal;margin-right:10px;" ng-show="item.knowledgeBeRelatedOn">在相关问题内提示</b>
+                        <b style="font-weight:normal;margin-right:10px;" ng-show="item.knowledgeCommonOn">弹出评价小尾巴</b>
+                    </p>
+                    <p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList">
+                        <span ng-class="indexVal?'':'mileVs'">已添加知识：</span>
+                        <span>{{indexVal}}{{val}}</span>
+                    </p>
+                    <p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList"><span ng-class="indexVal?'':'mileVs'">已添加知识：</span>
+                        <span>{{indexVal}}{{val}}</span>
+                    </p>
                 </div>
-                <p><span>知识配置：</span>
-                    <b style="font-weight:normal;margin-right:10px;"><b style="font-weight:normal" ng-if="item.knowledgeRelatedQuestionOn==0">不</b>显示相关问题</b>
-                    <b style="font-weight:normal;margin-right:10px;"><b style="font-weight:normal" ng-if="item.knowledgeBeRelatedOn==0">不</b>在相关问题内提示</b>
-                    <b style="font-weight:normal;margin-right:10px;"><b style="font-weight:normal" ng-if="item.knowledgeCommonOn==0">不</b>弹出评价小尾巴</b>
-                </p>
-                <p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList"><span ng-class="indexVal?'':'mileVs'">已添加知识：</span>
-                    <span>{{indexVal}}{{val}}</span>
-                </p>
             </li>
-
-            <!--<li style="border: none" ng-repeat="item in vm.listData.knowledgeContents">-->
-                <!--<p><span>知识配置：</span>-->
-                    <!--<span><span ng-if="item.knowledgeRelatedQuestionOn==0">不</span>显示相关问题</span>-->
-                    <!--<span><span ng-if="item.knowledgeBeRelatedOn==0">不</span>在相关问题内提示</span>-->
-                    <!--<span><span ng-if="item.knowledgeCommonOn==0">不</span>弹出评价小尾巴</span>-->
-                <!--</p>-->
-            <!--</li>-->
-            <li style="border: none" ng-repeat="(index,item) in vm.listData.knowledgeContents">
-                <p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList"><span ng-class="indexVal?'':'mileVs'">已添加知识：</span>
-                    <span>{{indexVal}}{{val}}</span>
-                </p>
-            </li>
-            <div class="jqrsz-btn-box" style="padding-left: 150px;margin-top: 4px;">
-                <a class="btn btn-blue mr10" ui-sref="markServScenaOverview.manage">返回</a>
-                <a class="btn btn-gray" href="javascript:;" ng-click="vm.edit()" style="background: #2bcacc; color: #fff;">修改</a>
-            </div>
         </ul>
+        <div class="jqrsz-btn-box" style="padding-left: 150px;margin-top: 4px;">
+            <a class="btn btn-blue mr10" ui-sref="markServScenaOverview.manage">返回</a>
+            <a class="btn btn-gray" href="javascript:;" ng-click="vm.edit()" style="background: #2bcacc; color: #fff;">修改</a>
+        </div>
     </div>
 </div>
-<style>
-
-</style>
