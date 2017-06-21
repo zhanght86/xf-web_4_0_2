@@ -7,9 +7,9 @@
     knowledgeAddServer.$injector = ["$resource"];
     function knowledgeAddServer($resource) {
         var services = {
-            getDimensions: getDimensions,  //��ȡ  ����
-            getChannels : getChannels ,    //�@ȡ�S��
-            getFrame : getFrame    ,        //    �@ȡ���
+            getDimensions: getDimensions,
+            getChannels : getChannels ,
+            getFrame : getFrame    ,
             faqSave : faqSave,
             conceptGetExtensionByDialogTitle : conceptGetExtensionByDialogTitle,
             getDataServer : getDataServer

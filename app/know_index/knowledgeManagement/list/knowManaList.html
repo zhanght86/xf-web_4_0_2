@@ -7,8 +7,7 @@
             <div class="content_box mb25 mt10">
                 <div class="cl mb-20">
                     <div class="L">
-                        <h3 class="f22 pl-10 mb15" ng-if="!vm.knowledgeId">列表型知识新增</h3>
-                        <h3 class="f22 pl-10 mb15" ng-if="vm.knowledgeId">列表型知识编辑</h3>
+                        <h3 class="f22 pl-10 mb15"  ng-bind="vm.knowledgeId?'列表型知识编辑':'列表型知识新增'"></h3>
                     </div>
                     <a href="javascript:;" class="c_green R" ng-click="vm.showTip();">使用帮助</a>
                 </div>
@@ -191,12 +190,12 @@
                             <div class="clearfix mb-10">
                                 <p class="mb-10 f-16">肯定回答:</p>
                                 <!--{{vm.newTitle}}-->
-                                <textarea class="word_div bd" ng-model="vm.newTitle" placeholder="#违禁品#是违禁物品，不可以带上飞机"></textarea>
+                                <textarea class="word_div bd" ng-model="vm.newTitle" placeholder="例如：#违禁品#是违禁物品，不可以带上飞机"></textarea>
                             </div>
                             <div class="clearfix mb-10">
                                 <p class="mb-10 f-16">否定回答:</p>
                                 <!--{{vm.knowledgeContentNegative}}-->
-                                <textarea class="word_div bd" ng-model="vm.knowledgeContentNegative" placeholder=" #违禁品#是违禁物品，不可以带上飞机"></textarea>
+                                <textarea class="word_div bd" ng-model="vm.knowledgeContentNegative" placeholder="例如：不是违禁物品，可以带上飞机"></textarea>
                             </div>
                             <div class="channel_div  mb-10">
                                 <span class="channel_s">渠道：</span>
@@ -359,8 +358,7 @@
 </div>
 
 <style>
-    .Wdate{background-position:164px center;}
-    .ipt-txt{height:34px;box-sizing:border-box;}
+
 
 
 

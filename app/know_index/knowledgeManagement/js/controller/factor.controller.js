@@ -437,15 +437,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function switchMiningType(type){
-            var returnStr = "OEC";
-            switch(type){
-                case 10017:
-                    returnStr = "OEC";
-                    break;
-                case 10018:
-                    returnStr = "GATE";
-                    break;
-            }
+            var returnStr = "NLP";
+            //var returnStr = "OEC";                   //nnf-6.21修改
+            // switch(type){
+            //     case 10017:
+            //         returnStr = "OEC";
+            //         break;
+            //     case 10018:
+            //         returnStr = "GATE";
+            //         break;
+            // }
             return returnStr;
         }
 
@@ -725,7 +726,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         function extensionEdit(){
             var extensionEdit = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

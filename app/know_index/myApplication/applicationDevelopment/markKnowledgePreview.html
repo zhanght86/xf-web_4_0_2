@@ -12,35 +12,17 @@
                 <!--<p><span>知识类目：</span>{{item.sceneName}}</p>-->
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeTitle">{{vm.listData.knowledgeBase.knowledgeTitle}}</p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart"><span>知识有效期：</span>{{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}</p>
-                <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span >BOT路径：</span><b style="font-weight:normal;">{{item.className.join("/")}}</b></p>
+                <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index!=0?'milesVh':''">BOT路径：</span><b style="font-weight:normal;">{{item.className.join("/")}}</b></p>
             </li>
-            <!--<li>-->
-                <!--<div class="knowContent" ng-repeat="item in vm.listData.knowledgeContents track by $index">-->
-                    <!--<span ng-class="$index==0?'mileVs':''">知识内容：</span>-->
-                    <!--<div class="PreviewRight" >-->
-                        <!--<p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>-->
-                        <!--<div  ng-if="vm.knowledgeType!=103">-->
-                            <!--<p>{{item.knowledgeContent}}</p>-->
-                            <!--&lt;!&ndash;<p><i>渠道：</i>  <span ng-repeat="val in item.channelId">{{val | channel:vm.channels}}</span></p>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p><i>维度：</i><span class="mr-10"  ng-repeat="val in item.dimensionId">{{val | dimension:vm.dimensions}}</span></p>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p><i>概念扩展：</i>信用，卡，规则，办理 &nbsp; 信用，挂失，处理，办法</p>&ndash;&gt;-->
-                            <!--<span>&nbsp;</span>-->
-                        <!--</div>-->
-                        <!--<div  ng-if="vm.knowledgeType==103">-->
-                            <!--<table class="essential_factor_tab">-->
-                                <!--<tr ng-repeat="(indexRow,row) in item.listTable track by $index">-->
-                                    <!--<td ng-repeat="(indexColumn,item) in row track by $index">-->
-                                        <!--{{item}}-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                            <!--</table>-->
-                            <!--<span>&nbsp;</span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</li>-->
-            <li  ng-repeat="item in vm.listData.extensionQuestions">
-                <p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>
+            <li>
+                <p ng-if="vm.knowledgeType!=100" ng-repeat="item in vm.listData.extensionQuestions track by $index">
+                    <span ng-class="$index!=0?'milesVh':''">概念扩展：</span>
+                    <span style="width: auto;background: #f1f1f1;" ng-repeat="val in item.extensionQuestionTagList track by $index">
+                        {{val.tagName}}
+                    </span>
+                    <span></span>
+                </p>
+                <!--<p><span ng-class="$index!=0?'milesVh':''">概念扩展：</span>{{item.extensionQuestionTitle}}</p>-->
             </li>
 
             <li ng-class="vm.knowledgeType==101?'':'borderN'" style="border-bottom: 0">

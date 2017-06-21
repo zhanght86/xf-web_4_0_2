@@ -571,7 +571,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
                 var extensionEdit = ngDialog.openConfirm({
-                    template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                    template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,
