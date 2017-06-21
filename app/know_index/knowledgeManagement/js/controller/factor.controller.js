@@ -285,6 +285,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             $scope.vm.elementAsk = $scope.vm.tableList.data.listTableType[column].elementAsk;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/knowledgeManagement/factor/factorDialog.html",
+                width:'695px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
