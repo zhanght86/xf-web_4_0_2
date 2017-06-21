@@ -287,8 +287,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         //打开知识内容对话框
         function openContentConfirm(callback) {
-            var dialog = ngDialog.openConfirm({
-                template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+            var dialog = ngDialog.openConfirm({ 
+                template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                 width:"650px",
                 scope: $scope,
                 closeByDocument: false,
@@ -649,7 +649,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
                 if(dia.length==0) {
                     var dialog = ngDialog.openConfirm({
-                        template: "/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog.html",
+                        template: "/know_index/knowledgeManagement/public-html/knowledge_increase.html",
                         width:"650px",
                         scope: $scope,
                         closeByDocument: false,
@@ -672,7 +672,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
                  var extensionEdit = ngDialog.openConfirm({
-                template:"/know_index/knowledgeManagement/concept/knowledgeAddSingleConceptDialog2.html",
+                     template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
                 width:"520px",
                 scope: $scope,
                 closeByDocument:false,
