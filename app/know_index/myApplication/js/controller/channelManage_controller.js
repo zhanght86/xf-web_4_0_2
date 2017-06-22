@@ -341,6 +341,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         //移除黑名单
         function delBlacklist(blackListId){
             httpRequestPost("/api/application/channel/deleteBlackList",{
+                "applicationId": $scope.vmo.applicationId,
                 "blackListId": blackListId
             },function(data){
                 layer.msg("移除成功");
@@ -354,6 +355,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         //批量移除黑名单
         function batchDelBlacklist(){
             httpRequestPost("/api/application/channel/batchDelBlackList",{
+                "applicationId": $scope.vmo.applicationId,
                 "blackListIds": $scope.selectedList
             },function(data){
                 if(data.data===10000){
