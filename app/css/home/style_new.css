@@ -177,10 +177,15 @@
 .framework_sel{height:30px;}
 
 /**/
-.modifi_title{}
-.modifi_title button{width:180px;height:40px;background:#ccc;font-size:15px;cursor:pointer;color:#fff;}
-.modifi_title button.current{background:#529ff6;}
-.tag_div{width:120px;border:1px solid #bdbdbd;padding:10px;}
+/*.modifi_title{}*/
+/*.modifi_title button{width:180px;height:40px;background:#ccc;font-size:15px;cursor:pointer;color:#fff;}*/
+/*.modifi_title button.current{background:#529ff6;}*/
+/*.tag_div{width:120px;border:1px solid #bdbdbd;padding:10px;}*/
+
+.knoe_concept .modifi_title{border-bottom:2px solid #529ff6;}
+.knoe_concept .modifi_title button{width:85px;height:30px;background:#ccc;font-size:15px;cursor:pointer;color:#fff;}
+.knoe_concept .modifi_title button.current{background:#529ff6;}
+.knoe_concept .tag_div{width:120px;border:1px solid #bdbdbd;padding:10px;}
 
 /*知识总览弹窗*/
 .advanced_search{position:absolute;left:0;top:31px;display:none;width:512px;background:#fff;z-index:100;padding:20px;box-sizing:border-box;}

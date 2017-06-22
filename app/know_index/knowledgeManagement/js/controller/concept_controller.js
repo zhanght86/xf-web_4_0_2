@@ -673,7 +673,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             if(dia.length==0){
                  var extensionEdit = ngDialog.openConfirm({
                      template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
-                width:"520px",
+                width:"500px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
