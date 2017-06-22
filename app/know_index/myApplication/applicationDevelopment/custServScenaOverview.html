@@ -132,7 +132,9 @@
                                         <div class="value oh">
                                             <ul class="">
                                                 <li ng-if="item.knowledgeType!=103" title="{{item.knowledgeContent}}">
-                                                    <p>{{item.knowledgeContent}}</p>
+                                                    <!--<p>{{item.knowledgeContent}}</p>-->
+                                                    <p ng-if="item.knowledgeContent.length<=50">{{item.knowledgeContent}}</p>
+                                                    <p ng-if="item.knowledgeContent.length>50">{{item.knowledgeContent.substring(0,50)+'...'}}</p>
                                                 </li>
                                                 <li ng-if="item.knowledgeType==103">
                                                     <p><strong>该要素知识包含条数：</strong> {{item.tableCount}}条</p>
