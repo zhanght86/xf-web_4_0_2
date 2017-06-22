@@ -36,8 +36,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
             //展示内容
             scanContent : [],
-            saveContent : [],
-
             save : save ,   //保存
             scan :scan ,   //预览
             //高级选项
@@ -95,6 +93,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             prevDiv : prevDiv,
             nextDiv : nextDiv,
             //引到页end
+            isDecorateSimple : true
         };
 
 

@@ -37,8 +37,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
             //展示内容
             scanContent : [],
-            saveContent : [],
-
             save : save ,   //保存
             scan :scan ,   //预览
             //弹框相关
@@ -81,8 +79,26 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
             extensionByContentTitle : [] ,   // 内容生成扩展问 ,
             limitSave : false ,//限制多次打标
-            isEdit : false  // 知识内容 弹框 编辑  不验证渠道维度重复
+            isEdit : false  ,// 知识内容 弹框 编辑  不验证渠道维度重复
+            increaseCheck  : increaseCheck,  //知识新增弹框保存按钮
+            //引到页
+            showTip : showTip,
+            hideTip : hideTip,
+            prevDiv : prevDiv,
+            nextDiv : nextDiv,
+            //引到页end
         };
+        function increaseCheck(){
+            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
+                layer.msg("请填写知识内容,并选择渠道后保存")
+            }else if(!$scope.vm.newTitle){
+                layer.msg("请填写知识内容后保存")
+            }else if(!$scope.vm.channel.length){
+                layer.msg("请选择渠道后保存")
+            }else{
+                ngDialog.closeAll(1) ;
+            }
+        }
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -1056,6 +1072,47 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
             });
         }
+        //引导页方法
+        function showTip(){
+            $('.shadow_div').show();
+            $('.step_div').show();
+            $('#step_one').show().siblings().hide();
+
+        }
+        function hideTip(){
+            $('.shadow_div').hide();
+            $('.step_div').hide();
+        }
+
+        //上一个
+        function prevDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().prev()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().prev().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().prev().offset().top-20
+                }, 500);
+            }else{
+                // $(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //下一个
+        function nextDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().next()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().next().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().next().offset().top-20
+                }, 500);
+            }else{
+                //$(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //引导页方法end
 
     }
 ]);
