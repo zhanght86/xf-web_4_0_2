@@ -19,7 +19,6 @@ angular.module('adminModule').controller('adminContentController', [
             newDescribe : "",
             selectScene : selectScene
         };
-
         function selectScene(id,applicationId){
             $cookieStore.put("sceneId",id);
             $cookieStore.put("applicationId",applicationId);
@@ -110,7 +109,7 @@ angular.module('adminModule').controller('adminContentController', [
         }
         //添加
         function addApplication(){
-            console.log(getCookie("userId"),$scope.vm.newApplicationName,$scope.vm.newScene,$scope.vm.newLicence,$scope.vm.newDescribe);
+            //console.log(getCookie("userId"),$scope.vm.newApplicationName,$scope.vm.newScene,$scope.vm.newLicence,$scope.vm.newDescribe);
             httpRequestPost("/api/application/application/addApplication",{
                 "userId":$cookieStore.get("userId"),
                 "applicationName": $scope.vm.newApplicationName,

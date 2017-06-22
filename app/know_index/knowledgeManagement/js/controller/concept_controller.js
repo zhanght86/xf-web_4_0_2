@@ -379,7 +379,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }else if(!checkExtension(obj , $scope.vm.extensions)){
                 layer.msg("扩展问重复");
                 return false
-            } else { 
+            } else {
                 httpRequestPost("/api/ms/conceptKnowledge/checkExtensionQuestion", {
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList": question

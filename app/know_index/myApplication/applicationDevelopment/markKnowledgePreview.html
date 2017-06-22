@@ -28,7 +28,7 @@
                     <div class="PreviewRight">
                         <p >内容 {{$index+1 | numberToWord}}</p>
                         <div>
-                            <p>{{item.knowledgeContent}}</p>
+                            <p ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
                             <span>&nbsp;</span>
                         </div>
                     </div>
