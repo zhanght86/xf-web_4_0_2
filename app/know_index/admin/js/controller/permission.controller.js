@@ -419,21 +419,33 @@ angular.module('adminModule').controller('userManageController', [
         //改变用户状态
         function stop(userId,statusId) {
             if(statusId == 10002){
-                httpRequestPost("/api/user/updateStatus", {
-                    userId: userId,
-                    statusId: statusId
-                }, function (data) {
-                    $state.reload();
-                    if (data.status == 10012) {
-                        layer.msg("用户状态修改成功!");
-                    } else {
-                        //layer.msg("用户状态修改失败!");
-                        console.log("用户状态修改失败!");
+                var dialog = ngDialog.openConfirm({
+                    template: "/know_index/admin/updateDialog1.html",
+                    scope: $scope,
+                    closeByDocument: false,
+                    closeByEscape: true,
+                    showClose: true,
+                    backdrop: 'static',
+                    preCloseCallback: function (e) {
+                        if (e === 1) {
+                            httpRequestPost("/api/user/updateStatus", {
+                                userId: userId,
+                                statusId: statusId
+                            }, function (data) {
+                                $state.reload();
+                                if (data.status == 10012) {
+                                    layer.msg("用户状态修改成功!");
+                                } else {
+                                    //layer.msg("用户状态修改失败!");
+                                    console.log("用户状态修改失败!");
+                                }
+                            }, function () {
+                                //layer.msg("请求失败")
+                                console.log("请求失败");
+                            })
+                        }
                     }
-                }, function () {
-                    //layer.msg("请求失败")
-                    console.log("请求失败");
-                })
+                });
             }else {
                 var dialog = ngDialog.openConfirm({
                     template: "/know_index/admin/updateDialog.html",
