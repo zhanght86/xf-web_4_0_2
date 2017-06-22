@@ -37,8 +37,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
             //展示内容
             scanContent : [],
-            saveContent : [],
-
             save : save ,   //保存
             scan :scan ,   //预览
             //高级选项

@@ -17,7 +17,6 @@
                 </p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span><b  style="font-weight:normal;">{{item.className.join("/")}}</b></p>
             </li>
-
             <!-- 要素列表 faq -->
             <li  ng-if="vm.knowledgeType!=101" class="borderN">
                 <p ng-if="vm.knowledgeType!=100" ng-repeat="item in vm.listData.extensionQuestions track by $index">

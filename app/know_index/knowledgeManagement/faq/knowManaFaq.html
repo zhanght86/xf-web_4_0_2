@@ -167,10 +167,8 @@
                         </div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
-                                <div class="textareaDiv textareaDiv1 textareaDiv2 L " >
-                                <!--<textarea   readonly style="width: 100%;">-->
-                                    <p ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
-                                <!--</textarea>-->
+                                <div class="textareaDiv textareaDiv1 textareaDiv2 L">
+                                    <p ng-repeat="text in item.knowledgeContent.split('\n') ">{{text}}</p>
                                 </div>
                                 <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
                                 <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
