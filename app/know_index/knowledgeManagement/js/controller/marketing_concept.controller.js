@@ -79,7 +79,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
             extensionByContentTitle : [] ,   // 内容生成扩展问 ,
             limitSave : false ,//限制多次打标
-            isEdit : false  ,// 知识内容 弹框 编辑  不验证渠道维度重复
+            isEditIndex : -1,   // 知识内容 弹框
+                        // -1 为内容新增
+                        // index 为知识的编辑索引
             increaseCheck  : increaseCheck  //知识新增弹框保存按钮
         };
         function increaseCheck(){
@@ -686,7 +688,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }else {
                 var dia = angular.element(".ngdialog ");
                 if (data) {    //增加
-                    $scope.vm.isEdit = true ;
+                    $scope.vm.isEditIndex = index ;
                     $scope.vm.newTitle = data.knowledgeContent;
                     $scope.vm.channel = data.channelIdList;
                     //$scope.vm.dimensionArr.id = data.dimensionIdList;
@@ -714,7 +716,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         obj.knowledgeCommonOn = $scope.vm.tail;   //弹出评价小尾巴
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup  //业务扩展问
                         $scope.vm.scanContent[index] = obj;
-                        $scope.vm.isEdit = false  ;
+                        $scope.vm.isEditIndex = -1  ;
                         setDialog();
                     }
                 } else {
@@ -733,7 +735,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             if (e === 1) {
                                 callback()
                             } else {
-                                $scope.vm.isEdit = false  ;
+                                $scope.vm.isEditIndex = -1  ;
                                 setDialog()
                             }
                         }
@@ -902,14 +904,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             $scope.vm.dimensionArr = [];
         }
 
-        //选择渠道
-        function selectChannel(channelId){
-            if($scope.vm.channel.inArray(channelId)){
-                $scope.vm.channel.remove(channelId);
-            }else{
-                $scope.vm.channel.push(channelId);
-            }
-        }
         function saveAddNew(){
             if($scope.vm.newTitle){
                 var title = angular.copy($scope.vm.newTitle);
@@ -985,27 +979,38 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }
         }
 //***************************    save check channel dimension  **********************************************
-        $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel.length && (!$scope.vm.isEdit)){
-                checkChannelDimension($scope.vm.channel,val.id)
+//        知识内容添加校验
+        function increaseCheck(){
+            //判斷维度是否为空 0 不变 1 全维度
+            if(!$scope.vm.dimensionArr.id.length){
+                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
+            };
+            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
+                layer.msg("请填写知识内容,并选择渠道后保存")
+            }else if(!$scope.vm.newTitle){
+                layer.msg("请填写知识内容后保存")
+            }else if(!$scope.vm.channel.length){
+                layer.msg("请选择渠道后保存")
+            }else if(checkChannelDimension($scope.vm.channel,$scope.vm.dimensionArr.id)){
+                //存在重复条件
+            }else{
+                ngDialog.closeAll(1) ;
             }
-        },true);
-        $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id.length && (!$scope.vm.isEdit)){
-                checkChannelDimension(val,$scope.vm.dimensionArr.id)
+        }
+        //选择渠道
+        function selectChannel(channelId){
+            if($scope.vm.channel.inArray(channelId)){
+                $scope.vm.channel.remove(channelId);
+            }else{
+                $scope.vm.channel.push(channelId);
             }
-        },true);
+        }
         function checkChannelDimension(channel,dimension){
-            //console.log(channel,dimension);
+            var isRepeat  = false;
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
-            if (!channel.length) {     //渠道不能为空
-                //layer.msg("请填写渠道");
-                return false
-            }else{               //渠道非空
-                                 //channel   == id
-                                 //dimenssion   == id
-                angular.forEach($scope.vm.scanContent,function(item){
+            angular.forEach($scope.vm.scanContent,function(item,contentIndex){
+                if($scope.vm.isEditIndex != contentIndex){
                     angular.forEach(item.channelIdList,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
                             if(val == v){
@@ -1015,24 +1020,20 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                             var channelTip;
                                             angular.forEach($scope.vm.channels,function(all){
                                                 if(all.channelCode==v){
-                                                    channelTip = all.channelName;
+                                                    channelTip = all.channelName
                                                 }
                                             });
                                             layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
-                                            $scope.vm.dimensionArr.id.remove(key);
-                                            $scope.vm.dimensionArr.name.splice(indexDimension,1);
+                                            isRepeat = true
                                         }
                                     })
                                 })
                             }
                         });
                     });
-                });
-            }
-        }
-        // 添加时候 存储对象
-        function saveScan(){
-
+                }
+            });
+            return isRepeat
         }
 //*************************************************************************
 

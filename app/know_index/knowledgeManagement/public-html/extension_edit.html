@@ -1,15 +1,15 @@
 <div class="pd-20 knoe_concept">
     <!--<h3 class="tc f16 mb-20">概念扩展修饰</h3>-->
     <div class="modifi_title mb-20">
-        <button class="current" ng-click="vm.isDecorateSimple = false">整体修饰</button>
-        <button ng-click="vm.isDecorateSimple = true">单独修饰</button>
+        <button ng-class="vm.isDecorateSimple?'':'current'" ng-click="vm.isDecorateSimple = false">整体修饰</button>
+        <button ng-class="vm.isDecorateSimple?'current':''" ng-click="vm.isDecorateSimple = true">单独修饰</button>
     </div>
     <div class="modifi_con">
         <div ng-show="!vm.isDecorateSimple">
             <div class="framework mb-10">
                 <div class="framework_s tr" style="width:95px;line-height:38px;">非必要:</div>
                 <div>
-                    <div class="input_text bd"></div>
+                    <div class="input_text bd" auto-complete-selec width="'100px'"></div>
                     <!--<select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">-->
                         <!--<option value="">信用卡</option>-->
                         <!--<option value="">办理</option>-->
@@ -69,21 +69,21 @@
 </style>
 <script>
 
-    //插件
-    var select_Group_user = '';
-    var select_Group_classifiy = '';
-    $(function() {
-        //loadClassifyZtree();//ztree
-        // queryGroupUserByName();
-        $('.chosen-select').chosen();//加载 amazeui Chosen
-        $('.chosen-select').on('change', function(e, params,param) {
-//            console.log("我被触发了-->>",params);
-            if(params!=null &&params!=undefined &&$.trim(params)!=''){
-                select_Group_user = '';
-                select_Group_user = params.selected;
-            }
-        });
-    });
+//    //插件
+//    var select_Group_user = '';
+//    var select_Group_classifiy = '';
+//    $(function() {
+//        //loadClassifyZtree();//ztree
+//        // queryGroupUserByName();
+//        $('.chosen-select').chosen();//加载 amazeui Chosen
+//        $('.chosen-select').on('change', function(e, params,param) {
+////            console.log("我被触发了-->>",params);
+//            if(params!=null &&params!=undefined &&$.trim(params)!=''){
+//                select_Group_user = '';
+//                select_Group_user = params.selected;
+//            }
+//        });
+//    });
 </script>
 
 

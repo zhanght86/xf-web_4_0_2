@@ -93,7 +93,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             prevDiv : prevDiv,
             nextDiv : nextDiv,
             //引到页end
-            isDecorateSimple : true
+            isDecorateSimple : false  // true 单独修饰  false  整体修饰
         };
 
 

@@ -77,9 +77,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             knowledgeId : "",
 
             limitSave : false ,
-            isEdit : false,  // 知识内容 弹框 编辑  不验证渠道维度重复
-
-            //引到页
+            isEditIndex : -1,   // 知识内容 弹框
+                        // -1 为内容新增
+                        // index 为知识的编辑索引
+                        //引到页
             showTip : showTip,
             hideTip : hideTip,
             prevDiv : prevDiv,
@@ -87,17 +88,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //引到页end
             increaseCheck  : increaseCheck  //知识新增弹框保存按钮
         };
-        function increaseCheck(){
-            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
-                layer.msg("请填写知识内容,并选择渠道后保存")
-            }else if(!$scope.vm.newTitle){
-                layer.msg("请填写知识内容后保存")
-            }else if(!$scope.vm.channel.length){
-                layer.msg("请选择渠道后保存")
-            }else{
-               ngDialog.closeAll(1) ;
-            }
-        }
+
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -623,7 +614,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }else{
                 var dia = angular.element(".ngdialog ");
                 if(data){    //增加
-                    $scope.vm.isEdit = true ;
+                    $scope.vm.isEditIndex = index ;
                     $scope.vm.newTitle = data.knowledgeContent;
                     $scope.vm.channel = data.channelIdList;
                     //$scope.vm.dimensionArr.id = data.dimensionIdList;
@@ -650,7 +641,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup ; //业务扩展问
                         $scope.vm.scanContent[index] = obj;
-                        $scope.vm.isEdit = false ;
+                        $scope.vm.isEditIndex = -1 ;
                         setDialog() ;
                     }
                 } else {
@@ -669,7 +660,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             if (e === 1) {
                                 callback()
                             } else {
-                                $scope.vm.isEdit = false  ;
+                                $scope.vm.isEditIndex = -1  ;
                                 setDialog()
                             }
                         }
@@ -1000,55 +991,60 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }
         }
 //***************************    save check channel dimension  **********************************************
-        $scope.$watch("vm.dimensionArr",function(val,old){
-            if(val.id && $scope.vm.channel && (!$scope.vm.isEdit)){
-                checkChannelDimension($scope.vm.channel,val.id)
+        function increaseCheck(){
+            //判斷维度是否为空 0 不变 1 全维度
+            if(!$scope.vm.dimensionArr.id.length){
+                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
+            };
+            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
+                layer.msg("请填写知识内容,并选择渠道后保存")
+            }else if(!$scope.vm.newTitle){
+                layer.msg("请填写知识内容后保存")
+            }else if(!$scope.vm.channel.length){
+                layer.msg("请选择渠道后保存")
+            }else if(checkChannelDimension($scope.vm.channel,$scope.vm.dimensionArr.id)){
+                //存在重复条件
+            }else{
+                ngDialog.closeAll(1) ;
             }
-        },true);
-        $scope.$watch("vm.channel",function(val,old){
-            if(val.length && $scope.vm.dimensionArr.id && (!$scope.vm.isEdit)){
-                checkChannelDimension(val,$scope.vm.dimensionArr.id)
+        }
+        //选择渠道
+        function selectChannel(channelId){
+            if($scope.vm.channel.inArray(channelId)){
+                $scope.vm.channel.remove(channelId);
+            }else{
+                $scope.vm.channel.push(channelId);
             }
-        }, true);
-        function checkChannelDimension(channel, dimension) {
-            console.log(channel, dimension);
+        }
+        function checkChannelDimension(channel,dimension){
+            var isRepeat  = false;
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
-            if (!channel.length) {     //渠道不能为空
-                //layer.msg("请填写渠道");
-                return false
-            } else {               //渠道非空
-                //channel   == id
-                //dimenssion   == id
-                angular.forEach($scope.vm.scanContent, function (item) {
-                    angular.forEach(item.channelIdList, function (v) {
-                        angular.forEach(channel, function (val, indexChannel) {
-                            if (val == v) {
-                                angular.forEach(item.dimensionIdList, function (value) {
-                                    angular.forEach(dimension, function (key, indexDimension) {
-                                        if (key == value) {
+            angular.forEach($scope.vm.scanContent,function(item,contentIndex){
+                if($scope.vm.isEditIndex != contentIndex){
+                    angular.forEach(item.channelIdList,function(v){
+                        angular.forEach(channel,function(val,indexChannel) {
+                            if(val == v){
+                                angular.forEach(item.dimensionIdList,function(value){
+                                    angular.forEach(dimension,function(key,indexDimension){
+                                        if(key==value){
                                             var channelTip;
-                                            angular.forEach($scope.vm.channels, function (all) {
-                                                if (all.channelCode == v) {
+                                            angular.forEach($scope.vm.channels,function(all){
+                                                if(all.channelCode==v){
                                                     channelTip = all.channelName
                                                 }
-
                                             });
-                                            layer.msg("重复添加" + "渠道 " + channelTip + " 维度 " + $scope.vm.dimensionArr.name[indexDimension]);
-                                            $scope.vm.dimensionArr.id.remove(key);
-                                            $scope.vm.dimensionArr.name.splice(indexDimension, 1);
+                                            layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
+                                            isRepeat = true
                                         }
                                     })
                                 })
                             }
                         });
                     });
-                });
-            }
-        }
-        // 添加时候 存储对象
-        function saveScan(){
-
+                }
+            });
+            return isRepeat
         }
 //*************************************************************************
 

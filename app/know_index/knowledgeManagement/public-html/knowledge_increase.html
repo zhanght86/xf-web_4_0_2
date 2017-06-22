@@ -6,14 +6,12 @@
     <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
         <form action="" name="form" novalidate>
             <textarea name="title" ng-model="vm.newTitle" required></textarea>
-            <!--<span class="c_red" ng-if="form.title.$dirty&&vm.newTitle==''">请添加知识标题</span>-->
         </form>
-
         <div class="checkboxStr mb-10">
             <div>渠道：</div>
             <!--{{vm.channel}}-->
             <label ng-repeat="channel in vm.channels track by $index">
-                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode)" ng-checked="vm.channel.inArray(channel.channelCode)">
+                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode,$event)" ng-checked="vm.channel.inArray(channel.channelCode)">
                 {{channel.channelName}}
             </label>
         </div>
@@ -23,11 +21,6 @@
             <div auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></div>
 
         </div>
-        <!--<div class="Concept-Ipt-nxtDiv">-->
-        <!--<span class="Concept-Ipt-nxt-ico"></span>-->
-        <!--<span class="Concept-Ipt-nxt"> 我们从您的知识内容里提取出了知识表示，您可以对这些知识表示进行编辑以生成概念扩展</span>-->
-        <!--</div>-->
-
         <div class="channel_div mb-10" style="padding-left:80px;">
             <span class="channel_s" >高级选项：</span>
             <a href="javascript:;" class="c-primary unfold_fit" ng-click="vm.slideDown()">
