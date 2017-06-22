@@ -551,6 +551,7 @@ function isHtmlLabel(str){
 function initUpload(url){
     (function ($) {
         $(function () {
+            var layerFlag = true;
             var $wrap = $('#uploader'),
                 $queue = $('<ul class="filelist"></ul>')
                     .appendTo($wrap.find('.queueList')),
@@ -658,7 +659,7 @@ function initUpload(url){
                 chunked: false,
                 chunkSize: 512 * 1024,
                 server: url,
-                timeout: 1000,
+                timeout: 0,
                 accept: {
                     title: 'file',
                     extensions: 'xls,xlsx',
@@ -688,6 +689,13 @@ function initUpload(url){
             });
             uploader.on('ready', function () {
                 window.uploader = uploader;
+            });
+            uploader.on('uploadAccept', function (block, ret, fn) {
+                console.log("====receive response====");
+                if(ret && ret.info){
+                    layerFlag = false;
+                    layer.msg('您的文件上传'+ret.info+'，请关闭当前窗口！');
+                }
             });
             function addFile(file) {
                 var $li = $('<li id="' + file.id + '">' +
@@ -854,7 +862,9 @@ function initUpload(url){
                         break;
                     case 'finish':
                         stats = uploader.getStats();
-                        layer.msg('您的文件正在上传，请关闭当前窗口！');
+                        if(layerFlag){
+                            layer.msg('您的文件正在上传，请关闭当前窗口！');
+                        }
                         break;
                 }
             }

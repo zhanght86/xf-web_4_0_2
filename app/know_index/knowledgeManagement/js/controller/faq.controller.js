@@ -460,7 +460,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
-            debugger;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.isEdit = true ;
@@ -570,8 +569,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 //"knowledgeCreator": $scope.vm.userId, //创建人
-                "knowledgeUpdater": USER_NAME, //操作人
-                "knowledgeCreator": USER_NAME, //操作人
+                "knowledgeUpdater": USER_LOGIN_NAME, //操作人
+                "knowledgeCreator": USER_LOGIN_NAME, //操作人
                 "knowledgeType": 100  //知识类型
             };
             params.knowledgeContents =  $scope.vm.scanContent;

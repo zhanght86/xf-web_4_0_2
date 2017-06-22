@@ -39,7 +39,7 @@
                         <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
                         <!-- fqq 概念-->
                         <div  ng-if="(vm.knowledgeType!=103) && (vm.knowledgeType!=102)">
-                            <p>{{item.knowledgeContent}}</p>
+                            <p ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
                             <span>&nbsp;</span>
                         </div>
                         <!-- 列表-->

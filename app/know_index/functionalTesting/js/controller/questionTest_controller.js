@@ -1,11 +1,6 @@
 /**
  * Created by 41212 on 2017/3/23.
  */
-/**
- * Created by Administrator on 2016/6/3.
- * 控制器
- */
-
 angular.module('functionalTestModule').controller('questionTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
@@ -45,25 +40,23 @@ angular.module('functionalTestModule').controller('questionTestController', [
             }
         }
         //问法测试
-        console.log($scope.vm.applicationId)
         function test(){
 
             $scope.vm.comparisonTextArray=$scope.vm.question.split("\n");         //换行;
             console.log($scope.vm.comparisonTextArray);
 
             if($scope.vm.testTitle==''){
-                alert('请输入标准问法！');
+                layer.msg('请输入标准问法！');
                 return;
             }
             if($scope.vm.question==''){
-                alert('请输入可能问法！');
+                layer.msg('请输入可能问法！');
                 return;
             }
             if($scope.vm.question==''&& $scope.vm.testTitle==''){
-                alert('请输入标准问法和可能问法！');
+                layer.msg('请输入标准问法和可能问法！');
                 return;
             }
-
             httpRequestPost("api/application/questionTest/passageway",{
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.testTitle,
@@ -81,8 +74,6 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 //layer.msg("err or err")
             });
         }
-        
-
         //清空问法；
         function emptyInput(){
             $scope.vm.testTitle='';
@@ -90,7 +81,5 @@ angular.module('functionalTestModule').controller('questionTestController', [
             $scope.vm.comparisonTextArray=[];
             $scope.vm.answerRes="";
         }
-
-        
     }
 ]);

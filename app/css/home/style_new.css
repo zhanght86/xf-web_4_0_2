@@ -17,6 +17,11 @@
 .btn_delete{background:#d95353;}
 .btn_delete:hover{background:#be5353;}
 
+/*select*/
+
+@media \0screen {
+    select{padding-bottom:5px;}
+}
 
 /*我的应用*/
 .my_appbox{box-sizing:border-box;background:#fff;}
@@ -213,7 +218,7 @@
 .step_one_s{
     width: 23px;
     height: 23px;
-    line-height: 20px;
+    line-height: 17px;
     border: 3px solid white;
     background:#be2924;
     border-radius: 50%;
@@ -248,7 +253,7 @@
     border-radius: 3px;
     box-shadow: 0 1px 10px rgba(0,0,0,.4);
 }
-.introjs-tooltipbuttons .introjs-button.c-999{color:#999;}
+.introjs-tooltipbuttons .introjs-button.c-999{color:#999;cursor: default;}
 .introjs-tooltipbuttons .introjs-button{
     width:58px;
     height:26px;
@@ -256,14 +261,12 @@
     overflow: visible;
     display: inline-block;
     padding: .3em .8em;
-    border: 1px solid #d4d4d4;
-    margin: 0;
     text-decoration: none;
-    text-shadow: 1px 1px 0 #fff;
-    color: green;
+    /*text-shadow: 1px 1px 0 #fff;*/
+    color: #333;
     white-space: nowrap;
     cursor: pointer;
-    background-color: #ccc;
+    background: #ccc;
     border:1px solid #eee;
     -webkit-border-radius: .2em;
     -moz-border-radius: .2em;

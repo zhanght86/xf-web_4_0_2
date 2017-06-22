@@ -365,9 +365,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList": question
                 }, function (data) {
-                    console.log(data);
+                    //console.log(data);
                     if (data.status == 500) {
-                        layer.msg("扩展问打标结果为空 请重新打标");
+                        layer.msg("概念扩展打标失败，请检查服务，重新打标");
                         $scope.vm.extensionTitle = "";
                         $scope.$apply();
                     } else if (data.status == 200) {
@@ -635,8 +635,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
-                "knowledgeUpdater": USER_NAME, //操作人
-                "knowledgeCreator": USER_NAME  //操作人
+                "knowledgeUpdater": USER_LOGIN_NAME, //操作人
+                "knowledgeCreator": USER_LOGIN_NAME  //操作人
             };
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
