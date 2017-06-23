@@ -28,3 +28,4 @@ dest
 /app/bower_components/jquery
 
 node_modules/grunt-newer/.cache/
+/node_modules
