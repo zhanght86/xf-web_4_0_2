@@ -401,7 +401,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             var enten = {}  ;
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
-                            enten.wholeDecorateTagList = [ 
+                            enten.wholeDecorateTagList = [
                                 {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
                                 {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
                                 {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
