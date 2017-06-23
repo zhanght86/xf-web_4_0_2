@@ -399,3 +399,5 @@
 .knowledgeSale .jqrsz-item{border-top:0;}
 .knowledgeSale .kuozhan_div span{background:#ccc;padding:2px 5px;display:inline;text-indent:0; line-height:25px;margin:4px 5px 4px 2px;}
 
+/*聊天知识库*/
+.chatKnowBase .webuploader-pick{height:30px;line-height:25px;}
