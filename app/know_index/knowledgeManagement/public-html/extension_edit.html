@@ -9,45 +9,29 @@
             <div class="framework mb-10">
                 <div class="framework_s tr" style="width:95px;line-height:38px;">非必要:</div>
                 <div>
-                    <div class="input_text bd" auto-complete-selec width="'100px'"></div>
-                    <!--<select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">-->
-                        <!--<option value="">信用卡</option>-->
-                        <!--<option value="">办理</option>-->
-                    <!--</select>-->
+                    <input class="input_text bd" tag-auto-complete result="vm.backupsOfExtension.wholeDecorateTagList[0].wholeDecorateTagNameList"/>
                 </div>
             </div>
             <div class="framework mb-10">
                 <div class="framework_s tr" style="width:95px;line-height:38px;">必要:</div>
                 <div>
-                    <div class="input_text bd"></div>
-                    <!--<input type="text" class="input_text"/>-->
-                    <!--<select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">-->
-                        <!--<option value="">信用卡</option>-->
-                        <!--<option value="">办理</option>-->
-                    <!--</select>-->
+                    <input class="input_text bd" tag-auto-complete result="vm.backupsOfExtension.wholeDecorateTagList[1].wholeDecorateTagNameList"/>
+
                 </div>
             </div>
             <div class="framework mb-10">
                 <div class="framework_s tr" style="width:95px;line-height:38px;">非:</div>
                 <div>
-                    <div class="input_text bd"></div>
-                    <!--<input type="text" class="input_text"/>-->
-                    <!--<select class="chosen-select"  style="width:260px;" tabindex="7" id="group_users" data-placeholder="请选择组员">-->
-                        <!--<option value="">办理</option>-->
-                        <!--<option value="">怎么</option>-->
-                    <!--</select>-->
+                    <input class="input_text bd" tag-auto-complete result="vm.backupsOfExtension.wholeDecorateTagList[2].wholeDecorateTagNamelist"/>
                 </div>
-            </div>
-            <div class="tc mt-20">
-                <input type="button" class="btn1 btn1_blue" value="保存"/>
             </div>
         </div>
         <div ng-show="vm.isDecorateSimple">
             <p class="mb-10">*用户可以修饰单个标签的权重</p>
             <div class="cl">
-                <div class="tag_div mr-10 L">
+                <div class="tag_div mr-10 L" ng-repeat="item in vm.backupsOfExtension.extensionQuestionTagList">
                     <p class="mb-5">信用卡</p>
-                    <select class="sel bd">
+                    <select class="sel bd" ng-model="item.tagTypeList[0]">
                         <option value="31">极重要</option>
                         <option value="32">重要</option>
                         <option value="33">一般</option>
@@ -56,9 +40,9 @@
                     </select>
                 </div>
             </div>
-            <div class="tc mt-20">
-                <input type="button" class="btn1 btn1_blue" value="保存"/>
-            </div>
+        </div>
+        <div class="tc mt-20">
+            <input type="button" class="btn1 btn1_blue" value="保存修改 " ng-click="closeThisDialog(1)"/>
         </div>
     </div>
 </div>
@@ -67,24 +51,6 @@
     .tag_div p{font-size:14px;}
     .tag_div select{font-size:12px;}
 </style>
-<script>
-
-//    //插件
-//    var select_Group_user = '';
-//    var select_Group_classifiy = '';
-//    $(function() {
-//        //loadClassifyZtree();//ztree
-//        // queryGroupUserByName();
-//        $('.chosen-select').chosen();//加载 amazeui Chosen
-//        $('.chosen-select').on('change', function(e, params,param) {
-////            console.log("我被触发了-->>",params);
-//            if(params!=null &&params!=undefined &&$.trim(params)!=''){
-//                select_Group_user = '';
-//                select_Group_user = params.selected;
-//            }
-//        });
-//    });
-</script>
 
 
 

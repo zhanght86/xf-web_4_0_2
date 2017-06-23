@@ -82,19 +82,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             isEditIndex : -1,   // 知识内容 弹框
                         // -1 为内容新增
                         // index 为知识的编辑索引
-            increaseCheck  : increaseCheck  //知识新增弹框保存按钮
+            increaseCheck  : increaseCheck , //知识新增弹框保存按钮
+            backupsOfExtension : "" //扩展问 编辑备份
         };
-        function increaseCheck(){
-            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
-                layer.msg("请填写知识内容,并选择渠道后保存")
-            }else if(!$scope.vm.newTitle){
-                layer.msg("请填写知识内容后保存")
-            }else if(!$scope.vm.channel.length){
-                layer.msg("请选择渠道后保存")
-            }else{
-                ngDialog.closeAll(1) ;
-            }
-        }
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -332,7 +322,11 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = weight ;
-                        enten.wholeDecorateTagList = new Array({"wholeDecorateTagName":"","wholeDecorateTagType":""});
+                        enten.wholeDecorateTagList = [
+                            {"wholeDecorateTagName":[],"wholeDecorateTagType":"36"},
+                            {"wholeDecorateTagName":[],"wholeDecorateTagType":"37"},
+                            {"wholeDecorateTagName":[],"wholeDecorateTagType":"38"}
+                        ];
                         enten.extensionQuestionTagList = [] ;
                         angular.forEach(data.data,function(tagList){
                             angular.forEach(tagList.extensionQuestionTagList,function(item){
@@ -340,7 +334,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                     "exist" : item.exist ,
                                     "tagClass" : item.tagClass ,
                                     "tagName" : item.tagName ,
-                                    "tagTypeList" : new Array(item.tagType)
+                                    "tagType" : item.tagType
                                 };
                                 enten.extensionQuestionTagList.push(tagTem) ;
                             });
@@ -447,7 +441,11 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             var enten = {}  ;
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
-                            enten.wholeDecorateTagList = new Array({"wholeDecorateTagName":"","wholeDecorateTagType":""});
+                            enten.wholeDecorateTagList = [
+                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"36"},
+                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"37"},
+                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"38"}
+                            ];
                             enten.extensionQuestionTagList = [] ;
                             angular.forEach(data.data,function(tagList){
                                 angular.forEach(tagList.extensionQuestionTagList,function(item){
@@ -455,7 +453,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                         "exist" : item.exist ,
                                         "tagClass" : item.tagClass ,
                                         "tagName" : item.tagName ,
-                                        "tagTypeList" : new Array(item.tagType)
+                                        "tagType" : item.tagType
                                     };
                                     enten.extensionQuestionTagList.push(tagTem) ;
                                 });
@@ -745,23 +743,29 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
 
 
-        function extensionEdit(){
+        function extensionEdit(type,item,index){
+            //type  1 框架生成  0 手动添加
+            $scope.vm.backupsOfExtension = angular.copy(item) ;
+            console.log($scope.vm.backupsOfExtension) ;
             var dia = angular.element(".ngdialog ");
-            if(dia.length==0) {
+            if(dia.length==0){
                 var extensionEdit = ngDialog.openConfirm({
-                    width :"521px" ,
                     template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
+                    width:"500px",
                     scope: $scope,
-                    closeByDocument: false,
+                    closeByDocument:false,
                     closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {     //关闭回掉
-                        if (e === 1) {
-                            //getExtensionByFrame( id ,1 )
-                        } else if (e === 0) {
-                            //getExtensionByFrame( id ,0 )
-                        }
+                    showClose : true,
+                    backdrop : 'static',
+                    preCloseCallback:function(e){     //关闭回掉
+                        if(e === 1){
+                            console.log( $scope.vm.backupsOfExtension ) ;
+                            if(type){
+                                $scope.vm.extensionsByFrame[index] = $scope.vm.backupsOfExtension
+                            }else{
+                                $scope.vm.extensions[index] = $scope.vm.backupsOfExtension
+                            }
+                        }else{$scope.vm.backupsOfExtension = ""; }
                     }
                 });
             }

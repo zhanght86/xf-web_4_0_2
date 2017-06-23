@@ -86,7 +86,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             prevDiv : prevDiv,
             nextDiv : nextDiv,
             //引到页end
-            increaseCheck  : increaseCheck  //知识新增弹框保存按钮
+            increaseCheck  : increaseCheck , //知识新增弹框保存按钮
+            backupsOfExtension : "" //扩展问 编辑备份
         };
 
         //獲取渠道
@@ -314,7 +315,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
-                console.log(data);
                 if(data.status==200){
                     var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
                     if(isTagRepeat(data.data,allExtension)){
@@ -323,7 +323,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = weight ;
-                        enten.wholeDecorateTagList = new Array({"wholeDecorateTagName":"","wholeDecorateTagType":""});
+                        enten.wholeDecorateTagList = [
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
+                        ];
                         enten.extensionQuestionTagList = [] ;
                         angular.forEach(data.data,function(tagList){
                             angular.forEach(tagList.extensionQuestionTagList,function(item){
@@ -331,7 +335,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                     "exist" : item.exist ,
                                     "tagClass" : item.tagClass ,
                                     "tagName" : item.tagName ,
-                                    "tagTypeList" : new Array(item.tagType)
+                                    "tagType" : item.tagType
                                 };
                                 enten.extensionQuestionTagList.push(tagTem) ;
                             });
@@ -384,6 +388,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList": question
                 }, function (data) {
+                    //console.log(data)
                     if (data.status == 500) {
                         layer.msg("改成概念扩展打标失败，请检查服务，重新打标");
                         $scope.vm.extensionTitle = "";
@@ -396,7 +401,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             var enten = {}  ;
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
-                            enten.wholeDecorateTagList = new Array({"wholeDecorateTagName":"","wholeDecorateTagType":""});
+                            enten.wholeDecorateTagList = [ 
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
+                            ];
                             enten.extensionQuestionTagList = [] ;
                             angular.forEach(data.data,function(tagList){
                                 angular.forEach(tagList.extensionQuestionTagList,function(item){
@@ -404,7 +413,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                         "exist" : item.exist ,
                                         "tagClass" : item.tagClass ,
                                         "tagName" : item.tagName ,
-                                        "tagTypeList" : new Array(item.tagType)
+                                        "tagType" : item.tagType
                                     };
                                     enten.extensionQuestionTagList.push(tagTem) ;
                                 });
@@ -668,11 +677,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             }
         }
-        function extensionEdit(){
+        function extensionEdit(type,item,index){
+            //type  1 框架生成  0 手动添加
+            $scope.vm.backupsOfExtension = angular.copy(item) ;
+            console.log($scope.vm.backupsOfExtension) ;
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
-                 var extensionEdit = ngDialog.openConfirm({
-                     template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
+            var extensionEdit = ngDialog.openConfirm({
+                template:"/know_index/knowledgeManagement/public-html/extension_edit.html",
                 width:"500px",
                 scope: $scope,
                 closeByDocument:false,
@@ -681,10 +693,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 backdrop : 'static',
                 preCloseCallback:function(e){     //关闭回掉
                     if(e === 1){
-                        //getExtensionByFrame( id ,1 )
-                    }else if(e === 0){
-                        //getExtensionByFrame( id ,0 )
-                    }
+                        console.log( $scope.vm.backupsOfExtension ) ;
+                        if(type){
+                            $scope.vm.extensionsByFrame[index] = $scope.vm.backupsOfExtension
+                        }else{
+                            $scope.vm.extensions[index] = $scope.vm.backupsOfExtension
+                        }
+                    }else{$scope.vm.backupsOfExtension = ""; }
                 }
             });
             }
