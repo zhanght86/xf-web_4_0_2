@@ -83,7 +83,13 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         // -1 为内容新增
                         // index 为知识的编辑索引
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
-            backupsOfExtension : "" //扩展问 编辑备份
+            backupsOfExtension : "" ,//扩展问 编辑备份
+            //引到页
+            showTip : showTip,
+            hideTip : hideTip,
+            prevDiv : prevDiv,
+            nextDiv : nextDiv,
+            //引到页end
         };
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
@@ -1071,6 +1077,47 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
             });
         }
+        //引导页方法
+        function showTip(){
+            $('.shadow_div').show();
+            $('.step_div').show();
+            $('#step_one').show().siblings().hide();
+
+        }
+        function hideTip(){
+            $('.shadow_div').hide();
+            $('.step_div').hide();
+        }
+
+        //上一个
+        function prevDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().prev()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().prev().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().prev().offset().top-20
+                }, 500);
+            }else{
+                // $(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //下一个
+        function nextDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().next()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().next().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().next().offset().top-20
+                }, 500);
+            }else{
+                //$(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //引导页方法end
 
     }
 ]);
