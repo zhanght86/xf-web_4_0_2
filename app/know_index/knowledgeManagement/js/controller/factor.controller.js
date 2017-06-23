@@ -537,9 +537,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
                             enten.wholeDecorateTagList = [
-                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"36"},
-                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"37"},
-                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"38"}
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
                             ];
                             enten.extensionQuestionTagList = [] ;
                             angular.forEach(data.data,function(tagList){

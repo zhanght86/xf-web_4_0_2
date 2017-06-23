@@ -329,9 +329,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         enten.extensionQuestionTitle = title;
                         enten.extensionQuestionType = weight ;
                         enten.wholeDecorateTagList = [
-                            {"wholeDecorateTagName":[],"wholeDecorateTagType":"36"},
-                            {"wholeDecorateTagName":[],"wholeDecorateTagType":"37"},
-                            {"wholeDecorateTagName":[],"wholeDecorateTagType":"38"}
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
                         ];
                         enten.extensionQuestionTagList = [] ;
                         angular.forEach(data.data,function(tagList){
@@ -367,7 +367,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //            enten.extensionQuestionType = weight ;
         //            var listArr = [];
         //            var listObj = {};
-        //            listObj.wholeDecorateTagName="";
+        //            listObj.wholeDecorateTagNameList="";
         //            listObj.wholeDecorateTagType="";
         //            listArr.push(listObj);
         //            enten.wholeDecorateTagList = listArr;
@@ -448,9 +448,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
                             enten.wholeDecorateTagList = [
-                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"36"},
-                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"37"},
-                                {"wholeDecorateTagName":[],"wholeDecorateTagType":"38"}
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
                             ];
                             enten.extensionQuestionTagList = [] ;
                             angular.forEach(data.data,function(tagList){

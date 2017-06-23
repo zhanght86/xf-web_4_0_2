@@ -109,7 +109,6 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
                     //placeholder: '输入内容点击enter添加您的标签 ...'
                     onChange: function(field, editor, tags) {
                         $scope.result = tags ;
-                        console.log(tags)
                     },
                     beforeTagSave: function(field, editor, tags, tag, val) {
                         //保存之前的

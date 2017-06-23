@@ -22,7 +22,7 @@
             <div class="framework mb-10">
                 <div class="framework_s tr" style="width:95px;line-height:38px;">非:</div>
                 <div>
-                    <input class="input_text bd" tag-auto-complete result="vm.backupsOfExtension.wholeDecorateTagList[2].wholeDecorateTagNamelist"/>
+                    <input class="input_text bd" tag-auto-complete result="vm.backupsOfExtension.wholeDecorateTagList[2].wholeDecorateTagNameList"/>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="cl">
                 <div class="tag_div mr-10 L" ng-repeat="item in vm.backupsOfExtension.extensionQuestionTagList">
                     <p class="mb-5">信用卡</p>
-                    <select class="sel bd" ng-model="item.tagTypeList[0]">
+                    <select class="sel bd" ng-model="item.tagType">
                         <option value="31">极重要</option>
                         <option value="32">重要</option>
                         <option value="33">一般</option>
@@ -47,10 +47,10 @@
     </div>
 </div>
 
-<style>
-    .tag_div p{font-size:14px;}
-    .tag_div select{font-size:12px;}
-</style>
+<!--<style>-->
+    <!--.tag_div p{font-size:14px;}-->
+    <!--.tag_div select{font-size:12px;}-->
+<!--</style>-->
 
 
 
