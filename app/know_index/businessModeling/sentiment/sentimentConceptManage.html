@@ -4,22 +4,24 @@
     </div>
     <div>
         <div class="conceptSearch clearfix">
-            <div class=" L bd mr-5">
+            <div class=" L  mr-5">
 
-                <select id="searchType" ng-model="vm.searchType" style="height: 31px;">
+                <select id="searchType" ng-model="vm.searchType"  class="bd L" style="width:130px;height: 30px;border-right:0;">
                     <option value="sentimentConceptKey" selected>情感概念类名</option>
                     <option value="sentimentConceptTerm">情感概念集合</option>
                     <option value="sentimentConceptModifier">修改人</option>
                     <option value="sentimentConceptModifyTime">更新时间</option>
                 </select>
-                <input type="text" ng-if="vm.searchType!='sentimentConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="border:0;height:19px;" ng-keypress="($event.which === 13)?vm.search():0"/>
-                <div style="margin: -31px 0px 0px 110px;" ng-if="vm.searchType=='sentimentConceptModifyTime'">
-                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
-                    -
-                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:170px;border:1px solid #e1e1e1;height: 31px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                <div class="L " style="height:30px;overflow:hidden;">
+                    <input type="text" ng-if="vm.searchType!='sentimentConceptModifyTime'" ng-model="vm.searchVal" class="input_text" style="height:30px;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                    <div  ng-if="vm.searchType=='sentimentConceptModifyTime'">
+                        <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="background-color:#fff;width:170px;border:1px solid #e1e1e1;height: 30px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        -
+                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="background-color:#fff;width:170px;border:1px solid #e1e1e1;height: 30px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    </div>
                 </div>
             </div>
-            <input type="button" value="查找" ng-click="vm.searchSentimentConcept(1)"  class="btn1 btn1_blue"/>
+            <input type="button" value="查找" ng-click="vm.searchSentimentConcept(1)"  class="btn1 btn1_blue L"/>
             <div class=" conceptSearchRt">
                 <!--<a class="btn btn-blue mr10" id="addCase" ng-click="vm.addSentiment()">新增</a>
                 <a class="btn btn-blue mr10" href="javascript:;">批量新增</a>
