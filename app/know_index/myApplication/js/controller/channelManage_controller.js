@@ -380,38 +380,63 @@ angular.module('myApplicationSettingModule').controller('channelManageController
 
         //移除黑名单
         function delBlacklist(blackListId){
-            httpRequestPost("/api/application/channel/deleteBlackList",{
-                "applicationId": $scope.vmo.applicationId,
-                "blackListId": blackListId
-            },function(data){
-                layer.msg("移除成功");
-                //$state.reload();
-                listBlackListData(1);
-            },function(){
-                layer.msg("请求失败")
-            })
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/deleteDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){
+                    if(e === 1){
+                        httpRequestPost("/api/application/channel/deleteBlackList",{
+                            "applicationId": $scope.vmo.applicationId,
+                            "blackListId": blackListId
+                        },function(data){
+                            layer.msg("移除成功");
+                            //$state.reload();
+                            listBlackListData(1);
+                        },function(){
+                            layer.msg("请求失败")
+                        })
+                    }
+                }
+            });
         }
 
         //批量移除黑名单
         function batchDelBlacklist(){
-            httpRequestPost("/api/application/channel/batchDelBlackList",{
-                "applicationId": $scope.vmo.applicationId,
-                "blackListIds": $scope.selectedList
-            },function(data){
-                if(data.data===10000){
-                    layer.msg("移除成功");
-                    //$state.reload();
-                    listBlackListData(1);
-                }else{
-                    layer.msg("移除失败");
+            if($scope.selectedList.length == 0){
+                layer.msg("请选择要删除的黑名单!");
+                return;
+            }
+            var dialog = ngDialog.openConfirm({
+                template:"/know_index/admin/deleteDialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){
+                    if(e === 1){
+                        httpRequestPost("/api/application/channel/batchDelBlackList",{
+                            "applicationId": $scope.vmo.applicationId,
+                            "blackListIds": $scope.selectedList
+                        },function(data){
+                            if(data.data===10000){
+                                layer.msg("移除成功");
+                                //$state.reload();
+                                listBlackListData(1);
+                            }else{
+                                layer.msg("移除失败");
+                            }
+                        },function(){
+                            layer.msg("请求失败")
+                        })
+                    }
                 }
-            },function(){
-                layer.msg("请求失败")
-            })
+            });
         }
-
-
-
 
         //创建变量用来保存选中结果
         $scope.selectedList = [];

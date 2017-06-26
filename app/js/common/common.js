@@ -908,6 +908,11 @@ function initUpload(url){
 
             uploader.onError = function (code) {
                 console.log('错误: ' + code);
+                switch (code){
+                    case "Q_TYPE_DENIED":layer.msg('上传文件类型错误！');break;
+                    case "Q_EXCEED_SIZE_LIMIT":layer.msg('超过限制大小！');break;
+                    case "Q_EXCEED_NUM_LIMIT":layer.msg('超过上传数量！');break;
+                }
             };
 
             $upload.on('click', function () {
