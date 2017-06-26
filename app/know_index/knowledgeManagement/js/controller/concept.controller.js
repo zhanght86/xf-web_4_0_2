@@ -736,10 +736,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     }else if(data.status == 200){
-                        //console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                        $scope.vm.knowledgeTitleTag = [];
-                        $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
+                        $scope.$apply(function(){
+                            $scope.vm.knowledgeTitleTag = angular.copy(data.data.knowledgeTitleTagList);
+                        }) ;
                         angular.forEach(data.data.classifyList, function (item) {
                             var obj = {};
                             obj.className = item.fullPath;
