@@ -15,9 +15,8 @@
                     <span>知识有效期：</span>
                     {{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}
                 </p>
-                <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span><b  style="font-weight:normal;">{{item.className.join("/")}}</b></p>
+                <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span> <b  style="font-weight:normal;">{{item.className.join("/")}}</b></p>
             </li>
-
             <!-- 要素列表 faq -->
             <li  ng-if="vm.knowledgeType!=101" class="borderN">
                 <p ng-if="vm.knowledgeType!=100" ng-repeat="item in vm.listData.extensionQuestions track by $index">
@@ -39,7 +38,7 @@
                         <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
                         <!-- fqq 概念-->
                         <div  ng-if="(vm.knowledgeType!=103) && (vm.knowledgeType!=102)">
-                            <p>{{item.knowledgeContent}}</p>
+                            <p ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
                             <span>&nbsp;</span>
                         </div>
                         <!-- 列表-->
@@ -62,16 +61,24 @@
                             <span>&nbsp;</span>
                         </div>
                     </div>
-                    <p>
+                    <p class="mb-10">
                         <span>知识配置：</span>
                         <b style="font-weight:normal;margin-right:10px;" ng-show="item.knowledgeRelatedQuestionOn">显示相关问题</b>
                         <b style="font-weight:normal;margin-right:10px;" ng-show="item.knowledgeBeRelatedOn">在相关问题内提示</b>
                         <b style="font-weight:normal;margin-right:10px;" ng-show="item.knowledgeCommonOn">弹出评价小尾巴</b>
                     </p>
-                    <p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList">
-                        <span ng-class="indexVal?'':'mileVs'">已添加知识：</span>
-                        <span>{{indexVal}}{{val}}</span>
-                    </p>
+                    <!--<p ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList">-->
+                        <!--<span ng-class="indexVal?'':'mileVs'">已添加知识：</span>-->
+                        <!--<span style="width:100%;">{{indexVal}}{{val}}</span>-->
+                    <!--</p>-->
+                    <div class="pr" style="padding-left:150px;">
+                        <span  class="pa dib" style="width:150px;left:0;top:0;color:#666;">已添加知识：</span>
+                        <div>
+                            <p class="mb-10" ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList">
+                                <span style="width:100%;text-align:left;color:#333;">{{indexVal+1}}. {{val}}</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </li>
             <!-- 概念知识 位置-->

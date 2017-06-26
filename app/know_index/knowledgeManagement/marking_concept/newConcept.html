@@ -1,11 +1,17 @@
-<div class="main warp">
+<!--引导页头部遮罩-->
+<div class="shadow_div dn" style="height:60px;" ></div>
+<!--引导页头部遮罩end-->
+<div class="main warp knowledgeSale">
     <div class="addContent pd30">
-        <div class="r-cont-hd">
-            <span ng-if="!vm.knowledgeId">营销知识新增</span>
-            <span ng-if="vm.knowledgeId">营销知识编辑</span>
+        <div class="cl">
+            <div class="r-cont-hd L">
+                <span ng-if="!vm.knowledgeId">营销知识新增</span>
+                <span ng-if="vm.knowledgeId">营销知识编辑</span>
+            </div>
+            <a href="javascript:;" class="c_green R" ng-click="vm.showTip();">使用帮助</a>
         </div>
         <!--<auto-complete ng-if="vm.dimensionsCopy" source="vm.dimensionsCopy" result="vm.dimensionArr"></auto-complete>-->
-        <div class="r-cont-bd oh">
+        <div class="r-cont-bd oh pr">
             <!--<form novalidate="novalidate" name="form">-->
             <div class="jqrsz-item">
                 <div class="item-line">
@@ -171,10 +177,8 @@
                         </div>
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
-                                <div class="textareaDiv textareaDiv1 textareaDiv2 L" >
-                                <!--<textarea   readonly style="width: 100%;">-->
-                                    {{item.knowledgeContent}}
-                                <!--</textarea>-->
+                                <div class="textareaDiv textareaDiv1 textareaDiv2 L " >
+                                    <p ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
                                 </div>
                                 <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
                                 <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
@@ -217,10 +221,90 @@
                     </div>
                 </div>
             </div>
-            <div class="jqrsz-btn-box">
+            <div class="jqrsz-btn-box" style="margin-bottom:120px;">
                 <a class="btn btn-blue mr10" href="javascript:;" ng-disabled="vm.limitSave" ng-click="vm.save()">保存</a>
                 <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>
             </div>
+            <!--引导-->
+            <div class="shadow_div dn" ></div>
+            <div class="step_div " >
+                <div class="step_one dn" id="step_one" >
+                    <div class="step_one_s">1</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>知识标题：您只需要填写这个知识的标准的提问方式，然后点击后面的生成按钮，系统会自动生成BOT路径哦~</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  disabled class="c-999 introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_two dn" id="step_two">
+                    <div class="step_one_s">2</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>BOT:除了自动生成的BOT路径，您还可以点击选择按钮选择您所希望的BOT类目路径。选好了别忘了点击后面的加号，路径可以添加多个哦~</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_three dn" id="step_three">
+                    <div class="step_one_s">3</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>业务框架：选择完毕路径之后，我们根据目前所选择的BOT，为您列出符合要求的业务框架，您可以选择对应的业务框架以节省编写扩展问的时间。业务框架可以添加多个哦~
+                        </p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_four dn" id="step_four">
+                    <div class="step_one_s">4</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>扩展问题：您可以自行填写扩展问题，应对问题的多样化.
+                        </p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_five dn" id="step_five">
+                    <div class="step_one_s">5</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>营销内容：营销内容就是答案，可以根据渠道维度的不同填写多个哦!
+                        </p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step_one step_six dn" id="step_six">
+                    <div class="step_one_s">6</div>
+                    <div class="step_one_arrow"></div>
+                    <div class="step_one_con">
+                        <p>最后一步：编辑完知识可以选择预览，或者保存，就可以啦!</p>
+                        <div class="tr introjs-tooltipbuttons">
+                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">完成</button>
+                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
+                            <button  disabled class="c-999 introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--引导end-->
         </div>
     </div>
 </div>
@@ -228,22 +312,7 @@
     .container{
         background:#f8f8f8;
     }
-    .ipt-txt{
-        border: 1px  solid #e1e1e1;
-        height:34px;
-        line-height:34px;
-        box-sizing:border-box;
-    }
-    .jqrsz-item .item-line .value .ipt-txt{width:407px;}
-    .tag_box{width:347px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
-    .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
-    .tagRepeat{
-        background: #fff;
-        color: #ed;
-    }
-    .jqrsz-item{border-top:0;}
-    .kuozhan_div span{background:#ccc;padding:2px 5px;display:inline;text-indent:0; line-height:25px;margin:4px 5px 4px 2px;}
 
 
 </style>

@@ -40,8 +40,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             //展示内容
             scanContent : [],
-            saveContent : [],
-
             save : save ,   //保存
             scan :scan ,    //预览
             //弹框相关
@@ -85,9 +83,19 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             prevDiv : prevDiv,
             nextDiv : nextDiv,
             //引到页end
-
+            increaseCheck  : increaseCheck  //知识新增弹框保存按钮
         };
-
+        function increaseCheck(){
+            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
+                layer.msg("请填写知识内容,并选择渠道后保存")
+            }else if(!$scope.vm.newTitle){
+                layer.msg("请填写知识内容后保存")
+            }else if(!$scope.vm.channel.length){
+                layer.msg("请选择渠道后保存")
+            }else{
+                ngDialog.closeAll(1) ;
+            }
+        }
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -460,7 +468,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
         function knowledgeAdd(data,index){
-            debugger;
             var dia = angular.element(".ngdialog ");
             if(data){    //增加
                 $scope.vm.isEdit = true ;

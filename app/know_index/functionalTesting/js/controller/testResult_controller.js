@@ -15,6 +15,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             editQuestion : editQuestion,
             pageSize : 5,            //每页条数；
             paginationConf : '',     //分页条件
+            paginationConf1 : '',     //分页条件
             applicationId : $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),
             batchNumberId:$stateParams.batchNumberId,
@@ -96,6 +97,19 @@ angular.module('functionalTestModule').controller('testResultController', [
                 }
                 timeout = $timeout(function () {
                     showData(current);
+                    searchFile(current);
+                }, 0);
+            }
+        },true);
+
+        var timeout ;
+        $scope.$watch('vm.paginationConf1.currentPage', function(current){
+            if(current){
+                if (timeout) {
+                    $timeout.cancel(timeout);
+                }
+                timeout = $timeout(function () {
+                    searchFile(current);
                 }, 0);
             }
         },true);
@@ -190,6 +204,7 @@ angular.module('functionalTestModule').controller('testResultController', [
         }
         //查询
         function searchFile(index){
+            $scope.vm.paginationConf.totalItems= 0
             //alert(1);
             httpRequestPost("/api/application/testResult/searchKnowledge",{
                 index:(index - 1)*$scope.vm.pageSize,
@@ -200,7 +215,6 @@ angular.module('functionalTestModule').controller('testResultController', [
                 answerCondition : $scope.vm.answerCondition,
                 possibleKnowledge : $scope.vm.selectInput,
                 knowledgeTitle : $scope.vm.selectInput
-
             },function(data){
                 console.log(data);
                 if(data.status == 10014){
@@ -208,7 +222,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     $scope.vm.listDataTotal = data.data.total;
                     // $scope.vm.listDataLength = data.data.total;
 
-                    $scope.vm.paginationConf = {
+                    $scope.vm.paginationConf1 = {
                         currentPage: index,//当前页
                         totalItems: data.data.total, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
@@ -218,7 +232,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
                     layer.msg("没有查询到记录!",{time:1000})
-                    $scope.vm.paginationConf = {
+                    $scope.vm.paginationConf1 = {
                         currentPage: index,//当前页
                         totalItems: 0, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
