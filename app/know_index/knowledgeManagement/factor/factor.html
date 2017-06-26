@@ -79,7 +79,6 @@
                                 <a href="javascript:;" class="L mr-10 mt-5" ng-if="item.classificationType==0" ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                             </div>
                         </div>
-
                     </div>
                     <!--手选生成-->
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
@@ -120,6 +119,21 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 标题打标结果-->
+                    <div class="exten_problem" ng-if="vm.knowledgeTitleTag">
+                        <div class="list_facContent mb-10">
+                            <div class="list_facContent_L">概念扩展：</div>
+                            <div >
+                                <div class="L extended_query_txt" style="width:345px;border:0;height: 34px" >
+                                   <span ng-repeat="val in vm.knowledgeTitleTag" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" >
+                                       {{val}}
+                                    </span>
+                                </div>
+                                <span class="tag_s mr-10 L bd" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">普通</span>
+                                <span class="L"><b>来源于</b> <span>{{vm..title}}</span></span>
+                            </div>
+                        </div>
+                    </div>
                     <!-- 概念 擴展 -->
                     <!--sshoudong  tinajia -->
                     <div class="exten_problem"  ng-repeat="(itemIndex,item) in vm.extensions track by $index">
@@ -157,6 +171,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="list_facContent mb-50">
                         <div class="list_facContent_L">知识内容: &nbsp;</div>
                         <div >

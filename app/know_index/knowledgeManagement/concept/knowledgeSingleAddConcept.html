@@ -175,6 +175,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- 标题打标结果-->
+                <div class="item-line"  style="overflow: visible" ng-if="vm.knowledgeTitleTag">
+                    <div class="lable">
+                        概念扩展：{{vm.knowledgeTitleTag}}
+                    </div>
+                    <div class="value clearfix">
+                        <div class=" tag_box L mr-10" style="width:353px;padding:0;">
+                            <!--{{item.extensionQuestionTagList}}-->
+                            <span ng-repeat="val in vm.knowledgeTitleTag track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;">
+                                {{val}}
+                            </span>
+                        </div>
+                        <span class="tag_s L" style="margin-right:10px;">普通</span>
+                        <span class="L" ng-if="vm.title"><b>来源于:</b> <span>{{vm.title}}</span></span>
+                    </div>
+                </div>
                 <!--sshoudong  tinajia -->
                 <div class="item-line"  style="overflow: visible" ng-repeat="(itemIndex,item) in vm.extensions track by $index">
                     <div class="lable">
@@ -219,7 +235,7 @@
             </div>
             <!--引导-->
             <div class="shadow_div dn" ></div>
-            <div class="step_div " >
+            <div class="step_div ">
                 <div class="step_one dn" id="step_one" >
                     <div class="step_one_s">1</div>
                     <div class="step_one_arrow"></div>

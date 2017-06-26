@@ -618,8 +618,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.$apply();
                     }else if(data.status == 200){
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                        $scope.vm.knowledgeTitleTag = [];
-                        $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList;
+                        $scope.$apply(function(){
+                            $scope.vm.knowledgeTitleTag = angular.copy(data.data.knowledgeTitleTagList);
+                        }) ;
                         angular.forEach(data.data.classifyList, function (item) {
                             var obj = {};
                             obj.className = item.fullPath;
@@ -668,15 +669,17 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
             return params
         }
+        var limitTimer ;
         function save() {
                 if (!checkSave()) {
                     return false
                 } else {
                     if(!$scope.vm.limitSave){
-                             $scope.vm.limitSave = true ;
-                            $timeout(function(){
-                                $scope.vm.limitSave = false ;
-                            },180000) ;
+                        $timeout.cancel(limitTimer) ;
+                        $scope.vm.limitSave = true ;
+                        limitTimer = $timeout(function(){
+                            $scope.vm.limitSave = false ;
+                        },180000) ;
                             var params = getParams();
                             var api;
                             if ($scope.vm.knowledgeId) {
@@ -693,9 +696,13 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                                     console.log(data);
                                     var url = $state.go('custServScenaOverview.manage');
                                 } else if (data.status == 500) {
-                                    layer.msg("保存失败")
+                                    layer.msg("知识保存失败") ;
+                                    $timeout.cancel(limitTimer) ;
+                                    $scope.vm.limitSave = false ;
                                 }
                             }, function (err) {
+                                $timeout.cancel(limitTimer) ;
+                                $scope.vm.limitSave = false ;
                                 console.log(err)
                             });
                         }
