@@ -576,19 +576,20 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             params.classificationAndKnowledgeList = $scope.vm.botClassfy;
             return params
         }
+        var limitTimer ;
         function save(){
                 if (!checkSave()) {
                     return false
                 } else {
                     if(!$scope.vm.limitSave) {
-                        $scope.vm.limitSave = true;
-                        $timeout(function(){
+                        $timeout.cancel(limitTimer) ;
+                        $scope.vm.limitSave = true ;
+                        limitTimer = $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
                         $scope.vm.data = getParams();
                         var api = $scope.vm.knowledgeId?"/api/ms/faqKnowledge/editFAQKnowledge":"/api/ms/faqKnowledge/addFAQKnowledge";
                         httpRequestPost(api, getParams(), function (data) {
-                            console.log(data);
                             if (data.status == 200) {
                                 if ($scope.vm.docmentation) {
                                     //文档知识分类状态回掉
@@ -597,9 +598,15 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                                     //open
                                     $state.go("custServScenaOverview.manage");
                                 }
+
+                            }else if (data.status == 500) {
+                                layer.msg("知识保存失败") ;
+                                $timeout.cancel(limitTimer) ;
+                                $scope.vm.limitSave = false ;
                             }
                         }, function (err) {
-                            //console.log(err)
+                            $timeout.cancel(limitTimer) ;
+                            $scope.vm.limitSave = false ;
                         });
                 }
             }

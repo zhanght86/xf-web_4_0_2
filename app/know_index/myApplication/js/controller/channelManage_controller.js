@@ -396,8 +396,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             layer.msg("移除成功");
                             //$state.reload();
                             listBlackListData(1);
-                        },function(){
-                            layer.msg("请求失败")
+                        },function(error){
+                            console.log(error)
                         })
                     }
                 }
@@ -409,7 +409,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             if($scope.selectedList.length == 0){
                 layer.msg("请选择要删除的黑名单!");
                 return;
-            }
+            }else{
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/admin/deleteDialog.html",
                 scope: $scope,
@@ -425,17 +425,16 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                         },function(data){
                             if(data.data===10000){
                                 layer.msg("移除成功");
-                                //$state.reload();
                                 listBlackListData(1);
                             }else{
                                 layer.msg("移除失败");
                             }
-                        },function(){
-                            layer.msg("请求失败")
+                        },function(error){
+                            console.log(error)
                         })
                     }
                 }
-            });
+            });}
         }
 
         //创建变量用来保存选中结果
@@ -463,7 +462,6 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         function isSelected(id) {
             return $scope.selectedList.indexOf(id) >= 0;
         };
-
 
         //全选
         function selectAll ($event){

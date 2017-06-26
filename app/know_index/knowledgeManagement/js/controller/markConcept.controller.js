@@ -833,14 +833,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
             return params
         }
-
+        var limitTimer ;
         function save(){
                 if(!checkSave()){
                     return false
                 }else{
                     if(!$scope.vm.limitSave){
+                        $timeout.cancel(limitTimer) ;
                         $scope.vm.limitSave = true ;
-                        $timeout(function(){
+                        limitTimer = $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
                         var params = getParams() ;
@@ -854,7 +855,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             api = "/api/ms/marketingKnowledge/addMarketingKnowledge"
                         }
                         httpRequestPost(api,params,function(data){
-                            //console.log(params);
                             if (data.status == 200) {
                                 if ($scope.vm.docmentation) {
                                     $scope.vm.knowledgeClassifyCall();
@@ -863,10 +863,14 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                     $state.go('markServScenaOverview.manage');
                                 }
                             } else if (data.status == 500) {
-                                layer.msg("保存失败")
+                                layer.msg("知识保存失败") ;
+                                $timeout.cancel(limitTimer) ;
+                                $scope.vm.limitSave = false ;
                             }
                         },function(err){
-                            //console.log(err)
+                            $timeout.cancel(limitTimer) ;
+                            $scope.vm.limitSave = false ;
+                            console.log(err)
                         });
                     }
                 }

@@ -855,14 +855,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             console.log(params);
             return params
         }
-
+        var limitTimer ;
         function save() {
                 if (!checkSave()) {
                     return false
                 } else {
                     if(!$scope.vm.limitSave){
+                        $timeout.cancel(limitTimer) ;
                         $scope.vm.limitSave = true ;
-                        $timeout(function(){
+                        limitTimer = $timeout(function(){
                             $scope.vm.limitSave = false ;
                         },180000) ;
                         $scope.vm.data = getParams(); 
@@ -873,9 +874,13 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 var url = $state.go('custServScenaOverview.manage');
                                 //window.open(url, '_blank');
                             } else if (data.status == 500) {
-                                layer.msg("保存失败")
+                                layer.msg("知识保存失败") ;
+                                $timeout.cancel(limitTimer) ;
+                                $scope.vm.limitSave = false ;
                             }
                         }, function (err) {
+                            $timeout.cancel(limitTimer) ;
+                            $scope.vm.limitSave = false ;
                         });
                 }
             }
