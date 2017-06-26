@@ -6,7 +6,6 @@ angular.module('myApplicationSettingModule').controller('channelManageController
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
-            applicationId: $cookieStore.get("applicationId"),
             channelData : "",   // 渠道数据
             paginationConf : ""  ,//分页条件
             pageSize : 2 , //默认每页数量
@@ -17,13 +16,11 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             changeChannel : changeChannel, //修改渠道状态
             channelName : "",  //渠道名称
             statusId : "",  //状态
-            userId : $cookieStore.get("userId"),   //用户id
             channelStatus : "",
             dialogTitle : "", //对话框标题
         };
 
         $scope.vmo = {
-            applicationId: $cookieStore.get("applicationId"),
             blackListData : "",  //黑名单数据
             paginationConf : ""  ,//分页条件
             pageSize : 2 , //默认每页数量
@@ -35,13 +32,29 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             blackListIdentify : "",  //黑名单标识
             blackListRemark : "", //黑名单备注
             channelId : "", //渠道id
-            blackListUpdateId : $cookieStore.get("userId"),   //用户id
+            addBlackListCheck : addBlackListCheck
         };
 
-        //获取渠道列表
-        getChannelList();
+        //获取所有的渠道
+        (function getChannelList(){
+            httpRequestPost("api/application/channel/listChannels",{
+                "applicationId": APPLICATION_ID
+            },function(data){
+                $scope.vmo.channelList = data.data;
+            },function(){
+                console.log("请求失败")
+            })
+        })();
         //获取状态列表
-        getStatusList();
+        (function getStatusList(){
+            httpRequestPost("/api/application/channel/listStatus",{
+                "applicationId": APPLICATION_ID
+            },function(data){
+                $scope.vm.channelStatus = data.data;
+            },function(){
+                console.log("请求失败")
+            })
+        })() ;
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -50,7 +63,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         //请求渠道列表
         function listChannelData(index){
             httpRequestPost("/api/application/channel/listChannelByPage",{
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
@@ -87,7 +100,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         //请求黑名单列表
         function listBlackListData(index){
             httpRequestPost("/api/application/channel/listBlackListByPage",{
-                "applicationId": $scope.vmo.applicationId,
+                "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vmo.pageSize,
                 "pageSize": $scope.vmo.pageSize
             },function(data){
@@ -116,29 +129,6 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             }
         },true);
 
-        //获取状态列表
-        function getStatusList(){
-            httpRequestPost("/api/application/channel/listStatus",{
-                "applicationId": $scope.vm.applicationId
-            },function(data){
-                $scope.vm.channelStatus = data.data;
-                //$scope.vm.statusId=data.data[0].statusId;
-            },function(){
-                layer.msg("请求失败")
-            })
-        }
-
-        //获取所有的渠道
-        function getChannelList(){
-            httpRequestPost("api/application/channel/listChannels",{
-                "applicationId": $scope.vmo.applicationId
-            },function(data){
-                $scope.vmo.channelList = data.data;
-            },function(){
-                layer.msg("请求失败")
-            })
-        }
-
         //添加渠道窗口
         function addChannel(){
             var dialog = ngDialog.openConfirm({
@@ -155,10 +145,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             return ;
                         }
                         httpRequestPost("/api/application/channel/addChannel",{
-                            "applicationId": $scope.vm.applicationId,
+                            "applicationId": APPLICATION_ID,
                             "channelName": $scope.vm.channelName,
                             "statusId": $scope.vm.statusId.statusId,
-                            "channelUpdateId": $scope.vm.userId
+                            "channelUpdateId": USER_ID
                         },function(data){          //类名重複
                             if(data.data===10002){
                                 layer.msg("渠道重复！");
@@ -225,10 +215,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             }
             httpRequestPost("/api/application/channel/editChannel",{
                 "channelId": item.channelId,
-                "applicationId": $scope.vm.applicationId,
+                "applicationId": APPLICATION_ID,
                 "channelName": $scope.vm.channelName,
                 "statusId": $scope.vm.statusId.statusId,
-                "channelUpdateId": $scope.vm.userId
+                "channelUpdateId": USER_ID
             },function(data){
                 if(data.data==10002){
                     layer.msg("渠道名称重复");
@@ -332,40 +322,17 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        httpRequestPost("/api/application/channel/checkBlackList",{
-                            "applicationId": $scope.vmo.applicationId,
+                        httpRequestPost("/api/application/channel/addBlackList",{
+                            "applicationId": APPLICATION_ID,
                             "blackListIdentify": $scope.vmo.blackListIdentify,
+                            "blackListRemark": $scope.vmo.blackListRemark,
+                            "blackListUpdateId": USER_ID,
                             "channelId": $scope.vmo.channelId
-                        },function(data){          //类名重複
-                            if(data.data===10002){
-                                layer.msg("黑名单重复！");
-                                $scope.vmo.blackListIdentify = "";
-                                $scope.vmo.blackListRemark = "";
-                            }else{
-                                if(data.data===10003){
-                                    layer.msg("黑名单IP不合法！");
-                                    $scope.vmo.blackListIdentify = "";
-                                    $scope.vmo.blackListRemark = "";
-                                }else{
-                                    httpRequestPost("/api/application/channel/addBlackList",{
-                                        "applicationId": $scope.vmo.applicationId,
-                                        "blackListIdentify": $scope.vmo.blackListIdentify,
-                                        "blackListRemark": $scope.vmo.blackListRemark,
-                                        "blackListUpdateId": $scope.vmo.blackListUpdateId,
-                                        "channelId": $scope.vmo.channelId
-                                    },function(data){
-                                        layer.msg("添加成功");
-                                        //$state.reload();
-                                        listBlackListData(1);
-                                    },function(){
-                                        layer.msg("添加失敗");
-                                        $scope.vmo.blackListIdentify = "";
-                                        $scope.vmo.blackListRemark = "";
-                                    })
-                                }
-                            }
+                        },function(data){
+                            layer.msg("添加成功");
+                            //$state.reload();
+                            listBlackListData(1);
                         },function(){
-                            layer.msg("添加失敗");
                             $scope.vmo.blackListIdentify = "";
                             $scope.vmo.blackListRemark = "";
                         })
@@ -376,8 +343,32 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 }
             });
         }
-
-
+        //檢測是否合理黑名单内容是否合理
+        function addBlackListCheck(){
+            if(!$scope.vmo.blackListIdentify){
+                layer.msg("请填写正确的ip标识") ;
+            }else{
+                httpRequestPost("/api/application/channel/checkBlackList",{
+                    "applicationId": APPLICATION_ID,
+                    "blackListIdentify": $scope.vmo.blackListIdentify,
+                    "channelId": $scope.vmo.channelId
+                },function(data){          //类名重複
+                    if(data.data===10002){
+                        layer.msg("黑名单重复！");
+                        $scope.vmo.blackListIdentify = "";
+                        $scope.vmo.blackListRemark = "";
+                    }else{
+                        if(data.data===10003){
+                            layer.msg("黑名单IP不合法！");
+                            $scope.vmo.blackListIdentify = "";
+                            $scope.vmo.blackListRemark = "";
+                        }else{
+                            ngDialog.closeAll(1) ;
+                        }
+                    }
+                })
+            }
+        };
         //移除黑名单
         function delBlacklist(blackListId){
             var dialog = ngDialog.openConfirm({
@@ -390,7 +381,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 preCloseCallback:function(e){
                     if(e === 1){
                         httpRequestPost("/api/application/channel/deleteBlackList",{
-                            "applicationId": $scope.vmo.applicationId,
+                            "applicationId": APPLICATION_ID,
                             "blackListId": blackListId
                         },function(data){
                             layer.msg("移除成功");
@@ -420,7 +411,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 preCloseCallback:function(e){
                     if(e === 1){
                         httpRequestPost("/api/application/channel/batchDelBlackList",{
-                            "applicationId": $scope.vmo.applicationId,
+                            "applicationId": APPLICATION_ID,
                             "blackListIds": $scope.selectedList
                         },function(data){
                             if(data.data===10000){

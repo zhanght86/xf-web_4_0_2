@@ -744,7 +744,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     backdrop : 'static',
                     preCloseCallback:function(e){     //关闭回掉
                         if(e === 1){
-                            $scope.vm.extensions[index] = $scope.vm.backupsOfExtension
+                            if(type){
+                                $scope.vm.extensionsByFrame[index] = $scope.vm.backupsOfExtension
+                            }else{
+                                $scope.vm.extensions[index] = $scope.vm.backupsOfExtension
+                            }
                         }else{$scope.vm.backupsOfExtension = ""; }
                     }
                 });

@@ -589,7 +589,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     backdrop : 'static',
                     preCloseCallback:function(e){     //关闭回掉
                         if(e === 1){
-                            console.log( $scope.vm.backupsOfExtension ) ;
                             if(type){
                                 $scope.vm.extensionsByFrame[index] = $scope.vm.backupsOfExtension
                             }else{
