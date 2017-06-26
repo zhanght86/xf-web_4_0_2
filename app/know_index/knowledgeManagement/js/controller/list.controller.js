@@ -234,7 +234,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(){
             });
         }
-
         // 获取Bot全路径
         function getBotFullPath(id){
             httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
