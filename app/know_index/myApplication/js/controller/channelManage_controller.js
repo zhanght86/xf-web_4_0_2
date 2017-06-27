@@ -17,7 +17,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             channelName : "",  //渠道名称
             statusId : "",  //状态
             channelStatus : "",
-            dialogTitle : "", //对话框标题
+            dialogTitle : "" //对话框标题
         };
 
         $scope.vmo = {

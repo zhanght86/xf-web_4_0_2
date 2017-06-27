@@ -38,7 +38,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
                 applicationId:$scope.vm.applicationId,
-                batchNumberId:$stateParams.batchNumberId,
+                batchNumberId:$stateParams.batchNumberId
             },function(data){
                 console.log(data);
                 $scope.vm.listData = data.data.detailList;
@@ -47,7 +47,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     currentPage: index,//当前页
                     totalItems: data.data.total, //总条数
                     pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
+                    pagesLength: 8//分页框数量
                 };
                 $scope.$apply();
             },function(){
@@ -101,7 +101,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                                 applicationId: $scope.vm.applicationId,
                                 batchNumberId: $stateParams.batchNumberId,
                                 possibleKnowledge: $scope.vm.possibleKnowledge,
-                                knowledgeTitle: $scope.vm.knowledgeTitle,
+                                knowledgeTitle: $scope.vm.knowledgeTitle
                             }, function (data) {
                                 //刷新页面
                                 $state.reload();
@@ -118,19 +118,19 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                                 console.log("请求失败");
                             })
                         }
-                        $scope.vm.possibleKnowledge = "",
+                        $scope.vm.possibleKnowledge = "";
                             $scope.vm.knowledgeTitle = ""
                     } else {
-                        $scope.vm.possibleKnowledge = "",
+                        $scope.vm.possibleKnowledge = "";
                             $scope.vm.knowledgeTitle = ""
                     }
                 }
             });
         }
         function editKnow(data){
-            $scope.vm.detailId = data.detailId
-            $scope.vm.possibleKnowledge = data.possibleKnowledge
-            $scope.vm.knowledgeTitle = data.knowledgeTitle
+            $scope.vm.detailId = data.detailId;
+            $scope.vm.possibleKnowledge = data.possibleKnowledge;
+            $scope.vm.knowledgeTitle = data.knowledgeTitle;
             var dialog = ngDialog.openConfirm({
                 template: "/know_index/functionalTesting/viewDetailsEditDialog.html",
                 scope: $scope,
@@ -221,7 +221,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     currentPage: index,//当前页
                     totalItems: data.data.total, //总条数
                     pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
+                    pagesLength: 8//分页框数量
                 };
                 $scope.$apply();
             },function(){
@@ -235,7 +235,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
          */
         function exportExcel(){
             httpRequestPost("/api/application/detail/export",{
-                batchNumberId:$stateParams.batchNumberId,
+                batchNumberId:$stateParams.batchNumberId
             },function(data){
                 console.log(data)
                 if(data.status==500){

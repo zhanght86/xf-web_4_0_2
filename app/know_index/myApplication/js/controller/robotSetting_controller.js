@@ -31,7 +31,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             addCustom : addCustom,  //弹出自定义头像对话框
             selectClassic : selectClassic, //选择经典头像
 
-            myFile : "", //上传的图片
+            myFile : "" //上传的图片
             //x : "", //坐标x
             //y : "", //坐标y
             //w : "", //截取的宽度

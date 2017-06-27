@@ -60,7 +60,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
 
             //flagDialog : true, //发布按钮是否可点击，默认不可点击
 
-            verifyRelease : verifyRelease, //发布服务校验
+            verifyRelease : verifyRelease //发布服务校验
         };
 
 

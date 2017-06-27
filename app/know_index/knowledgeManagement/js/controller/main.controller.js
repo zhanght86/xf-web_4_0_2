@@ -7,7 +7,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeManagementContr
     '$scope', 'localStorageService' ,"$state" ,function ($scope,localStorageService, $state) {
         $scope.vm = {
             userName: '',
-            password: '',
+            password: ''
         };
 
     }

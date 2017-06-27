@@ -48,7 +48,7 @@ angular.module('myApplicationSettingModule').controller('newServiceReleaseContro
             findServiceByServiceId : findServiceByServiceId, //根据服务id查询服务信息
 
             botRoot : "",     //根节点
-            newCategoryIds : [],  //选中的分类节点
+            newCategoryIds : []  //选中的分类节点
 
         };
         listDimensionData(); //获取维度数据

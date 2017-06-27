@@ -22,7 +22,7 @@ angular.module('materialManagement').controller('faqChatController', [
             save : save ,
             scan : scan,
             scanData : $stateParams.scanData,
-            type : $stateParams.scanData?$stateParams.scanData.type:1,
+            type : $stateParams.scanData?$stateParams.scanData.type:1
         };
 
         //擴展問
