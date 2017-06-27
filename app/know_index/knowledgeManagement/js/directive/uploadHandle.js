@@ -372,8 +372,8 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                             formData : {
                                 "userId":USER_LOGIN_NAME,
-                                "applicationId":APPLICATION_ID,
-                                "templateType": scope.templateType
+                                "applicationId":APPLICATION_ID
+                                //"templateType": scope.templateType
                             }  ,   // 上传参数
                             // 文件接收服务端。
                             server: scope.server ,
@@ -402,7 +402,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             fileSingleSizeLimit: 5 * 1024 * 1024    // 50 M   single
                         });
                         scope.upload = function(){
-                            //console.log(uploader) ;
+                            uploader.options.formData.templateType = scope.templateType ;
                             uploader.upload()
                         } ;
                         uploader.on( 'beforeFileQueued', function( file ) {
@@ -489,6 +489,11 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                                 layer.msg("导入成功")
                             }
                         });
+                        //console.log(scope.templateType)
+                        //scope.$watch("templateType",function(type){
+                        //    console.log(uploader) ;
+                        //    uploader.options.formData.templateType = type ;
+                        //})
                     }, 0)
                 }
             }
