@@ -77,7 +77,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableRemove : tableRemove, //删除行或列
             addRow : addRow,   //添加行
             gorithm : [], //语义挖掘
-            tableType : null,   //类型
+            tableType : "字符串",   //类型
             factorName : null,   //要素名称
             reQuestion : null, //反问
 
@@ -85,6 +85,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             listTableType: "",
             data : "",
             column:"" ,
+            tableSaveCheck : tableSaveCheck ,  // 添加的行列是否符合要求
 
             limitSave : false ,//限制多次打标
             //引到页
@@ -236,6 +237,16 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var arr = new Array(len);
             $scope.vm.tableList.data.listTable.push(arr);
         }
+        //检验是否合理保存 ==> 检查要素名称以及反问
+        function tableSaveCheck(){
+            if(!$scope.vm.factorName){
+                layer.msg("请填写要素名称后保存")
+            }else if(!$scope.vm.elementAsk){
+                layer.msg("请填写反问后保存")
+            }else{
+                ngDialog.closeAll(1)
+            }
+        }
         function addList(row,column){
             var dia = angular.element(".ngdialog ");
             if(dia.length==0) {
@@ -263,13 +274,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 "elementAsk" : $scope.vm.elementAsk ,
                                 "relatedQuestions" :null
                             };
-                            //newType.elementName = $scope.vm.factorName;
-                            //newType.elementType = $scope.vm.tableType;
-                            //newType.technology = $scope.vm.gorithm;
-                            //newType.elementAsk = $scope.vm.elementAsk;
-                            //newType.relatedQuestions = null;
                             $scope.vm.tableList.data.listTableType.push(newType);
-                            //$scope.$apply();
+                            setDialogNew();
+                        }else{
                             setDialogNew();
                         }
                     }
@@ -278,7 +285,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 
         function editList(row,column){
-            console.log("editList");
             $scope.vm.factorName = $scope.vm.tableList.data.listTableType[column].elementName;
             $scope.vm.tableType = $scope.vm.tableList.data.listTableType[column].elementType;
             $scope.vm.gorithm=$scope.vm.tableList.data.listTableType[column].technology;
@@ -351,7 +357,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
          }
         function setDialogNew(){
             $scope.vm.factorName = null ;
-            $scope.vm.tableType = null;
+            $scope.vm.tableType = "字符串";
             $scope.vm.gorithm = [];
             $scope.vm.elementAsk = null;
         }
@@ -858,7 +864,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //  主页保存 获取参数
         function getParams(){
-            //console.log(getTableParams())
+            console.log(getTableParams())
            var  params =  {
                 "applicationId": APPLICATION_ID,
                 "knowledgeId": $scope.vm.knowledgeId ,
@@ -906,16 +912,20 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         httpRequestPost(api, getParams(), function (data) {
                             //console.log(data);
                             if (data.status == 200) {
-                                var url = $state.go('custServScenaOverview.manage');
-                                //window.open(url, '_blank');
+                              $state.go('custServScenaOverview.manage');
                             } else if (data.status == 500) {
                                 layer.msg("知识保存失败") ;
                                 $timeout.cancel(limitTimer) ;
-                                $scope.vm.limitSave = false ;
+                                $scope.$apply(function(){
+                                    $scope.vm.limitSave = false ;
+                                });
+                                console.log($scope.vm.limitSave)
                             }
                         }, function (err) {
                             $timeout.cancel(limitTimer) ;
-                            $scope.vm.limitSave = false ;
+                            $scope.$apply(function(){
+                                $scope.vm.limitSave = false ;
+                            });
                         });
                 }
             }
@@ -972,6 +982,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 //        提交 检验参数
         function checkSave(){
+            console.log()
             var params = getParams();
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
@@ -989,8 +1000,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空");
                 return false;
-            }else if(!$scope.vm.tableList.data){
-                layer.msg("请上传表格知识");
+            }else if($scope.vm.tableList.data.listTable[0].length<=1 || $scope.vm.tableList.data.listTable.length<=1){
+                layer.msg("请完善表格知识");
                 return false;
             }else{
                 return true

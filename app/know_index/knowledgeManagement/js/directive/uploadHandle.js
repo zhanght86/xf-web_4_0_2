@@ -365,7 +365,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                              '</div>',
 
                 link: function (scope, element, attrs) {
-                    $timeout(function () { 
+                    $timeout(function () {
                         var uploader = WebUploader.create({
                             auto: false, // 选完文件后，是否自动上传
                             // swf文件路径

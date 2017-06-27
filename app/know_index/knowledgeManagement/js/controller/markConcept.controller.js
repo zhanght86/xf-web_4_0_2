@@ -894,12 +894,15 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                             } else if (data.status == 500) {
                                 layer.msg("知识保存失败") ;
                                 $timeout.cancel(limitTimer) ;
-                                $scope.vm.limitSave = false ;
+                                $scope.$apply(function(){
+                                    $scope.vm.limitSave = false ;
+                                });
                             }
                         },function(err){
                             $timeout.cancel(limitTimer) ;
-                            $scope.vm.limitSave = false ;
-                            console.log(err)
+                            $scope.$apply(function(){
+                                $scope.vm.limitSave = false ;
+                            });
                         });
                     }
                 }

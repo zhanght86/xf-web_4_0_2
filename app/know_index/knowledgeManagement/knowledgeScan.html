@@ -5,7 +5,6 @@
         <div class="r-cont-hd">
             <span>知识预览</span>
         </div>
-        <!--{{vm.knowledgeData}}-->
         <ul class="preview pd-30">
             <!--<li>-->
                 <!--&lt;!&ndash;<p><span>知识类目：</span>{{item.sceneName}}</p>&ndash;&gt;-->
@@ -30,6 +29,7 @@
 
             <li class="preview_li pr">
                 <!--   要素  -->
+                {{vm.knowledgeType}}
                 <span class="pa preview_span">知识内容：</span>
                 <table class="essential_factor_tab" ng-if="vm.knowledgeType == 103">
                     <tr>
@@ -48,7 +48,7 @@
                     </tr>
                 </table>
                 <!--   其他   -->
-                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103 || vm.knowledgeType != 102" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
+                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103 && vm.knowledgeType != 102" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
                     <li class="preview_li pr" style="padding-left: 80px;">
                         <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
                         <p>{{item.knowledgeContent}}</p>
