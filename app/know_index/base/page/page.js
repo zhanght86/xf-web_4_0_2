@@ -34,7 +34,6 @@ angular.module('pagination',[]).directive('pagination',[function(){
 
                 //总页数
                 scope.conf.numberOfPages = Math.ceil(scope.conf.totalItems / scope.conf.pageSize);
-                console.log(scope.conf.numberOfPages);
                 if(scope.conf.currentPage < 1){
                     scope.conf.currentPage = 1;
                 }
@@ -103,7 +102,7 @@ angular.module('pagination',[]).directive('pagination',[function(){
                 	scope.conf.methodFn(scope.conf);
                 }
             }
-            
+
             //上一页
             scope.prevPage = function(){
                 if(scope.conf.currentPage > 1){

@@ -348,9 +348,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
         function scanCotentByTitle(title,index){
-            //console.log(1) ;
-            var answerContentList = [];
-            answerContentList.push(title);
+            var answerContentList = new Array(title);
             httpRequestPost("/api/ms/conceptKnowledge/productExtensionQuestion", {
                 "applicationId": APPLICATION_ID,
                 "title": $scope.vm.title,
@@ -586,7 +584,26 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             }
         });
-
+        //自动转换图标类型
+        function styleSwitch(type,leaf,attrType){
+            var styleHidden = "display: inline-block;";
+            if(leaf==0){
+                styleHidden="display:none;";
+            }
+            if(attrType=="node"){
+                return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
+            }
+            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+            switch (type){
+                case 161:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                case 160:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                case 162:
+                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+            }
+            return style;
+        }
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({
@@ -641,6 +658,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup ; //业务扩展问
                         $scope.vm.scanContent[index] = obj;
                         $scope.vm.isEditIndex = -1 ;
+                        scanCotentByTitle(obj.knowledgeContent,index) ;
                         setDialog() ;
                     }
                 } else {

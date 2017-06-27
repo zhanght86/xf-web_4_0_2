@@ -93,8 +93,6 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             source: '=',
             result : '=',
             width : '=' ,
-            class : '@'
-            //bindAttr: '='
         },
         template:'<input >' ,
         replace: true,
