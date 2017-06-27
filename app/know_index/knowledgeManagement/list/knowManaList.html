@@ -17,7 +17,7 @@
                         <div class="list_facContent_L">知识标题：</div>
                         <div >
                             <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
-                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotAndExtensionByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -83,21 +83,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--手选生成-->
-                    <!--<div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">-->
-                        <!--<div class="row cl mb-10">-->
-                            <!--<label class="form-label col-xs-4 col-sm-2 text-r">BOT路径：</label>-->
-                            <!--<div class="value Div clearfix" >-->
-                                <!--<div class="ipt-txt-box L" style="width: 395px;border: 1px solid #e1e1e1;margin-left: 14px;margin-right: 10px;">-->
-                                    <!--<div class="ipt-txt" style="overflow:hidden;line-height:24px;">-->
-                                        <!--&lt;!&ndash;<span>{{item.className.join("/")}}</span>&ndash;&gt;-->
-                                        <!--<a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">BOT路径：</div>
@@ -112,7 +97,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="list_facContent mb-10">
                         <div class="list_facContent_L">业务框架：</div>
                         <div >
@@ -137,17 +121,20 @@
                         </div>
                     </div>
                     <!-- 标题打标结果-->
-                    <div class="exten_problem" ng-if="vm.knowledgeTitleTag">
+                    <div class="exten_problem"  style="overflow: visible" ng-repeat="(itemIndex,item) in vm.extensionByTitleTag track by $index">
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">概念扩展：</div>
                             <div >
-                                <div class="L extended_query_txt" style="width:345px;border:0;height: 34px" >
-                                   <span ng-repeat="val in vm.knowledgeTitleTag" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" >
-                                       {{val}}
-                                    </span>
+                                <div class="L extended_query_txt" style="width:345px;height:34px;border:0;" >
+                                    <!--{{item.extensionQuestionTagList}}-->
+                                       <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="background: #e1e1e1;padding: 4px;margin:0 5px 5px 0;display:inline-block;" ng-class="val.exist?'':'tagRepeat'">
+                                            {{val.tagName}}
+                                        </span>
                                 </div>
-                                <span class="tag_s mr-10 L bd" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">普通</span>
-                                <span class="L"><b>来源于</b> <span>{{vm..title}}</span></span>
+                                <span class="tag_s mr-10 L" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center;">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
+                                <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(2,item,itemIndex)"></a>
+                                <span class="L"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>
                         </div>
                     </div>
@@ -168,18 +155,6 @@
                                 <span class="L"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>
                         </div>
-                        <!--<div class="value clearfix">-->
-                            <!--<div class=" tag_box L mr-10" style="width:353px;padding:0;">-->
-                            <!--<span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">-->
-                                <!--{{val.tagName}}-->
-                            <!--</span>-->
-                            <!--</div>-->
-                            <!--<span class="tag_s mr-10 L" style="margin-right:10px;">普通</span>-->
-                            <!--&lt;!&ndash;<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>&ndash;&gt;-->
-                            <!--<a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>-->
-                            <!--<a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit()"></a>-->
-                            <!--<span class="L" ng-if="item.extensionQuestionTitle"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>-->
-                        <!--</div>-->
                     </div>
                     <!-- 業務框架 生成 -->
                     <div class="exten_problem"  ng-repeat="(itemIndex,item) in vm.extensionsByFrame">

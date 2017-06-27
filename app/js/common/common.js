@@ -23,6 +23,21 @@
 //    aLink.dispatchEvent(evt);
 //}
 //提供keySearch 使用方法
+//$scope.down =onput() ;
+//$scope.updata = function(){
+//     $scope.$apply(function(){
+//        $scope.vm = angular.element(self).val();
+//    })
+//} ;
+//    function(e){
+//    var  self = e.srcElement ? e.srcElement : e.target;
+//    var keycode = window.event?e.keyCode:e.which;
+//    angular.element(self).on({
+//        compositionend:function(val){
+//            console.log( angular.element(self).val())
+//        }
+//    }) ;
+//} ;
 function onput(e,updateCall,specialKeyCall,inputCall){
     /* 必写
     *   e
