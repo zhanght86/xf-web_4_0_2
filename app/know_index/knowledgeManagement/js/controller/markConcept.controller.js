@@ -72,7 +72,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             replaceType : 0 ,
             enterEvent : enterEvent,
 
-            factor : 62 ,  //触发要素，62知识标题 63概念扩展
+            factor : 62  ,  //触发要素，62知识标题 63概念扩展
             factorTitle : "" , // 触发要素 标题
             getDetailByTitle : getDetailByTitle,
             getFactorByTitle : []  ,     // 要素标题产生选项
@@ -159,24 +159,30 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
-
-
         // 触发要素  知识标题
-        $scope.$watch("vm.factor",function(val){ 
-            if(val == 0){
-                $scope.$watch("vm.factorTitle",function(title){
-                    if(title != "" && $scope.vm.factor==0 && title != $scope.vm.getFactorByTitle[0] ){
+        var timer ;
+        if(myBrowser() == "Chrome"){
+            angular.element(".factorInput").on({
+                compositionend:function(value) {
+                    var val = angular.element(".factorInput").val() ; //得到数值
+                    $scope.vm.factorTitle = val ;
+                    $timeout.cancel(timer) ;
+                    timer = $timeout(function(){
+                        getDetailByTitle(val);
+                    },300)
+                }
+            }) ;
+        }else{
+            $scope.$watch("vm.factorTitle",function(title){
+                if(title != "" && $scope.vm.factor==62 && title != $scope.vm.getFactorByTitle[0] ){
+                    console.log(title) ;
+                    $timeout.cancel(timer) ;
+                    timer = $timeout(function(){
                         getDetailByTitle(title);
-                    }
-                })
-            }
-        });
-        //// 触发要素  知识标题
-        //$scope.$watch("vm.factorTitle",function(val){
-        //    if(val != "" && $scope.vm.factor==0 && val != $scope.vm.getFactorByTitle[0] ){
-        //         getDetailByTitle(val)
-        //    }
-        //});
+                    },300) ;
+                }
+            },true) ;
+        }
         function selelectTitle(title){
             $scope.vm.factorTitle = title ;
             $scope.vm.getFactorByTitle = [] ;
@@ -419,7 +425,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             question.push(title);
             var obj = {} ;
             obj.extensionQuestionTitle = title;
-            obj.extensionQuestionType = $scope.vm.factor;
+            obj.extensionQuestionType = angular.copy($scope.vm.factor);
             if(!title){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtensionByTitle(obj)){
@@ -433,7 +439,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     //console.log(data);
                     if(data.status == 500){
                         //console.log(question) ;
-                        layer.msg("改成概念扩展打标失败，请检查服务，重新打标") ;
+                        layer.msg("概念扩展打标失败，请检查服务，重新打标") ;
                         $scope.vm.extensionTitle = "" ;
                         $scope.$apply();
                     }else if(data.status==11006){
@@ -795,37 +801,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     }else if(data.status == 200) {
                         //console.log(data);
                         $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                        $scope.$apply(function(){
-                            $scope.vm.knowledgeTitleTag = angular.copy(data.data.knowledgeTitleTagList);
-                            //   存储为扩展问  ====>> 框架
-                            var enten = {}  ;
-                            enten.extensionQuestionTitle = angular.copy($scope.vm.title);
-                            enten.extensionQuestionType = "60" ;
-                            enten.wholeDecorateTagList = [
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                            ];
-                            enten.extensionQuestionTagList = [] ;
-                            angular.forEach(data.data.knowledgeTitleTagList,function(item){
-                                var tagTem = {
-                                    "exist" : false ,
-                                    "tagClass" : item ,
-                                    "tagName" : item ,
-                                    "tagType" : "33"
-                                };
-                                enten.extensionQuestionTagList.push(tagTem) ;
-                            });
-                            var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                            if(!checkExtensionByTitle(enten)){
-                                layer.msg("生成扩展问重复,已阻止添加") ;
-                            }else if(isTagRepeat(data.data,allExtension)) {
-
-                            }else{
-                                $scope.vm.extensionByTitleTag = new Array(enten) ;
-                                console.log($scope.vm.extensionByTitleTag)
-                            }
-                        }) ;
                     //生成bot
                     angular.forEach(data.data.classifyList, function (item) {
                         var obj = {};
