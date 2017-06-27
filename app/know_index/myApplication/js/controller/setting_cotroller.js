@@ -12,7 +12,7 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
 
             robotHead : "",//头像
             imgUrl : "", //文件服务器地址
-            robotName : "", //机器人名称
+            robotName : "" //机器人名称
         };
 
         //获取应用的头像

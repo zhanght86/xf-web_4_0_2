@@ -137,7 +137,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                     currentPage: index,//当前页
                     totalItems: data.data.total, //总条数
                     pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 10,//分页框数量
+                    pagesLength: 10 //分页框数量
                     //numberOfPages  : Math.ceil(data.data.total/5)
                 };
                 $scope.$apply();
@@ -226,7 +226,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
                 "knowledgeCreator": $scope.vm.knowledgeCreator,        //作者默认值null
                 "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
                 "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
-                "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                "sourceType":$scope.vm.sourceType        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
             },function(data){
                 $scope.vm.newNumber = data.data.total;
                 console.log(data)

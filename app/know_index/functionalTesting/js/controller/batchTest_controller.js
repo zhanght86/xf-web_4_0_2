@@ -34,7 +34,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             serviceId : "" ,
             channel:"",
             channelList : [] ,
-            getService : getService,
+            getService : getService
             //------------------------------渠道   服务end
 
         };

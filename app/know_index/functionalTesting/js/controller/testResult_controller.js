@@ -42,7 +42,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             editTitle : "" ,
             editKnow :  "",
             editChannel : '',
-            channelList : "",  //所有渠道
+            channelList : ""  //所有渠道
         };
         //获取维度
         knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},

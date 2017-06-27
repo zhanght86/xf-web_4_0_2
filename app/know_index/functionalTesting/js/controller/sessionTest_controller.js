@@ -22,7 +22,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             reset : reset,
             result:'',
             question : '',
-            txtFocus : txtFocus,
+            txtFocus : txtFocus
         };
 
         //獲取维度

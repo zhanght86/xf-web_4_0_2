@@ -43,7 +43,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             dialogTitle : "",  //对话框标题
             allowSubmit : 0, //是否允许提交
             errorTip : "", //错误访问地址提示
-            errorNodeIdTip : "", //错误节点id提示
+            errorNodeIdTip : "" //错误节点id提示
 
         };
 

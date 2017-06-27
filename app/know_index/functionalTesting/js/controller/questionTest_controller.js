@@ -15,7 +15,7 @@ angular.module('functionalTestModule').controller('questionTestController', [
             emptyInput : emptyInput,
             //addArr : addArr,
             test : test,
-            check : check,
+            check : check
 
         };
         //比较测试回答有没有重的词；

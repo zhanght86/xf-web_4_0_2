@@ -23,7 +23,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
                 currentPage: $scope.SearchPOJO.currentPage,//当前页
                 totalItems: 0, //总条数
                 pageSize: $scope.SearchPOJO.pageSize,//第页条目数
-                pagesLength: 6,//分页框数量
+                pagesLength: 6//分页框数量
 
             };
         }

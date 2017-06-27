@@ -88,7 +88,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             showTip : showTip,
             hideTip : hideTip,
             prevDiv : prevDiv,
-            nextDiv : nextDiv,
+            nextDiv : nextDiv
             //引到页end
         };
         //獲取渠道

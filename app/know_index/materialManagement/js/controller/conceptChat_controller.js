@@ -23,7 +23,7 @@ angular.module('materialManagement').controller('conceptChatController', [
             save : save,
             scan : scan,
             scanData : $stateParams.scanData,
-            type : paraOfData?paraOfData.type:1,
+            type : paraOfData?paraOfData.type:1
         };
 
         //擴展問
