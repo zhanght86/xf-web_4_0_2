@@ -22,7 +22,7 @@
                         <div class="ipt-txt-box" style="width:100%;">
                             <input class="ipt-txt bd" style="height:32px;" type="text"  ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
-                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotAndExtensionByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -111,13 +111,13 @@
                     </div>
                     <div class="value" style="overflow: visible">
                         <div class="clearfix mb-10" style="width: 500px;height: 34px;">
-                            <select  ng-model="vm.factor" onchange="" class="bd L " style="width:102px;height:33px;line-height:33px;">
+                            <select  ng-model="vm.factor" onchange="" ng-change="" class="bd L " style="width:102px;height:33px;line-height:33px;">
                                 <option value="62">知识标题</option>
                                 <option value="63">概念扩展</option>
                             </select>
-                            <input  onchange=""  type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height:33px;line-height:33px;display: inline-block;width: 302px;border: 1px solid #e1e1e1;border-left:0;">
+                            <input  onchange=""  type="text" class="L mr-10 factorInput" placeholder="请输入问题" ng-model="vm.factorTitle" style="text-indent:1em;height:33px;line-height:33px;display: inline-block;width: 302px;border: 1px solid #e1e1e1;border-left:0;">
                             <!--<input ng-if="vm.factor==1" type="text" class="L mr-10" placeholder="请输入问题" ng-model="vm.extensionTitle" style="text-indent:1em;height: 98%;display: inline-block;width: 70%;border: 1px solid #e1e1e1;border-left:0;">-->
-                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>
+                            <a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getExtension(vm.factorTitle,0)"><img src="../../../images/images/add_img.png" alt=""></a>
                             <!--<a href="javascript:;" class="L mr-15 mt-5" ng-click="vm.getDetailByTitle(vm.factorTitle)"><img src="../../../images/images/add_img.png" alt=""></a>-->
                             <ul class="listItem" ng-if="vm.getFactorByTitle.length" style="position: absolute;
                             left: 100px;z-index: 2;height: 200px;overflow: auto ;box-sizing:border-box;top: 40px;">
