@@ -347,8 +347,8 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
 //    fileSingleSizeLimit : 1 * 1024 * 1024
 //    // 50 M
 //});
-    .directive("knowBatchUp", ["$parse", "ngDialog", "$cookieStore", "$state", "$timeout",
-        function ($parse, ngDialog, $cookieStore, $state, $timeout) {
+    .directive("knowBatchUp", ["$parse", "ngDialog", "$cookieStore", "$state", "$timeout","$interval",
+        function ($parse, ngDialog, $cookieStore, $state, $timeout,$interval) {
             return {
                 scope:{
                     accept:'=',
@@ -365,11 +365,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                              '</div>',
 
                 link: function (scope, element, attrs) {
-                    //console .log(typeof USER_LOGIN_NAME) ;
-                    var templateType = scope.templateType ,
-                        server = scope.server ;
-                    //console.log(userId,templateType,applicationId)
-                    $timeout(function () {
+                    $timeout(function () { 
                         var uploader = WebUploader.create({
                             auto: false, // 选完文件后，是否自动上传
                             // swf文件路径
@@ -377,10 +373,10 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             formData : {
                                 "userId":USER_LOGIN_NAME,
                                 "applicationId":APPLICATION_ID,
-                                "templateType": templateType
+                                "templateType": scope.templateType
                             }  ,   // 上传参数
                             // 文件接收服务端。
-                            server: server ,
+                            server: scope.server ,
                             accept: {
                                 title: 'file',
                                 extensions: 'xls,xlsx',

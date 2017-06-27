@@ -887,7 +887,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             params.knowledgeContents =  angular.copy($scope.vm.scanContent) ;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionByTitleTag) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
-            return params  
+            return params
         }
         //限制一个知识多次保存
         var limitTimer ;
