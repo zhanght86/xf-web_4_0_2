@@ -22,7 +22,7 @@
                         <div class="ipt-txt-box" style="width:100%;">
                             <input class="ipt-txt bd" type="text" style="height:32px;" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <i class="btn-empty"></i>
-                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" class="mr-15"  ng-click="vm.getBotAndExtensionByTitle()"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
             </div>
             <div class="jqrsz-item" style="overflow: visible">
                 <div class="item-line"  style="overflow: visible">
-                    <div class="lable" >
+                    <div class="lable">
                         概念扩展：
                     </div>
                     <div class="value" style="overflow: visible">
@@ -176,19 +176,21 @@
                     </div>
                 </div>
                 <!-- 标题打标结果-->
-                <div class="item-line"  style="overflow: visible" ng-if="vm.knowledgeTitleTag">
+                <div class="item-line"  style="overflow: visible" ng-repeat="(itemIndex,item) in vm.extensionByTitleTag track by $index">
                     <div class="lable">
-                        概念扩展：{{vm.knowledgeTitleTag}}
+                        概念扩展：
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10" style="width:353px;padding:0;">
-                            <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in vm.knowledgeTitleTag track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;">
-                                {{val}}
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                                {{val.tagName}}
                             </span>
                         </div>
-                        <span class="tag_s L" style="margin-right:10px;">普通</span>
-                        <span class="L" ng-if="vm.title"><b>来源于:</b> <span>{{vm.title}}</span></span>
+                        <span class="tag_s mr-10 L" style="margin-right:10px;">普通</span>
+                        <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
+                        <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(2,item,itemIndex)"></a>
+                        <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
                 </div>
                 <!--sshoudong  tinajia -->
