@@ -10,7 +10,7 @@ angular.module('knowledgeManagementModule').controller('knowBatchAdditionsContro
             downTemplate: downTemplate,  //新增点击事件
             upload : upload,
             fileName :'',
-            templateType : SCENE_ID==1?"190":"192",
+            templateType : SCENE_ID==1?"190":"192", //添加默认值
             sceneId : SCENE_ID
         };
         //$.getScript('/js/common/config.js',function(e){
