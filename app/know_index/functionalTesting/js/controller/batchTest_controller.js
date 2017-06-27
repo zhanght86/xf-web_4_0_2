@@ -88,7 +88,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         currentPage: index,//当前页
                         totalItems: data.data.total, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
+                        pagesLength: 8//分页框数量
                     };
                     $scope.$apply();
                 }
@@ -106,7 +106,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 batchStatusId :$scope.vm.searchType,
                 batchName: $scope.vm.selectInput,
                 channel: $scope.vm.selectInput,
-                batchOperator: $scope.vm.selectInput,
+                batchOperator: $scope.vm.selectInput
 
             },function(data){
                 console.log(data);
@@ -123,7 +123,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         currentPage: index,//当前页
                         totalItems: data.data.total, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
+                        pagesLength: 8//分页框数量
                     };
                 }
                 $scope.$apply();

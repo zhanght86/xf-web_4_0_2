@@ -81,7 +81,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                    content:$scope.vm.testAsking,
                    channel:$scope.vm.channel,
                    dimensionArray:$scope.vm.dimensionArray,
-                   serviceId:$scope.vm.serviceId,
+                   serviceId:$scope.vm.serviceId
                    //serviceId:22
                },function(data){
                    console.log(data);

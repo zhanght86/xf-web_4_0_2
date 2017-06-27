@@ -78,7 +78,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                         currentPage: index,//当前页
                         totalItems: data.data.total, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
+                        pagesLength: 8//分页框数量
                     };
                     $scope.$apply();
                 }
@@ -226,7 +226,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                         currentPage: index,//当前页
                         totalItems: data.data.total, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
+                        pagesLength: 8//分页框数量
                     };
                 }else if(data.status == 10005){
                     $scope.vm.listData = "";
@@ -236,7 +236,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                         currentPage: index,//当前页
                         totalItems: 0, //总条数
                         pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
+                        pagesLength: 8//分页框数量
                     };
                 }
                 $scope.$apply();
@@ -249,7 +249,7 @@ angular.module('functionalTestModule').controller('testResultController', [
         //导出功能
         function exportExcel(){
             httpRequestPost("/api/application/testResult/export",{
-                batchNumberId:$stateParams.batchNumberId,
+                batchNumberId:$stateParams.batchNumberId
             },function(data){
                 console.log(data)
                 if(data.status==500){
@@ -300,7 +300,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                     ids :  $scope.vm.deleteIds,
                     serviceId : $scope.vm.serviceId,            //服务id,每条都一样；
                     //serviceId : 22
-                    batchNumberId : $scope.vm.batchNumberId,
+                    batchNumberId : $scope.vm.batchNumberId
                 },function(data){
                     console.log( $scope.vm.deleteIds);
                     if(data.status == 20009){
