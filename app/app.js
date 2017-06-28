@@ -39,7 +39,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'functionalTestModule',
     //应用分析
     'applAnalysisModule',
-    'knowDetailsModule',
+    //'knowDetailsModule',
 ]);
 
 /**
@@ -989,7 +989,7 @@ knowledge_static_web
                             templateUrl: 'know_index/home/homePageNav.html',
                             controller: "homePageNavController"
                         },
-                        templateUrl: 'know_index/knowledge_details/main_know_view_container.html',
+                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_know_view_container.html',
                         controller: "knowViewController"
                     }
                 }

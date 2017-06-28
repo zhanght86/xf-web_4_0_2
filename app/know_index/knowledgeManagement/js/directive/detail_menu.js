@@ -2,7 +2,7 @@
 /**
  * 打开回复框
  */
-angular.module('knowDetailsModule').directive("answer", function() {
+angular.module('knowledgeManagementModule').directive("answer", function() {
     return {
         restrict: "AE",
         link: function(scope, elem, attrs) {
@@ -18,7 +18,7 @@ angular.module('knowDetailsModule').directive("answer", function() {
 /**
  * 取消回复
  */
-angular.module('knowDetailsModule').directive("cancelAnswer", function() {
+angular.module('knowledgeManagementModule').directive("cancelAnswer", function() {
     return {
         restrict: "AE",
         link: function(scope, elem, attrs) {
