@@ -401,3 +401,9 @@
 
 /*聊天知识库*/
 .chatKnowBase .webuploader-pick{height:30px;line-height:25px;}
+/*知识新增弹窗样式*/
+.knowPopup{}
+.knowPopup .listItem{position: absolute; left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;}
+.knowPopup .listItem li{width: 100%; cursor:pointer;background: #eae8e8;padding-left:10px;box-sizing:border-box;line-height: 26px;}
+.knowPopup .listItem li:hover{background:#dcdbdb;}
+
