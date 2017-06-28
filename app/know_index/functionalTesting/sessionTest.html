@@ -23,7 +23,7 @@
                 </div>
                 <!--推荐问-->
                 <div  id="recommendElements" ng-if="vm.result.recommendAnswerElementList.length>0" style="border-top:1px dashed #bdbdbd;padding-top:5px;margin-top:5px;">
-                    <p class="mr-5"><span class="bold mr-5">向您推荐其他问题</span></p>
+                    <p class="mr-5"><span style="color: blue" class="bold mr-5">向您推荐其他问题</span></p>
                 <div ng-repeat="i in vm.result.recommendAnswerElementList track by $index">
                     <p class="c-primary" ><span >{{$index+1}} . {{i.knowledge_title}}</span></p>
 
