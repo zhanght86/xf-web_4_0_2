@@ -85,7 +85,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var winHeight = $win.height()*0.75;
             $scope.vm.winHeight=winHeight+5;
             $(".libraryFt").attr("style","width: 450px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: left;box-sizing:border-box;");
-            $(".libraryRth").attr("style","width: 670px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;box-sizing:border-box;");
+            $(".libraryRth").attr("style","width: 710px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;box-sizing:border-box;");
         }
 
         var params = {

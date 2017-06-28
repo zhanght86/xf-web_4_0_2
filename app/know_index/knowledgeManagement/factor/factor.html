@@ -43,7 +43,7 @@
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
                                         <input class="ipt-txt bd" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 394px;height:32px;padding-right:28px;box-sizing: border-box;"/>
-                                        <i class="btn-menu_1" ng-click="vm.knowledgeBot()"></i>
+                                        <i class="btn-menu_1" ng-click="vm.knowledgeBot()" style="right:1px;top:2px;width:23px;height:28px;"></i>
 
                                         <div class="rootClassfy aside-navs aside-navs2" >
                                             <ul class="menus show">
@@ -231,7 +231,7 @@
                                     <div class="channel_div mb-20" ng-if="vm.appointRelativeGroup.length">
                                         <span class="channel_s c-primary">已添加</span>
                                         <ul>
-                                            <li ng-repeat="item in vm.appointRelativeGroup track by $index">{{$index}}、{{item}}  <span class="delete_a R" ng-click="vm.appointRelativeGroup.splice($index,1)"></span></li>
+                                            <li ng-repeat="item in vm.appointRelativeGroup track by $index">{{$index+1}}、{{item}}  <span class="delete_a R" ng-click="vm.appointRelativeGroup.splice($index,1)"></span></li>
                                         </ul>
                                     </div>
                                 </div>

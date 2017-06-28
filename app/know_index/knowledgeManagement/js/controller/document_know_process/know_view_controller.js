@@ -3,7 +3,7 @@
  * 控制器
  */
 
-angular.module('knowDetailsModule').controller('knowViewController', [
+angular.module('knowledgeManagementModule').controller('knowViewController', [
     '$scope', '$location','$anchorScroll', "$interval",  "$timeout", "ngDialog","$stateParams","$state",
     "DetailService","$sce","KnowDocService",
     function ($scope, $location,$anchorScroll, $interval, $timeout, ngDialog,$stateParams,$state,
@@ -26,8 +26,6 @@ angular.module('knowDetailsModule').controller('knowViewController', [
                         know.contentHtml = contentHtml
                     })
                 }
-            },function(){
-
             })
         }
 

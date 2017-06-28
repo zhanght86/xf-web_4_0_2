@@ -1,7 +1,7 @@
 
 <script type="text/ng-template" >
 </script>
-<div class="pd-10" style="width: 100%;" >
+<div class="pd-10 knowPopup"  style="width: 100%;" >
     <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
     <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
         <form action="" name="form" novalidate>
@@ -45,10 +45,10 @@
                 </div>
             </div>
             <div>
-                <div class="mb-10" style="position: relative;">
-                    <span>指定相关知识:</span>
+                <div class="mb-10" style="position: relative;padding-left:100px;">
+                    <span class="pa" style="left:0;top:0;">指定相关知识:</span>
                     <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:279px;">
-                    <ul class="listItem" ng-if="vm.appointRelativeList.length" >
+                    <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position:static;">
                         <li ng-repeat="item in vm.appointRelativeList track by $index"
                             ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
                     </ul>
@@ -87,9 +87,7 @@
     .addPopupCnt{
         margin-left: 22px;
     }
-    .listItem{position: absolute; left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;}
-    .listItem li{width: 100%; cursor:pointer;background: #eae8e8;padding-left:10px;box-sizing:border-box;line-height: 26px;}
-    .listItem li:hover{background:#dcdbdb;}
+
 </style>
 <script>
 
