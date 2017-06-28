@@ -69,7 +69,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "pageSize":$scope.vm.pageSize,
             },function(data){
                 if(data.data==10005){
-                    layer.msg("查询无次相关知识")
+                    layer.msg("查询无此相关知识")
                 }else{
                     $scope.vm.listData = data.data.objs,
                         $scope.vm.paginationConf = {
@@ -88,14 +88,12 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         /**
          * 知识导出
          */
-        function exportExcel(currentPage){
+        function exportExcel(){
             httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
                 "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
                 "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
-                "index": (currentPage-1)*$scope.vm.pageSize,
-                "pageSize":$scope.vm.pageSize,
             },function(data){
                 if(data.status==500){
                     layer.msg("导出失败")
