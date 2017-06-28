@@ -76,7 +76,7 @@
                         <thead>
                         <tr>
                             <th class="bold" width="6%">
-                                <input  type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/>
+                                <input  type="checkbox" ng-click="vmo.selectAll()" ng-checked="vmo.isSelectedAll"/>
                             </th>
                             <th class="bold" width="14%">ID</th>
                             <th class="bold" width="15%">标识</th>
@@ -88,8 +88,8 @@
                         <tbody>
                         <tr ng-repeat="item in vmo.blackListData">
                             <td>
-                                <input  type="checkbox" name="selected" ng-checked="isSelected(item.blackListId)"
-                                        ng-click="updateSelection($event,item.blackListId)"/>
+                                <input  type="checkbox" name="selected" ng-checked="vmo.selectedList.inArray(item.blackListId)"
+                                        ng-click="vmo.selectSingle(item.blackListId)"/>
                             </td>
                             <td>{{item.blackListId}}</td>
                             <td>{{item.blackListIdentify}}</td>
@@ -107,9 +107,3 @@
         </div>
     </div>
 </div>
-<style>
-
-</style>
-<script>
-
-</script>

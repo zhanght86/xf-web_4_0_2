@@ -5,6 +5,7 @@
 angular.module('myApplicationSettingModule').controller('channelManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
+        //渠道管理
         $scope.vm = {
             channelData : "",   // 渠道数据
             paginationConf : ""  ,//分页条件
@@ -19,7 +20,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             channelStatus : "",
             dialogTitle : "" //对话框标题
         };
-
+        // 黑名单管理
         $scope.vmo = {
             blackListData : "",  //黑名单数据
             paginationConf : ""  ,//分页条件
@@ -32,9 +33,12 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             blackListIdentify : "",  //黑名单标识
             blackListRemark : "", //黑名单备注
             channelId : "", //渠道id
-            addBlackListCheck : addBlackListCheck
+            addBlackListCheck : addBlackListCheck,
+            selectedList  : []  ,//已选择黑名单 ,
+            isSelectedAll : false ,
+            selectAll : selectAll , //全部加入黑名单
+            selectSingle : selectSingle
         };
-
         //获取所有的渠道
         (function getChannelList(){
             httpRequestPost("api/application/channel/listChannels",{
@@ -104,6 +108,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 "index" : (index-1)*$scope.vmo.pageSize,
                 "pageSize": $scope.vmo.pageSize
             },function(data){
+
                 $scope.vmo.blackListData = data.data;
                 $scope.vmo.blackListDataTotal =data.total;
                 $scope.vmo.paginationConf = {
@@ -124,6 +129,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                     $timeout.cancel(timeout2)
                 }
                 timeout2 = $timeout(function () {
+                    initBlackList() ;
                     listBlackListData(current);
                 }, 100)
             }
@@ -270,7 +276,6 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             },function(data){
                                 if(data.data===10000){
                                     layer.msg("状态修改成功");
-                                    //$state.reload();
                                     listChannelData(1);
                                 }else{
                                     layer.msg("状态修改失败")
@@ -309,7 +314,32 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 });
             }
         }
-
+        //全选
+        function selectAll (){
+            if(!$scope.vmo.isSelectedAll){
+                $scope.vmo.isSelectedAll = true;
+                $scope.vmo.selectedList = [];
+                angular.forEach($scope.vmo.blackListData,function(item){
+                    $scope.vmo.selectedList.push(item.blackListId);
+                });
+            }else{
+                $scope.vmo.isSelectedAll = false;
+                $scope.vmo.selectedList = [];
+            }
+        }
+        // 黑名单单个添加删除
+        function selectSingle(id){
+            if($scope.vmo.selectedList.inArray(id)){
+                $scope.vmo.selectedList.remove(id);
+                $scope.vmo.isSelectedAll = false;
+            }else{
+                $scope.vmo.selectedList.push(id);
+            }
+            if($scope.vmo.selectedList.length==$scope.vmo.blackListData.length){
+                $scope.vmo.isSelectedAll = true;
+            }
+            console.log($scope.vmo.selectedList)
+        }
         //添加黑名单
         function addBlacklist(){
             var dialog = ngDialog.openConfirm({
@@ -329,16 +359,18 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             "blackListUpdateId": USER_ID,
                             "channelId": $scope.vmo.channelId
                         },function(data){
+                            $scope.vmo.isSelectedAll = false ;
                             layer.msg("添加成功");
-                            //$state.reload();
-                            listBlackListData(1);
+                            if($scope.vmo.selectedList.length == $scope.vmo.pageSize){
+                                $scope.vmo.selectedList.pop() ;
+                                $scope.vmo.isSelectedAll = false
+                            }
+                            listBlackListData(1) ;
                         },function(){
-                            $scope.vmo.blackListIdentify = "";
-                            $scope.vmo.blackListRemark = "";
+                            initBlackBackUp()
                         })
                     }else{
-                        $scope.vmo.blackListIdentify = "";
-                        $scope.vmo.blackListRemark = "";
+                        initBlackBackUp()
                     }
                 }
             });
@@ -355,13 +387,11 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 },function(data){          //类名重複
                     if(data.data===10002){
                         layer.msg("黑名单重复！");
-                        $scope.vmo.blackListIdentify = "";
-                        $scope.vmo.blackListRemark = "";
+                        initBlackBackUp()
                     }else{
                         if(data.data===10003){
                             layer.msg("黑名单IP不合法！");
-                            $scope.vmo.blackListIdentify = "";
-                            $scope.vmo.blackListRemark = "";
+                            initBlackBackUp()
                         }else{
                             ngDialog.closeAll(1) ;
                         }
@@ -384,8 +414,8 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             "applicationId": APPLICATION_ID,
                             "blackListId": blackListId
                         },function(data){
+                            initBlackList() ;
                             layer.msg("移除成功");
-                            //$state.reload();
                             listBlackListData(1);
                         },function(error){
                             console.log(error)
@@ -397,7 +427,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
 
         //批量移除黑名单
         function batchDelBlacklist(){
-            if($scope.selectedList.length == 0){
+            if($scope.vmo.selectedList.length == 0){
                 layer.msg("请选择要删除的黑名单!");
                 return;
             }else{
@@ -412,9 +442,10 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                     if(e === 1){
                         httpRequestPost("/api/application/channel/batchDelBlackList",{
                             "applicationId": APPLICATION_ID,
-                            "blackListIds": $scope.selectedList
+                            "blackListIds": $scope.vmo.selectedList
                         },function(data){
                             if(data.data===10000){
+                                initBlackList() ;
                                 layer.msg("移除成功");
                                 listBlackListData(1);
                             }else{
@@ -423,76 +454,21 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                         },function(error){
                             console.log(error)
                         })
+                    }else{
+
                     }
                 }
             });}
         }
-
-        //创建变量用来保存选中结果
-        $scope.selectedList = [];
-        $scope.updateSelection= updateSelection; //更新某一列数据的选择
-        $scope.selectAll = selectAll; //全选
-        $scope.isSelected = isSelected; //判断某一列是否已被选中
-        $scope.isSelectedAll = isSelectedAll;  //判断是否已经全部选中
-        function updateSelected(action, id){
-            if (action == 'add' && $scope.selectedList.indexOf(id) == -1) $scope.selectedList.push(id);
-            if (action == 'remove' && $scope.selectedList.indexOf(id) != -1) $scope.selectedList.splice($scope.selectedList.indexOf(id), 1);
-            console.log($scope.selectedList);
-
+        //黑名单列表选择删除
+        function initBlackList(){
+            $scope.vmo.selectedList = [] ;
+            $scope.vmo.isSelectedAll = false
         }
-
-        //更新某一列数据的选择
-        function updateSelection($event, id){
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            console.log(action+"选中的id"+id);
-            updateSelected(action, id);
+        // 黑名单 添加 数据初始化
+        function initBlackBackUp(){
+            $scope.vmo.blackListIdentify = "";
+            $scope.vmo.blackListRemark = "";
         }
-
-        //判断某一列是否已被选中
-        function isSelected(id) {
-            return $scope.selectedList.indexOf(id) >= 0;
-        };
-
-        //全选
-        function selectAll ($event){
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            for (var i = 0; i < $scope.vmo.blackListData.length; i++) {
-                var contact = $scope.vmo.blackListData[i];
-                updateSelected(action, contact.blackListId);
-            }
-        }
-        //判断是否已经全部选中
-        function isSelectedAll() {
-            return $scope.selectedList.length === $scope.vmo.blackListData.length;
-        };
-
-        //var updateSelected = function (action, id) {
-        //    if (action == 'add' && $scope.selected.indexOf(id) == -1) $scope.selected.push(id);
-        //    if (action == 'remove' && $scope.selected.indexOf(id) != -1) $scope.selected.splice($scope.selected.indexOf(id), 1);
-        //};
-        ////更新某一列数据的选择
-        //$scope.updateSelection = function ($event, id) {
-        //    var checkbox = $event.target;
-        //    var action = (checkbox.checked ? 'add' : 'remove');
-        //    updateSelected(action, id);
-        //};
-        ////全选操作
-        //$scope.selectAll = function ($event) {
-        //    var checkbox = $event.target;
-        //    var action = (checkbox.checked ? 'add' : 'remove');
-        //    for (var i = 0; i < $scope.vmo.blackListData.length; i++) {
-        //        var contact = $scope.vmo.blackListData[i];
-        //        updateSelected(action, contact.blackListId);
-        //    }
-        //};
-        //$scope.isSelected = function (id) {
-        //    return $scope.selected.indexOf(id) >= 0;
-        //};
-        //$scope.isSelectedAll = function () {
-        //    return $scope.selected.length === $scope.vmo.blackListData.length;
-        //};
-
     }
 ]);

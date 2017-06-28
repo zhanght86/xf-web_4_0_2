@@ -2,7 +2,6 @@
 <div class="know_manage wrap mb50" style=" padding-bottom:80px">
     <div class="know_man_tit clearfix mb20">
         <p class="current">文档加工</p>
-        <!--<p ui-sref="back.adapter">适配器接入</p>-->
     </div>
     <div class="bd doc_import" style="min-height:100%">
         <div class="doc_import_tit clearfix">
@@ -20,14 +19,6 @@
                     <option value="WORD">WORD</option>
                 </select>
             </div>
-            <!--<div class="mb10 clearfix">-->
-                <!--<span class="L know_span">模板条件:</span>-->
-                <!--<div class="L ">-->
-                        <!--<textarea class="txta bd mb10">包含标题/包含内容/包含分类-->
-
-                        <!--</textarea>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="mb10 clearfix">
                 <span class="L know_span">文档样例:</span>
                 <input id="tempickfile" type="button" class="btn btn3 L" value="浏览" temp-plupload/>
@@ -41,21 +32,6 @@
                 <span class="L know_span">模板规则:</span>
                 <div class="rule_div L">
                     <div class="bd" style="margin-bottom:25px">
-                        <!-- <div class="mb10">
-                            一级目录
-                            <input type="text" class="catalog_txt bd ml10 mr10"/>
-                            <input type="button" class="btn3 mb10 " value="从文章中提取"/>
-                        </div>
-                        <div class="mb10">
-                            一级目录
-                            <input type="text" class="catalog_txt bd ml10 mr10"/>
-                            <input type="button" class="btn3 mb10 " value="从文章中提取"/>
-                        </div>
-                        <div class="mb10">
-                            一级目录
-                            <input type="text" class="catalog_txt bd ml10 mr10"/>
-                            <input type="button" class="btn3 mb10 " value="从文章中提取"/>
-                        </div> -->
                         <table class="rule_table">
                             <tr class="tr_t" ng-repeat="role in rules">
                                 <td width="30%">{{role.level+1}}级目录</td>

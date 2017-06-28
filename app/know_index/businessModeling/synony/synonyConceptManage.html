@@ -56,7 +56,7 @@
                 <td>{{item.synonymConceptKey}}</td>
                 <td>{{item.synonymConceptWeight | weightFilter}}</td>
                 <td>
-                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.synonymConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.synonymConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
+                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.synonymConceptTerm.split('；')"><i ng-if="$index!=0 && i " style="color: #333;">, </i>{{i}} </span>
                 </td>
                 <td>{{item.synonymConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td>{{item.synonymConceptModifier}}</td>

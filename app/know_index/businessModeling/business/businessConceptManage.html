@@ -58,7 +58,7 @@
                 <td>{{item.businessConceptKey}}</td>
                 <td>{{item.businessConceptWeight | weightFilter}}</td>
                 <td>
-                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.businessConceptTerm.split('；')">{{i}} <i ng-if="$index!=item.businessConceptTerm.split('；').length-1" style="color: #333;">,</i></span>
+                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.businessConceptTerm.split('；')"><i ng-if="$index!=0 && i " style="color: #333;">, </i>{{i}} </span>
                 </td>
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.businessConceptRelate.split('；')">{{i}} <i ng-if="$index!=item.businessConceptRelate.split('；').length-1" style="color: #333;">,</i></span>

@@ -17,7 +17,6 @@
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <!--<th class="bold" width="10%"><input  type="checkbox" id="selectAll" onclick="checkedAll()"/></th>-->
                             <th class="bold" width="10%"></th>
                             <th class="bold" width="40%">服务名称</th>
                             <th class="bold" width="30%">关联服务</th>
@@ -26,7 +25,6 @@
                         </thead>
                         <tbody>
                         <tr  ng-repeat="item in vm.applicationServiceData">
-                            <!--<td><input  type="checkbox" name="sid" onclick="clear_checked()"/></td>-->
                             <td><input type="radio" name="serviceId" ng-click="vm.selectServiceId(item.serviceId)"/></td>
                             <td>{{item.serviceName}}</td>
                             <td>{{item.relatedServiceNames}}</td>
@@ -42,27 +40,4 @@
         </div>
     </div>
 </div>
-<style>
 
-</style>
-<script>
-    function clear_checked() {
-        var count = 0;
-        var ids = document.getElementsByName("sid");
-        for (var i = 0; i < ids.length; i++) {
-            console.log("============"+!ids[i].checked);
-            if (!ids[i].checked) {
-                count++;
-                $("#selectAll").attr("checked",false);
-            }
-        }
-        console.log("============"+count);
-        if(count==0){
-            $("#selectAll").prop("checked",true);
-        }
-    }
-    function checkedAll(){
-        $("#selectAll").prop("checked",true);
-        $("input[name='sid']").prop("checked",true);
-    }
-</script>
