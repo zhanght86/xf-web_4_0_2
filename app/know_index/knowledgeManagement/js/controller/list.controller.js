@@ -617,19 +617,22 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
-                        $scope.vm.titleTip = data.info;
+                        $scope.vm.titleTip = "知识标题重复";
                         $scope.$apply();
                     }else if(data.status == 200){
-                        $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                        //生成bot
-                        angular.forEach(data.data.classifyList, function (item) {
-                            var obj = {};
-                            obj.className = item.fullPath;
-                            obj.classificationId = item.id;
-                            obj.classificationType = item.type;
-                            $scope.vm.botClassfy.push(obj);
-                            $scope.vm.frameCategoryId = item.id;
-                            $scope.$apply();
+                        $scope.$apply(function(){
+                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTag ;
+                            $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                            //生成bot
+                            angular.forEach(data.data.classifyList, function (item) {
+                                var obj = {
+                                    "className" : item.fullPath ,
+                                    "classificationId" : item.id ,
+                                    "classificationType" : item.type
+                                };
+                                $scope.vm.botClassfy.push(obj);
+                                $scope.vm.frameCategoryId = item.id;
+                            });
                         });
                     }
                 });
