@@ -115,10 +115,10 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
                 "documentationCreateTime":$scope.SearchPOJO.startTime,
                 "documentationModifyTime": $scope.SearchPOJO.endTime,
                 "documentationCreater": $scope.SearchPOJO.userName,
-                "requestId": "string",
+                "requestId": "string"
             },function(resource){
                 if(resource.status == 200){
-                    $scope.knowDocs = resource.data.objs
+                    $scope.knowDocs = resource.data.objs ;
                     $scope.paginationConf.totalItems = resource.data.total;
                 }
             })

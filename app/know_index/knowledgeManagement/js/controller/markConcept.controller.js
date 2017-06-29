@@ -324,11 +324,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 "extensionQuestionList" : extensionQuestionList,
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
-                //console.log(data);
                 if(data.status==200){
                     var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                    if(isTagRepeat(data.data,allExtension)){
-                        $scope.vm.extensionTitle = "" ;  //重复
+                    if(isTagRepeat(data.data,allExtension,title)){
+
                     }else{
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
@@ -428,6 +427,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             obj.extensionQuestionType = angular.copy($scope.vm.factor);
             if(!title){
                 layer.msg("扩展问不能为空")
+            }else if(title == $scope.vm.title){
+                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtensionByTitle(obj)){
                 layer.msg("生成扩展问重复,已阻止添加");
                 return false
@@ -436,19 +437,16 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList" : question
                 },function(data){
-                    //console.log(data);
                     if(data.status == 500){
-                        //console.log(question) ;
                         layer.msg("概念扩展打标失败，请检查服务，重新打标") ;
-                        $scope.vm.extensionTitle = "" ;
-                        $scope.$apply();
                     }else if(data.status==11006){
                         layer.msg("扩展问生成失败") ;
                     }else if(data.status==200){
                         var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                        if(isTagRepeat(data.data,allExtension)){
-                            $scope.vm.extensionTitle = "" ;  //重复
+                        if(isTagRepeat(data.data,allExtension,title)){
+
                         }else{
+                            $scope.vm.extensionTitle = "" ;
                             var enten = {}  ;
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
@@ -482,7 +480,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
         //判断扩展问标签是否重复
         //data.data
-        function isTagRepeat(current,allExtension){
+        function isTagRepeat(current,allExtension,title ){
             var isRepeat = false ;
             var tag = [] ;
             angular.forEach(current,function(tagList){
@@ -504,7 +502,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     }
                 }) ;
                 if(tagLen == itemTag.length && tag.length == itemTag.length){
-                    layer.msg("根据"+ current[0].extensionQuestionTitle+ "生成扩展问重复,已阻止添加") ;
+                    layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
                     return   isRepeat = true ;
                 }
             }) ;
