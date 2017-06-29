@@ -1,8 +1,8 @@
-<div class="r-cont pd30">
+<div class="r-cont pd30 parameterSetting">
     <div class="r-cont-hd">
         <span>参数设置</span>
     </div>
-    <div class="r-cont-bd oh pt30">
+    <div class="r-cont-bd oh pt30 ">
         <div class="jqrsz-item jqrsz-item2">
             <div class="item-line">
                 <div class="lable">
@@ -33,22 +33,22 @@
                 </div>
             </div>
         </div>
-        <div class="jqrsz-item jqrsz-item2">
-            <div class="item-line">
-                <div class="lable">
-                    话轮识别：
-                </div>
-                <div class="value">
-                    <div class="dib pt-5 mr-15">
-                        <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[app.settingTurnRoundOn]"
-                             ng-click="app.turnOn(app.settingTurnRoundOn,'settingTurnRoundOn')"
-                             style="float:left;margin-right:10px;">
-                            <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[app.settingTurnRoundOn]"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--<div class="jqrsz-item jqrsz-item2">-->
+            <!--<div class="item-line">-->
+                <!--<div class="lable">-->
+                    <!--话轮识别：-->
+                <!--</div>-->
+                <!--<div class="value">-->
+                    <!--<div class="dib pt-5 mr-15">-->
+                        <!--<div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[app.settingTurnRoundOn]"-->
+                             <!--ng-click="app.turnOn(app.settingTurnRoundOn,'settingTurnRoundOn')"-->
+                             <!--style="float:left;margin-right:10px;">-->
+                            <!--<div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[app.settingTurnRoundOn]"></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="jqrsz-item jqrsz-item2">
             <div class="item-line">
                 <div class="lable">
@@ -73,18 +73,18 @@
                 </div>
             </div>
         </div>
-        <div class="jqrsz-item jqrsz-item2">
-            <div class="item-line">
-                <div class="lable">
-                    获取数据时间：
-                </div>
-                <div class="value">
-                    <input class="input-text" type="number" ng-model="app.settingDataTimeoutLimit"
-                           ng-change="app.parameterLimit(1,'settingDataTimeoutLimit')" step="1"
-                           placeholder="获取数据时间限制，标准格式为数字型" style="width: 350px;" required>
-                </div>
-            </div>
-        </div>
+        <!--<div class="jqrsz-item jqrsz-item2">-->
+            <!--<div class="item-line">-->
+                <!--<div class="lable">-->
+                    <!--获取数据时间：-->
+                <!--</div>-->
+                <!--<div class="value">-->
+                    <!--<input class="input-text" type="number" ng-model="app.settingDataTimeoutLimit"-->
+                           <!--ng-change="app.parameterLimit(1,'settingDataTimeoutLimit')" step="1"-->
+                           <!--placeholder="获取数据时间限制，标准格式为数字型" style="width: 350px;" required>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="jqrsz-item jqrsz-item2">
             <div class="item-line">
                 <div class="lable">
@@ -129,6 +129,4 @@
 
     </div>
 </div>
-<style>
-    .jqrsz-item2{border-top:0;padding:0;margin-top:0;}
-</style>
+
