@@ -88,7 +88,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
         };
 
-        //獲取渠道
+        //獲取纬度
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -96,7 +96,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
                 }
             }, function(error) {console.log(error) });
-        //获取维度
+        //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){

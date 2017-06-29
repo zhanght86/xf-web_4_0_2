@@ -83,7 +83,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             isDecorateSimple : false  ,// true 单独修饰  false  整体修饰
             backupsOfExtension : "" //扩展问 编辑备份
         };
-        //獲取渠道
+        //獲取纬度
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -93,7 +93,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             }, function(error) {
                 console.log(error)
             });
-        //获取维度
+        //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
