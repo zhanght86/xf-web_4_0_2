@@ -998,9 +998,11 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
             }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标")
+                layer.msg("知识标题未打标") ;
+                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
-                layer.msg("分类知识Bot不能为空")
+                layer.msg("分类知识Bot不能为空") ;
+                return false
             }else{
                 return true
             }
