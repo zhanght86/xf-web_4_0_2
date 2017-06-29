@@ -16,7 +16,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
             "tableList" : "=" ,
         },
         template:
-            '<button  id="picker" style="height:30px;">批量导入</button>'
+            '<button  id="picker" style="height:30px;font-size:14px;">批量导入</button>'
         ,
         link:function(scope,element,attrs){
             //var $list = angular.element("#thelist");

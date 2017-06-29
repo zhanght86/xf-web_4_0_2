@@ -400,7 +400,7 @@
 .knowledgeSale .kuozhan_div span{background:#ccc;padding:2px 5px;display:inline;text-indent:0; line-height:25px;margin:4px 5px 4px 2px;}
 
 /*聊天知识库*/
-.chatKnowBase .webuploader-pick{height:30px;line-height:25px;}
+.chatKnowBase .webuploader-pick{height:30px;line-height:17px;}
 /*知识新增弹窗样式*/
 .knowPopup{}
 .knowPopup .listItem{position: absolute; left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;}
