@@ -23,7 +23,7 @@ angular.module('knowledgeManagementModule').controller('temController', [
                 pageSize: $scope.SearchPOJO.pageSize,//第页条目数
                 pagesLength: 6//分页框数量
             };
-        }
+        } ;
         $scope.queryTemplate = function(){
             TemplateService.queryTemplate.save(
                 {

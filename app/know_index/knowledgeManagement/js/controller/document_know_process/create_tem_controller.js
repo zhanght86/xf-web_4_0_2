@@ -20,12 +20,11 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
             $scope.temId = localStorageService.get($state.current.name);
         }else if($stateParams.temId){
             $scope.storeParams($stateParams.temId);
-            $scope.temId = $stateParams.temId
+            $scope.temId = $stateParams.temId ;
             $scope.temuptools.show = false;
         }else if(!$stateParams.temId) {
             $scope.temuptools.show = true;
         }
-
         $scope.queryTemplateById = function(){
             TemplateService.queryTemplateById.save({
                 "index":0,

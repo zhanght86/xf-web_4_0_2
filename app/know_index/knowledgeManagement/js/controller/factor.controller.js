@@ -960,7 +960,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
 //        提交 检验参数
         function checkSave(){
-            console.log()
             var params = getParams();
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");

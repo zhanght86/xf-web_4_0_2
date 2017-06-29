@@ -17,7 +17,6 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
              * 加载分页条
              * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
              */
-            console.log() ;
             $scope.paginationConf = {
                 currentPage: $scope.SearchPOJO.currentPage,//当前页
                 totalItems: 0, //总条数
@@ -26,12 +25,10 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
 
             };
         }
-
         $scope.TemSearchPOJO = {
             pageSize:5,
             currentPage:1
         };
-
         $scope.temPaginationConf = {
             currentPage: $scope.TemSearchPOJO.currentPage,//当前页
             totalItems: 0, //总条数
@@ -39,8 +36,6 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
             pagesLength: 6,//分页框数量
             target:$scope.TemSearchPOJO
         };
-
-
         $scope.queryTemplate = function(){
             TemplateService.queryTemplate.save({
                 "index": ($scope.TemSearchPOJO.currentPage-1)*$scope.TemSearchPOJO.pageSize,
@@ -65,8 +60,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
             }else if(taskStatus == 3){
                 return "解析失败"
             }
-        }
-
+        } ;
         $scope.getAnalyseType  = function(analyseType){
             if(analyseType == 0){
                 return "全文解析"
@@ -77,7 +71,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
             }else if(analyseType == 3){
                 return "插件解析"
             }
-        }
+        } ;
 
         $scope.resetUploadPOJO = function(){
             if($scope.libraryIds && $scope.libraryIds.length>0)
