@@ -190,16 +190,6 @@ knowledge_static_web.controller('ApplicationController',
             $scope.goHistory = function(){
                 $window.history.back();
             };
-
-            //定义退出登录的方法
-            $scope.logout = function () {
-                AuthService.logout(function (data) {
-
-                }, function (errMsg) {
-                    $scope.errMsg = errMsg;
-                });
-            };
-
             $scope.initKnowCheckNoticeView = function(){
                 PersonalCenterService.connKnowCheckNoticeCon.get(
                     {
@@ -222,7 +212,6 @@ knowledge_static_web.controller('ApplicationController',
                     }
                 })
             };
-
             $scope.initAnalyseTaskCount = function(){
                 KnowDocService.queryAnalyseTaskCount.get({
                     getCount:true,
@@ -233,8 +222,6 @@ knowledge_static_web.controller('ApplicationController',
                     }
                 })
             };
-
-
 
             // alert(format(new Date().getTime(), 'yyyy-MM-dd HH:mm:ss'))
             // $scope.$on(AUTH_EVENTS.notAuthenticated, function (event) {

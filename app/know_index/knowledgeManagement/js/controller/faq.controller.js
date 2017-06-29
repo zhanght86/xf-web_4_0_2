@@ -20,6 +20,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             frameCategoryId : "",
             title : "",   //标题
             titleTip :  "",
+            isTitleRepeat : true ,
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
@@ -532,7 +533,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
-                         $scope.vm.titleTip = "标题重复";
+                         $scope.vm.titleTip = "知识标题重复";
+                        //isTitleRepeat = false ;
+                        $scope.title = ""  ;
                         $scope.$apply()
                     }else{
                         $scope.vm.botClassfy = [] ;

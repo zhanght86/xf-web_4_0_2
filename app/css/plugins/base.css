@@ -17,8 +17,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {d
 audio,canvas,video,img {display: inline-block;*display: inline;*zoom: 1;max-width:100%;}
 
 /* 要注意表单元素并不继承父级 font 的问题 */
-body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5FAE\8F6F\96C5\9ED1,\5b8b\4f53;}
-input,select,textarea{font-size:100%;}
+/*body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5FAE\8F6F\96C5\9ED1,\5b8b\4f53;}*/
+/*input,select,textarea{font-size:100%;}*/
 
 /* 单词换行 */
 p { word-wrap: break-word;}
