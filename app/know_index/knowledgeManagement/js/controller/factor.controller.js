@@ -519,6 +519,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             obj.extensionQuestionType = $scope.vm.extensionWeight;
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
+            }else if(title == $scope.vm.title){
+                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!chackTitleAndextEnsionQuestion($scope.vm.title,$scope.vm.extensionTitle)){
                 layer.msg("扩展问和标题重复请重新输入扩展问") ;
                 return ;
@@ -532,17 +534,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 },function(data){
                     if(data.status == 500){
                         layer.msg("概念扩展打标失败，请检查服务，重新打标") ;
-                        if(!source){
-                            $scope.vm.extensionTitle = "";
-                        }
-                        $scope.$apply();
                     }else if(data.status==200){
                         var allExtension = $scope.vm.extensions ;
-                        if(isTagRepeat(data.data,allExtension)){
-                            if(!source){
-                                $scope.vm.extensionTitle = "";
-                            }
+                        if(isTagRepeat(data.data,allExtension,title)){
+
                         }else{
+                            $scope.vm.extensionTitle = "";
                             var enten = {}  ;
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
@@ -581,7 +578,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }
         //判断扩展问标签是否重复
         //data.data
-        function isTagRepeat(current,allExtension){
+        function isTagRepeat(current,allExtension,title){
             var isRepeat = false ;
             var tag = [] ;
             angular.forEach(current,function(tagList){
@@ -603,7 +600,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                     }
                 }) ;
                 if(tagLen == itemTag.length && tag.length == itemTag.length){
-                    layer.msg("根据"+ current[0].extensionQuestionTitle+ "生成扩展问重复,已阻止添加") ;
+                    layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
                     return   isRepeat = true ;
                 }
             }) ;
@@ -861,11 +858,13 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 var obj = {};
                 obj.knowledgeContent = getTableParams();
                 obj.channelIdList =  $scope.vm.channel;
+                if(!$scope.vm.dimensionArr.id.length){
+                    $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
+                };  
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question ;   //显示相关问
                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
                 obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
-
             obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
             $scope.vm.scanContent=new Array(obj);
             params.knowledgeContents =  angular.copy($scope.vm.scanContent) ;
