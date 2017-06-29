@@ -860,7 +860,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.channelIdList =  $scope.vm.channel;
                 if(!$scope.vm.dimensionArr.id.length){
                     $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
-                };  
+                };
                 obj.dimensionIdList =  $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id;
                 obj.knowledgeRelatedQuestionOn = $scope.vm.question ;   //显示相关问
                 obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
@@ -971,9 +971,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false;
             }else if(!params.knowledgeTitleTag.length){
-                return true ;
-                //layer.msg("知识标题未打标");
-                //return false;
+                return false ;
+                layer.msg("知识标题未打标");
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空");
                 return false;

@@ -796,8 +796,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 return false ;
             }else if(params.knowledgeTitleTag.length<0){
                 layer.msg("知识标题未打标") ;
+                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空") ;
+                return false ;
             }else{
                 return true
             }
