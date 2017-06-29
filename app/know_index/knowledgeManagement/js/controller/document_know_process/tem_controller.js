@@ -63,7 +63,6 @@ angular.module('knowledgeManagementModule').controller('temController', [
                 $timeout.cancel(timeout)
             }
             timeout = $timeout(function () {
-                $scope.storeParams(SearchPOJO);
                 $scope.queryTemplate();
             }, 350)
         }, true)
