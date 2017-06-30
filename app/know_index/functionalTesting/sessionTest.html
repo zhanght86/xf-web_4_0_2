@@ -75,8 +75,8 @@
                             <div class="tc" ng-if="$index!=vm.result.flowInfo.length-1" style="font-size:30px;color:green;margin-top:10px;">↓</div>
                         </div>
                         <span class="flow_span L ml-10 mr-10">-</span>
-                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>
-                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>
+                        <pre class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</pre>
+                        <pre class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</pre>
                     </li>
 
                 </ul>

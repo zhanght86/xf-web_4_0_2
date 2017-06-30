@@ -462,7 +462,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                 var contact = $scope.vmo.blackListData[i];
                 updateSelected(action, contact.blackListId);
             }
-        }
+        }  
         //判断是否已经全部选中
         function isSelectedAll() {
             return $scope.selectedList.length === $scope.vmo.blackListData.length;
