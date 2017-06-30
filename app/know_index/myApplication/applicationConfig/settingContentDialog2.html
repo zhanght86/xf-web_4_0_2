@@ -48,7 +48,7 @@
     }
 </style>
 <script>
-    /*6.30*/
+    /*6.30add-图片大小限制*/
     var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
     function fileChange(target) {
         var fileSize = 0;
@@ -61,11 +61,11 @@
             fileSize = target.files[0].size;
         }
         var size = fileSize / 1024;
-        if(size>10000){
-            alert("附件不能大于10M");
+        if(size>1000){
+            alert("附件不能大于1M");
         }
     }
-    /*6.30-ennd*/
+    /*6.30-图片大小限制ennd*/
     $("#file").change(function () {
         var objUrl = getObjectURL(this.files[0]);
         if (objUrl) {
