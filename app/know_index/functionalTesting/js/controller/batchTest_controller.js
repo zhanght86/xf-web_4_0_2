@@ -62,7 +62,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     //layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
                 }
             },function(){
-                //layer.msg("请求失败");
                 console.log('请求失败');
             })
         }
@@ -93,7 +92,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     $scope.$apply();
                 }
             },function(){
-                //layer.msg("请求失败");
                 console.log('请求失败');
             })  ;
         }
@@ -128,7 +126,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 }
                 $scope.$apply();
             },function(){
-               // layer.msg("请求失败");
                 console.log('请求失败');
             })  ;
         }
@@ -190,17 +187,14 @@ angular.module('functionalTestModule').controller('batchTestController', [
                             applicationId :  $scope.vm.applicationId,
                             ids :  $scope.vm.deleteIds
                         },function(data){
-                            //$state.reload();
                             if(data.status == 10013){
                                 $scope.vm.selectAllCheck = false;
                                 $state.reload();
                                 layer.msg("删除成功",{time:1000});
                             }else{
-                                //layer.msg("删除失败");
-                                console.log('删除失败');
+                                layer.msg("删除失败");
                             }
                         },function(){
-                            //layer.msg("请求失败");
                             console.log('请求失败');
                         });
                     }
@@ -224,7 +218,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     }
                 });
             }else{
-                layer.msg("当前应用下没有发布服务，请发布服务后进行测试",{time:1000});
+                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
             }
 
         }
@@ -232,7 +226,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             var id = $scope.vm.batchNumberId ;
             var channelId = angular.copy($scope.vm.channel) ;
             if(!$scope.vm.channel){
-                layer.msg("选择渠道",{time:1000})
+                layer.msg("选择渠道")
             }else{
                 var name ;
                 angular.forEach($scope.vm.channelList,function(item){
@@ -249,8 +243,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     applicationId:$scope.vm.applicationId,
                     serviceId:$scope.vm.serviceId,
                 }, function (data) {
-                    console.log(data);
-                    //$state.reload();
                     if(data.status == 20002){
                         layer.msg(data.data,{time:1000});
                     }
@@ -259,7 +251,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         startTest(id,name,channelId);
                     }
                 }, function () {
-                    //layer.msg("请求失败");
                     console.log('请求失败');
                 },"","",60000);
                 ngDialog.closeAll() ;
@@ -310,7 +301,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 $scope.vm.selectAllCheck = false;
                 $scope.vm.deleteIds = [];
             }
-            //console.log( $scope.vm.deleteIds);
         }
         function selectSingle(id){
             if($scope.vm.deleteIds.inArray(id)){

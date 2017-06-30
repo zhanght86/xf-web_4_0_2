@@ -20,6 +20,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             frameCategoryId : "",
             title : "",   //标题
             titleTip :  "",
+            isTitleRepeat : true ,
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
@@ -88,7 +89,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
         };
 
-        //獲取渠道
+        //獲取纬度
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -96,7 +97,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
                 }
             }, function(error) {console.log(error) });
-        //获取维度
+        //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -299,11 +300,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         function getExtension(title,weight){
             var obj = {
                 "extensionQuestionTitle" : title ,
-                "extensionQuestionType" : weight ,
-                //"source": title
+                "extensionQuestionType" : weight
              } ;
             if(!title){
                 layer.msg("扩展问不能为空")
+            }else if(title == $scope.vm.title){
+                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtension(obj ,  $scope.vm.extensions)){
                 layer.msg('根据"'+title+'"生成扩展问重复,已阻止添加');
                 return false
@@ -517,7 +519,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 }
             });
         }
-
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
@@ -532,25 +533,23 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
-                        //if(data.data==10002){
-                            $scope.vm.titleTip = "标题重复";
-                        //}
-                        // $scope.vm.titleTip = data.info;
+                         $scope.vm.titleTip = "知识标题重复";
+                        //isTitleRepeat = false ;
+                        $scope.title = ""  ;
                         $scope.$apply()
                     }else{
                         $scope.vm.botClassfy = [] ;
                         angular.forEach(data.data,function(item){
-                            var obj = {};
-                            obj.className = item.fullPath;
-                            obj.classificationId = item.id ;
-                            obj.classificationType = 0;
+                            var obj = {
+                                "className" : item.fullPath,
+                                "classificationId" : item.id ,
+                                "classificationType" : 0
+                            };
                             $scope.vm.botClassfy.push(obj);
                             $scope.vm.frameCategoryId = item.id
                         });
-                        //$scope.vm.creatBot = data.data;
                         $scope.$apply()
                     }
-                    //console.log(data);
                 },function(err){
                    console.log(err)
                 });

@@ -78,7 +78,7 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                    if(nullCheck($("#synonymConceptWeight").val())==true || nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
                         searchSynonymConcept(current);
                     }else{
                         loadSynonymConceptTable(current);

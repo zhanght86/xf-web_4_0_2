@@ -218,9 +218,9 @@
                                 <div>
                                     <div class="mb-10" style="position: relative;">
                                         <span>指定相关知识:</span>
-                                        <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:279px;">
+                                        <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:380px;">
                                         <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position: absolute;
-                            left: 100px;z-index: 2;height: 200px;overflow: scroll ;">
+                            left: 91px;z-index: 2;width:380px;height: 200px;overflow: scroll ;">
                                             <li ng-repeat="item in vm.appointRelativeList track by $index" style="min-width: 280px;
                                              cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px"
                                                 ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
@@ -231,7 +231,10 @@
                                     <div class="channel_div mb-20" ng-if="vm.appointRelativeGroup.length">
                                         <span class="channel_s c-primary">已添加</span>
                                         <ul>
-                                            <li ng-repeat="item in vm.appointRelativeGroup track by $index">{{$index+1}}、{{item}}  <span class="delete_a R" ng-click="vm.appointRelativeGroup.splice($index,1)"></span></li>
+                                            <li ng-repeat="item in vm.appointRelativeGroup track by $index">
+                                                <span class="mr-10">{{$index+1}}、{{item}}</span>
+                                                <span class="delete_a dib" ng-click="vm.appointRelativeGroup.splice($index,1)"></span>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

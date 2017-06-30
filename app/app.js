@@ -38,8 +38,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //测试功能
     'functionalTestModule',
     //应用分析
-    'applAnalysisModule',
-    //'knowDetailsModule',
+    'applAnalysisModule'
 ]);
 
 /**
@@ -962,38 +961,21 @@ knowledge_static_web
                         controller: "docSelectController"
                     }
                 }
-
-                // templateUrl: 'know_background/know_gateway/doc_select.html',
-                // controller: "docSelectController"
-            })
-            //适配器及接入
-            .state("back.adapter", {
-                url: "/gateway/adapter",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                    'main_container': {
-                        templateUrl: 'know_background/know_gateway/main_adapter_container.html',
-                        controller: "adapterController"
-                    }
-                }
             })
             //知识视图（后台）
-            .state("back.know_view", {
-                url: "/know_view/:knowDocId",
-                views: {
-                    'main_container': {
-                        'header': {
-                            templateUrl: 'know_index/home/homePageNav.html',
-                            controller: "homePageNavController"
-                        },
-                        templateUrl: 'know_index/knowledgeManagement/document_know_process/main_know_view_container.html',
-                        controller: "knowViewController"
-                    }
-                }
-            })
+            //.state("back.know_view", {
+            //    url: "/know_view/:knowDocId",
+            //    views: {
+            //        'main_container': {
+            //            'header': {
+            //                templateUrl: 'know_index/home/homePageNav.html',
+            //                controller: "homePageNavController"
+            //            },
+            //            templateUrl: 'know_index/knowledgeManagement/document_know_process/main_know_view_container.html',
+            //            controller: "knowViewController"
+            //        }
+            //    }
+            //})
     }]);
     knowledge_static_web.config(function ($httpProvider) {
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';

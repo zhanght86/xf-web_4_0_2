@@ -9,7 +9,6 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
               KnowDocService,SearchService,TemplateService,TipService) {
         var self = this;
         $scope.processMethod = true;
-
         self.initSearch = function (column) {
             if (!$scope.SearchPOJO) {
                 $scope.SearchPOJO = $scope.initSearchPOJO();
@@ -115,14 +114,14 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
                 "documentationCreateTime":$scope.SearchPOJO.startTime,
                 "documentationModifyTime": $scope.SearchPOJO.endTime,
                 "documentationCreater": $scope.SearchPOJO.userName,
-                "requestId": "string",
+                "requestId": "string"
             },function(resource){
                 if(resource.status == 200){
-                    $scope.knowDocs = resource.data.objs
+                    $scope.knowDocs = resource.data.objs ;
                     $scope.paginationConf.totalItems = resource.data.total;
                 }
             })
-        }
+        } ;
 
         $scope.resetKnowDocSearchPOJO = function(){
             $scope.SearchPOJO.currentPage =1;
@@ -132,7 +131,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
             $scope.SearchPOJO.libraryId ="";
             $scope.SearchPOJO.isRepeated ="";
             $scope.SearchPOJO.userName="";
-        }
+        } ;
 
         $scope.deleteKnowDoc = function(knowDocId){
             KnowDocService.deleteKnowDoc.save({
@@ -151,10 +150,9 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
                 $timeout.cancel(timeout)
             }
             timeout = $timeout(function () {
-                $scope.storeParams(SearchPOJO);
                 $scope.queryKnowDocList();
             }, 350)
-        }, true)
+        }, true) ;
 
         self.initSearch();
 

@@ -199,9 +199,6 @@ angular.module('materialManagement').controller('conceptChatController', [
             if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
                 layer.msg("标准问不能为空");
                 return false
-            }else if($scope.vm.extendedQuestionArr.length==0){
-                layer.msg("扩展问不能为空");
-                return false;
             }else if($scope.vm.contentArr.length==0){
                 layer.msg("知识内容不能为空");
                 return false

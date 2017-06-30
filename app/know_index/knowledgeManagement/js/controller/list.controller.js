@@ -83,7 +83,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             isDecorateSimple : false  ,// true 单独修饰  false  整体修饰
             backupsOfExtension : "" //扩展问 编辑备份
         };
-        //獲取渠道
+        //獲取纬度
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -93,7 +93,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             }, function(error) {
                 console.log(error)
             });
-        //获取维度
+        //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -276,8 +276,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(data){
                 if(data.status==200){
                     var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                    if(isTagRepeat(data.data,allExtension)){
-                        $scope.vm.extensionTitle = "" ;  //重复
+                    if(isTagRepeat(data.data,allExtension,title)){
+
                     }else{
                         var enten = {}  ;
                         enten.extensionQuestionTitle = title;
@@ -356,6 +356,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             obj.extensionQuestionType = $scope.vm.extensionWeight;
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
+            }else if(title == $scope.vm.title && !source){
+                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtensionByTitle(obj)){
                 layer.msg("生成扩展问重复,已阻止添加");
                 return false
@@ -364,20 +366,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     "applicationId": APPLICATION_ID,
                     "extendQuestionList": question
                 }, function (data) {
-                    //console.log(data);
                     if (data.status == 500) {
                         layer.msg("概念扩展打标失败，请检查服务，重新打标");
-                        if(!source){
-                            $scope.vm.extensionTitle = "";
-                        }
-                        $scope.$apply();
                     } else if (data.status == 200) {
                         var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                        if(isTagRepeat(data.data,allExtension)){
-                            if(!source){
-                                $scope.vm.extensionTitle = "";
-                            }
+                        if(isTagRepeat(data.data,allExtension,title)){
+
                         }else{
+                            $scope.vm.extensionTitle = "";
                             var enten = {}  ;
                             enten.extensionQuestionTitle = title;
                             enten.extensionQuestionType = weight ;
@@ -416,7 +412,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         }
         //判断扩展问标签是否重复
         //data.data
-        function isTagRepeat(current,allExtension){
+        function isTagRepeat(current,allExtension,title){
             var isRepeat = false ;
             var tag = [] ;
             angular.forEach(current,function(tagList){
@@ -438,7 +434,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     }
                 }) ;
                 if(tagLen == itemTag.length && tag.length == itemTag.length){
-                    layer.msg("根据"+ current[0].extensionQuestionTitle+ "生成扩展问重复,已阻止添加") ;
+                    layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
                     return   isRepeat = true ;
                 }
             }) ;
@@ -621,19 +617,22 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
-                        $scope.vm.titleTip = data.info;
+                        $scope.vm.titleTip = "知识标题重复";
                         $scope.$apply();
                     }else if(data.status == 200){
-                        $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                        //生成bot
-                        angular.forEach(data.data.classifyList, function (item) {
-                            var obj = {};
-                            obj.className = item.fullPath;
-                            obj.classificationId = item.id;
-                            obj.classificationType = item.type;
-                            $scope.vm.botClassfy.push(obj);
-                            $scope.vm.frameCategoryId = item.id;
-                            $scope.$apply();
+                        $scope.$apply(function(){
+                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTag ;
+                            $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                            //生成bot
+                            angular.forEach(data.data.classifyList, function (item) {
+                                var obj = {
+                                    "className" : item.fullPath ,
+                                    "classificationId" : item.id ,
+                                    "classificationType" : item.type
+                                };
+                                $scope.vm.botClassfy.push(obj);
+                                $scope.vm.frameCategoryId = item.id;
+                            });
                         });
                     }
                 });
@@ -658,10 +657,13 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             };
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
-            obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative,
+            obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative;
             obj.channelIdList =  $scope.vm.channel;
+            if(!$scope.vm.dimensionArr.id.length){
+                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
+            };
             obj.dimensionIdList =  $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id;
-            obj.knowledgeRelatedQuestionOn = $scope.vm.question,    //显示相关问
+            obj.knowledgeRelatedQuestionOn = $scope.vm.question;    //显示相关问
             obj.knowledgeBeRelatedOn  =  $scope.vm.tip ; //在提示
             obj.knowledgeCommonOn = $scope.vm.tail ;   //弹出评价小尾巴
             obj.knowledgeRelevantContentList = $scope.vm.appointRelativeGroup;  //业务扩展问
@@ -791,14 +793,16 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 return false
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
-                return false
-            }else if(!params.knowledgeContents.length){
-                layer.msg("知识内容不能为空，请点击新增填写");
-                return false
+                return false ;
+            }else if(!params.knowledgeContents[0].knowledgeContent || !params.knowledgeContents[0].knowledgeContentNegative){
+                layer.msg("知识内容信息不完整，请增填写完整");
+                return false ;
             }else if(params.knowledgeTitleTag.length<0){
-                layer.msg("知识标题未打标")
+                layer.msg("知识标题未打标") ;
+                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
-                layer.msg("分类知识Bot不能为空")
+                layer.msg("分类知识Bot不能为空") ;
+                return false ;
             }else{
                 return true
             }
