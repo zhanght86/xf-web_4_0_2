@@ -16,6 +16,5 @@ angular.module('know.template').factory('TemplateService',['$resource',function 
     templateService.checkTemName = $resource('/api/ms/template/searchByTemplateName', {}, {});
     templateService.deleteRule = $resource('/api/ms/templateRule/deleteWordRule', {}, {});
     templateService.queryRuleById = $resource('/api/ms/templateRule/queryRuleById', {}, {});
-
     return templateService;
 }])

@@ -98,6 +98,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     },
 
                     UploadProgress: function (up, file) {
+                        alert(up) ;
                         //document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
                         $('#' + file.id).find('b').html('<span>' + file.percent + '%</span>');
                     },
@@ -107,7 +108,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     },
 
                     UploadComplete: function (uploader, files) {
-
+                        alert("success")
                     },
 
                     FileUploaded: function (uploader, files, res) {
@@ -143,25 +144,25 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                 multi_selection: false,
                 filters: {
                     max_file_size: '10mb',
-                    mime_types: [{
-                        title: "Know File",
-                        extensions: "doc,docx"
-                    }]
+                    //mime_types: [{
+                    //    title: "Know File",
+                    //    extensions: "doc,docx"
+                    //}]
                 },
                 flash_swf_url: '/plupload/Moxie.swf',
                 silverlight_xap_url: '/plupload/Moxie.xap',
                 init: {
                     PostInit: function () {
                         $('#temupload').click(function () {
-                            if ($scope.temName == null || $scope.temName == '' || !$scope.temName) {
+                            if ($scope.vm.temName == null || $scope.vm.temName == '' || !$scope.vm.temName) {
                                  layer.msg("请输入模板名称");
                                 return;
                             }
-                            if ($scope.temName.length > 50) {
+                            if ($scope.vm.temName.length > 50) {
                                  layer.msg("模板名称不能大于50字");
                                 return;
                             }
-                            if (!$scope.temNameChecked) {
+                            if (!$scope.vm.temNameChecked) {
                                  layer.msg("模板名校验失败");
                                 return;
                             }
@@ -170,16 +171,15 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                                 return;
                             }
                             uploader.setOption('multipart_params', {
-                                type: $scope.temType,
-                                "templateName": $scope.temName,
+                                "type": $scope.vm.temType,
+                                "templateName": $scope.vm.temName,
                                 "requestId":"String",
                                 //此处设置上传用户信息
-                                "userId":"testUser"
+                                "userId":USER_LOGIN_NAME
                             });
                             uploader.start();
                             return false;
                         });
-
                         //document.getElementById('temreset').onclick = function(){
                         $('#temreset').click(function () {
                             if (uploader.files.length > 0) {
@@ -192,12 +192,16 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
 
                     FilesAdded: function (up, files) {
                         plupload.each(files, function (file) {
+                            console.log(file)
+                            $scope.$apply(function(){
+                                $scope.vm.fileName = file.name  ;
+                            }) ;
                             //document.getElementById('temcontainer').innerHTML = '<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> </span></div>';
-                            $('#temcontainer').html('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
-                                                        '<span  class="name">' + file.name + '</span>' +
-                                                        '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
-                                                        '<span class="size"> </span>' +
-                                                    '</div>');
+                            //$('#temcontainer').html('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
+                            //                            '<span  class="name">' + file.name + '</span>' +
+                            //                            '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
+                            //                            '<span class="size"> </span>' +
+                            //                        '</div>');
                             if (up.files.length <= 1) {
                                 return;
                             }
@@ -209,18 +213,26 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                         plupload.each(files, function (file) {
                             if (up.files.length <= 0) {
                                 //document.getElementById('temcontainer').innerHTML = '未选择文件';
-                                $('#temcontainer').html('未选择文件');
+                                $scope.$apply(function(){
+                                    $scope.vm.fileName = '未选择文件'  ;
+                                }) ;
+                                //$('#temcontainer').html();
                             }
                         });
                     },
 
                     UploadProgress: function (up, file) {
+                        $scope.$apply(function(){
+                            $scope.vm.progress = file.percent  ;
+                        }) ;
                         //document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
-                        $('#' + file.id).find('b').html('<span>' + file.percent + '%</span>');
+                        //$('#' + file.id).find('b').html('<span>' + file.percent + '%</span>');
                     },
 
                     Error: function (up, err) {
-                        console.log("Error #" + err.code + ": " + err.message);
+                        $scope.$apply(function(){
+                            $scope.vm.progress = 0  ;
+                        }) ;
                     },
 
                     UploadComplete: function (uploader, files) {
@@ -238,7 +250,10 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                                     $scope.storeParams($scope.temId);
                                 })
                             } else {
-                                 layer.msg("模板文件上传失败");
+                                $scope.$apply(function(){
+                                    $scope.vm.progress = 0  ;
+                                }) ;
+                                layer.msg("模板文件上传失败");
                             }
                         }
                     }

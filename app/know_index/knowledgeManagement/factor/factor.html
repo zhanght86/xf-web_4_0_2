@@ -17,7 +17,7 @@
                         <div class="list_facContent_L">知识标题：</div>
                         <div >
                             <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
-                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
+                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotAndExtensionByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>

@@ -7,25 +7,34 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
     "TemplateService","localStorageService","$state","TipService",
     function ($scope, $location, $stateParams, $interval, $timeout, ngDialog,
               TemplateService,localStorageService,$state,TipService) {
-        var self = this;
-        $scope.temName = "";
-        $scope.temType = 'WORD';
-        $scope.temNameChecked = false;
-        $scope.fileName = "未选择文件";
-        $scope.temuptools={
-            show: false
-        };
-
-        if($stateParams.isGo !=true && localStorageService.get($state.current.name)){
-            $scope.temId = localStorageService.get($state.current.name);
-        }else if($stateParams.temId){
-            $scope.storeParams($stateParams.temId);
-            $scope.temId = $stateParams.temId
-            $scope.temuptools.show = false;
+        $scope.vm = {
+            "temName" :  "" ,    //模板名称
+            "temType" : "WORD"  , //模板类型
+            "temNameChecked" : false , //模板名称校验
+            "fileName" : "未选择文件" ,  //上传文件名称
+            "isTempUpToolsShow" : false ,
+            "progress" : 0 ,
+            "tempId" : $stateParams.temId ?$stateParams.temId : "",
+        } ;
+        //$scope.temName = "";
+        //$scope.temType = 'WORD';
+        //$scope.temNameChecked = false;
+        //$scope.fileName = "未选择文件";
+        //$scope.vm.isTempUpToolsShow={
+        //    show: false
+        //};
+        console.log($stateParams.isGo)
+        //if(($stateParams.isGo !=true) && (localStorageService.get($state.current.name))){
+        //    $scope.temId = localStorageService.get($state.current.name);
+        //    alert(1)
+        //}else
+        if($stateParams.temId){
+            //$scope.storeParams($stateParams.temId);
+            $scope.temId = $stateParams.temId ;
+            $scope.vm.isTempUpToolsShow = false;
         }else if(!$stateParams.temId) {
-            $scope.temuptools.show = true;
+            $scope.vm.isTempUpToolsShow = true;
         }
-
         $scope.queryTemplateById = function(){
             TemplateService.queryTemplateById.save({
                 "index":0,
@@ -33,13 +42,12 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
                 "templateId":$stateParams.temId
             },function(resource){
                 if(resource.status == 200 && resource.data){
-                    $scope.temName = resource.data.objs[0].templateName;
+                    $scope.vm.temName = resource.data.objs[0].templateName;
                     //$scope.rules = resource.data.rules;
                     var filePath = resource.data.objs[0].templateUrl;
                     var filename=filePath.substring(filePath.lastIndexOf("//")+2,filePath.length);
-                    $scope.fileName = filename;
+                    $scope.vm.fileName = filename;
                 }
-                console.log();
             })
         }
         
@@ -53,7 +61,6 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
                     //$scope.rules = resource.data.objs.rules;
                     $scope.rules = resource.data.objs;
                 }
-                console.log();
             })
         }
 
@@ -107,11 +114,12 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
         var timeout;
         $scope.$watch('temId', function (temId) {
             if(temId){
+                console.log(temId)  ;
                 if (timeout) {
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    $scope.temuptools.show = false;//隐藏保持相关按钮
+                    $scope.vm.isTempUpToolsShow = false;//隐藏保持相关按钮
                     $scope.queryTemplateById();
                     $scope.queryRules();
                 }, 350)
@@ -119,19 +127,19 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
         }, true)
 
         var timeout2;
-        $scope.$watch('temName', function (temName) {
+        $scope.$watch('vm.temName', function (temName) {
             if(temName && temName != ""){
                 if (timeout2) {
                     $timeout.cancel(timeout2)
                 }
                 timeout2 = $timeout(function () {
                     TemplateService.checkTemName.save({
-                        templateName: $scope.temName,
+                        templateName: $scope.vm.temName,
                     },function(resource){
                         if(resource.status == 200 && resource.data.objs.length == 0){
-                            $scope.temNameChecked = true;
+                            $scope.vm.temNameChecked = true;
                         }else{
-                            $scope.temNameChecked = false;
+                            $scope.vm.temNameChecked = false;
                         }
                     })
                 }, 350)

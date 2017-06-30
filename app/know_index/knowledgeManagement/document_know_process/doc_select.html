@@ -30,7 +30,7 @@
             <p ng-if="checkedRule != null" ng-repeat="str in strs track by $index" style="margin-bottom:14px"><span>{{$index+1}}.</span>{{str}}</p>
         </div>
         <!--<div ng-if="showExtract && strs.length>0">-->
-        <div>
+        <div>  
             <p class="mb20">请输入正则</p>
             <div class="clearfix app_search mr20" style="margin-bottom:40px">
                 <input ng-model="extractRegTxt" type="text" class="input-text txt L" placeholder="正则描述" />
@@ -42,8 +42,8 @@
             </div>
             <p style="margin-bottom:27px">
                 <span style="margin-right:20px"><input type="radio" name="zhengze" style="position:relative;top:2px" ng-value="1" ng-model="checkModel" />文档</span>
-                <span style="margin-right:20px"><input type="radio" name="zhengze" style="position:relative;top:2px" ng-value="2" ng-model="checkModel" />正则</span>
-                <span><input type="radio" name="zhengze" style="position:relative;top:2px" ng-value="3" ng-model="checkModel" />文档+正则</span>
+                <!--<span style="margin-right:20px"><input type="radio" name="zhengze" style="position:relative;top:2px" ng-value="2" ng-model="checkModel" />正则</span>-->
+                <!--<span><input type="radio" name="zhengze" style="position:relative;top:2px" ng-value="3" ng-model="checkModel" />文档+正则</span>-->
             </p>
         </div>
         <div class="tc mb50">

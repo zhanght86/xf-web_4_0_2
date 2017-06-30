@@ -2,7 +2,7 @@
 knowledge_static_web.directive("autoComplete", function($compile,$timeout,$interval) {
     //fanhui   {id : [],name : []}
     return {
-        restrict: 'AE', //attribute or element
+        //restrict: 'AE', //attribute or element
         //
         scope: {
             source: '=',
@@ -71,8 +71,9 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
                       $(document).on("click",function(event){
                           var event = event || window.event;
                           if($(event.target).attr('class')!= "miles-autoInput L"){
-                              $scope.flag = false;
-                              $scope.$apply()
+                              $scope.$apply(function(){
+                                  $scope.flag = false;
+                              })
                           }else{
                               $scope.flag = true;
                               angular.element(elem).find(".miles-autoInput").focus();
