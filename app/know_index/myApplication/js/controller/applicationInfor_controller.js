@@ -313,7 +313,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 //        }
                 //    }
                 //});
-            },function(){  
+            },function(){
                 console.log("cancel");
             });
         }

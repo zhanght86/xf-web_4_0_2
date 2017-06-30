@@ -4,9 +4,9 @@
  */
 angular.module('knowledgeManagementModule').controller('analyseTaskController', [
     '$scope', '$location', "$routeParams", "$interval", "$timeout", "ngDialog",
-    "KnowDocService","SearchService","TemplateService","TipService",
+    "KnowDocService","TemplateService","TipService",
     function ($scope, $location, $routeParams, $interval, $timeout, ngDialog,
-              KnowDocService,SearchService,TemplateService,TipService) {
+              KnowDocService,TemplateService,TipService) {
         var self = this;
         $scope.processMethod = true;
         self.initSearch = function (column) {
@@ -144,6 +144,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
                 $timeout.cancel(timeout)
             }
             timeout = $timeout(function () {
+                $scope.storeParams(SearchPOJO);
                 $scope.queryKnowDocList();
             }, 350)
         }, true) ;

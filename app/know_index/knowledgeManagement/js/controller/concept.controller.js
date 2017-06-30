@@ -731,7 +731,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.$apply()
                     }else if(data.status == 200){
                         $scope.$apply(function(){
-                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTag ;
+                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
                             $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
@@ -984,7 +984,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 //        提交 检验参数
         function checkSave(){
             var params = getParams();
-            console.log(params)
+            console.log(params) ;
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false ;
@@ -995,7 +995,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false ;
             }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标") ;  
+                layer.msg("知识标题未打标") ;
 
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空")

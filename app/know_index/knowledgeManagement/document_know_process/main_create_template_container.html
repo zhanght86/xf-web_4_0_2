@@ -11,19 +11,19 @@
         <div class="proce_result p20">
             <div class="mb10 clearfix">
                 <span class="L know_span" >模板名称:</span>
-                <input type="text" class="txt bd L" ng-model="temName"/>
+                <input type="text" class="txt bd L" ng-model="vm.temName"/>
             </div>
             <div class="mb10 clearfix">
                 <span class="L know_span">模板类型:</span>
-                <select class="txt L bd" ng-model="temType">
+                <select class="txt L bd" ng-model="vm.temType">
                     <option value="WORD">WORD</option>
                 </select>
             </div>
             <div class="mb10 clearfix">
                 <span class="L know_span">文档样例:</span>
-                <input id="tempickfile" type="button" class="btn btn3 L" value="浏览" temp-plupload/>
-                <span id="temcontainer" style="color:#999;margin-left:10px;line-height: 33px;" class="L">{{fileName}}</span>
-                    <span ng-show='temuptools.show' class="R" style="margin-right:210px">
+                <input id="tempickfile" type="button" class="btn btn3 L" value="浏览" temp-plupload ng-if="!vm.tempId"/>
+                <span id="temcontainer" style="color:#999;margin-left:10px;line-height: 33px;" class="L">{{vm.fileName}}  &nbsp;<span ng-if="vm.fileName!='未选择文件' && !vm.tempId "> {{vm.progress}}%</span></span>
+                    <span ng-show='vm.isTempUpToolsShow' class="R" style="margin-right:210px">
                         <input id="temupload" type="button" value="保存" class="btn1 btn_gray clearfix" style="color:#333;margin-right:12px"/>
                         <input id="temreset" type="button" value="取消" class="btn1 btn_gray clearfix" style="color:#333;"/>
                     </span>
