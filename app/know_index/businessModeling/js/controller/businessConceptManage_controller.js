@@ -85,7 +85,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                    if(nullCheck($("#businessConceptWeight").val())==true || nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
                         searchBusinessConcept(current);
                     }else{
                         loadBusinessConceptTable(current);
