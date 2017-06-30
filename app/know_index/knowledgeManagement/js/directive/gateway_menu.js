@@ -98,7 +98,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     },
 
                     UploadProgress: function (up, file) {
-                        alert(up) ;
+                        //alert(up) ;
                         //document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
                         $('#' + file.id).find('b').html('<span>' + file.percent + '%</span>');
                     },
@@ -108,7 +108,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     },
 
                     UploadComplete: function (uploader, files) {
-                        alert("success")
+                        //alert("success")
                     },
 
                     FileUploaded: function (uploader, files, res) {
@@ -133,33 +133,34 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
 knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) {
     return {
         restrict: 'A',
+        //template : '<span></span>'  ,
         link: function ($scope, iElm, iAttrs, controller) {
             var uploader = new plupload.Uploader({
                 runtimes: 'html4,html5,flash,silverlight',
                 browse_button: 'tempickfile',
                 url:'/api/ms/template/createTemplate',
-
                 //container: 'temcontainer',
-                max_file_count: 1,
+                max_file_count: 10,
                 multi_selection: false,
                 filters: {
                     max_file_size: '10mb',
-                    //mime_types: [{
-                    //    title: "Know File",
-                    //    extensions: "doc,docx"
-                    //}]
+                    mime_types: [{
+                        title: "Know File",
+                        extensions: "doc,docx"
+                    }]
                 },
                 flash_swf_url: '/plupload/Moxie.swf',
                 silverlight_xap_url: '/plupload/Moxie.xap',
                 init: {
                     PostInit: function () {
-                        $('#temupload').click(function () {
+                        $('#temupload').on("click",function () {
+
                             if ($scope.vm.temName == null || $scope.vm.temName == '' || !$scope.vm.temName) {
                                  layer.msg("请输入模板名称");
                                 return;
                             }
-                            if ($scope.vm.temName.length > 50) {
-                                 layer.msg("模板名称不能大于50字");
+                            if ($scope.vm.temName.length > 20) {
+                                 layer.msg("模板名称不能大于20字");
                                 return;
                             }
                             if (!$scope.vm.temNameChecked) {
@@ -177,11 +178,10 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                                 //此处设置上传用户信息
                                 "userId":USER_LOGIN_NAME
                             });
-                            uploader.start();
+                            uploader.start() ;
                             return false;
                         });
-                        //document.getElementById('temreset').onclick = function(){
-                        $('#temreset').click(function () {
+                        $('#temreset').on("click",function () {
                             if (uploader.files.length > 0) {
                                 for (var i = uploader.files.length; i > 0; i--) {
                                     uploader.removeFile(uploader.files[i - 1]);
@@ -189,34 +189,28 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                             }
                         })
                     },
-
                     FilesAdded: function (up, files) {
                         plupload.each(files, function (file) {
-                            console.log(file)
-                            $scope.$apply(function(){
-                                $scope.vm.fileName = file.name  ;
-                            }) ;
-                            //document.getElementById('temcontainer').innerHTML = '<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> </span></div>';
-                            //$('#temcontainer').html('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
-                            //                            '<span  class="name">' + file.name + '</span>' +
-                            //                            '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
-                            //                            '<span class="size"> </span>' +
-                            //                        '</div>');
-                            if (up.files.length <= 1) {
-                                return;
-                            }
-                            up.removeFile(file);
+                           if(file.name.length>=24){
+                               layer.msg("文件名称过长,请返回修改") ;
+                               up.removeFile(file);
+                           }else{
+                               $scope.$apply(function(){
+                                   $scope.vm.fileName = file.name  ;
+                               }) ;
+                               if (up.files.length > 1) {
+                                   up.removeFile(file);
+                               }
+                           }
                         });
                     },
 
                     FilesRemoved: function (up, files) {
                         plupload.each(files, function (file) {
                             if (up.files.length <= 0) {
-                                //document.getElementById('temcontainer').innerHTML = '未选择文件';
                                 $scope.$apply(function(){
                                     $scope.vm.fileName = '未选择文件'  ;
                                 }) ;
-                                //$('#temcontainer').html();
                             }
                         });
                     },
@@ -225,14 +219,13 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                         $scope.$apply(function(){
                             $scope.vm.progress = file.percent  ;
                         }) ;
-                        //document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
-                        //$('#' + file.id).find('b').html('<span>' + file.percent + '%</span>');
                     },
 
                     Error: function (up, err) {
                         $scope.$apply(function(){
                             $scope.vm.progress = 0  ;
                         }) ;
+                        uploader.init();
                     },
 
                     UploadComplete: function (uploader, files) {
@@ -246,14 +239,15 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                             if (response.status == 200) {
                                  layer.msg("模板文件上传成功，请添加规则");
                                 $scope.$apply(function () {
-                                    $scope.temId = response.data.templateId;
+                                    $scope.vm.temId = response.data.templateId;
                                     $scope.storeParams($scope.temId);
                                 })
                             } else {
                                 $scope.$apply(function(){
                                     $scope.vm.progress = 0  ;
                                 }) ;
-                                layer.msg("模板文件上传失败");
+                                uploader.removeFile(uploader.files[0]);
+                                layer.msg("模板文件上传失败,请重新选择文件");
                             }
                         }
                     }
