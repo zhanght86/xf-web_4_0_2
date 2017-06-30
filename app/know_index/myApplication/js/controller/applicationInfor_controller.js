@@ -277,30 +277,42 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 shade:false
             },function(index){
                 layer.close(index);
-                var dialog = ngDialog.openConfirm({
-                    template:"/know_index/myApplication/applicationInfor/applicationInforDialog2.html",
-                    scope: $scope,
-                    closeByDocument:false,
-                    closeByEscape: true,
-                    showClose : true,
-                    backdrop : 'static',
-                    preCloseCallback:function(e){    //关闭回掉
-                        if(e === 1){
-                            httpRequestPost("/api/application/service/deleteAllServices",{
-                                "applicationId": $scope.vm.applicationId
-                            },function(data){
-                                if(data.status==200){
-                                    layer.msg("删除成功");
-                                    $state.go("admin.manage");
-                                }else{
-                                    layer.msg("删除失败");
-                                }
-                            },function(){
-                                layer.msg("请求失败");
-                            })
-                        }
-                    }
-                });
+                httpRequestPost("/api/application/service/deleteAllServices",{
+                                    "applicationId": $scope.vm.applicationId
+                                },function(data){
+                                    if(data.status==200){
+                                        layer.msg("删除成功");
+                                        $state.go("admin.manage");
+                                    }else{
+                                        layer.msg("删除失败");
+                                    }
+                                },function(){
+                                    console.log("请求失败");
+                                }) ;
+                //var dialog = ngDialog.openConfirm({
+                //    template:"/know_index/myApplication/applicationInfor/applicationInforDialog2.html",
+                //    scope: $scope,
+                //    closeByDocument:false,
+                //    closeByEscape: true,
+                //    showClose : true,
+                //    backdrop : 'static',
+                //    preCloseCallback:function(e){    //关闭回掉
+                //        if(e === 1){
+                //            httpRequestPost("/api/application/service/deleteAllServices",{
+                //                "applicationId": $scope.vm.applicationId
+                //            },function(data){
+                //                if(data.status==200){
+                //                    layer.msg("删除成功");
+                //                    $state.go("admin.manage");
+                //                }else{
+                //                    layer.msg("删除失败");
+                //                }
+                //            },function(){
+                //                layer.msg("请求失败");
+                //            })
+                //        }
+                //    }
+                //});
             },function(){
                 console.log("cancel");
             });

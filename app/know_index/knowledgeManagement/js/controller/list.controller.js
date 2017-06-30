@@ -486,7 +486,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if($scope.vm.botFullPath){
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
-                $scope.vm.botFullPath = null;
+                $scope.vm.botFullPath = "";
                 $scope.vm.knowledgeBotVal = "";
             }
         };
@@ -621,7 +621,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.$apply();
                     }else if(data.status == 200){
                         $scope.$apply(function(){
-                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTag ;
+                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
                             $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
@@ -649,8 +649,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "sceneId" : SCENE_ID ,
                 "knowledgeType": 102,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
-                "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-                "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
+                "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:"",  //开始时间
+                "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:"",     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
                 "knowledgeCreator": USER_LOGIN_NAME  //操作人
@@ -790,21 +790,21 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             var params = getParams();
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
-                return false
+                return false;
+            }else if(!params.knowledgeTitleTag.length ){
+                layer.msg("知识标题未打标") ;
+                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false ;
             }else if(!params.knowledgeContents[0].knowledgeContent || !params.knowledgeContents[0].knowledgeContentNegative){
                 layer.msg("知识内容信息不完整，请增填写完整");
                 return false ;
-            }else if(params.knowledgeTitleTag.length<0){
-                layer.msg("知识标题未打标") ;
-                return false ;
-            }else if(!params.classificationAndKnowledgeList.length){
-                layer.msg("分类知识Bot不能为空") ;
+            }else if(!params.knowledgeContents[0].channelIdList.length){
+                layer.msg("渠道不能为空") ;
                 return false ;
             }else{
-                return true
+                return true ;
             }
         }
         // 添加时候 存储对象
@@ -817,7 +817,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(arr.indexOf(item)==-1){
                 arr.push(item)
             }
-            $scope.vm.appointRelative = null;  //清楚title
+            $scope.vm.appointRelative = "";  //清楚title
             $scope.vm.appointRelativeList = [];  //清除 列表
 
         }

@@ -18,7 +18,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
             "tableList" : "="
         },
         template:
-            '<button  id="picker" >上传线下编辑场景知识</button><span class="f-14 pl-10">请先<a href="/api/ms/elementKnowledgeAdd/download?fileName=factor_template.xlsx"  class="c-primary">下载模板</a>进行填写</span>'
+            '<span  id="picker" style="float:left">上传线下编辑场景知识</span><span class="f-14 pl-10" style="float:left;margin-top: 5px;">请先<a href="/api/ms/elementKnowledgeAdd/download?fileName=factor_template.xlsx"  class="c-primary">下载模板</a>进行填写</span>'
         ,
         link:function(scope,element,attrs){
             //var $list = angular.element("#thelist");
@@ -26,11 +26,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
-                swf: 'Uploader.swf',
-                //formData : {title:"is Image  ====   uploader"}  ,   // 上传参数
-                // 文件接收服务端。
-                //server: "/api/application/application/uploadHead",
-
+                swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                 server: "/api/ms/elementKnowledgeAdd/upload",
                 //accept: {
                 //    title: 'file',
@@ -79,7 +75,6 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
                     scope.tableList = response ;
                     scope.$apply();
                 }
-
                 console.log(response)
             });
 
@@ -112,7 +107,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse", function($parse) {
                 var uploader = WebUploader.create({
                     auto: true, // 选完文件后，是否自动上传
                     // swf文件路径
-                    swf: 'Uploader.swf',
+                    swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                     formData : {title:"is Image  ====   uploader"}  ,   // 上传参数
                     // 文件接收服务端。
                     server: "/api/application/application/uploadHead",
@@ -222,7 +217,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                 var uploader = WebUploader.create({
                     auto: true, // 选完文件后，是否自动上传
                     // swf文件路径
-                    swf: 'Uploader.swf',
+                    swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                     formData : {"userId":userId,"applicationId":applicationId,"userName":$cookieStore.get("userName")}  ,   // 上传参数
                     // 文件接收服务端。
                     //server: "/api/application/application/uploadHead",
@@ -269,7 +264,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                     console.log("上传失败")
                 });
                 uploader.on('uploadSuccess', function (file,response) {
-                    console.log(response)
+                    console.log(response) ;
                     if(response.status == 500){
                         layer.msg("模板错误")
                     }else if(response.status==10001){

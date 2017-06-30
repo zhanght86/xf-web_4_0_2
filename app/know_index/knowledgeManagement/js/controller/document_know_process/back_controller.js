@@ -5,9 +5,9 @@
 
 angular.module('knowledgeManagementModule').controller('backController', [
     '$scope', '$location', "$interval", "$timeout", "$state",
-    "IndexService", "AuthService",
+    "AuthService",
     function ($scope, $location, $interval, $timeout, $state,
-              IndexService , AuthService) {
+              AuthService) {
         $state.go("back.gateway");
         // var self = this;
         // $scope.active = function(path){

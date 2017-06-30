@@ -12,7 +12,7 @@
             <div class="proce_result_top clearfix mb15">
                 <a ui-sref="back.createTemplate({isGo:true})" class="L add_person_a f16 c_blue" >创建模板</a>
                 <div class="R app_search mr20">
-                    <input type="text" class="input-text txt L" placeholder="文档名称" ng-model="SearchPOJO.name"/>
+                    <input type="text" class="input-text txt L" placeholder="文档名称" ng-model="paginationConf.searchName"/>
                     <input type="button" class="btn L" value="检索" />
                 </div>
             </div>
@@ -32,7 +32,7 @@
                         <td ng-bind="template.templateCreater"></td>
                         <td>{{template.templateCreateTime | date:"yyyy-MM-dd"}}</td>
                         <td>
-                            <a href="javascript:;" ng-click="deleteTemplate(template.templateId)" class="c_red" alertBar ng-confirm="确认删除?">删除</a>
+                            <a href="javascript:;" ng-click="vm.deleteTemplate(template.templateId)" class="c_red" alertBar ng-confirm="确认删除?">删除</a>
                         </td>
                     </tr>
                     </tbody>

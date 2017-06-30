@@ -1,10 +1,11 @@
 /**
- * Created by Administrator on 2016/6/17.
+ * Created by mileS on 2017/5/17.
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
+ * info  控制器嵌套
  */
 knowledge_static_web.controller('ApplicationController',
-    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"HomeService", "PersonalCenterService","KnowDocService",
-        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,HomeService,PersonalCenterService,KnowDocService) {
+    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"KnowDocService",
+        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,KnowDocService) {
             $scope.currentUser = null;
             $scope.isAuthorized = AuthService.isAuthorized;
             $scope.currentPage = 1;
@@ -14,33 +15,32 @@ knowledge_static_web.controller('ApplicationController',
 
             $scope.backTage = $location.url().indexOf("index")>0?false:true;
 
-            $scope.setCurrentUser = function (data) {
-                $scope.currentUser = {
-                    id: data.id,
-                    userName: data.name,
-                    realName: data.realName,
-                    sex: data.sex,
-                    email: data.email,             
-                    protarit: data.protarit,
-                    phone: data.phone,
-                    identity: data.identity,
-                    birthday: data.birthday,
-                    status: data.status,
-                    role: data.role,
-                    lastLoginTime: data.lastLoginTime,
-                    privileges:data.privileges
-                };
-            };
-
-            $scope.getCurrentUserPrivileges = function () {
-                if($scope.currentUser.privileges)  {
-                    return $scope.currentUser.privileges
-                }else if(localStorageService.get("privileges")){
-                    return localStorageService.get("privileges")
-                }else{
-                    return null;
-                }
-            };
+            //$scope.setCurrentUser = function (data) {
+            //    $scope.currentUser = {
+            //        id: data.id,
+            //        userName: data.name,
+            //        realName: data.realName,
+            //        sex: data.sex,
+            //        email: data.email,
+            //        protarit: data.protarit,
+            //        phone: data.phone,
+            //        identity: data.identity,
+            //        birthday: data.birthday,
+            //        status: data.status,
+            //        role: data.role,
+            //        lastLoginTime: data.lastLoginTime,
+            //        privileges:data.privileges
+            //    };
+            //};
+            //$scope.getCurrentUserPrivileges = function () {
+            //    if($scope.currentUser.privileges)  {
+            //        return $scope.currentUser.privileges
+            //    }else if(localStorageService.get("privileges")){
+            //        return localStorageService.get("privileges")
+            //    }else{
+            //        return null;
+            //    }
+            //};
 
             $scope.getCurrentUserId = function () {
                 if($scope.currentUser && $scope.currentUser.id)  {
@@ -57,7 +57,7 @@ knowledge_static_web.controller('ApplicationController',
                 $anchorScroll();
             };
 
-            /**
+            /**  for  文档加工
              * 处理一些共有方法
              * @returns {{currentPage: *, pageSize: *}}
              */
@@ -106,33 +106,6 @@ knowledge_static_web.controller('ApplicationController',
                 return false;
             };
 
-            //添加评论的方法
-            $scope.addComment = function(scope,knowItemId,index,userId,successFun){
-                var comment = scope.comments[index];
-                var flag = false;
-                if(comment == null){
-                    alert("评论不能为空！")
-                }
-
-                if(comment.length>500){
-                    alert("评论不能超过500个字！");
-                    return;
-                }
-                if(comment != null){
-                    flag = true;
-                }
-                if(flag) {
-                    HomeService.createComment.save({
-                        commType: 0,
-                        content: comment,
-                        knowItemId: knowItemId,
-                        targetId:userId
-                    }, function () {
-                        scope.comments[index] = "";
-                        successFun();
-                    });
-                }
-            };
 
             /**
              * 格式化时间
@@ -190,53 +163,19 @@ knowledge_static_web.controller('ApplicationController',
             $scope.goHistory = function(){
                 $window.history.back();
             };
-            $scope.initKnowCheckNoticeView = function(){
-                PersonalCenterService.connKnowCheckNoticeCon.get(
-                    {
-                        flag:1/*,
-                     pageNo:$scope.SearchPOJO.currentPage,
-                     pageSize:5*/
-                    },function(resource){
-                        var resultData = resource.data;
-                        // $("#knowCheckNotice").css("display","block");
-                        $scope.resultCheckNoticeList = resultData.data;
-                        $scope.resultCheckNoticeTotal = resultData.total;
-                        // console.log($scope.resultCheckNoticeTotal);
-                    })
-            };
-            $scope.initNoCheckTaskView = function(){
-                HomeService.queryMyTask.get({page:1,pageSize:10},function(resource){
-                    if(resource.status == 200){
-                        $scope.taskCount = resource.data.count;
-                        // console.log("带蛇和-->>”"+$scope.taskCount);
-                    }
-                })
-            };
-            $scope.initAnalyseTaskCount = function(){
-                KnowDocService.queryAnalyseTaskCount.get({
-                    getCount:true,
-                    taskStatus:0
-                },function(resource){
-                    if(resource.status == 200){
-                        $scope.analyseTaskCount = resource.data.data.total;
-                    }
-                })
-            };
+
+
 
             // alert(format(new Date().getTime(), 'yyyy-MM-dd HH:mm:ss'))
             // $scope.$on(AUTH_EVENTS.notAuthenticated, function (event) {
             //     $state.go('login');
             // });
             $scope.$on(AUTH_EVENTS.notAuthorized, function (event,data) {
-                if(data.fromState.name != null && data.fromState.name!='')
-                    //$state.go(data.fromState.name);
-                    $state.go($window.location.reload());
-            });
 
+            });
             $scope.$on(AUTH_EVENTS.logoutSuccess, function (event,data) {
-                $scope.currentUser = null;
-            });
 
+            });
             $scope.$on(AUTH_EVENTS.loginSuccess, function (event,data) {
                 $scope.initKnowCheckNoticeView();
                 $scope.initNoCheckTaskView();

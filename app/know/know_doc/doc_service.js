@@ -6,6 +6,5 @@ angular.module('know.knowdoc').factory('KnowDocService',['$resource',function ($
     knowDocService.queryKnowDocList = $resource('/api/ms/knowledgeDocumentation/queryDocumentationList', {}, {});
     knowDocService.queryDetailByDocId = $resource('/api/ms/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
     knowDocService.deleteKnowDoc = $resource('/api/ms/knowledgeDocumentation/deleteDocumentation', {}, {});
-
     return knowDocService;
 }])

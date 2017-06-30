@@ -798,7 +798,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         $scope.$apply()
                     }else if(data.status == 200) {
                         $scope.$apply(function(){
-                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTag ;
+                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
                             $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
