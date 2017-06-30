@@ -76,7 +76,7 @@ angular.module('businessModelingModule').controller('botConceptManageController'
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                    if(nullCheck($("#botConceptWeight").val())==true || nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
                         searchBotConcept(current);
                     }else{
                         loadBotConceptTable(current);

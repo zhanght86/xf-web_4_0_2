@@ -14,7 +14,7 @@ html,body{width:100%;height:100%}
 
 body{
 	font-size:14px;
-	font-family:"微软雅黑","Times New Roman",Arial, Helvetica, sans-serif;
+	/*font-family:"微软雅黑","Times New Roman",Arial, Helvetica, sans-serif;*/
 	color:#75777b;
 	background:#f8f8f8;        /*11.07-add*/
 	box-sizing:border-box;
