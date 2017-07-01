@@ -95,17 +95,19 @@
                 <div class="csso-cont mt30">
                     <div class="clearfix csso-hd">
                         <div class="fl">
-                            <input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
+                            <!--<input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/>-->
+                            <a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>
+                            <span class="L"><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
                         </div>
-                        <div class="fr" style="margin-right: 80px;" ng-click="vm.delData()">
-                            <a class="ljtClose-btn" href="javascript:;" style="width: 50px;">
+                        <div class="fr"  ng-click="vm.delData()">
+                            <a class="ljtClose-btn" href="javascript:;" >
                                 <i class="icon-ljtClose"></i>
-                                <span class="txt" >删除</span>
+                                <span style="color:#e84f4f;">删除</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="clearfix csso-bd" style="min-height:300px;">
+                    <div class="clearfix csso-bd" style="min-height:300px;padding-left: 15px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
@@ -142,7 +144,7 @@
                                 </div>
                                 <div class="csso-info oh">
                                     <div class="fr">
-                                        <span>作者：{{item.knowledgeCreator}}</span>
+                                        <span class="mr-10">作者：{{item.knowledgeCreator}}</span>
                                         <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</span>
                                     </div>
                                 </div>
@@ -161,5 +163,11 @@
     .advanced_search{background:#fff;width:540px;}
 </style>
 <script>
-
+    $('.selectall_a').click(function(){
+        if($(this).hasClass('selectall_a1')){
+            $(this).attr('class','selectall_a selectall_a2 L');
+        }else{
+            $(this).attr('class','selectall_a selectall_a1 L');
+        }
+    });
 </script>

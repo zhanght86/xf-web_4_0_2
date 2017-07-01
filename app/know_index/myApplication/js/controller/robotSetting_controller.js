@@ -31,12 +31,11 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             addCustom : addCustom,  //弹出自定义头像对话框
             selectClassic : selectClassic, //选择经典头像
 
-            myFile : "" ,//上传的图片
+            myFile : "" //上传的图片
             //x : "", //坐标x
             //y : "", //坐标y
             //w : "", //截取的宽度
             //h : "", //截取的高度
-            fileChange : fileChange
         };
 
         //弹出经典头像对话框
@@ -104,7 +103,6 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                             headers: {'Content-Type':undefined},
                             transformRequest: angular.identity
                         }).success( function (response){
-
                             if(response.status==200){
                                 layer.msg("修改头像成功");
                                 //$state.go("setting.robot");
@@ -117,26 +115,6 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 }
             });
         }
-        /*6.30add-图片大小限制*/
-
-        function fileChange(e) {
-            var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
-            var  target = e.srcElement ? e.srcElement : e.target;
-            var fileSize = 0;
-            if (isIE && !target.files) {
-                var filePath = target.value;
-                var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
-                var file = fileSystem.GetFile (filePath);
-                fileSize = file.Size;
-            } else {
-                fileSize = target.files[0].size;
-            }
-            var size = fileSize / 1024;
-            if(size>1000){
-                alert("附件不能大于1M,请重新选择");
-            }
-        }
-        /*6.30-图片大小限制ennd*/
 
         $scope.app = {
             applicationId: $cookieStore.get("applicationId"),

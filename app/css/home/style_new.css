@@ -408,4 +408,12 @@
 .knowPopup .listItem li:hover{background:#dcdbdb;}
 /*参数设置*/
 .parameterSetting .jqrsz-item2{border-top:0;padding:0;margin-top:0;}
+/*总览*/
+
+.custOver .selectall_a, .markOver .selectall_a{width:23px;height:24px;display:inline-block;margin-top:13px;}
+.custOver .selectall_a1,.markOver .selectall_a1{background:url(../../images/images/my-checkbox.png) no-repeat;}
+.custOver .selectall_a2,.markOver .selectall_a2{background:url(../../images/images/my-checkbox-on.png) no-repeat;}
+
+
+
 
