@@ -23,6 +23,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
             findMultiInteractive: findMultiInteractive, //查询多轮交互设置
 
             turnOn : turnOn,//开关函数
+            turnOn2 : turnOn2,
     
             settingId: "", //配置id
             categoryFuzzyOn: 1,  //类目模糊开关
@@ -192,6 +193,20 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
         //开关
         function turnOn(targetValue,targetName){
             $scope.vm[targetName] = targetValue ? 0 : 1 ;
+        }
+
+        //nnf-7.3-add
+        function turnOn2(targetValue,targetName){
+            $scope.vm[targetName] = targetValue ? 0 : 1 ;
+            //添加判断，如果为关，后面两项不可用
+            if($scope.vm[targetName]==0){
+                $scope.vm.subjectMemoryRounds='';
+                $scope.vm.memoryMethod='';
+            }else{
+                $scope.vm.subjectMemoryRounds=3;
+                $scope.vm.memoryMethod=1;
+            }
+
         }
     }
 ]);
