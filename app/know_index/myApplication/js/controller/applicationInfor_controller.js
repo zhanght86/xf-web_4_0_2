@@ -103,18 +103,26 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
 
         //上线服务
         function startService(serviceId){
-            httpRequestPost("/api/application/service/startService",{
-                "serviceId": serviceId
-            },function(data){
-                if(data.status==200){
-                    layer.msg("上线服务成功");
-                    listServiceData(1);
-                }else{
-                    layer.msg("上线服务失败");
-                }
+            layer.confirm("确认上线？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/service/startService",{
+                    "serviceId": serviceId
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("上线服务成功");
+                        listServiceData(1);
+                    }else{
+                        layer.msg("上线服务失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
         //下线服务
         function stopService(serviceId){
