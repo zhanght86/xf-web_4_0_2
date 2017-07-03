@@ -480,7 +480,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             return false;
         }
         function downloadTemplate(){
-            downloadFile("/api/ms/modeling/download","","semantic_expression_concept_template.xlsx");
+            downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","semantic_expression_concept_template.xlsx");
         }
         function exportAll(){
             httpRequestPost("/api/ms/modeling/concept/semanticexpression/export",{

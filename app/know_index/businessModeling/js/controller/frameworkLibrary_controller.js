@@ -571,13 +571,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 preCloseCallback:function(e){    //关闭回掉
                     if(e==10011){
                         frameTemplate="frame_faq_template.xlsx";
-                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
                     }else if(e==10012){
                         frameTemplate="frame_concept_template.xlsx";
-                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
                     }else if(e==10013){
                         frameTemplate="frame_element_template.xlsx";
-                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
                     }
                 }
             });

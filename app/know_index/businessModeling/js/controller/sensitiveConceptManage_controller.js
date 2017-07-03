@@ -456,7 +456,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             return false;
         }
         function downloadTemplate(){
-            downloadFile("/api/ms/modeling/download","","concept_template.xlsx");
+            downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","concept_template.xlsx");
         }
         function exportAll(){
             httpRequestPost("/api/ms/modeling/concept/sensitive/export",{

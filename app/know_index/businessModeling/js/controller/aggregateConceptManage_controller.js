@@ -468,7 +468,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             return false;
         }
         function downloadTemplate(){
-            downloadFile("/api/ms/modeling/download","","concept_with_weight_template.xlsx");
+            downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","concept_with_weight_template.xlsx");
         }
         function exportAll(){
             httpRequestPost("/api/ms/modeling/concept/collective/export",{

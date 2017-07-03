@@ -743,7 +743,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
         });
         function downloadTemplate(){
-            downloadFile("/api/ms/modeling/download","","business_ontology_tree_template.xlsx");
+            downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","business_ontology_tree_template.xlsx");
         }
         function exportAll(){
             httpRequestPost("/api/ms/modeling/category/export",{
