@@ -76,7 +76,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             tableChange : tableChange  ,//編輯
             tableRemove : tableRemove, //删除行或列
             addRow : addRow,   //添加行
-            gorithm : [], //语义挖掘
+            gorithm : ['NLP'], //语义挖掘
             tableType : "字符串",   //类型
             factorName : null,   //要素名称
             reQuestion : null, //反问
@@ -358,7 +358,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function setDialogNew(){
             $scope.vm.factorName = null ;
             $scope.vm.tableType = "字符串";
-            $scope.vm.gorithm = [];
+            $scope.vm.gorithm = ['NLP'];
             $scope.vm.elementAsk = null;
         }
 // 通过类目id 获取框架
