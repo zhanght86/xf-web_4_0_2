@@ -86,7 +86,7 @@
                 </div>
             </li>
             <!-- 概念知识 位置-->
-            <li class="borderN"  ng-if="vm.knowledgeType==101"  >
+            <li class="borderN"  ng-if="vm.knowledgeType==101">
                 <p ng-repeat="item in vm.listData.extensionQuestions track by $index">
                     <span ng-class="$index!=0?'milesVh':''">概念扩展：</span>
                     <span style="width: auto;background: #f1f1f1;" ng-repeat="val in item.extensionQuestionTagList track by $index">

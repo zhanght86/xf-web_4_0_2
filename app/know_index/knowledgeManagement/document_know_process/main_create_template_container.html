@@ -33,15 +33,15 @@
                 <div class="rule_div L">
                     <div class="bd" style="margin-bottom:25px">
                         <table class="rule_table">
-                            <tr class="tr_t" ng-repeat="role in rules">
+                            <tr class="tr_t" ng-repeat="role in vm.rules">
                                 <td width="30%">{{role.level+1}}级目录</td>
                                 <td width="30%" style="color:#999"><span ng-if="role.ruleId">规则完成</span></td>
-                                <td width="20%"><a type="button" class="btn3"  ui-sref="back.docselect({temId:temId,level:$index,roleId:role.ruleId})" >从文章中提取</a></td>
-                                <td width="20%" ng-if="role.ruleId"><a href="javascript:;" class="btn3" ng-confirm="确认删除?" value="删除" ng-click="deleteRule(role.ruleId)">删除</a></td>
-                                <td width="20%" ng-if="!role.ruleId"><a class="btn3" ng-click="resetRule($index)">取消</a></td>
+                                <td width="20%"><a type="button" class="btn3"  ui-sref="back.docselect({temId:vm.templateId,level:$index,roleId:role.ruleId})" >从文章中提取</a></td>
+                                <td width="20%" ng-if="role.ruleId"><a href="javascript:;" class="btn3" ng-confirm="确认删除?" value="删除" ng-click="vm.deleteRule(role.ruleId)">删除</a></td>
+                                <td width="20%" ng-if="!role.ruleId"><a class="btn3" ng-click="vm.resetRule($index)">取消</a></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:void(0)" class="c_blue" ng-click="addRule()">+添加目录</a></td>
+                                <td><a href="javascript:void(0)" class="c_blue" ng-click="vm.addRule()">+添加目录</a></td>
                             </tr>
                         </table>
                     </div>
