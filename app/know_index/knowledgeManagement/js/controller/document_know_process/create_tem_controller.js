@@ -1,6 +1,6 @@
 /**
- * Created by Administrator on 2016/6/3.
- * 控制器
+ * Created by miles on 2017/7/1.
+ * For   模板配置 && 创建模板  公用
  */
 angular.module('knowledgeManagementModule').controller('createTemController', [
     '$scope', '$location', "$stateParams", "$interval", "$timeout", "ngDialog",
@@ -12,34 +12,21 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
             "temType" : "WORD"  , //模板类型
             "temNameChecked" : false , //模板名称校验
             "fileName" : "未选择文件" ,  //上传文件名称
-            "isTempUpToolsShow" : false ,
-            "progress" : 0 ,
-            "tempId" : $stateParams.temId ?$stateParams.temId : "",
+            "isTempUpToolsShow" : $stateParams.temId ? false : true  , //上传 按钮显示
+            "progress" : 0 ,        // 上传进度
+            "templateId" : $stateParams.temId ?$stateParams.temId : "" , //模板id
+            "rules" : "" , //所有规则
+            "addRule" : addRule , //添加规则
+            "deleteRule" : deleteRule , //删除已添加规则
+            "resetRule" : resetRule ,//取消添加的规则
+
         } ;
-        //$scope.temName = "";
-        //$scope.temType = 'WORD';
-        //$scope.temNameChecked = false;
-        //$scope.fileName = "未选择文件";
-        //$scope.vm.isTempUpToolsShow={
-        //    show: false
-        //};
-        console.log($stateParams.isGo)
-        //if(($stateParams.isGo !=true) && (localStorageService.get($state.current.name))){
-        //    $scope.temId = localStorageService.get($state.current.name);
-        //    alert(1)
-        //}else
-        if($stateParams.temId){
-            //$scope.storeParams($stateParams.temId);
-            $scope.temId = $stateParams.temId ;
-            $scope.vm.isTempUpToolsShow = false;
-        }else if(!$stateParams.temId) {
-            $scope.vm.isTempUpToolsShow = true;
-        }
-        $scope.queryTemplateById = function(){
+        //通过id 获取模板
+        function queryTemplateById(){
             TemplateService.queryTemplateById.save({
                 "index":0,
                 "pageSize":1,
-                "templateId":$stateParams.temId
+                "templateId":$scope.vm.templateId
             },function(resource){
                 if(resource.status == 200 && resource.data){
                     $scope.vm.temName = resource.data.objs[0].templateName;
@@ -50,41 +37,37 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
                 }
             })
         }
-        
-        $scope.queryRules = function(){
+        //获取规则
+        function queryRules(){
             TemplateService.queryRules.save({
-                //"index":0,
-                //"pageSize":1,
-                "templateId":$scope.temId
+                "templateId":$scope.vm.templateId
             },function(resource){
                 if(resource.status == 200 && resource.data){
-                    //$scope.rules = resource.data.objs.rules;
-                    $scope.rules = resource.data.objs;
+                    $scope.vm.rules = resource.data.objs;
                 }
             })
-        }
-
-        
-        $scope.addRule = function(){
-            if($scope.rules){
-                if($scope.rules.length == 0)//判断是否存在模板规则
+        } ;
+        //添加规则
+        function addRule(){
+            if($scope.vm.rules){
+                if($scope.vm.rules.length == 0)//判断是否存在模板规则
                 {
-                    $scope.rules.push({
+                    $scope.vm.rules.push({
                         level:0
                     });
                 }
                 else{
-                    $scope.rules.push({
-                        level:$scope.rules[$scope.rules.length-1].level+1
+                    $scope.vm.rules.push({
+                        level:$scope.vm.rules[$scope.vm.rules.length-1].level+1
                     });
                 }
                 $('.proce_result ').trigger('click');
             }else{
                  layer.msg("请先上传模板或选定模板");
             }
-        }
-
-        $scope.deleteRule = function(ruleId){
+        } ;
+        //删除已添加规则
+        function deleteRule(ruleId){
             if(!ruleId){
                 return;
             }
@@ -93,26 +76,23 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
             },function(resource){
                 if(resource.status == 200){
                     TipService.setMessage('删除成功!',"success");
-                    $scope.queryRules();//重新查询规则
+                    queryRules();//重新查询规则
                 }else{
                     TipService.setMessage('删除失败!',"err");
                 }
             })
-        }
-
-        $scope.resetRule = function(index){
-            var rule = $scope.rules[index];
+        };
+        // 取消添加的规则
+        function resetRule(index){
+            var rule = $scope.vm.rules[index];
             if(rule && !rule.id){
-                $scope.rules.splice(index,1)
+                $scope.vm.rules.splice(index,1)
             }
         }
-
-        $scope.backT = function(){
-            history.back();
-        };
-
+        // 监听templateId
+        //For  创建模板 OR  模板添加规则
         var timeout;
-        $scope.$watch('temId', function (temId) {
+        $scope.$watch('vm.templateId', function (temId) {
             if(temId){
                 console.log(temId)  ;
                 if (timeout) {
@@ -120,12 +100,13 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
                 }
                 timeout = $timeout(function () {
                     $scope.vm.isTempUpToolsShow = false;//隐藏保持相关按钮
-                    $scope.queryTemplateById();
-                    $scope.queryRules();
+                    queryTemplateById();
+                    queryRules();
                 }, 350)
             }
-        }, true)
-
+        }, true) ;
+        // templateName
+        //For  监测模板名字 是否 符合
         var timeout2;
         $scope.$watch('vm.temName', function (temName) {
             if(temName && temName != ""){
@@ -134,7 +115,7 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
                 }
                 timeout2 = $timeout(function () {
                     TemplateService.checkTemName.save({
-                        templateName: $scope.vm.temName,
+                        templateName: $scope.vm.temName
                     },function(resource){
                         if(resource.status == 200 && resource.data.objs.length == 0){
                             $scope.vm.temNameChecked = true;
@@ -144,6 +125,10 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
                     })
                 }, 350)
             }
-        }, true)
+        }, true) ;
+        //修改保存
+        $scope.backT = function(){
+            history.back();
+        };
     }
 ])
