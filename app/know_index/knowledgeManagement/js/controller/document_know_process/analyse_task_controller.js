@@ -85,6 +85,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
             if (timeout) {
                 $timeout.cancel(timeout)
             }
+
             timeout = $timeout(function () {
                 //$scope.storeParams(paginationConf);
                 queryKnowDocList();
@@ -92,7 +93,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
         }, true) ;
 
         var timeout3;
-        $scope.$watch('TemSearchPOJO', function (SearchPOJO) {
+        $scope.$watch('temPaginationConf', function (SearchPOJO) {
             if (timeout3) {
                 $timeout.cancel(timeout3)
             }

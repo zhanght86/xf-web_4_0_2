@@ -35,31 +35,26 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     max_file_size: '10mb',
                     mime_types: [{
                         title: "Know File",
-                        extensions: "doc,docx,txt,pdf,xls,xlsx,html,ppt,pptx"
+                        extensions: "docx"
                     }]
                 },
                 flash_swf_url: '/plupload/Moxie.swf',
                 silverlight_xap_url: '/plupload/Moxie.xap',
                 init: {
                     PostInit: function () {
-                        //document.getElementById('uploadfiles').onclick = function() {
                         $('#uploadfiles').click(function () {
                             var params = {
                                 //这里设置上传参数
-                                //ontologys: $scope.classifyId,
-                                //fregStyle: 2, //碎片化加工
                                 templateId:$scope.targetId,
                                 requestId:"String",
                                 //设置用户信息
-                                userName: $cookieStore.get("userName")
-
+                                userName: USER_NAME
                             };
                             if ($scope.processMethod == true) {
                                 if (!$scope.targetId || $scope.targetId == null) {
                                      layer.msg("请选择加工模板");
                                     return;
                                 }
-                                //params.targetId = $scope.targetId;
                             }
                             uploader.setOption('multipart_params', params);
                             uploader.setOption('url', '/api/ms/knowledgeDocumentation/createDocumentation');
@@ -112,9 +107,9 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     },
 
                     FileUploaded: function (uploader, files, res) {
-                        $scope.queryKnowDocList();
+                        $scope.vm.queryKnowDocList();
                         $('#file_container').html('');
-                        $scope.resetUploadPOJO();
+                        //$scope.vm.resetUploadPOJO();
                         $('.template_inpt').val("");
                         if (res.status == 200){
                             $('.popup_wrap').hide();
@@ -146,7 +141,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                     max_file_size: '10mb',
                     mime_types: [{
                         title: "Know File",
-                        extensions: "doc,docx"
+                        extensions: "docx"
                     }]
                 },
                 flash_swf_url: '/plupload/Moxie.swf',
@@ -176,7 +171,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                                 "templateName": $scope.vm.temName,
                                 "requestId":"String",
                                 //此处设置上传用户信息
-                                "userId":USER_LOGIN_NAME
+                                "userId":USER_NAME
                             });
                             uploader.start() ;
                             return false;
@@ -239,7 +234,8 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                             if (response.status == 200) {
                                  layer.msg("模板文件上传成功，请添加规则");
                                 $scope.$apply(function () {
-                                    $scope.vm.temId = response.data.templateId;
+                                    $scope.vm.isTempUpToolsShow = false;//隐藏保持相关按钮
+                                    $scope.vm.templateId = response.data.templateId;
                                     $scope.storeParams($scope.temId);
                                 })
                             } else {
@@ -406,6 +402,65 @@ knowledge_static_web.directive("advansearchdiv", function () {
     }
 });
 
+
+// src \app\know_index\knowledgeManagement\document_know_process\main_container.html
+// For 选择模板名称
+knowledge_static_web.directive("templateInput", function () {
+    return {
+        restrict: "AE",
+        link: function ($scope, elem, attrs) {
+            elem.click(function (e) {
+                var ev = e || window.event;
+                $('.template_con').show();
+                ev.stopPropagation();
+            }) ;
+            $(document).click(function () {
+                $('.template_con').hide();
+            })
+        }
+    }
+});
+//模板选择 存储id
+knowledge_static_web.directive("templateCon", function () {
+    return {
+        restrict: "AE",
+        link: function ($scope, elem, attrs) {
+            elem.click(function (e) {
+                var ev = e || window.event;
+                ev.stopPropagation();
+            }) ;
+            $scope.$on('onRenderFinish', function (event) {
+                $('.template_con tbody tr').click(function () {
+                    var value = $(this).find('td').eq(1).html();
+                    var id = $(this).find('td').eq(3).html();
+                    $('.template_inpt').val(value);
+                    $scope.$parent.targetId = $scope.targetId = id;
+                    $(this).parents('.template_con').hide();
+                })
+            });
+        }
+    }
+});
+
+
+
+//模板选择 关闭按钮
+knowledge_static_web.directive("closeMenu", function () {
+    return {
+        restrict: "AE",
+        scope: {},
+        link: function ($scope, elem, attrs) {
+            elem.click(function () {
+                $('.popup_wrap').hide();
+                $('.popup_span').hide();
+                $(".import_from_txt").css('visibility', 'hidden');
+                $(".add_single_popup").css('visibility', 'hidden');
+            });
+        }
+    }
+});
+
+//================================================================================= no-use ==========================================================//
 knowledge_static_web.directive("processMethodMenu", function () {
     return {
         restrict: "AE",
@@ -424,51 +479,6 @@ knowledge_static_web.directive("processMethodMenu", function () {
         }
     }
 });
-
-knowledge_static_web.directive("templateInput", function () {
-    return {
-        restrict: "AE",
-        link: function ($scope, elem, attrs) {
-            elem.click(function (e) {
-                var ev = e || window.event;
-                $('.template_con').show();
-                ev.stopPropagation();
-            })
-
-            $(document).click(function () {
-                $('.template_con').hide();
-            })
-        }
-    }
-});
-
-knowledge_static_web.directive("templateCon", function () {
-    return {
-        restrict: "AE",
-        // scope:{
-        //     targetId:"=targetId"
-        // },
-        link: function ($scope, elem, attrs) {
-            elem.click(function (e) {
-                var ev = e || window.event;
-                ev.stopPropagation();
-            })
-
-            $scope.$on('onRenderFinish', function (event) {
-                $('.template_con tbody tr').click(function () {
-                    var value = $(this).find('td').eq(1).html();
-                    var id = $(this).find('td').eq(3).html();
-                    $('.template_inpt').val(value);
-                    $scope.$parent.targetId = $scope.targetId = id;
-                    $(this).parents('.template_con').hide();
-                })
-            });
-
-        }
-    }
-});
-
-
 knowledge_static_web.directive("mouldShowMenu", function () {
     return {
         restrict: "AE",
@@ -482,22 +492,6 @@ knowledge_static_web.directive("mouldShowMenu", function () {
         }
     }
 });
-
-knowledge_static_web.directive("closeMenu", function () {
-    return {
-        restrict: "AE",
-        scope: {},
-        link: function ($scope, elem, attrs) {
-            elem.click(function () {
-                $('.popup_wrap').hide();
-                $('.popup_span').hide();
-                $(".import_from_txt").css('visibility', 'hidden');
-                $(".add_single_popup").css('visibility', 'hidden');
-            });
-        }
-    }
-});
-
 knowledge_static_web.directive("onOff", function () {
     return {
         restrict: "AE",

@@ -31,11 +31,12 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             addCustom : addCustom,  //弹出自定义头像对话框
             selectClassic : selectClassic, //选择经典头像
 
-            myFile : "" //上传的图片
+            myFile : "" ,//上传的图片
             //x : "", //坐标x
             //y : "", //坐标y
             //w : "", //截取的宽度
             //h : "", //截取的高度
+            isHeadPicSize : isHeadPicSize  //头像大小是否合格 1Mb
         };
 
         //弹出经典头像对话框
@@ -70,10 +71,21 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
         //选择经典头像
         function selectClassic(item){
-            console.log("点击"+item);
+            console.log("点击"+item); 
             $scope.robot.newRobotHead=item;
         }
-
+        //确定头像 大小检测
+        function isHeadPicSize(){
+            var file = document.querySelector('input[type=file]').files[0];
+            console.log(file)
+            //if(!file){
+            //    layer.msg("请选择要上传的头像")
+            //}else if(file.size>1024){
+            //    layer.msg("头像尺寸不能超过1Mb")
+            //}else{
+                ngDialog.closeAll(1)
+            //}
+        }
         //弹出自定义头像对话框
         function addCustom(){
             var dialog = ngDialog.openConfirm({
@@ -86,32 +98,36 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        console.log($scope.robot.settingId);
-                        var fd = new FormData();
-                        //var file =$scope.robot.myFile
                         var file = document.querySelector('input[type=file]').files[0];
-                        fd.append('file', file);
-                        fd.append('settingId',$scope.robot.settingId);
-                        fd.append('x',$('#x').val())
-                        fd.append('y',$('#y').val());
-                        fd.append('w',$('#w').val());
-                        fd.append('h',$('#h').val());
-                        $http({
-                            method:'POST',
-                            url:"/api/application/application/uploadHead",
-                            data: fd,
-                            headers: {'Content-Type':undefined},
-                            transformRequest: angular.identity
-                        }).success( function (response){
-                            if(response.status==200){
-                                layer.msg("修改头像成功");
-                                //$state.go("setting.robot");
-                                $state.reload();
-                            }else{
-                                layer.msg("上传头像失敗");
-                            }
-                        });
-                    }
+                        //if(file.size>1024){
+                        //    layer.msg("头像尺寸不能超过1Mb")
+                        //}else{
+                            var fd = new FormData();
+                            //var file =$scope.robot.myFile
+                            fd.append('file', file);
+                            fd.append('settingId',$scope.robot.settingId);
+                            fd.append('x',$('#x').val()) ;
+                            fd.append('y',$('#y').val());
+                            fd.append('w',$('#w').val());
+                            fd.append('h',$('#h').val());
+                        console.log(fd)
+                            $http({
+                                method:'POST',
+                                url:"/api/application/application/uploadHead",
+                                data: fd,
+                                headers: {'Content-Type':undefined},
+                                transformRequest: angular.identity
+                            }).success( function (response){
+                                if(response.status==200){
+                                    layer.msg("修改头像成功");
+                                    //$state.go("setting.robot");
+                                    $state.reload();
+                                }else{
+                                    layer.msg("上传头像失敗");
+                                }
+                            });
+                        }
+                    //}
                 }
             });
         }
