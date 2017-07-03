@@ -71,20 +71,20 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
         //选择经典头像
         function selectClassic(item){
-            console.log("点击"+item); 
+            console.log("点击"+item);
             $scope.robot.newRobotHead=item;
         }
         //确定头像 大小检测
         function isHeadPicSize(){
             var file = document.querySelector('input[type=file]').files[0];
-            console.log(file)
-            //if(!file){
-            //    layer.msg("请选择要上传的头像")
-            //}else if(file.size>1024){
-            //    layer.msg("头像尺寸不能超过1Mb")
-            //}else{
-                ngDialog.closeAll(1)
-            //}
+            //console.log(file)
+            if(!file){
+                layer.msg("请选择要上传的头像")
+            }else if(file.size>1024){
+                layer.msg("头像尺寸不能超过1Mb")
+            }else{ 
+                ngDialog.closeAll(1);
+            }
         }
         //弹出自定义头像对话框
         function addCustom(){
