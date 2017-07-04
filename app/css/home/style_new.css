@@ -408,7 +408,7 @@
 .knowPopup .listItem li:hover{background:#dcdbdb;}
 
 .knowledgeList .specify_know_ul,.knowledgeFactor .specify_know_ul{position: absolute;
-    left: 91px;z-index: 2;max-height: 200px;width:380px;overflow: scroll ;box-sizing: border-box;background:#e1e1e1;}
+    left: 100px;z-index: 2;max-height: 200px;width:380px;overflow: scroll ;box-sizing: border-box;background:#e1e1e1;}
 .knowledgeList .specify_know_ul li,.knowledgeFactor .specify_know_ul li{width: 100%;
     cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px}
 
