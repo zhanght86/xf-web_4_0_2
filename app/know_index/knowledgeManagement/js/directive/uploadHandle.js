@@ -375,7 +375,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             accept: {
                                 title: 'file',
                                 extensions: 'xls,xlsx',
-                                mimeTypes: 'file/*'
+                                //mimeTypes: 'file/*'
                             },
                             // 选择文件的按钮。可选。
                             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -429,8 +429,8 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                                     layer.msg("错误：请勿重复上传该文件！");
                                     break;
                                 default:
-                                    layer.msg('错误代码：' + type);
-                                    break;
+                                    //layer.msg('错误代码：' + type);
+                                    //break;
                             }
                         });
                         uploader.on('uploadProgress', function (file, percentage) {
@@ -477,7 +477,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                         uploader.on('uploadSuccess', function (file, response) {
                             console.log(response) ;
                             if(response.status == 500){
-                                layer.msg("模板错误")
+                                layer.msg("导入模本格式错误")
                             }else if(response.status==10001){
                                 layer.msg("导入失败")
                             }else {

@@ -71,7 +71,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
         //选择经典头像
         function selectClassic(item){
-            console.log("点击"+item); 
+            console.log("点击"+item);
             $scope.robot.newRobotHead=item;
         }
         //确定头像 大小检测
