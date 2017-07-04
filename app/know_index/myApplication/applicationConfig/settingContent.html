@@ -11,9 +11,9 @@
                 <span class="setting_span">机器人昵称：</span>
                 <div>
                     <input name="robotName" class="input-text" type="text" placeholder="给机器人起个名字吧"
-                           ng-model="robot.robotName" ng-maxlength="8" ng-pattern="/^[\u2E80-\uFE4F]+$/"/>
+                           ng-model="robot.robotName" ng-maxlength="8" ng-pattern="/^[\u2E80-\uFE4F]+$/" required/>
                     <div class="error-tip c-red" ng-show="mySetting.robotName.$dirty && mySetting.robotName.$invalid">
-                        昵称输入不能超过8个汉字，请重新输入！
+                        昵称输入不能超过8个汉字且不能为空，请重新输入！
                     </div>
                 </div>
             </div>
