@@ -82,7 +82,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 layer.msg("请选择要上传的头像")
             }else if(file.size>1024){
                 layer.msg("头像尺寸不能超过1Mb")
-            }else{ 
+            }else{
                 ngDialog.closeAll(1);
             }
         }

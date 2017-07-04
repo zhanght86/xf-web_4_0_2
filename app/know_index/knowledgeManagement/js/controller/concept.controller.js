@@ -70,6 +70,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             appointRelative : "",
             appointRelativeList :[],
             addAppoint  : addAppoint,
+            removeAppointRelative : removeAppointRelative ,
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             replaceType : 0 ,
@@ -846,6 +847,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         };
 
  /* *********************              弹框相关           **************************/ //
+        function removeAppointRelative(item){
+            $scope.vm.appointRelativeGroup.remove(item);
+        }
 //重置参数
         function setDialog() {
             $scope.vm.newTitle = "";

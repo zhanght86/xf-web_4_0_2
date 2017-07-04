@@ -34,7 +34,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             serviceId : "" ,
             channel:"",
             channelList : [] ,
-            getService : getService
+            getService : getService,
             //------------------------------渠道   服务end
 
         };
@@ -237,11 +237,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 httpRequestPost("/api/application/batchTest/getChannelAndUserName", {
                     batchNumberId:  id,
                     userId: $scope.vm.userId,
-                    //channel:$scope.vm.channel,
                     channelName : name,
                     channel:channelId,
                     applicationId:$scope.vm.applicationId,
-                    serviceId:$scope.vm.serviceId,
+                    serviceId:$scope.vm.serviceId
                 }, function (data) {
                     if(data.status == 20002){
                         layer.msg(data.data,{time:1000});
@@ -272,21 +271,23 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
 
         function startTest(id,name,channelId){
+            console.log(this ) ;
             httpRequestPost("/api/application/batchTest/startTest", {
                 batchNumberId: id,
                 userId: $scope.vm.userId,
                 channelName : name ,
                 channel:channelId,
                 applicationId:$scope.vm.applicationId,
-                serviceId:$scope.vm.serviceId,
-                //serviceId:22
+                serviceId:$scope.vm.serviceId
             }, function (data) {
                 console.log(data);
                 if(data.status=10000){
                     showData($scope.vm.paginationConf.currentPage) ;
                 }
-            }, function () {
-                //layer.msg("请求失败");
+            }, function (err) {
+                if( err.statusText == "timeout"){
+                    //startTest(id,name,channelId)
+                }
             },"","",3600000);
         }
 
