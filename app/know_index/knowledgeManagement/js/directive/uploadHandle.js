@@ -78,7 +78,7 @@ knowledge_static_web.directive("uploaderFactor", ["$parse","$timeout",
                     }
                     console.log(response)
                 });
-            },1000) ;
+            },0) ;
 
 
         }
