@@ -32,7 +32,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                 //container: $('#filelist'),
                 multi_selection: true,
                 filters: {
-                    max_file_size: '10mb',
+                    max_file_size: '50mb',
                     mime_types: [{
                         title: "Know File",
                         extensions: "docx"
@@ -68,7 +68,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                                     uploader.removeFile(uploader.files[i - 1]);
                                 }
                             }
-                            $scope.$apply($scope.resetUploadPOJO());
+                            //$scope.$apply($scope.resetUploadPOJO());
                         })
                     },
 
