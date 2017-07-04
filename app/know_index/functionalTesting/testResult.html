@@ -72,7 +72,7 @@
 
                             <td ng-if="v.answerContent.length>=20" title="{{v.answerContent|replaceCode}}">{{v.answerContent|replaceCodeCut}}</td>
                             <td ng-if="v.answerContent.length<20">{{v.answerContent|replaceCode}}</td>
-                            <td title="{{v.similarity}}">{{v.similarity | floatFilter}}</td>  
+                            <td title="{{v.similarity}}">{{v.similarity | floatFilter}}</td>
                             <td ><a href="javascript:;" class="c_green" ng-click="vm.editQuestion(v)">修改</a></td>
                         </tr>
 

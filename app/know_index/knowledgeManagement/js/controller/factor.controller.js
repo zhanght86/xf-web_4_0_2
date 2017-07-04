@@ -97,6 +97,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             isDecorateSimple : false  ,// true 单独修饰  false  整体修饰
             backupsOfExtension : "" //扩展问 编辑备份
         };
+
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {

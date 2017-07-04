@@ -11,7 +11,7 @@ angular.module('knowledge_static_web').filter('floatFilter',function () {
         if(index!=-1){
             result = Number(val.substring(0,index+length))
         }else{
-            result = Number("val")
+            result = Number(val)
         }
         return result ;
     }
