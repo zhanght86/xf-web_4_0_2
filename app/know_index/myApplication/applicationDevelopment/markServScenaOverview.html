@@ -6,7 +6,10 @@
             <div class="aside-hd tac">
                 <!--<img class="hd-img" src="../../../images/images/poto.png"/>-->
                 <!--<img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>-->
-                <img class="hd-img" ng-src="/img/{{vm.robotHead}}"/>
+                <div style="width:110px;height:110px;overflow: hidden;border-radius:50%;margin:0 auto;border:3px solid #fff;">
+                    <!--<img class="hd-img" ng-src="../../images/touxiang1.png"/>-->
+                    <img class="hd-img" ng-src="/img/{{vm.robotHead}}"/>
+                </div>
                 <span class="hd-name ellipsis">{{vm.applicationName}}</span>
             </div>
             <div class="aside-nav aside-navn">
@@ -88,24 +91,26 @@
                     </div>
                     <div class="fr">
                         <a class="btn btn-blue" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions">批量导入</a>
-                        <a class="btn btn-green" href="javascript:;">知识加工</a>
+                        <!--<a class="btn btn-green" href="javascript:;">知识加工</a>-->
                         <a class="btn btn-green2" href="javascript:;" ng-click="vm.exportExcel()">导出知识</a>
                     </div>
                 </div>
                 <div class="csso-cont mt30">
                     <div class="clearfix csso-hd">
                         <div class="fl">
-                            <input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
+                            <!--<input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/>-->
+                            <a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>
+                            <span class="L"><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
                         </div>
-                        <div class="fr" style="margin-right: 80px;" ng-click="vm.delData()">
-                            <a class="ljtClose-btn" href="javascript:;" style="width: 50px;">
+                        <div class="fr"  ng-click="vm.delData()">
+                            <a class="ljtClose-btn" href="javascript:;" >
                                 <i class="icon-ljtClose"></i>
-                                <span class="txt" >删除</span>
+                                <span style="color:#e84f4f;">删除</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="clearfix csso-bd" style="min-height:300px;">
+                    <div class="clearfix csso-bd" style="min-height:300px;padding-left: 15px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
@@ -142,7 +147,7 @@
                                 </div>
                                 <div class="csso-info oh">
                                     <div class="fr">
-                                        <span>作者：{{item.knowledgeCreator}}</span>
+                                        <span class="mr-10">作者：{{item.knowledgeCreator}}</span>
                                         <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</span>
                                     </div>
                                 </div>
@@ -161,5 +166,11 @@
     .advanced_search{background:#fff;width:540px;}
 </style>
 <script>
-
+    $('.selectall_a').click(function(){
+        if($(this).hasClass('selectall_a1')){
+            $(this).attr('class','selectall_a selectall_a2 L');
+        }else{
+            $(this).attr('class','selectall_a selectall_a1 L');
+        }
+    });
 </script>

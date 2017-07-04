@@ -36,7 +36,7 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             //y : "", //坐标y
             //w : "", //截取的宽度
             //h : "", //截取的高度
-            fileChange : fileChange
+            isHeadPicSize : isHeadPicSize  //头像大小是否合格 1Mb
         };
 
         //弹出经典头像对话框
@@ -74,7 +74,18 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             console.log("点击"+item);
             $scope.robot.newRobotHead=item;
         }
-
+        //确定头像 大小检测
+        function isHeadPicSize(){
+            var file = document.querySelector('input[type=file]').files[0];
+            console.log(file);
+            if(!file){
+                layer.msg("请选择要上传的头像");
+            }else if(file.size>1024){
+                layer.msg("头像尺寸不能超过1Mb");
+            }else{
+                ngDialog.closeAll(1);
+            }
+        }
         //弹出自定义头像对话框
         function addCustom(){
             var dialog = ngDialog.openConfirm({
@@ -87,56 +98,39 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        console.log($scope.robot.settingId);
-                        var fd = new FormData();
-                        //var file =$scope.robot.myFile
                         var file = document.querySelector('input[type=file]').files[0];
-                        fd.append('file', file);
-                        fd.append('settingId',$scope.robot.settingId);
-                        fd.append('x',$('#x').val())
-                        fd.append('y',$('#y').val());
-                        fd.append('w',$('#w').val());
-                        fd.append('h',$('#h').val());
-                        $http({
-                            method:'POST',
-                            url:"/api/application/application/uploadHead",
-                            data: fd,
-                            headers: {'Content-Type':undefined},
-                            transformRequest: angular.identity
-                        }).success( function (response){
-
-                            if(response.status==200){
-                                layer.msg("修改头像成功");
-                                //$state.go("setting.robot");
-                                $state.reload();
-                            }else{
-                                layer.msg("上传头像失敗");
-                            }
-                        });
-                    }
+                        //if(file.size>1024){
+                        //    layer.msg("头像尺寸不能超过1Mb")
+                        //}else{
+                            var fd = new FormData();
+                            //var file =$scope.robot.myFile
+                            fd.append('file', file);
+                            fd.append('settingId',$scope.robot.settingId);
+                            fd.append('x',$('#x').val()) ;
+                            fd.append('y',$('#y').val());
+                            fd.append('w',$('#w').val());
+                            fd.append('h',$('#h').val());
+                        console.log(fd)
+                            $http({
+                                method:'POST',
+                                url:"/api/application/application/uploadHead",
+                                data: fd,
+                                headers: {'Content-Type':undefined},
+                                transformRequest: angular.identity
+                            }).success( function (response){
+                                if(response.status==200){
+                                    layer.msg("修改头像成功");
+                                    //$state.go("setting.robot");
+                                    $state.reload();
+                                }else{
+                                    layer.msg("上传头像失敗");
+                                }
+                            });
+                        }
+                    //}
                 }
             });
         }
-        /*6.30add-图片大小限制*/
-
-        function fileChange(e) {
-            var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
-            var  target = e.srcElement ? e.srcElement : e.target;
-            var fileSize = 0;
-            if (isIE && !target.files) {
-                var filePath = target.value;
-                var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
-                var file = fileSystem.GetFile (filePath);
-                fileSize = file.Size;
-            } else {
-                fileSize = target.files[0].size;
-            }
-            var size = fileSize / 1024;
-            if(size>1000){
-                alert("附件不能大于1M,请重新选择");
-            }
-        }
-        /*6.30-图片大小限制ennd*/
 
         $scope.app = {
             applicationId: $cookieStore.get("applicationId"),

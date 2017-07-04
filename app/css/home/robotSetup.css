@@ -1,5 +1,6 @@
 .aside-hd{padding: 30px 0;}
-.aside-hd .hd-img{ display: block; margin: 0 auto; width: 110px; height: 110px; border-radius: 50%; border: 3px solid #fff;}
+/*.aside-hd .hd-img{ display: block; margin: 0 auto; width: 110px; height: 110px; border-radius: 50%; border: 3px solid #fff;}*/
+.aside-hd .hd-img{ width: 100%;height:100%;}
 .aside-hd .hd-name{font-size: 16px; color: #333; line-height: 35px; padding: 10px 15px 0;}
 
 .aside-nav{ border-top: 1px solid #dadada; border-bottom: 1px solid #dadada;}

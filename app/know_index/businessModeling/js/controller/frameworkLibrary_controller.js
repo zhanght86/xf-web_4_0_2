@@ -571,13 +571,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 preCloseCallback:function(e){    //关闭回掉
                     if(e==10011){
                         frameTemplate="frame_faq_template.xlsx";
-                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
                     }else if(e==10012){
                         frameTemplate="frame_concept_template.xlsx";
-                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
                     }else if(e==10013){
                         frameTemplate="frame_element_template.xlsx";
-                        downloadFile("/api/ms/modeling/download","",frameTemplate);
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
                     }
                 }
             });
@@ -1849,9 +1849,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     '       </select>'+
                     '   </td>'+
                     '   <td>'+
-                    '       <select class="mining-type-add bd">'+
-                    '           <option value=10017>OEC</option>'+
-                    '           <option value=10018>GATE</option>'+
+                    '       <select class="mining-type-add bd" disabled="disabled">'+
+                    '           <option value=10017>NLP</option>'+
+                    /*'           <option value=10017>OEC</option>'+
+                    '           <option value=10018>GATE</option>'+*/
                     '       </select>'+
                     '   </td>'+
                     '   <td><input style="width: 200px;" type="text" class="input_text ele-asked-add" value="'+$scope.vm.elementAskContentArray[i]+'" disabled="disabled"/></td>'+
@@ -2059,9 +2060,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         '       </select>'+
                         '   </td>'+
                         '   <td>'+
-                        '       <select class="mining-type-add bd">'+
-                        '           <option value=10017>OEC</option>'+
-                        '           <option value=10018>GATE</option>'+
+                        '       <select class="mining-type-add bd" disabled="disabled">'+
+                        '           <option value=10017>NLP</option>'+
+                        /*'           <option value=10017>OEC</option>'+
+                        '           <option value=10018>GATE</option>'+*/
                         '       </select>'+
                         '   </td>'+
                         '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+

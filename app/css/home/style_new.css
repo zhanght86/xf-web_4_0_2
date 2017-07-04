@@ -401,11 +401,25 @@
 
 /*聊天知识库*/
 .chatKnowBase .webuploader-pick{height:30px;line-height:17px;}
-/*知识新增弹窗样式*/
+/*指定相关知识样式*/
 .knowPopup{}
-.knowPopup .listItem{position: absolute; left: 100px;z-index: 2;height: 200px;overflow: auto ;width:279px;}
+.knowPopup .listItem{position: absolute; left: 100px;z-index: 2;max-height: 200px;overflow: auto ;width:279px;}
 .knowPopup .listItem li{width: 100%; cursor:pointer;background: #eae8e8;padding-left:10px;box-sizing:border-box;line-height: 26px;}
 .knowPopup .listItem li:hover{background:#dcdbdb;}
+
+.knowledgeList .specify_know_ul,.knowledgeFactor .specify_know_ul{position: absolute;
+    left: 91px;z-index: 2;max-height: 200px;width:380px;overflow: scroll ;box-sizing: border-box;background:#e1e1e1;}
+.knowledgeList .specify_know_ul li,.knowledgeFactor .specify_know_ul li{width: 100%;
+    cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px}
+
 /*参数设置*/
 .parameterSetting .jqrsz-item2{border-top:0;padding:0;margin-top:0;}
+/*总览*/
+
+.custOver .selectall_a, .markOver .selectall_a{width:23px;height:24px;display:inline-block;margin-top:13px;}
+.custOver .selectall_a1,.markOver .selectall_a1{background:url(../../images/images/my-checkbox.png) no-repeat;}
+.custOver .selectall_a2,.markOver .selectall_a2{background:url(../../images/images/my-checkbox-on.png) no-repeat;}
+
+
+
 

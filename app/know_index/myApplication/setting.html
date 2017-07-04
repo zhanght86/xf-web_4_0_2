@@ -4,7 +4,10 @@
         <div class="l-aside fl">
             <div class="aside-hd tac">
                 <!--<img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>-->
-                <img class="hd-img" ng-src="/img/{{vm.robotHead}}"/>
+                <div style="width:110px;height:110px;overflow: hidden;border-radius:50%;margin:0 auto;border:3px solid #fff;">
+                    <!--<img class="hd-img" src="../../images/touxiang4.png"/>-->
+                    <img class="hd-img" ng-src="/img/{{vm.robotHead}}"/>
+                </div>
                 <!--<span class="hd-name ellipsis">{{vm.robotName}}</span>-->
                 <span class="hd-name ellipsis">{{applicationName}}</span>
             </div>
