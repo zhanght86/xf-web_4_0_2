@@ -31,7 +31,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             function(data) {
                 console.log( $scope.vm.applicationId) ;
                 if(data.data){
-                    console.log(data.data)
+                    console.log(data.data);
                     $scope.vm.listDimension = data.data;
                     $scope.vm.listDimensionUpBack = {"id":[],"name":[]} ;
                     angular.forEach(data.data,function(item){
@@ -48,7 +48,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             function(data) {
                 if(data.data){
                     $scope.vm.channelList = data.data;
-                    $scope.vm.channel=data.data[0].channelCode ;
+                    $scope.vm.channel=data.data[0].channelCode ;        //初始化渠道为第一个选项；
                 }
             }, function(error) {
                 console.log(error);
@@ -118,7 +118,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             $scope.vm.channel= $scope.vm.channelList[0].channelCode ;
             $scope.vm.listDimension =  angular.copy($scope.vm.listDimensionUpBack) ;
             $scope.vm.dimensionArray =  {"id":[],"name":[]};
-
+            console.log($scope.vm.listDimension);
         }
         //文本域自动获取焦点；
         function txtFocus(){
