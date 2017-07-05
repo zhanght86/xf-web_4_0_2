@@ -46,7 +46,7 @@
                     </select>
                     <span >
                         <span class="">渠道：</span>
-                        <label class="mr-10" ng-repeat="channel in vm.channelList"><input type="radio" name="channel" ng-click="vm.channel=channel.channelCode"/> {{channel.channelName}}</label>
+                        <label class="mr-10" ng-repeat="channel in vm.channelList"><input type="radio" name="channel"  ng-model="vm.channel" ng-value="channel.channelCode"/> {{channel.channelName}}</label>
                     </span>
                 </div>
                 <!--<div class="framework mb-10 cl" style="min-height:25px;padding-left:100px;">-->
@@ -74,8 +74,14 @@
                             <div class="tc" ng-if="$index!=vm.result.flowInfo.length-1" style="font-size:30px;color:green;margin-top:10px;">↓</div>
                         </div>
                         <span class="flow_span L ml-10 mr-10">-</span>
-                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>
-                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>
+                        <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>-->
+                        <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>-->
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">
+                            <div ng-repeat="i in v.stepInfo.split('\n')">{{i}}</div>
+                        </div>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">
+                            <div ng-repeat="i in v.stepInfo.split('\n')">{{i.substring(0,(i.length-1))}}</div>
+                        </div>
                     </li>
 
                 </ul>

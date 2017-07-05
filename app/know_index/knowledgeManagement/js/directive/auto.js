@@ -16,7 +16,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             '<i class="miles-remove" ng-click="removeItem($index,val)">x</i>' +
             '<span>{{val}}</span>' +
         '</div>' +
-        '<input class="miles-autoInput L"  id="input" name="input" ng-focus="flag=true" type="text"/>' +
+        '<input class="miles-autoInput L" style="width:100%;" id="input" name="input" ng-focus="flag=true" type="text"/>' +
         '</div>' +
         '<label for="input"><ul ng-if="source.name&&source.name.length" class="miles-dropDown" ng-show="flag">' +
         '<li class="miles-item" ng-repeat="item in source.name track by $index" ng-click="addItem($index,item)">{{item}}</li>'+
