@@ -217,8 +217,8 @@
                                 </div>
                                 <div>
                                     <div class="mb-10" style="position: relative;">
-                                        <span>指定相关知识:</span>
-                                        <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:380px;">
+                                        <span class="mr-5">指定相关知识 :</span>
+                                        <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:380px;padding-left: 10px;">
                                         <ul class="listItem specify_know_ul pd-5" ng-if="vm.appointRelativeList.length" >
                                             <li ng-repeat="item in vm.appointRelativeList track by $index"
                                                 ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>

@@ -3,14 +3,16 @@
  * For  浮点数保留
  */
 angular.module('knowledge_static_web').filter('floatFilter',function () {
-    return function(val){
-            var regu = "^([0-9]*[.0-9])$"; // 小数测试
-            var re = new RegExp(regu);
-            if (val.test(re) != -1){
-                console.log(val.search(re))
-                //return val.substring(0,)
-            }else{
-                return true
-            }
+    return function(val , length){
+         var length = length?length+1:3 ;
+         var val = new String(val) ;
+         var index = val.indexOf(".") ;
+        var result ;
+        if(index!=-1){
+            result = Number(val.substring(0,index+length))
+        }else{
+            result = Number("val")
+        }
+        return result ;
     }
-})
+}) ;
