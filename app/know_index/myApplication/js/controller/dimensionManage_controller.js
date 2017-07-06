@@ -46,10 +46,21 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
                 userId:$scope.vm.userId,
-                applicationId:$scope.vm.applicationId
+                applicationId:$scope.vm.applicationId,
+                dimensionName: $scope.vm.getDimension,
+                dimensionParentId: 0
             },function(data){
               console.log(data);
                 if(data.status == 10005){
+                    $scope.vm.listData = "";
+                    $scope.vm.listDataTotal = 0;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: 0, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8,//分页框数量
+                    };
+                    $scope.$apply();
                     layer.msg("查询到记录为空！");
                     return;
                 }

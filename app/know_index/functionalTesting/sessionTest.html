@@ -77,10 +77,10 @@
                         <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>-->
                         <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>-->
                         <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">
-                            <div ng-repeat="i in v.stepInfo.split('\n')">{{i}}</div>
+                            <div ng-repeat="i in v.stepInfo.split('\n') track by $index">{{i}}</div>
                         </div>
                         <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">
-                            <div ng-repeat="i in v.stepInfo.split('\n')">{{i.substring(0,(i.length-1))}}</div>
+                            <div ng-repeat="i in v.stepInfo.split('\n') track by $index">{{i.substring(0,(i.length-1))}}</div>
                         </div>
                     </li>
 
