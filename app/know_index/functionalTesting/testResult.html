@@ -41,12 +41,11 @@
                         <tr>
                             <th class="bold" width="3%"><input type="checkbox" class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/></th>
                             <th class="bold" width="10%">测试问法</th>
-                            <th class="bold" width="7%">标签</th>
                             <th class="bold" width="11%">知识标题</th>
                             <th class="bold" width="11%">匹配知识</th>
                             <th class="bold" width="6%">渠道</th>
-                            <!--<th class="bold" width="7%">标签</th>-->
-                            <th class="bold" width="7%">匹配情况</th>
+                            <th class="bold" width="7%">标签</th>
+                            <th class="bold" width="7%">回答类型</th>
                             <th class="bold" width="7%">回答情况</th>
                             <th class="bold" width="10%">答案</th>
                             <th class="bold" width="6%">相似度</th>
@@ -57,14 +56,13 @@
                         <tr ng-repeat="v in vm.listData">
                             <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.testResultId)"  ng-click="vm.selectSingle(v.testResultId)"/></td>
                             <td>{{v.possibleKnowledge}}</td>
-                            <td ng-if="v.tags == 'null'"></td>
-                            <td ng-if="v.tags != 'null'">{{v.tags.substring(1,v.tags.length-1)}}</td>
                             <td>{{v.knowledgeTitle}}</td>
                             <td ng-if="v.matchKnowledge == 'null'"></td>
                             <td ng-if="v.matchKnowledge != 'null'">{{v.matchKnowledge}}</td>
                             <td>{{v.channelName}}</td>
                             <!--<td>{{v.tags}}</td>-->
-
+                            <td ng-if="v.tags == 'null'"></td>
+                            <td ng-if="v.tags != 'null'">{{v.tags.substring(1,v.tags.length-1)}}</td>
                             <td ng-if="v.answerType==40001">匹配</td>
                             <td ng-if="v.answerType==40002">不匹配</td>
 

@@ -4,8 +4,100 @@
  * info  控制器嵌套
  */
 knowledge_static_web.controller('ApplicationController',
-    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS','$state','localStorageService','$stateParams','$sce','$window',"KnowDocService",
-        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,localStorageService,$stateParams,$sce,$window,KnowDocService) {
+    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',
+        '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer",
+        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,
+                  localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer) {
+     /***************************************************************  MASTER   **************************************************************************************/
+            //Name  master
+            //For   下游调用
+            $scope.master = {
+                getDimensions : getDimensions ,
+                getChannels : getChannels ,
+                isBotRepeat : isBotRepeat // 验证Bot 是否重复
+           } ;
+            //獲取纬度
+            function getDimensions(){
+                var dimensions = [] ;
+                knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
+                    function(data) {
+                        if(data.data){
+                            dimensions = data.data ;
+                            //$scope.vm.dimensions = data.data;
+                            //$scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+                        }
+                    }, function(error) {
+                        console.log(error)
+                    });
+                return dimensions ;
+            }
+            //获取渠道
+            function getChannels(){
+                var  channels = []
+                knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
+                    function(data) {
+                        if(data.data){
+                           channels = data.data
+                        }else{
+                            return []
+                        }
+                    }, function(error) {
+                        console.log(error) ;
+                    });
+                return   channels ;
+            }
+
+
+            function isBotRepeat(id,path,type,allBot){
+                //className  classificationId  classificationType(不推送)
+                //重复 提示   不重复返回bot对象
+                // 校验对象  className
+                var result = false ;    //返回對象
+                var len = allBot.length;  //所有bot 長度
+                var obj = {             //定义bot对象
+                    "className" : path,
+                    "classificationId" : id,
+                    "classificationType" : type?type:67
+                };
+
+                if(len){                 //需要验证
+                    angular.forEach(allBot,function(item){
+                        console.log(item.className==path) ;
+                        angular.forEach(item.className,function(name,index){
+                            if(name !=path[index]){
+                                len-=1
+                            }
+                        })
+                    });
+                    if(len!=0){   //有重复
+                        layer.msg("添加分类重复");
+                    }
+
+                }else{   //不需要验证
+                    result = obj
+                }
+                return result;
+            }
+
+  /***********************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             $scope.currentUser = null;
             $scope.isAuthorized = AuthService.isAuthorized;
             $scope.currentPage = 1;

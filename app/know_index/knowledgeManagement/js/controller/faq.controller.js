@@ -604,6 +604,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                                 $scope.$apply(function(){
                                     $scope.vm.limitSave = false ;
                                 });
+                            }else if( data.status == 10002  ){
+                                layer.msg("标题重复，请返回修改") ;
+                                $timeout.cancel(limitTimer) ;
+                                $scope.$apply(function(){
+                                    $scope.vm.limitSave = false ;
+                                });
                             }
                         }, function (err) {
                             $timeout.cancel(limitTimer) ;

@@ -1,6 +1,7 @@
 # angular-seed — the seed for AngularJS apps
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
-information :
+AUTOHR : MILES ;
+INFOMATION : 
  开发规则
 @1 命名方式 :
   文件名 (文件夹  统一驼峰式)
@@ -60,3 +61,7 @@ layer api
         //        btn: ['明白了', '知道了']
         //    });
         //});
+修改记录  2017/7/5
+            1 .知识bot 分发两种   type 作为不推送内容 可以忽略(标题67  bot 68)
+               校验对象由classificationId--->>>>className
+            2 . applicationCtr master  添加下游方法
