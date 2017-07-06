@@ -819,7 +819,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.$apply(function(){
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
                             $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                            console.log(data.data.knowledgeTitleTagList)
+                            console.log(data.data.knowledgeTitleTagList) ;
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
                                 var obj = {
@@ -827,7 +827,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                     "classificationId" : item.id ,
                                     "classificationType" : item.type
                                 };
-                                $scope.vm.botClassfy.push(obj);
+                                //botClassfy
+                                $scope.vm.botClassfy=new Array(obj);
                                 $scope.vm.frameCategoryId = item.id;
                             });
                         });

@@ -209,14 +209,15 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    //console.log(data);
                     var extensionQuestionList = [],
                         frameQuestionTagList = [];
                     var obj = {};
                     if (data.data[0].elements) {
                         angular.forEach(data.data[0].elements, function (item, index) {
-                                obj.extensionQuestionType = 60;   //61
-                                obj.extensionQuestionTitle = data.data[0].frameTitle;
+                                obj={
+                                    "extensionQuestionType": 60 ,  //61
+                                    "extensionQuestionTitle": data.data[0].frameTitle
+                                } ;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
                         });
@@ -231,40 +232,21 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         // 获取Bot全路径
         function getBotFullPath(id){
-            //console.log(id ,$scope.vm.creatSelectBot) ;
             httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
-                //console.log(data) ;
                 if(data.status = 10000){
-                    var len = $scope.vm.creatSelectBot.length;
-                    var obj = {};
-                    if(len){
-                        angular.forEach($scope.vm.creatSelectBot,function(item){
-                            if(item.classificationId!=id){
-                                len-=1
-                            }
-                        });
-                        if(len==0){
-                            obj.className = data.categoryFullName.split("/");
-                            obj.classificationId = id ;
-                            obj.classificationType = 1;
-                        }else{
-                            layer.msg("添加分类重复");
-                            return false
+                    var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
+                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                    $scope.$apply(function(){
+                        $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                        if(botResult != false){
+                            $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                            $scope.vm.botFullPath= botResult;
                         }
-                    }else{
-                        obj.className = data.categoryFullName.split("/");
-                        obj.classificationId = id ;
-                        //obj.classificationType = 1;
-                    }
-                    $scope.vm.knowledgeBotVal = obj.className.join("/");
-                    $scope.vm.botFullPath=obj ;
-                    $scope.$apply()
+                    });
                 }
-            },function(error){
-                console.log(error)
-            });
+            },function(error){console.log(error)});
         }
         // 知识文档分类回调
         function knowledgeClassifyCall() {
@@ -721,7 +703,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //根據 標題 生成 bot 跟 扩展问
         function getBotAndExtensionByTitle(){
             if($scope.vm.title){
-                getExtension($scope.vm.title,"60",1) ; //生成扩展问
                 httpRequestPost("/api/ms/conceptKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
                     "applicationId" : APPLICATION_ID
@@ -731,17 +712,19 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                         $scope.vm.titleTip = "知识标题重复";
                         $scope.$apply()
                     }else if(data.status == 200){
+                        getExtension($scope.vm.title,"60",1) ; //生成扩展问
                         $scope.$apply(function(){
+                            //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
-                            $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                            //添加校验是否添加校验  获取所有bot 验证是否重复
+                            var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ;
+                            $scope.vm.botClassfy = [];   //reset 标题生成bot
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
-                                var obj = {
-                                    "className" : item.fullPath ,
-                                    "classificationId" : item.id ,
-                                    "classificationType" : item.type
-                                };
-                                $scope.vm.botClassfy.push(obj);
+                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
+                                if(botResult != false){
+                                    $scope.vm.botClassfy.push(botResult);
+                                }
                                 $scope.vm.frameCategoryId = item.id;
                             });
                         });

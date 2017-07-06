@@ -291,6 +291,9 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
 
         //编辑应用参数
         function editApplication(){
+            if(applicationParamentValidate()==false){
+                return;
+            }
             httpRequestPost("/api/application/application/saveApplicationSetting",{
                 "applicationId": $scope.app.applicationId,
                 "settingCommentOn": $scope.app.settingCommentOn,
@@ -314,6 +317,48 @@ angular.module('myApplicationSettingModule').controller('robotSettingController'
             },function(){
                 layer.msg("保存失敗");
             })
+        }
+
+        /**
+         * 应用部分参数验证
+         */
+        function applicationParamentValidate(){
+            var flag = true;
+            if(!isPositiveInteger($scope.app.settingRecommendNumber)){
+                $("#settingRecommendNumber").attr("style","display:block;");
+                flag = false;
+            }else{
+                $("#settingRecommendNumber").attr("style","display:none;");
+            }
+            if(!isPositiveInteger($scope.app.settingRelateNumber)){
+                $("#settingRelateNumber").attr("style","display:block;");
+                flag = false;
+            }else{
+                $("#settingRelateNumber").attr("style","display:none;");
+            }
+            //if(!isPositiveInteger($scope.app.settingDataTimeoutLimit)){
+            //    layer.msg("获取数据时间必须为正整数!");
+            //    flag = false;
+            //}
+            if(!isThreshold($scope.app.settingUpperLimit) || $scope.app.settingUpperLimit<$scope.app.settingLowerLimit){
+                $("#settingUpperLimit").attr("style","display:block;");
+                flag = false;
+            }else{
+                $("#settingUpperLimit").attr("style","display:none;");
+            }
+            if(!isThreshold($scope.app.settingLowerLimit) || $scope.app.settingLowerLimit>$scope.app.settingUpperLimit){
+                $("#settingLowerLimit").attr("style","display:block;");
+                flag = false;
+            }else{
+                $("#settingLowerLimit").attr("style","display:none;");
+            }
+            if(!isThreshold($scope.app.settingGreetingThreshold)){
+                $("#settingGreetingThreshold").attr("style","display:block;");
+                flag = false;
+            }else{
+                $("#settingGreetingThreshold").attr("style","display:none;");
+            }
+            return flag;
         }
 
         //开关
