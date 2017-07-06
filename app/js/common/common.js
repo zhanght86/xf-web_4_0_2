@@ -586,6 +586,32 @@ function isHtmlLabel(str){
     }
     return reg.test(str);
 }
+/**
+ * 校验是否是阈值类型值
+ * 大于等于0小于等于1
+ * @param value
+ */
+function isThreshold(value){
+    var r = /^\d+(\.\d+)?$/;
+    if(!r.test(value)){
+        return false;
+    }
+    if(value>1){
+        return false;
+    }
+    return true;
+}
+/**
+ * 校验是否是正整数
+ * @param value
+ */
+function isPositiveInteger(value){
+    var r = /^[0-9]*[1-9][0-9]*$/;
+    if(!r.test(value)){
+        return false;
+    }
+    return true;
+}
 
 function initUpload(url){
     (function ($) {
