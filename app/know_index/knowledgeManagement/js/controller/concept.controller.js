@@ -225,9 +225,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     }
                     $scope.$apply();
                 }
-            }, function (error) {
-                console.log(error)
-            });
+            }, function (error) {console.log(error)});
         }
 
         // 获取Bot全路径
