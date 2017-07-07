@@ -23,11 +23,11 @@
             <div class="list_facContent_L" style="width:100px;margin-top:7px;">打标结果：</div>
             <div  >
                 <div class="bd pd-10" style="min-height:200px;max-height:300px;overflow:auto;" id="solution">
-                    <div class="c-red bold">标准问法：
+                    <div class="c-red bold mb-10">标准问法：
                         <!--{{vm.answerRes.standardQueryResult}}-->
                         <span ng-repeat="v in vm.answerRes.standardQueryResult">[ {{v.tagList.join(',')}} ]</span>
                     </div>
-                    <div ng-repeat="v in vm.answerRes.comparisonResult">测试问法{{$index+1}}:
+                    <div class="mb-10" ng-repeat="v in vm.answerRes.comparisonResult">测试问法{{$index+1}}:
 
                                 <span ng-repeat="i in v.wordTagResultList" ng-class="">
                                     [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,vm.answerRes.standardQueryResult)?'c-red':'c-green'">{{val}}<i ng-if="$index!=i.tagList.length-1">，</i></span>]
