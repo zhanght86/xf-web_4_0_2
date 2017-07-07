@@ -151,7 +151,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
                 "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-                "knowledgeUpdater": $scope.vm.knowledgeCreator,        //作者默认值null
+                "knowledgeUpdate": $scope.vm.knowledgeCreator,        //作者默认值null
                 "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
                 "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
@@ -199,7 +199,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 $scope.vm.sceneIds = [],						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 $scope.vm.knowledgeTitle = null,         //知识标题默认值null
                 $scope.vm.knowledgeContent = null,        //知识内容默认值null
-                $scope.vm.knowledgeUpdater = null,        //作者默认值null
+                $scope.vm.knowledgeUpdate = null,        //作者默认值null
                 $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
                 $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
                 $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
@@ -253,7 +253,7 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
                 "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-                "knowledgeUpdater": $scope.vm.knowledgeCreator,        //作者默认值null
+                "knowledgeUpdate": $scope.vm.knowledgeCreator,        //作者默认值null
                 "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
                 "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
