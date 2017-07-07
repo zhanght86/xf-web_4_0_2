@@ -160,7 +160,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList == null ? [] : item.knowledgeRelevantContentList  ;  //业务扩展问
+
                 //console.log(obj)
             });
             //
@@ -214,15 +215,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
+                    console.log(data);
                     var  extensionQuestionList = [] ,
                         frameQuestionTagList = [];
                     var obj = {} ;
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item,index){
-                                obj={
-                                    "extensionQuestionType": 60 ,  //61
-                                    "extensionQuestionTitle": data.data[0].frameTitle
-                                } ;
+                                obj.extensionQuestionType = 60;   //61
+                                obj.extensionQuestionTitle = data.data[0].frameTitle;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
                         });
@@ -238,23 +238,38 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
-                    //添加校验是否添加校验
-                    var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
-                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
-                    $scope.$apply(function(){
-                        $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
-                        if(botResult != false){
-                            $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
-                            $scope.vm.botFullPath= botResult;
+                    var len = $scope.vm.creatSelectBot.length;
+                    var obj = {};
+                    if(len){
+                        angular.forEach($scope.vm.creatSelectBot,function(item){
+                            if(item.classificationId!=id){
+                                len-=1
+                            }
+                        });
+                        if(len==0){
+                            obj.className = data.categoryFullName.split("/");
+                            obj.classificationId = id ;
+                            obj.classificationType = 1;
+                        }else{
+                            layer.msg("添加分类重复");
+                            return false;
                         }
-                    });
+                    }else{
+                        obj.className = data.categoryFullName.split("/");
+                        obj.classificationId = id ;
+                        //obj.classificationType = 1;
+                    }
+                    $scope.vm.knowledgeBotVal = obj.className.join("/");
+                    $scope.vm.botFullPath=obj;
+                    $scope.$apply();
                 }
-            }
-        )}
+            });
+        }
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             var title = oldWord.extensionQuestionTitle ;
             var weight = oldWord.extensionQuestionType ;
+            //console.log(oldWord);
             httpRequestPost("/api/ms/listKnowledge/checkFrameTag",{
                 "applicationId": APPLICATION_ID,
                 "extensionQuestionList" : extensionQuestionList,
@@ -289,8 +304,49 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.$apply();
                     }
                 }
+            }, function () {
+                //layer.msg("err or err")
             });
         }
+        //// 擴展問深层检验
+        //function checkHeighExtension(item,extension){
+        //    if(!extension.length){
+        //        return false
+        //    }else{
+        //        //获取长度
+        //        var valItem = [] ;   //获取所有标签
+        //        angular.forEach(item,function(val){
+        //            angular.forEach(val.extensionQuestionTagList,function(tag){
+        //                if(!tag.exist){   //标签存在情况下
+        //                    valItem.push(tag.tagName);
+        //                }
+        //            })
+        //        });
+        //        var lenExtension = extension.length ;
+        //        angular.forEach(extension,function(item){
+        //            var lenItem = valItem.length ;
+        //            angular.forEach(item.extensionQuestionTagList,function(tag){
+        //                if((!tag.exist) && (valItem.inArray(tag.tagName))){   //标签存在情况下
+        //                    lenItem-=1 ;
+        //                    console.log(tag.tagName)
+        //                }
+        //            }) ;
+        //            if(lenItem == 0){    //重複
+        //                return true ;
+        //            }else{
+        //                lenExtension-=1 ;
+        //            }
+        //        }) ;
+        //        console.log(lenExtension,valItem);
+        //        if(lenExtension != extension.length){
+        //            console.log("use --- success") ;
+        //            return false
+        //        }else{
+        //            return true
+        //        }
+        //    }
+        //}
+
         //手动添加扩展问
         function getExtension(title,weight,source){
             //source  0 默认  1 标题
@@ -393,6 +449,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         getBotRoot();
         //点击 root 的下拉效果
         function  knowledgeBot(ev){
+            console.log(1) ;
             $timeout(function(){
                 angular.element(".rootClassfy").slideToggle();
             },50)
@@ -547,6 +604,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 });
             }
         }
+
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
@@ -564,17 +622,16 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.$apply();
                     }else if(data.status == 200){
                         $scope.$apply(function(){
-                            //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
-                            //添加校验是否添加校验  获取所有bot 验证是否重复
-                            var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ;
-                            $scope.vm.botClassfy = [];   //reset 标题生成bot
+                            $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
-                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
-                                if(botResult != false){
-                                    $scope.vm.botClassfy.push(botResult);
-                                }
+                                var obj = {
+                                    "className" : item.fullPath ,
+                                    "classificationId" : item.id ,
+                                    "classificationType" : item.type
+                                };
+                                $scope.vm.botClassfy.push(obj);
                                 $scope.vm.frameCategoryId = item.id;
                             });
                         });
@@ -584,6 +641,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 $scope.vm.titleTip = "知识标题不能为空"
             }
         }
+
         //  主页保存 获取参数
         function getParams(){
            var params =  {

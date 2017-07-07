@@ -120,23 +120,13 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
             // }
         },
         watch: {
-            //livereload: {
-            //
-            //    options: {livereload: true},
-            //    files: ['dest/**/*.js','know_index/**/*.html']
-            //
-            //} ,
-            html: {
-                files: ['app/**/*.html'],
-                options: {livereload:true}
-            },
             javascript: {
                 files: ['app/know*/**/*.js'],
                 tasks: ['concat:allInOne', 'concat:othersInOne', 'uglify:buildrelease'],
                 options: {
                     spawn: true,
                     interrupt: true ,
-                    livereload:true
+                   //livereload:true
                 }
             },
             css: {
@@ -144,13 +134,13 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 tasks: ['concat:css', 'cssmin:css'],
                 options: {
                     spawn: true,
-                    livereload: true ,
+                    //livereload: true ,
                     interrupt: true
                 }
             }
         }
     });
-    grunt.loadNpmTasks('grunt-contrib-livereload');
+
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');

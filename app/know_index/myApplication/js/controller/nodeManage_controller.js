@@ -268,35 +268,50 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
 
         //禁用节点
         function disabledAndEnabledNode(nodeCode){
-            httpRequestPost("/api/application/node/disabledAndEnabledNode",{
-                "nodeCode": nodeCode
-            },function(data){
-                if(data.status==200){
-                    layer.msg(data.info);
-                    listNodeData(1);
-                }else{
-                    layer.msg("操作失败");
-                }
+            layer.confirm("确认禁用？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/node/disabledAndEnabledNode",{
+                    "nodeCode": nodeCode
+                },function(data){
+                    if(data.status==200){
+                        layer.msg(data.info);
+                        listNodeData(1);
+                    }else{
+                        layer.msg("操作失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
-
+                console.log("cancel");
+            });
         }
 
         //删除节点
         function deleteNode(nodeCode){
-            httpRequestPost("/api/application/node/deleteNode",{
-                "nodeCode": nodeCode
-            },function(data){
-                if(data.status==200){
-                    layer.msg("删除节点成功");
-                    listNodeData(1);
-                }else{
-                    layer.msg("删除节点失败");
-                }
+            layer.confirm("确认删除？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                httpRequestPost("/api/application/node/deleteNode",{
+                    "nodeCode": nodeCode
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("删除节点成功");
+                        listNodeData(1);
+                    }else{
+                        layer.msg("删除节点失败");
+                    }
+                },function(){
+                    layer.msg("请求失败");
+                });
             },function(){
-                layer.msg("请求失败");
-            })
+                console.log("cancel");
+            });
         }
 
         //从原有的子节点中删除子节点

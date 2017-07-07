@@ -9,9 +9,21 @@
                 <td width="50%" class="bold">服务地址</td>
             </tr>
             <tbody id="engineList">
+
             </tbody>
         </table>
     </div>
+    <!--<div class="page clearfix">
+        <span class="page_span ">上一页</span>
+        <a href="javascript:;" class="cura">1</a>
+        <a href="javascript:;">2</a>
+        <span class="page_span ">下一页</span>
+        <span>共<b class="page_b">12</b>页</span>
+        <span>跳转到</span>
+        <input type="text" class="page_txt">
+        <span>页</span>
+        <span class="go_span">GO</span>
+    </div>-->
     <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
     <div class="tc">
         <input type="button" value="确定" class="btn1 btn1_blue" ng-click="closeThisDialog(1)"/>
@@ -22,4 +34,6 @@
     .table1 td{border:1px solid #eee;text-align:center;font-size:14px;min-height:25px;padding:5px 0;}
     .ngdialog.ngdialog-theme-default .ngdialog-content{width:500px;}
 </style>
+<script>
 
+</script>
