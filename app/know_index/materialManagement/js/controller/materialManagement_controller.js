@@ -4,8 +4,8 @@
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
-    '$scope',"$state", "$cookieStore","$timeout","$location","$window",
-    function ($scope,$state,$cookieStore,$timeout,$location,$window) {
+    '$scope',"$state", "$cookieStore","$timeout","$location",
+    function ($scope,$state,$cookieStore,$timeout,$location) {
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             title : "" ,           //知识标题
@@ -89,11 +89,19 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
          * 知识导出
          */
         function exportExcel(){
-            var urlParams =
-                "?chatKnowledgeTopic="+$scope.vm.chatKnowledgeTopic+"&chatKnowledgeModifier="+$scope.vm.chatKnowledgeModifier+"&modifyTimeType="+$scope.vm.modifyTimeType +
-                "&knowledgeContent="+$scope.vm.chatQuestionContent;
-            var url = "/api/ms/chatKnowledge/exportExcel"+urlParams;//请求的url
-            $window.open(url,"_blank") ;
+            httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
+                "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
+                "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
+                "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
+                "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
+            },function(data){
+                if(data.status==500){
+                    layer.msg("导出失败")
+                }else{
+                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
+                }
+            },function(err){})
+
         }
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;

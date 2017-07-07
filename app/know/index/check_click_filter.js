@@ -4,11 +4,11 @@
  */
 'use strict';
 
-angular.module('know').filter('checkclick',['$location', function($location) {
+angular.
+module('know').
+filter('checkclick',['$location', function($location) {
     return function(item) {
             item.classtype = $location.absUrl().indexOf(item.url.split('.')[1]) > 0 ? "cur_li1" : "";
             return item.classtype;
     };
-}])
-
-;
+}]);

@@ -124,33 +124,23 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             httpRequestPost("/api/application/hotQuestion/getHotQuestionList",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId,
-                hotQuestionTitle: $scope.vm.hotQuestionTitle,
+                applicationId:$scope.vm.applicationId
             },function(data){
                 console.log(data);
-                if(data.status == 10005){
-                    $scope.vm.listData = "";
-                    $scope.vm.listDataTotal = 0;
-                    $scope.vm.paginationConf = {
-                        currentPage: index,//当前页
-                        totalItems: 0, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
-                    };
-                    $scope.$apply();
-                    layer.msg("没有查询到记录!");
-                }else{
-                    $scope.vm.listData = data.data.hotQuestionList;
-                    $scope.vm.listDataTotal = data.data.total;
-                    $scope.vm.listDataLength = data.data.total;
-                    $scope.vm.paginationConf = {
-                        currentPage: index,//当前页
-                        totalItems: data.data.total, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
-                    };
-                    $scope.$apply()
-                }
+                //if(data.status == 10005){
+                //    layer.msg("查询到记录为空");
+                //    return;
+                //}
+                $scope.vm.listData = data.data.hotQuestionList;
+                $scope.vm.listDataTotal = data.data.total;
+                $scope.vm.listDataLength = data.data.total;
+                $scope.vm.paginationConf = {
+                    currentPage: index,//当前页
+                    totalItems: data.data.total, //总条数
+                    pageSize: $scope.vm.pageSize,//第页条目数
+                    pagesLength: 8,//分页框数量
+                };
+                $scope.$apply()
             },function(){
                 layer.msg("请求失败")
             })

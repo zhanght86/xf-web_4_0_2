@@ -265,10 +265,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     var obj = {} ;
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item,index){
-                                obj={
-                                    "extensionQuestionType": 60 ,  //61
-                                    "extensionQuestionTitle": data.data[0].frameTitle
-                                } ;
+                                obj.extensionQuestionType = 60;   //61
+                                obj.extensionQuestionTitle = data.data[0].frameTitle;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
                         });
@@ -276,6 +274,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     }
                     $scope.$apply();
                 }
+            },function(){
+
             });
         }
 
@@ -285,16 +285,30 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
-                    //添加校验是否添加校验
-                    var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
-                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
-                    $scope.$apply(function(){
-                        $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
-                        if(botResult != false){
-                            $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
-                            $scope.vm.botFullPath= botResult;
+                    var len = $scope.vm.creatSelectBot.length;
+                    var obj = {};
+                    if(len){
+                        angular.forEach($scope.vm.creatSelectBot,function(item){
+                            if(item.classificationId!=id){
+                                len-=1
+                            }
+                        });
+                        if(len==0){
+                            obj.className = data.categoryFullName.split("/");
+                            obj.classificationId = id ;
+                            obj.classificationType = 1;
+                        }else{
+                            layer.msg("添加分类重复");
+                            return false
                         }
-                    });
+                    }else{
+                        obj.className = data.categoryFullName.split("/");
+                        obj.classificationId = id ;
+                        //obj.classificationType = 1;
+                    }
+                    $scope.vm.knowledgeBotVal = obj.className.join("/");
+                    $scope.vm.botFullPath=obj ;
+                    $scope.$apply()
                 }
             },function(){
 
@@ -697,7 +711,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     $scope.vm.tip = data.knowledgeBeRelatedOn; //在提示
                     $scope.vm.question = data.knowledgeRelatedQuestionOn;
                     $scope.vm.tail = data.knowledgeCommonOn;
-                    $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
+                    $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList == null ? [] : data.knowledgeRelevantContentList;
                     var callback = function () {
                         var obj = {};
                         obj.knowledgeContent = $scope.vm.newTitle;

@@ -32,7 +32,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                 //container: $('#filelist'),
                 multi_selection: true,
                 filters: {
-                    max_file_size: '50mb',
+                    max_file_size: '10mb',
                     mime_types: [{
                         title: "Know File",
                         extensions: "docx"
@@ -48,7 +48,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                                 templateId:$scope.targetId,
                                 requestId:"String",
                                 //设置用户信息
-                                userName: USER_LOGIN_NAME
+                                userName: USER_NAME
                             };
                             if ($scope.processMethod == true) {
                                 if (!$scope.targetId || $scope.targetId == null) {
@@ -68,7 +68,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                                     uploader.removeFile(uploader.files[i - 1]);
                                 }
                             }
-                            //$scope.$apply($scope.resetUploadPOJO());
+                            $scope.$apply($scope.resetUploadPOJO());
                         })
                     },
 
@@ -154,6 +154,10 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                                  layer.msg("请输入模板名称");
                                 return;
                             }
+                            if ($scope.vm.temName.length > 20) {
+                                 layer.msg("模板名称不能大于20字");
+                                return;
+                            }
                             if (!$scope.vm.temNameChecked) {
                                  layer.msg("模板名校验失败");
                                 return;
@@ -167,7 +171,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                                 "templateName": $scope.vm.temName,
                                 "requestId":"String",
                                 //此处设置上传用户信息
-                                "userId":USER_LOGIN_NAME
+                                "userId":USER_NAME
                             });
                             uploader.start() ;
                             return false;

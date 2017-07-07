@@ -64,12 +64,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             question : 1,
             tip : 1,
             tail : 1 ,
-
             appointRelative : "",
             appointRelativeList :[],
-            addAppoint  : addAppoint,
-            //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
+            addAppoint  : addAppoint,
             removeAppointRelative : removeAppointRelative,
             replaceType : 0,
 
@@ -475,7 +473,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.tip  = data.knowledgeBeRelatedOn; //在提示
                 $scope.vm.question = data.knowledgeRelatedQuestionOn;
                 $scope.vm.tail = data.knowledgeCommonOn;
-                $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
+                $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList == null ? [] : data.knowledgeRelevantContentList;
                 var callback = function(){
                     var obj = {};
                     obj.knowledgeContent = $scope.vm.newTitle;
@@ -600,12 +598,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
                             }else if (data.status == 500) {
                                 layer.msg("知识保存失败") ;
-                                $timeout.cancel(limitTimer) ;
-                                $scope.$apply(function(){
-                                    $scope.vm.limitSave = false ;
-                                });
-                            }else if( data.status == 10002  ){
-                                layer.msg("标题重复，请返回修改") ;
                                 $timeout.cancel(limitTimer) ;
                                 $scope.$apply(function(){
                                     $scope.vm.limitSave = false ;
