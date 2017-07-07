@@ -57,7 +57,7 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
          * 知识导出
          * @param index
          */
-        function exportExcel(){
+        function exportExcel(){ 
             var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:[];
             var urlParams =
                 "?applicationId="+APPLICATION_ID+"&sceneIds="+scenceId+"&knowledgeTitle="+$scope.vm.knowledgeTitle +
