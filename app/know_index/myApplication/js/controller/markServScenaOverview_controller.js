@@ -99,7 +99,6 @@ angular.module('knowledgeManagementModule').controller('markServScenaOverviewCon
             $scope.vm.heighSarch = false ;
         }
         function scan(item){
-
             var obj = {};
             obj.applicationId = APPLICATION_ID ;
             obj.knowledgeId = item.knowledgeId;
