@@ -15,5 +15,4 @@ angular.module('knowledge_static_web').filter('numberToWord', function () {
         }
         return result
     }
-
 });

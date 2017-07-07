@@ -1,41 +1,41 @@
 /**
  * Created by 41212 on 2017/4/28.
  */
-//SensitiveConcept(40, "Ãô¸Ğ¸ÅÄî"),
-//    StopConcept(41, "Í£ÓÃ¸ÅÄî"),
-//    ErrorCorrectionConcept(42, "¾À´í¸ÅÄî"),
-//    ThesaurusConcept(43, "Í¬Òå¸ÅÄî"),
-//    CollectiveConcept(44, "¼¯ºÏ¸ÅÄî"),
-//    BusinessConcept(45, "ÒµÎñ¸ÅÄî"),
-//    ForceSegmentConcept(46, "Ç¿ÖÆ·Ö´Ê¸ÅÄî"),
-//    SemanticExpressionConcept(47, "ÓïÒå±í´ïÊ½¸ÅÄî"),
+//    SensitiveConcept(40, "æ•æ„Ÿæ¦‚å¿µ"),
+//    StopConcept(41, "åœç”¨æ¦‚å¿µ"),
+//    ErrorCorrectionConcept(42, "çº é”™æ¦‚å¿µ"),
+//    ThesaurusConcept(43, "åŒä¹‰æ¦‚å¿µ"),
+//    CollectiveConcept(44, "é›†åˆæ¦‚å¿µ"),
+//    BusinessConcept(45, "ä¸šåŠ¡æ¦‚å¿µ"),
+//    ForceSegmentConcept(46, "å¼ºåˆ¶åˆ†è¯æ¦‚å¿µ"),
+//    SemanticExpressionConcept(47, "è¯­ä¹‰è¡¨è¾¾å¼æ¦‚å¿µ"),
 angular.module('knowledge_static_web').filter('classType', function () {
     return function (value) {
         switch(value){
             case 40 :
-                return "Ãô¸Ğ¸ÅÄî"
-            break;
+                return "æ•æ„Ÿæ¦‚å¿µ"
+                break;
             case 41 :
-                return "Í£ÓÃ¸ÅÄî"
-            break;
+                return "åœç”¨æ¦‚å¿µ"
+                break;
             case 42 :
-                return "¾À´í¸ÅÄî"
-            break;
+                return "çº é”™æ¦‚å¿µ"
+                break;
             case 43 :
-                return "Í¬Òå¸ÅÄî"
-            break;
+                return "åŒä¹‰æ¦‚å¿µ"
+                break;
             case 44 :
-                return "¼¯ºÏ¸ÅÄî"
-            break;
+                return "é›†åˆæ¦‚å¿µ"
+                break;
             case 45 :
-                return "ÒµÎñ¸ÅÄî"
-            break;
+                return "ä¸šåŠ¡æ¦‚å¿µ"
+                break;
             case 46 :
-                return "Ç¿ÖÆ·Ö´Ê¸ÅÄî"
-            break ;
+                return "å¼ºåˆ¶åˆ†è¯æ¦‚å¿µ"
+                break ;
             case 47 :
-                return "ÓïÒå±í´ïÊ½¸ÅÄî"
-            break
+                return "è¯­ä¹‰è¡¨è¾¾å¼æ¦‚å¿µ"
+                break
         }
 
     };
