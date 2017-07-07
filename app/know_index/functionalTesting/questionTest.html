@@ -30,7 +30,7 @@
                     <div ng-repeat="v in vm.answerRes.comparisonResult">测试问法{{$index+1}}:
 
                                 <span ng-repeat="i in v.wordTagResultList" ng-class="">
-                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">{{val}}<i ng-if="$index!=i.tagList.length-1">，</i></span>]
+                                    [<span ng-repeat="val in i.tagList" ng-class="vm.check(val,vm.answerRes.standardQueryResult)?'c-red':'c-green'">{{val}}<i ng-if="$index!=i.tagList.length-1">，</i></span>]
                                 </span>
                         <span > ; 相似度：{{v.similarity}}</span>
                     </div>
