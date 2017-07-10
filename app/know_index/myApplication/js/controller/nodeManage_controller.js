@@ -267,8 +267,8 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         }
 
         //禁用节点
-        function disabledAndEnabledNode(nodeCode){
-            layer.confirm("确认禁用？",{
+        function disabledAndEnabledNode(nodeCode,operator){
+            layer.confirm("确认"+operator+"？",{
                 btn:['确认','取消'],
                 shade:false
             },function(index){
