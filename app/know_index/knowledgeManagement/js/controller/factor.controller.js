@@ -806,7 +806,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 getExtension($scope.vm.title,"60",1) ; //生成扩展问
                 httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId": APPLICATION_ID
+                    "applicationId": APPLICATION_ID ,
+                    "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败

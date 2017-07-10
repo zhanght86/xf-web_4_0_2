@@ -7,6 +7,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
               knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
         $scope.vm = {
+            knowledgeId : "" ,
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -529,7 +530,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             if($scope.vm.title){
                 httpRequestPost("/api/ms/faqKnowledge/findClasssByKnowledgeTitle",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : APPLICATION_ID
+                    "applicationId" : APPLICATION_ID,
+                    "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
