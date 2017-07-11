@@ -843,6 +843,20 @@ knowledge_static_web
                     }
                 }
             })
+            //7.11-add
+            .state("applAnalysis.accessStatistics", {
+                url: "/accessStatistics",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/accessStatistics.html',
+                        controller: "accessStatisticsController"
+                    }
+                }
+            })
 
             //-----------------------
 
