@@ -34,9 +34,9 @@ angular.module('functionalTestModule').controller('batchTestController', [
             serviceId : "" ,
             channel:"",
             channelList : [] ,
-            getService : getService,
+            getService : getService
             //------------------------------渠道   服务end
-            initBatchTest :initBatchTest
+
 
         };
         //获取渠道
@@ -146,7 +146,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 }
                 timeout = $timeout(function () {
                     initBatchTest();
-                    alert('换页了');
                     showData(current);
                 }, 100);
             }
@@ -315,7 +314,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 $scope.vm.selectAllCheck = false;
             }else{
                 $scope.vm.deleteIds.push(id);
-                
+
             }
             if($scope.vm.deleteIds.length==$scope.vm.listData.length){
                 $scope.vm.selectAllCheck = true;
