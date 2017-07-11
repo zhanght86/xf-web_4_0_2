@@ -138,6 +138,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 pageSize:$scope.vm.pageSize,
                 applicationId:$scope.vm.applicationId
             },function(data){
+                initChatPageConfig();
                 console.log(data);
                 //if(data.status == 10005){
                 //    layer.msg("查询到记录为空");
@@ -164,6 +165,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
+                    initChatPageConfig();
                     getData(current);
                 }, 100)
             }
@@ -228,6 +230,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         },function(data){
                             //$state.reload();
                             if(data.status == 10013){
+                                initChatPageConfig();
                                 $scope.vm.selectAllCheck = false;
                                 $state.reload();
                                 layer.msg("删除成功");
@@ -357,6 +360,11 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     }
                 }
             });
+        }
+        function initChatPageConfig(){
+            $scope.vm.deleteIds=[];
+            $scope.vm.selectAllCheck = false;
+
         }
     }
 ]);

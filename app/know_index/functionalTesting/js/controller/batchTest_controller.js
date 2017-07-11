@@ -38,6 +38,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             getService : getService
             //------------------------------渠道   服务end
 
+
         };
         //获取渠道
         knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
@@ -75,6 +76,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 pageSize:$scope.vm.pageSize,
                 applicationId:$scope.vm.applicationId
             },function(data){
+
+                initBatchTest();
                 console.log(data);
                 if(data.status == 10005){
                     layer.msg("查询到记录为空",{time:1000});
@@ -144,10 +147,12 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     $timeout.cancel(timeout);
                 }
                 timeout = $timeout(function () {
+                    initBatchTest();
                     showData(current);
-                }, 0);
+                }, 100);
             }
         },true);
+
 
         //批量上传
         function uploadQuestion(callback){
@@ -172,7 +177,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
         //删除
         function deleteQuestion(callback){
-            if($scope.vm.deleteIds == 0){
+            if($scope.vm.deleteIds.length == 0){
                 layer.msg("请选择要删除的文件！",{time:1000});
                 return;
             }
@@ -190,7 +195,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                             ids :  $scope.vm.deleteIds
                         },function(data){
                             if(data.status == 10013){
-                                $scope.vm.selectAllCheck = false;
+                                initBatchTest();
+                                //$scope.vm.selectAllCheck = false;
                                 $state.reload();
                                 layer.msg("删除成功",{time:1000});
                             }else{
@@ -310,11 +316,18 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 $scope.vm.selectAllCheck = false;
             }else{
                 $scope.vm.deleteIds.push(id);
+
             }
             if($scope.vm.deleteIds.length==$scope.vm.listData.length){
                 $scope.vm.selectAllCheck = true;
             }
-            //console.log( $scope.vm.deleteIds);
+            console.log( $scope.vm.deleteIds);
+        }
+
+        //
+        function initBatchTest(){
+            $scope.vm.deleteIds = [] ;
+            $scope.vm.selectAllCheck = false;
         }
     }
 ]);
