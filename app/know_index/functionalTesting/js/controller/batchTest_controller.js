@@ -1,5 +1,6 @@
 /**
- * Created by 41212 on 2017/3/23.
+ * Created by mileS on 2017/3/23
+ * For  批量测试
  */
 
 angular.module('functionalTestModule').controller('batchTestController', [
@@ -64,8 +65,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             },function(){
                 console.log('请求失败');
             })
-        }
-
+        }   
         showData(1);
         //加载表格
         function showData(index){
@@ -78,18 +78,20 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 console.log(data);
                 if(data.status == 10005){
                     layer.msg("查询到记录为空",{time:1000});
-                    return;
                 }else{
-                    $scope.vm.listData = data.data.batchTestList;
-                    $scope.vm.listDataTotal = data.data.total;
-                    // $scope.vm.listDataLength = data.data.total;
-                    $scope.vm.paginationConf = {
-                        currentPage: index,//当前页
-                        totalItems: data.data.total, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8//分页框数量
-                    };
-                    $scope.$apply();
+                    $scope.$apply(function(){
+                        $scope.vm.deleteIds = [];
+                        $scope.vm.selectAllCheck = false;
+                        $scope.vm.listData = data.data.batchTestList;
+                        $scope.vm.listDataTotal = data.data.total;
+                        // $scope.vm.listDataLength = data.data.total;
+                        $scope.vm.paginationConf = {
+                            currentPage: index,//当前页
+                            totalItems: data.data.total, //总条数
+                            pageSize: $scope.vm.pageSize,//第页条目数
+                            pagesLength: 8//分页框数量
+                        };
+                    });
                 }
             },function(){
                 console.log('请求失败');

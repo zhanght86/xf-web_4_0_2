@@ -16,10 +16,9 @@
             <li>
                 <p  ng-repeat="item in vm.listData.extensionQuestions track by $index">
                     <span ng-class="$index!=0?'milesVh':''">概念扩展：</span>
-                    <span style="width: auto;background: #f1f1f1;" ng-repeat="val in item.extensionQuestionTagList track by $index">
-                        {{val.tagName}}
+                    <span style="width: auto;" >
+                        {{item.extensionQuestionTitle}}
                     </span>
-                    <span></span>
                 </p>
             </li>
             <li ng-class="vm.knowledgeType==101?'':'borderN'" style="border-bottom: 0">

@@ -4,9 +4,9 @@
  */
 angular.module('knowledgeManagementModule').controller('analyseTaskController', [
     '$scope', '$location', "$routeParams", "$interval", "$timeout", "ngDialog",
-    "KnowDocService","TemplateService","TipService",
+    "KnowDocService","TemplateService","TipService","$state",
     function ($scope, $location, $routeParams, $interval, $timeout, ngDialog,
-              KnowDocService,TemplateService,TipService) {
+              KnowDocService,TemplateService,TipService,$state) {
         $scope.vm = {
             searchName  : "" , //搜索条件 templateName
             templates : "" ,  //模板列表
@@ -65,6 +65,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
                 if(resource.status == 200){
                     $scope.vm.knowDocs = resource.data.objs ;
                     $scope.paginationConf.totalItems = resource.data.total;
+                    console.log( $scope.paginationConf.totalItems )
                 }
             })
         } ;
@@ -75,7 +76,7 @@ angular.module('knowledgeManagementModule').controller('analyseTaskController', 
             },function(resource){
                 if(resource.status == 200){
                     TipService.setMessage('删除成功!',"success");
-                    queryKnowDocList();
+                    $state.reload();
                 }
             })
         } ;

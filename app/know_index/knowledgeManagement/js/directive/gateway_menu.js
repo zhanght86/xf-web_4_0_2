@@ -20,7 +20,8 @@ knowledge_static_web.directive("gatewayMenu", function () {
     }
 });
 
-knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function ($timeout,$cookieStore) {
+knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
+    function ($timeout,$cookieStore,$state) {
     return {
         restrict: 'A',
         link: function ($scope, iElm, iAttrs, controller) {
@@ -74,15 +75,26 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
 
                     FilesAdded: function (up, files) {
                         plupload.each(files, function (file) {
+
+                                if(file.name.length>=24){
+                                    layer.msg("文件名称过长,请返回修改") ;
+                                    up.removeFile(file);
+                                }else{
+                                    //$scope.$apply(function(){
+                                        $('#file_container').append('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
+                                            '<span  class="name">' + file.name + '</span>' +
+                                            '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
+                                            '<span class="size"> (' + plupload.formatSize(file.size) + ') </span>' +
+                                            '</div>');
+                                    //}) ;
+                                    //if (up.files.length > 1) {
+                                    //    up.removeFile(file);
+                                    //}
+                                }
                             //document.getElementById('file_container').innerHTML += '<div class="file_con" id="' + file.id + '"style="overflow:hidden"><span  class="name">' + file.name + '</span><b class="progress">0%</b><span class="size"> (' + plupload.formatSize(file.size) + ') </span></div>';
-                            $('#file_container').append('<div class="file_con" id="' + file.id + '"style="overflow:hidden;padding: 0px;">' +
-                                                            '<span  class="name">' + file.name + '</span>' +
-                                                            '<b class="progress" style="font-size: 14px;line-height: 33px;margin-left: 15px; height: inherit; width: 40px;">0%</b>' +
-                                                            '<span class="size"> (' + plupload.formatSize(file.size) + ') </span>' +
-                                                        '</div>');
+
                         });
                     },
-
                     FilesRemoved: function (up, files) {
                         plupload.each(files, function (file) {
                             if (up.files.length <= 0) {
@@ -107,7 +119,8 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore", function 
                     },
 
                     FileUploaded: function (uploader, files, res) {
-                        $scope.vm.queryKnowDocList();
+                        $state.reload()
+                        //$scope.vm.queryKnowDocList();
                         $('#file_container').html('');
                         //$scope.vm.resetUploadPOJO();
                         $('.template_inpt').val("");
@@ -149,9 +162,12 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                 init: {
                     PostInit: function () {
                         $('#temupload').on("click",function () {
-
                             if ($scope.vm.temName == null || $scope.vm.temName == '' || !$scope.vm.temName) {
                                  layer.msg("请输入模板名称");
+                                return;
+                            }
+                            if ($scope.vm.temName.length > 20) {
+                                 layer.msg("模板名称不能大于20字");
                                 return;
                             }
                             if (!$scope.vm.temNameChecked) {

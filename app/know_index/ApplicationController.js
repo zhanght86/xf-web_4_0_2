@@ -50,8 +50,6 @@ knowledge_static_web.controller('ApplicationController',
                     });
                 return   channels ;
             }
-
-
             function isBotRepeat(id,path,type,allBot){
                 //className  classificationId  classificationType(不推送)
                 //重复 提示   不重复返回bot对象
@@ -63,20 +61,15 @@ knowledge_static_web.controller('ApplicationController',
                     "classificationId" : id,
                     "classificationType" : type?type:67
                 };
-
-                if(len){                 //需要验证
+                // 集合转为string 便于比较  并不改变原数组
+                var backUpPath = angular.copy(path).join("/") ;
+                if(len){                  //需要验证
                     angular.forEach(allBot,function(item){
-                        console.log(item.className==path) ;
-                        angular.forEach(item.className,function(name,index){
-                            if(name !=path[index]){
-                                len-=1
-                            }
-                        })
+                        if(item.className.join("/") == backUpPath){
+                            result = false ;
+                            return  layer.msg("添加分类重复");
+                        }
                     });
-                    if(len!=0){   //有重复
-                        layer.msg("添加分类重复");
-                    }
-
                 }else{   //不需要验证
                     result = obj
                 }

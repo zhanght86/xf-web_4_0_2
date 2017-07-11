@@ -237,9 +237,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
                         botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
                     $scope.$apply(function(){
-                        $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                        console.log(data) ;
+                        $scope.vm.knowledgeBotVal = data.categoryFullName;
                         if(botResult != false){
-                            $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                            //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
                             $scope.vm.botFullPath= botResult;
                         }
                     });
