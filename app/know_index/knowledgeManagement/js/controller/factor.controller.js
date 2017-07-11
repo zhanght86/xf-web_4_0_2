@@ -644,6 +644,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         });
         //添加BOT 分类  ==== 点击bot分类的 加号
         function botSelectAdd(){
+            console.log($scope.vm.botFullPath);
             if($scope.vm.botFullPath){
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
