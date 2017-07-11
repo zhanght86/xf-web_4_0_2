@@ -5,17 +5,21 @@
  */
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',
-        '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer",
+        '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer","$cookieStore",
         function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,
-                  localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer) {
-     /***************************************************************  MASTER   **************************************************************************************/
-            //Name  master
-            //For   下游调用
+                  localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
+/***************************************************************  MASTER   **************************************************************************************/
+                //Name  master
+                //For   下游调用
             $scope.master = {
-                getDimensions : getDimensions ,
-                getChannels : getChannels ,
-                isBotRepeat : isBotRepeat // 验证Bot 是否重复
-           } ;
+                //const for Downstream
+                    headImage : $cookieStore.get("robotHead") ,
+                    applicationName : APPLICATION_NAME,
+                //method for Downstream
+                    getDimensions : getDimensions ,
+                    getChannels : getChannels ,
+                    isBotRepeat : isBotRepeat // 验证Bot 是否重复
+            } ;
             //獲取纬度
             function getDimensions(){
                 var dimensions = [] ;
@@ -37,7 +41,7 @@ knowledge_static_web.controller('ApplicationController',
                 knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
-                           channels = data.data
+                            channels = data.data
                         }else{
                             return []
                         }
@@ -79,7 +83,7 @@ knowledge_static_web.controller('ApplicationController',
                 return result;
             }
 
-  /***********************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************/
 
 
 
@@ -170,10 +174,10 @@ knowledge_static_web.controller('ApplicationController',
              * 非空判断
              */
             $scope.notEmpty = function (param) {
-               if(param!=null && param!=undefined && $.trim(param)!=''){
-                   return true;
-               }
-               return false;
+                if(param!=null && param!=undefined && $.trim(param)!=''){
+                    return true;
+                }
+                return false;
             };
 
             /**
@@ -202,7 +206,7 @@ knowledge_static_web.controller('ApplicationController',
             /**
              * 格式化时间
              */
-            // 格式化时间
+                // 格式化时间
             $scope.format = function(time, format){
                 var t = new Date(time);
                 var tf = function(i){return (i < 10 ? '0' : '') + i};
@@ -212,7 +216,7 @@ knowledge_static_web.controller('ApplicationController',
                             return tf(t.getFullYear());
                             break;
                         case 'MM':
-                             return tf(t.getMonth() + 1);
+                            return tf(t.getMonth() + 1);
                             break;
                         case 'mm':
                             return tf(t.getMinutes());

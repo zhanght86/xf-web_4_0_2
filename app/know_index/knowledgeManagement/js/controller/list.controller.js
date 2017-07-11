@@ -556,7 +556,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if($scope.vm.title){
                 httpRequestPost("/api/ms/listKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : APPLICATION_ID
+                    "applicationId" : APPLICATION_ID,
+                    "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败

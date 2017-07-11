@@ -703,7 +703,8 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             if($scope.vm.title){
                 httpRequestPost("/api/ms/conceptKnowledge/checkKnowledgeTitleAndGetAutoClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : APPLICATION_ID
+                    "applicationId" : APPLICATION_ID,
+                    "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     console.log(data) ;
                     if(data.status == 500){    //标题打标失败
