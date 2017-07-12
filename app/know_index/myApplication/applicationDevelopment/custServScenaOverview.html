@@ -54,6 +54,10 @@
                                 <input type="text" class="input_text" ng-model="vm.knowledgeContent"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">知识扩展问:</span>
+                                <input type="text" class="input_text"/>
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
                                 <span>
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.knowledgeExpDateStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
@@ -66,6 +70,15 @@
                                 <input type="text" class="input_text" ng-model="vm.knowledgeCreator"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
+                                <span class="framework_s">知识类型:</span>
+                                <div>
+                                    <label class="mr-10"><input type="radio" name="knoe_type" />FAQ</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_type" />概念</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_type" />列表</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_type" />要素</label>
+                                </div>
+                            </div>
+                            <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-checked="vm.sourceType==0" ng-click="vm.getSourceType(0)"/>全部</label>
@@ -73,6 +86,7 @@
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(2)"/>文档加工</label>
                                 </div>
                             </div>
+
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">更新时间:</span>
                                 <div>
