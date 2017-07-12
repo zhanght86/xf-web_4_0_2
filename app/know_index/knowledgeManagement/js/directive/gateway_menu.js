@@ -138,7 +138,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
     };
 }]);
 
-knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) {
+knowledge_static_web.directive('tempPlupload', ['$timeout',"$location","$state", function ($timeout,$location,$state) {
     return {
         restrict: 'A',
         //template : '<span></span>'  ,
@@ -221,13 +221,11 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                             }
                         });
                     },
-
                     UploadProgress: function (up, file) {
                         $scope.$apply(function(){
                             $scope.vm.progress = file.percent  ;
                         }) ;
                     },
-
                     Error: function (up, err) {
                         $scope.$apply(function(){
                             $scope.vm.progress = 0  ;
@@ -238,13 +236,13 @@ knowledge_static_web.directive('tempPlupload', ['$timeout', function ($timeout) 
                     UploadComplete: function (uploader, files) {
 
                     },
-
                     FileUploaded: function (uploader, files, res) {
                         if (res.status == 200) {
                             //var res = res.replace(/<.*?>/ig,"")
                             var response = JSON.parse(res.response.replace(/<.*?>/ig,""));
                             if (response.status == 200) {
-                                 layer.msg("模板文件上传成功，请添加规则");
+                                layer.msg("模板文件上传成功，请添加规则");
+                                $location.$$absUrl = $location.$$absUrl + response.data.templateId ;
                                 $scope.$apply(function () {
                                     $scope.vm.isTempUpToolsShow = false;//隐藏保持相关按钮
                                     $scope.vm.templateId = response.data.templateId;

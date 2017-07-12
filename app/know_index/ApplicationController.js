@@ -37,7 +37,7 @@ knowledge_static_web.controller('ApplicationController',
             }
             //获取渠道
             function getChannels(){
-                var  channels = []
+                var  channels = [] ;
                 knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
@@ -54,25 +54,31 @@ knowledge_static_web.controller('ApplicationController',
                 //className  classificationId  classificationType(不推送)
                 //重复 提示   不重复返回bot对象
                 // 校验对象  className
-                var result = false ;    //返回對象
-                var len = allBot.length;  //所有bot 長度
-                var obj = {             //定义bot对象
+                var result = {             //定义bot对象
                     "className" : path,
                     "classificationId" : id,
                     "classificationType" : type?type:67
-                };
+                } ;    //返回對象
+                var len = allBot.length;  //所有bot 長度
+                //var obj = {             //定义bot对象
+                //    "className" : path,
+                //    "classificationId" : id,
+                //    "classificationType" : type?type:67
+                //};
                 // 集合转为string 便于比较  并不改变原数组
                 var backUpPath = angular.copy(path).join("/") ;
                 if(len){                  //需要验证
                     angular.forEach(allBot,function(item){
+                        console.log(item.className.join("/"),backUpPath) ;
                         if(item.className.join("/") == backUpPath){
                             result = false ;
-                            return  layer.msg("添加分类重复");
+                            return  layer.msg("添加分类重复，已阻止添加");
                         }
                     });
-                }else{   //不需要验证
-                    result = obj
                 }
+                //else{   //不需要验证
+                //    result = obj
+                //}
                 return result;
             }
 

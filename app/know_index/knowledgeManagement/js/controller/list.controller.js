@@ -239,12 +239,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(data){
                 if(data.status = 10000){
                     //添加校验是否添加校验
+                    console.log(data)
                     var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
                         botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                    console.log(botResult)
                     $scope.$apply(function(){
-                        $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                        $scope.vm.knowledgeBotVal = data.categoryFullName;
                         if(botResult != false){
-                            $scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                            //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
                             $scope.vm.botFullPath= botResult;
                         }
                     });
@@ -644,7 +646,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                                 //console.log(getParams());
                                 if (data.status == 200) {
                                     console.log(data);
-                                    $state.go('custServScenaOverview.manage');
+                                    $state.go('knowledgeManagement.custOverview');
                                 } else if (data.status == 500) {
                                     layer.msg("知识保存失败") ;
                                     $timeout.cancel(limitTimer) ;

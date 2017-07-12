@@ -850,7 +850,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                                     $scope.vm.knowledgeClassifyCall();
                                 }
                                 else{
-                                    $state.go('markServScenaOverview.manage');
+                                    $state.go('knowledgeManagement.markOverview');
                                 }
                             } else if (data.status == 500) {
                                 layer.msg("知识保存失败") ;

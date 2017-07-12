@@ -1,9 +1,8 @@
-<div ui-view="header"></div>
+<!--<div ui-view="header"></div>-->
 <div class="main warp custOver">
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                {{master.a}}
                 <!--<img class="hd-img" src="../../../images/images/poto.png"/>-->
                 <!--{{vm.imgUrl}}  +++    {{vm.robotHead}}-->
                 <!--<img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>-->
@@ -108,7 +107,10 @@
                     <div class="clearfix csso-hd">
                         <div class="fl">
                             <!--<input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/>-->
-                            <a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>
+                            <!--<a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>-->
+                            <!-- 全选-->
+                            <span class="L" checkbox-overview ng-click="vm.selectAll(vm.listData)" result="vm.isSelectAll"></span>
+
                             <span class="L"><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
                         </div>
                         <div class="fr"  ng-click="vm.delData()">
@@ -123,7 +125,7 @@
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
                                     <span checkbox-overview ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)" result="vm.knowledgeIds.inArray(item.knowledgeId)"></span>
-                                    <a href="javascript:;" ng-click="vm.scan(item)">{{item.knowledgeTitle}}</a>
+                                    <a href="javascript:;" ui-sref="knowledgeManagement.custPreview({knowledgeId:item.knowledgeId,knowledgeType:item.knowledgeType})">{{item.knowledgeTitle}}</a>
                                 </div>
                                 <div class="txt-cont mt10">
                                     <div class="txt-item oh">
@@ -168,15 +170,4 @@
             </div>
         </div>
     </div>
-
 </div>
-
-<script>
-    $('.selectall_a').click(function(){
-        if($(this).hasClass('selectall_a1')){
-            $(this).attr('class','selectall_a selectall_a2 L');
-        }else{
-            $(this).attr('class','selectall_a selectall_a1 L');
-        }
-    });
-</script>

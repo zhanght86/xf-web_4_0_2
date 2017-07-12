@@ -784,7 +784,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                             if ($scope.vm.docmentation) {
                                 $scope.vm.knowledgeClassifyCall();
                             }else{
-                                $state.go('custServScenaOverview.manage');
+                                $state.go('knowledgeManagement.custOverview');
                             }
                         } else if (data.status == 500) {
                             layer.msg("知识保存失败") ;
