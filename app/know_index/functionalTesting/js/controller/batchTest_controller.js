@@ -102,6 +102,9 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
         //查询
         function searchFile(index){
+            if($scope.vm.selectInput==''){
+                showData(1);
+            }
             httpRequestPost("/api/application/batchTest/findByValue",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
@@ -117,6 +120,12 @@ angular.module('functionalTestModule').controller('batchTestController', [
                    layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: 0, //总条数
+                        pageSize: 0,//第页条目数
+                        pagesLength: 8//分页框数量
+                    };
                     //return;
                 }else{
                     $scope.vm.listData = data.data.batchTestList;
