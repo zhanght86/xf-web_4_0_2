@@ -169,7 +169,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
-            $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
+            $timeout(function(){$scope.vm.openContentConfirm(saveAddNew);},0) ;
+             //知识内容弹出框
         }
 
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
