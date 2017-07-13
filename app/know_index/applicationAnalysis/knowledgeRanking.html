@@ -1,0 +1,59 @@
+<div ui-view="header"></div>
+
+<div class="wrap">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="mt-10">
+
+            <div class="con_box mb25 p30">
+                <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 110px;">
+                    <select class="sel bd L mr-5 ng-pristine ng-valid" id="request_time_type" ng-model="vm.timeType">
+                        <option value="0">全部时间</option>
+                        <option value="1">今日</option>
+                        <option value="2">昨日</option>
+                        <option value="3">过去7天</option>
+                        <option value="4">过去30天</option>
+                    </select>
+                    <select class="sel bd L mr-5 ng-pristine ng-valid" id="channel_id" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions"><option value="" class="">全部维度</option><option value="0">国家_美国</option><option value="1">国家_中国</option></select>
+                    <select class="sel bd L mr-5 ng-pristine ng-valid" id="channel_id" ng-model="vm.channelId" ng-options="site.channelUpdateId as site.channelName for site in vm.channels"><option value="" class="">全部渠道</option><option value="0">微信</option><option value="1">web</option><option value="2">app</option></select>
+                    <span>
+                        日期范围:
+                        <!--<div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">-->
+                            <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
+                            -
+                            <input type="text" id="endTime" onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
+                        <!--</div>-->
+                    </span>
+                    <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找">
+                </div>
+                <div class="clearfix p10 cus_ser_scene">
+                    <div class="tab_tit">
+                        <span class="cur"  onclick="tabtab(this);">知识点排名统计  </span>
+                        <span class="" onclick="tabtab(this);">未匹配问题统计 </span>
+                    </div>
+                    <div class="tab_con pt30 pb30">
+                        <div class="db">
+                            111
+                        </div>
+                        <div class="dn" >
+                            222
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function tabtab(obj) {
+        $(obj).addClass('cur').siblings().removeClass();
+        $(obj).parent().next().children('div').eq($(obj).index()).attr('class', 'db').siblings().attr('class', 'dn');
+    }
+
+</script>
+
+
+
+
+
+

@@ -35,9 +35,9 @@
                             <td ng-if="item.nodeRunningId==70002">运行异常</td>
                             <td>
                                 <a ng-if="item.statusId==60001"
-                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode)" class="mr-10 c-orange">禁用</a>
+                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode,'禁用')" class="mr-10 c-orange">禁用</a>
                                 <a ng-if="item.statusId==60003"
-                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode)" class="mr-10 c-orange">启用</a>
+                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode,'启用')" class="mr-10 c-orange">启用</a>
                                 <a ng-click="vm.editNode(item.nodeCode)" class="c-primary mr-10" >编辑</a>
                                 <a ng-if="item.statusId!=60002" ng-click="vm.deleteNode(item.nodeCode)" class="c-error">删除</a>
                             </td>

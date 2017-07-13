@@ -127,7 +127,7 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
     $.ajax(url, {
         dataType: 'json', //服务器返回json格式数据
         type: "POST", //HTTP请求类型
-        timeout: timeout?timeout:10000, //超时时间设置为10秒；
+        timeout: timeout?timeout:100000, //超时时间设置为10秒；
         headers: header,
         data: data,
         success: function(data) {
@@ -140,10 +140,6 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
             if(status=='timeout'){//超时,status还有success,error等值的情况
                 //ajaxTimeoutTest.abort();
                 //layer.msg("请求超时");
-                if(timeoutCall){
-                    var  timer = setTimeout(timeoutCall,100)
-                    //timeoutCall()
-                }
                 console.log("请求超时");
             }
         }
@@ -585,32 +581,6 @@ function isHtmlLabel(str){
         return false;
     }
     return reg.test(str);
-}
-/**
- * 校验是否是阈值类型值
- * 大于等于0小于等于1
- * @param value
- */
-function isThreshold(value){
-    var r = /^\d+(\.\d+)?$/;
-    if(!r.test(value)){
-        return false;
-    }
-    if(value>1){
-        return false;
-    }
-    return true;
-}
-/**
- * 校验是否是正整数
- * @param value
- */
-function isPositiveInteger(value){
-    var r = /^[0-9]*[1-9][0-9]*$/;
-    if(!r.test(value)){
-        return false;
-    }
-    return true;
 }
 
 function initUpload(url){

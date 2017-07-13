@@ -33,7 +33,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
                 //container: $('#filelist'),
                 multi_selection: true,
                 filters: {
-                    max_file_size: '50mb',
+                    max_file_size: '10mb',
                     mime_types: [{
                         title: "Know File",
                         extensions: "docx"
@@ -49,7 +49,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
                                 templateId:$scope.targetId,
                                 requestId:"String",
                                 //设置用户信息
-                                userName: USER_LOGIN_NAME
+                                userName: USER_NAME
                             };
                             if ($scope.processMethod == true) {
                                 if (!$scope.targetId || $scope.targetId == null) {
@@ -69,7 +69,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
                                     uploader.removeFile(uploader.files[i - 1]);
                                 }
                             }
-                            //$scope.$apply($scope.resetUploadPOJO());
+                            $scope.$apply($scope.resetUploadPOJO());
                         })
                     },
 
@@ -183,7 +183,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout',"$location","$state",
                                 "templateName": $scope.vm.temName,
                                 "requestId":"String",
                                 //此处设置上传用户信息
-                                "userId":USER_LOGIN_NAME
+                                "userId":USER_NAME
                             });
                             uploader.start() ;
                             return false;

@@ -1,0 +1,75 @@
+
+<div class="wrap" style="background:#fff;">
+    <div class="pd-20 mt-10" >
+        <div class="bd pr history_div" >
+            <select class="sel ">
+                <option>操作人</option>
+                <option>加工文件</option>
+                <option>加工日期</option>
+            </select>
+            <input type="text" />
+            <input type="button" value="查找" class="pa btn1 btn1_blue" />
+        </div>
+        <div class="history_tabdiv">
+            <table class="history_table">
+                <thead>
+                    <td class="bold" width="25%">文件名</td>
+                    <td class="bold" width="10%">目标位置</td>
+                    <td class="bold"  width="10%">状态</td>
+                    <td class="bold"  width="10%">操作人</td>
+                    <td class="bold"  width="10%">上传总条数</td>
+                    <td class="bold"  width="10%">上传成功条数</td>
+                    <td class="bold"  width="15%">上传时间</td>
+                    <td class="bold"  width="10%">操作</td>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>文件1</td>
+                    <td>知识库</td>
+                    <td>导入成功</td>
+                    <td>niunafang</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>2017-06-29 09:30:31</td>
+                    <td><a href="javascript:;" class="c_blue">查看</a></td>
+                </tr>
+                <tr>
+                    <td>文件1</td>
+                    <td>概念库</td>
+                    <td>导入成功</td>
+                    <td>niunafang</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>2017-06-29 09:30:31</td>
+                    <td>导入失败</td>
+                </tr>
+                <tr>
+                    <td>文件1</td>
+                    <td>框架库</td>
+                    <td>导入成功</td>
+                    <td>niunafang</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>2017-06-29 09:30:31</td>
+                    <td>导入失败</td>
+                </tr>
+                <tr>
+                    <td>文件1</td>
+                    <td>聊天知识库</td>
+                    <td>导入成功</td>
+                    <td>niunafang</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>2017-06-29 09:30:31</td>
+                    <td>导入失败</td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

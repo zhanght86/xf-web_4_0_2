@@ -81,7 +81,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
                           $("#input").val("")
                       });
                   }
-              },1000);
+              },100);
             console.debug($scope);
         }
     };
