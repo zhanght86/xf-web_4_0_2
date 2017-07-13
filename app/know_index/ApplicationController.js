@@ -18,7 +18,8 @@ knowledge_static_web.controller('ApplicationController',
                 //method for Downstream
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
-                    isBotRepeat : isBotRepeat // 验证Bot 是否重复
+                    isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
+                    searchBotAutoTag : searchBotAutoTag  //BOT搜索自动补全   For 知识新增bot添加
             } ;
             //獲取纬度
             function getDimensions(){
@@ -80,6 +81,46 @@ knowledge_static_web.controller('ApplicationController',
                 //    result = obj
                 //}
                 return result;
+            }
+            //BOT搜索自动补全
+            function searchBotAutoTag(el,url,callback){
+                $(el).autocomplete({
+                    serviceUrl: url,
+                    type:'POST',
+                    params:{
+                        "categoryName":$(el).val(),
+                        "categoryAttributeName":"node",
+                        "categoryApplicationId":APPLICATION_ID
+                    },
+                    paramName:'categoryName',
+                    dataType:'json',
+                    transformResult:function(data){
+                        var result = {
+                            suggestions : []
+                        };
+                        if(data.data){
+                            angular.forEach(data.data,function(item){
+                                result.suggestions.push({
+                                    data:item.categoryId,
+                                    value:item.categoryName,
+                                    type : item.categoryTypeId
+                                })
+                            }) ;
+                        }
+                        return result;
+                    },
+                    onSelect: function(suggestion) {
+                        callback(suggestion) ;
+                        //$scope.$apply(function(){
+                        //    $scope.vm.botFullPath = {
+                        //        "className" : suggestion.value.split("/"),
+                        //        "classificationId" : suggestion.data,
+                        //        "classificationType" : suggestion.type
+                        //    } ;
+                        //    $scope.vm.knowledgeBotVal = suggestion.value;
+                        //})
+                    }
+                });
             }
 
 /***********************************************************************************************************************************************************************/
