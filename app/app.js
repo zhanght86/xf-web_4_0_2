@@ -868,6 +868,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("applAnalysis.knowledgeRanking", {
+                url: "/knowledgeRanking",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/knowledgeRanking.html',
+                        controller: "knowledgeRankingController"
+                    }
+                }
+            })
 
             //-----------------------
 
