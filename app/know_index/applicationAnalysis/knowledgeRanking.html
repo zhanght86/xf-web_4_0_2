@@ -5,37 +5,95 @@
         <div class="mt-10">
 
             <div class="con_box mb25 p30">
-                <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 110px;">
-                    <select class="sel bd L mr-5 ng-pristine ng-valid" id="request_time_type" ng-model="vm.timeType">
-                        <option value="0">全部时间</option>
-                        <option value="1">今日</option>
-                        <option value="2">昨日</option>
-                        <option value="3">过去7天</option>
-                        <option value="4">过去30天</option>
+                <div class="knowrank_top pt-10 clearfix" >
+                    <select class="sel bd L mr-5 " >
+                        <option value="">今日</option>
+                        <option value="">昨日</option>
+                        <option value="">过去7天</option>
+                        <option value="">过去30天</option>
                     </select>
-                    <select class="sel bd L mr-5 ng-pristine ng-valid" id="channel_id" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions"><option value="" class="">全部维度</option><option value="0">国家_美国</option><option value="1">国家_中国</option></select>
-                    <select class="sel bd L mr-5 ng-pristine ng-valid" id="channel_id" ng-model="vm.channelId" ng-options="site.channelUpdateId as site.channelName for site in vm.channels"><option value="" class="">全部渠道</option><option value="0">微信</option><option value="1">web</option><option value="2">app</option></select>
-                    <span>
+                    <select class="sel bd L mr-5 "  >
+                        <option value="">全部渠道</option>
+                        <option value="">微信</option>
+                        <option value="">web</option>
+                        <option value="">app</option>
+                    </select>
+                    <input type="text" class="input-text bd L mr-5" placeholder="请输入纬度" style="width:200px;"/>
+                    <span class="L mr-5">
                         日期范围:
-                        <!--<div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">-->
-                            <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
-                            -
-                            <input type="text" id="endTime" onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
-                        <!--</div>-->
+                        <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 33px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
+                        -
+                        <input type="text" id="endTime" onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 33px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
+
                     </span>
-                    <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找">
+                    <input type="button" class="L btn1 btn1_blue" ng-click="vm.getList(1)" value="查找">
                 </div>
-                <div class="clearfix p10 cus_ser_scene">
-                    <div class="tab_tit">
-                        <span class="cur"  onclick="tabtab(this);">知识点排名统计  </span>
-                        <span class="" onclick="tabtab(this);">未匹配问题统计 </span>
+                <div class=" p10 cus_ser_scene">
+                    <div class="tab_tit ">
+                        <span class=""  onclick="tabtab(this);">知识点排名统计  </span>
+                        <span class="cur" onclick="tabtab(this);">未匹配问题统计 </span>
                     </div>
-                    <div class="tab_con pt30 pb30">
-                        <div class="db">
-                            111
+                    <div class="tab_con pt20 pb30">
+                        <div class="dn">
+                            <div class="clearfix mb-10">
+                                <p class="L bold"> 知识点排名统计TOP100</p>
+                                <a href="javascript:;" class="R c_blue">导出表格</a>
+                            </div>
+                            <div>
+                                <table class="access_amount_table">
+                                    <tr>
+                                        <td class="bold" width="15%">排名↑</td>
+                                        <td class="bold" width="35%">知识标题</td>
+                                        <td class="bold" width="35%">所属BOT</td>
+                                        <td class="bold" width="15%">访问次数</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>珠海海关>物品进境问题</td>
+                                        <td>56</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>珠海海关>物品进境问题</td>
+                                        <td>56</td>
+                                    </tr>
+                                </table>
+                                <div >分页</div>
+                            </div>
                         </div>
-                        <div class="dn" >
-                            222
+                        <div class="db" >
+                            <div class="clearfix mb-10">
+                                <p class="L bold"> 未匹配问题统计</p>
+                                <span class="R">
+                                    <span class="mr-10">共有数据<b>3</b>条</span>
+                                    <a href="javascript:;" class=" c_blue">导出表格</a>
+                                </span>
+                            </div>
+                            <div>
+                                <table class="access_amount_table">
+                                    <tr>
+                                        <td class="bold" width="45%">用户提问</td>
+                                        <td class="bold" width="15%">提问次数</td>
+                                        <td class="bold" width="20%">首次提问时间</td>
+                                        <td class="bold" width="20%">末次提问时间</td>
+                                    </tr>
+                                    <tr>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>56</td>
+                                        <td>2016.07.12 12:00:00</td>
+                                        <td>2016.07.12 13:00:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>56</td>
+                                        <td>2016.07.12 12:00:00</td>
+                                        <td>2016.07.12 13:00:00</td>
+                                    </tr>
+                                </table>
+                                <div >分页</div>
+                            </div>
                         </div>
 
                     </div>

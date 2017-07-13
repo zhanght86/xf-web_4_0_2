@@ -429,3 +429,5 @@
 .history_div .btn1{right:-1px;top:-1px;height:32px;}
 .history_tabdiv .history_table td,.history_tabdiv .history_table th{word-break: break-all;border:1px solid #eee;min-height:30px;padding:5px 0;text-align: center;}
 .history_tabdiv .history_table {width:100%;}
+/*统计分析*/
+.knowrank_top{width:910px;margin:0 auto 20px;}

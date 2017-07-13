@@ -320,6 +320,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
         function addHotIssues(){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/myApplication/applicationConfig/chatPageConfigDialog.html",
+                width:'660px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
