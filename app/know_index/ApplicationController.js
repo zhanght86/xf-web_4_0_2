@@ -18,7 +18,8 @@ knowledge_static_web.controller('ApplicationController',
                 //method for Downstream
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
-                    isBotRepeat : isBotRepeat // 验证Bot 是否重复
+                    isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
+                    searchBotAutoTag : searchBotAutoTag  //BOT搜索自动补全   For 知识新增bot添加
             } ;
             //獲取纬度
             function getDimensions(){
@@ -60,11 +61,6 @@ knowledge_static_web.controller('ApplicationController',
                     "classificationType" : type?type:67
                 } ;    //返回對象
                 var len = allBot.length;  //所有bot 長度
-                //var obj = {             //定义bot对象
-                //    "className" : path,
-                //    "classificationId" : id,
-                //    "classificationType" : type?type:67
-                //};
                 // 集合转为string 便于比较  并不改变原数组
                 var backUpPath = angular.copy(path).join("/") ;
                 if(len){                  //需要验证
@@ -76,10 +72,47 @@ knowledge_static_web.controller('ApplicationController',
                         }
                     });
                 }
-                //else{   //不需要验证
-                //    result = obj
-                //}
                 return result;
+            }
+            //BOT搜索自动补全
+            function searchBotAutoTag(el,url,callback){
+                $(el).autocomplete({
+                    serviceUrl: url,
+                    type:'POST',
+                    params:{
+                        "categoryName":$(el).val(),
+                        "categoryAttributeName":"node",
+                        "categoryApplicationId":APPLICATION_ID
+                    },
+                    paramName:'categoryName',
+                    dataType:'json',
+                    transformResult:function(data){
+                        var result = {
+                            suggestions : []
+                        };
+                        if(data.data){
+                            angular.forEach(data.data,function(item){
+                                result.suggestions.push({
+                                    data:item.categoryId,
+                                    value:item.categoryName,
+                                    type : item.categoryTypeId
+                                })
+                            }) ;
+                        }
+                        return result;
+                    },
+                    onSelect: function(suggestion) {
+                        callback(suggestion) ;
+                        //$scope.$apply(function(){
+                        //    $scope.vm.botFullPath = {
+                        //        "className" : suggestion.value.split("/"),
+                        //        "classificationId" : suggestion.data,
+                        //        "classificationType" : suggestion.type
+                        //    } ;
+                        //    $scope.vm.knowledgeBotVal = suggestion.value;
+                        //})
+                    }
+                });
             }
 
 /***********************************************************************************************************************************************************************/

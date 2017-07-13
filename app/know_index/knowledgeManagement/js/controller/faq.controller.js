@@ -328,6 +328,18 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                console.log("获取bot类目失败")
             });
         }() ;
+        //BOT搜索自动补全
+        $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+            $scope.$apply(function(){
+                var allBot = angular.copy($scope.vm.botClassfy) ,
+                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                    $scope.vm.knowledgeBotVal = suggestion.value;
+                    if(botResult != false){
+                        $scope.vm.botFullPath= botResult;
+                    }
+            })
+        });
+
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
             //类型节点

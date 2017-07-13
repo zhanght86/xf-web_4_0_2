@@ -16,7 +16,7 @@
                     <div class="list_facContent mb-10">
                         <div class="list_facContent_L">知识标题：</div>
                         <div >
-                            <input  type="text" class="bk-gray input-text " placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
+                            <input  type="text" class="bk-gray input-text " autofocus placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
                             <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotAndExtensionByTitle()" class=" mr-15"><img src="../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
@@ -42,7 +42,7 @@
                             <div >
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
-                                        <input class="ipt-txt bd" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled style="width: 394px;height:32px;padding-right:28px;box-sizing: border-box;"/>
+                                        <input class="ipt-txt bd botTagAuto" ng-model="vm.knowledgeBotVal"  id="ipt-txt" type="text"  style="width: 394px;height:32px;padding-right:28px;box-sizing: border-box;"/>
                                         <i class="btn-menu_1" ng-click="vm.knowledgeBot()" style="right:1px;top:2px;width:23px;height:28px;"></i>
 
                                         <div class="rootClassfy aside-navs aside-navs2" >
@@ -108,7 +108,7 @@
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">概念扩展：</div>
                             <div >
-                                <div class="L extended_query_txt" style="width:345px;border:0;height: 34px" >
+                                <div class="L extended_query_txt" style="width:345px;border:0;height: 35px;overflow-x: auto;" >
                                    <span ng-repeat="val in item.extensionQuestionTagList" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                        {{val.tagName}}
                                     </span>
@@ -125,7 +125,7 @@
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">概念扩展：</div>
                             <div>
-                                <div class="L extended_query_txt" style="width:345px;border: 0;margin-right:0;height: 34px" >
+                                <div class="L extended_query_txt" style="width:345px;border: 0;margin-right:0;height: 35px;overflow-x: auto;" >
                                    <span ng-repeat="val in item.extensionQuestionTagList" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
                                       {{val.tagName}}
                                     </span>

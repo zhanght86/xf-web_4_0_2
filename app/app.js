@@ -868,6 +868,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("applAnalysis.knowledgeRanking", {
+                url: "/knowledgeRanking",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/knowledgeRanking.html',
+                        controller: "knowledgeRankingController"
+                    }
+                }
+            })
 
             //-----------------------
 
@@ -889,10 +902,6 @@ knowledge_static_web
                         templateUrl: 'know_index/admin/adminContent.html',
                         controller: "adminContentController"
                     },
-                    //'myApplicationSidebar': {
-                    //    templateUrl: 'know_index/home/chatKnowledgeBase.html',
-                    //    //controller: "homePageNavController"
-                    //}
                 }
 
             })
@@ -987,20 +996,7 @@ knowledge_static_web
                     }
                 }
             })
-            //知识视图（后台）
-            //.state("back.know_view", {
-            //    url: "/know_view/:knowDocId",
-            //    views: {
-            //        'main_container': {
-            //            'header': {
-            //                templateUrl: 'know_index/home/homePageNav.html',
-            //                controller: "homePageNavController"
-            //            },
-            //            templateUrl: 'know_index/knowledgeManagement/document_know_process/main_know_view_container.html',
-            //            controller: "knowViewController"
-            //        }
-            //    }
-            //})
+
     }]);
     knowledge_static_web.config(function ($httpProvider) {
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';

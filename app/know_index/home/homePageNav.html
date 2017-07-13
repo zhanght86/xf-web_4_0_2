@@ -10,7 +10,7 @@
                 <a ui-sref="homePage.define" ng-if="vm.sceneId">首页</a>
             </li>
             <li>
-                <a ng-click="vm.logApplication()">我的应用</a>
+                <a ng-click="vm.logApplication()">应用管理</a>
             </li>
             <li ng-if="vm.applicationId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
@@ -110,12 +110,12 @@
                             <!--<span>知识审核</span>-->
                         <!--</a>-->
                     <!--</li>-->
-                    <li>
-                        <a ui-sref="knowledgeManagement.historyView">
-                            <i class="icon-nav icon-nav__icon-nav_lsck"></i>
-                            <span>历史查看</span>
-                        </a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a ui-sref="knowledgeManagement.historyView">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_lsck"></i>-->
+                            <!--<span>历史查看</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
                 </ul>
             </li>
             <li ng-if="vm.applicationId">
@@ -151,23 +151,23 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="applAnalysis.knowledgeRanking">
                             <i class="icon-nav icon-nav__icon-nav_zsdpm"></i>
                             <span>知识点排名统计</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="icon-nav icon-nav__icon-nav_wpp"></i>
-                            <span>未匹配问题统计</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="icon-nav icon-nav__icon-nav_fltj"></i>
-                            <span>分类统计</span>
-                        </a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_wpp"></i>-->
+                            <!--<span>未匹配问题统计</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_fltj"></i>-->
+                            <!--<span>分类统计</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
                     <li>
                         <a ui-sref="applAnalysis.sessionDetails">
                             <i class="icon-nav icon-nav__icon-nav_hhmx"></i>
@@ -251,7 +251,7 @@
                 </div>
             </div>
             <div class="mail-conver" ng-if="vm.sceneId==2 || vm.sceneId==1" style="margin-left:0;">
-                <a href="javascript:;" class="mail">
+                <a ui-sref="knowledgeManagement.historyView" class="mail">
                     <!--<em>2</em>-->
                 </a>
                 <a  class="conver" ng-click="vm.queryServiceList()"></a>

@@ -90,6 +90,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
          */
         function exportExcel(){
             httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
+                "applicationId": APPLICATION_ID,
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
                 "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
