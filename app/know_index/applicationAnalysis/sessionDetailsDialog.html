@@ -7,59 +7,46 @@
                 会话
             </p>
             <ul class="chat_theme_ul" id="sessionBar" ng-if="vm.timeList.length">
-                <li  style="cursor:pointer;" ng-if="vm.timeList" ng-repeat="item in vm.timeList" ng-click="vm.getdetail(item.sessionId)">{{item.sessionTime}}</li>
+                <li style="cursor:pointer;" ng-if="vm.timeList" ng-repeat="item in vm.timeList" ng-click="vm.getdetail(item.sessionId,1)">{{item.sessionTime | limitTo:19}}</li>
             </ul>
             <div class="text-c mb-10 user_session_pag" id="barPage" ng-if="vm.timeList.length">
                 <div name="laypage1.2" class="laypage_main laypageskin_molv" id="laypage_0" ng-if="vm.currentPage!=1" style="float: left;margin: 2px;border: 1px solid #e1e1e1;">
                     <a href="javascript:;" class="laypage_next" data-page="2" ng-click="vm.prePage()">上一页</a>
                 </div>
-                <div name="laypage1.2" class="laypage_main laypageskin_molv" id="laypage_0" style="float: left;margin: 2px;border: 1px solid #e1e1e1;">
+                <div name="laypage1.2" class="laypage_main laypageskin_molv" id="laypage_1" style="float: left;margin: 2px;border: 1px solid #e1e1e1;">
                     <a href="javascript:;" class="laypage_next" data-page="2" ng-click="vm.nextPage()" ng-if="vm.currentPage!=vm.total">下一页</a>
                 </div>
             </div>
             <span id="barPageDetail" style="right: 14px;bottom: 18px;position: absolute;">{{vm.currentPage}}/{{vm.total}}</span>
         </div>
-        <div class="L w78" style="max-height: 600px;overflow: scroll;">
-            <ul class="talk_ul talk_ul_usersession clearfix pt-10" id="sessionDetail" ng-repeat="item in vm.talkDetail">
-                <li class="li_right" >
-                    <div class="head R">
-                        <img src="../../images/talk_headimg2.jpg">
-                    </div>
-                    <div class="talk_msg R">
-                        <span class="talk_arrow2"></span>
-                        <p class="talk_content">
-                            {{item.content}}
+        <div id="chatContent" class="L w78" style="height: 350px;overflow: scroll;">
+            <div ng-repeat="item in vm.talkDetail">
+                <div style="clear: both" class="chatPopLeftMe">
+                    <div>
+                        <p>
+                            <span class="chatPopLeftMeMSg">
+                                <sub></sub>{{item.content}}
+                            </span>
                         </p>
                     </div>
-                </li>
-                <li>
-                    <div class="head L">
-                        <img src="../../images/talk_headimg.jpg">
-                    </div>
-                    <div class="talk_msg L">
-                        <span class="talk_arrow"></span>
-                        <p class="talk_content">
-                           {{item.answer}}
+                </div>
+                <div class="chatPopLeftHe" style="z-index:0;">
+                    <div>
+                        <p><sub></sub>
+                            <span class="RecommendCnt">
+                                <span class="RecommendCnt1">{{item.answer}}</span>
+                                <span class="RecommendCnt1-line" ng-if="item.prompt!=null && item.prompt!=''">{{item.prompt}}</span>
+                                <span ng-if="item.recommendQuestions!=null && item.recommendQuestions.length>0" ng-repeat="reco in item.recommendQuestions">
+                                    <i style="display:inline">{{reco.knowledgeTitle}}</i>
+                                </span>
+                            </span>
                         </p>
                     </div>
-                </li>
-                <li>
-                    <div class="head L">
-                        <img src="../../images/talk_headimg.jpg">
-                    </div>
-                    <div class="talk_msg L">
-                        <span class="talk_arrow"></span>
-                        <p class="talk_content">
-                           {{item.knowledgeTitle}}
-                        </p>
-                    </div>
-                </li>
-            </ul>
+                </div>
+            </div>
+            <a href="javascript:;" ng-if="vm.talkDetailTotal>vm.pageSize" ng-click="getdetail(item.sessionId,vm.contentIndex)">查看更多</a>
         </div>
     </div>
-    <!--<input type="hidden" id="userId" value="339825586094477312">-->
-    <!--<input type="hidden" id="userSessionTimebarTotal" value="140">-->
-    <!--<input type="hidden" id="contentTotal">-->
 </div>
 <style>
     .ngdialog.ngdialog-theme-default .ngdialog-content{
