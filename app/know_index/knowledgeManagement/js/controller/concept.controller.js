@@ -152,6 +152,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
                 $scope.vm.scanContent.push(obj);
             });
+        //    文檔加工添加知識
         } else if ($stateParams.data  && angular.fromJson($stateParams.data).docmentation) {
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
@@ -475,14 +476,21 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 console.log(error)
             });
         }
+        //BOT搜索自动补全
+        $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+            $scope.$apply(function(){
+                var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
+                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                $scope.vm.knowledgeBotVal = suggestion.value;
+                if(botResult != false){
+                    $scope.vm.botFullPath= botResult;
+                }
+            })
+        });
         //点击更改bot value
         $(".aside-navs").on("click","span",function(){
             //类型节点
             var pre = $(this).prev() ;
-            //if(pre.hasClass("bot-edge")){
-            //    layer.msg("请可用选择节点") ;
-            //    return ;
-            //}else{
                 angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                 var id = pre.attr("data-option");
                 getBotFullPath(id);    //添加bot分類
@@ -493,6 +501,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
+                console.log($scope.vm.botFullPath)
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = "";
@@ -565,26 +574,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             }
         });
-        //自动转换图标类型
-        function styleSwitch(type,leaf,attrType){
-            var styleHidden = "display: inline-block;";
-            if(leaf==0){
-                styleHidden="display:none;";
-            }
-            if(attrType=="node"){
-                return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
-            }
-            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
-            switch (type){
-                case 161:
-                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 160:
-                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
-                case 162:
-                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
-            }
-            return style;
-        }
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({
