@@ -47,7 +47,8 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
             scan : scan ,   // 点击标题预览
 
             heighSarch : false ,
-
+            knowledgeType : "" , //搜索知识类型
+            searchExtension : "", //搜索的擴展問
             newKnowledge : "false",
             jumpToNewKonwledge : jumpToNewKonwledge,
             isSelectAll  : false ,  // 全选 删除
@@ -133,8 +134,8 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
                 "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
                 "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
-            var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
-            $window.open(url,"_blank") ;
+                var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
+                $window.open(url,"_blank") ;
             //httpRequestPost("/api/ms/knowledgeManage/exportExcel",{
             //    "applicationId" : APPLICATION_ID,
             //    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
@@ -170,7 +171,9 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
                 "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                "updateTimeType": $scope.vm.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                "knowledgeType" : $scope.vm.knowledgeType ,
+                "knowledgeExtensionQuestion" : $scope.vm.searchExtension
             },function(data){
                 $scope.vm.isSelectAll = false ;
                 $scope.vm.knowledgeIds = [] ;
@@ -212,6 +215,8 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
         }
         function paramsReset(){
             //重置 参数 问题
+                $scope.vm.knowledgeType = "" ,
+                $scope.vm.searchExtension = "",
                 $scope.vm.sceneIds = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 $scope.vm.knowledgeTitle = null,         //知识标题默认值null
                 $scope.vm.knowledgeContent = null,        //知识内容默认值null
