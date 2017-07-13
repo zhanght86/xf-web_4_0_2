@@ -721,6 +721,20 @@ knowledge_static_web
                     }
                 }
             })
+            // 历史查看
+            .state("knowledgeManagement.historyView", {
+                url: "/historyView",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/historyView/historyView.html',
+                        controller: "historyViewController"
+                    }
+                }
+            })
             
             //知識預覽
             .state("knowledgeManagement.knowledgeScan", {
