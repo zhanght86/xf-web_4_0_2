@@ -41,7 +41,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
 
         };
         //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.channelList = data.data;
@@ -54,7 +54,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         getService();
         function getService(){
             httpRequestPost("/api/application/service/listServiceByApplicationId",{
-                applicationId:$scope.vm.applicationId,
+                applicationId:APPLICATION_ID,
             },function(data){
                 if(data.status == 10000){
                     $scope.vm.listService = data.data;
@@ -74,7 +74,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             httpRequestPost("/api/application/batchTest/getBatchFile",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId
+                applicationId:APPLICATION_ID
             },function(data){
 
                 initBatchTest();
@@ -108,12 +108,11 @@ angular.module('functionalTestModule').controller('batchTestController', [
             httpRequestPost("/api/application/batchTest/findByValue",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId,
+                applicationId:APPLICATION_ID,
                 batchStatusId :$scope.vm.searchType,
                 batchName: $scope.vm.selectInput,
                 channel: $scope.vm.selectInput,
                 batchOperator: $scope.vm.selectInput
-
             },function(data){
                 console.log(data);
                 if(data.status == 10005){
@@ -200,7 +199,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 preCloseCallback: function (e) {    //关闭回掉
                     if(e === 1){
                         httpRequestPost("/api/application/batchTest/batchDeleteByIds",{
-                            applicationId :  $scope.vm.applicationId,
+                            applicationId :  APPLICATION_ID,
                             ids :  $scope.vm.deleteIds
                         },function(data){
                             if(data.status == 10013){
@@ -257,7 +256,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     //channel:$scope.vm.channel,
                     channelName : name,
                     channel:channelId,
-                    applicationId:$scope.vm.applicationId,
+                    applicationId:APPLICATION_ID,
                     serviceId:$scope.vm.serviceId,
                 }, function (data) {
                     if(data.status == 20002){
@@ -294,7 +293,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 userId: $scope.vm.userId,
                 channelName : name ,
                 channel:channelId,
-                applicationId:$scope.vm.applicationId,
+                applicationId:APPLICATION_ID,
                 serviceId:$scope.vm.serviceId,
                 //serviceId:22
             }, function (data) {

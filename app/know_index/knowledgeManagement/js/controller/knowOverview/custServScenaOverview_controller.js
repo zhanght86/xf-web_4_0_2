@@ -3,19 +3,15 @@
  * Created by mileS on 2017/4/3.
  * 客服 知识 总览
  */
-angular.module('knowledgeManagementModule').controller('custServScenaOverviewController', [
+angular.module('knowledgeManagementModule').controller('custOverviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
-        $state.go("custServScenaOverview.manage");
+        //$state.go("custServScenaOverview.manage");
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
         $scope.vm = {
             applicationName : $cookieStore.get("applicationName"),
-            imgUrl : $cookieStore.get("imgUrl"),
-            robotHead : $cookieStore.get("robotHead"),
-            //editName : editName
-            //getCreatBot : getCreatBot,
             creatBot : [],
             frameCategoryId : "",
 
@@ -157,7 +153,8 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                 "updateTimeType": $scope.vm.updateTimeType   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
             },function(data){
-                console.log(data);
+                $scope.vm.isSelectAll = false ;
+                $scope.vm.knowledgeIds = [] ;
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.knowledgeTotal = data.data.total;
                 $scope.vm.paginationConf = {
@@ -196,10 +193,10 @@ angular.module('knowledgeManagementModule').controller('custServScenaOverviewCon
         }
         function paramsReset(){
             //重置 参数 问题
-                $scope.vm.sceneIds = [],						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                $scope.vm.sceneIds = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 $scope.vm.knowledgeTitle = null,         //知识标题默认值null
                 $scope.vm.knowledgeContent = null,        //知识内容默认值null
-                $scope.vm.knowledgeUpdate = null,        //作者默认值null
+                $scope.vm.knowledgeCreator = null,        //作者默认值null
                 $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
                 $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
                 $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)

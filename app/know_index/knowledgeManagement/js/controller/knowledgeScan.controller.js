@@ -39,7 +39,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             httpRequestPost(knowledgeScan.api,$scope.vm.knowledgeData,function(data){
                 console.log(data) ;
                 if(data.status == 200){
-                    $state.go("custServScenaOverview.manage")
+                    $state.go('knowledgeManagement.custOverview');
                 }
             },function(err){
                 console.log(err)

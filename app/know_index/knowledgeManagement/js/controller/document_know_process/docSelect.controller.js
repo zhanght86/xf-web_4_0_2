@@ -153,14 +153,15 @@ angular.module('knowledgeManagementModule').controller('docSelectController', [
             if($scope.vm.roleId && $scope.vm.roleId != null && $scope.vm.roleId != "")
                 TemplateService.updateWordRule.save(params, function(re){
                     if(re.status == 200){
-                        history.back();
+                        $state.go("back.createTemplate",{"isGo":true ,"temId":$scope.vm.temId});
                     }
                 });
             else
             {
                 TemplateService.addWordRule.save(params, function(re){
                     if(re.status == 200){
-                        history.back();
+                        $state.go("back.createTemplate",{"isGo":true ,"temId":$scope.vm.temId});
+                        //history.back();
                     }
                 });
             }

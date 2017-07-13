@@ -471,67 +471,6 @@ knowledge_static_web
                 templateUrl: 'know_index/myApplication/applicationDevelopment/botApply.html',
                 controller:"botApplyController"
             })
-            //应用开发-知识管理-客服场景知识总览
-            .state("custServScenaOverview", {
-                url: "/custServScenaOverview",
-                templateUrl: 'know_index/myApplication/applicationDevelopment/custServScenaOverview.html',
-                controller:"custServScenaOverviewController"
-            })
-            .state("custServScenaOverview.manage", {
-                url: "/manage",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    }
-                }
-            })
-            //应用开发-知识管理-营销场景知识总览
-            .state("markServScenaOverview", {
-                url: "/markServScenaOverview",
-                templateUrl: 'know_index/myApplication/applicationDevelopment/markServScenaOverview.html',
-                controller:"markServScenaOverviewController"
-            })
-            .state("markServScenaOverview.manage", {
-                url: "/manage",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                }
-            })
-            //应用开发-知识管理-营销知识预览
-            .state("markKnowledgePreview", {
-                url: "/markKnowledgePreview/:scanKnowledge",
-                templateUrl: 'know_index/myApplication/applicationDevelopment/markKnowledgePreview.html',
-                controller:"markKnowledgePreviewController"
-            })
-            .state("markKnowledgePreview.manage", {
-                url: "/manage",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                }
-            })
-
-            //应用开发-知识管理-客服知识预览
-            .state("custKnowledgePreview", {
-                url: "/custKnowledgePreview",
-                templateUrl: 'know_index/myApplication/applicationDevelopment/custKnowledgePreview.html',
-                controller:"custKnowledgePreviewController"
-            })
-            .state("custKnowledgePreview.manage", {
-                url: "/manage",
-                views: {
-                    'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
-                        controller: "homePageNavController"
-                    },
-                }
-            })
 
             //应用发布
             .state("setting.releaseMan", {
@@ -641,6 +580,64 @@ knowledge_static_web
                 controller: "knowledgeManagementController"
 
             })
+
+            //客服知識總覽
+            .state("knowledgeManagement.custOverview", {
+                url: "/custOverview",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowOverview/custOverview.html',
+                        controller: "custOverviewController"
+                    }
+                }
+            })
+            //客服知識預覽
+            .state("knowledgeManagement.custPreview", {
+                url: "/custPreview/:knowledgeId/:knowledgeType",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowOverview/custPreview.html',
+                        controller: "custPreviewController"
+                    }
+                }
+            })
+            //營銷知識總覽
+            .state("knowledgeManagement.markOverview", {
+                url: "/markOverview",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowOverview/markOverview.html',
+                        controller: "markOverviewController"
+                    }
+                }
+            })
+            //營銷知識預覽
+            .state("knowledgeManagement.markPreview", {
+                url: "/markPreview/:knowledgeId/:knowledgeType",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/knowledgeManagement/knowOverview/markPreview.html',
+                        controller: "markPreviewController"
+                    }
+                }
+            })
+            //概念新增
             .state("knowledgeManagement.singleAddConcept", {
                 url: "/singleAddConcept/:data",
                 views: {

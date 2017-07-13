@@ -94,7 +94,6 @@ angular.module('knowledgeManagementModule').controller('createTemController', [
         var timeout;
         $scope.$watch('vm.templateId', function (temId) {
             if(temId){
-                console.log(temId)  ;
                 if (timeout) {
                     $timeout.cancel(timeout)
                 }

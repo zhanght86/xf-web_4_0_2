@@ -3,26 +3,23 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-
-angular.module('knowledgeManagementModule').controller('custKnowledgePreviewController', [
+angular.module('knowledgeManagementModule').controller('custPreviewController', [
     '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$cookieStore","knowledgeAddServer","$window","$http","myService",
     function ($scope,localStorageService, $state,$stateParams,ngDialog,$cookieStore,knowledgeAddServer,$window,$http,myService) {
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
-        var viewData =  $window.opener.knowledgeScan ;
-        if(!viewData){
-            $state.go("custServScenaOverview.manage")
+        //var viewData =  $window.opener.knowledgeScan ;
+        if(!$stateParams.knowledgeId || !$stateParams.knowledgeType){
+            $state.go("knowledgeManagement.custOverview")
         }else{
-            //console.log($stateParams.scanKnowledge);
             $scope.vm = {
-                applicationId :$cookieStore.get("applicationId"),
-                knowledgeId : viewData.knowledgeId,        //del
-                knowledgeType : viewData.knowledgeType,
+                knowledgeId : $stateParams.knowledgeId,        //del
+                knowledgeType : parseInt($stateParams.knowledgeType),
                 listData : null,
                 edit :  edit
             };
             // 展示渠道维度使用
             //獲取渠道
-            knowledgeAddServer.getDimensions({ "applicationId" : $scope.vm.applicationId},
+            knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
                 function(data) {
                     if(data.data){
                         $scope.vm.dimensions = data.data;
@@ -30,7 +27,7 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 }, function(error) {
                 });
             //获取维度
-            knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+            knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
                 function(data) {
                     if(data.data){
                         $scope.vm.channels = data.data
@@ -38,9 +35,8 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                 }, function(error) {
                 });
             //修改
-            //console.log(viewData.knowledgeType);
             var editUrl,api;
-            switch(viewData.knowledgeType){
+            switch($scope.vm.knowledgeType){
                 case 100 :
                     editUrl = "knowledgeManagement.faqAdd";
                     api = "/api/ms/faqKnowledge/getKnowledge";
@@ -59,16 +55,15 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     break;
             }
             function edit(){
-
                 $state.go(editUrl,{data:angular.toJson($scope.vm.listData)})
             }
-            void function(){
+           void function(){
                 knowledgeAddServer.getDataServer(api,{
                     "knowledgeId" : $scope.vm.knowledgeId,
-                    "applicationId" : $scope.vm.applicationId
+                    "applicationId" : APPLICATION_ID
                 },function(data){
-                    //console.log(data) ;
-                    if(viewData.knowledgeType == 103){
+                    console.log(data) ;
+                    if($scope.vm.knowledgeType == 103){
                         var data = data.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;
                         data.knowledgeContents[0].knowledgeContent = table;
@@ -78,10 +73,8 @@ angular.module('knowledgeManagementModule').controller('custKnowledgePreviewCont
                     }else{
                         $scope.vm.listData = data.data;
                     }
-                    //console.log(data);
-                    //$scope.$apply();
                 },function(){
-                    layer.msg("获取失败")
+                    console.log("获取失败")
                 }) ;
             }()
         }
