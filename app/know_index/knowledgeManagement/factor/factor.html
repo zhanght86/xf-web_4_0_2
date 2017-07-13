@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <!--手选生成-->
-                    <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
+                    <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy">
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">BOT路径：</div>
                             <div class=" clearfix" id="Div">
@@ -75,7 +75,7 @@
                                         <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
+                                <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.botClassfy.splice($index,1)" alt=""></a>
                             </div>
                         </div>
                     </div>

@@ -1,14 +1,10 @@
-<div ui-view="header"></div>
+<!--<div ui-view="header"></div>-->
 <div class="main warp markOver">
-
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                <!--<img class="hd-img" src="../../../images/images/poto.png"/>-->
-                <!--<img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>-->
                 <div style="width:110px;height:110px;overflow: hidden;border-radius:50%;margin:0 auto;border:3px solid #fff;">
-                    <!--<img class="hd-img" ng-src="../../images/touxiang1.png"/>-->
-                    <img class="hd-img" ng-src="/img/{{vm.robotHead}}"/>
+                    <img class="hd-img" ng-src="{{master.headImage}}"/>
                 </div>
                 <span class="hd-name ellipsis">{{vm.applicationName}}</span>
             </div>
@@ -98,22 +94,25 @@
                 <div class="csso-cont mt30">
                     <div class="clearfix csso-hd">
                         <div class="fl">
-                            <input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span>
+                            <!--<input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/>-->
+                            <!--<a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>-->
+                            <span class="L" checkbox-overview ng-click="vm.selectAll(vm.listData)" result="vm.isSelectAll"></span>
+                            <span class="L"><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
                         </div>
-                        <div class="fr" style="margin-right: 80px;" ng-click="vm.delData()">
-                            <a class="ljtClose-btn" href="javascript:;" style="width: 50px;">
+                        <div class="fr"  ng-click="vm.delData()">
+                            <a class="ljtClose-btn" href="javascript:;" >
                                 <i class="icon-ljtClose"></i>
-                                <span class="txt" >删除</span>
+                                <span style="color:#e84f4f;">删除</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="clearfix csso-bd" style="min-height:300px;">
+                    <div class="clearfix csso-bd" style="min-height:300px;padding-left: 15px;">
                         <ul class="csso-lsit">
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
                                     <span checkbox-overview ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)" result="vm.knowledgeIds.inArray(item.knowledgeId)"></span>
-                                    <a href="javascript:;" ng-click="vm.scan(item)">{{item.knowledgeTitle}}</a>
+                                    <a href="javascript:;" ui-sref="knowledgeManagement.custPreview({knowledgeId:item.knowledgeId,knowledgeType:item.knowledgeType})">{{item.knowledgeTitle}}</a>
                                 </div>
                                 <div class="txt-cont mt10">
                                     <div class="txt-item oh">
@@ -145,7 +144,7 @@
                                 </div>
                                 <div class="csso-info oh">
                                     <div class="fr">
-                                        <span>作者：{{item.knowledgeCreator}}</span>
+                                        <span class="mr-10">作者：{{item.knowledgeCreator}}</span>
                                         <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</span>
                                     </div>
                                 </div>
@@ -163,6 +162,3 @@
 <style>
     .advanced_search{background:#fff;width:540px;}
 </style>
-<script>
-
-</script>

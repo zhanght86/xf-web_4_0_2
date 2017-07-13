@@ -7,14 +7,9 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
             isSlide : isSlide,
             isSlide2 : isSlide2,
             sceneId : $cookieStore.get('sceneId'),
-            applicationId: $cookieStore.get("applicationId"),
             applicationName : $cookieStore.get("applicationName"),
-
-            robotHead : "",//头像
-            imgUrl : "", //文件服务器地址
             robotName : "" //机器人名称
         };
-
         //获取应用的头像
         findRobotHead();
 
@@ -33,28 +28,22 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
             }else{
                 $(self).addClass("slideActive").parent().next(".menu_1").stop().slideToggle();
             }
-
         }
-
         //获取应用的头像
         function findRobotHead(){
             httpRequestPost("/api/application/application/findRobotSetting",{
-                "applicationId": $scope.vm.applicationId
+                "applicationId": APPLICATION_ID
             },function(data){          //类名重複
                 if(data.data===10005){
-                    $scope.vm.robotHead= "";//头像
-                    $scope.vm.imgUrl =""; //文件服务器地址
+                    $scope.master.headImage= "";//头像
                 }else{
-                    $cookieStore.put('robotHead',data.data.robotHead);
-                    $cookieStore.put('imgUrl',data.data.imgUrl);
-                    
-                    $scope.vm.robotHead= data.data.robotHead;//头像
-                    $scope.vm.imgUrl = data.data.imgUrl; //文件服务器地址
+                    $cookieStore.put('robotHead','/img/'+data.data.robotHead);
+                    $scope.master.headImage = '/img/'+data.data.robotHead ;
                     $scope.vm.robotName = data.data.robotName; //机器人名称
                     $scope.$apply();
                 }
             },function(){
-                layer.msg("获取头像失敗");
+                console.log("获取头像失敗");
             })
         }
     }

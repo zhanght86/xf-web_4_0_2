@@ -7,6 +7,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
               knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
         $scope.vm = {
+            knowledgeId : "" ,
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -30,7 +31,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //失去焦点
             //blur:blur,
             botClassfy : [],   //类目
-            //creatSelectBot : [], //手选生成 bot
             //扩展问
             getExtension : getExtension , //获取扩展问
             extensionTitle : "",
@@ -167,7 +167,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
-            $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
+            $timeout(function(){$scope.vm.openContentConfirm(saveAddNew);},0) ;
+             //知识内容弹出框
         }
 
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
@@ -208,7 +209,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                             return true ;
                         }
                     }) ;
-                    console.log(frame)  ;
+                    //console.log(frame)  ;
                     if(frame == $scope.vm.extensionsByFrame[0].source){
                         return false
                     }else{
@@ -224,7 +225,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
         // 通过frame 获取扩展问
         function getExtensionByFrame(id,type){
-            console.log(id);
+            //console.log(id);
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameTypeId": 10011,
                 "frameId": id,
@@ -265,34 +266,18 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 categoryId: id
             },function(data){
                 if(data.status = 10000){
-                    var len = $scope.vm.botClassfy.length;
-                    var obj = {};
-                    if(len){
-                        angular.forEach($scope.vm.botClassfy,function(item){
-                            if(item.classificationId!=id){
-                                len-=1
-                            }
-                        });
-                        if(len==0){
-                            obj.className = data.categoryFullName.split("/");
-                            obj.classificationId = id ;
-                            obj.classificationType = 1;
-                        }else{
-                            layer.msg("添加分类重复");
-                            return false
+                    var allBot = angular.copy($scope.vm.botClassfy) ,
+                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                    $scope.$apply(function(){
+                        console.log(data) ;
+                        $scope.vm.knowledgeBotVal = data.categoryFullName;
+                        if(botResult != false){
+                            //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                            $scope.vm.botFullPath= botResult;
                         }
-                    }else{
-                        obj.className = data.categoryFullName.split("/");
-                        obj.classificationId = id ;
-                        obj.classificationType = 1;
-                    }
-                    $scope.vm.knowledgeBotVal = obj.className.join("/");
-                    $scope.vm.botFullPath=obj ;
-                    $scope.$apply()
+                    });
                 }
-            },function(error){
-                console.log(error)
-            });
+            },function(error){console.log(error)});
         }
         //添加扩展问
         function getExtension(title,weight){
@@ -527,7 +512,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             if($scope.vm.title){
                 httpRequestPost("/api/ms/faqKnowledge/findClasssByKnowledgeTitle",{
                     "title" :  $scope.vm.title,
-                    "applicationId" : APPLICATION_ID
+                    "applicationId" : APPLICATION_ID,
+                    "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){
@@ -592,8 +578,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                                     //文档知识分类状态回掉
                                     $scope.vm.knowledgeClassifyCall()
                                 } else {
-                                    //open
-                                    $state.go("custServScenaOverview.manage");
+                                    $state.go('knowledgeManagement.custOverview');
                                 }
 
                             }else if (data.status == 500) {

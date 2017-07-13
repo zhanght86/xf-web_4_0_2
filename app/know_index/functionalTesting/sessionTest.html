@@ -41,18 +41,15 @@
                 <textarea class="chat_text_txta f-14 mb-5" ng-model="vm.testAsking"  placeholder="请输入测试问题" style="border:1px solid #eee;"></textarea>
                 <div class="framework mb-10 cl" style="min-height:25px;padding-left:100px;">
                     <span class="framework_s text-r">选择服务：</span>
-                    <div class="">
-                        <select class="bd" style="height:30px;min-width: 50px" ng-model="vm.serviceId"  ng-options="service.serviceId as service.serviceName for service in vm.listService">
-                            <option value="" ng-if="vm.listService.length==0">应用下服务为空</option>
-                        </select>
-                    </div>
+                    <select class="bd mr-30" style="height:30px;min-width: 50px" ng-model="vm.serviceId"  ng-options="service.serviceId as service.serviceName for service in vm.listService">
+                        <option value="" ng-if="vm.listService.length==0">应用下服务为空</option>
+                    </select>
+                    <span>
+                        <span class="">渠道：</span>
+                        <label class="mr-10" ng-repeat="channel in vm.channelList"><input type="radio" name="channel" ng-model="vm.channel" ng-value="channel.channelCode"/> {{channel.channelName}}</label>
+                    </span>
                 </div>
-                <div class="framework mb-10 cl" style="min-height:25px;padding-left:100px;">
-                    <span class="framework_s text-r">渠道：</span>
-                    <div class="">
-                        <label class="mr-10" ng-repeat="channel in vm.channelList"><input type="radio" name="channel" ng-click="vm.channel=channel.channelCode"/> {{channel.channelName}}</label>
-                    </div>
-                </div>
+
                 <div class="framework mb-10 cl" style="min-height:25px;padding-left:100px;">
                     <span class="framework_s text-r">维度：</span>
                     <div>
@@ -75,8 +72,15 @@
                             <div class="tc" ng-if="$index!=vm.result.flowInfo.length-1" style="font-size:30px;color:green;margin-top:10px;">↓</div>
                         </div>
                         <span class="flow_span L ml-10 mr-10">-</span>
-                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>
-                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>
+                        <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>-->
+                        <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>-->
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">
+                            <div ng-repeat="i in v.stepInfo.split('\n') track by $index">{{i}}</div>
+                        </div>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">
+                            <div ng-repeat="i in v.stepInfo.split('\n') track by $index">{{i.substring(0,(i.length-1))}}</div>
+                        </div>
+
                     </li>
 
                 </ul>

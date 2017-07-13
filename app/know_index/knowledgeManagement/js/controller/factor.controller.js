@@ -98,7 +98,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             backupsOfExtension : "" //扩展问 编辑备份
         };
 
-
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -170,7 +169,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList == null ? [] : item.knowledgeRelevantContentList ;  //业务扩展问
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
             });
         }else{
             init();
@@ -479,30 +478,40 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             },function(data){
                 console.log(data) ;
                 if(data.status = 10000){
-                    var len = $scope.vm.creatSelectBot.length;
-                    var obj = {};
-                    if(len){
-                        angular.forEach($scope.vm.creatSelectBot,function(item){
-                            if(item.classificationId!=id){
-                                len-=1
-                            }
-                        });
-                        if(len==0){
-                            obj.className = data.categoryFullName.split("/");
-                            obj.classificationId = id ;
-                            obj.classificationType = 1;
-                        }else{
-                            layer.msg("添加分类重复");
-                            return false
+                    var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
+                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                    $scope.$apply(function(){
+                        console.log(data) ;
+                        $scope.vm.knowledgeBotVal = data.categoryFullName;
+                        if(botResult != false){
+                            //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                            $scope.vm.botFullPath= botResult;
                         }
-                    }else{
-                        obj.className = data.categoryFullName.split("/");
-                        obj.classificationId = id ;
-                        //obj.classificationType = 1;
-                    }
-                    $scope.vm.knowledgeBotVal = obj.className.join("/");
-                    $scope.vm.botFullPath=obj;
-                    $scope.$apply();
+                    });
+                    //var len = $scope.vm.creatSelectBot.length;
+                    //var obj = {};
+                    //if(len){
+                    //    angular.forEach($scope.vm.creatSelectBot,function(item){
+                    //        if(item.classificationId!=id){
+                    //            len-=1
+                    //        }
+                    //    });
+                    //    if(len==0){
+                    //        obj.className = data.categoryFullName.split("/");
+                    //        obj.classificationId = id ;
+                    //        obj.classificationType = 1;
+                    //    }else{
+                    //        layer.msg("添加分类重复");
+                    //        return false
+                    //    }
+                    //}else{
+                    //    obj.className = data.categoryFullName.split("/");
+                    //    obj.classificationId = id ;
+                    //    //obj.classificationType = 1;
+                    //}
+                    //$scope.vm.knowledgeBotVal = obj.className;
+                    //$scope.vm.botFullPath=obj;
+                    //$scope.$apply();
                 }
             },function(){
                 //console.log("添加扩展问失败")
@@ -645,6 +654,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         });
         //添加BOT 分类  ==== 点击bot分类的 加号
         function botSelectAdd(){
+            console.log($scope.vm.botFullPath);
             if($scope.vm.botFullPath){
                 $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
@@ -804,10 +814,10 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 return;
             }*/
             if($scope.vm.title){
-                getExtension($scope.vm.title,"60",1) ; //生成扩展问
                 httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
-                    "applicationId": APPLICATION_ID
+                    "applicationId": APPLICATION_ID ,
+                    "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     console.log(data);
                     if(data.status == 500){    //标题打标失败
@@ -817,21 +827,38 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.vm.titleTip = data.info;
                         $scope.$apply()
                     } else if(data.status == 200){
+                        getExtension($scope.vm.title,"60",1) ; //生成扩展问
                         $scope.$apply(function(){
+                            //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
-                            $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                            console.log(data.data.knowledgeTitleTagList)
+                            //添加校验是否添加校验  获取所有bot 验证是否重复
+                            var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ;
+                            $scope.vm.botClassfy = [];   //reset 标题生成bot
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
-                                var obj = {
-                                    "className" : item.fullPath ,
-                                    "classificationId" : item.id ,
-                                    "classificationType" : item.type
-                                };
-                                $scope.vm.botClassfy.push(obj);
+                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
+                                if(botResult != false){
+                                    $scope.vm.botClassfy.push(botResult);
+                                }
                                 $scope.vm.frameCategoryId = item.id;
                             });
                         });
+                        //$scope.$apply(function(){
+                        //    $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
+                        //    $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
+                        //    console.log(data.data.knowledgeTitleTagList) ;
+                        //    //生成bot
+                        //    angular.forEach(data.data.classifyList, function (item) {
+                        //        var obj = {
+                        //            "className" : item.fullPath ,
+                        //            "classificationId" : item.id ,
+                        //            "classificationType" : item.type
+                        //        };
+                        //        //botClassfy
+                        //        $scope.vm.botClassfy=new Array(obj);
+                        //        $scope.vm.frameCategoryId = item.id;
+                        //    });
+                        //});
                     }
                 },function(error){
                     console.log(error)
@@ -891,7 +918,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         httpRequestPost(api, getParams(), function (data) {
                             //console.log(data);
                             if (data.status == 200) {
-                              $state.go('custServScenaOverview.manage');
+                                $state.go('knowledgeManagement.custOverview');
                             } else if (data.status == 500) {
                                 layer.msg("知识保存失败") ;
                                 $timeout.cancel(limitTimer) ;

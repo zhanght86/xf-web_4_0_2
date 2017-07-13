@@ -1,6 +1,5 @@
-<div ui-view="header"></div>
+<!--<div ui-view="header"></div>-->
 <div class="main warp">
-
     <div class="addContent pd30">
         <div class="r-cont-hd">
             <span>知识预览</span>
@@ -22,10 +21,9 @@
             <li  ng-if="vm.knowledgeType!=101" class="borderN">
                 <p ng-if="vm.knowledgeType!=100" ng-repeat="item in vm.listData.extensionQuestions track by $index">
                     <span ng-class="$index!=0?'milesVh':''">概念扩展：</span>
-                    <span style="width: auto;background: #f1f1f1;" ng-repeat="val in item.extensionQuestionTagList track by $index">
-                        {{val.tagName}}
+                     <span style="width: auto;" >
+                        {{item.extensionQuestionTitle}}
                     </span>
-                    <span></span>
                 </p>
                 <p ng-if="vm.knowledgeType==100" ng-repeat="item in vm.listData.extensionQuestions track by $index">
                     <span ng-class="$index!=0?'milesVh':''">扩展问题：</span>{{item.extensionQuestionTitle}}
@@ -89,14 +87,13 @@
             <li class="borderN"  ng-if="vm.knowledgeType==101">
                 <p ng-repeat="item in vm.listData.extensionQuestions track by $index">
                     <span ng-class="$index!=0?'milesVh':''">概念扩展：</span>
-                    <span style="width: auto;background: #f1f1f1;" ng-repeat="val in item.extensionQuestionTagList track by $index">
-                        {{val.tagName}}
+                     <span style="width: auto;" >
+                        {{item.extensionQuestionTitle}}
                     </span>
-                    <span></span>
                 </p>
             </li>
             <div class="jqrsz-btn-box" style="padding-left: 150px;margin-top: 4px;">
-                <a class="btn btn-blue mr10" ui-sref="custServScenaOverview.manage">返回</a>
+                <a class="btn btn-blue mr10" ui-sref="knowledgeManagement.custOverview">返回</a>
                 <a class="btn btn-gray" href="javascript:;" ng-click="vm.edit()" style="background: #2bcacc; color: #fff;">修改</a>
             </div>
         </ul>

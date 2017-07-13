@@ -1,5 +1,6 @@
 /**
- * Created by 41212 on 2017/3/23.
+ * Created by mileS on 2017/3/23
+ * For  批量测试
  */
 
 angular.module('functionalTestModule').controller('batchTestController', [
@@ -37,9 +38,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
             getService : getService
             //------------------------------渠道   服务end
 
+
         };
         //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : $scope.vm.applicationId},
+        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
                     $scope.vm.channelList = data.data;
@@ -52,7 +54,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         getService();
         function getService(){
             httpRequestPost("/api/application/service/listServiceByApplicationId",{
-                applicationId:$scope.vm.applicationId,
+                applicationId:APPLICATION_ID,
             },function(data){
                 if(data.status == 10000){
                     $scope.vm.listService = data.data;
@@ -64,8 +66,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             },function(){
                 console.log('请求失败');
             })
-        }
-
+        }   
         showData(1);
         //加载表格
         function showData(index){
@@ -73,23 +74,27 @@ angular.module('functionalTestModule').controller('batchTestController', [
             httpRequestPost("/api/application/batchTest/getBatchFile",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId
+                applicationId:APPLICATION_ID
             },function(data){
+
+                initBatchTest();
                 console.log(data);
                 if(data.status == 10005){
                     layer.msg("查询到记录为空",{time:1000});
-                    return;
                 }else{
-                    $scope.vm.listData = data.data.batchTestList;
-                    $scope.vm.listDataTotal = data.data.total;
-                    // $scope.vm.listDataLength = data.data.total;
-                    $scope.vm.paginationConf = {
-                        currentPage: index,//当前页
-                        totalItems: data.data.total, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8//分页框数量
-                    };
-                    $scope.$apply();
+                    $scope.$apply(function(){
+                        $scope.vm.deleteIds = [];
+                        $scope.vm.selectAllCheck = false;
+                        $scope.vm.listData = data.data.batchTestList;
+                        $scope.vm.listDataTotal = data.data.total;
+                        // $scope.vm.listDataLength = data.data.total;
+                        $scope.vm.paginationConf = {
+                            currentPage: index,//当前页
+                            totalItems: data.data.total, //总条数
+                            pageSize: $scope.vm.pageSize,//第页条目数
+                            pagesLength: 8//分页框数量
+                        };
+                    });
                 }
             },function(){
                 console.log('请求失败');
@@ -97,21 +102,29 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
         //查询
         function searchFile(index){
+            if($scope.vm.selectInput==''){
+                showData(1);
+            }
             httpRequestPost("/api/application/batchTest/findByValue",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId,
+                applicationId:APPLICATION_ID,
                 batchStatusId :$scope.vm.searchType,
                 batchName: $scope.vm.selectInput,
                 channel: $scope.vm.selectInput,
                 batchOperator: $scope.vm.selectInput
-
             },function(data){
                 console.log(data);
                 if(data.status == 10005){
                    layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: 0, //总条数
+                        pageSize: 0,//第页条目数
+                        pagesLength: 8//分页框数量
+                    };
                     //return;
                 }else{
                     $scope.vm.listData = data.data.batchTestList;
@@ -142,10 +155,12 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     $timeout.cancel(timeout);
                 }
                 timeout = $timeout(function () {
+                    initBatchTest();
                     showData(current);
-                }, 0);
+                }, 100);
             }
         },true);
+
 
         //批量上传
         function uploadQuestion(callback){
@@ -170,7 +185,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
         //删除
         function deleteQuestion(callback){
-            if($scope.vm.deleteIds == 0){
+            if($scope.vm.deleteIds.length == 0){
                 layer.msg("请选择要删除的文件！",{time:1000});
                 return;
             }
@@ -184,11 +199,12 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 preCloseCallback: function (e) {    //关闭回掉
                     if(e === 1){
                         httpRequestPost("/api/application/batchTest/batchDeleteByIds",{
-                            applicationId :  $scope.vm.applicationId,
+                            applicationId :  APPLICATION_ID,
                             ids :  $scope.vm.deleteIds
                         },function(data){
                             if(data.status == 10013){
-                                $scope.vm.selectAllCheck = false;
+                                initBatchTest();
+                                //$scope.vm.selectAllCheck = false;
                                 $state.reload();
                                 layer.msg("删除成功",{time:1000});
                             }else{
@@ -240,7 +256,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     //channel:$scope.vm.channel,
                     channelName : name,
                     channel:channelId,
-                    applicationId:$scope.vm.applicationId,
+                    applicationId:APPLICATION_ID,
                     serviceId:$scope.vm.serviceId,
                 }, function (data) {
                     if(data.status == 20002){
@@ -277,7 +293,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 userId: $scope.vm.userId,
                 channelName : name ,
                 channel:channelId,
-                applicationId:$scope.vm.applicationId,
+                applicationId:APPLICATION_ID,
                 serviceId:$scope.vm.serviceId,
                 //serviceId:22
             }, function (data) {
@@ -308,11 +324,18 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 $scope.vm.selectAllCheck = false;
             }else{
                 $scope.vm.deleteIds.push(id);
+
             }
             if($scope.vm.deleteIds.length==$scope.vm.listData.length){
                 $scope.vm.selectAllCheck = true;
             }
-            //console.log( $scope.vm.deleteIds);
+            console.log( $scope.vm.deleteIds);
+        }
+
+        //
+        function initBatchTest(){
+            $scope.vm.deleteIds = [] ;
+            $scope.vm.selectAllCheck = false;
         }
     }
 ]);

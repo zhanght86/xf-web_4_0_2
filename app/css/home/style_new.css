@@ -420,6 +420,12 @@
 .custOver .selectall_a1,.markOver .selectall_a1{background:url(../../images/images/my-checkbox.png) no-repeat;}
 .custOver .selectall_a2,.markOver .selectall_a2{background:url(../../images/images/my-checkbox-on.png) no-repeat;}
 
+/*黑名单、发布管理 样式修改*/
+.Blacklist_tab th,.Blacklist_tab td{word-break: break-all;min-height:40px;line-height:20px;}
+.ReleaseManage td{word-break: break-all;min-height:40px;line-height:20px;}
 
-
-
+/*上传历史*/
+.history_div{width:350px;height:33px;margin:0 auto 20px;}
+.history_div .btn1{right:-1px;top:-1px;height:32px;}
+.history_tabdiv .history_table td,.history_tabdiv .history_table th{word-break: break-all;border:1px solid #eee;min-height:30px;padding:5px 0;text-align: center;}
+.history_tabdiv .history_table {width:100%;}

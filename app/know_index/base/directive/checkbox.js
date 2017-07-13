@@ -55,7 +55,6 @@ knowledge_static_web.directive("checkbox", function($parse) {
                 }) ;
                 scope.toggle=function toggle(){
                     scope.flag = !scope.flag;
-
                 }
             }
         }

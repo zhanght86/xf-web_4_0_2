@@ -92,7 +92,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             }
         }
 
-        function selectAll(ev){
+        function selectAll(){
             //var self = $(ev.target);
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
@@ -106,18 +106,30 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
             }
             console.log( $scope.vm.deleteIds)
         }
-       function selectSingle(ev,id){
-           var self = $(ev.target);
-           if(self.attr('checked')){    
-               self.attr('checked',false);
-               $scope.vm.deleteIds.remove(id);
-               $(".selectAllBtn").attr("checked",false)
-           }else{
-               $(".selectAllBtn").attr("checked",false)
-               $scope.vm.deleteIds.push(id)
-           }
-           console.log( $scope.vm.deleteIds)
-       }
+       // function selectSingle(ev,id){
+       //     var self = $(ev.target);
+       //     if(self.attr('checked')){
+       //         self.attr('checked',false);
+       //         $scope.vm.deleteIds.remove(id);
+       //         $(".selectAllBtn").attr("checked",false)
+       //     }else{
+       //         $(".selectAllBtn").attr("checked",false)
+       //         $scope.vm.deleteIds.push(id)
+       //     }
+       //     console.log( $scope.vm.deleteIds)
+       // }
+        function selectSingle(id){
+            if($scope.vm.deleteIds.inArray(id)){
+                $scope.vm.deleteIds.remove(id);
+                $scope.vm.selectAllCheck = false;
+            }else{
+                $scope.vm.deleteIds.push(id);
+            }
+            if($scope.vm.deleteIds.length==$scope.vm.listData.length){
+                $scope.vm.selectAllCheck = true;
+            }
+            console.log( $scope.vm.deleteIds);
+        }
         //加载列表
         getData(1);
         function getData(index){
@@ -126,6 +138,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 pageSize:$scope.vm.pageSize,
                 applicationId:$scope.vm.applicationId
             },function(data){
+                initChatPageConfig();
                 console.log(data);
                 //if(data.status == 10005){
                 //    layer.msg("查询到记录为空");
@@ -152,6 +165,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
+                    initChatPageConfig();
                     getData(current);
                 }, 100)
             }
@@ -216,6 +230,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                         },function(data){
                             //$state.reload();
                             if(data.status == 10013){
+                                initChatPageConfig();
                                 $scope.vm.selectAllCheck = false;
                                 $state.reload();
                                 layer.msg("删除成功");
@@ -345,6 +360,11 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     }
                 }
             });
+        }
+        function initChatPageConfig(){
+            $scope.vm.deleteIds=[];
+            $scope.vm.selectAllCheck = false;
+
         }
     }
 ]);

@@ -360,6 +360,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             "channelId": $scope.vmo.channelId
                         },function(data){
                             $scope.vmo.isSelectedAll = false ;
+                            $scope.vmo.blackListIdentify = "";
                             layer.msg("添加成功");
                             if($scope.vmo.selectedList.length == $scope.vmo.pageSize){
                                 $scope.vmo.selectedList.pop() ;
