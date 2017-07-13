@@ -430,4 +430,9 @@
 .history_tabdiv .history_table td,.history_tabdiv .history_table th{word-break: break-all;border:1px solid #eee;min-height:30px;padding:5px 0;text-align: center;}
 .history_tabdiv .history_table {width:100%;}
 /*统计分析*/
+.analy_table{width:100%;}
+.analy_table td{border:1px solid #eee;text-align:center;min-height:30px;padding:5px;}
+.analy_table .tr1 td{background:#00a2d4;color:#fff;}
 .knowrank_top{width:910px;margin:0 auto 20px;}
+.visitor_div{width:49%;height:133px;box-sizing: border-box;}
+.visitor_div1{width:100%;height:41px;line-height:41px;padding:0 20px;background:#ccc;box-sizing: border-box;}

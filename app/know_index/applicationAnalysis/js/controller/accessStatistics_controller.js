@@ -9,6 +9,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
         $scope.vm = {
 
 
+
         };
 
 
