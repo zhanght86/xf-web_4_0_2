@@ -359,6 +359,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
                             "blackListUpdateId": USER_ID,
                             "channelId": $scope.vmo.channelId
                         },function(data){
+                            $scope.vmo.blackListRemark = "" ,
                             $scope.vmo.isSelectedAll = false ;
                             $scope.vmo.blackListIdentify = "";
                             layer.msg("添加成功");

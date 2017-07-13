@@ -38,14 +38,22 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             }
         }
         function delKnowledge(){
-            httpRequestPost("/api/ms/chatKnowledge/deleteConceCptChatKnowledge",{
-                "applicationId": APPLICATION_ID,
-                "ids":$scope.vm.delArr
-            },function(data){
-                $state.reload();
-            },function(err){
-                console.log(err)
-            })
+            console.log($scope.vm.delArr) ;
+            if(!$scope.vm.delArr.length){
+                layer.msg("请选择要删除的知识")
+            }else{
+                layer.confirm('是否确定删除该条知识？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    httpRequestPost("/api/ms/chatKnowledge/deleteConceCptChatKnowledge",{
+                        "applicationId": APPLICATION_ID,
+                        "ids":$scope.vm.delArr
+                    },function(){
+                        layer.msg("删除成功") ;
+                        $state.reload();
+                    })
+                });
+            }
         }
         $scope.$watch("vm.searchHeighFlag",function(val){
             if(val){
@@ -71,6 +79,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 if(data.data==10005){
                     layer.msg("查询无此相关知识")
                 }else{
+                    $scope.vm.delArr = [] ;
                     $scope.vm.listData = data.data.objs,
                         $scope.vm.paginationConf = {
                             currentPage: index,//当前页
@@ -116,6 +125,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index" :(index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
             },function(data){
+                $scope.vm.delArr = [] ;
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页

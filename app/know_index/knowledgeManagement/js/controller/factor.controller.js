@@ -521,11 +521,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //手动添加扩展问
         function getExtension(title,weight,source){
             //source  0 默认  1 标题;
-            var question = [];
-            question.push(title);
-            var obj = {} ;
-            obj.extensionQuestionTitle = $scope.vm.extensionTitle;
-            obj.extensionQuestionType = $scope.vm.extensionWeight;
+            var question = new Array(title);
+            var obj = {
+                "extensionQuestionTitle" : $scope.vm.extensionTitle,
+                "extensionQuestionType" : $scope.vm.extensionWeight
+            } ;
             if(!$scope.vm.extensionTitle && !source){
                 layer.msg("扩展问不能为空")
             }else if(title == $scope.vm.title && !source){
@@ -543,6 +543,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 },function(data){
                     if(data.status == 500){
                         layer.msg("概念扩展打标失败，请检查服务，重新打标") ;
+                    }else if(data.status == 10026 ){
+                        layer.msg("扩展问添加重复，请重新添加")
                     }else if(data.status==200){
                         var allExtension = $scope.vm.extensions ;
                         if(isTagRepeat(data.data,allExtension,title)){
@@ -819,11 +821,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
 
         //根據 標題 生成 bot 跟 扩展问
         function getBotAndExtensionByTitle(){
-           /* console.log(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle));
-            if(chackTitleAndextEnsionQuestion( $scope.vm.title,$scope.vm.extensionTitle)){
-                layer.msg("标题和扩展问重复请重新输入标题")
-                return;
-            }*/
             if($scope.vm.title){
                 httpRequestPost("/api/ms/elementKnowledgeAdd/byTitleGetClassify",{
                     "title" :  $scope.vm.title,
@@ -842,10 +839,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         $scope.$apply(function(){
                             //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
-                            //添加校验是否添加校验  获取所有bot 验证是否重复
-                            var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ;
                             $scope.vm.botClassfy = [];   //reset 标题生成bot
-                            //生成bot
+                            //添加校验是否添加校验  获取所有bot 验证是否重复
+                            var allBot = angular.copy($scope.vm.creatSelectBot) ;
                             angular.forEach(data.data.classifyList, function (item) {
                                 var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
                                 if(botResult != false){
@@ -854,22 +850,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 $scope.vm.frameCategoryId = item.id;
                             });
                         });
-                        //$scope.$apply(function(){
-                        //    $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
-                        //    $scope.vm.botClassfy = [];   //防止 多次打标,添加类目
-                        //    console.log(data.data.knowledgeTitleTagList) ;
-                        //    //生成bot
-                        //    angular.forEach(data.data.classifyList, function (item) {
-                        //        var obj = {
-                        //            "className" : item.fullPath ,
-                        //            "classificationId" : item.id ,
-                        //            "classificationType" : item.type
-                        //        };
-                        //        //botClassfy
-                        //        $scope.vm.botClassfy=new Array(obj);
-                        //        $scope.vm.frameCategoryId = item.id;
-                        //    });
-                        //});
                     }
                 },function(error){
                     console.log(error)
