@@ -61,11 +61,6 @@ knowledge_static_web.controller('ApplicationController',
                     "classificationType" : type?type:67
                 } ;    //返回對象
                 var len = allBot.length;  //所有bot 長度
-                //var obj = {             //定义bot对象
-                //    "className" : path,
-                //    "classificationId" : id,
-                //    "classificationType" : type?type:67
-                //};
                 // 集合转为string 便于比较  并不改变原数组
                 var backUpPath = angular.copy(path).join("/") ;
                 if(len){                  //需要验证
@@ -77,9 +72,6 @@ knowledge_static_web.controller('ApplicationController',
                         }
                     });
                 }
-                //else{   //不需要验证
-                //    result = obj
-                //}
                 return result;
             }
             //BOT搜索自动补全

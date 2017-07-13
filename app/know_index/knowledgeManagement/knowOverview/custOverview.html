@@ -54,7 +54,7 @@
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识扩展问:</span>
-                                <input type="text" class="input_text"/>
+                                <input type="text" ng-model="vm.searchExtension" class="input_text"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
@@ -71,10 +71,11 @@
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识类型:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="knoe_type" />FAQ</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_type" />概念</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_type" />列表</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_type" />要素</label>
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType"  value="" type="radio" name="knoe_type"/>全部</label> 
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType"  value="100" type="radio" name="knoe_type" />FAQ</label>
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>
                                 </div>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
