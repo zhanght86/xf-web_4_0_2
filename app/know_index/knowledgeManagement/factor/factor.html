@@ -64,21 +64,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--标题生成-->
-                    <div class="exten_problem"  ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">
-                        <div class="list_facContent mb-10">
-                            <div class="list_facContent_L">BOT路径：</div>
-                            <div class=" clearfix" id="Div">
-                                <div class="ipt-txt-box L" style="width: 394px;border: 1px solid #e1e1e1;margin-right:10px;">
-                                    <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
-                                        <!--<span>{{item.className.join("/")}}</span>-->
-                                        <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
-                                    </div>
-                                </div>
-                                <a href="javascript:;" class="L mr-10 mt-5" ><img src="../../../images/images/delete_img.png" ng-click="vm.creatSelectBot.splice($index,1)" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
                     <!--手选生成-->
                     <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy">
                         <div class="list_facContent mb-10">
@@ -232,11 +217,13 @@
                                 </div>
                                 <div>
                                     <div class="mb-10" style="position: relative;">
-                                        <span class="mr-5">指定相关知识 :</span>
-                                        <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:380px;padding-left: 10px;">
-                                        <ul class="listItem specify_know_ul pd-5" ng-if="vm.appointRelativeList.length" >
-                                            <li ng-repeat="item in vm.appointRelativeList track by $index"
-                                                ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
+                                        <span>指定相关知识:</span>
+                                        <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:380px;">
+                                        <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position: absolute;
+                            left: 91px;z-index: 2;width:380px;height: 200px;overflow: scroll ;">
+                                            <li ng-repeat="item in vm.appointRelativeList track by $index" style="min-width: 280px;
+                                             cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px"
+                                                ng-click="vm.addAppoint(item, vm.appointRelativeGroup)">{{item}}</li>
                                         </ul>
                                     </div>
                                     <!-- -->
