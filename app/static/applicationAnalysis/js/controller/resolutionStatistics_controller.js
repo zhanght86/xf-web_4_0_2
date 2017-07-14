@@ -9,10 +9,6 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
         $scope.vm = {
             paginationConf : null ,//分页条件
             pageSize : 5  , //默认每页数量
-
         };
-
-
-        
     }
 ]);
