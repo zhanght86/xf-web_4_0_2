@@ -121,6 +121,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 "orderForSessionNumber": $scope.vm.orderForSessionNumber,
                 "orderForSessionTime": $scope.vm.orderForSessionTime
             },function(data){
+                console.log(data) ;
                 $scope.vm.listData = data.data.objs;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页

@@ -7,8 +7,9 @@
             <select class="L bd sel mr-10" ng-model="vm.answerCondition">
                 <option value="0">全部</option>
                 <option value="40003">回答正确</option>
-                <option value="40004">推荐</option>
+                <option value="40004">推荐正确</option>
                 <option value="40005">回答错误</option>
+                <option value="40006">推荐错误</option>
                 <option value="40007">不能回答</option>
             </select>
             <select class="L bd sel mr-10"  ng-model="vm.matchCondition">
@@ -68,8 +69,9 @@
                             <td ng-if="v.answerType==40002">不匹配</td>
 
                             <td ng-if="v.answerCondition==40003 ">回答正确</td>
-                            <td ng-if="v.answerCondition==40004 ">推荐</td>
+                            <td ng-if="v.answerCondition==40004 ">推荐正确</td>
                             <td ng-if="v.answerCondition==40005 ">回答错误</td>
+                            <td ng-if="v.answerCondition==40006">推荐错误</td>
                             <td ng-if="v.answerCondition==40007 ">不能回答</td>
 
                             <td ng-if="v.answerContent.length>=20" title="{{v.answerContent|replaceCode}}">{{v.answerContent|replaceCodeCut}}</td>
