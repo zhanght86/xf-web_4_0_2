@@ -49,7 +49,7 @@
             </div>
             <div class="tab_con pt30 pb30">
                 <div class="db">
-                    <div class="data_time_statis_top ">
+                    <div class="data_time_statis_top " style="width:910px;">
                         <select class="sel bd L mr-5" id="request_time_type">
                             <option value="1">今日</option>
                             <option value="2">昨日</option>
@@ -62,13 +62,11 @@
                             <option value="">APP</option>
                             <option value="">微信</option>
                         </select>
-                        <select class="sel bd L mr-5" >
-                            <option value="">选择维度</option>
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
-                        </select>
-                               <span>
+                        <!--纬度-->
+                        <div class="L mr-5" style="width:200px;height:32px;">
+                            <div auto-complete  source="" result="" style="width:100%;"></div>
+                        </div>
+                        <span>
                         日期范围:
                         <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
                         <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>

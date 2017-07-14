@@ -1,0 +1,58 @@
+<div ui-view="header"></div>
+
+<div class="wrap">
+    <div class="con_box mb25 p30 mt-10" style="min-height:500px;">
+        <div class="" style="width:910px;margin:0 auto 20px;">
+            <select class="sel bd L mr-5" >
+                <option value="0">全部时间</option>
+                <option value="1">今日</option>
+                <option value="2">昨日</option>
+                <option value="3">过去7天</option>
+                <option value="4">过去30天</option>
+            </select>
+
+            <select class="sel bd L mr-5" >
+                <option  value="" >全部渠道</option>
+                <option  value="" >web</option>
+                <option  value="" >微信</option>
+                <option  value="" >app</option>
+            </select>
+            <!--纬度-->
+            <div class="L mr-5" style="width:200px;height:32px;">
+                <div auto-complete  source="" result="" style="width:100%;"></div>
+            </div>
+                    <span>
+                        日期范围:
+                        <!--<div style="margin: 5px  0 0;"   ng-if="vm.searchType=='businessConceptModifyTime'">-->
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                            -
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                        <!--</div>-->
+                    </span>
+            <input type="button" class="btn1 btn1_blue"  value="查找" />
+        </div>
+        <div class="mb-20">
+            <a href="javascript:;" class="R c_blue">导出图表</a>
+        </div>
+        <div class="clearfix reso_echart_divbox" >
+            <div class="L reso_echart_div" >
+                <img src="../../../images/u30009.png" width="100%"/>
+            </div>
+            <div class="R reso_echart_div">
+                <img src="../../../images/u30484.png" width="100%"/>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+
+</script>
+
+
+
+
+
+

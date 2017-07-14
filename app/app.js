@@ -881,6 +881,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("applAnalysis.resolutionStatistics", {
+                url: "/resolutionStatistics",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/resolutionStatistics.html',
+                        controller: "resolutionStatisticsController"
+                    }
+                }
+            })
 
             //-----------------------
 

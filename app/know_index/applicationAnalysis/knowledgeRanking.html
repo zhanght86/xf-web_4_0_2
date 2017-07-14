@@ -18,7 +18,10 @@
                         <option value="">web</option>
                         <option value="">app</option>
                     </select>
-                    <input type="text" class="input-text bd L mr-5" placeholder="请输入纬度" style="width:200px;"/>
+                    <!--纬度-->
+                    <div class="L mr-5" style="width:200px;height:32px;">
+                        <div auto-complete  source="" result="" style="width:100%;"></div>
+                    </div>
                     <span class="L mr-5">
                         日期范围:
                         <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 33px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
