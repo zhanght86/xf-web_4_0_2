@@ -2,7 +2,6 @@
  * Created by mileS on 2017/3/23
  * For  批量测试
  */
-
 angular.module('functionalTestModule').controller('batchTestController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","knowledgeAddServer",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
@@ -21,7 +20,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
             listDataTotal : 0 ,      //共几条
           //  listDataLength : '',
             paginationConf : '',     //分页条件
-            showData : showData,
             selectAllCheck : false,
             selectAll : selectAll,
             selectSingle : selectSingle,
@@ -66,45 +64,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
             },function(){
                 console.log('请求失败');
             })
-        }   
-        showData(1);
-        //加载表格
-        function showData(index){
-            //console.log(applicationId);
-            httpRequestPost("/api/application/batchTest/getBatchFile",{
-                index:(index - 1)*$scope.vm.pageSize,
-                pageSize:$scope.vm.pageSize,
-                applicationId:APPLICATION_ID
-            },function(data){
-
-                initBatchTest();
-                console.log(data);
-                if(data.status == 10005){
-                    layer.msg("查询到记录为空",{time:1000});
-                }else{
-                    $scope.$apply(function(){
-                        $scope.vm.deleteIds = [];
-                        $scope.vm.selectAllCheck = false;
-                        $scope.vm.listData = data.data.batchTestList;
-                        $scope.vm.listDataTotal = data.data.total;
-                        // $scope.vm.listDataLength = data.data.total;
-                        $scope.vm.paginationConf = {
-                            currentPage: index,//当前页
-                            totalItems: data.data.total, //总条数
-                            pageSize: $scope.vm.pageSize,//第页条目数
-                            pagesLength: 8//分页框数量
-                        };
-                    });
-                }
-            },function(){
-                console.log('请求失败');
-            })  ;
         }
+        searchFile(1) ;
         //查询
         function searchFile(index){
-            if($scope.vm.selectInput==''){
-                showData(1);
-            }
             httpRequestPost("/api/application/batchTest/findByValue",{
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
@@ -114,7 +77,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 channel: $scope.vm.selectInput,
                 batchOperator: $scope.vm.selectInput
             },function(data){
-                console.log(data);
                 if(data.status == 10005){
                    layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
@@ -125,7 +87,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         pageSize: 0,//第页条目数
                         pagesLength: 8//分页框数量
                     };
-                    //return;
                 }else{
                     $scope.vm.listData = data.data.batchTestList;
                     $scope.vm.listDataTotal = data.data.total;
@@ -156,7 +117,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 }
                 timeout = $timeout(function () {
                     initBatchTest();
-                    showData(current);
+                    searchFile(current);
                 }, 100);
             }
         },true);
@@ -263,7 +224,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         layer.msg(data.data,{time:1000});
                     }
                     if(data.status == 10018){
-                        showData($scope.vm.paginationConf.currentPage);
+                        searchFile($scope.vm.paginationConf.currentPage);
                         startTest(id,name,channelId);
                     }
                 }, function () {
@@ -280,10 +241,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
             }, function (data) {
                 console.log(data);
                 if(data.status=10000){
-                    showData($scope.vm.paginationConf.currentPage) ;
+                    searchFile($scope.vm.paginationConf.currentPage) ;
                 }
-            }, function () {
-                //layer.msg("请求失败");
             });
         }
 
@@ -299,7 +258,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             }, function (data) {
                 console.log(data);
                 if(data.status=10000){
-                    showData($scope.vm.paginationConf.currentPage) ;
+                    searchFile($scope.vm.paginationConf.currentPage) ;
                 }
             }, function () {
                 //layer.msg("请求失败");

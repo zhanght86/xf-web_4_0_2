@@ -239,10 +239,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             },function(data){
                 if(data.status = 10000){
                     //添加校验是否添加校验
-                    console.log(data)
+                    console.log(data) ;
                     var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
                         botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
-                    console.log(botResult)
+                    console.log(botResult) ;
                     $scope.$apply(function(){
                         $scope.vm.knowledgeBotVal = data.categoryFullName;
                         if(botResult != false){
@@ -296,11 +296,11 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //手动添加扩展问
         function getExtension(title,weight,source){
             //source  0 默认  1 标题
-            var question = [];
-            question.push(title);
-            var obj = {} ;
-            obj.extensionQuestionTitle = $scope.vm.extensionTitle;
-            obj.extensionQuestionType = $scope.vm.extensionWeight;
+            var question = new Array(title);
+            var obj = {
+                "extensionQuestionTitle" : $scope.vm.extensionTitle,
+                "extensionQuestionType" : $scope.vm.extensionWeight
+            } ;
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
             }else if(title == $scope.vm.title && !source){
@@ -315,7 +315,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 }, function (data) {
                     if (data.status == 500) {
                         layer.msg("概念扩展打标失败，请检查服务，重新打标");
-                    } else if (data.status == 200) {
+                    } else if(data.status == 10026 ){
+                         layer.msg("扩展问添加重复，请重新添加");
+                    }else if (data.status == 200) {
                         var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
                         if(isTagRepeat(data.data,allExtension,title)){
 
@@ -580,9 +582,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.$apply(function(){
                             //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
-                            //添加校验是否添加校验  获取所有bot 验证是否重复
-                            var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ;
                             $scope.vm.botClassfy = [];   //reset 标题生成bot
+                            //添加校验是否添加校验  获取所有bot 验证是否重复
+                            var allBot = angular.copy($scope.vm.creatSelectBot) ;
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
                                 var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;

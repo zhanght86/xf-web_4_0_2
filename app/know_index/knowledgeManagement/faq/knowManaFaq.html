@@ -79,18 +79,19 @@
                         <a href="javascript:;" class="L mr-10 mt-5"  ng-click="vm.botClassfy.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
                     </div>
                 </div>
-<!-- 手选生成-->
-                <!--<div class="item-line" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot">-->
-                    <!--<div class="lable"> BOT分类：</div>-->
-                    <!--<div class="value Div" id="Div">-->
-                        <!--<div class="ipt-txt-box">-->
-                            <!--<div class="ipt-txt">-->
-                                <!--<span>{{item}}</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="javascript:;" class=" mr-10" ><img src="../../../images/images/delete_img.png" ng-click="vm.botClassfy.splice($index,1)" alt=""></a>-->
-                    <!--</div>-->
-                <!--</div>-->
+ <!--bot  類目數 点击生成  -->
+                <div class="item-line mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
+                    <div class="lable"> BOT路径：</div>
+                    <div class="value Div clearfix" id="Div">
+                        <div class="ipt-txt-box L mr-10">
+                            <div class="ipt-txt" style="overflow:hidden;line-height:24px;width:407px;">
+                                <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
+                            </div>
+                        </div>
+                        <a href="javascript:;" class="L mr-10 mt-5"  ng-click="vm.creatSelectBot.splice($index,1)"><img src="../../../images/images/delete_img.png"  alt=""></a>
+                    </div>
+                </div>
+
                 <div class="item-line">
                     <div class="row cl mb-10">
                         <div class="lable" style="width:245px;">业务框架：</div>

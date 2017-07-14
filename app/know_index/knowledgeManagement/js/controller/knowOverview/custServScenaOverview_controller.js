@@ -172,8 +172,8 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                 "updateTimeType": $scope.vm.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                "knowledgeType" : $scope.vm.knowledgeType ,
-                "knowledgeExtensionQuestion" : $scope.vm.searchExtension
+                //"knowledgeType" : $scope.vm.knowledgeType ,
+                //"knowledgeExtensionQuestion" : $scope.vm.searchExtension
             },function(data){
                 $scope.vm.isSelectAll = false ;
                 $scope.vm.knowledgeIds = [] ;

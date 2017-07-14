@@ -30,7 +30,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //creatBot : [],
             //失去焦点
             //blur:blur,
-            botClassfy : [],   //类目
+            botClassfy : [],   //标题生成bot
+            creatSelectBot : [] ,//点击bot类目数生成
             //扩展问
             getExtension : getExtension , //获取扩展问
             extensionTitle : "",
@@ -140,7 +141,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
             $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             // bot 路径 s
-            $scope.vm.botClassfy = data.knowledgeBase.classificationAndKnowledgeList ;
+            $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
 
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
@@ -265,11 +266,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
                 categoryId: id
             },function(data){
+                //console.log(data)
                 if(data.status = 10000){
-                    var allBot = angular.copy($scope.vm.botClassfy) ,
+                    var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
                         botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
                     $scope.$apply(function(){
-                        console.log(data) ;
                         $scope.vm.knowledgeBotVal = data.categoryFullName;
                         if(botResult != false){
                             //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
@@ -305,9 +306,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                         $scope.$apply()
                     }
                     //console.log(data);
-                },function(error){
-                    console.log(error)
-                });
+                },function(error){console.log(error)});
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
@@ -358,7 +357,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //添加bot分类的
         function botSelectAdd(){
             if($scope.vm.botFullPath){
-                $scope.vm.botClassfy.push($scope.vm.botFullPath);
+                $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
                 $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
                 $scope.vm.botFullPath = null;
                 $scope.vm.knowledgeBotVal = ""
@@ -527,24 +526,23 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     "applicationId" : APPLICATION_ID,
                     "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
-                    console.log(data);
                     if(data.status == 500){
                          $scope.vm.titleTip = "知识标题重复";
-                        //isTitleRepeat = false ;
-                        $scope.title = ""  ;
+                         $scope.title = ""  ;
                         $scope.$apply()
                     }else{
-                        $scope.vm.botClassfy = [] ;
-                        angular.forEach(data.data,function(item){
-                            var obj = {
-                                "className" : item.fullPath,
-                                "classificationId" : item.id ,
-                                "classificationType" : 0
-                            };
-                            $scope.vm.botClassfy.push(obj);
-                            $scope.vm.frameCategoryId = item.id
+                        $scope.$apply(function(){
+                            $scope.vm.botClassfy = [];   //reset 标题生成bot
+                            //添加校验是否添加校验  获取所有bot 验证是否重复
+                            var allBot = angular.copy($scope.vm.creatSelectBot) ;
+                            angular.forEach(data.data, function (item) {
+                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
+                                if(botResult != false){
+                                    $scope.vm.botClassfy.push(botResult);
+                                }
+                                $scope.vm.frameCategoryId = item.id;
+                            });
                         });
-                        $scope.$apply()
                     }
                 },function(err){
                    console.log(err)
