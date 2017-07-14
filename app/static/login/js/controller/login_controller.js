@@ -1,9 +1,8 @@
 /**
- * Created by Administrator on 2016/6/3.
+ * Created by Administrator on 2016/6/3
  * 控制器
  */
-
-angular.module('loginModule').controller('loginController', [+
+angular.module('loginModule').controller('loginController', [
     '$scope', '$location', 'localStorageService' ,"$state" ,"$cookieStore",
     function ($scope, $location, localStorageService, $state,$cookieStore) {
         $scope.vm = {

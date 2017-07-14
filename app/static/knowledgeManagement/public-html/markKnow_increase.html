@@ -1,0 +1,98 @@
+
+<script type="text/ng-template" >
+</script>
+<div class="pd-10 knowPopup"  style="width: 100%;" >
+    <div class="tab_tit">
+        <span ng-class="vm.contentType==0?'cur':''" ng-click="vm.contentType=0">图文新增</span>
+        <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1">语音新增</span>
+        <span ng-class="vm.contentType==2?'cur':''" ng-click="vm.contentType=2">表情新增</span>
+    </div>
+
+    <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
+        <!--<form action="" name="form" novalidate>-->
+        <div name="Teletext miles-textArea" ng-show="vm.contentType==0">
+            <textarea style="height: 150px;" name="title" ng-model="vm.newTitle" ></textarea>
+        </div>
+        <div name="voice miles-textArea" ng-show="vm.contentType==1">
+            <textarea style="height: 150px;" name="title" ng-model="vm.newTitle" ></textarea>
+        </div>
+        <div name="emotion miles-textArea" ng-show="vm.contentType==2">
+            <textarea style="height: 150px;" name="title" ng-model="vm.newTitle"></textarea>
+        </div>
+
+        <div class="checkboxStr mb-10">
+            <div>渠道：</div>
+            <label ng-repeat="channel in vm.channels track by $index">
+                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode,$event)" ng-checked="vm.channel.inArray(channel.channelCode)">
+                {{channel.channelName}}
+            </label>
+        </div>
+        <div class="checkboxAddress pr"  style="padding-left:50px;height:auto;">
+            <span class="pa" style="top:0;left:0;">维度：</span>
+            <div auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></div>
+
+        </div>
+        <div class="channel_div mb-10" style="padding-left:80px;">
+            <span class="channel_s" >高级选项：</span>
+            <a href="javascript:;" class="c-primary unfold_fit" ng-click="vm.slideDown()">
+                <span ng-if="!vm.slideFlag">展开</span>
+                <span ng-if="vm.slideFlag">隐藏</span>
+            </a>
+        </div>
+        <div class="senior_div"  style="display: none">
+            <div class=" mb-20">
+                <span >知识配置：</span>
+                <div class="dib pt-5 mr-15">
+                    <span switch value="vm.question"></span>
+                    <span>显示相关问题</span>
+                </div>
+                <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
+                    <span switch value="vm.tip"></span>
+                    <span>在相关问题内提示</span>
+                </div>
+                <div class="dib pt-5 mr-15" style="margin-left: 81px;">
+                    <span switch value="vm.tail"></span>
+                    <span>弹出评价小尾巴</span>
+                </div>
+            </div>
+            <div>
+                <div class="mb-10" style="position: relative;padding-left:100px;">
+                    <span class="pa" style="left:0;top:0;">指定相关知识:</span>
+                    <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:279px;">
+                    <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position:static;">
+                        <li ng-repeat="item in vm.appointRelativeList track by $index"
+                            ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
+                    </ul>
+                </div>
+                <!-- -->
+                <div class="channel_div mb-20" ng-if="vm.appointRelativeGroup.length" style="padding-left:70px;">
+                    <span class="channel_s c-primary">已添加</span>
+                    <ul>
+                        <li ng-repeat="item in vm.appointRelativeGroup track by $index">
+                            <span class="mr-30">{{$index+1}}、{{item}}  </span>
+                            <a  ng-click="vm.removeAppointRelative(item)"><img src="../../../images/images/delete_img.png" alt=""></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tc mb-10">
+            <input  value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="vm.increaseCheck()" >
+            <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
