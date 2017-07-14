@@ -1,0 +1,102 @@
+<div ui-view="header"></div>
+
+<div class="wrap pr chat_test_wrap" style="padding-top:10px;">
+
+    <div class="p20 cl" style="background:#fff;height:100%;">
+        <div class="cl" style="width:510px;margin:0 auto 20px;">
+            <select class="L bd sel mr-10" ng-model="vm.answerCondition">
+                <option value="0">全部</option>
+                <option value="40003">回答正确</option>
+                <option value="40004">推荐正确</option>
+                <option value="40005">回答错误</option>
+                <option value="40006">推荐错误</option>
+                <option value="40007">不能回答</option>
+            </select>
+            <select class="L bd sel mr-10"  ng-model="vm.matchCondition">
+                <option value="0">全部</option>
+                <option value="40001">匹配</option>
+                <option value="40002">不匹配</option>
+            </select>
+            <span class="">
+                <input type="text" class="input_text L" placeholder="测试问法/知识标题" ng-model="vm.selectInput" style="height:30px;">
+                <button class="btn1 btn1_blue L" type="button" ng-click="vm.searchFile(1)">查询</button>
+            </span>
+        </div>
+        <div class="bd p20" style="background:#fcfdfd;">
+            <div class="mb-10 cl">
+                <span class="L">
+                    <button class="btn1 btn_green mr-10" ng-click="vm.testDialog();"> 批量测试</button>
+                    <button class="btn1 btn_green" ng-click="vm.exportExcel()">导出</button>
+                    <!--<button class="btn1 btn_green2" ng-click="vm.editQuestion()">修改</button>-->
+                </span>
+                <span class="R">
+                    <span class="c-999 pl-10">共有数据：<strong id="total">{{vm.listDataTotal}}</strong> 条 </span>
+                </span>
+            </div>
+
+            <div class="mt-20">
+                <div class="dataTables_wrapper no-footer">
+                    <table class="stop_word_tab" id="knowledge_table">
+                        <thead>
+                        <tr>
+                            <th class="bold" width="3%"><input type="checkbox" class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/></th>
+                            <th class="bold" width="10%">测试问法</th>
+                            <th class="bold" width="7%">标签</th>
+                            <th class="bold" width="11%">知识标题</th>
+                            <th class="bold" width="11%">匹配知识</th>
+                            <th class="bold" width="6%">渠道</th>
+                            <!--<th class="bold" width="7%">标签</th>-->
+                            <th class="bold" width="7%">匹配情况</th>
+                            <th class="bold" width="7%">回答情况</th>
+                            <th class="bold" width="10%">答案</th>
+                            <th class="bold" width="6%">相似度</th>
+                            <th class="bold" width="6%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="v in vm.listData">
+                            <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.testResultId)"  ng-click="vm.selectSingle(v.testResultId)"/></td>
+                            <td>{{v.possibleKnowledge}}</td>
+                            <td ng-if="v.tags == 'null'"></td>
+                            <td ng-if="v.tags != 'null'">{{v.tags.substring(1,v.tags.length-1)}}</td>
+                            <td>{{v.knowledgeTitle}}</td>
+                            <td ng-if="v.matchKnowledge == 'null'"></td>
+                            <td ng-if="v.matchKnowledge != 'null'">{{v.matchKnowledge}}</td>
+                            <td>{{v.channelName}}</td>
+                            <!--<td>{{v.tags}}</td>-->
+
+                            <td ng-if="v.answerType==40001">匹配</td>
+                            <td ng-if="v.answerType==40002">不匹配</td>
+
+                            <td ng-if="v.answerCondition==40003 ">回答正确</td>
+                            <td ng-if="v.answerCondition==40004 ">推荐正确</td>
+                            <td ng-if="v.answerCondition==40005 ">回答错误</td>
+                            <td ng-if="v.answerCondition==40006">推荐错误</td>
+                            <td ng-if="v.answerCondition==40007 ">不能回答</td>
+
+                            <td ng-if="v.answerContent.length>=20" title="{{v.answerContent|replaceCode}}">{{v.answerContent|replaceCodeCut}}</td>
+                            <td ng-if="v.answerContent.length<20">{{v.answerContent|replaceCode}}</td>
+                            <td>{{v.similarity}}</td>
+                            <td ><a href="javascript:;" class="c_green" ng-click="vm.editQuestion(v)">修改</a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                    <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+
+</script>
+
+
+
+
+
