@@ -31,15 +31,15 @@
                     </span>
             <input type="button" class="btn1 btn1_blue"  value="查找" />
         </div>
-        <div class="mb-20">
+        <div class="mb-20" style="height:20px;">
             <a href="javascript:;" class="R c_blue">导出图表</a>
         </div>
         <div class="clearfix reso_echart_divbox" >
-            <div class="L reso_echart_div" >
-                <img src="../../../images/u30009.png" width="100%"/>
+            <div class="L reso_echart_div bd" id="resolution_echart">
+                <!--<img src="../../../images/u30009.png" width="100%"/>-->
             </div>
-            <div class="R reso_echart_div">
-                <img src="../../../images/u30484.png" width="100%"/>
+            <div class="R reso_echart_div bd" id="resolution_echart2">
+                <!--<img src="../../../images/u30484.png" width="100%"/>-->
             </div>
         </div>
     </div>
@@ -48,6 +48,117 @@
 
 </style>
 <script>
+    //左图
+    var myChart = echarts.init(document.getElementById('resolution_echart'));
+    // 指定图表的配置项和数据
+    var option = {
+        title : {
+            text: '解决率统计',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['未解决','解决']
+        },
+        series : [
+            {
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:500, name:'未解决'},
+                    {value:2000, name:'解决'},
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    //右图
+    var myChart2 = echarts.init(document.getElementById('resolution_echart2'));
+    option2 = {
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient : 'vertical',
+            x : 'left',
+            data:['直接回答','推荐回答','引导回答','未知回答','引导成功','敏感词回答']
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel'],
+                    option: {
+                        funnel: {
+                            x: '25%',
+                            width: '50%',
+                            funnelAlign: 'center',
+                            max: 1548
+                        }
+                    }
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+            {
+                name:'访问来源',
+                type:'pie',
+                radius : ['50%', '70%'],
+                itemStyle : {
+                    normal : {
+                        label : {
+                            show : false
+                        },
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : true,
+                            position : 'center',
+                            textStyle : {
+                                fontSize : '14',
+                                fontWeight : ''
+                            }
+                        }
+                    }
+                },
+                data:[
+                    {value:335, name:'直接回答'},
+                    {value:310, name:'推荐回答'},
+                    {value:234, name:'引导回答'},
+                    {value:135, name:'未知回答'},
+                    {value:548, name:'引导成功'},
+                    {value:1000, name:'敏感词回答'}
+                ]
+            }
+        ]
+    };
+    myChart2.setOption(option2);
+
 
 </script>
 
