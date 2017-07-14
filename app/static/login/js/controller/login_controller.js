@@ -3,7 +3,7 @@
  * 控制器
  */
 
-angular.module('loginModule').controller('loginController', [+
+angular.module('loginModule').controller('loginController', [
     '$scope', '$location', 'localStorageService' ,"$state" ,"$cookieStore",
     function ($scope, $location, localStorageService, $state,$cookieStore) {
         $scope.vm = {
