@@ -688,6 +688,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("knowledgeManagement.markKnow", {
+                url: "/markKnow/:data",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/knowledgeManagement/markKnow/markKnow.html',
+                        controller: "markKnowController"
+                    }
+                }
+            })
             // //批量知识新增
             .state("knowledgeManagement.knowBatchAdditions", {
                 url: "/knowBatchAdditions",
