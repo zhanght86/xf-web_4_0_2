@@ -7,19 +7,17 @@
         <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1">语音新增</span>
         <span ng-class="vm.contentType==2?'cur':''" ng-click="vm.contentType=2">表情新增</span>
     </div>
-
-    <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
-        <!--<form action="" name="form" novalidate>-->
-        <div name="Teletext miles-textArea" ng-show="vm.contentType==0">
-            <textarea style="height: 150px;" name="title" ng-model="vm.newTitle" ></textarea>
+    <div style="width:100%;margin-left:0;padding-top:10px;">
+        <div name="Teletext"  class="miles-textArea-container" ng-show="vm.contentType==0" >
+            <textarea class=" " name="title" ng-model="vm.newTitle" ></textarea>
         </div>
-        <div name="voice miles-textArea" ng-show="vm.contentType==1">
-            <textarea style="height: 150px;" name="title" ng-model="vm.newTitle" ></textarea>
+        <div name="voice" class="miles-textArea-container"   ng-show="vm.contentType==1">
+            <textarea class="miles-textArea"  name="title" ng-model="vm.newTitle" ></textarea>
         </div>
-        <div name="emotion miles-textArea" ng-show="vm.contentType==2">
-            <textarea style="height: 150px;" name="title" ng-model="vm.newTitle"></textarea>
+        <div name="emotion" class="miles-textArea-container"  ng-show="vm.contentType==2">
+            <textarea class="miles-textArea" id="emotion-container" name="title" ng-model="vm.newTitle"></textarea>
+            <p ><span class="emotion" >表情</span></p>
         </div>
-
         <div class="checkboxStr mb-10">
             <div>渠道：</div>
             <label ng-repeat="channel in vm.channels track by $index">

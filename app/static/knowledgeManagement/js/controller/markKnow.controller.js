@@ -81,6 +81,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 
 //*******************2017/7/14*******************//
             contentType : 0 ,  //新增内容类型
+
 //*******************2017/7/14*******************//
             //引到页
             showTip : showTip,
@@ -90,9 +91,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //引到页end
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
             isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
-
         };
-
         //獲取纬度
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -482,6 +481,18 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     }
                 }
             });
+            $timeout(function(){
+                $('.emotion').qqFace({
+
+                    id : 'facebox',
+
+                    assign:'emotion-container',       //赋值对象
+
+                    path:'/libs/qqFace/arclist/',	//表情存放的路径
+
+                });
+            },1000)
+
         }
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
@@ -785,12 +796,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                                 }
                                             });
                                             layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
-                                            //if( $scope.vm.isChannelSelect ){
-                                            //    $scope.vm.channel.splice(indexChannel,1) ;
-                                            //}else{
-                                            //    $scope.vm.dimensionArr.id.remove(key);
-                                            //    $scope.vm.dimensionArr.name.splice(indexDimension,1);
-                                            //}
                                             isRepeat = true
                                         }
                                     })
@@ -834,7 +839,34 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 console.log(error)
             });
         }
+//*******************2017/7/14*******************//
+        $timeout(function(){
+            //$('.emotion').qqFace({
+            //    id : 'facebox',
+            //
+            //    assign:'emotion-container',       //赋值对象
+            //
+            //    path:'app/libs/qqFace/arclist/'	//表情存放的路径
+            //
+            //});
+            //表情符号替换图片
+            function replace_em(str){
 
+                str = str.replace(/\</g,'&lt;');
+
+                str = str.replace(/\>/g,'&gt;');
+
+                str = str.replace(/\n/g,'<br/>');
+
+                str = str.replace(/\[em_([0-9]*)\]/g,'<img src="arclist/$1.gif" border="0" />');
+
+                return str;
+
+            }
+        },500) ;
+
+
+//*******************2017/7/14*******************//
         //引导页方法
         function showTip(){
             $('.shadow_div').show();
