@@ -557,6 +557,20 @@ knowledge_static_web
                     }
                 }
             })
+            //图片库
+            .state("materialManagement.pictureLibrary", {
+                url: "/pictureLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/pictureLibrary/pictureLibrary.html',
+                        controller: "pictureLibraryController"
+                    }
+                }
+            })
             //知识管理knowledgeManagement
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",
