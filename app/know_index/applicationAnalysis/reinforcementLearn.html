@@ -1,0 +1,163 @@
+<div ui-view="header"></div>
+
+<div class="wrap">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+            <div class="tab_tit">
+                <span class="cur" style="width:80px;">未学习  </span>
+                <span class="" style="width:80px;">已学习 </span>
+            </div>
+            <div class="tab_con pt30 pb30">
+                <div class="db">
+                    <div class="con_box mb25 p30 mt10" style="min-height:500px;">
+                        <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 45px;">
+                            <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
+                                <option value="0">全部时间</option>
+                                <option value="1">今日</option>
+                                <option value="2">昨日</option>
+                                <option value="3">过去7天</option>
+                                <option value="4">过去30天</option>
+                            </select>
+
+                            <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelUpdateId as site.channelName for site in vm.channels">
+                                <option  value="" >全部渠道</option>
+                            </select>
+                            <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
+                                <option  value="" >全部维度</option>
+                            </select>
+
+                    <span>
+                        日期范围:
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                            -
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    </span>
+                    <span>
+                        用户提问:
+                            <input type="text" id="question" class="input-text" style="width: 180px"/>
+                    </span>
+
+                            <input type="button" class="btn1 btn1_blue" ng-click="vm.searchReinforcement(1)" value="查找" />
+                            <input type="button" class="btn1 btn1_blue" ng-click="vm.ignore()" value="忽略" />
+                        </div>
+                        <div class="cl mb-10">
+                            <b class="l f-14">现有知识强化</b>
+                            <p class="r f-12 c-999" style="display: none;">共有数据<span id="total"></span>条</p>
+                        </div>
+                        <div>
+                            <table class="access_amount_table" id="user_session_statistic">
+                                <thead>
+                                <tr>
+                                    <th width="10%"><input type="checkbox" id="selectAll"></th>
+                                    <th width="25%">用户提问</th>
+                                    <th width="15%">来源渠道</th>
+                                    <th width="25%">创建时间</th>
+                                    <th width="25%">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr role="row" class="odd" ng-repeat="item in vm.listData">
+                                    <td><input type="checkbox" name="sid" value="{{item.requestId}}"></td>
+                                    <td>{{item.content}}</td>
+                                    <td>{{item.channelId | channelFilter}}</td>
+                                    <td>{{item.requestTime | limitTo:19}}</td>
+                                    <td><a href="javascript:;" class="c-green" ng-click="vm.learn(item.requestId,item.content)">学习</a></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                        </div>
+                    </div>
+                </div>
+                <div class="dn">
+                    <div class="con_box mb25 p30 mt10" style="min-height:500px;">
+                        <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 20px;">
+                            <select class="sel bd L mr-5" id="request_time_type1" ng-model="vm.timeType1">
+                                <option value="0">全部时间</option>
+                                <option value="1">今日</option>
+                                <option value="2">昨日</option>
+                                <option value="3">过去7天</option>
+                                <option value="4">过去30天</option>
+                            </select>
+
+                            <select class="sel bd L mr-5" id="channel_id1" ng-model="vm.channelId1" ng-options="site.channelUpdateId as site.channelName for site in vm.channels">
+                                <option  value="" >全部渠道</option>
+                            </select>
+                            <select class="sel bd L mr-5" id="dimensionId1" ng-model="vm.dimensionId1" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
+                                <option  value="" >全部维度</option>
+                            </select>
+
+                    <span>
+                        日期范围:
+                            <input type="text" id="startTime1" onchange=""  ng-model="vm.timeStart1"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                            -
+                            <input type="text" id="endTime1"   onchange="" ng-model="vm.timeEnd1" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                    </span>
+                    <span>
+                        审核状态:
+                            <select class="sel bd" id="statusId" ng-model="vm.statusId">
+                                <option value="0">待审核</option>
+                                <option value="1">已审核</option>
+                            </select>
+                        通过状态:
+                            <select class="sel bd" id="passStatusId" ng-model="vm.passStatusId">
+                                <option value="0">不通过</option>
+                                <option value="1">通过</option>
+                            </select>
+                    </span><br/>
+                    <input type="button" class="btn1 btn1_blue" ng-click="vm.review(1)" value="通过" />
+                    <input type="button" class="btn1 btn1_blue" ng-click="vm.review(0)" value="不通过" />
+                    <span style="float: right;">
+                        用户提问:
+                            <input type="text" id="question1" class="input-text" style="width: 180px"/>
+                        <input type="button" class="btn1 btn1_blue" ng-click="vm.listNoReview(1)" value="查找" />
+                    </span>
+
+
+                        </div>
+                        <div class="cl mb-10">
+                            <b class="l f-14">现有知识强化</b>
+                            <p class="r f-12 c-999" style="display: none;">共有数据<span id="total1"></span>条</p>
+                        </div>
+                        <div>
+                            <table class="access_amount_table" id="user_session_statistic1">
+                                <thead>
+                                <tr>
+                                    <th width="10%"><input type="checkbox" id="selectAll1"></th>
+                                    <th width="25%">用户提问</th>
+                                    <th width="15%">来源渠道</th>
+                                    <th width="15%">匹配知识</th>
+                                    <th width="25%">创建时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr role="row" class="odd" ng-repeat="item in vm.listData1">
+                                    <td><input type="checkbox" name="sid1" value="{{item.recordId}}"></td>
+                                    <td>{{item.question}}</td>
+                                    <td>{{item.channelId | channelFilter}}</td>
+                                    <td>{{item.knowledgeTitle}}</td>
+                                    <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationCon1f.totalItems>0" conf="vm.paginationConf1"></pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+
+
+
+
+
+

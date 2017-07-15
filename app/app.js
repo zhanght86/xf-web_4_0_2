@@ -894,7 +894,32 @@ knowledge_static_web
                     }
                 }
             })
-
+            .state("applAnalysis.reinforcementLearn", {
+                url: "/reinforcementLearn",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/reinforcementLearn.html',
+                        controller: "reinforcementLearnController"
+                    }
+                }
+            })
+            .state("applAnalysis.newKnowledgeDiscoveryLearn", {
+                url: "/newKnowledgeDiscoveryLearn",
+                views: {
+                    'header': {
+                        templateUrl: 'know_index/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/newKnowledgeDiscoveryLearn.html',
+                        controller: "newKnowledgeDiscoveryLearnController"
+                    }
+                }
+            })
             //-----------------------
 
             //我的应用admin
