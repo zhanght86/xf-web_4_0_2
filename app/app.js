@@ -543,6 +543,20 @@ knowledge_static_web
                     }
                 }
             })
+            //语音库
+            .state("materialManagement.speechLibrary", {
+                url: "/speechLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/speechLibrary/speechLibrary.html',
+                        controller: "speechLibraryController"
+                    }
+                }
+            })
             //知识管理knowledgeManagement
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",
