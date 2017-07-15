@@ -15,7 +15,8 @@
             <textarea class="miles-textArea"  name="title" ng-model="vm.newTitle" ></textarea>
         </div>
         <div name="emotion" class="miles-textArea-container"  ng-show="vm.contentType==2">
-            <textarea class="miles-textArea" id="emotion-container" name="title" ng-model="vm.newTitle"></textarea>
+            {{vm.newTitle}}
+            <textarea class="miles-textArea" id="emotion-container" name="title" ng-model="vm.newTitle | emotion"></textarea>
             <p ><span class="emotion" >表情</span></p>
         </div>
         <div class="checkboxStr mb-10">
