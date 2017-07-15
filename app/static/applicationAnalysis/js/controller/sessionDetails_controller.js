@@ -14,10 +14,10 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             paginationConf : null ,//分页条件
             pageSize : 5  , //默认每页数量
             dimensions : [] ,
-            channels : [] ,
+            channels : [] , 
             channelId  : null ,
             dimensionId : null ,
-            timeType : 0,
+            timeType : 1,
             timeStart : null,
             timeEnd : null,
             orderForSessionNumber : null,
@@ -32,7 +32,8 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             prePage : prePage ,
             nextPage : nextPage,
             clearHistory:clearHistory,
-            contentIndex:2
+            contentIndex:2 ,
+            exportExcel : exportExcel  //导出
         };
         // 点击查看
         function scan(id){
@@ -197,6 +198,30 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             },function(err){
                 console.log(err);
             });
+        };
+        function exportExcel(){
+            httpRequestPost("/api/analysis/userSession/export",{
+                "applicationId" : $scope.vm.applicationId,
+                "channelId": $scope.vm.channelId,
+                "dimensionId": $scope.vm.dimensionId,
+                "requestTimeType":$scope.vm.timeType,
+                "startTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
+                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
+                "orderForSessionTime": $scope.vm.orderForSessionTime
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    //layer.msg("导出失败")
+                    console.log("导出失败");
+                }else{
+                    alert(data.data);
+                    window.open("/api/analysis/userSession/downloadExcel?fileName="+ data.data);
+                }
+                console.log();
+
+            },function(err){})
+
         }
     }
 ]);

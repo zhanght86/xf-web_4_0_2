@@ -268,10 +268,35 @@
 //FOR  营销知识新增
 //变量区域
 @fontSize : 10px ;
-//.miles-textArea{
-//  font-size: @fontSize+10;
-//}
+@lineBlock : inline-block ;
+@prect : 1.0 ;
 
+.borderNone{
+  border : none;
+};
+.miles-textArea-container{
+  width: percentage(@prect);
+  height: @fontSize*20;
+  border: 1px solid #e1e1e1;
+  padding:@fontSize/2;
+  .miles-textArea{
+    border : none ;
+    height: @fontSize*15;
+    width: percentage(@prect);
+  }
+}
+.emotion{
+  width: @fontSize*4;
+  height: @fontSize*2;
+  background: url(../../images/emotion.gif) no-repeat @fontSize/5 @fontSize/5;
+  padding-left: @fontSize*2.4;
+  cursor: pointer;
+  //display: @lineBlock;
+  //width: @fontSize+8;
+  //height: @fontSize+8 ;
+  //background: url(../../images/emotion.gif);
+  //filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/emotion.gif',sizingMethod='scale')
+}
 
 
 //******************************* 2017/7/14 END ***************************//
