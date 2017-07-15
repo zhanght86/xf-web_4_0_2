@@ -7,7 +7,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-
+            contentType:0
 
 
         };
