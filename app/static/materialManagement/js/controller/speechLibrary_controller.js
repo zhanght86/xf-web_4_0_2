@@ -10,7 +10,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
         //var paraData = $stateParams.scanDataList?angular.fromJson($stateParams.scanDataList):"" ;
         $scope.vm = {
             uploadSpeech :uploadSpeech,
-            showUl :true
+            //showUl :true
 
         };
         // $scope.$watch("$scope.vm.showUl",function(val){
