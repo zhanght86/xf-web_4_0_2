@@ -1,0 +1,117 @@
+<div ui-view="header"></div>
+
+<div class="wrap">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="mt-10">
+
+            <div class="con_box mb25 p30">
+                <div class="knowrank_top pt-10 clearfix" >
+                    <select class="sel bd L mr-5 " >
+                        <option value="">今日</option>
+                        <option value="">昨日</option>
+                        <option value="">过去7天</option>
+                        <option value="">过去30天</option>
+                    </select>
+                    <select class="sel bd L mr-5 "  >
+                        <option value="">全部渠道</option>
+                        <option value="">微信</option>
+                        <option value="">web</option>
+                        <option value="">app</option>
+                    </select>
+                    <!--纬度-->
+                    <div class="L mr-5" style="width:200px;height:32px;">
+                        <div auto-complete  source="" result="" style="width:100%;"></div>
+                    </div>
+                    <span class="L mr-5">
+                        日期范围:
+                        <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 33px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
+                        -
+                        <input type="text" id="endTime" onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 33px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly="">
+
+                    </span>
+                    <input type="button" class="L btn1 btn1_blue" ng-click="vm.getList(1)" value="查找">
+                </div>
+                <div class=" p10 cus_ser_scene">
+                    <div class="tab_tit ">
+                        <span ng-class="vm.contentType==0?'cur':''"  ng-click="vm.contentType=0">知识点排名统计  </span>
+                        <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1">未匹配问题统计 </span>
+                    </div>
+                    <div class="tab_con pt20 pb30">
+                        <div ng-show="vm.contentType==0">
+                            <div class="clearfix mb-10">
+                                <p class="L bold"> 知识点排名统计TOP100</p>
+                                <a href="javascript:;" class="R c_blue">导出表格</a>
+                            </div>
+                            <div>
+                                <table class="access_amount_table">
+                                    <tr>
+                                        <td class="bold" width="15%">排名↑</td>
+                                        <td class="bold" width="35%">知识标题</td>
+                                        <td class="bold" width="35%">所属BOT</td>
+                                        <td class="bold" width="15%">访问次数</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>珠海海关>物品进境问题</td>
+                                        <td>56</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>珠海海关>物品进境问题</td>
+                                        <td>56</td>
+                                    </tr>
+                                </table>
+                                <div >分页</div>
+                            </div>
+                        </div>
+                        <div ng-show="vm.contentType==1" >
+                            <div class="clearfix mb-10">
+                                <p class="L bold"> 未匹配问题统计</p>
+                                <span class="R">
+                                    <span class="mr-10">共有数据<b>3</b>条</span>
+                                    <a href="javascript:;" class=" c_blue">导出表格</a>
+                                </span>
+                            </div>
+                            <div>
+                                <table class="access_amount_table">
+                                    <tr>
+                                        <td class="bold" width="45%">用户提问</td>
+                                        <td class="bold" width="15%">提问次数</td>
+                                        <td class="bold" width="20%">首次提问时间</td>
+                                        <td class="bold" width="20%">末次提问时间</td>
+                                    </tr>
+                                    <tr>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>56</td>
+                                        <td>2016.07.12 12:00:00</td>
+                                        <td>2016.07.12 13:00:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>进境不免税的20种商品</td>
+                                        <td>56</td>
+                                        <td>2016.07.12 12:00:00</td>
+                                        <td>2016.07.12 13:00:00</td>
+                                    </tr>
+                                </table>
+                                <div >分页</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+</script>
+
+
+
+
+
+

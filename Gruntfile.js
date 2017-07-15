@@ -10,11 +10,11 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 //separator: ';\n'  //文件间分隔符
             },
             allInOne: { //所有JS文件全部合并成一份文件
-                src: ['app/know*/**/*_module.js'],
+                src: ['app/know/**/*_module.js','app/static/**/*_module.js'],
                 dest: 'app/dest/src-concated/js/<%= pkg.name %>_module.js'
             },
             othersInOne: {
-                src: ['app/know*/**/*.js'],
+                src: ['app/know*/**/*.js','app/static/**/*.js'],
                 dest: 'app/dest/src-concated/js/<%= pkg.name %>.js',
                 options: {
                     banner: "'use strict';\n",
@@ -35,7 +35,8 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                     //'css/home/back/*.css' ,
                     //'libs/tagEditor/css/jquery.tag-editor.css','libs/H_ui/static/h-ui/css/H-ui.css','libs/H_ui/static/h-ui/css/H-ui.reset.css','css/plugins/1.0.8/iconfont.css',
                     'app/css/home/nav.css','app/css/home/login.css','app/css/home/index.css','app/css/home/style_new.css',
-                    'app/css/home/base.css','app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css','app/css/home/chat.css',
+
+                    'app/css/home/common.css','app/css/home/robotSetup.css','app/css/home/ng-style.css','app/css/home/addContent.css','app/css/home/chat.css',
                     //'css/plugins/base.css','css/plugins/common.css','css/plugins/common2.css'
                 ],
                 //src: ['app/css/home/*.css'] ,
@@ -120,13 +121,23 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
             // }
         },
         watch: {
+            //livereload: {
+            //
+            //    options: {livereload: true},
+            //    files: ['dest/**/*.js','know_index/**/*.html']
+            //
+            //} ,
+            html: {
+                files: ['app/**/*.html'],
+                options: {livereload:true}
+            },
             javascript: {
-                files: ['app/know*/**/*.js'],
+                files: ['app/know*/**/*.js','app/static/**/*.js'],
                 tasks: ['concat:allInOne', 'concat:othersInOne', 'uglify:buildrelease'],
                 options: {
                     spawn: true,
                     interrupt: true ,
-                   //livereload:true
+                    livereload:true
                 }
             },
             css: {
@@ -134,13 +145,13 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 tasks: ['concat:css', 'cssmin:css'],
                 options: {
                     spawn: true,
-                    //livereload: true ,
+                    livereload: true ,
                     interrupt: true
                 }
             }
         }
     });
-
+    grunt.loadNpmTasks('grunt-contrib-livereload');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
