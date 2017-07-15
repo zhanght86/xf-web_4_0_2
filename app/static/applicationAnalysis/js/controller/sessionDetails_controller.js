@@ -14,7 +14,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             paginationConf : null ,//分页条件
             pageSize : 5  , //默认每页数量
             dimensions : [] ,
-            channels : [] , 
+            channels : [] ,
             channelId  : null ,
             dimensionId : null ,
             timeType : 1,
@@ -215,7 +215,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                     //layer.msg("导出失败")
                     console.log("导出失败");
                 }else{
-                    alert(data.data);
+                    //alert(data.data);
                     window.open("/api/analysis/userSession/downloadExcel?fileName="+ data.data);
                 }
                 console.log();
