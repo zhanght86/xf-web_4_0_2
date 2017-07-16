@@ -484,14 +484,15 @@
                                 <span ng-class="vm.contentType==2?'cur':''" ng-click="vm.contentType=2">表情新增</span>
                             </div>
                             <div name="Teletext"  class="miles-textArea-container" ng-show="vm.contentType==0" >
-                                <textarea class=" " name="title" ng-model="vm.newTitle" ></textarea>
+                                <textarea class=" " name="title" ></textarea>
                             </div>
                             <div name="voice" class="miles-textArea-container"   ng-show="vm.contentType==1">
                                 <textarea class="miles-textArea"  name="title" ng-model="vm.newTitle" ></textarea>
                             </div>
                             <div name="emotion" class="miles-textArea-container"  ng-show="vm.contentType==2">
-                             {{vm.emotionText | emotion}}
-                                <textarea class="miles-textArea"  id="emotion-container" name="title" ng-model="vm.emotionText"></textarea>
+                             <!--{{vm.emotionText | emotion}}-->
+                                <div class="miles-textArea"  id="emotion-container" name="title"  contenteditable="true"></div>
+                                <input type="text" id="emotinon-backup" ng-model="vm.emotionText"/>
                                 <p ><span class="emotion" >表情</span></p>
                             </div>
                             <div class="channel_div  mb-10">

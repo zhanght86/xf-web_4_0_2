@@ -3,9 +3,9 @@
  */
 angular.module('knowledgeManagementModule').controller('markKnowController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams",
-    "knowledgeAddServer","$window","$rootScope","$filter","myService","$location",
+    "knowledgeAddServer","$window","$rootScope","$filter","myService","$location","$interval",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
-              knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
+              knowledgeAddServer,$window,$rootScope,$filter,myService,$location,$interval) {
         $scope.vm = {
             knowledgeId : "" ,
             frames : [],      //业务框架
@@ -78,6 +78,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 
 //*******************2017/7/14*******************//
             contentType : 0 ,  //新增内容类型
+            getEmotion : getEmotion ,
 
 //*******************2017/7/14*******************//
             //引到页
@@ -173,7 +174,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
                 if($scope.vm.extensionsByFrame.length){
-                   var frame ;
+                    var frame ;
                     angular.forEach($scope.vm.frames,function(item){
                         if(item.frameId == val ){
                             frame = item.frameTitle ;
@@ -245,7 +246,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             var obj = {
                 "extensionQuestionTitle" : title ,
                 "extensionQuestionType" : weight
-             } ;
+            } ;
             if(!title){
                 layer.msg("扩展问不能为空")
             }else if(title == $scope.vm.title){
@@ -284,7 +285,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             },function(data){
                 $scope.vm.botRoot = data.data;
             },function(){
-               console.log("获取bot类目失败")
+                console.log("获取bot类目失败")
             });
         }() ;
         //BOT搜索自动补全
@@ -292,10 +293,10 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             $scope.$apply(function(){
                 var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
                     botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
-                    $scope.vm.knowledgeBotVal = suggestion.value;
-                    if(botResult != false){
-                        $scope.vm.botFullPath= botResult;
-                    }
+                $scope.vm.knowledgeBotVal = suggestion.value;
+                if(botResult != false){
+                    $scope.vm.botFullPath= botResult;
+                }
             })
         });
 
@@ -303,11 +304,11 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         $(".aside-navs").on("click","span",function(){
             //类型节点
             var pre = $(this).prev() ;
-                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
-                var id = pre.attr("data-option");
-                getBotFullPath(id);    //添加bot分類
-                angular.element(".rootClassfy,.menus").slideToggle();
-                $scope.$apply();
+            angular.element(".icon-jj").css("backgroundPosition","0% 0%");
+            var id = pre.attr("data-option");
+            getBotFullPath(id);    //添加bot分類
+            angular.element(".rootClassfy,.menus").slideToggle();
+            $scope.$apply();
             //}
         });
         //添加bot分类的
@@ -358,15 +359,15 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                     break  ;
                             }
                             html+= '<li>' +
-                                         '<div class="slide-a">'+
-                                         ' <a class="ellipsis" href="javascript:;">' ;
+                                '<div class="slide-a">'+
+                                ' <a class="ellipsis" href="javascript:;">' ;
 
                             html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
 
                             html+=             '<span>'+data.data[i].categoryName+'</span>'+
-                                        '</a>' +
-                                        '</div>' +
-                                     '</li>'
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
@@ -401,8 +402,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     "knowledgeId" : $scope.vm.knowledgeId
                 },function(data){
                     if(data.status == 500){
-                         $scope.vm.titleTip = "知识标题重复";
-                         $scope.title = ""  ;
+                        $scope.vm.titleTip = "知识标题重复";
+                        $scope.title = ""  ;
                         $scope.$apply()
                     }else{
                         $scope.$apply(function(){
@@ -419,7 +420,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         });
                     }
                 },function(err){
-                   console.log(err)
+                    console.log(err)
                 });
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
@@ -427,7 +428,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         }
         //  主页保存 获取参数
         function getParams(){
-          var  params =  {
+            var  params =  {
                 "applicationId": APPLICATION_ID,
                 "knowledgeId" : $scope.vm.knowledgeId ,
                 "knowledgeTitle": $scope.vm.title,      //知识标题
@@ -445,33 +446,33 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         }
         var limitTimer ;
         function save(){
-                if (!checkSave()) {
-                    return false
-                } else {
-                    if(!$scope.vm.limitSave) {
-                        $timeout.cancel(limitTimer) ;
-                        $scope.vm.limitSave = true ;
-                        limitTimer = $timeout(function(){
-                            $scope.vm.limitSave = false ;
-                        },180000) ;
-                        $scope.vm.data = getParams();
-                        var api = $scope.vm.knowledgeId?"/api/ms/faqKnowledge/editFAQKnowledge":"/api/ms/faqKnowledge/addFAQKnowledge";
-                        httpRequestPost(api, getParams(), function (data) {
-                            if (data.status == 200) {
-                                $state.go('knowledgeManagement.custOverview');
-                            }else if (data.status == 500) {
-                                layer.msg("知识保存失败") ;
-                                $timeout.cancel(limitTimer) ;
-                                $scope.$apply(function(){
-                                    $scope.vm.limitSave = false ;
-                                });
-                            }
-                        }, function (err) {
+            if (!checkSave()) {
+                return false
+            } else {
+                if(!$scope.vm.limitSave) {
+                    $timeout.cancel(limitTimer) ;
+                    $scope.vm.limitSave = true ;
+                    limitTimer = $timeout(function(){
+                        $scope.vm.limitSave = false ;
+                    },180000) ;
+                    $scope.vm.data = getParams();
+                    var api = $scope.vm.knowledgeId?"/api/ms/faqKnowledge/editFAQKnowledge":"/api/ms/faqKnowledge/addFAQKnowledge";
+                    httpRequestPost(api, getParams(), function (data) {
+                        if (data.status == 200) {
+                            $state.go('knowledgeManagement.custOverview');
+                        }else if (data.status == 500) {
+                            layer.msg("知识保存失败") ;
                             $timeout.cancel(limitTimer) ;
                             $scope.$apply(function(){
                                 $scope.vm.limitSave = false ;
                             });
+                        }
+                    }, function (err) {
+                        $timeout.cancel(limitTimer) ;
+                        $scope.$apply(function(){
+                            $scope.vm.limitSave = false ;
                         });
+                    });
                 }
             }
         }
@@ -578,12 +579,12 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //    新增的 channel = []  dimension = [] ,
             //   页面以添加 scanContent.dimensions   scanContent.channels
             //if(!channel.length){     //渠道不能为空
-                //layer.msg("请填写渠道");
-                //return false
+            //layer.msg("请填写渠道");
+            //return false
             //}else{               //渠道非空 channel   == code dimenssion   == id
-                angular.forEach($scope.vm.scanContent,function(item,contentIndex){
-                    if($scope.vm.isEditIndex != contentIndex){
-                        angular.forEach(item.channelIdList,function(v){
+            angular.forEach($scope.vm.scanContent,function(item,contentIndex){
+                if($scope.vm.isEditIndex != contentIndex){
+                    angular.forEach(item.channelIdList,function(v){
                         angular.forEach(channel,function(val,indexChannel) {
                             if(val == v){
                                 angular.forEach(item.dimensionIdList,function(value){
@@ -603,8 +604,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                             }
                         });
                     });
-                    }
-                });
+                }
+            });
             //}
             return isRepeat
         }
@@ -640,17 +641,30 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             });
         }
 //*******************2017/7/14*******************//
-            $('.emotion').qqFace({
-                id : 'facebox',
-
-                assign:'emotion-container',       //赋值对象
-
-                path:'/libs/qqFace/arclist/'	//表情存放的路径
-
-            });
-
-
-
+        $('.emotion').qqFace({
+            id : 'facebox',
+            //assign:'emotion-container',       //赋值对象
+            assign:'emotinon-backup',       //赋值对象
+            path:'/libs/qqFace/arclist/'	//表情存放的路径
+        });
+        $interval(function(){
+            console.log(1)
+            console.log($("#emotinon-backup").val())
+        },500) ;
+        $("#emotinon-backup").on("change",function(){
+        console.log($(this).val())
+        }) ;
+        $("#emotinon-backup").change(function(){
+            alert()
+        })
+        function getEmotion(e){
+            var ev = window.e | e ;
+            src = $(ev.target) ;
+            console.log(src.html())
+        }
+        //function relaceFace(){
+        //
+        //}
 //*******************2017/7/14*******************//
 
         //引导页方法
