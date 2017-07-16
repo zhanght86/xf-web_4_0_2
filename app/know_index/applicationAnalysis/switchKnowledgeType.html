@@ -2,23 +2,23 @@
 <div class=" ">
     <p class="f16 tc mb-30 mt-30">请选择知识类型</p>
     <div class="tc mb-10">
-        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.faqAdd">
-            FAQ知识新增
+        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.faqAdd({'knowledgeTitle':vm.knowledgeContent})">
+            FAQ知识新增 
         </a>
         <br/>
-        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.singleAddConcept">
+        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.singleAddConcept({'knowledgeTitle':vm.knowledgeContent})"> 
             概念知识新增
         </a>
         <br/>
-        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.listAdd">
+        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.listAdd({'knowledgeTitle':vm.knowledgeContent})">
             列表知识新增
         </a>
         <br/>
-        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.factorAdd">
+        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.factorAdd({'knowledgeTitle':vm.knowledgeContent})">
             要素知识新增
         </a>
         <br/>
-        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.markKnow">
+        <a class="btn1 btn1_blue" ui-sref="knowledgeManagement.markKnow({'knowledgeTitle':vm.knowledgeContent})">
             营销知识新增
         </a>
     </div>
