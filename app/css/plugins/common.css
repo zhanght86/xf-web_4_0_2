@@ -7,11 +7,11 @@ html,body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .ipt-txt{height: 20px; line-height:20px;font-size: 14px; padding: 6px; background: none; border: none; background-color: #fff;}
 .warp{width: 1200px; overflow: hidden; margin: 0 auto; height: inherit;}
 /*头部*/
-.header{position: relative; z-index: 3; width: 100%; height: 60px; line-height: 60px; padding: 0 28px; box-sizing: border-box; background-color: #2b2b2d;}
+.header{position: relative; z-index: 3; width: 100%; height: 60px; line-height: 60px; box-sizing: border-box; background-color: #2b2b2d;}
 .header .logo{float: left; overflow: hidden; height: inherit;}
 .header .logo a{display: block;height: inherit; padding-left: 35px; background: url(../../images/images/logo.png) no-repeat left center; font-size: 18px; font-weight: bold; color: #fff;}
 .header .logo .edition{font-size: 12px; background-color: #e84f4f; line-height: 1; padding: 0px 4px; border-radius: 2px; margin-left: 6px;}
-.header .nav{float: left;  margin-left: 30px;}
+.header .nav{float: left; }
 .header .nav:before{content: ""; height: 20px; border-left:1px solid #3c3c3f; border-right: 1px solid #1d1d20; float: left; margin-top: 20px;}
 .header .nav>li{float: left; position: relative;}
 .header .nav>li>a{font-size: 16px; color: #fff; display: block; text-align: center; padding: 0 20px;border-top: 3px solid transparent; height: 57px;}

@@ -38,7 +38,10 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //测试功能
     'functionalTestModule',
     //应用分析
-    'applAnalysisModule'
+    'applAnalysisModule',
+    //深度学习
+    'deepLearning'
+
 ]);
 
 /**
@@ -482,6 +485,53 @@ knowledge_static_web
                     },
                 }
             })
+            //
+            //深度学习
+            .state("deepLearning", {
+                url: "/deepLearning",
+                templateUrl: 'static/deepLearning/deepLearning.html',
+                controller: "adminController"
+            })
+            .state("deepLearning.dataAcquisition", {
+                url: "/dataAcquisition",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/dataAcquisition.html',
+                        controller: "dataAcquisitionController"
+                    }
+                }
+            })
+            .state("deepLearning.acquisitionDetails", {
+                url: "/acquisitionDetails",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/acquisitionDetails.html',
+                        controller: "acquisitionDetailsController"
+                    }
+                }
+            })
+            .state("deepLearning.similarityCalculation", {
+                url: "/similarityCalculation",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/similarityCalculation.html',
+                        controller: "similarityCalculationController"
+                    }
+                }
+            })
+            //深度学习end
 
             //materialManagement
             .state("materialManagement", {

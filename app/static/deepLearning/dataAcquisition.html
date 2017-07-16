@@ -1,0 +1,49 @@
+<div class="wrap dataAcquisition" style="margin-top:10px;">
+    <div class="pd-30" style="background:#fff;">
+        <div class="mb-20">
+            <span class="mr-10">
+                日期范围:
+                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
+                <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
+            </span>
+            <input type="button" class="btn1 btn1_blue mr-10" value="搜索" />
+            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.newTask()" value="新建任务" />
+        </div>
+        <div class="tab_div">
+            <table class="tab">
+                <tr>
+                    <td width="10%">序号</td>
+                    <td width="40%">采集时间</td>
+                    <td width="10%">状态</td>
+                    <td width="10%">采集数量</td>
+                    <td width="20%">耗时</td>
+                    <td width="10%">操作</td>
+                </tr>
+                <tr>
+                    <td>071201</td>
+                    <td>2017/07/12 00:00:00 - 2017/07/12 23:59:59</td>
+                    <td>完成</td>
+                    <td>120</td>
+                    <td>23小时59分59秒</td>
+                    <td><a ui-sref="deepLearning.acquisitionDetails">查看</a></td>
+                </tr>
+                <tr>
+                    <td>071201</td>
+                    <td>2017/07/12 00:00:00 - 2017/07/12 23:59:59</td>
+                    <td>完成</td>
+                    <td>120</td>
+                    <td>23小时59分59秒</td>
+                    <td><a ui-sref="deepLearning.acquisitionDetails">查看</a></td>
+                </tr>
+                <tr>
+                    <td>071201</td>
+                    <td>2017/07/12 00:00:00 - 2017/07/12 23:59:59</td>
+                    <td>完成</td>
+                    <td>120</td>
+                    <td>23小时59分59秒</td>
+                    <td><a ui-sref="deepLearning.acquisitionDetails">查看</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

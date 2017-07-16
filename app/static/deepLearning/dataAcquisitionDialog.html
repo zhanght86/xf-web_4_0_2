@@ -1,0 +1,19 @@
+<div class="pd-20" >
+    <div class="framework mb-10">
+        <span class="framework_s">数据源</span>
+        <input type="text" class="input-text bd" placeholder="知乎"/>
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">采集日期</span>
+        <!--<input type="text" class="input-text"/>-->
+        <input type="text"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" >
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">采集数量</span>
+        <input type="text" class="input-text bd"/>
+    </div>
+    <div>
+        <input type="button" class="btn1 btn1_blue mr-20" value="采集" />
+        <input type="button" class="btn1 btn_gray"value="取消" />
+    </div>
+</div>
