@@ -1,0 +1,42 @@
+<div class="pd-20" >
+    <div class="bk-gray clearfix h100" style="width:100%;">
+        <div id="chatContent" class="L" style="height: 350px;overflow: scroll;">
+            <div ng-repeat="item in vm.talkDetail">
+                <div style="clear: both" class="chatPopLeftMe">
+                    <div>
+                        <p>
+                            <span class="chatPopLeftMeMSg">
+                                <sub></sub>{{item.content}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="chatPopLeftHe" style="z-index:0;">
+                    <div>
+                        <p><sub></sub>
+                            <span class="RecommendCnt">
+                                <span class="RecommendCnt1">{{item.answer}}</span>
+                                <span class="RecommendCnt1-line" ng-if="item.prompt!=null && item.prompt!=''">{{item.prompt}}</span>
+                                <span ng-if="item.recommendQuestions!=null && item.recommendQuestions.length>0" ng-repeat="reco in item.recommendQuestions">
+                                    <i style="display:inline">{{reco.knowledgeTitle}}</i>
+                                </span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .ngdialog.ngdialog-theme-default .ngdialog-content{
+        width:930px;
+        min-height: 400px;
+    }
+</style>
+
+
+
+
+
+

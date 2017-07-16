@@ -41,7 +41,7 @@
                             <input type="button" class="btn1 btn1_blue" ng-click="vm.ignore()" value="忽略" />
                         </div>
                         <div class="cl mb-10">
-                            <b class="l f-14">现有知识强化</b>
+                            <b class="l f-14">增强学习</b>
                             <p class="r f-12 c-999" style="display: none;">共有数据<span id="total"></span>条</p>
                         </div>
                         <div>
@@ -118,7 +118,7 @@
 
                         </div>
                         <div class="cl mb-10">
-                            <b class="l f-14">现有知识强化</b>
+                            <b class="l f-14">增强学习</b>
                             <p class="r f-12 c-999" style="display: none;">共有数据<span id="total1"></span>条</p>
                         </div>
                         <div>
@@ -129,7 +129,8 @@
                                     <th width="25%">用户提问</th>
                                     <th width="15%">来源渠道</th>
                                     <th width="15%">匹配知识</th>
-                                    <th width="25%">创建时间</th>
+                                    <th width="15%">创建时间</th>
+                                    <th width="10%">审核状态</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -140,11 +141,16 @@
                                     <td>{{item.channelId | channelFilter}}</td>
                                     <td>{{item.knowledgeTitle}}</td>
                                     <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td>
+                                        <font ng-if="item.statusId==0">未审核</font>
+                                        <font ng-if="item.statusId==1 && item.passStatusId==0">未通过</font>
+                                        <font ng-if="item.statusId==1 && item.passStatusId==1">通过</font>
+                                    </td>
                                 </tr>
 
                                 </tbody>
                             </table>
-                            <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationCon1f.totalItems>0" conf="vm.paginationConf1"></pagination>
+                            <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
                         </div>
                     </div>
                 </div>

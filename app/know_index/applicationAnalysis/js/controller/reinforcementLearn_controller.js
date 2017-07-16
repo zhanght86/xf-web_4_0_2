@@ -44,12 +44,13 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             question:null,
             question1:null
         };
-
-        //客服场景新增
+        //选项卡
         function tab(obj1, obj2) {
             $(obj1).click(function () {
                 $(this).addClass('cur').siblings().removeClass();
                 $(obj2).children('div').eq($(this).index()).attr('class', 'db').siblings().attr('class', 'dn');
+                searchNewKnowledgeDiscovery(1);
+                listNoReview(1);
             });
         }
 
@@ -219,21 +220,20 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            layer.confirm('确认要忽略吗？', function () {
-                httpRequestPost("/api/analysis/knowledgeLearn/learn",{
-                    "qalog_id" : requestId,
-                    "knowledge_id":id_array.pop(),
-                    "knowledge_type":knowledgeType,
-                    "knowledge_title":knowledgeTitle,
-                    "learn_type":0,
-                    "knowledge_learn_type":0
-                },function(data){
-                    if(data.data){
-                        layer.msg(data.massage);
-                    }
-                },function(err){
-                    console.log(err);
-                });
+            httpRequestPost("/api/analysis/knowledgeLearn/learn",{
+                "qalog_id" : requestId,
+                "knowledge_id":id_array.pop(),
+                "knowledge_type":knowledgeType,
+                "knowledge_title":knowledgeTitle,
+                "learn_type":0,
+                "knowledge_learn_type":0
+            },function(data){
+                if(data.info){
+                    layer.msg(data.info);
+                    searchReinforcement(1);
+                }
+            },function(err){
+                console.log(err);
             });
         }
         function review(pass){
@@ -259,8 +259,9 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                     "ids" : id_array,
                     "pass_status_id": pass
                 },function(data){
-                    if(data.data){
-                        layer.msg(data.massage);
+                    if(data.info){
+                        layer.msg(data.info);
+                        listNoReview(1);
                     }
                 },function(err){
                     console.log(err);
