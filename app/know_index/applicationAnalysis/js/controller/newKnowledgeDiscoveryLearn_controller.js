@@ -47,7 +47,8 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             content:content,
             talkDetail:null,
             associateCheck:associateCheck,
-            currKnowledgeTitle:null
+            currKnowledgeTitle:null ,
+            knowledgeContent : ""
         };
         //选项卡
         function tab(obj1, obj2) {
@@ -348,6 +349,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         }
         //学习
         function learn(requestId,content){
+            $scope.vm.knowledgeContent = content ;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/switchKnowledgeType.html",
                 width:'500px',
