@@ -350,7 +350,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         function learn(requestId,content){
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/switchKnowledgeType.html",
-                width:'700px',
+                width:'500px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
