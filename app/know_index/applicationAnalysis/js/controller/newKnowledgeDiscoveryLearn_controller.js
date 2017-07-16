@@ -348,9 +348,8 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         }
         //学习
         function learn(requestId,content){
-            $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/applicationAnalysis/associateLearn.html",
+                template:"/know_index/applicationAnalysis/switchKnowledgeType.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

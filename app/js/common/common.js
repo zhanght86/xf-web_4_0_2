@@ -319,6 +319,17 @@ function nullCheck(value){
     return true;
 }
 /**
+ * 获取页面传参
+ * @param key
+ * @returns {null}
+ */
+function getPageParam(key){
+    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)return unescape(r[2]);
+    return null;
+}
+/**
  * 长度检测 包括边界
  * @param value
  * @param min
