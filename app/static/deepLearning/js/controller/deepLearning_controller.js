@@ -10,7 +10,7 @@ angular.module('deepLearning').controller('deepLearningController', [
         //var paraData = $stateParams.scanDataList?angular.fromJson($stateParams.scanDataList):"" ;
         $scope.vm = {
             uploadSpeech :uploadSpeech,
-
+ 
 
         };
 

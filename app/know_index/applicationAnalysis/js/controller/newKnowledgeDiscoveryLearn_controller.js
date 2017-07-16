@@ -341,7 +341,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 }
             });
         });
-        //清空全选  
+        //清空全选
         function clearSelectAll1(){
             console.log("=====clearSelectAll1=====");
             $("#selectAll1").attr("checked",false);
