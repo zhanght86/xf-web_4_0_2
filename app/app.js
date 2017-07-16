@@ -557,6 +557,20 @@ knowledge_static_web
                     }
                 }
             })
+            //图片库
+            .state("materialManagement.pictureLibrary", {
+                url: "/pictureLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/pictureLibrary/pictureLibrary.html',
+                        controller: "pictureLibraryController"
+                    }
+                }
+            })
             //知识管理knowledgeManagement
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",
@@ -891,7 +905,32 @@ knowledge_static_web
                     }
                 }
             })
-
+            .state("applAnalysis.reinforcementLearn", {
+                url: "/reinforcementLearn",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/reinforcementLearn.html',
+                        controller: "reinforcementLearnController"
+                    }
+                }
+            })
+            .state("applAnalysis.newKnowledgeDiscoveryLearn", {
+                url: "/newKnowledgeDiscoveryLearn",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'know_index/applicationAnalysis/newKnowledgeDiscoveryLearn.html',
+                        controller: "newKnowledgeDiscoveryLearnController"
+                    }
+                }
+            })
             //-----------------------
 
             //我的应用admin

@@ -28,6 +28,18 @@ angular.module('knowledge_static_web').filter('weightFilter', function () {
                 break;
         }
     };
+})
+.filter('channelFilter', function () {
+    return function (value) {
+        switch (value){
+            case '130' : return "微信";
+                break;
+            case '131' : return "web";
+                break;
+            case '132' : return "app";
+                break;
+        }
+    };
 });
 
 //angular.module('knowledge_static_web').filter('strReplace', function () {

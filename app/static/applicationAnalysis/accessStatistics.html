@@ -44,11 +44,11 @@
         </div>
         <div class="clearfix cus_ser_scene">
             <div class="tab_tit">
-                <span class="cur"  onclick="tabtab(this);">访问数据时间统计  </span>
-                <span class="" onclick="tabtab(this);">访问数据渠道统计 </span>
+                <span ng-class="vm.contentType==0?'cur':''"  ng-click="vm.contentType=0">访问数据时间统计  </span>
+                <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1">访问数据渠道统计 </span>
             </div>
             <div class="tab_con pt30 pb30">
-                <div class="db">
+                <div ng-show="vm.contentType==0">
                     <div class="data_time_statis_top " style="width:910px;">
                         <select class="sel bd L mr-5" id="request_time_type">
                             <option value="1">今日</option>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="dn" >
+                <div ng-show="vm.contentType==1" >
                     <div class="data_time_statis_top " style="width:605px;">
                         <select class="sel bd L mr-5" id="request_time_typeId">
                             <option value="1">今日</option>
@@ -199,10 +199,7 @@
     </div>
 </div>
 <script>
-    function tabtab(obj) {
-        $(obj).addClass('cur').siblings().removeClass();
-        $(obj).parent().next().children('div').eq($(obj).index()).attr('class', 'db').siblings().attr('class', 'dn');
-    }
+
     //访问数据时间统计
     var myChart = echarts.init(document.getElementById('access_echart_div'));
     option = {
