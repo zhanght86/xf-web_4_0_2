@@ -40,6 +40,26 @@ angular.module('knowledge_static_web').filter('weightFilter', function () {
                 break;
         }
     };
+})
+.filter('sentimentTypeFilter', function () {
+    return function (value) {
+        switch (value){
+            case 490 : return "乐";
+                break;
+            case 491 : return "好";
+                break;
+            case 492 : return "怒";
+                break;
+            case 493 : return "哀";
+                break;
+            case 494 : return "惧";
+                break;
+            case 495 : return "恶";
+                break;
+            case 496 : return "惊";
+                break;
+        }
+    };
 });
 
 //angular.module('knowledge_static_web').filter('strReplace', function () {
