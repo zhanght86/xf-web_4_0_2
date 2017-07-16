@@ -909,7 +909,7 @@ knowledge_static_web
                 url: "/reinforcementLearn",
                 views: {
                     'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
+                        templateUrl: 'static/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'content': {
@@ -922,7 +922,7 @@ knowledge_static_web
                 url: "/newKnowledgeDiscoveryLearn",
                 views: {
                     'header': {
-                        templateUrl: 'know_index/home/homePageNav.html',
+                        templateUrl: 'static/home/homePageNav.html',
                         controller: "homePageNavController"
                     },
                     'content': {
