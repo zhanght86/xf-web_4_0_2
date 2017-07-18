@@ -12,33 +12,33 @@
                     </tr>
                     <tr>
                         <td>今日</td>
-                        <td>10000</td>
-                        <td>8000</td>
+                        <td ng-bind="dataTopRightToday[0]"></td>
+                        <td ng-bind="dataTopRightToday[1]"></td>
                     </tr>
                     <tr>
                         <td>昨日</td>
-                        <td>5000</td>
-                        <td>4000</td>
+                        <td ng-bind="dataTopRightTom[0]"></td>
+                        <td ng-bind="dataTopRightTom[1]"></td>
                     </tr>
                     <tr>
                         <td>历史最高</td>
-                        <td>120000（2017-7-13）</td>
-                        <td>120000（2017-7-13）</td>
+                        <td  ng-bind="dataTopRightHis[0]"></td>
+                        <td ng-bind="dataTopRightHis[1]"></td>
                     </tr>
                 </table>
             </div>
             <div class="visitor_div R bd p20" >
                 <div class="visitor_div1 mb-10">
                     今日访客总数
-                    <strong class="mr-30">10000</strong>
-                    今日问答总数
-                    <strong>10000</strong>
+                    <strong class="mr-30" ng-bind="dataTopLeftToday[0]"></strong>
+                    今日会话总数
+                    <strong ng-bind="dataTopLeftToday[1]"></strong>
                 </div>
                 <div class="visitor_div1">
-                    今日访客总数
-                    <strong class="mr-30">10000</strong>
-                    今日问答总数
-                    <strong>10000</strong>
+                    历史访客总数
+                    <strong class="mr-30" ng-bind="dataTopLeftHis[0]"></strong>
+                    历史会话总数
+                    <strong ng-bind="dataTopLeftHis[1]"></strong>
                 </div>
             </div>
         </div>
@@ -51,21 +51,21 @@
                 <div class="db">
                     <div class="data_time_statis_top " style="width:910px;">
                         <select class="sel bd L mr-5" id="request_time_type">
-                            <option value="1">今日</option>
-                            <option value="2">昨日</option>
-                            <option value="3">过去7天</option>
-                            <option value="4">过去30天</option>
+                            <option value="1" ng-click="setDate(0)">今日</option>
+                            <option value="2" ng-click="setDate(1)">昨日</option>
+                            <option value="3" ng-click="setDate(7)">过去7天</option>
+                            <option value="4" ng-click="setDate(30)">过去30天</option>
                         </select>
                         <select class="sel bd L mr-5" >
                             <option value="">选择渠道</option>
-                            <option value="">WEB</option>
-                            <option value="">APP</option>
-                            <option value="">微信</option>
+                            <option value="" ng-click="setChannel(131)">WEB</option>
+                            <option value="" ng-click="setChannel(132)">APP</option>
+                            <option value="" ng-click="setChannel(130)">微信</option>
                         </select>
                         <!--纬度-->
-                        <div class="L mr-5" style="width:200px;height:32px;">
-                            <div auto-complete  source="" result="" style="width:100%;"></div>
-                        </div>
+                        <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
+                            <option  value="" >全部维度</option>
+                        </select>
                         <span>
                         日期范围:
                         <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
@@ -97,43 +97,43 @@
                                 <tbody>
                                 <tr>
                                     <td>总用户人数</td>
-                                    <td>23</td>
-                                    <td>34</td>
-                                    <td>12</td>
-                                    <td>33</td>
-                                    <td>44</td>
-                                    <td>23</td>
-                                    <td>21</td>
+                                    <td ng-bind="dataByTimeUser[0]"></td>
+                                    <td ng-bind="dataByTimeUser[1]"></td>
+                                    <td ng-bind="dataByTimeUser[2]"></td>
+                                    <td ng-bind="dataByTimeUser[3]"></td>
+                                    <td ng-bind="dataByTimeUser[4]"></td>
+                                    <td ng-bind="dataByTimeUser[5]"></td>
+                                    <td ng-bind="dataByTimeUser[6]"></td>
                                 </tr>
                                 <tr>
                                     <td>总会话数</td>
-                                    <td>23</td>
-                                    <td>34</td>
-                                    <td>12</td>
-                                    <td>33</td>
-                                    <td>44</td>
-                                    <td>23</td>
-                                    <td>21</td>
+                                    <td ng-bind="dataByTimeSession[0]"></td>
+                                    <td ng-bind="dataByTimeSession[1]"></td>
+                                    <td ng-bind="dataByTimeSession[2]"></td>
+                                    <td ng-bind="dataByTimeSession[3]"></td>
+                                    <td ng-bind="dataByTimeSession[4]"></td>
+                                    <td ng-bind="dataByTimeSession[5]"></td>
+                                    <td ng-bind="dataByTimeSession[6]"></td>
                                 </tr>
                                 <tr>
                                     <td>有效会话数</td>
-                                    <td>23</td>
-                                    <td>34</td>
-                                    <td>12</td>
-                                    <td>33</td>
-                                    <td>44</td>
-                                    <td>23</td>
-                                    <td>21</td>
+                                    <td ng-bind="dataByTimeVuser[0]"></td>
+                                    <td ng-bind="dataByTimeVuser[1]"></td>
+                                    <td ng-bind="dataByTimeVuser[2]"></td>
+                                    <td ng-bind="dataByTimeVuser[3]"></td>
+                                    <td ng-bind="dataByTimeVuser[4]"></td>
+                                    <td ng-bind="dataByTimeVuser[5]"></td>
+                                    <td ng-bind="dataByTimeVuser[6]"></td>
                                 </tr>
                                 <tr>
                                     <td>有效用户数</td>
-                                    <td>23</td>
-                                    <td>34</td>
-                                    <td>12</td>
-                                    <td>33</td>
-                                    <td>44</td>
-                                    <td>23</td>
-                                    <td>21</td>
+                                    <td ng-bind="dataByTimeVsessiion[0]"></td>
+                                    <td ng-bind="dataByTimeVsessiion[1]"></td>
+                                    <td ng-bind="dataByTimeVsessiion[2]"></td>
+                                    <td ng-bind="dataByTimeVsessiion[3]"></td>
+                                    <td ng-bind="dataByTimeVsessiion[4]"></td>
+                                    <td ng-bind="dataByTimeVsessiion[5]"></td>
+                                    <td ng-bind="dataByTimeVsessiion[6]"></td>
                                 </tr>
                                 </tbody>
                             </table>
