@@ -160,6 +160,11 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
+            if($scope.vm.newDimensions.length == 0){
+                layer.msg("请至少添加一个维度表示!");
+                $scope.vm.allowSubmit=0;
+                return 0;
+            }
             return 1;
         }
 
