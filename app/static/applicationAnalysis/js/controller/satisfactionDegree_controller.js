@@ -179,7 +179,6 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             });
         }
         //渠道
-
         function  getChannel(){
             httpRequestPost("/api/application/channel/listChannels",{
                 "applicationId" : $scope.vm.applicationId

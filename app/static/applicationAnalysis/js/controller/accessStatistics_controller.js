@@ -15,6 +15,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
 
         };
 
+
         //左上表格数据
         function getTopLeft(){
             httpRequestPost("/api/analysis/access/queryAccessDataTopLeft",{
