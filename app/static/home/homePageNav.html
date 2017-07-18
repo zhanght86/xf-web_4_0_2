@@ -180,20 +180,25 @@
                         </a>
                     </li>
                     <li>
+                        <a ui-sref="applAnalysis.satisfactionDegree">
+                            <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
+                            <span>满意率统计</span>
+                        </a>
+                    </li>
+                    <li>
                         <a ui-sref="applAnalysis.resolutionStatistics">
                             <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
                             <span>解决率统计</span>
                         </a>
                     </li>
-
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="applAnalysis.reinforcementLearn">
                             <i class="icon-nav icon-nav__icon-nav_myltj"></i>
                             <span>增强学习</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="applAnalysis.newKnowledgeDiscoveryLearn">
                             <i class="icon-nav icon-nav__icon-nav_myltj"></i>
                             <span>新知识发现</span>
                         </a>
@@ -216,7 +221,7 @@
                         <!--</a>-->
                     <!--</li>-->
                     <li>
-                        <a href="javascript:;">
+                        <a ui-sref="materialManagement.pictureLibrary">
                             <i class="icon-nav icon-nav__icon-nav_tpk"></i>
                             <span>图片库</span>
                         </a>
@@ -237,6 +242,29 @@
                         <a ui-sref="materialManagement.speechLibrary">
                             <i class="icon-nav icon-nav__icon-nav_wdk"></i>
                             <span>语音库</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-if="vm.applicationId">
+                <a href="javascript:;">深度学习<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="deepLearning.dataAcquisition">
+                            <i class="icon-nav icon-nav__icon-nav_fwtj"></i>
+                            <span>数据采集</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="">
+                            <i class="icon-nav icon-nav__icon-nav_zsdpm"></i>
+                            <span>深度学习</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="deepLearning.similarityCalculation">
+                            <i class="icon-nav icon-nav__icon-nav_hhmx"></i>
+                            <span>相似度计算</span>
                         </a>
                     </li>
                 </ul>

@@ -446,3 +446,22 @@
 .voice_dl dt{width:130px;height:130px;margin-right:2%;}
 .voice_dl dt img{width:100%;height:100%;}
 .voice_dl dd{width:58%;height:130px;overflow-y: auto;}
+/*.voice_classific p{width:100%;height:31px;}*/
+/*.voice_classific ul{position:absolute;top:31px;left:0;z-index:9999;width:100%;padding:10px 15px;box-sizing: border-box;background:#fff;}*/
+/*.voice_classific ul li{width:96px;margin:0 10px 5px 0;float: left;cursor:pointer;}*/
+/*.voice_upload_div{}*/
+
+.voice_upload_dl{width:430px;height:90px;}
+.voice_upload_dl dt{width:116px;height:89px;}
+.voice_upload_dl dd{width:300px;height:89px;padding-left: 10px;}
+
+.picture_div{width:23%;height:238px;margin:10px 1%;box-sizing: border-box;}
+.picture_div .picture_dl{width:100%;}
+.picture_div .picture_dl dt{width:100%;height:171px;}
+.picture_div .picture_dl dt img{width:100%;height:100%;}
+.picture_div .picture_dl dd{padding:5px 10px;}
+/*深度学习*/
+.dataAcquisition .tab_div{width:100%;}
+.dataAcquisition .tab{width:100%;}
+.dataAcquisition .tab td{border:1px solid #eee;text-align: center;padding:5px 0;min-height:30px;}
+

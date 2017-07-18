@@ -216,7 +216,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                     console.log("导出失败");
                 }else{
                     //alert(data.data);
-                    window.open("/api/analysis/userSession/downloadExcel?fileName="+ data.data);
+                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
                 }
                 console.log();
 

@@ -1,0 +1,39 @@
+<div class="pd-20" >
+    <div>
+        <p>{{vm.currQuestion}}</p>
+    </div>
+    <div>
+        <table class="access_amount_table">
+            <thead>
+                <tr>
+                    <th width="20%"></th>
+                    <th width="80%" class="text-c">知识标题</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr role="row" class="odd">
+                    <td><input type="radio" checked="checked"></td>
+                    <td>{{vm.currKnowledgeTitle}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="framework mb-10 pt-10">
+        <span class="framework_s text-r"></span>
+        <div class="">
+            <input type="button" class="btn1 btn_green" ng-click="closeThisDialog(0)" value="返回"/>
+        </div>
+    </div>
+</div>
+<style>
+    .ngdialog.ngdialog-theme-default .ngdialog-content{
+        width:930px;
+        min-height: 400px;
+    }
+</style>
+
+
+
+
+
+
