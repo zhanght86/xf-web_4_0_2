@@ -59,9 +59,9 @@
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
                                 <span>
-                                    <input type="text" id="startTime" onchange=""  ng-model="vm.knowledgeExpDateStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                                    <input type="text" id="startTime" onchange=""  ng-model="vm.knowledgeExpDateStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择开始日期" readonly>
                                     -
-                                    <input type="text" id="endTime"   onchange="" ng-model="vm.knowledgeExpDateEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
+                                    <input type="text" id="endTime"   onchange="" ng-model="vm.knowledgeExpDateEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>
                                 </span>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
@@ -76,14 +76,16 @@
                                     <label class="mr-10"><input ng-model="vm.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>
                                     <label class="mr-10"><input ng-model="vm.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>
                                     <label class="mr-10"><input ng-model="vm.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="105"  type="radio" name="knoe_type" />营销</label>
+
                                 </div>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-checked="vm.sourceType==0" ng-click="vm.getSourceType(0)"/>全部</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(1)"/>单条新增</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(2)"/>文档加工</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(120)"/>单条新增</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(122)"/>文档加工</label>
                                 </div>
                             </div>
 
@@ -110,6 +112,7 @@
                             <option value="101">概念知识型新增</option>
                             <option value="102">列表型知识新增</option>
                             <option value="103">要素型知识新增</option>
+                            <option value="105">营销知识新增</option>
                         </select>
                         <a class="L btn btn-blue mr-10" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions" style="line-height:17px;">批量导入</a>
                         <!--<a class="btn btn-green" href="javascript:;" style="line-height:17px;">知识加工</a>-->
@@ -140,7 +143,9 @@
                             <li ng-repeat="item in vm.listData">
                                 <div class="title">
                                     <span checkbox-overview ng-click="vm.addDelIds(item.knowledgeId,vm.knowledgeIds)" result="vm.knowledgeIds.inArray(item.knowledgeId)"></span>
-                                    <a href="javascript:;" ui-sref="knowledgeManagement.custPreview({knowledgeId:item.knowledgeId,knowledgeType:item.knowledgeType})">{{item.knowledgeTitle}}</a>
+                                    <a href="javascript:;" ui-sref="knowledgeManagement.custPreview({knowledgeId:item.knowledgeId,knowledgeType:item.knowledgeType})">
+                                        {{item.knowledgeTitle}}
+                                    </a>
                                 </div>
                                 <div class="txt-cont mt10">
                                     <div class="txt-item oh">
@@ -152,13 +157,25 @@
                                     <div class="txt-item oh">
                                         <div class="lable fl">知识内容：</div>
                                         <!--{{item.knowledgeContent}}-->
+                                        <!--{{vm.listData}}-->
                                         <div class="value oh">
                                             <ul class="">
-                                                <li ng-if="item.knowledgeType!=103" title="{{item.knowledgeContent}}">
+                                                <li ng-if="item.knowledgeType==105 " title="{{item.knowledgeContent}}">
+                                                    <!--<p>{{item.knowledgeContent}}</p>-->
+                                                    <!--<p  ng-if="item.knowledgeContentNegative==110">文本</p>-->
+                                                    <p  ng-if="item.knowledgeContentNegative==111">
+                                                        图片
+                                                    </p>
+                                                    <p ng-if="item.knowledgeContentNegative==112">语音</p>
+                                                    <p ng-if="item.knowledgeContentNegative==113">文本</p>
+                                                </li>
+                                                <!-- 列表 概念  faq 知識-->
+                                                <li ng-if="item.knowledgeType!=103 && item.knowledgeType!=105" title="{{item.knowledgeContent}}">
                                                     <!--<p>{{item.knowledgeContent}}</p>-->
                                                     <p ng-if="item.knowledgeContent.length<=50">{{item.knowledgeContent}}</p>
                                                     <p ng-if="item.knowledgeContent.length>50">{{item.knowledgeContent.substring(0,50)+'...'}}</p>
                                                 </li>
+                                                <!-- 要素知識-->
                                                 <li ng-if="item.knowledgeType==103">
                                                     <p><strong>该要素知识包含条数：</strong> {{item.tableCount}}条</p>
                                                     <p><strong>新添加要素数：</strong> {{item.elementsCount}}条</p>
@@ -173,7 +190,7 @@
                                 </div>
                                 <div class="csso-info oh">
                                     <div class="fr">
-                                        <span class="mr-10">作者：{{item.knowledgeCreator}}</span>
+                                        <span class="mr-20">作者：{{item.knowledgeCreator}}</span>
                                         <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</span>
                                     </div>
                                 </div>

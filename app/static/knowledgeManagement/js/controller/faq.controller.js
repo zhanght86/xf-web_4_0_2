@@ -6,6 +6,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
     "knowledgeAddServer","$window","$rootScope","$filter","myService","$location",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
               knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
+        console.log($stateParams);
         $scope.vm = {
             knowledgeId : "" ,
             frames : [],      //业务框架
@@ -129,7 +130,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
         //标题
-        //if(!$stateParams.data!=null && $stateParams.data.knowledgeBase){
         if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
             var data = angular.fromJson($stateParams.data);
             //标题
@@ -172,6 +172,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
              //知识内容弹出框
         }
 
+        if($stateParams.knowledgeTitle){
+            console.log("======"+$stateParams.knowledgeTitle);
+            $scope.vm.title=$stateParams.knowledgeTitle;
+        }
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 
 // 通过类目id 获取框架

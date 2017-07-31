@@ -1,0 +1,89 @@
+<div class="pt-10 pb-10">
+    <form action="" method="post" name="myForm" class="form form-horizontal" novalidate>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Name：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" value="{{vm._name}}" ng-model="vm._name" readonly="readonly"/>
+        	</div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Cell：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+            	<select class="bd" ng-model="vm.cell" ng-disabled="vm.isEdit==0" >
+                <option ng-selected="vm.cell == 'RNN'">RNN</option>
+	                <option ng-selected="vm.cell == 'LSTM'">LSTM</option>
+	                <option ng-selected="vm.cell == 'GRU'">GRU</option>
+	            </select>
+            </div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Activation：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+            	<select class="bd" ng-model="vm.activation" ng-disabled="vm.isEdit==0" >
+	                <option ng-selected="vm.activation == 'ReLu'">ReLu</option>
+	                <option ng-selected="vm.activation == 'Tanh'">Tanh</option>
+	                <option ng-selected="vm.activation == 'Sigmoid'">Sigmoid</option>
+	                <option ng-selected="vm.activation == 'Linear'">Linear</option>
+	            </select>
+            </div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Regularization：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+            	<select class="bd" ng-model="vm.regularization" ng-disabled="vm.isEdit==0" >
+                	<option ng-selected="vm.regularization == 'none'">none</option>
+                	<option ng-selected="vm.regularization == 'l1'">l1</option>
+                	<option ng-selected="vm.regularization == 'l2'">l2</option>
+            	</select>
+            </div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Regularization Rate：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="0" ng-readonly="vm.isEdit==0" value="{{vm.regularizationRate}}" ng-model="vm.regularizationRate"/>
+        	</div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Layers：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="2" ng-readonly="vm.isEdit==0" value="{{vm.layers}}" ng-model="vm.layers"/>
+        	</div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Neurons：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="1024" ng-readonly="vm.isEdit==0" value="{{vm.neurons}}" ng-model="vm.neurons"/>
+        	</div>
+        </div>
+		<div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Learning Rate：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="0.0003" ng-readonly="vm.isEdit==0" value="{{vm.learningRate}}" ng-model="vm.learningRate"/>
+        	</div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Max Gradient：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="5.0" ng-readonly="vm.isEdit==0" value="{{vm.maxGradient}}" ng-model="vm.maxGradient"/>
+        	</div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Dropout：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="0.5" ng-readonly="vm.isEdit==0" value="{{vm.dropout}}" ng-model="vm.dropout"/>
+        	</div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-4">Batch Size：</label>
+            <div class="formControls col-xs-9 col-sm-7">
+                <input type="text" class="input-text bd" placeholder="64" ng-readonly="vm.isEdit==0" value="{{vm.batchSize}}" ng-model="vm.batchSize"/>
+        	</div>
+        </div>
+	    <div class="tc">
+	        <input type="button" ng-if="vm.isEdit==1" class="btn1 btn1_blue mr-10" value="Save" ng-click="vm.verifyRelease()?closeThisDialog(1):''"/>
+	        <input type="button" class="btn1 btn_gray" value="Cancel" ng-click="closeThisDialog(0)"/>
+	    </div>
+	</form>
+</div>
+
+<style type="text/css">select {width: 302px; height: 29px;}</style>

@@ -9,6 +9,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         $scope.vm = {
             applicationId: $cookieStore.get("applicationId"),
             userId : $cookieStore.get("userId"),   //用户id
+            userName : $cookieStore.get("userLoginName"), //获取用户id
             serviceData : "",   // 发布服务列表数据
             paginationConf : ""  ,//分页条件
             pageSize : 3 , //默认每页数量
@@ -88,7 +89,10 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         //发布服务
         function publishService(serviceId){
             httpRequestPost("/api/application/service/publishService",{
-                "serviceId": serviceId
+                "serviceId": serviceId,
+                "applicationId": $scope.vm.applicationId,
+                "userId" : $scope.vm.userId, //获取用户id
+                "userName" : $scope.vm.userName //获取用户名称
             },function(data){
                 if(data.status==200){
                     layer.msg("发布服务成功");
@@ -286,17 +290,19 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             },function(index){
                 layer.close(index);
                 httpRequestPost("/api/application/service/deleteAllServices",{
-                                    "applicationId": $scope.vm.applicationId
-                                },function(data){
-                                    if(data.status==200){
-                                        layer.msg("删除成功");
-                                        $state.go("admin.manage");
-                                    }else{
-                                        layer.msg("删除失败");
-                                    }
-                                },function(){
-                                    console.log("请求失败");
-                                }) ;
+                    "applicationId": $scope.vm.applicationId,
+                    "userId" : $scope.vm.userId, //获取用户id
+                    "userName" : $scope.vm.userName //获取用户名称
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("删除成功");
+                        $state.go("admin.manage");
+                    }else{
+                        layer.msg("删除失败");
+                    }
+                },function(){
+                    console.log("请求失败");
+                }) ;
                 //var dialog = ngDialog.openConfirm({
                 //    template:"/static/myApplication/applicationInfor/applicationInforDialog2.html",
                 //    scope: $scope,

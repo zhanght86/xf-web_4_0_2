@@ -1,7 +1,7 @@
 <div class="pd-20" >
     <div class="framework mb-10">
         <span class="framework_s">语音标题：</span>
-        <input type="text" class="bd input-text"/>
+        <input type="text" class="bd input-text" ng-model="vm.voiceTitle"/>
     </div>
     <!--<div class="framework mb-10">-->
         <!--<span class="framework_s">语音分类：</span>-->
@@ -30,22 +30,25 @@
         <span class="framework_s">语音上传：</span>
         <div class="bd voice_upload_div  mb-10">
             <div class="p10">
-                <dl class="voice_upload_dl clearfix bd">
-                    <dt class="L">
-                        <img src="../../../images/u1134.png"/>
-                    </dt>
-                    <dd class="L">
-                        <p>无标题</p>
-                        <p>3.34</p>
-                    </dd>
-                </dl>
+                <!--<dl class="voice_upload_dl clearfix bd">-->
+                    <!--<dt class="L">-->
+                        <!--<img src="../../../images/u1134.png" />-->
+                        <span voice-upload></span>
+                    <!--</dt>-->
+                    <!--<dd class="L">-->
+                        <!--<p>无标题</p>-->
+                        <!--<p>3.34</p>-->
+                    <!--</dd>-->
+                <!--</dl>-->
             </div>
             <div class="clearfix pd-5" style="border-top:1px solid #eee;">
-                <p class="L">格式支持mp3、wma、wav、amr，文件大小不超过30M，语音时长不超过30分钟</p>
-                <button class="R btn1 btn1_blue">重新上传</button>
+                <p class="L">格式支持mp3、amr
+                    <!--，文件大小不超过2M，语音时长不超过30秒-->
+                </p>
+                <!--<button class="R btn1 btn1_blue">重新上传</button>-->
             </div>
         </div>
-        <button class="btn1 btn1_blue">提交</button>
+        <button class="btn1 btn1_blue" id="startUpload" ng-click="vm.isUploadStart=true">提交</button>
     </div>
 
 </div>

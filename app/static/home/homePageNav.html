@@ -2,7 +2,7 @@
 <div class="homePageNav">
     <div class="header clearfix">
         <div class="logo">
-            <a ui-sref="homePage.define"><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>
+            <a ui-sref="homePage.define"><strong>小富机器人控制台</strong><em class="edition">V4.0</em></a>
             <!--<a ui-sref="homePage.define"><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>-->
         </div>
         <ul class="nav">
@@ -179,28 +179,40 @@
                             <span>会话明细统计</span>
                         </a>
                     </li>
-                    <li>
-                        <a ui-sref="applAnalysis.satisfactionDegree">
-                            <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
-                            <span>满意率统计</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a ui-sref="applAnalysis.resolutionStatistics">
-                            <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
-                            <span>解决率统计</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a ui-sref="applAnalysis.reinforcementLearn">
-                            <i class="icon-nav icon-nav__icon-nav_myltj"></i>
-                            <span>增强学习</span>
+                    <!--<li>-->
+                        <!--<a ui-sref="applAnalysis.satisfactionDegree">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_jjltj"></i>-->
+                            <!--<span>满意率统计</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a ui-sref="applAnalysis.resolutionStatistics">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_fltj"></i>-->
+                            <!--<span>解决率统计</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li >
+                        <a ui-sref="applAnalysis.reinforcementLearn" style="border-top: 1px dashed #afafb8;">
+                            <i class="icon-nav icon-nav_zqxx" ></i>
+                            <span>智能学习</span>
                         </a>
                     </li>
                     <li>
                         <a ui-sref="applAnalysis.newKnowledgeDiscoveryLearn">
-                            <i class="icon-nav icon-nav__icon-nav_myltj"></i>
-                            <span>新知识发现</span>
+                            <i class="icon-nav icon-nav_xzzfx" ></i>
+                            <span>未匹配问题聚类</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a ui-sref="applAnalysis.operationLog" style="border-top: 1px dashed #afafb8;">
+                            <i class="icon-nav icon-nav_czrz" ></i>
+                            <span>操作日志</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="applAnalysis.sessionLog">
+                            <i class="icon-nav icon-nav_hhrz" ></i>
+                            <span>会话日志</span>
                         </a>
                     </li>
                 </ul>
@@ -244,27 +256,39 @@
                             <span>语音库</span>
                         </a>
                     </li>
+                    <li >
+                        <a ui-sref="deepLearning.dataAcquisition" style="border-top: 1px dashed #afafb8">
+                            <i class="icon-nav icon-nav__icon-nav_sjcj"></i>
+                            <span>自动导入更新</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li ng-if="vm.applicationId">
                 <a href="javascript:;">深度学习<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
-                        <a ui-sref="deepLearning.dataAcquisition">
-                            <i class="icon-nav icon-nav__icon-nav_fwtj"></i>
-                            <span>数据采集</span>
+                        <a ui-sref="deepLearning.deeplearnConfig">
+                            <i class="icon-nav icon-nav__icon-nav_mxgj"></i>
+                            <span>模型构建</span>
                         </a>
                     </li>
                     <li>
-                        <a ui-sref="">
-                            <i class="icon-nav icon-nav__icon-nav_zsdpm"></i>
-                            <span>深度学习</span>
+                        <a ui-sref="deepLearning.deepLearningCon">
+                            <i class="icon-nav icon-nav__icon-nav_mxxl"></i>
+                            <span>模型训练</span>
                         </a>
                     </li>
                     <li>
                         <a ui-sref="deepLearning.similarityCalculation">
-                            <i class="icon-nav icon-nav__icon-nav_hhmx"></i>
-                            <span>相似度计算</span>
+                            <i class="icon-nav icon-nav__icon-nav_mxcs"></i>
+                            <span>模型测试</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a ui-sref="deepLearning.dataAcquisition" style="border-top: 1px dashed #afafb8">
+                            <i class="icon-nav icon-nav__icon-nav_sjcj"></i>
+                            <span>自动导入更新</span>
                         </a>
                     </li>
                 </ul>
@@ -297,9 +321,9 @@
                 </div>
             </div>
             <div class="mail-conver" ng-if="vm.sceneId==2 || vm.sceneId==1" style="margin-left:0;">
-                <a ui-sref="knowledgeManagement.historyView" class="mail">
-                    <!--<em>2</em>-->
-                </a>
+                <!--<a ui-sref="knowledgeManagement.historyView" class="mail">-->
+                    <!--&lt;!&ndash;<em>2</em>&ndash;&gt;-->
+                <!--</a>-->
                 <a  class="conver" ng-click="vm.queryServiceList()"></a>
             </div>
         </div>

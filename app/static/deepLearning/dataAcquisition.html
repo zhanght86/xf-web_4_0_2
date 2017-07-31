@@ -2,48 +2,55 @@
     <div class="pd-30" style="background:#fff;">
         <div class="mb-20">
             <span class="mr-10">
-                日期范围:
-                <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
-                <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
+               	 日期范围:            
+                <input type="text" ng-model="vm.crawlStartTime" id="crawlStartTime" onchange="" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'crawlEndTime\')}'})" class="input-text Wdate " style="width:185px;height:31px;font-size:14px;border:1px solid #e1e1e1;" placeholder="请选择开始日期" readonly> -
+                <input type="text" ng-model="vm.crawlEndTime" id="crawlEndTime" onchange="" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'crawlStartTime\')}'})" class="input-text Wdate " style="width:185px;height:31px;font-size:14px;border:1px solid #e1e1e1;" placeholder="请选择结束日期" readonly>
             </span>
-            <input type="button" class="btn1 btn1_blue mr-10" value="搜索" />
-            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.newTask()" value="新建任务" />
+            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.listCrawlRecordData(1)" value="搜索" />
+            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.clearDate()" value="清空" />
+            <!--<input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.newTask()" value="新建任务" />-->
         </div>
         <div class="tab_div">
             <table class="tab">
                 <tr>
-                    <td width="10%">序号</td>
-                    <td width="40%">采集时间</td>
-                    <td width="10%">状态</td>
+                    <td width="8%">序号</td>
+                    <td width="10%">采集日期</td>
+                    <td width="15%">采集开始时间</td>
+                    <td width="15%">采集结束时间</td>
+                    <td width="10%">采集状态</td>
+                    <td width="10%">导入状态</td>
                     <td width="10%">采集数量</td>
-                    <td width="20%">耗时</td>
                     <td width="10%">操作</td>
                 </tr>
-                <tr>
-                    <td>071201</td>
-                    <td>2017/07/12 00:00:00 - 2017/07/12 23:59:59</td>
-                    <td>完成</td>
-                    <td>120</td>
-                    <td>23小时59分59秒</td>
-                    <td><a ui-sref="deepLearning.acquisitionDetails">查看</a></td>
-                </tr>
-                <tr>
-                    <td>071201</td>
-                    <td>2017/07/12 00:00:00 - 2017/07/12 23:59:59</td>
-                    <td>完成</td>
-                    <td>120</td>
-                    <td>23小时59分59秒</td>
-                    <td><a ui-sref="deepLearning.acquisitionDetails">查看</a></td>
-                </tr>
-                <tr>
-                    <td>071201</td>
-                    <td>2017/07/12 00:00:00 - 2017/07/12 23:59:59</td>
-                    <td>完成</td>
-                    <td>120</td>
-                    <td>23小时59分59秒</td>
-                    <td><a ui-sref="deepLearning.acquisitionDetails">查看</a></td>
-                </tr>
+                <tbody ng-repeat="item in vm.crawlRecordData">
+	                <tr>
+	                    <td>{{item.crawlRecordId}}</td>
+                        <td>
+                            {{item.crawlDate |  date : 'yyyy-MM-dd'}}
+                        </td>
+	                    <td>
+	                    	{{item.crawlStartTime |  date : 'yyyy-MM-dd HH:mm:ss'}}
+                        </td>
+                        <td>
+							{{item.crawlEndTime |  date : 'yyyy-MM-dd HH:mm:ss'}} 
+	                    </td>
+                       <td>
+                            <label ng-if="item.crawlStatus==1">采集完成</label>
+                            <label ng-if="item.crawlStatus==0">采集中</label>
+                        </td>
+                        <td>
+                            <label ng-if="item.exportTag==1">导入完成</label>
+                            <label ng-if="item.exportTag==0">未导入</label>
+                        </td>
+	                    <td>{{item.crawlCount}}</td>
+	                    <td>
+                            <a ui-sref="deepLearning.acquisitionDetails({crawlRecordId:item.crawlRecordId})">查看</a>
+                            <!--<a ng-if="item.crawlStatus==1" ng-click="vm.exportToChat(item.crawlRecordId)" class="mr-10 c-orange">导出到闲聊库</a>-->
+                        </td>
+	                </tr>
+                </tbody>
             </table>
+            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
         </div>
     </div>
 </div>

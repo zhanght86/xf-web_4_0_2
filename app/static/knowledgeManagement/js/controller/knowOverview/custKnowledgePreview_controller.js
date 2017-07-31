@@ -1,4 +1,3 @@
-
 /**
  * Created by Administrator on 2016/6/3.
  * 控制器
@@ -9,7 +8,7 @@ angular.module('knowledgeManagementModule').controller('custPreviewController', 
         //$state.go("custKnowledgePreview.manage",{userPermission:$stateParams.userPermission});
         //var viewData =  $window.opener.knowledgeScan ;
         if(!$stateParams.knowledgeId || !$stateParams.knowledgeType){
-            $state.go("knowledgeManagement.custOverview")
+            //$state.go("knowledgeManagement.custOverview")
         }else{
             $scope.vm = {
                 knowledgeId : $stateParams.knowledgeId,        //del
@@ -53,6 +52,10 @@ angular.module('knowledgeManagementModule').controller('custPreviewController', 
                     editUrl = "knowledgeManagement.factorAdd";
                     api = "/api/ms/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId";
                     break;
+                case 105 :
+                    editUrl = "knowledgeManagement.markKnow";
+                    api = "api/ms/marketingKnowledge/getKnowledge";
+                    break;
             }
             function edit(){
                 $state.go(editUrl,{data:angular.toJson($scope.vm.listData)})
@@ -62,7 +65,6 @@ angular.module('knowledgeManagementModule').controller('custPreviewController', 
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : APPLICATION_ID
                 },function(data){
-                    console.log(data) ;
                     if($scope.vm.knowledgeType == 103){
                         var data = data.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;

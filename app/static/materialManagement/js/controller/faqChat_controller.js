@@ -118,7 +118,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     contentArr : $scope.vm.contentArr,
                     chatKnowledgeModifier : $scope.vm.userName,
                     //editUrl : "materialManagement.faqChat",
-                    type : 1
+                    type : 0
                 };
                 $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
             }
@@ -166,9 +166,6 @@ angular.module('materialManagement').controller('faqChatController', [
             if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
                 layer.msg("标准问不能为空",{time:1000});
                 return false
-            }else if($scope.vm.extendedQuestionArr.length==0){
-                layer.msg("扩展问不能为空",{time:1000});
-                return false;
             }else if($scope.vm.contentArr.length==0){
                 layer.msg("知识内容不能为空",{time:1000});
                 return false

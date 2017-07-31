@@ -1,12 +1,12 @@
 /*ͷ��*/
-.homePageNav .header{position: relative; z-index: 3; width: 100% !important; min-width: 1280px; height: 60px; line-height: 60px; padding: 0 28px; box-sizing: border-box; background-color: #2b2b2d;}
+.homePageNav .header{position: relative; z-index: 3; width: 100% !important; min-width: 1280px;padding:0 15px; height: 60px; line-height: 60px; box-sizing: border-box; background-color: #2b2b2d;}
 .homePageNav .header .logo{float: left; overflow: hidden; height: inherit;margin: 0;}
 .homePageNav .header .logo a{display: block;height: inherit; padding-left: 35px; background: url(../../images/images/logo.png) no-repeat left center; font-size: 18px; font-weight: bold; color: #fff;}
 .homePageNav .header .logo .edition{font-size: 12px; background-color: #e84f4f; line-height: 1; padding: 0 4px; border-radius: 2px; margin-left: 6px;}
-.homePageNav .header .nav{float: left;  margin-left: 30px;}
+.homePageNav .header .nav{float: left; }
 .homePageNav .header .nav:before{content: ""; height: 20px; border-left:1px solid #3c3c3f; border-right: 1px solid #1d1d20; float: left; margin-top: 20px;}
 .homePageNav .header .nav>li{float: left; position: relative;}
-.homePageNav .header .nav>li>a{font-size: 16px; color: #fff; display: block; text-align: center; padding: 0 20px;border-top: 3px solid transparent; height: 60px;}
+.homePageNav .header .nav>li>a{font-size: 16px; color: #fff; display: block; text-align: center; padding: 0 16px;border-top: 3px solid transparent; height: 60px;}
 .homePageNav .header .menu_1{position: absolute; left: 0; top: 60px; float: left; padding: 0 0 10px; background-color: #39393c; line-height: 35px; display: none;}
 .homePageNav .header .menu_1 li{padding: 0 19px;}
 .homePageNav .header .menu_1 a{color: #afafb8; font-size: 14px; white-space:nowrap; display: block; position: relative;}
@@ -276,6 +276,39 @@
     background-position: -68px -69px;
     width: 17px;
     height: 16px;
+}
+/*sssssssssssssssssssssssssss*/
+.homePageNav .icon-nav__icon-nav_mxgj{
+    width: 20px;
+    height: 20px;
+    background: url(../../images/images/model.png);
+}
+.homePageNav .header .menu_1 a:hover .icon-nav__icon-nav_mxgj{
+    background: url(../../images/images/modei-h.png);
+}
+.homePageNav .icon-nav__icon-nav_mxxl{
+    width:20px;
+    height: 20px;
+    background: url(../../images/images/train.png) 0 0 ;
+}
+.homePageNav .header .menu_1 a:hover .icon-nav__icon-nav_mxxl{
+    background: url(../../images/images/train-h.png) 0 0 ;
+}
+.homePageNav .icon-nav__icon-nav_mxcs{
+    width: 20px;
+    height: 20px;
+    background: url(../../images/images/test.png) 0 0 ;
+}
+.homePageNav .header .menu_1 a:hover .icon-nav__icon-nav_mxcs{
+    background: url(../../images/images/test-h.png) 0 0 ;
+}
+.homePageNav .icon-nav__icon-nav_sjcj{
+    width: 20px;
+    height: 22px;
+    background: url(../../images/images/sprider.png) 0 0 ;
+}
+.homePageNav .header .menu_1 a:hover .icon-nav__icon-nav_sjcj{
+    background: url(../../images/images/sprider-h.png) 0 0 ;
 }
 .homePageNav .header .menu_1 a:hover .icon-nav__icon-nav_zssh {
     background-position: 0 -36px;

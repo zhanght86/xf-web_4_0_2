@@ -68,15 +68,15 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">角色：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" id="role_id" ng-model="vm.roleId" disabled ng-init="vm.roleId=vm.listRole[0].roleId">
-                    <option ng-repeat="item in vm.listRole" ng-selected="$index==0"  ng-value="item.roleId">{{item.roleName}}</option>
+                <select class="input-text" id="role_id" ng-model="vm.roleId"  ng-init="vm.roleId=vm.listRole[0].roleId" ng-options="role.roleId as role.roleName for role in vm.listRole">
+                    <!--<option ng-repeat="item in vm.listRole" ng-selected="$index==0"  ng-value="item.roleId">{{item.roleName}}</option>-->
                 </select>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">所属应用：</label>
             <!--{{vm.prop}}-->
-            <div class="formControls col-xs-9 col-sm-9" style="height:200px;overflow-y: auto;">
+            <div class="formControls col-xs-9 col-sm-9" style="max-height:200px;overflow-y: auto;">
                 <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="width:47%;display:inline-block;margin-right: 2%;">
                     <input  type="checkbox" ng-click="vm.savaProp($event,item.applicationId)"/>{{item.applicationName}}
                 </label>

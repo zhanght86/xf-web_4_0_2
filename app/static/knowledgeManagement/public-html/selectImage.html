@@ -1,0 +1,40 @@
+<div class="pd-10 selectImage">
+    <form class="form form-horizontal" >
+        <div>
+            <p class="tc mb-10" ng-show="vm.contentType==111">请选择要上传的图片</p>
+            <p class="tc mb-10" ng-show="vm.contentType==112">请选择要上传的语音</p>
+            <ul class="classic_head_ul clearfix" ng-if="vm.contentType==111">
+                <li ng-repeat="item in vm.imageList"  ng-class="vm.imgSelected.id==item.pictureId ? 'active' : ''"
+                    ng-click="vm.addMultimedia(item)">
+                    <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
+                        <img title="{{item.pictureName}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/img/{{item.pictureUrl}}">
+                    </div>
+                    <p class="f14">{{item.pictureName}}</p>
+                </li>
+            </ul>
+            <ul class="classic_head_ul clearfix" ng-if="vm.contentType==112">
+                <li ng-repeat="item in vm.voiceList"  ng-class="vm.voiceSelected.id==item.voiceId ? 'active' : ''"
+                    ng-click="vm.addMultimedia(item)">
+                    <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
+                        <img style="width: 100%;height: 100%;cursor:pointer;" title="{{item.voiceName}}" src="../../../images/audio_pic1.png" />
+                    </div>
+                    <p class="f14">{{item.voiceName}}</p>
+                </li>
+            </ul>
+        </div>
+        <pagination ng-if="(vm.imgPaginationConf.totalItems) && (vm.imgPaginationConf.totalItems>0) && (vm.contentType==111)" conf="vm.voicePaginationConf"></pagination>
+        <pagination ng-if="(vm.voicePaginationConf.totalItems) && (vm.voicePaginationConf.totalItems>0) && (vm.contentType==112)" conf="vm.voicePaginationConf"></pagination>
+        <!--<div class="row cl">-->
+            <!--<div class="text-c">-->
+                <!--<button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>-->
+                <!--<button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    </form>
+</div>
+<style>
+    .ipt-txt-box .ipt-txt{
+        border:1px solid gray
+    }
+
+</style>

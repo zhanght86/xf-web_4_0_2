@@ -121,7 +121,8 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
                 layer.msg("请选择要删除的记录！");
                 return;
             }
-            layer.confirm('确认要删除吗？', function () {
+            layer.confirm('确认要删除吗？', function (index) {
+                layer.close(index);
                 var request = new Object();
                 request.ids=id_array;
                 httpRequestPost("/api/ms/modeling/concept/sensitive/batchDelete",request,function(data){

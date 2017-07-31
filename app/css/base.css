@@ -127,6 +127,7 @@ textarea{resize:none;}
 .mt25{margin-top: 25px;}
 .mb25{margin-bottom: 25px;}
 .mt30{margin-top: 30px;}
+
 .mb30{margin-bottom: 30px;}
 .pt30{padding-top: 30px;}
 .pb30{padding-bottom: 30px;}
@@ -164,7 +165,7 @@ textarea{resize:none;}
 
 /*多选*/
 .my-checkbox {overflow:hidden;zoom:1;}
-.my-checkbox label {color: #666; display:inline-block;height:38px;line-height:38px;padding-left:23px;background:url(../images/my-checkbox.png) 0 10px no-repeat;margin-right:25px;cursor:pointer;}
+.my-checkbox label {color: #666; display:inline-block;height:38px;line-height:38px;padding-left:23px;background:url(../images/my-checkbox.png) 0 10px no-repeat;cursor:pointer;}
 .my-checkbox label.my-checkbox-on {background-image:url(../images/my-checkbox-on.png);}
 
 /*多选2*/

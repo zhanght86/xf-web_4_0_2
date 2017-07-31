@@ -15,7 +15,8 @@ angular.module('functionalTestModule').controller('questionTestController', [
             emptyInput : emptyInput,
             //addArr : addArr,
             test : test,
-            check : check
+            check : check,
+            show_tit:false
 
         };
         //比较测试回答有没有重的词；
@@ -50,18 +51,20 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 return;
             }
             if($scope.vm.question==''){
-                layer.msg('请输入可能问法！');
+                layer.msg('请输入测试问法！');
                 return;
             }
             if($scope.vm.question==''&& $scope.vm.testTitle==''){
-                layer.msg('请输入标准问法和可能问法！');
+                layer.msg('请输入标准问法和测试问法！');
                 return;
             }
+
             httpRequestPost("api/application/questionTest/passageway",{
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.testTitle,
                 "comparisonTextArray": $scope.vm.comparisonTextArray
             },function(data){
+                $scope.vm.show_tit=true;
                 //$scope.vm.botRoot = data.data;
                 console.log(data);
                 if(data.data.status == 500){
@@ -80,6 +83,8 @@ angular.module('functionalTestModule').controller('questionTestController', [
             $scope.vm.question='';
             $scope.vm.comparisonTextArray=[];
             $scope.vm.answerRes="";
+            $scope.vm.show_tit=false;
+
         }
     }
 ]);

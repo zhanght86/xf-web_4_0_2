@@ -3,9 +3,9 @@
  */
 angular.module('knowledgeManagementModule').controller('markKnowController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","$stateParams",
-    "knowledgeAddServer","$window","$rootScope","$filter","myService","$location","$interval",
+    "knowledgeAddServer","$window","$rootScope","$filter","myService","$location","$interval","$parse","$sce",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,$stateParams,
-              knowledgeAddServer,$window,$rootScope,$filter,myService,$location,$interval) {
+              knowledgeAddServer,$window,$rootScope,$filter,myService,$location,$interval,$parse,$sce) {
         $scope.vm = {
             knowledgeId : "" ,
             frames : [],      //业务框架
@@ -53,8 +53,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             dimensionsCopy :[],
             //extensionsArr:[],//校验页面扩展是否重复集合A
 
-
-            checkChannelDimension : checkChannelDimension ,
             //高级选项内容
             slideDown : slideDown ,
             slideFlag : false,
@@ -77,8 +75,26 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                 // index 为知识的编辑索引
 
 //*******************2017/7/14*******************//
-            contentType : 0 ,  //新增内容类型
-            getEmotion : getEmotion ,
+            contentType : 111 ,  //新增内容类型
+            imgPaginationConf : {
+                pageSize: 8,//第页条目数
+                pagesLength: 10,//分页框数量
+            },
+            voicePaginationConf : {
+                pageSize: 8,//第页条目数
+                pagesLength: 10,//分页框数量
+            } ,
+            getPicList : getPicList ,   //获得所有图片
+            selectMultimedia : selectMultimedia,   //图片选择弹出框
+            imageList : [] ,     //所有图片文件
+            addMultimedia : addMultimedia , //选择图片
+            imgSelected : "",    // 已选图片
+            //getEmotion : getEmotion ,
+            voiceList : "",                //所有声音文件
+            getVoiceList : getVoiceList,  //获取素有声音文件
+            voiceSelected : "" ,    //以选择声音文件
+
+            qqFaceText : "" ,
 
 //*******************2017/7/14*******************//
             //引到页
@@ -87,7 +103,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             prevDiv : prevDiv,
             nextDiv : nextDiv,
             //引到页end
-            increaseCheck  : increaseCheck , //知识新增弹框保存按钮
             isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
         };
         //獲取纬度
@@ -131,17 +146,50 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //内容
             //$scope.vm.scanContent = data.knowledgeContents ;
             angular.forEach(data.knowledgeContents,function(item){
-                var obj = {} ;
-                obj.knowledgeContent = item.knowledgeContent;
+                $scope.vm.dimensionArr = [] ;
+                //异步原因
+                var getDimension = $interval(function(){
+                    if($scope.vm.dimensions){
+                        //console.log(item.dimensionIdList , $scope.vm.dimensions) ;
+                        $interval.cancel(getDimension);
+                        angular.forEach($scope.vm.dimensions,function(val){
+                            if(item.dimensionIdList.inArray(val.dimensionId)){
+                                var obj = {};
+                                obj.dimensionName = val.dimensionName;
+                                obj.dimensionId = val.dimensionId;
+                                $scope.vm.dimensionArr.push(obj);
+                            }
+                        });
+                    }
+                },100) ;
                 //維度，添加預覽效果   以name id 的 形式显示
-                obj.channelIdList =  item.channelIdList ;
-                obj.dimensionIdList =  item.dimensionIdList ;
-                obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
-                obj.knowledgeBeRelatedOn  =  item.knowledgeBeRelatedOn ; //在提示
-                obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
-                obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
-                $scope.vm.scanContent.push(obj) ;
+                $scope.vm.channel = item.channelIdList ;
+                //$scope.vm.dimensionIdList = item.channelIdList ;
+                $scope.vm.contentType = item.knowledgeContentNegative ;
+                $scope.vm.dimensionArr.id = item.dimensionIdList ;
+                $scope.vm.question = item.knowledgeRelatedQuestionOn ;
+                $scope.vm.tip = item.knowledgeBeRelatedOn ;
+                $scope.vm.tail = item.knowledgeCommonOn ;
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;
+                $scope.vm.contentType = parseInt(item.knowledgeContentNegative) ;
+                if(item.knowledgeContentNegative==111){
+                    $scope.vm.imgSelected={
+                        "url" :  item.knowledgeContent ,
+                        "name" : item.knowledgeContent
+                    }
+                }else if(item.knowledgeContentNegative==112){
+                    $scope.vm.voiceSelected = {
+                        "url" :  item.knowledgeContent,
+                        "name" : item.knowledgeContent
+                    }
+                }else if(item.knowledgeContentNegative==113){
+                    var html = item.knowledgeContent ;
+                    $("#emotion-container").html($filter("emotion")(html)) ;
+                }
             });
+        }else if($stateParams.knowledgeTitle){
+            //console.log("======"+$stateParams.knowledgeTitle);
+            $scope.vm.title=$stateParams.knowledgeTitle;
         }
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 
@@ -396,7 +444,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         //生成 bot
         function getCreatBot(){
             if($scope.vm.title){
-                httpRequestPost("/api/ms/faqKnowledge/findClasssByKnowledgeTitle",{
+                httpRequestPost("api/ms/marketingKnowledge/findClasssByKnowledgeTitle",{
                     "title" :  $scope.vm.title,
                     "applicationId" : APPLICATION_ID,
                     "knowledgeId" : $scope.vm.knowledgeId
@@ -434,12 +482,33 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-                //"knowledgeCreator": $scope.vm.userId, //创建人
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
                 "knowledgeCreator": USER_LOGIN_NAME, //操作人
-                "knowledgeType": 100  //知识类型
+                "knowledgeType": 105  //知识类型
             };
-            params.knowledgeContents =  $scope.vm.scanContent;
+            var knowledgeContent ;
+            if($scope.vm.contentType==111){
+                knowledgeContent = $scope.vm.imgSelected.url
+            }else if($scope.vm.contentType==112){
+                knowledgeContent = $scope.vm.voiceSelected.url
+            }else if($scope.vm.contentType==113){
+                //faceToString
+                var html = $("#emotion-container").html() ;
+                knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
+            }
+            if(!$scope.vm.dimensionArr.id.length){
+                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
+            };
+            params.knowledgeContents =  new Array({
+                "knowledgeContent" : knowledgeContent ,
+                "channelIdList":$scope.vm.channel ,
+                "knowledgeContentNegative": $scope.vm.contentType.toString() ,
+                "dimensionIdList" : $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id,
+                "knowledgeRelatedQuestionOn" :$scope.vm.question,    //显示相关问
+                "knowledgeBeRelatedOn": $scope.vm.tip , //在提示
+                "knowledgeCommonOn" : $scope.vm.tail ,   //弹出评价小尾巴
+                "knowledgeRelevantContentList" :  $scope.vm.appointRelativeGroup  //业务扩展问
+            });
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;
             params.classificationAndKnowledgeList = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot));
             return params
@@ -456,7 +525,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         $scope.vm.limitSave = false ;
                     },180000) ;
                     $scope.vm.data = getParams();
-                    var api = $scope.vm.knowledgeId?"/api/ms/faqKnowledge/editFAQKnowledge":"/api/ms/faqKnowledge/addFAQKnowledge";
+                    var api = $scope.vm.knowledgeId?"api/ms/marketingKnowledge/editKnowledge":"api/ms/marketingKnowledge/addKnowledge";
                     httpRequestPost(api, getParams(), function (data) {
                         if (data.status == 200) {
                             $state.go('knowledgeManagement.custOverview');
@@ -483,11 +552,10 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }else{
                 var obj = {};
                 var params = getParams();
-                console.log(params);
                 obj.params = params;
-                obj.editUrl = "knowledgeManagement.faqAdd";
-                obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
-                obj.knowledgeType = 101 ;
+                obj.editUrl = "knowledgeManagement.markKnow";
+                obj.api = $scope.vm.knowledgeId?"api/ms/marketingKnowledge/editKnowledge":"api/ms/marketingKnowledge/addKnowledge" ;
+                obj.knowledgeType = 105 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
@@ -542,72 +610,15 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         }
 //***************************    save check channel dimension  **********************************************
-        function increaseCheck(){
-            //判斷维度是否为空 0 不变 1 全维度
-            if(!$scope.vm.dimensionArr.id.length){
-                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
-            }
-            if(!$scope.vm.newTitle && !$scope.vm.channel.length){
-                layer.msg("请填写知识内容,并选择渠道后保存")
-            }else if(!$scope.vm.newTitle){
-                layer.msg("请填写知识内容后保存")
-            }else if(!$scope.vm.channel.length){
-                layer.msg("请选择渠道后保存")
-            }else if(checkChannelDimension($scope.vm.channel,$scope.vm.dimensionArr.id)){
-                //存在重复条件
-            }else{
-                ngDialog.closeAll(1) ;
-            }
-        }
+
         //选择渠道
         function selectChannel(channelId,e){
-            var  srcObj = e.srcElement ? e.srcElement : e.target;
-            //$scope.vm.isChannelSelect = false ;
-            //checkChannelDimension($scope.vm.channel,val.id) ;
-            //if(checkChannelDimension($scope.vm.channel,$scope.vm.dimensionArr.id,type)){
-            //    $(srcObj).attr("checked","false")
-            //}
+            //var  srcObj = e.srcElement ? e.srcElement : e.target;
             if($scope.vm.channel.inArray(channelId)){
                 $scope.vm.channel.remove(channelId);
             }else{
                 $scope.vm.channel.push(channelId);
             }
-        }
-        // true  重复  false 不重复通过可以保存
-        function checkChannelDimension(channel,dimension){
-            var isRepeat  = false;
-            //    新增的 channel = []  dimension = [] ,
-            //   页面以添加 scanContent.dimensions   scanContent.channels
-            //if(!channel.length){     //渠道不能为空
-            //layer.msg("请填写渠道");
-            //return false
-            //}else{               //渠道非空 channel   == code dimenssion   == id
-            angular.forEach($scope.vm.scanContent,function(item,contentIndex){
-                if($scope.vm.isEditIndex != contentIndex){
-                    angular.forEach(item.channelIdList,function(v){
-                        angular.forEach(channel,function(val,indexChannel) {
-                            if(val == v){
-                                angular.forEach(item.dimensionIdList,function(value){
-                                    angular.forEach(dimension,function(key,indexDimension){
-                                        if(key==value){
-                                            var channelTip;
-                                            angular.forEach($scope.vm.channels,function(all){
-                                                if(all.channelCode==v){
-                                                    channelTip = all.channelName
-                                                }
-                                            });
-                                            layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
-                                            isRepeat = true
-                                        }
-                                    })
-                                })
-                            }
-                        });
-                    });
-                }
-            });
-            //}
-            return isRepeat
         }
 //*************************************************************************
 
@@ -648,23 +659,104 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             path:'/libs/qqFace/arclist/'	//表情存放的路径
         });
         $interval(function(){
-            console.log(1)
-            console.log($("#emotinon-backup").val())
+          var val = $("#emotinon-backup").val() ;
+            if(val){
+                var html = $("#emotion-container").html()+$filter('emotion')(val);
+                $("#emotion-container").html(html) ;
+                $("#emotinon-backup").val("") ;
+                console.log($filter("faceToString")(html))
+            }
         },500) ;
-        $("#emotinon-backup").on("change",function(){
-        console.log($(this).val())
-        }) ;
-        $("#emotinon-backup").change(function(){
-            alert()
-        })
-        function getEmotion(e){
-            var ev = window.e | e ;
-            src = $(ev.target) ;
-            console.log(src.html())
+        //弹出选择图片声音对话框
+        function selectMultimedia(){
+            var dialog = ngDialog.openConfirm({
+                template:"/static/knowledgeManagement/public-html/selectImage.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                    }
+                }
+            });
         }
-        //function relaceFace(){
-        //
-        //}
+        function addMultimedia(item){
+            if($scope.vm.contentType==111){
+                $scope.vm.imgSelected = {
+                    "url" : item.pictureUrl ,
+                    "id" : item.pictureId,
+                    "name" : item.pictureName
+                } ;
+            }else if($scope.vm.contentType==112){
+                $scope.vm.voiceSelected = {
+                    "url" : item.voiceUrl ,
+                    "id" : item.voiceId ,
+                    "name" : item.voiceName
+                } ;
+            }
+            ngDialog.closeAll() ;
+        }
+        getPicList(1) ;
+        //获取所有图片
+        function getPicList(index){
+            httpRequestPost("/api/ms/picture/queryPicture",{
+                "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
+                "pageSize": $scope.vm.imgPaginationConf.pageSize
+            },function(data){
+                if(data.status == 200){
+                    $scope.$apply(function(){
+                        $scope.vm.imageList = data.data.objs ;
+                        $scope.vm.imgPaginationConf.currentPage =index ;
+                        $scope.vm.imgPaginationConf.totalItems =data.data.total ;
+                    })
+                }
+            },function(err){
+                console.log(err)
+            }) ;
+        }
+        getVoiceList(1) ;
+        function getVoiceList(index){
+            httpRequestPost("/api/ms/voiceManage/queryVioce ",{
+                "index": (index-1)*$scope.vm.voicePaginationConf.pageSize,
+                "pageSize": $scope.vm.voicePaginationConf.pageSize
+            },function(data){
+                if(data.status == 200){
+                    $scope.$apply(function(){
+                        $scope.vm.voiceList = data.data.objs ;
+                        $scope.vm.voicePaginationConf.currentPage =index ;
+                        $scope.vm.voicePaginationConf.totalItems =data.data.total ;
+                        console.log($scope.vm.voicePaginationConf)
+                    })
+                }
+            },function(err){
+                console.log(err)
+            }) ;
+        }
+        var picTimer ;
+        $scope.$watch('vm.imgPaginationConf.currentPage', function(current){
+            if(current){
+                if (picTimer) {
+                    $timeout.cancel(picTimer)
+                }
+                picTimer = $timeout(function () {
+                    getPicList(current);
+                }, 100)
+
+            }
+        },true);
+        var voiceTimer ;
+        $scope.$watch('vm.voicePaginationConf.currentPage', function(current){
+            if(current){
+                if (voiceTimer) {
+                    $timeout.cancel(voiceTimer)
+                }
+                voiceTimer = $timeout(function () {
+                    getVoiceList(current);
+                }, 100)
+            }
+        },true);
 //*******************2017/7/14*******************//
 
         //引导页方法

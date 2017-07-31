@@ -108,7 +108,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }, function(error) {
                 console.log(error)
             });
-        //获取维度
+        //获取维度 
         knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
             function(data) {
                 if(data.data){
@@ -174,6 +174,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         }else{
             init();
         }
+
+        if($stateParams.knowledgeTitle){
+            console.log("======"+$stateParams.knowledgeTitle);
+            $scope.vm.title=$stateParams.knowledgeTitle;
+        }
+
         function init(){
             $scope.vm.tableList = {
                 "data": {"listTable" : new Array(new Array("产品名称"))}

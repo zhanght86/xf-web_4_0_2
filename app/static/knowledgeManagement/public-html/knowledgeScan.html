@@ -28,7 +28,6 @@
 
             <li class="preview_li pr">
                 <!--   要素  -->
-
                 <span class="pa preview_span">知识内容：</span>
                 <table class="essential_factor_tab" ng-if="vm.knowledgeType == 103">
                     <tr>
@@ -50,11 +49,15 @@
                 <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103 && vm.knowledgeType != 102" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
                     <li class="preview_li pr" style="padding-left: 80px;">
                         <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
-                        <p>{{item.knowledgeContent}}</p>
+                        <!--<p  ng-if="vm.knowledgeType==105 && item.knowledgeContentNegative==110">{{item.knowledgeContent}}</p>-->
+                        <p  ng-if="vm.knowledgeType==105 && item.knowledgeContentNegative==111">图片</p>
+                        <p ng-if="vm.knowledgeType==105 &&  item.knowledgeContentNegative==112">语音</p>
+                        <p ng-if="vm.knowledgeType==105 &&  item.knowledgeContentNegative==113" ng-bind-html="item.knowledgeContent | emotion  | toHtml">文本</p>
+                        <p ng-if="vm.knowledgeType!=105">{{item.knowledgeContent}}</p>
                     </li>
                     <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.channelIdList">
                         <span class="pa preview_span2">渠道:</span>
-                        <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
+                        <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}<span></span></span>
                     </li>
                     <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.dimensionIdList">
                         <span class="pa preview_span2">维度:</span>

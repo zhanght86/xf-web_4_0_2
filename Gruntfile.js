@@ -150,7 +150,7 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 }
             }
         }
-    });
+    }); 
     grunt.loadNpmTasks('grunt-contrib-livereload');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');

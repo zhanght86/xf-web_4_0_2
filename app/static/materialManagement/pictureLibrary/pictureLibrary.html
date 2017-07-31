@@ -7,58 +7,38 @@
         <div class="clearfix mb-20">
             <span class="L">
                 <button class=" btn1 btn_delete" >删除图片</button>
-                <button class=" btn1 btn1_blue" >上传图片</button>
+                <button img-upload class=" btn1" style="padding: 0;"></button>
                 <!--<button class=" btn1 btn1_blue" >批量移动</button>-->
             </span>
 
-            <span class="R">共有数据<b>33</b>条</span>
+            <span class="R">共有数据<b>{{vm.imageList.total}}</b>条</span>
         </div>
         <div class="voice_box_div  clearfix">
-            <div class="picture_div bd L">
+
+            <div class="picture_div bd L" ng-repeat="item in vm.imageList.objs">
                 <dl class="picture_dl ">
-                    <dt ><img src="../../../images/u13699.png" /></dt>
+                    <dt ><img ng-src="/img/{{item.pictureUrl}}" /></dt>
                     <dd >
-                        湖光景色
+                        {{item.pictureName}}
                     </dd>
                 </dl>
                 <div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">
-                    <a href="javascript:;">删除</a>
+                    <a href="javascript:;" ng-click="vm.removeImg(item,$index)">删除</a>
                 </div>
             </div>
-            <div class="picture_div bd L">
-                <dl class="picture_dl ">
-                    <dt ><img src="../../../images/u13699.png" /></dt>
-                    <dd >
-                        湖光景色
-                    </dd>
-                </dl>
-                <div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">
-                    <a href="javascript:;">删除</a>
-                </div>
-            </div>
-            <div class="picture_div bd L">
-                <dl class="picture_dl ">
-                    <dt ><img src="../../../images/u13699.png" /></dt>
-                    <dd >
-                        湖光景色
-                    </dd>
-                </dl>
-                <div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">
-                    <a href="javascript:;">删除</a>
-                </div>
-            </div>
-            <div class="picture_div bd L">
-                <dl class="picture_dl ">
-                    <dt ><img src="../../../images/u13699.png" /></dt>
-                    <dd >
-                        湖光景色
-                    </dd>
-                </dl>
-                <div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">
-                    <a href="javascript:;">删除</a>
-                </div>
-            </div>
+            <!--<div class="picture_div bd L">-->
+                <!--<dl class="picture_dl ">-->
+                    <!--<dt ><img src="../../../images/u13699.png" /></dt>-->
+                    <!--<dd >-->
+                        <!--湖光景色-->
+                    <!--</dd>-->
+                <!--</dl>-->
+                <!--<div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">-->
+                    <!--<a href="javascript:;">删除</a>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
+        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
     </div>
 </div>
 <style>

@@ -178,6 +178,7 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                 pageSize : $scope.vm.pageSize,
                 index : (index - 1)*$scope.vm.pageSize,
             },function(data){
+                    initChatPageConfigDialog();    //7.20-add
                     if( data.data.total == 0){
                         layer.msg("查询记录为空") ;
                         $scope.vm.knowledge = "";
@@ -204,7 +205,9 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
                     $timeout.cancel(timeout2)
                 }
                 timeout2 = $timeout(function () {
+                    initChatPageConfigDialog();    //7.20-add
                     findKnowledge(current);
+
                 }, 100)
             }
         },true);
@@ -365,6 +368,12 @@ angular.module('knowledgeManagementModule').controller('chatPageConfigController
         function initChatPageConfig(){
             $scope.vm.deleteIds=[];
             $scope.vm.selectAllCheck = false;
+
+        }
+        //7.20-add
+        function initChatPageConfigDialog(){
+            $scope.vm.seleceAddAll=[];
+            $scope.vm.selectAllCheckDialog = false;
 
         }
     }

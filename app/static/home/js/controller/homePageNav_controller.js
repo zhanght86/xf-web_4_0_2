@@ -42,8 +42,12 @@ angular.module('homePage').controller('homePageNavController', [
             $cookieStore.remove('sceneId');
             $cookieStore.remove('userId');
             $cookieStore.remove('userName');
-            $state.go("login");
             localStorage.removeItem('history');
+            httpRequestPost("/api/user/userOut",{
+                "userId" : USER_ID ,
+                "userLoginName" : USER_LOGIN_NAME
+            },function(){});
+            $state.go("login");
         }
         //初始化分页配置
         self.initSearch = function (column) {
@@ -166,6 +170,12 @@ angular.module('homePage').controller('homePageNavController', [
                     return '问法测试';
                 case 'functionalTest.sessionTest':
                     return '会话测试';
+                case 'knowledgeManagement.custOverview':
+                    return '知识总览';
+                case 'knowledgeManagement.markOverview':
+                    return '知识总览';
+                case 'knowledgeManagement.conceptAdd':
+                    return '营销知识新增';
                 case 'knowledgeManagement.faqAdd':
                     return 'FAQ知识新增';
                 case 'knowledgeManagement.singleAddConcept':
@@ -174,14 +184,44 @@ angular.module('homePage').controller('homePageNavController', [
                     return '列表知识新增';
                 case 'knowledgeManagement.factorAdd':
                     return '要素知识新增';
+                case 'knowledgeManagement.markKnow':
+                    return '营销知识新增';
+                case 'knowledgeManagement.knowBatchAdditions':
+                    return '知识批量新增';
                 case (url.match(/^gateway/) || {}).input:
                     return '文档加工新增';
+                case 'applAnalysis.accessStatistics':
+                    return '访问统计';
+                case 'applAnalysis.knowledgeRanking':
+                    return '知识点排名统计';
                 case 'applAnalysis.sessionDetails':
                     return '会话明细统计';
                 case 'applAnalysis.satisfactionDegree':
                     return '满意率统计';
+                case 'applAnalysis.resolutionStatistics':
+                    return '解决率统计';
+                case 'applAnalysis.reinforcementLearn':
+                    return '智能学习';
+                case 'applAnalysis.newKnowledgeDiscoveryLearn':
+                    return '未匹配问题聚类';
+                case 'applAnalysis.operationLog':
+                    return '操作日志';
+                case 'applAnalysis.sessionLog':
+                    return '会话日志';
                 case 'materialManagement.chatKnowledgeBase':
                     return '聊天知识库';
+                case 'materialManagement.pictureLibrary':
+                    return '图片库';
+                case 'materialManagement.speechLibrary':
+                    return '语音库';
+                case 'deepLearning.deeplearnConfig':
+                    return '模型构建';
+                case 'deepLearning.deepLearningCon':
+                    return '模型训练';
+                case 'deepLearning.similarityCalculation':
+                    return '模型测试';
+                case 'deepLearning.dataAcquisition':
+                    return '自动导入更新';
                 case 'admin.manage':
                     return '应用切换';
                 default:

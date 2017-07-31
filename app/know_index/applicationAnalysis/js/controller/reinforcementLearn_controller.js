@@ -7,6 +7,8 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
+            userId :$cookieStore.get("userId"),
+            userName :$cookieStore.get("userLoginName"),
             searchReinforcement : searchReinforcement ,
             listNoReview : listNoReview ,
             listData : null ,   // table 数据
@@ -42,14 +44,25 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             searchByKnowledgeTitle:searchByKnowledgeTitle,
             knowledgeList:null,
             question:null,
-            question1:null
+            question1:null,
+            keyLogin:keyLogin,
+            getRecommend:getRecommend
         };
+        function keyLogin(e){
+            var srcObj = e.srcElement ? e.srcElement : e.target;
+            var keycode = window.event?e.keyCode:e.which;
+            if(keycode==13){//回车
+                srcObj.blur() ;
+                searchByKnowledgeTitle(1);
+                srcObj.focus() ;
+            }
+        }
         //选项卡
         function tab(obj1, obj2) {
             $(obj1).click(function () {
                 $(this).addClass('cur').siblings().removeClass();
                 $(obj2).children('div').eq($(this).index()).attr('class', 'db').siblings().attr('class', 'dn');
-                searchNewKnowledgeDiscovery(1);
+                searchReinforcement(1);
                 listNoReview(1);
             });
         }
@@ -64,20 +77,29 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
         });
         $scope.$watch('vm.paginationConf1.currentPage', function(current){
             if(current){
-                searchReinforcement(current);
+                listNoReview(current);
             }
         });
         $scope.$watch('vm.paginationConf2.currentPage', function(current){
             if(current){
-                searchReinforcement(current);
+                searchByKnowledgeTitle(current);
             }
         });
-
+        $scope.$watch('vm.channelId1', function(){
+            $scope.vm.listData1 = null;
+            $scope.vm.paginationConf1 = {
+                currentPage: 0,//当前页
+                totalItems: 0, //总条数
+                pageSize: 1,//第页条目数
+                pagesLength: 8//分页框数量
+            };
+            $scope.$apply();
+        });
      //表格列表
         function searchReinforcement(index){
             var question = null;
-            if(nullCheck($scope.vm.question1)==true){
-                question = nullCheck($scope.vm.question);
+            if(nullCheck($scope.vm.question)==true){
+                question = "%"+$scope.vm.question+"%";
             }
             httpRequestPost("/api/analysis/knowledgeLearn/reinforcementLearnUnlearn",{
                 "applicationId" : $scope.vm.applicationId,
@@ -101,6 +123,7 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             });
         }
         function searchByKnowledgeTitle(index){
+            $scope.vm.knowledgeList=null;
             if(nullCheck($("#inputValue").val())==true){
                 httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
                     "applicationId" : $scope.vm.applicationId,
@@ -126,7 +149,7 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
         function listNoReview(index){
             var question = null;
             if(nullCheck($scope.vm.question1)==true){
-                question = nullCheck($scope.vm.question1);
+                question = "%"+$scope.vm.question1+"%";
             }
             httpRequestPost("/api/analysis/knowledgeLearn/listNoReview",{
                 "applicationId" : $scope.vm.applicationId,
@@ -172,17 +195,35 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                 layer.msg("请选择要忽略的记录！");
                 return;
             }
-            layer.confirm('确认要忽略吗？', function () {
+            layer.confirm('确认要忽略吗？', function (index) {
+                layer.close(index);
                 var request = new Object();
                 request.ids=id_array;
-                httpRequestPost("/api/analysis/knowledgeLearn/ignore",request,function(data){
+                httpRequestPost("/api/analysis/knowledgeLearn/ignoreByContent",request,function(data){
                     if(data!=null){
                         searchReinforcement($scope.vm.paginationConf.currentPage);
                     }
                 });
             });
         }
+
+        /**
+         * 获取推荐知识
+         * @param requestId
+         */
+        function getRecommend(requestId){
+            console.log("====="+requestId);
+            httpRequestPost("/api/analysis/userSession/getOneRecommend",{
+                "qalogId" : requestId
+            },function(data){
+                $scope.vm.knowledgeList = data.data;
+                $scope.$apply();
+            });
+        }
+
         function learn(requestId,content){
+            $scope.vm.knowledgeList=null;
+            getRecommend(requestId);
             $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/associateLearn.html",
@@ -220,10 +261,10 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            httpRequestPost("/api/analysis/knowledgeLearn/learn",{
+            httpRequestPost("/api/analysis/knowledgeLearn/learnByContent",{
                 "qalog_id" : requestId,
                 "knowledge_id":id_array.pop(),
-                "knowledge_type":knowledgeType,
+                "knowledge_type":100,
                 "knowledge_title":knowledgeTitle,
                 "learn_type":0,
                 "knowledge_learn_type":0
@@ -254,10 +295,13 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                 layer.msg("请选择要"+msg+"的记录！");
                 return;
             }
-            layer.confirm('确认要'+msg+'吗？', function () {
+            layer.confirm('确认要'+msg+'吗？', function (index) {
+                layer.close(index);
                 httpRequestPost("/api/analysis/knowledgeLearn/review",{
                     "ids" : id_array,
-                    "pass_status_id": pass
+                    "pass_status_id": pass,
+                    "userId":$scope.vm.userId,
+                    "userName":$scope.vm.userName
                 },function(data){
                     if(data.info){
                         layer.msg(data.info);

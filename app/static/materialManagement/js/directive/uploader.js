@@ -73,13 +73,13 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
                 console.log("上传失败")
             });
             uploader.on('uploadSuccess', function (file,response) {
-                   console.log(response)
+                   console.log(response) ;
                 if(response.status == 500){
-                 layer.msg("模板错误")
+                     layer.msg("模板错误")
                  }else if(response.status==10001){
                     layer.msg("导入失败")
                  }else {
-                    layer.msg("导入成功")
+                    layer.msg("导入成功",{time : 2000})
                 }
             });
 

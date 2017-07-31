@@ -28,17 +28,25 @@
                 </table>
             </div>
             <div class="visitor_div R bd p20" >
-                <div class="visitor_div1 mb-10">
-                    今日访客总数
-                    <strong class="mr-30" ng-bind="dataTopLeftToday[0]"></strong>
-                    今日会话总数
-                    <strong ng-bind="dataTopLeftToday[1]"></strong>
+                <div class="visitor_div1 mb-10 clearfix">
+                    <span class="dib L" style="width:50%;">
+                        今日有效访客总数
+                        <strong class="mr-30" ng-bind="dataTopLeftToday[0]"></strong>
+                    </span>
+                    <span class="dib L" style="width:50%;">
+                        今日有效会话总数
+                        <strong ng-bind="dataTopLeftToday[1]"></strong>
+                    </span>
                 </div>
-                <div class="visitor_div1">
-                    历史访客总数
-                    <strong class="mr-30" ng-bind="dataTopLeftHis[0]"></strong>
-                    历史会话总数
-                    <strong ng-bind="dataTopLeftHis[1]"></strong>
+                <div class="visitor_div1 clearfix">
+                    <span class="dib L" style="width:50%;">
+                        历史访客总数
+                        <strong class="mr-30" ng-bind="dataTopLeftHis[0]"></strong>
+                    </span>
+                    <span class="dib L" style="width:50%;">
+                        历史会话总数
+                        <strong ng-bind="dataTopLeftHis[1]"></strong>
+                    </span>
                 </div>
             </div>
         </div>
@@ -50,17 +58,16 @@
             <div class="tab_con pt30 pb30">
                 <div ng-show="vm.contentType==0">
                     <div class="data_time_statis_top " style="width:910px;">
-                        <select class="sel bd L mr-5" id="request_time_type">
-                            <option value="1" ng-click="setDate(0)">今日</option>
-                            <option value="2" ng-click="setDate(1)">昨日</option>
-                            <option value="3" ng-click="setDate(7)">过去7天</option>
-                            <option value="4" ng-click="setDate(30)">过去30天</option>
+                        <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.TimerSearchTimeType">
+                            <option value="1" >今日</option>
+                            <option value="2">昨日</option>
+                            <option value="3">过去7天</option>
                         </select>
-                        <select class="sel bd L mr-5" >
-                            <option value="">选择渠道</option>
-                            <option value="" ng-click="setChannel(131)">WEB</option>
-                            <option value="" ng-click="setChannel(132)">APP</option>
-                            <option value="" ng-click="setChannel(130)">微信</option>
+                        <!--<select class="sel bd L mr-5" ng-model="vm.channelId" ng-options="channel.channelName as channel.channelCode for channel in vm.channels">-->
+                            <!--<option value="">全部渠道</option>-->
+                        <!--</select>-->
+                        <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in vm.channels">
+                            <option  value="" >全部渠道</option>
                         </select>
                         <!--纬度-->
                         <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
@@ -68,96 +75,62 @@
                         </select>
                         <span>
                         日期范围:
-                        <input type="text" id="startTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly> -
-                        <input type="text" id="endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate " style="width:185px;" placeholder="" readonly>
-                    </span>
-                        <input type="button" class="btn1 btn1_blue" value="查找" />
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timerSearchStartTime"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly>
+                                        -
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timerSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly>
+                        </span>
+                        <input type="button" class="btn1 btn1_blue" value="查找" ng-click="vm.queryAccessDataByTime()"/>
                     </div>
                     <div class="data_time_statis_bot" >
                         <div class="text-r pt-10">
-                            <a href="javascript:;" class=" c-primary" >导出图表</a>
+                            <!--<a href="javascript:;" class=" c-primary" >导出图表</a>-->
                         </div>
-                        <div class="echart_div" id="access_echart_div"  style="width:700px;height:400px">
+                        <div class="echart_div" id="access_echart_div" ng-show="vm.isTimerChartShow"  style="width:700px;height:400px">
                             <!--<img src="../../../images/u28570.png" alt="">-->
                         </div>
-                        <div>
-                            <table class="access_amount_table ">
-                                <thead >
+                        <div ng-show="vm.isTimerChartShow">
+                            <div style="width:100%;height:250px;overflow:auto;">
+                                <table class="access_amount_table" >
+                                <thead>
                                 <tr>
-                                    <th width="16%">Column 1</th>
-                                    <th width="12%">周一</th>
-                                    <th width="12%">周二</th>
-                                    <th width="12%">周三</th>
-                                    <th width="12%">周四</th>
-                                    <th width="12%">周五</th>
-                                    <th width="12%">周六</th>
-                                    <th width="12%">周日</th>
+                                    <th ><div style="min-width:100px;">时间</div></th>
+                                    <th  ng-repeat="time in vm.timerData['时间']" ><div ng-bind="time" style="min-width:100px;"></div></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>总用户人数</td>
-                                    <td ng-bind="dataByTimeUser[0]"></td>
-                                    <td ng-bind="dataByTimeUser[1]"></td>
-                                    <td ng-bind="dataByTimeUser[2]"></td>
-                                    <td ng-bind="dataByTimeUser[3]"></td>
-                                    <td ng-bind="dataByTimeUser[4]"></td>
-                                    <td ng-bind="dataByTimeUser[5]"></td>
-                                    <td ng-bind="dataByTimeUser[6]"></td>
-                                </tr>
-                                <tr>
-                                    <td>总会话数</td>
-                                    <td ng-bind="dataByTimeSession[0]"></td>
-                                    <td ng-bind="dataByTimeSession[1]"></td>
-                                    <td ng-bind="dataByTimeSession[2]"></td>
-                                    <td ng-bind="dataByTimeSession[3]"></td>
-                                    <td ng-bind="dataByTimeSession[4]"></td>
-                                    <td ng-bind="dataByTimeSession[5]"></td>
-                                    <td ng-bind="dataByTimeSession[6]"></td>
-                                </tr>
-                                <tr>
-                                    <td>有效会话数</td>
-                                    <td ng-bind="dataByTimeVuser[0]"></td>
-                                    <td ng-bind="dataByTimeVuser[1]"></td>
-                                    <td ng-bind="dataByTimeVuser[2]"></td>
-                                    <td ng-bind="dataByTimeVuser[3]"></td>
-                                    <td ng-bind="dataByTimeVuser[4]"></td>
-                                    <td ng-bind="dataByTimeVuser[5]"></td>
-                                    <td ng-bind="dataByTimeVuser[6]"></td>
-                                </tr>
-                                <tr>
-                                    <td>有效用户数</td>
-                                    <td ng-bind="dataByTimeVsessiion[0]"></td>
-                                    <td ng-bind="dataByTimeVsessiion[1]"></td>
-                                    <td ng-bind="dataByTimeVsessiion[2]"></td>
-                                    <td ng-bind="dataByTimeVsessiion[3]"></td>
-                                    <td ng-bind="dataByTimeVsessiion[4]"></td>
-                                    <td ng-bind="dataByTimeVsessiion[5]"></td>
-                                    <td ng-bind="dataByTimeVsessiion[6]"></td>
+                                <tr ng-repeat="(key,value) in vm.timerData" ng-if="key!='时间'">
+                                    <td ng-bind="key"></td>
+                                    <td ng-repeat="data in value">
+                                        <!--{{data}}-->
+                                        <!--<p ng-if="data.users">{{data.users}}</p>-->
+                                        <p ng-if="data.users>=0">{{data.users}}</p>
+                                        <p ng-if="data.times>=0">{{data.times}}</p>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div ng-show="vm.contentType==1" >
                     <div class="data_time_statis_top " style="width:605px;">
-                        <select class="sel bd L mr-5" id="request_time_typeId">
+                        <select class="sel bd L mr-5" id="request_time_typeId" ng-model="vm.accessSearchTimeType">
                             <option value="1">今日</option>
                             <option value="2">昨日</option>
                             <option value="3">过去7天</option>
-                            <option value="4">过去30天</option>
                         </select>
                         <span>
                             日期范围:
-                            <input type="text" id="startTimeId" onclick="WdatePicker()" class="input-text Wdate" style="width:185px;" placeholder="请选择生效日期" readonly> -
-                            <input type="text" id="endTimeId" onclick="WdatePicker()" class="input-text Wdate " style="width:185px;" placeholder="请选择结束日期" readonly>
+                            <input type="text" id="startTime2" onchange=""  ng-model="vm.accessSearchStartTime"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime2\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly>
+                                        -
+                            <input type="text" id="endTime2"   onchange="" ng-model="vm.accessSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime2\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly>
                         </span>
-                        <input type="button" class="btn1 btn1_blue" value="查找" />
+                        <input type="button" class="btn1 btn1_blue" value="查找" ng-click="vm.queryAccessDataByType()"/>
                     </div>
                     <div class="data_time_statis_bot" >
                         <div class="text-r pt-10">
-                            <a href="javascript:;" class=" c-primary" >导出图表</a>
+                            <!--<a href="javascript:;" class=" c-primary" >导出图表</a>-->
                         </div>
                         <div class="echart_div" id="access_echart_div2" style="width:700px;height:400px">
                             <!--<img src="../../../images/u28879.png" alt="">-->
@@ -174,19 +147,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <!--<td ng-if="data130[0]._value == null">0</td>-->
+                                <tr >
                                     <td>微信</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>0</td>
+                                    <td ng-bind="data130[0]._value?data130[0]._value:0"></td>
+                                    <td ng-bind="data130[1]._value?data130[1]._value:0"></td>
+                                    <td ng-bind="data130[2]._value?data130[2]._value:0"></td>
+                                    <td ng-bind="data130[3]._value?data130[3]._value:0"></td>
                                 </tr>
                                 <tr>
                                     <td>web</td>
-                                    <td>11</td>
-                                    <td>62</td>
-                                    <td>11</td>
-                                    <td>0</td>
+                                    <td ng-bind="data131[0]._value?data131[0]._value:0"></td>
+                                    <td ng-bind="data131[1]._value?data131[1]._value:0"></td>
+                                    <td ng-bind="data131[2]._value?data131[2]._value:0"></td>
+                                    <td ng-bind="data131[3]._value?data131[3]._value:0"></td>
+                                </tr>
+                                <tr>
+                                    <td>app</td>
+                                    <td ng-bind="data132[0]._value?data132[0]._value:0"></td>
+                                    <td ng-bind="data132[1]._value?data132[1]._value:0"></td>
+                                    <td ng-bind="data132[2]._value?data132[2]._value:0"></td>
+                                    <td ng-bind="data132[3]._value?data132[3]._value:0"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -198,154 +179,6 @@
         </div>
     </div>
 </div>
-<script>
-
-    //访问数据时间统计
-    var myChart = echarts.init(document.getElementById('access_echart_div'));
-    option = {
-        title : {
-            text: '未来一周气温变化',
-            subtext: '纯属虚构'
-        },
-        tooltip : {
-            trigger: 'axis'
-        },
-        legend: {
-            data:['最高气温','最低气温']
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                mark : {show: true},
-                dataView : {show: true, readOnly: false},
-                magicType : {show: true, type: ['line', 'bar']},
-                restore : {show: true},
-                saveAsImage : {show: true}
-            }
-        },
-        calculable : true,
-        xAxis : [
-            {
-                type : 'category',
-                boundaryGap : false,
-                data : ['周一','周二','周三','周四','周五','周六','周日']
-            }
-        ],
-        yAxis : [
-            {
-                type : 'value',
-                axisLabel : {
-                    formatter: '{value} °C'
-                }
-            }
-        ],
-        series : [
-            {
-                name:'最高气温',
-                type:'line',
-                data:[11, 11, 15, 13, 12, 13, 10],
-                markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
-                },
-                markLine : {
-                    data : [
-                        {type : 'average', name: '平均值'}
-                    ]
-                }
-            },
-            {
-                name:'最低气温',
-                type:'line',
-                data:[1, -2, 2, 5, 3, 2, 0],
-                markPoint : {
-                    data : [
-                        {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
-                    ]
-                },
-                markLine : {
-                    data : [
-                        {type : 'average', name : '平均值'}
-                    ]
-                }
-            }
-        ]
-    };
-    myChart.setOption(option);
-
-
-    //访问数据渠道统计
-    var myChart2 = echarts.init(document.getElementById('access_echart_div2'));
-    // 指定图表的配置项和数据
-    option2 = {
-        title: {
-            text: '深圳月最低生活费组成（单位:元）',
-            subtext: 'From ExcelHome',
-            sublink: 'http://e.weibo.com/1341556070/AjQH99che'
-        },
-        tooltip : {
-            trigger: 'axis',
-            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-            },
-            formatter: function (params) {
-                var tar = params[0];
-                return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
-            }
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                mark : {show: true},
-                dataView : {show: true, readOnly: false},
-                restore : {show: true},
-                saveAsImage : {show: true}
-            }
-        },
-        xAxis : [
-            {
-                type : 'category',
-                splitLine: {show:false},
-                data : ['总费用','房租','水电费','交通费','伙食费','日用品数']
-            }
-        ],
-        yAxis : [
-            {
-                type : 'value'
-            }
-        ],
-        series : [
-            {
-                name:'辅助',
-                type:'bar',
-                stack: '总量',
-                itemStyle:{
-                    normal:{
-                        barBorderColor:'rgba(0,0,0,0)',
-                        color:'rgba(0,0,0,0)'
-                    },
-                    emphasis:{
-                        barBorderColor:'rgba(0,0,0,0)',
-                        color:'rgba(0,0,0,0)'
-                    }
-                },
-                data:[0, 1700, 1400, 1200, 300, 0]
-            },
-            {
-                name:'生活费',
-                type:'bar',
-                stack: '总量',
-                itemStyle : { normal: {label : {show: true, position: 'inside'}}},
-                data:[2900, 1200, 300, 200, 900, 300]
-            }
-        ]
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart2.setOption(option2);
-
-</script>
 
 
 

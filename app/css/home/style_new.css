@@ -107,6 +107,7 @@
 /*统计分析*/
 .con_box{padding:20px 30px;box-sizing:border-box;background:#fff;}
 .tab_tit{height:32px;border-bottom:1px solid #e3e3e3;box-sizing:border-box;}
+
 .tab_tit span{padding:0 10px;height:32px;display:inline-block;font-size:16px;line-height:32px;text-align:center;margin-right:10px;cursor:pointer;}
 .tab_tit span.cur{background:#3ea9fb;color:#fff;}
 .data_time_statis_top{width:800px;margin:0 auto 20px;}
@@ -120,7 +121,7 @@
 .access_amount_table{border-collapse:collapse;}
 .access_amount_table th{font-weight:bold;}
 .access_amount_table td,.access_amount_table th{text-align:center;border:1px solid #e3e3e3;height:40px;}
-.sorting_asc{width:20px;height:19px;display:inline-block;background:url(../../images/sort_asc.png) no-repeat;}
+.sorting_asc{width:20px;height:19px;display:inline-block;background:url(../../images/sort_asc.png) no-repeat 2px 7px;}
 .sorting_asc2{width:20px;height:19px;display:inline-block;background:url(../../images/sort_desc.png) no-repeat;}
 
 .user_session{padding-top:36px;padding-bottom:50px;height:100%;box-sizing:border-box;position:relative;}
@@ -357,6 +358,36 @@
 .knowledgeFactor #step_six .step_one_con{
     top: 113px;
 }
+/*营销知识新增*/
+.markKnow .step_one{width:600px;height:40px;position:absolute;top:0px;left: 153px;
+    z-index:10000000;
+    background:url(../../images/faq_yd1.png) no-repeat 0px top;
+}
+.markKnow #step_two{background-image:url(../../images/faq_yd2.png);top:70px;}
+.markKnow #step_three{background-image:url(../../images/faq_yd3.png);top:112px;}
+.markKnow #step_four{background-image:url(../../images/markKnow_yd4.png);top:154px;}
+.markKnow #step_five{height:328px;background-image:url(../../images/markKnow_yd5.png);top:202px;}
+.markKnow #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:435px;left:228px;}
+.markKnow #step_seven{background-image:url(../../images/faq_yd6.png);top:583px;left:228px;}
+
+.markKnow #step_five .step_one_arrow{
+    top: 242px;
+}
+.markKnow #step_five .step_one_con{
+    top: 252px;
+}
+.markKnow #step_six .step_one_arrow{
+    top: 103px;
+}
+.markKnow #step_six .step_one_con{
+    top: 113px;
+}
+
+
+
+
+
+
 /*批量知识新增*/
 .know_batch_add{ background:#fff;box-sizing:border-box;min-height:500px;}
 .know_batch_add .know_batch_left{width:65%;box-sizing: border-box;}
@@ -465,3 +496,51 @@
 .dataAcquisition .tab{width:100%;}
 .dataAcquisition .tab td{border:1px solid #eee;text-align: center;padding:5px 0;min-height:30px;}
 
+.simi_div_tab{width:100%;}
+.simi_div_tab td{border:1px solid #eee;text-align:center;padding:5px;min-height:30px;}
+.simi_div_tab .td1{background:#fff;}
+.simi_div_tab .td_red{background:red;}
+
+.deelLearing .framework{padding-left:135px;}
+#scale{position: relative}
+#scale div{position: absolute;top:2px;}
+#scale div em{border-left:2px solid #000;height:7px;display: block;}
+#scale div span{margin-left: -3px;font-size: 12px;}
+.dotting {
+    display: inline-block; min-width: 2px; min-height: 2px;
+    box-shadow: 2px 0 currentColor, 6px 0 currentColor, 10px 0 currentColor;
+    -webkit-animation: dot 4s infinite step-start both;
+    animation: dot 4s infinite step-start both;
+}
+.dotting:before { content: '...'; } /* IE8 */
+.dotting::before { content: ''; }
+:root .dotting { margin-right: 8px; } /* IE9+,FF,CH,OP,SF */
+
+@-webkit-keyframes dot {
+    25% { box-shadow: none; }
+    50% { box-shadow: 2px 0 currentColor; }
+    75% { box-shadow: 2px 0 currentColor, 6px 0 currentColor; }
+}
+@keyframes dot {
+    25% { box-shadow: none; }
+    50% { box-shadow: 2px 0 currentColor; }
+    75% { box-shadow: 2px 0 currentColor, 6px 0 currentColor; }
+}
+/*营销样式add*/
+
+.selectImage .classic_head_ul li {
+    width: 23%;
+    height: 120px;
+    margin-right: 2%;
+    margin-bottom: 10px;
+    float: left;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    overflow:hidden;
+}
+.selectImage .classic_head_ul li.active {
+    border-color: red;
+}
+.selectImage .classic_head_ul li p{width:100%;height:34px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+/*总览*/
+.custOver .aside-nav .menu_1, .custOver .aside-nav .pas-menu_1{overflow: visible!important;}

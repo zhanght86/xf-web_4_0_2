@@ -4,8 +4,8 @@
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
-    '$scope',"$state", "$cookieStore","$timeout","$location",
-    function ($scope,$state,$cookieStore,$timeout,$location) {
+    '$scope',"$state", "$cookieStore","$timeout","$window","$location",
+    function ($scope,$state,$cookieStore,$timeout,$window,$location) {
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             title : "" ,           //知识标题
@@ -77,18 +77,24 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "pageSize":$scope.vm.pageSize,
             },function(data){
                 if(data.data==10005){
-                    layer.msg("查询无此相关知识")
+                    $scope.$apply(function(){
+                        $scope.vm.delArr = [] ;
+                        $scope.vm.listData = data.data.objs;
+                        $scope.vm.paginationConf.totalItems = 0 ;
+                        layer.msg("查询无此相关知识")
+                    });
                 }else{
-                    $scope.vm.delArr = [] ;
-                    $scope.vm.listData = data.data.objs,
+                    $scope.$apply(function(){
+                        $scope.vm.delArr = [] ;
+                        $scope.vm.listData = data.data.objs;
                         $scope.vm.paginationConf = {
                             currentPage: index,//当前页
                             totalItems: data.data.total, //总条数
                             pageSize: $scope.vm.pageSize,//第页条目数
                             pagesLength: 8,//分页框数量
                         };
-                    $scope.$apply();
-                    $scope.vm.title = null;
+                        $scope.vm.title = null;
+                    });
                 }
 
             },function(err){})
@@ -98,7 +104,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
          * 知识导出
          */
         function exportExcel(){
-            httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
+            var urlParams =
+                "?applicationId="+APPLICATION_ID+"&chatKnowledgeTopic="+$scope.vm.chatKnowledgeTopic+"&chatKnowledgeModifier="+$scope.vm.chatKnowledgeModifier +
+                "&chatQuestionContent="+$scope.vm.chatQuestionContent;
+            var url = "/api/ms/chatKnowledge/exportExcel"+urlParams  ;//请求的url
+            $window.open(url,"_blank") ;
+
+           /* httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
                 "applicationId": APPLICATION_ID,
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
@@ -110,7 +122,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }else{
                     window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
                 }
-            },function(err){})
+            },function(err){})*/
 
         }
         function selectTimeType(type){
@@ -162,12 +174,12 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 standardQuestion : data.chatKnowledgeTopic,
                 extendedQuestionArr :data.chatQuestionList,
                 contentArr : data.chatKnowledgeContentList,
-                applicationId: data.chatKnowledgeApplicationId,
+                applicationId: APPLICATION_ID,
                 chatKnowledgeModifier : data.chatKnowledgeModifier,
                 chatKnowledgeId : data.chatKnowledgeId,
                 chatKnowledgeSource:data.chatKnowledgeSource,   //类型 101  概念      100 faq
                 editUrl : data.chatKnowledgeSource==100?"materialManagement.faqChat":"materialManagement.conceptChat",
-                type : 0
+                type : data.chatKnowledgeSource
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
         }

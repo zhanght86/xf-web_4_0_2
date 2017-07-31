@@ -3,7 +3,7 @@
         <p>{{vm.currQuestion}}</p>
     </div>
     <div class="text-c mb-10">
-        <input type="text" id="inputValue" style="width: 316px;" class="input-text txt_corre" />
+        <input type="text" id="inputValue" style="width: 316px;" ng-keydown="vm.keyLogin($event)" class="input-text txt_corre" />
         <input type="button" value="查找" ng-click="vm.searchByKnowledgeTitle(1)" class="btn1"/>
     </div>
     <div>
@@ -16,7 +16,8 @@
             </thead>
             <tbody>
                 <tr role="row" class="odd" ng-repeat="item in vm.knowledgeList">
-                    <td><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}"></td>
+                    <td ng-if="$index==0"><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}" checked="checked"></td>
+                    <td ng-if="$index!=0"><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}"></td>
                     <td>{{item.knowledgeTitle}}</td>
                 </tr>
             </tbody>

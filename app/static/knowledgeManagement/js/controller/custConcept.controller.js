@@ -5,7 +5,7 @@
 angular.module('knowledgeManagementModule').controller('conceptController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
-        //console.log($stateParams.data);
+      //console.log($stateParams)
         $scope.vm = {
             frames: [],      //业务框架
             frameId: "",
@@ -161,6 +161,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
         }
 
+        if($stateParams.knowledgeTitle){
+            console.log("======"+$stateParams.knowledgeTitle);
+            $scope.vm.title=$stateParams.knowledgeTitle;
+        }
+
 
 // 通过类目id 获取框架
         function getFrame(id){
@@ -190,13 +195,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //  根據框架添加擴展問  --》 替換原來的條件
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
-                if($scope.vm.extensionsByFrame.length){
-                    //  替換條件
-                    replace(val);
-                }else{
+                //if($scope.vm.extensionsByFrame.length){
+                //    //  替換條件
+                //    replace(val);
+                //}else{
                     // 在未生成扩展问情況
                     getExtensionByFrame(val);
-                }
+                //}
 
             }
         });
@@ -211,19 +216,22 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "pageSize":999999
             },function(data){
                 if(data.status==10000){
-                    var extensionQuestionList = [],
-                        frameQuestionTagList = [];
+                    //var extensionQuestionList = [],
+                    //    frameQuestionTagList = [];
                     var obj = {};
                     if (data.data[0].elements) {
                         angular.forEach(data.data[0].elements, function (item, index) {
+                            var  extensionQuestionList = [] ,
+                                 frameQuestionTagList = [];
                                 obj={
                                     "extensionQuestionType": 60 ,  //61
                                     "extensionQuestionTitle": data.data[0].frameTitle
                                 } ;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
+                            checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
                         });
-                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
+                        //checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
                     }
                     $scope.$apply();
                 }
@@ -290,9 +298,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         //y业务框架生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
-            var title = oldWord.extensionQuestionTitle ;
+            //var title = oldWord.extensionQuestionTitle ;
+            var title = extensionQuestionList[0] ;
             var weight = oldWord.extensionQuestionType ;
-            //console.log(oldWord);
+            console.log(oldWord,title);
             httpRequestPost("/api/ms/conceptKnowledge/checkFrameTag",{
                 "applicationId": APPLICATION_ID,
                 "extensionQuestionList" : extensionQuestionList,
@@ -420,25 +429,25 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //判断扩展问标签是否重复
         //data.data
         function isTagRepeat(current,allExtension,title){
+            console.log(allExtension) ;
             var current = angular.copy(current) ;
             var isRepeat = false ;
             var tag = [] ;
             angular.forEach(current,function(tagList){
                 angular.forEach(tagList.extensionQuestionTagList,function(item){
-                    if(!item.exist){   //标签存在情况下
+                    if(item.exist){   //标签存在情况下
                         tag.push(item.tagName);
                     }
                 });
             });
             angular.forEach(allExtension,function(extension){
-
                 var tagLen = 0 ;
                 var itemTag = [] ;
                 angular.forEach(extension.extensionQuestionTagList,function(item){
-                    if(!tag.exist){   //存在标签
+                    if(item.exist){       //存在标签
                         itemTag.push(item.tagName);
                     }
-                    if(tag.inArray(item.tagName) && !tag.exist){   //标签重复数量
+                    if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
                         tagLen += 1;
                     }
                 }) ;

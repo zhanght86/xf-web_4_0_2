@@ -322,7 +322,7 @@ knowledge_static_web
                         controller: "robotSettingController"
                     },
                 }
-            })        
+            })
             .state("setting.parameter", {
                 url: "/parameter",
                 views: {
@@ -490,7 +490,6 @@ knowledge_static_web
             .state("deepLearning", {
                 url: "/deepLearning",
                 templateUrl: 'static/deepLearning/deepLearning.html',
-                controller: "adminController"
             })
             .state("deepLearning.dataAcquisition", {
                 url: "/dataAcquisition",
@@ -506,7 +505,7 @@ knowledge_static_web
                 }
             })
             .state("deepLearning.acquisitionDetails", {
-                url: "/acquisitionDetails",
+                url: "/acquisitionDetails/:crawlRecordId",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -528,6 +527,32 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'static/deepLearning/similarityCalculation.html',
                         controller: "similarityCalculationController"
+                    }
+                }
+            })
+            .state("deepLearning.deepLearningCon", {
+                url: "/deepLearningCon",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/deepLearningCon.html',
+                        controller: "deepLearningConController"
+                    }
+                }
+            })
+            .state("deepLearning.deeplearnConfig", {
+                url: "/deeplearnConfig",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/deeplearnConfig.html',
+                        controller: "deeplearnConfigController"
                     }
                 }
             })
@@ -687,7 +712,8 @@ knowledge_static_web
             })
             //概念新增
             .state("knowledgeManagement.singleAddConcept", {
-                url: "/singleAddConcept/:data",
+                url: "/singleAddConcept/:data/:knowledgeTitle",
+                //params:{"knowledgeTitle":null},
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -701,7 +727,7 @@ knowledge_static_web
             })
             //营销场景-概念新增
             .state("knowledgeManagement.conceptAdd", {
-                url: "/ConceptAdd/:data",
+                url: "/ConceptAdd/:data/:knowledgeTitle",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -714,7 +740,7 @@ knowledge_static_web
                 }
             })
             .state("knowledgeManagement.faqAdd", {
-                url: "/faqAdd/:data",
+                url: "/faqAdd/:data/:knowledgeTitle",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -727,7 +753,7 @@ knowledge_static_web
                 }
             })
             .state("knowledgeManagement.listAdd", {
-                url: "/listAdd/:data",
+                url: "/listAdd/:data/:knowledgeTitle",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -740,7 +766,7 @@ knowledge_static_web
                 }
             })
             .state("knowledgeManagement.factorAdd", {
-                url: "/factorAdd/:data",
+                url: "/factorAdd/:data/:knowledgeTitle",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -753,7 +779,7 @@ knowledge_static_web
                 }
             })
             .state("knowledgeManagement.markKnow", {
-                url: "/markKnow/:data",
+                url: "/markKnow/:data/:knowledgeTitle",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
@@ -978,6 +1004,32 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'know_index/applicationAnalysis/newKnowledgeDiscoveryLearn.html',
                         controller: "newKnowledgeDiscoveryLearnController"
+                    }
+                }
+            })
+            .state("applAnalysis.operationLog", {
+                url: "/operationLog",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/applicationAnalysis/operationLog.html',
+                        controller: "operationLogController"
+                    }
+                }
+            })
+            .state("applAnalysis.sessionLog", {
+                url: "/sessionLog",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/applicationAnalysis/sessionLog.html',
+                        controller: "sessionLogController"
                     }
                 }
             })

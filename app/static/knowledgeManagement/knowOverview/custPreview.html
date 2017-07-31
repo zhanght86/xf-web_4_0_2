@@ -33,14 +33,14 @@
                 <div class="knowContent mb-10" ng-repeat="item in vm.listData.knowledgeContents track by $index">
                     <span ng-class="$index!=0?'mileVs':''">知识内容：</span>
                     <div class="PreviewRight">
-                        <!-- faq 概念 列表-->
+                        <!-- faq 概念 列表 营销-->
                         <p  ng-if="vm.knowledgeType!=103">内容 {{$index+1 | numberToWord}}</p>
                         <!-- fqq 概念-->
                         <div  ng-if="(vm.knowledgeType!=103) && (vm.knowledgeType!=102)">
-
-                                <p ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
+                            <!--{{item.knowledgeContent}}-->
+                                <p ng-if="vm.knowledgeType=105"  ng-bind-html="item.knowledgeContent | emotion  | toHtml"></p>
+                                <p ng-if="vm.knowledgeType!=105" ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p>
                                 <!--</textarea>-->
-
                             <span>&nbsp;</span>
                         </div>
                         <!-- 列表-->

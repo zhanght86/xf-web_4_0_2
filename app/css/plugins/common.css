@@ -14,7 +14,7 @@ html,body{font-family: "\5FAE\8F6F\96C5\9ED1";}
 .header .nav{float: left; }
 .header .nav:before{content: ""; height: 20px; border-left:1px solid #3c3c3f; border-right: 1px solid #1d1d20; float: left; margin-top: 20px;}
 .header .nav>li{float: left; position: relative;}
-.header .nav>li>a{font-size: 16px; color: #fff; display: block; text-align: center; padding: 0 20px;border-top: 3px solid transparent; height: 57px;}
+.header .nav>li>a{font-size: 16px; color: #fff; display: block; text-align: center; padding: 0 16px;border-top: 3px solid transparent; height: 57px;}
 .header .menu{position: absolute; left: 0; top: 60px; float: left; padding: 0px 19px 10px; background-color: #39393c; line-height: 35px; display: none;}
 .header .menu a{color: #afafb8; font-size: 14px; white-space:nowrap;}
 .header .nav>li:hover>a{background-color: #39393c; border-top: 3px solid #3ea9fb;}
@@ -287,7 +287,50 @@ html,body{font-family: "\5FAE\8F6F\96C5\9ED1";}
   width: 17px;
   height: 14px;
 }
+/**/
+.header  a:hover .icon-nav_zqxx {
+  background-position: -102px -100px;
+  width: 15px;
+  height: 15px;
+}
+.icon-nav_zqxx {
+  background-position: -118px -100px;
+  width: 15px;
+  height: 15px;
+}
+.header  a:hover .icon-nav_xzzfx {
+  background-position: -119px -62px;
+  width: 15px;
+  height: 15px;
+}
+.icon-nav_xzzfx {
+  background-position: -119px -77px;
+  width: 15px;
+  height: 15px;
+}
+.icon-nav_hhrz {
+  background-position: 172px 1px;
+  width: 18px;
+  height: 18px;
+}
+.header  a:hover .icon-nav_hhrz {
+  background-position: 172px -17px;
+  width: 18px;
+  height: 18px;
+}
 
+.icon-nav_czrz {
+  background-position: 172px -36px;
+  width: 18px;
+  height: 16px;
+}
+.header  a:hover .icon-nav_czrz {
+  background-position: 172px -53px;
+  width: 18px;
+  height: 16px;
+}
+
+/**/
 
 .header-r{float: right;}
 .user-admin{position: relative; float: left;}

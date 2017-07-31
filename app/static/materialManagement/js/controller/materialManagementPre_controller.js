@@ -11,7 +11,7 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             scanData : angular.fromJson($stateParams.scanData),
             save : save ,
             edit : edit ,
-            editUrl : angular.fromJson($stateParams.scanData).type?"materialManagement.faqChat":"materialManagement.conceptChat"
+            editUrl : angular.fromJson($stateParams.scanData).type?"materialManagement.conceptChat":"materialManagement.faqChat" 
         };
         function save(){
             var params = $scope.vm.scanData ;
@@ -43,6 +43,7 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             //}
         }
         function edit(){
+            console.log(angular.fromJson($stateParams.scanData).type);
             $state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});
         }
         //验证 所有数据是否合格

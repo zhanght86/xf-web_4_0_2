@@ -35,6 +35,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             serviceStatus : 0, //服务状态
             serviceType : 10, //服务类型
             userId : $cookieStore.get("userId"), //获取用户id
+            userName : $cookieStore.get("userLoginName"), //获取用户id
 
             categoryData : "", //分类数据
             channelData : "", //渠道数据
@@ -192,7 +193,8 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                                         "nodeCode" : $scope.vm.nodeCode, //节点编号
                                         "serviceName": $scope.vm.serviceName, //服务名称
                                         "serviceType" : $scope.vm.serviceType, //服务类型
-                                        "userId" : $scope.vm.userId //获取用户id
+                                        "userId" : $scope.vm.userId, //获取用户id
+                                        "userName" : $scope.vm.userName //获取用户名称
                                     },function(data){
                                         if(data.status==200){
                                             listServiceData(1);
@@ -331,7 +333,10 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(index){
                 layer.close(index);
                 httpRequestPost("/api/application/service/publishService",{
-                    "serviceId": serviceId
+                    "serviceId": serviceId,
+                    "applicationId": $scope.vm.applicationId,
+                    "userId" : $scope.vm.userId, //获取用户id
+                    "userName" : $scope.vm.userName //获取用户名称
                 },function(data){
                     if(data.status==200){
                         layer.msg("发布服务成功");
@@ -426,7 +431,10 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
             },function(index){
                 layer.close(index);
                 httpRequestPost("/api/application/service/deleteService",{
-                    "serviceId": serviceId
+                    "serviceId": serviceId,
+                    "applicationId": $scope.vm.applicationId,
+                    "userId" : $scope.vm.userId, //获取用户id
+                    "userName" : $scope.vm.userName //获取用户名称
                 },function(data){
                     if(data.status==200){
                         layer.msg("删除服务成功");

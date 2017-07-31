@@ -103,7 +103,6 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-
             },function(data){
                 var params;
                 if(data && data.status == 200 && data.data != null && data.data.length != 0)

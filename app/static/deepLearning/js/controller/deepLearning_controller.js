@@ -9,13 +9,7 @@ angular.module('deepLearning').controller('deepLearningController', [
 
         $scope.vm = {
 
-
-
         };
-
-      
-
-
     }
 ]);
 

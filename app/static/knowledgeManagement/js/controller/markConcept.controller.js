@@ -92,6 +92,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             nextDiv : nextDiv
             //引到页end
         };
+
         //獲取渠道
         knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
             function(data) {
@@ -150,7 +151,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
                 obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
                 $scope.vm.scanContent.push(obj);
-                //console.log(obj)
             });
         } else if ($stateParams.data  && angular.fromJson($stateParams.data).docmentation) {
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
@@ -158,6 +158,12 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
+
+        if($stateParams.knowledgeTitle){
+            console.log("======"+$stateParams.knowledgeTitle);
+            $scope.vm.title=$stateParams.knowledgeTitle;
+        }
+
         //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
         // 触发要素  知识标题
         var timer ;
@@ -183,6 +189,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 }
             },true) ;
         }
+
         function selelectTitle(title){
             $scope.vm.factorTitle = title ;
             $scope.vm.getFactorByTitle = [] ;
@@ -238,13 +245,13 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         //  根據框架添加擴展問  --》 替換原來的條件
         $scope.$watch("vm.frameId",function(val,old){
             if(val&&val!=old){
-                if($scope.vm.extensionsByFrame.length){
-                    //  替換條件
-                    replace(val);
-                }else{
+                //if($scope.vm.extensionsByFrame.length){
+                //    //  替換條件
+                //    replace(val);
+                //}else{
                     // 在未生成扩展问情況
                     getExtensionByFrame(val);
-                }
+                //}
 
             }
         });
@@ -260,17 +267,20 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             },function(data){
                 if(data.status==10000){
                     //console.log(data);
-                    var  extensionQuestionList = [] ,
-                        frameQuestionTagList = [];
+                    //var  extensionQuestionList = [] ,
+                    //     frameQuestionTagList = [];
                     var obj = {} ;
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item,index){
+                            var  extensionQuestionList = [] ,
+                                frameQuestionTagList = [];
                                 obj.extensionQuestionType = 60;   //61
                                 obj.extensionQuestionTitle = data.data[0].frameTitle;
                                 extensionQuestionList.push((item.elementContent.substring(0,item.elementContent.indexOf('#'))));
                                 frameQuestionTagList.push(item.elementContent.substring(item.elementContent.indexOf('#')+1).split('；'));
+                                checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
                         });
-                        checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
+                        //checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,obj);
                     }
                     $scope.$apply();
                 }
@@ -316,7 +326,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
         }
         //生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
-            var title = oldWord.extensionQuestionTitle ;
+            //var title = oldWord.extensionQuestionTitle ;
+            var title = extensionQuestionList[0] ;
             var weight = oldWord.extensionQuestionType ;
             //console.log(oldWord);
             httpRequestPost("/api/ms/marketingKnowledge/checkFrameTag",{
@@ -482,12 +493,14 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
 
         //判断扩展问标签是否重复
         //data.data
-        function isTagRepeat(current,allExtension,title ){
+        function isTagRepeat(current,allExtension,title){
+            console.log(allExtension) ;
+            var current = angular.copy(current) ;
             var isRepeat = false ;
             var tag = [] ;
             angular.forEach(current,function(tagList){
                 angular.forEach(tagList.extensionQuestionTagList,function(item){
-                    if(!item.exist){   //标签存在情况下
+                    if(item.exist){   //标签存在情况下
                         tag.push(item.tagName);
                     }
                 });
@@ -496,10 +509,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 var tagLen = 0 ;
                 var itemTag = [] ;
                 angular.forEach(extension.extensionQuestionTagList,function(item){
-                    if(!tag.exist){   //存在标签
+                    if(item.exist){       //存在标签
                         itemTag.push(item.tagName);
                     }
-                    if(tag.inArray(item.tagName) && !tag.exist){   //标签重复数量
+                    if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
                         tagLen += 1;
                     }
                 }) ;

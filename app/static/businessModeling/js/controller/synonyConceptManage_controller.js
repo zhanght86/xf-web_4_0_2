@@ -124,7 +124,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
                 layer.msg("请选择要删除的记录！");
                 return;
             }
-            layer.confirm('确认要删除吗？', function () {
+            layer.confirm('确认要删除吗？', function (index) {
+                layer.close(index);
                 var request = new Object();
                 request.synonymConceptModifier=$scope.vm.modifier;
                 request.synonymConceptApplicationId=$scope.vm.applicationId;

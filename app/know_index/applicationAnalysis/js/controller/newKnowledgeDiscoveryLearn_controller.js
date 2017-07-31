@@ -7,6 +7,8 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
+            userId :$cookieStore.get("userId"),
+            userName :$cookieStore.get("userLoginName"),
             searchNewKnowledgeDiscovery : searchNewKnowledgeDiscovery ,
             listNoReview : listNoReview ,
             listData : null ,   // table 数据
@@ -48,8 +50,18 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             talkDetail:null,
             associateCheck:associateCheck,
             currKnowledgeTitle:null ,
-            knowledgeContent : ""
+            knowledgeContent : "",
+            keyLogin:keyLogin
         };
+        function keyLogin(e){
+            var srcObj = e.srcElement ? e.srcElement : e.target;
+            var keycode = window.event?e.keyCode:e.which;
+            if(keycode==13){//回车
+                srcObj.blur() ;
+                searchByKnowledgeTitle(1);
+                srcObj.focus() ;
+            }
+        }
         //选项卡
         function tab(obj1, obj2) {
             $(obj1).click(function () {
@@ -70,20 +82,29 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         });
         $scope.$watch('vm.paginationConf1.currentPage', function(current){
             if(current){
-                searchNewKnowledgeDiscovery(current);
+                listNoReview(current);
             }
         });
         $scope.$watch('vm.paginationConf2.currentPage', function(current){
             if(current){
-                searchNewKnowledgeDiscovery(current);
+                searchByKnowledgeTitle(current);
             }
         });
-
+        $scope.$watch('vm.channelId1', function(){
+            $scope.vm.listData1 = null;
+            $scope.vm.paginationConf1 = {
+                currentPage: 0,//当前页
+                totalItems: 0, //总条数
+                pageSize: 1,//第页条目数
+                pagesLength: 8//分页框数量
+            };
+            $scope.$apply();
+        });
         //表格列表
         function searchNewKnowledgeDiscovery(index){
             var question = null;
-            if(nullCheck($scope.vm.question1)==true){
-                question = nullCheck($scope.vm.question);
+            if(nullCheck($scope.vm.question)==true){
+                question = "%"+$scope.vm.question+"%";
             }
             httpRequestPost("/api/analysis/knowledgeLearn/newKnowledgeDiscoveryLearnUnlearn",{
                 "applicationId" : $scope.vm.applicationId,
@@ -132,7 +153,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         function listNoReview(index){
             var question = null;
             if(nullCheck($scope.vm.question1)==true){
-                question = nullCheck($scope.vm.question1);
+                question = "%"+$scope.vm.question1+"%";
             }
             httpRequestPost("/api/analysis/knowledgeLearn/listNoReview",{
                 "applicationId" : $scope.vm.applicationId,
@@ -178,10 +199,11 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 layer.msg("请选择要忽略的记录！");
                 return;
             }
-            layer.confirm('确认要忽略吗？', function () {
+            layer.confirm('确认要忽略吗？', function (index) {
+                layer.close(index);
                 var request = new Object();
                 request.ids=id_array;
-                httpRequestPost("/api/analysis/knowledgeLearn/ignore",request,function(data){
+                httpRequestPost("/api/analysis/knowledgeLearn/ignoreByContent",request,function(data){
                     if(data!=null){
                         searchNewKnowledgeDiscovery($scope.vm.paginationConf.currentPage);
                     }
@@ -189,6 +211,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             });
         }
         function associate(requestId,content){
+            $scope.vm.knowledgeList=null;
             $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/associateLearn.html",
@@ -226,7 +249,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            httpRequestPost("/api/analysis/knowledgeLearn/learn",{
+            httpRequestPost("/api/analysis/knowledgeLearn/learnByContent",{
                 "qalog_id" : requestId,
                 "knowledge_id":id_array.pop(),
                 "knowledge_type":knowledgeType,
@@ -260,10 +283,13 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 layer.msg("请选择要"+msg+"的记录！");
                 return;
             }
-            layer.confirm('确认要'+msg+'吗？', function () {
+            layer.confirm('确认要'+msg+'吗？', function (index) {
+                layer.close(index);
                 httpRequestPost("/api/analysis/knowledgeLearn/review",{
                     "ids" : id_array,
-                    "pass_status_id": pass
+                    "pass_status_id": pass,
+                    "userId":$scope.vm.userId,
+                    "userName":$scope.vm.userName
                 },function(data){
                     if(data.info){
                         layer.msg(data.info);
@@ -350,6 +376,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         //学习
         function learn(requestId,content){
             $scope.vm.knowledgeContent = content ;
+            console.log("======="+$scope.vm.knowledgeContent);
             var dialog = ngDialog.openConfirm({
                 template:"/know_index/applicationAnalysis/switchKnowledgeType.html",
                 width:'500px',

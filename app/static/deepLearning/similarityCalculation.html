@@ -1,5 +1,72 @@
 <div class="wrap dataAcquisition" style="margin-top:10px;">
-    <div class="pd-30" style="background:#fff;">
-        xiangsidu
+    <div class="pd-20 bg_white" >
+        <p class="f22 bold mb-20">Deep Semantic Relevance Computing & Demonstrating</p>
+    </div>
+    <div class="pd-20" style="background:#fff;">
+        <div style="border:1px solid #eee;position: relative;" class="p25">
+            <span class="bg_white p5 f-15 bold" style="position: absolute;top:-17px;">Word Level</span>
+            <div class="framework mb-20">
+                <span class="framework_s mt-5 F">Seed Words</span>
+                <input class="bd p5 mr-30 F" style="width:350px;height: 30px;" ng-model="vm.words">
+                </input>
+                <span class="mr-20 F ">TopN</span>
+                <input class="bd p5 F" style="width:350px;height: 30px;" ng-model="vm.top" placeholder="10">
+                </input>
+                <input class="R btn1 btn1_blue" type="button" style="width: 150px;" value="Get Similar Words" ng-click="vm.getResult()"/>
+            </div>
+            <div class="framework">
+                <span class="framework_s mt-5">Similar Words</span>
+                <div class="bd p5" style="width:1000px;min-height: 30px;line-height: 20px;height:auto" >{{vm.result}}</div>
+            </div>
+        </div>
+    </div>
+        <!--<div  class="tab_tit"></div>-->
+    <div class="pd-20" style="background:#fff;">
+        <div style="border:1px solid #eee;position: relative;" class="p25">
+            <span class="bg_white p5 f-15 bold" style="position: absolute;top:-17px;">Sentence(Doc) Level</span>
+            <div class="mb-20 framework">
+                <span class="mr-10 framework_s mt-5">Embedding</span>
+                <select class="bd mr-30" ng-model="vm.embedding" style="height: 30px;width:350px">
+                    <option value="1">NewsData(4GB)</option>
+                    <option value="2">DialogueData(30Million)</option>
+                </select>
+                <span class="mr-10 mr-10">Algorithm</span>
+                <select class="bd" ng-model="vm.algorithm" style="height: 30px;width:320px">
+                    <option value="1">Word Mover's Distance</option>
+                    <option value="2">Local Greedy WMD</option>
+                    <option value="3">Global Greedy WMD</option>
+                    <option value="4">Embedding + BOW</option>
+                </select>
+            </div>
+            <div class="mb-20">
+                <div class="framework">
+                    <span class="framework_s mt-5">Query</span>
+                    <input class="bd p5" style="width:1000px;height: 30px;" ng-model="vm.sentence1">
+                    </input>
+                </div>
+                <div>
+                    <a href="javascript:;" class="ml-10" ng-click="vm.change()"><img src="../../../images/u1748.png" /></a>
+                </div>
+                <div class="framework">
+                    <span class="framework_s mt-5">Answer</span>
+                    <input class="bd p5" style="width:1000px;height: 30px;" ng-model="vm.sentence2">
+                    </input>
+                </div>
+            </div>
+            <div class="clearfix">
+                <input class="R btn1 btn1_blue" type="button" style="width: 150px;" value="Get Similarity" ng-click="vm.similarityCalculation()"/>
+            </div>
+            <div class="mt-30">
+                <div class="dn" style="width:300px;height:300px;margin:0 auto;">
+            </div>
+            <div class="simi_div" style="">
+                <p class="mb-10"id="score"></p>
+                <div >
+                    <table class="simi_div_tab" id="tableWords">
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>

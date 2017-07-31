@@ -1,8 +1,6 @@
 /**
  * Created by 41212 on 2017/4/19.
  */
-
-
 angular.module('knowledge_static_web').filter('channel', function () {
     return function (value,params) {
         var result;

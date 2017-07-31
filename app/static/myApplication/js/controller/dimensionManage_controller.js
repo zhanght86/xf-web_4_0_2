@@ -46,7 +46,8 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 index:(index - 1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize,
                 userId:$scope.vm.userId,
-                applicationId:$scope.vm.applicationId
+                applicationId:$scope.vm.applicationId,
+                dimensionParentId:0
             },function(data){
               console.log(data);
                 if(data.status == 10005){
@@ -94,7 +95,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                             applicationId:$scope.vm.applicationId,
                             dimensionId:dimensionId
                         },function(data){
-                            if(data.status == 12009){
+                            if(data.status == 10000){
                                 layer.msg("存在知识使用该维度，请修改后删除");
                             }
                             if(data.status == 10013){

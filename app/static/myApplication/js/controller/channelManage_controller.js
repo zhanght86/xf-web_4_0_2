@@ -9,7 +9,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         $scope.vm = {
             channelData : "",   // 渠道数据
             paginationConf : ""  ,//分页条件
-            pageSize : 2 , //默认每页数量
+            pageSize : 3 , //默认每页数量
             channelDataTotal: "", //渠道数据记录总数
             addChannel : addChannel,  //添加渠道
             editChannel : editChannel, //编辑渠道
