@@ -889,17 +889,17 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     var tagStr = originStr.substring(idx1+1,originStr.length);
                     var tagArr = tagStr.split($scope.vm.conceptSplit);
                     console.log("===="+tagArr);
-                    var tagHtml = '<div class="tag_box">';
+                    var tagHtml = '<div class="tag_box L mr-10">';
                     for(var j=0;j<tagArr.length;j++){
-                        tagHtml+='<span class="tag_s">'+tagArr[j]+'</span>';
+                        tagHtml+='<span class="tag_s ">'+tagArr[j]+'</span>';
                     }
                     tagHtml+='</div>';
-                    var html =  '<div class="framework mb-10" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                    var html =  '<div class="framework mb-10" style="min-height: 40px;" element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '   <span class="framework_s text-r mt-7">概念扩展：</span>' +
-                        '   <div class="formControlsForConcept" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                        '   <div class="formControlsForConcept " element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '       <input type="hidden" value="'+originalText+'"/>'+
                         tagHtml+
-                        '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button">'+
+                        '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button L mt-5">'+
                         '           <img src="../../images/images/delete_img.png">'+
                         '       </a>'+
                         '   </div>'+
@@ -1324,11 +1324,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $(".ele-name").blur(function(){
                         if(lengthCheck($(".ele-name").val(),0,50)==false){
                             $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
-                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999");
+                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999");
                             return;
                         }else if(isHtmlLabel($(".ele-name").val())){
                             $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
-                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index;");
+                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index;");
                             return;
                         }else{
                             $("#ele-name-error").html('');
@@ -1338,7 +1338,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             console.log("====="+$(value).find(".ele-name-add").val());
                             if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
                                 $("#ele-name-error").html('要素名称不能与已有要素名称重复');
-                                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                                $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                                 return true;
                             }else{
                                 $("#ele-name-error").html('');
@@ -1349,11 +1349,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $(".ele-asked").blur(function(){
                         if(lengthCheck($(".ele-asked").val(),0,255)==false){
                             $("#ele-asked-error").html('反问不能为空或超过长度限制255');
-                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                             return;
                         }else if(isHtmlLabel($(".ele-asked").val())){
                             $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
-                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                             return;
                         }else{
                             $("#ele-asked-error").html('');
@@ -1363,7 +1363,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             console.log("====="+$(value).find(".ele-asked-add").val());
                             if($(".ele-asked").val()==$(value).find(".ele-asked-add").val()){
                                 $("#ele-asked-error").html('反问不能与已有反问重复');
-                                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                                 return true;
                             }else{
                                 $("#ele-asked-error").html('');
@@ -1938,19 +1938,19 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             });
         }
         function appendTag(data,originStr){
-            var tagHtml = '<div class="tag_box">';
+            var tagHtml = '<div class="tag_box L mr-10">';
             for(var i=0;i<data.length;i++){
                 for(var j=0;j<data[i].tagList.length;j++){
-                    tagHtml+='<span class="tag_s">'+data[i].tagList[j]+'</span>';
+                    tagHtml+='<span class="tag_s ">'+data[i].tagList[j]+'</span>';
                 }
             }
             tagHtml+='</div>';
-            var html =  '<div class="framework mb-10">'+
+            var html =  '<div class="framework mb-10" style="min-height: 40px;">'+
                         '   <span class="framework_s mt-7">概念扩展：</span>' +
-                        '   <div class="formControlsForConcept">'+
+                        '   <div class="formControlsForConcept ">'+
                         '       <input type="hidden" value="'+originStr+'"/>'+
                         tagHtml+
-                        '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+
+                        '       <a href="javascript:;" class="del-button L mt-5" onclick="rem_ques(this);">'+
                         '           <img src="../../images/images/delete_img.png">'+
                         '       </a>'+
                         '   </div>'+
@@ -1963,11 +1963,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var eleName = $(".ele-name").val();
             if(lengthCheck(eleName,0,50)==false){
                 $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
-                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                 return;
             }else if(isHtmlLabel(eleName)){
                 $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
-                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                 return;
             }else{
                 $("#ele-name-error").html('');
@@ -1978,7 +1978,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log("====="+$(value).find(".ele-name-add").val());
                 if(eleName==$(value).find(".ele-name-add").val()){
                     $("#ele-name-error").html('要素名称不能与已有要素名称重复');
-                    $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999");
+                    $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999");
                     flag1 = true;
                 }
             });
@@ -1992,11 +1992,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var eleAsked = $(".ele-asked").val();
             if(lengthCheck(eleAsked,0,255)==false){
                 $("#ele-asked-error").html('反问不能为空或超过长度限制255');
-                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                 return;
             }else if(isHtmlLabel(eleAsked)){
                 $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
-                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                 return;
             }else{
                 $("#ele-asked-error").html('');
@@ -2007,7 +2007,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log("====="+$(value).find(".ele-asked-add").val());
                 if(eleAsked==$(value).find(".ele-asked-add").val()){
                     $("#ele-asked-error").html('反问不能与已有反问重复');
-                    $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                    $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
                     flag2 = true;
                 }
             });
