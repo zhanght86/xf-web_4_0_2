@@ -629,7 +629,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
         function searchByFrameTitle(current,type){
             console.log("===searchByFrameTitle===");
-            if($("#keyWords").val()){
+            if(nullCheck($("#keyWords").val())==true){
                 httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                     "frameCategoryId": $scope.vm.botSelectValue,
                     "frameTitle": "%"+$("#keyWords").val()+"%",
@@ -656,12 +656,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                if($("#keyWords").val()){
-                    loadFrameLibrary(current,0);
-                }else{
+                console.log("======="+$("#keyWords").val());
+                if(nullCheck($("#keyWords").val())==true){
                     searchByFrameTitle(current,0);
+                }else{
+                    loadFrameLibrary(current,0);
                 }
-
             }
         });
         //添加框架
@@ -848,7 +848,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         layer.confirm("删除以后不能恢复，确认删除？",{
                             btn:['确认','取消'],
                             shade:false
-                        },function(){
+                        },function(index){
+                            layer.close(index);
                             console.log("======elementId======"+elementId);
                             httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
@@ -889,17 +890,17 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     var tagStr = originStr.substring(idx1+1,originStr.length);
                     var tagArr = tagStr.split($scope.vm.conceptSplit);
                     console.log("===="+tagArr);
-                    var tagHtml = '<div class="tag_box L mr-10">';
+                    var tagHtml = '<div class="tag_box">';
                     for(var j=0;j<tagArr.length;j++){
-                        tagHtml+='<span class="tag_s ">'+tagArr[j]+'</span>';
+                        tagHtml+='<span class="tag_s">'+tagArr[j]+'</span>';
                     }
                     tagHtml+='</div>';
-                    var html =  '<div class="framework mb-10" style="min-height: 40px;" element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                    var html =  '<div class="framework mb-10" element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '   <span class="framework_s text-r mt-7">概念扩展：</span>' +
-                        '   <div class="formControlsForConcept " element-id="'+$scope.vm.elementIdArray[i]+'">'+
+                        '   <div class="formControlsForConcept" element-id="'+$scope.vm.elementIdArray[i]+'">'+
                         '       <input type="hidden" value="'+originalText+'"/>'+
                         tagHtml+
-                        '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button L mt-5">'+
+                        '       <a href="javascript:;" element-id="'+$scope.vm.elementIdArray[i]+'" class="del del-button">'+
                         '           <img src="../../images/images/delete_img.png">'+
                         '       </a>'+
                         '   </div>'+
@@ -1208,14 +1209,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         if($(this).attr("element-id")==null){
                             return;
                         }
-                        var obj = $(this).parent().parent().remove();
+                        var obj = $(this).parent().parent();
                         var elementId=$(this).attr("element-id");
                         layer.confirm("删除以后不能恢复，确认删除？",{
                             btn:['确认','取消'],
                             shade:false
                         },function(){
                             console.log("======elementId======"+elementId);
-                            $(this).parent().parent().remove();
                             httpRequestPost("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
                             },function(data){
@@ -1324,11 +1324,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $(".ele-name").blur(function(){
                         if(lengthCheck($(".ele-name").val(),0,50)==false){
                             $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
-                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999");
+                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999");
                             return;
                         }else if(isHtmlLabel($(".ele-name").val())){
                             $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
-                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index;");
+                            $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index;");
                             return;
                         }else{
                             $("#ele-name-error").html('');
@@ -1338,7 +1338,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             console.log("====="+$(value).find(".ele-name-add").val());
                             if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
                                 $("#ele-name-error").html('要素名称不能与已有要素名称重复');
-                                $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                                 return true;
                             }else{
                                 $("#ele-name-error").html('');
@@ -1349,11 +1349,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $(".ele-asked").blur(function(){
                         if(lengthCheck($(".ele-asked").val(),0,255)==false){
                             $("#ele-asked-error").html('反问不能为空或超过长度限制255');
-                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                             return;
                         }else if(isHtmlLabel($(".ele-asked").val())){
                             $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
-                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                             return;
                         }else{
                             $("#ele-asked-error").html('');
@@ -1363,7 +1363,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             console.log("====="+$(value).find(".ele-asked-add").val());
                             if($(".ele-asked").val()==$(value).find(".ele-asked-add").val()){
                                 $("#ele-asked-error").html('反问不能与已有反问重复');
-                                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                                 return true;
                             }else{
                                 $("#ele-asked-error").html('');
@@ -1852,8 +1852,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     '   <td>'+
                     '       <select class="mining-type-add bd" disabled="disabled">'+
                     '           <option value=10017>NLP</option>'+
-                    /*'           <option value=10017>OEC</option>'+
-                    '           <option value=10018>GATE</option>'+*/
+                        /*'           <option value=10017>OEC</option>'+
+                         '           <option value=10018>GATE</option>'+*/
                     '       </select>'+
                     '   </td>'+
                     '   <td><input style="width: 200px;" type="text" class="input_text ele-asked-add" value="'+$scope.vm.elementAskContentArray[i]+'" disabled="disabled"/></td>'+
@@ -1908,13 +1908,18 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $("#conceptExtendQuestionErrorObj").html("概念标题不能与概念扩展重复");
                     return true;
                 }
+                var flag = false;
                 $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index1,value1){
                     console.log($(value1).val());
                     if($(value).val()==$(value1).val()){
                         $("#conceptExtendQuestionErrorObj").html("不能与已有概念扩展重复");
+                        flag = true;
                         return true;
                     }
                 });
+                if(flag){
+                    return true;
+                }
                 $("#conceptExtendQuestionErrorObj").html('');
                 var arr = [];
                 arr[0]=$(value).val();
@@ -1931,6 +1936,9 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             }
                         }
                     }
+                    $.each($(".exten_problem").find("input").filter(":eq(0)"),function(index,value){
+                        $(value).val('');
+                    });
                 },function(err){
                     console.log(err);
                     $("#conceptExtendQuestionErrorObj").html("打标失败，请正确发布节点后再进行打标操作!");
@@ -1938,23 +1946,23 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             });
         }
         function appendTag(data,originStr){
-            var tagHtml = '<div class="tag_box L mr-10">';
+            var tagHtml = '<div class="tag_box">';
             for(var i=0;i<data.length;i++){
                 for(var j=0;j<data[i].tagList.length;j++){
-                    tagHtml+='<span class="tag_s ">'+data[i].tagList[j]+'</span>';
+                    tagHtml+='<span class="tag_s">'+data[i].tagList[j]+'</span>';
                 }
             }
             tagHtml+='</div>';
-            var html =  '<div class="framework mb-10" style="min-height: 40px;">'+
-                        '   <span class="framework_s mt-7">概念扩展：</span>' +
-                        '   <div class="formControlsForConcept ">'+
-                        '       <input type="hidden" value="'+originStr+'"/>'+
-                        tagHtml+
-                        '       <a href="javascript:;" class="del-button L mt-5" onclick="rem_ques(this);">'+
-                        '           <img src="../../images/images/delete_img.png">'+
-                        '       </a>'+
-                        '   </div>'+
-                        '</div>';
+            var html =  '<div class="framework mb-10">'+
+                '   <span class="framework_s mt-7">概念扩展：</span>' +
+                '   <div class="formControlsForConcept">'+
+                '       <input type="hidden" value="'+originStr+'"/>'+
+                tagHtml+
+                '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+
+                '           <img src="../../images/images/delete_img.png">'+
+                '       </a>'+
+                '   </div>'+
+                '</div>';
             $("#concept_extension").append(html);
         }
         //添加表格子元素
@@ -1963,11 +1971,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var eleName = $(".ele-name").val();
             if(lengthCheck(eleName,0,50)==false){
                 $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
-                $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                 return;
             }else if(isHtmlLabel(eleName)){
                 $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
-                $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                 return;
             }else{
                 $("#ele-name-error").html('');
@@ -1978,7 +1986,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log("====="+$(value).find(".ele-name-add").val());
                 if(eleName==$(value).find(".ele-name-add").val()){
                     $("#ele-name-error").html('要素名称不能与已有要素名称重复');
-                    $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999");
+                    $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999");
                     flag1 = true;
                 }
             });
@@ -1992,11 +2000,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var eleAsked = $(".ele-asked").val();
             if(lengthCheck(eleAsked,0,255)==false){
                 $("#ele-asked-error").html('反问不能为空或超过长度限制255');
-                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                 return;
             }else if(isHtmlLabel(eleAsked)){
                 $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
-                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                 return;
             }else{
                 $("#ele-asked-error").html('');
@@ -2007,7 +2015,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 console.log("====="+$(value).find(".ele-asked-add").val());
                 if(eleAsked==$(value).find(".ele-asked-add").val()){
                     $("#ele-asked-error").html('反问不能与已有反问重复');
-                    $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
+                    $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
                     flag2 = true;
                 }
             });
@@ -2051,25 +2059,25 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
 
             var html =  '<tr>'+
-                        '   <td><input type="checkbox" class="sid"/></td>'+
-                        '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-name-add" placeholder="地区" value="'+eleName+'" disabled="disabled"/></td>'+
-                        '   <td>'+
-                        '       <select class="ele-type-add bd">'+
-                        '           <option value=10014>字符串</option>'+
-                        '           <option value=10015>数字</option>'+
-                        '           <option value=10016>范围</option>'+
-                        '       </select>'+
-                        '   </td>'+
-                        '   <td>'+
-                        '       <select class="mining-type-add bd" disabled="disabled">'+
-                        '           <option value=10017>NLP</option>'+
-                        /*'           <option value=10017>OEC</option>'+
-                        '           <option value=10018>GATE</option>'+*/
-                        '       </select>'+
-                        '   </td>'+
-                        '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+
-                        '   <td class="pr"><input type="text" style="width: 180px;" class="input_text ele-concept-add" placeholder="从概念库中选择" value="'+relateConceptVals+'" data-option="'+relateConceptIds+'" disabled="disabled"/></td>'+
-                        '</tr>';
+                '   <td><input type="checkbox" class="sid"/></td>'+
+                '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-name-add" placeholder="地区" value="'+eleName+'" disabled="disabled"/></td>'+
+                '   <td>'+
+                '       <select class="ele-type-add bd">'+
+                '           <option value=10014>字符串</option>'+
+                '           <option value=10015>数字</option>'+
+                '           <option value=10016>范围</option>'+
+                '       </select>'+
+                '   </td>'+
+                '   <td>'+
+                '       <select class="mining-type-add bd" disabled="disabled">'+
+                '           <option value=10017>NLP</option>'+
+                    /*'           <option value=10017>OEC</option>'+
+                     '           <option value=10018>GATE</option>'+*/
+                '       </select>'+
+                '   </td>'+
+                '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+
+                '   <td class="pr"><input type="text" style="width: 180px;" class="input_text ele-concept-add" placeholder="从概念库中选择" value="'+relateConceptVals+'" data-option="'+relateConceptIds+'" disabled="disabled"/></td>'+
+                '</tr>';
             $("#add-item").prepend(html);
 
             $("#add-item").find("tr").filter(":eq(0)").find(".ele-type-add").val(eleType);
@@ -2085,23 +2093,31 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //删除表格子元素
         function delEle(){
             console.log("delEle");
-            $.each($("#add-item").find(".sid"),function(index,value){
-                console.log($(value).prop("checked"));
-                if($(value).prop("checked")==true){
-                    if ($(value).parent().parent().attr("element-id")!=null) {
-                        httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
-                            "elementId":$(value).parent().parent().attr("element-id")
-                        },function(data){
-                            if(responseView(data)==true){
-                                loadFrameLibrary(1,0);
+            layer.confirm("确认删除？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                $.each($("#add-item").find(".sid"),function(index,value){
+                    console.log($(value).prop("checked"));
+                    if($(value).prop("checked")==true){
+                        if ($(value).parent().parent().attr("element-id")!=null) {
+                            httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
+                                "elementId":$(value).parent().parent().attr("element-id")
+                            },function(data){
+                                if(responseView(data)==true){
+                                    loadFrameLibrary(1,0);
 
-                            }
-                        },function(err){
-                            console.log(err);
-                        });
+                                }
+                            },function(err){
+                                console.log(err);
+                            });
+                        }
+                        $(value).parent().parent().remove();
                     }
-                    $(value).parent().parent().remove();
-                }
+                });
+            },function(){
+                console.log("cancel");
             });
         }
         function splitAuto(val) {
