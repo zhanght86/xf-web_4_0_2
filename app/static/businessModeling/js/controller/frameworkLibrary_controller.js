@@ -906,6 +906,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         '   </div>'+
                         '</div>';
                     $("#concept_extension").append(html);
+
                 }
             }
         }
@@ -1932,6 +1933,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             if(data.data.length>0){
                                 if(data.data[0]!=null){
                                     appendTag(data.data[0],$(value).val());
+
                                 }
                             }
                         }
@@ -1964,6 +1966,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 '   </div>'+
                 '</div>';
             $("#concept_extension").append(html);
+            $('.extended_query_txt').val('');                   //2017 nnf 添加；
         }
         //添加表格子元素
         function addEle(){
