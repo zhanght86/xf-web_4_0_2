@@ -214,6 +214,12 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
+                    $scope.vm.paginationConf = {
+                        currentPage: 0,//当前页
+                        totalItems: 0, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8//分页框数量
+                    };
                     $scope.$apply();
                 }
                 $scope.vm.listData = data.data.detailList;
