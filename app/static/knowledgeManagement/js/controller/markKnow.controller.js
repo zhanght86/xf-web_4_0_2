@@ -859,7 +859,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         params.knowledgeId = $scope.vm.knowledgeId;
                     } else {
                         //新增
-                        api = "/api/ms/richtextKnowledge/addConceptKnowledge"
+                        api = "/api/ms/richtextKnowledge/addKnowledge"
                     }
                     httpRequestPost(api, params, function (data) {
                         console.log(getParams());
@@ -894,14 +894,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 var params = getParams();
                 console.log(params);
                 obj.params = params;
-                obj.editUrl = "knowledgeManagement.singleAddConcept";
+                obj.editUrl = "knowledgeManagement.markKnow";
                 if($scope.vm.knowledgeId){
                     //编辑
                     obj.api = "/api/ms/richtextKnowledge/editKnowledge" ;
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
-                    obj.api = "/api/ms/richtextKnowledge/addConceptKnowledge"
+                    obj.api = "/api/ms/richtextKnowledge/addKnowledge"
                 }
                 obj.params = params;
                 obj.knowledgeType = 101;
