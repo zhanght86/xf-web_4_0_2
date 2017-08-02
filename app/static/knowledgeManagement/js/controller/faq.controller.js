@@ -846,7 +846,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
             $scope.vm.appointRelative = null;  //清楚title
             $scope.vm.appointRelativeList = [];  //清除 列表
-
         }
         // 動態加載 title
         $scope.$watch("vm.appointRelative",function(title){

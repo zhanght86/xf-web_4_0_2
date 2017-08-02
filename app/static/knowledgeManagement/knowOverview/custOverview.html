@@ -76,7 +76,7 @@
                                     <label class="mr-10"><input ng-model="vm.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>
                                     <label class="mr-10"><input ng-model="vm.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>
                                     <label class="mr-10"><input ng-model="vm.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="105"  type="radio" name="knoe_type" />营销</label>
+                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="106"  type="radio" name="knoe_type" />富文本</label>
 
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                             <option value="101">概念知识型新增</option>
                             <option value="102">列表型知识新增</option>
                             <option value="103">要素型知识新增</option>
-                            <option value="105">营销知识新增</option>
+                            <option value="106">营销知识新增</option>
                         </select>
                         <a class="L btn btn-blue mr-10" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions" style="line-height:17px;">批量导入</a>
                         <!--<a class="btn btn-green" href="javascript:;" style="line-height:17px;">知识加工</a>-->
@@ -160,7 +160,7 @@
                                         <!--{{vm.listData}}-->
                                         <div class="value oh">
                                             <ul class="">
-                                                <li ng-if="item.knowledgeType==105 " title="{{item.knowledgeContent}}">
+                                                <li ng-if="item.knowledgeType==106 " title="{{item.knowledgeContent}}">
                                                     <!--<p>{{item.knowledgeContent}}</p>-->
                                                     <!--<p  ng-if="item.knowledgeContentNegative==110">文本</p>-->
                                                     <p  ng-if="item.knowledgeContentNegative==111">
@@ -170,7 +170,7 @@
                                                     <p ng-if="item.knowledgeContentNegative==113">文本</p>
                                                 </li>
                                                 <!-- 列表 概念  faq 知識-->
-                                                <li ng-if="item.knowledgeType!=103 && item.knowledgeType!=105" title="{{item.knowledgeContent}}">
+                                                <li ng-if="item.knowledgeType!=103 && item.knowledgeType!=106" title="{{item.knowledgeContent}}">
                                                     <!--<p>{{item.knowledgeContent}}</p>-->
                                                     <p ng-if="item.knowledgeContent.length<=50">{{item.knowledgeContent}}</p>
                                                     <p ng-if="item.knowledgeContent.length>50">{{item.knowledgeContent.substring(0,50)+'...'}}</p>
