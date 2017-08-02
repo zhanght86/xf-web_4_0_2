@@ -210,7 +210,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                         }
                     });
                 }
-            },200) ;
+            },5) ;
 
         }
 
@@ -281,7 +281,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     });
                 }
 
-            },200) ;
+            },5) ;
 
 
 
