@@ -7,6 +7,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
       //console.log($stateParams)
         $scope.vm = {
+            knowledgeId : "",
             frames: [],      //业务框架
             frameId: "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -76,7 +77,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             replaceType : 0 ,
             enterEvent : enterEvent,
             dialogExtension : [],
-            knowledgeId : "",
 
             limitSave : false ,
             isEditIndex : -1,   // 知识内容 弹框

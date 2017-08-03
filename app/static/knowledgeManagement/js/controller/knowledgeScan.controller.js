@@ -38,7 +38,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             console.log(knowledgeScan.api) ;
             httpRequestPost(knowledgeScan.api,$scope.vm.knowledgeData,function(data){
                 console.log(data) ;
-
                 if(data.status == 200){
                     $state.go('knowledgeManagement.custOverview');
                 }else if(data.status == 10002){

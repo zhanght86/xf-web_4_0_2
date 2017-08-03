@@ -72,7 +72,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 case "103" :
                     addUrl = "knowledgeManagement.factorAdd";
                     break;
-                case "105" :
+                case "106" :
                     addUrl = "knowledgeManagement.markKnow";
                     break;
             }

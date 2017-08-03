@@ -52,9 +52,9 @@ angular.module('knowledgeManagementModule').controller('custPreviewController', 
                     editUrl = "knowledgeManagement.factorAdd";
                     api = "/api/ms/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId";
                     break;
-                case 105 :
+                case 106 :
                     editUrl = "knowledgeManagement.markKnow";
-                    api = "api/ms/marketingKnowledge/getKnowledge";
+                    api = "api/ms/richtextKnowledge/getKnowledge";
                     break;
             }
             function edit(){

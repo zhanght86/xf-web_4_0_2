@@ -4,7 +4,7 @@ knowledge_static_web
 
         return {
             restrict: 'EA',
-            templateUrl: '../../..//base/tip/directives/tip.html',
+            templateUrl: 'static/base/tip/directives/tip.html',
             scope : {
                 message : "=",
                 type : "="
