@@ -146,9 +146,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //内容
             angular.forEach(data.knowledgeContents,function(item){
                 var obj = {} ;
-                obj.knowledgeContent = item.knowledgeContent;
+
                 //維度，添加預覽效果   以name id 的 形式显示
-                obj.knowledgeContentNegative = item.knowledgeContentNegative
+                obj.knowledgeContentNegative = item.knowledgeContentNegative ;
+                if(item.knowledgeContentNegative==113){
+                    obj.knowledgeContent = $filter("emotion")(item.knowledgeContent);
+                }else{
+                    obj.knowledgeContent = item.knowledgeContent;
+                }
                 obj.channelIdList =  item.channelIdList ;
                 obj.dimensionIdList =  item.dimensionIdList ;
                 obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
@@ -310,7 +315,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     "extendQuestionList": question
                 }, function (data) {
                     if (data.status == 500) {
-                        layer.msg("概念扩展打标失败，请检查服务，重新打标");
+                        layer.msg(data.data);
                     }else if(data.status == 10026 ){
                         layer.msg("扩展问添加重复，请重新添加")
                     } else if (data.status == 200) {
@@ -327,7 +332,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                             }
                         });
                     }
-                }, function (error) {
+                }, function (error,e,er) {
                     console.log(error)
                 });
             }
@@ -497,7 +502,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                 "name" : data.knowledgeContent
                             };
                             break ;
-                        case  "113" : 
+                        case  "113" :
                             $timeout(function(){
                                 $("#emotion-container").html(data.knowledgeContent) ;
                             },100);
@@ -528,7 +533,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                             knowledgeContent = $scope.vm.voiceSelected.url
                         }else if($scope.vm.contentType==113){
                             //faceToString
-                            knowledgeContent = $("#emotion-container").html() ;
+                            var html = $("#emotion-container").html() ;
+                            knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
                         }
                         if(!$scope.vm.dimensionArr.id.length){
                             $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
@@ -687,15 +693,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             };
 
             //var knowledgeContent ;
-            //if($scope.vm.contentType==111){
-            //    knowledgeContent = $scope.vm.imgSelected.url
-            //}else if($scope.vm.contentType==112){
-            //    knowledgeContent = $scope.vm.voiceSelected.url
-            //}else if($scope.vm.contentType==113){
-            //    //faceToString
-            //    var html = $("#emotion-container").html() ;
-            //    knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
-            //}
+            var content = angular.copy($scope.vm.scanContent) ;
+            angular.forEach(content,function(item){
+                if(item.knowledgeContentNegative ==113){
+                    var html = item.knowledgeContent ;
+                    item.knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
+                }
+            }) ;
+
             //if(!$scope.vm.dimensionArr.id.length){
             //    $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
             //};
@@ -709,7 +714,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //    "knowledgeCommonOn" : $scope.vm.tail ,   //弹出评价小尾巴
             //    "knowledgeRelevantContentList" :  $scope.vm.appointRelativeGroup  //业务扩展问
             //});
-            params.knowledgeContents =  $scope.vm.scanContent;
+            params.knowledgeContents =  content;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
             return params
@@ -820,7 +825,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 }else if($scope.vm.contentType==113){
                     //faceToString
                     knowledgeContent = $("#emotion-container").html() ;
-                    console.log($("#emotion-container").html()) ;
+                    //console.log($("#emotion-container").html()) ;
                     //var html = $("#emotion-container").html() ;
                     //knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
                 }
