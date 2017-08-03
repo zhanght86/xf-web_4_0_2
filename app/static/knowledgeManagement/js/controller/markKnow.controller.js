@@ -148,6 +148,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 var obj = {} ;
                 obj.knowledgeContent = item.knowledgeContent;
                 //維度，添加預覽效果   以name id 的 形式显示
+                obj.knowledgeContentNegative = item.knowledgeContentNegative
                 obj.channelIdList =  item.channelIdList ;
                 obj.dimensionIdList =  item.dimensionIdList ;
                 obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
@@ -496,7 +497,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                 "name" : data.knowledgeContent
                             };
                             break ;
-                        case  "113" :
+                        case  "113" : 
                             $timeout(function(){
                                 $("#emotion-container").html(data.knowledgeContent) ;
                             },100);
