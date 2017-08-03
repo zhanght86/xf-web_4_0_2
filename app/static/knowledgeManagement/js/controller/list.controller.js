@@ -74,6 +74,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
             dialogExtension : [],
             limitSave : false, //限制多次打标
+//*******************2017/8/3  BEGIN   删除扩展问本地备份 *******************//
+            rmExtensionBackup : [] ,
+//*******************2017/8/3  END   删除扩展问本地备份   *******************//
             //引到页
             showTip : showTip,
             hideTip : hideTip,
@@ -84,26 +87,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             backupsOfExtension : "" //扩展问 编辑备份
         };
 
-        //獲取纬度
-        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                }
-            }, function(error) {
-                console.log(error)
-            });
-        //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channels = data.data ;
-                    console.log(data.data) ;
-                }
-            }, function(error) {
-                console.log(error) ;
-            });
+        //獲取渠道
+        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        //获取维度
+        $scope.master.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         /*
 
@@ -273,33 +260,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
                 if(data.status==200){
-                    var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                    if(isTagRepeat(data.data,allExtension,title)){
-
-                    }else{
-                        var enten = {}  ;
-                        enten.extensionQuestionTitle = title;
-                        enten.extensionQuestionType = weight ;
-                        enten.wholeDecorateTagList = [
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                        ];
-                        enten.extensionQuestionTagList = [] ;
-                        angular.forEach(data.data,function(tagList){
-                            angular.forEach(tagList.extensionQuestionTagList,function(item){
-                                var tagTem = {
-                                    "exist" : item.exist ,
-                                    "tagClass" : item.tagClass ,
-                                    "tagName" : item.tagName ,
-                                    "tagType" : item.tagType
-                                };
-                                enten.extensionQuestionTagList.push(tagTem) ;
-                            });
-                        });
-                        $scope.vm.extensionsByFrame.push(enten);
-                        $scope.$apply();
-                    }
+                    $scope.$apply(function(){
+                        var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
+                        var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                        if(result != false){
+                            $scope.vm.extensionTitle = "";
+                            $scope.vm.extensionsByFrame.push(result);
+                        }
+                    }) ;
                 }
             });
         }
@@ -328,78 +296,23 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     } else if(data.status == 10026 ){
                          layer.msg("扩展问添加重复，请重新添加");
                     }else if (data.status == 200) {
-                        var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                        if(isTagRepeat(data.data,allExtension,title)){
-
-                        }else{
-                            $scope.vm.extensionTitle = "";
-                            var enten = {}  ;
-                            enten.extensionQuestionTitle = title;
-                            enten.extensionQuestionType = weight ;
-                            enten.wholeDecorateTagList = [
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                            ];
-                            enten.extensionQuestionTagList = [] ;
-                            angular.forEach(data.data,function(tagList){
-                                angular.forEach(tagList.extensionQuestionTagList,function(item){
-                                    var tagTem = {
-                                        "exist" : item.exist ,
-                                        "tagClass" : item.tagClass ,
-                                        "tagName" : item.tagName ,
-                                        "tagType" : item.tagType
-                                    };
-                                    enten.extensionQuestionTagList.push(tagTem) ;
-                                });
-                            });
-                            if(!source){
-                                $scope.vm.extensions.push(enten);
-                            }else{
-                                $scope.vm.extensionByTitleTag = new Array(enten)
+                        $scope.$apply(function(){
+                            var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
+                            var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                            if(result != false){
+                                $scope.vm.extensionTitle = "";
+                                if(!source){
+                                    $scope.vm.extensions.push(result);
+                                }else{
+                                    $scope.vm.extensionByTitleTag = new Array(result)
+                                }
                             }
-                        }
-                        if(!source){
-                            $scope.vm.extensionTitle = "";
-                        }
-                        $scope.$apply();
+                        })
                     }
                 }, function () {
 
                 });
             }
-        }
-        //判断扩展问标签是否重复
-        //data.data
-        function isTagRepeat(current,allExtension,title){
-            console.log(allExtension) ;
-            var current = angular.copy(current) ;
-            var isRepeat = false ;
-            var tag = [] ;
-            angular.forEach(current,function(tagList){
-                angular.forEach(tagList.extensionQuestionTagList,function(item){
-                    if(item.exist){   //标签存在情况下
-                        tag.push(item.tagName);
-                    }
-                });
-            });
-            angular.forEach(allExtension,function(extension){
-                var tagLen = 0 ;
-                var itemTag = [] ;
-                angular.forEach(extension.extensionQuestionTagList,function(item){
-                    if(item.exist){       //存在标签
-                        itemTag.push(item.tagName);
-                    }
-                    if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
-                        tagLen += 1;
-                    }
-                }) ;
-                if(tagLen == itemTag.length && tag.length == itemTag.length){
-                    layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
-                    return   isRepeat = true ;
-                }
-            }) ;
-            return isRepeat
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
         //{

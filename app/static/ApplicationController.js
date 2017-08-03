@@ -19,37 +19,42 @@ knowledge_static_web.controller('ApplicationController',
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
                     isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
-                    searchBotAutoTag : searchBotAutoTag  //BOT搜索自动补全   For 知识新增bot添加
+                    searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
+                    isExtensionTagRepeat : isExtensionTagRepeat ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
+                    removeExtensionHasTag : removeExtensionHasTag , //对删除的扩展问备份     营销 概念 列表 富文本知识新增
+                    //getFrameByClassId : getFrameByClassId  //通过类目id 获取业务框架
+                    //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
             } ;
             //獲取纬度
-            function getDimensions(){
-                var dimensions = [] ;
+            function getDimensions(self,arr){
+                //var dimensions = [] ;
                 knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
-                            dimensions = data.data ;
-                            //$scope.vm.dimensions = data.data;
-                            //$scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
+                            angular.forEach(arr,function(item){
+                                self.vm[item] = data.data
+                            }) ;
+                            //dimensions = data.data ;
                         }
                     }, function(error) {
                         console.log(error)
                     });
-                return dimensions ;
+                //return dimensions ;
             }
             //获取渠道
-            function getChannels(){
-                var  channels = [] ;
+            function getChannels(self,arr){
+                //var  channels = [] ;
                 knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
-                            channels = data.data
-                        }else{
-                            return []
+                            angular.forEach(arr,function(item){
+                                self.vm[item] = data.data
+                            }) ;
                         }
                     }, function(error) {
                         console.log(error) ;
                     });
-                return   channels ;
+                //return   channels ;
             }
             function isBotRepeat(id,path,type,allBot){
                 //className  classificationId  classificationType(不推送)
@@ -113,6 +118,73 @@ knowledge_static_web.controller('ApplicationController',
                         //})
                     }
                 });
+            }
+            /**
+             * 检测扩展问标签是否重复
+             * false   return   ；  true  return ext
+             * */
+            function isExtensionTagRepeat(current,allExtension,title,weight){
+                console.log(allExtension) ;
+                var isRepeat = false ;
+                var tag = [] ;
+                angular.forEach(current,function(tagList){
+                    angular.forEach(tagList.extensionQuestionTagList,function(item){
+                        if(item.exist){   //标签存在情况下
+                            tag.push(item.tagName);
+                        }
+                    });
+                });
+                angular.forEach(allExtension,function(extension){
+                    var tagLen = 0 ;
+                    var itemTag = [] ;
+                    angular.forEach(extension.extensionQuestionTagList,function(item){
+                        if(item.exist){       //存在标签
+                            itemTag.push(item.tagName);
+                        }
+                        if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
+                            tagLen += 1;
+                        }
+                    }) ;
+                    if(tagLen == itemTag.length && tag.length == itemTag.length){
+                        layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
+                        return   isRepeat = true ;
+                    }
+                }) ;
+                //判断是否是重复
+                if(isRepeat == false){
+                    var extension = {
+                        "extensionQuestionTitle" : title ,
+                        "extensionQuestionType" : weight ,
+                        "wholeDecorateTagList" : [
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
+                        ] ,
+                        "extensionQuestionTagList" : []
+                    }  ;
+                    angular.forEach(current,function(tagList){
+                        angular.forEach(tagList.extensionQuestionTagList,function(item){
+                            var tagTem = {
+                                "exist" : item.exist ,
+                                "tagClass" : item.tagClass ,
+                                "tagName" : item.tagName ,
+                                "tagType" : item.tagType
+                            };
+                            extension.extensionQuestionTagList.push(tagTem) ;
+                        });
+                    });
+                    isRepeat = extension
+                }
+                return isRepeat
+            }
+            function removeExtensionHasTag(self,container,item){
+                item.wholeDecorateTagList = [
+                    {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
+                    {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
+                    {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
+                ] ;
+                self.vm[container].push(item)  ;
+                //return container ;
             }
 
 /***********************************************************************************************************************************************************************/

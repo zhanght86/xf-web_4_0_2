@@ -403,16 +403,33 @@
 .knowledgeConcepe .tag_box{width:346px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
 .knowledgeConcepe .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
-.knowledgeConcepe .tagRepeat{
+.knowledgeConcepe .tag_item{
+    margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;
+}
+.knowledgeConcepe .tagExistFalse{
     background: #fff;
-
+    color: red;
 }
 .knowledgeConcepe .Wdate{background-position:164px center;}
 /*列表-要素*/
 .knowledgeList .Wdate,.knowledgeFactor .Wdate{background-position:164px center;}
 .knowledgeList .ipt-txt,.knowledgeFactor .ipt-txt{height:34px;box-sizing:border-box;}
-
-/*营销*/
+.knowledgeList .tag_item{
+    margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;
+}
+.knowledgeList .tagExistFalse{
+    background: #fff;
+    color: red;
+}
+/*富文本*/
+.exten_problem .tag_item{
+    margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;
+}
+.exten_problem .tagExistFalse{
+    background: #fff;
+    color: red;
+}
+    /*营销*/
 .knowledgeSale .ipt-txt{
     border: 1px  solid #e1e1e1;
     height:34px;
@@ -423,9 +440,12 @@
 .knowledgeSale .tag_box{width:347px;height:31px;overflow-y:auto;padding:2px;box-sizing:border-box;}
 
 .knowledgeSale .tag_s{display:inline-block;color: #46799b; background: #e0eaf1;border:1px solid #eee;height:25px;line-height:25px;padding:0 10px;margin-right:6px;}
-.knowledgeSale .tagRepeat{
+.knowledgeSale .tag_item{
+    margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;
+}
+.knowledgeSale .tagExistFalse{
     background: #fff;
-
+    color: red;
 }
 .knowledgeSale .jqrsz-item{border-top:0;}
 .knowledgeSale .kuozhan_div span{background:#ccc;padding:2px 5px;display:inline;text-indent:0; line-height:25px;margin:4px 5px 4px 2px;}

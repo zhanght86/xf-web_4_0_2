@@ -79,6 +79,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             isEditIndex : -1,   // 知识内容 弹框
                                 // -1 为内容新增
                                 // index 为知识的编辑索引
+//*******************2017/8/3  BEGIN   删除扩展问本地备份 *******************//
+            rmExtensionBackup : [] ,
+//*******************2017/8/3  END   删除扩展问本地备份   *******************//
             //引到页
             showTip : showTip,
             hideTip : hideTip,
@@ -88,22 +91,10 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
             isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
         };
-
-        //獲取纬度
-        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                }
-            }, function(error) {console.log(error) });
-        //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channels = data.data
-                }
-            }, function(error) {console.log(error)});
+        //獲取渠道
+        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        //获取维度
+        $scope.master.getChannels($scope,["channels"]) ;
         // 相关问题 键盘选择
         //function selectEvent(e){
         //        var  srcObj = e.srcElement ? e.srcElement : e.target;

@@ -49,20 +49,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
         }
         // 展示渠道维度使用
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                }
-            }, function(error) {
-            });
+        $scope.master.getDimensions($scope,["dimensions"]) ;
         //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channels = data.data
-                }
-            }, function(error) {
-            });
+        $scope.master.getChannels($scope,["channels"]) ;
     }
 ]);

@@ -138,7 +138,7 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin: 0 5px 5px 0;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -155,7 +155,7 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin: 0 5px 5px 0;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -173,7 +173,7 @@
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
                             <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>

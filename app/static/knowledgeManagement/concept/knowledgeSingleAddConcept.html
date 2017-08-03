@@ -182,13 +182,13 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10" style="width:353px;padding:0;">
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
                         <span class="tag_s mr-10 L" style="margin-right:10px;">普通</span>
                         <!--<span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>-->
-                        <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(2,item,itemIndex)"></a>
                         <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
@@ -200,12 +200,12 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10" style="width:353px;padding:0;">
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="tag.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                        <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" ng-click="vm.extensions.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(0,item,itemIndex)"></a>
                         <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
@@ -219,12 +219,12 @@
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10" style="width:353px;padding:0;">
                             <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
                         <span class="tag_s L" style="margin-right:10px;">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                        <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(1,item,itemIndex)"></a>
                         <span class="L" ng-if="item.extensionQuestionTitle"><b>来源于:</b> <span>{{item.extensionQuestionTitle}}</span></span>
                     </div>
