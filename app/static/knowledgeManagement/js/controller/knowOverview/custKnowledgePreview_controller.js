@@ -54,7 +54,7 @@ angular.module('knowledgeManagementModule').controller('custPreviewController', 
                     break;
                 case 106 :
                     editUrl = "knowledgeManagement.markKnow";
-                    api = "api/ms/marketingKnowledge/getKnowledge";
+                    api = "api/ms/richtextKnowledge/getKnowledge";
                     break;
             }
             function edit(){
