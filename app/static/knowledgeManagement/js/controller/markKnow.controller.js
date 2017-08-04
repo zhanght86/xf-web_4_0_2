@@ -516,7 +516,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         if(data.dimensionIdList.inArray(item.dimensionId)){
                             var obj = {
                               "dimensionId" : item.dimensionId ,
-                               "dimensionName" : item.dimensionName
+                              "dimensionName" : item.dimensionName
                             } ;
                             $scope.vm.dimensionArr.push(obj) ;
                         }
@@ -525,36 +525,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     $scope.vm.question = data.knowledgeRelatedQuestionOn;
                     $scope.vm.tail = data.knowledgeCommonOn;
                     $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
-                    var callback = function(){
-                        var knowledgeContent ;
-                        if($scope.vm.contentType==111){
-                            knowledgeContent = $scope.vm.imgSelected.url
-                        }else if($scope.vm.contentType==112){
-                            knowledgeContent = $scope.vm.voiceSelected.url
-                        }else if($scope.vm.contentType==113){
-                            //faceToString
-                            var html = $("#emotion-container").html() ;
-                            knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
-                        }
-                        if(!$scope.vm.dimensionArr.id.length){
-                            $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
-                        };
-                        var parameter = {
-                            "knowledgeContent": knowledgeContent,
-                            "channelIdList": $scope.vm.channel,
-                            "knowledgeContentNegative": $scope.vm.contentType.toString(),
-                            "dimensionIdList": $scope.vm.dimensionArr.id.length ? $scope.vm.dimensionArr.id : $scope.vm.dimensionsCopy.id,
-                            "knowledgeRelatedQuestionOn": $scope.vm.question,    //显示相关问
-                            "knowledgeBeRelatedOn": $scope.vm.tip, //在提示
-                            "knowledgeCommonOn": $scope.vm.tail,   //弹出评价小尾巴
-                            "knowledgeRelevantContentList": $scope.vm.appointRelativeGroup  //业务扩展问
-                        };
-                        $scope.vm.scanContent[index] = parameter;
-                        $scope.vm.isEditIndex = -1 ;
-
-                    } ;
-                } else {
-                    var callback = saveAddNew;
                 }
                 if(dia.length==0) {
                     var dialog = ngDialog.openConfirm({
@@ -567,13 +537,13 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         backdrop: 'static',
                         preCloseCallback: function (e) {    //关闭回掉
                             if (e === 1) {
-                                callback()
+                                addNewOrEditKnow(index);
                             } else {
                                 $scope.vm.isEditIndex = -1  ;
                             }
                             setDialog()
                         }
-                    })
+                    }) ;
                     var isDialog = $interval(function(){
                         if(angular.element(".ngdialog ")){
                             $interval.cancel(isDialog) ;
@@ -694,26 +664,12 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 
             //var knowledgeContent ;
             var content = angular.copy($scope.vm.scanContent) ;
-            angular.forEach(content,function(item){
+            angular.forEach(content,function(item,index){
                 if(item.knowledgeContentNegative ==113){
-                    var html = item.knowledgeContent ;
-                    item.knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
+                    var html = angular.copy(item.knowledgeContent) ;
+                    content[index].knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
                 }
             }) ;
-
-            //if(!$scope.vm.dimensionArr.id.length){
-            //    $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
-            //};
-            //params.knowledgeContents =  new Array({
-            //    "knowledgeContent" : knowledgeContent ,
-            //    "channelIdList":$scope.vm.channel ,
-            //    "knowledgeContentNegative": $scope.vm.contentType.toString() ,
-            //    "dimensionIdList" : $scope.vm.dimensionArr.id.length?$scope.vm.dimensionArr.id:$scope.vm.dimensionsCopy.id,
-            //    "knowledgeRelatedQuestionOn" :$scope.vm.question,    //显示相关问
-            //    "knowledgeBeRelatedOn": $scope.vm.tip , //在提示
-            //    "knowledgeCommonOn" : $scope.vm.tail ,   //弹出评价小尾巴
-            //    "knowledgeRelevantContentList" :  $scope.vm.appointRelativeGroup  //业务扩展问
-            //});
             params.knowledgeContents =  content;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
             params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
@@ -784,7 +740,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     obj.api = "/api/ms/richtextKnowledge/addKnowledge"
                 }
                 obj.params = params;
-                obj.knowledgeType = 101;
+                obj.knowledgeType = 106;
                 $window.knowledgeScan = obj;
                 //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
                 var url = $state.href('knowledgeManagement.knowledgeScan');
@@ -815,7 +771,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             $scope.vm.dimensionArr = [];
         }
 
-        function saveAddNew(){
+        function addNewOrEditKnow(index){
             if(isNewKnowledgeTitle()){
                 var knowledgeContent ;
                 if($scope.vm.contentType==111){
@@ -842,12 +798,42 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                    "knowledgeCommonOn": $scope.vm.tail,   //弹出评价小尾巴
                    "knowledgeRelevantContentList": $scope.vm.appointRelativeGroup  //业务扩展问
                };
-                $scope.vm.scanContent.push(parameter);
-                //setDialog() ;
+                if(index>=0){
+                    $scope.vm.scanContent[index] = parameter ;
+                }else{
+                    $scope.vm.scanContent.push(parameter);
+                }
+
             }
-            //else {
-            //    setDialog()
-            //}
+        }
+        function knowledgeEdit(index){
+            var knowledgeContent ;
+            if($scope.vm.contentType==111){
+                knowledgeContent = $scope.vm.imgSelected.url
+            }else if($scope.vm.contentType==112){
+                knowledgeContent = $scope.vm.voiceSelected.url
+            }else if($scope.vm.contentType==113){
+                //faceToString
+                var html = $("#emotion-container").html() ;
+                console.log(html) ;
+                knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
+
+            }
+            if(!$scope.vm.dimensionArr.id.length){
+                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
+            };
+            var parameter = {
+                "knowledgeContent": knowledgeContent,
+                "channelIdList": $scope.vm.channel,
+                "knowledgeContentNegative": $scope.vm.contentType.toString(),
+                "dimensionIdList": $scope.vm.dimensionArr.id.length ? $scope.vm.dimensionArr.id : $scope.vm.dimensionsCopy.id,
+                "knowledgeRelatedQuestionOn": $scope.vm.question,    //显示相关问
+                "knowledgeBeRelatedOn": $scope.vm.tip, //在提示
+                "knowledgeCommonOn": $scope.vm.tail,   //弹出评价小尾巴
+                "knowledgeRelevantContentList": $scope.vm.appointRelativeGroup  //业务扩展问
+            };
+            $scope.vm.scanContent[index] = parameter;
+            $scope.vm.isEditIndex = -1 ;
         }
         // 检验标题是否符合
         function checkTitle(title,type){
