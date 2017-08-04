@@ -18,7 +18,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
         };
         /**
          * 展示渠道维度使用
-         * */  
+         * */
         //獲取渠道
         $scope.master.getDimensions($scope,["dimensions"]) ;
         //获取维度
