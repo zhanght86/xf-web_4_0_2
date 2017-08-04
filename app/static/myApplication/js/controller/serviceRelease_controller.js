@@ -239,6 +239,7 @@ angular.module('myApplicationSettingModule').controller('serviceReleaseControlle
                     $interval.cancel(edit) ;
                     var dialog = ngDialog.openConfirm({
                         template:"/static/myApplication/applicationRelease/NewServiceRelease.html",
+                        width:'700px',
                         scope: $scope,
                         closeByDocument:false,
                         closeByEscape: true,

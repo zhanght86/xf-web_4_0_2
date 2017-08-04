@@ -18,6 +18,7 @@ angular.module('knowledge_static_web').filter('emotion', function () {
     return function (face) {
         var regex = new RegExp('<img src="/libs/qqFace/arclist/([0-9]*).gif" border="0">', "g");
         face = face.replace(regex, "[em_$1]");
+        //console.log(face)
         return face;
         //face = face.replace(/<img [^>]*src=['"][^'"]+(\d+).[gif,png][^>]*>/gi, "[em_$1]") ;
         //console.log(face) ;

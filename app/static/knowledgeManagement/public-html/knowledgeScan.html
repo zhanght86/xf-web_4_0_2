@@ -49,11 +49,12 @@
                 <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType != 103 && vm.knowledgeType != 102" ng-repeat="item in vm.knowledgeData.knowledgeContents track by $index">
                     <li class="preview_li pr" style="padding-left: 80px;">
                         <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
-                        <!--<p  ng-if="vm.knowledgeType==105 && item.knowledgeContentNegative==110">{{item.knowledgeContent}}</p>-->
-                        <p  ng-if="vm.knowledgeType==105 && item.knowledgeContentNegative==111">图片</p>
-                        <p ng-if="vm.knowledgeType==105 &&  item.knowledgeContentNegative==112">语音</p>
-                        <p ng-if="vm.knowledgeType==105 &&  item.knowledgeContentNegative==113" ng-bind-html="item.knowledgeContent | emotion  | toHtml">文本</p>
-                        <p ng-if="vm.knowledgeType!=105">{{item.knowledgeContent}}</p>
+                        <!--<p  ng-if="vm.knowledgeType==106 && item.knowledgeContentNegative==110">{{item.knowledgeContent}}</p>-->
+                        <p  ng-if="vm.knowledgeType==106 && item.knowledgeContentNegative==111">图片</p>
+                        <p ng-if="vm.knowledgeType==106 &&  item.knowledgeContentNegative==112">语音</p>
+                        <!--{{item.knowledgeContent}}-->
+                        <p ng-if="vm.knowledgeType==106 &&  item.knowledgeContentNegative==113" ng-bind-html="item.knowledgeContent | emotion  | toHtml">文本</p>
+                        <p ng-if="vm.knowledgeType!=106">{{item.knowledgeContent}}</p>
                     </li>
                     <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.channelIdList">
                         <span class="pa preview_span2">渠道:</span>

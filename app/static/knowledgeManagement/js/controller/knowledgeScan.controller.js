@@ -7,8 +7,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
         //console.log($window.opener.knowledgeScan);
         var knowledgeScan =  $window.opener.knowledgeScan;
         $scope.vm = {
-            knowledgeId : knowledgeScan.knowledgeId,
-            knowledgeType : knowledgeScan.knowledgeType,
+            knowledgeType : knowledgeScan.params.knowledgeType,
             listData : null,
             knowledgeData : knowledgeScan.params ,
             dimensions : "",
@@ -17,25 +16,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             save :save,
             tableData : knowledgeScan.knowledgeType==103?JSON.parse(knowledgeScan.params.knowledgeContents[0].knowledgeContent):""
         };
-
+        /**
+         * 展示渠道维度使用
+         * */  
+        //獲取渠道
+        $scope.master.getDimensions($scope,["dimensions"]) ;
+        //获取维度
+        $scope.master.getChannels($scope,["channels"]) ;
         //保存方法  根据url  获取 保存路径
         function save(){
-            //var api = "" ;
-            //switch($scope.vm.editUrl){
-            //    case "knowledgeManagement.faqAdd":
-            //        api = "/api/ms/faqKnowledge/addFAQKnowledge";
-            //        break;
-            //    case "knowledgeManagement.singleAddConcept":
-            //        api = "/api/ms/conceptKnowledge/addConceptKnowledge";
-            //        break;
-            //    case "knowledgeManagement.listAdd":
-            //        api = "/api/ms/listKnowledge/addListKnowledge";
-            //        break;
-            //    case "knowledgeManagement.factorAdd":
-            //        api = "/api/ms/elementKnowledgeAdd/addElementKnowledge";
-            //        break;
-            //}
-            console.log(knowledgeScan.api) ;
             httpRequestPost(knowledgeScan.api,$scope.vm.knowledgeData,function(data){
                 console.log(data) ;
                 if(data.status == 200){
@@ -47,10 +36,5 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
                 console.log(err)
             });
         }
-        // 展示渠道维度使用
-        //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions"]) ;
-        //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
     }
 ]);
