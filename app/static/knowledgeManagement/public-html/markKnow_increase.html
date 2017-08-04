@@ -1,6 +1,6 @@
 <script type="text/ng-template">
 </script>
-<div class="pd-10 knowPopup" style="width: 100%;">
+<div class="pd-20 knowPopup" style="width: 100%;">
     <div class="tab_tit" style="width: 70%;border-bottom:0;">
         <span ng-class="vm.contentType==113?'cur':''" ng-click="vm.contentType=113">文本新增</span>
         <span ng-class="vm.contentType==111?'cur':''" ng-click="vm.contentType=111">图片新增</span>
@@ -8,7 +8,7 @@
     </div>
     <!--emotion-->
     <div name="emotion" class="miles-textArea-container" ng-show="vm.contentType==113"
-         style="width: 70%;overflow-y: auto;">
+         style="width: 100%;overflow-y: auto;">
         <!--{{vm.emotionText | emotion}}-->
         <div class="miles-textArea mb-5" id="emotion-container" name="title" contenteditable="true"
              style="overflow:auto;height:160px;"></div>
@@ -20,7 +20,7 @@
     </div>
     <!-- pic-->
     <div name="Teletext" class="miles-textArea-container" ng-show="vm.contentType==111"
-         style="width: 70%;overflow-y: auto;">
+         style="width: 100%;overflow-y: auto;">
         <img name="title" ng-if="vm.imgSelected" ng-click="vm.selectMultimedia()" ng-src="/img/{{vm.imgSelected.url}}"
              alt="" style="width: 188px;height: 150px;"/>
         <img name="title" ng-if="!vm.imgSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
@@ -30,7 +30,7 @@
     </div>
     <!--voice-->
     <div name="voice" class="miles-textArea-container" ng-show="vm.contentType==112"
-         style="width: 70%;overflow-y: auto;">
+         style="width: 100%;overflow-y: auto;">
         <img name="title" ng-if="vm.voiceSelected" ng-click="vm.selectMultimedia()" src="/images/audio_pic1.png" alt=""
              style="width: 150px;height: 150px;cursor:pointer;"/>
         <img name="title" ng-if="!vm.voiceSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
@@ -39,7 +39,7 @@
         <p ng-if="vm.voiceSelected">已添加：{{vm.voiceSelected.name}}</p>
     </div>
 
-    <div class="channel_div  mb-10">
+    <div class="channel_div  mb-10 mt-10" style="padding-left:0;">
 
         <div class="checkboxStr mb-10">
             <div>渠道：</div>
