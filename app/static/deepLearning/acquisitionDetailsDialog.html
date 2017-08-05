@@ -1,0 +1,47 @@
+<div class="pd-20 dataAcquisition" >
+    <div class="tab_div mb-10">
+        <table class="tab">
+            <tr>
+                <td width="20%">序号</td>
+                <td width="80%">{{vm.knowledgeId}}</td>
+            </tr>
+            <tr>
+                <td>原始问题</td>
+                <td>
+                    <textarea style="width:100%;height:100%;" readonly="readonly">
+                      {{vm.crawlQuestion}}
+                    </textarea>
+
+                </td>
+            </tr>
+            <tr>
+                <td>原始回答</td>
+                <td>
+                    <textarea style="width:100%;height:50px;" readonly="readonly">{{vm.crawlAnswer}}
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>处理后问题</td>
+                <td>
+                    <textarea style="width:100%;height:100%;" ng-readonly="vm.isEdit==0" ng-model="vm.knowledgeQuestion" >
+                        {{vm.knowledgeQuestion}}
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>处理后回答</td>
+                <td>
+                    <textarea style="width:100%;height:50px;" ng-readonly="vm.isEdit==0" ng-model="vm.knowledgeAnswer" >
+						{{vm.knowledgeAnswer}}
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="tc">
+        <input type="button" ng-if="vm.isEdit==1"  class="btn1 btn1_blue mr-10" value="保存"  ng-click="vm.verifyRelease()?closeThisDialog(1):''"/>
+        <input type="button" class="btn1 btn_gray" value="取消" ng-click="closeThisDialog(0)"/>
+    </div>
+</div>

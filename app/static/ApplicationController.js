@@ -11,7 +11,7 @@ knowledge_static_web.controller('ApplicationController',
 /***************************************************************  MASTER   **************************************************************************************/
                 //Name  master
                 //For   下游调用
-            $scope.master = {
+            $scope.master = { 
                 //const for Downstream
                     headImage : $cookieStore.get("robotHead") ,
                     applicationName : APPLICATION_NAME,

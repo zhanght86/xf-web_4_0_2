@@ -1,0 +1,19 @@
+<div class="pd-20" >
+    <div class="framework mb-10">
+        <span class="framework_s">数据源</span>
+        <input type="text" class="input-text bd" placeholder="知乎" ng-model="vm.crawlSource" />
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">采集日期</span>
+        <!--<input type="text" class="input-text"/>-->
+        <input type="text" ng-model="vm.crawlDate" onchange="" onclick="WdatePicker()" class="input-text Wdate " style="width:185px;border:1px solid #eee;" >
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">采集数量</span>
+        <input type="text" class="input-text bd" ng-model="vm.crawlCount"/>
+    </div>
+    <div class="tc">
+        <input type="button" class="btn1 btn1_blue mr-20" value="采集" ng-click="vm.save()" />
+        <input type="button" class="btn1 btn_gray" value="取消" />
+    </div>
+</div>
