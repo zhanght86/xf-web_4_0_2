@@ -365,16 +365,16 @@
 }
 .markKnow #step_two{background-image:url(../../images/faq_yd2.png);top:70px;}
 .markKnow #step_three{background-image:url(../../images/faq_yd3.png);top:112px;}
-.markKnow #step_four{background-image:url(../../images/markKnow_yd4.png);top:154px;}
-.markKnow #step_five{height:328px;background-image:url(../../images/markKnow_yd5.png);top:202px;}
-.markKnow #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:435px;left:228px;}
-.markKnow #step_seven{background-image:url(../../images/faq_yd6.png);top:583px;left:228px;}
+.markKnow #step_four{background-image:url(../../images/faq_yd4.png);top:154px;}
+.markKnow #step_five{height:328px;background-image:url(../../images/faq_yd5.png);top:202px;}
+/*.markKnow #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:435px;left:228px;}*/
+.markKnow #step_seven{background-image:url(../../images/faq_yd6.png);top:287px;left:228px;}
 
 .markKnow #step_five .step_one_arrow{
-    top: 242px;
+    top: 37px;
 }
 .markKnow #step_five .step_one_con{
-    top: 252px;
+    top: 47px;
 }
 .markKnow #step_six .step_one_arrow{
     top: 103px;
