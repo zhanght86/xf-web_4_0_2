@@ -214,7 +214,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.knowledgeList=null;
             $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/applicationAnalysis/associateLearn.html",
+                template:"/static/applicationAnalysis/associateLearn.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -378,7 +378,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.knowledgeContent = content ;
             console.log("======="+$scope.vm.knowledgeContent);
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/applicationAnalysis/switchKnowledgeType.html",
+                template:"/static/applicationAnalysis/switchKnowledgeType.html",
                 width:'500px',
                 scope: $scope,
                 closeByDocument:false,
@@ -401,7 +401,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.currQuestion="用户问题:"+content;
             $scope.vm.currKnowledgeTitle=knowledgeTitle;
             ngDialog.openConfirm({
-                template:"/know_index/applicationAnalysis/associateLearnCheck.html",
+                template:"/static/applicationAnalysis/associateLearnCheck.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -432,7 +432,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 console.log(err);
             });
             ngDialog.openConfirm({
-                template:"/know_index/applicationAnalysis/content.html",
+                template:"/static/applicationAnalysis/content.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
