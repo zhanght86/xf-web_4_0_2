@@ -15,7 +15,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
             botRoot : "",      //根节点
-            knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
             botFullPath: null ,
             botSelectAdd : botSelectAdd,
@@ -305,23 +304,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        //点击 root 的下拉效果
-        function  knowledgeBot(){
-            $timeout(function(){
-                angular.element(".rootClassfy").slideToggle();
-            },50)
-        }
-        //获取root 数据
-        void function(){
-            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": APPLICATION_ID,
-                "categoryPid": "root"
-            },function(data){
-                $scope.vm.botRoot = data.data;
-            },function(){
-               console.log("获取bot类目失败")
-            });
-        }() ;
+        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+            //"/api/ms/modeling/category/searchbycategoryname"
+        ) ;
         //BOT搜索自动补全
         $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
@@ -333,22 +318,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     }
             })
         });
-
-        //点击更改bot value
-        $(".aside-navs").on("click","span",function(){
-            //类型节点
-            var pre = $(this).prev() ;
-            //if(pre.hasClass("bot-edge")){
-            //    layer.msg("请可用选择节点") ;
-            //    return ;
-            //}else{
-                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
-                var id = pre.attr("data-option");
-                getBotFullPath(id);    //添加bot分類
-                angular.element(".rootClassfy,.menus").slideToggle();
-                $scope.$apply();
-            //}
-        });
         //添加bot分类的
         function botSelectAdd(){
             if($scope.vm.botFullPath){
@@ -357,74 +326,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 $scope.vm.botFullPath = null;
                 $scope.vm.knowledgeBotVal = ""
             }
-
         }
-        //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'i',function(){
-            var id = $(this).attr("data-option");
-            var that = $(this);
-            if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":APPLICATION_ID,
-                    "categoryPid": id
-                },function(data){
-                    console.log(data) ;
-                    if(data.data){
-                        var  html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                            var typeClass ;
-                            // 叶子节点 node
-                            if((data.data[i].categoryLeaf == 0)){
-                                typeClass = "bot-leaf"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
-                                typeClass = "bot-edge"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
-                                typeClass = "icon-jj"
-                            }
-                            var  backImage ;
-                            switch(data.data[i].categoryTypeId){
-                                case 160 :
-                                    backImage = " bot-divide" ;
-                                    break  ;
-                                case 161 :
-                                    backImage = " bot-process";
-                                    break  ;
-                                case 162 :
-                                    backImage = " bot-attr" ;
-                                    break  ;
-                                case 163 :
-                                    backImage = " bot-default" ;
-                                    break  ;
-                            }
-                            html+= '<li>' +
-                                         '<div class="slide-a">'+
-                                         ' <a class="ellipsis" href="javascript:;">' ;
-
-                            html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
-
-                            html+=             '<span>'+data.data[i].categoryName+'</span>'+
-                                        '</a>' +
-                                        '</div>' +
-                                     '</li>'
-                        }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
-                    }
-                },function(err){
-                    //layer.msg(err)
-                });
-            }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%");
-                    that.parent().parent().next().slideDown()
-                }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp()
-                }
-            }
-        });
 ////////////////////////////////////////         Bot     //////////////////////////////////////////////////////
         function replace(id){
             var dia = angular.element(".ngdialog");

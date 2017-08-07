@@ -12,7 +12,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             frameId: "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
-            knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
             knowledgeBotVal : "",  //bot 内容
@@ -70,7 +69,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
             appointRelative : "",
             appointRelativeList :[],
-            addAppoint  : addAppoint,
+            //addAppoint  : addAppoint,
             removeAppointRelative : removeAppointRelative ,
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
@@ -373,33 +372,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //    "categoryPid": "root"
-        //}
-        getBotRoot();
-        //    getDimensions();
-        //    getChannel();
-        //点击 root 的下拉效果
-        function  knowledgeBot(ev){
-            //console.log(1) ;
-            $timeout(function(){
-                angular.element(".rootClassfy").slideToggle();
-            },50)
-        }
-        //获取root 数据
-        function getBotRoot(){
-            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": APPLICATION_ID,
-                "categoryPid": "root"
-            },function(data){
-                console.log(data);
-                $scope.vm.botRoot = data.data;
-                //console.log( APPLICATION_ID);
-            },function(error){
-                console.log(error)
-            });
-        }
+        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+            //"/api/ms/modeling/category/searchbycategoryname"
+        ) ;
         //BOT搜索自动补全
         $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
@@ -411,17 +386,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             })
         });
-        //点击更改bot value
-        $(".aside-navs").on("click","span",function(){
-            //类型节点
-            var pre = $(this).prev() ;
-                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
-                var id = pre.attr("data-option");
-                getBotFullPath(id);    //添加bot分類
-                angular.element(".rootClassfy,.menus").slideToggle();
-                $scope.$apply();
-            //}
-        });
+
         //点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
@@ -432,72 +397,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 $scope.vm.knowledgeBotVal = "";
             }
         };
-        //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'i',function(){
-            var id = $(this).attr("data-option");
-            var that = $(this);
-            if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":APPLICATION_ID,
-                    "categoryPid": id
-                },function(data){
-                    console.log(data) ;
-                    if(data.data){
-                        var  html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                            var typeClass ;
-                            // 叶子节点 node
-                            if((data.data[i].categoryLeaf == 0)){
-                                typeClass = "bot-leaf"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
-                                typeClass = "bot-edge"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
-                                typeClass = "icon-jj"
-                            }
-                            var  backImage ;
-                            switch(data.data[i].categoryTypeId){
-                                case 160 :
-                                    backImage = " bot-divide" ;
-                                    break  ;
-                                case 161 :
-                                    backImage = " bot-process";
-                                    break  ;
-                                case 162 :
-                                    backImage = " bot-attr" ;
-                                    break  ;
-                                case 163 :
-                                    backImage = " bot-default" ;
-                                    break  ;
-                            }
-                            html+= '<li>' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">' ;
-
-                            html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
-
-                            html+=             '<span>'+data.data[i].categoryName+'</span>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>'
-                        }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
-                    }
-                },function(err){
-                    //layer.msg(err)
-                });
-            }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%");
-                    that.parent().parent().next().slideDown()
-                }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp()
-                }
-            }
-        });
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({
@@ -575,7 +474,12 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                 setDialog()
                             }
                         }
+
                     });
+                    $timeout(function(){
+                        $scope.master.searchAppointAutoTag(".appoint","/api/ms/conceptKnowledge/getKnowledgeTitle","",$scope)
+                    },1000)
+
                 }
             }
         }
@@ -823,65 +727,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }
             return  result ;
         }
-        // 擴展問深层检验
-        //function checkHeighExtension(item,arr){
-        //    console.log(item) ;
-        //    var extenFrame = angular.copy($scope.vm.extensionsByFrame) ;
-        //    var extenNew = angular.copy($scope.vm.extensions) ;
-        //    var extension = extenFrame.concat(extenNew);
-        //    if(!extension.length){
-        //        return false
-        //    }else{
-        //        //获取长度
-        //        var valItem = [] ;   //获取所有标签
-        //        angular.forEach(item,function(val){
-        //            angular.forEach(val.extensionQuestionTagList,function(tag){
-        //                if(!tag.exist){   //标签存在情况下
-        //                    valItem.push(tag.tagName);
-        //                }
-        //            })
-        //        });
-        //
-        //
-        //        var lenExtension = extension.length ;  //已有扩展问获取长度
-        //        angular.forEach(extension,function(item){
-        //            var lenItem = 0 ;
-        //            angular.forEach(item.extensionQuestionTagList,function(tag){
-        //                if((!tag.exist) && (valItem.inArray(tag.tagName))){   //标签存在情况下
-        //                    lenItem+=1 ;
-        //                }
-        //            }) ;
-        //            if(lenItem == valItem.length){    //重複
-        //                return true ;
-        //            }else{
-        //                lenExtension-=1 ;
-        //            }
-        //        }) ;
-        //
-        //        //var lenExtension = extension.length ;  //已有扩展问获取长度
-        //        //angular.forEach(extension,function(item){
-        //        //    var lenItem = 0 ;
-        //        //    angular.forEach(item.extensionQuestionTagList,function(tag){
-        //        //        if((!tag.exist) && (valItem.inArray(tag.tagName))){   //标签存在情况下
-        //        //            lenItem+=1 ;
-        //        //        }
-        //        //    }) ;
-        //        //    if(lenItem == valItem.length){    //重複
-        //        //        return true ;
-        //        //    }else{
-        //        //        lenExtension-=1 ;
-        //        //    }
-        //        //}) ;
-        //
-        //
-        //        if(lenExtension != extension.length){
-        //            console.log("use --- success") ;
-        //            return false
-        //        }else{
-        //            return true
-        //        }
-        //    }
-        //}
+
 //        提交 检验参数
         function checkSave(){
             var params = getParams();
@@ -962,36 +808,36 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //*************************************************************************
 
-        function addAppoint(item,arr){
-            if(arr.indexOf(item)==-1){
-                arr.push(item)
-            }
-            $scope.vm.appointRelative = "";  //清楚title
-            $scope.vm.appointRelativeList = [];  //清除 列表
-
-        }
+        //function addAppoint(item,arr){
+        //    if(arr.indexOf(item)==-1){
+        //        arr.push(item)
+        //    }
+        //    $scope.vm.appointRelative = "";  //清楚title
+        //    $scope.vm.appointRelativeList = [];  //清除 列表
+        //
+        //}
         // 動態加載 title
-        $scope.$watch("vm.appointRelative",function(title){
-            //console.log(title);
-            if(title){
-                $timeout(getAppointRelative(title),300)
-            }
-        });
+        //$scope.$watch("vm.appointRelative",function(title){
+        //    //console.log(title);
+        //    if(title){
+        //        $timeout(getAppointRelative(title),300)
+        //    }
+        //});
 
-        function getAppointRelative(title){
-            httpRequestPost("/api/ms/conceptKnowledge/getKnowledgeTitle",{
-                "title" : title
-            },function(data){
-                if(data.status == 200){
-                    $scope.vm.appointRelativeList = data.data;
-                    $scope.$apply()
-                }else{
-                }
-                console.log(data);
-            },function(error){
-                console.log(error)
-            });
-        }
+        //function getAppointRelative(title){
+        //    httpRequestPost("/api/ms/conceptKnowledge/getKnowledgeTitle",{
+        //        "title" : title
+        //    },function(data){
+        //        if(data.status == 200){
+        //            $scope.vm.appointRelativeList = data.data;
+        //            $scope.$apply()
+        //        }else{
+        //        }
+        //        console.log(data);
+        //    },function(error){
+        //        console.log(error)
+        //    });
+        //}
         //引导页方法
         function showTip(){
             $('.shadow_div').show();

@@ -4,27 +4,46 @@
  * info  控制器嵌套
  */
 knowledge_static_web.controller('ApplicationController',
-    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',
+    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout",
         '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer","$cookieStore",
-        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$state,
-                  localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
+        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,
+                  $state , localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
 /***************************************************************  MASTER   **************************************************************************************/
-                //Name  master
-                //For   下游调用
+               /**
+                * @Name  master
+                * @For   下游调用
+                * @Info  self === $scope
+                * */
             $scope.master = { 
                 //const for Downstream
                     headImage : $cookieStore.get("robotHead") ,
                     applicationName : APPLICATION_NAME,
+                //method for DownStream simple
+                    slideToggle : slideToggle ,   //滑动控制
+                                                  // @params el callBack
                 //method for Downstream
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
                     isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
                     searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
+                    searchAppointAutoTag : searchAppointAutoTag ,    //相关问搜索自动补全
                     isExtensionTagRepeat : isExtensionTagRepeat ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
                     removeExtensionHasTag : removeExtensionHasTag , //对删除的扩展问备份     营销 概念 列表 富文本知识新增
                     //getFrameByClassId : getFrameByClassId  //通过类目id 获取业务框架
                     //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
+
+            /* bot 下拉树的公共方法 */
+                botTreeOperate : botTreeOperate
+
             } ;
+            function slideToggle(el,callBack){
+                $timeout(function(){
+                    angular.element(el).slideToggle();
+                },50)
+                if(callBack){
+                    callBack()
+                }
+            }
             //獲取纬度
             function getDimensions(self,arr){
                 //var dimensions = [] ;
@@ -119,6 +138,34 @@ knowledge_static_web.controller('ApplicationController',
                     }
                 });
             }
+            //相关问搜索自动补全
+            function searchAppointAutoTag(el,url,callback,self){
+                alert()
+                $(el).autocomplete({
+                    serviceUrl: url,
+                    type:'POST',
+                    params:{
+                        "title":$(el).val(),
+                    },
+                    paramName:'title',
+                    delay : 300 ,
+                    type : "string" , 
+                    dataType:'json',
+                    transformResult:function(data){
+                        console.log(data)
+                        if(data.data){
+                           return data.data
+                        }
+                    },
+                    onSelect: function(suggestion) {
+                        if(self.vm.appointRelativeGroup.indexOf(suggestion)==-1){
+                            self.vm.appointRelativeGroup.push(suggestion)
+                        }
+                        self.vm.appointRelative = "";  //清楚title
+                        self.vm.appointRelativeList = [];  //清除 列表
+                    }
+                });
+            }
             /**
              * 检测扩展问标签是否重复
              * false   return   ；  true  return ext
@@ -187,7 +234,109 @@ knowledge_static_web.controller('ApplicationController',
                 //return container ;
             }
 
+            /*bot*/
+            function botTreeOperate(self,initUrl,getNodeUrl,selectCall,searchAutoUrl){
+                var tree = {
+                    init : function(){
+                        httpRequestPost(initUrl,{
+                            "categoryApplicationId": APPLICATION_ID,
+                            "categoryPid": "root"
+                        },function(data){
+                            self.vm.botRoot = data.data;
+                        },function(error){
+                            console.log(error)
+                        });
+                    } ,
+                    getChildNode : getChildNode ,
+                    selectNode : selectNode ,
+                } ;
+                function getChildNode(){
+                    $(".aside-navs").on("click",'i',function(){
+                        var id = $(this).attr("data-option");
+                        var that = $(this);
+                        if(!that.parent().parent().siblings().length){
+                            that.css("backgroundPosition","0% 100%");
+                            httpRequestPost(getNodeUrl,{
+                                "categoryApplicationId":APPLICATION_ID,
+                                "categoryPid": id
+                            },function(data){
+                                console.log(data) ;
+                                if(data.data){
+                                    var  html = '<ul class="menus">';
+                                    for(var i=0;i<data.data.length;i++){
+                                        var typeClass ;
+                                        // 叶子节点 node
+                                        if((data.data[i].categoryLeaf == 0)){
+                                            typeClass = "bot-leaf"　;
+                                        }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
+                                            typeClass = "bot-edge"　;
+                                        }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
+                                            typeClass = "icon-jj"
+                                        }
+                                        var  backImage ;
+                                        switch(data.data[i].categoryTypeId){
+                                            case 160 :
+                                                backImage = " bot-divide" ;
+                                                break  ;
+                                            case 161 :
+                                                backImage = " bot-process";
+                                                break  ;
+                                            case 162 :
+                                                backImage = " bot-attr" ;
+                                                break  ;
+                                            case 163 :
+                                                backImage = " bot-default" ;
+                                                break  ;
+                                        }
+                                        html+= '<li>' +
+                                            '<div class="slide-a">'+
+                                            ' <a class="ellipsis" href="javascript:;">' ;
+
+                                        html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
+
+                                        html+=             '<span>'+data.data[i].categoryName+'</span>'+
+                                            '</a>' +
+                                            '</div>' +
+                                            '</li>'
+                                    }
+                                    html+="</ul>";
+                                    $(html).appendTo((that.parent().parent().parent()));
+                                    that.parent().parent().next().slideDown()
+                                }
+                            },function(err){
+                                //layer.msg(err)
+                            });
+                        }else{
+                            if(that.css("backgroundPosition")=="0% 0%"){
+                                that.css("backgroundPosition","0% 100%");
+                                that.parent().parent().next().slideDown()
+                            }else{
+                                that.css("backgroundPosition","0% 0%");
+                                that.parent().parent().next().slideUp()
+                            }
+                        }
+                    });
+                }
+                function selectNode(){
+                    $(".aside-navs").on("click","span",function(){
+                        //类型节点
+                        var pre = $(this).prev() ;
+                        angular.element(".icon-jj").css("backgroundPosition","0% 0%");
+                        var id = pre.attr("data-option");
+                        selectCall(id) ;   //添加bot分類
+                        angular.element(".rootClassfy,.menus").slideToggle();
+                        //$scope.$apply();
+                        //}
+                    });
+                }
+                tree.init() ;
+                tree.getChildNode() ;
+                tree.selectNode() ;
+                //return tree ;
+            }
+
 /***********************************************************************************************************************************************************************/
+
 
 
 
