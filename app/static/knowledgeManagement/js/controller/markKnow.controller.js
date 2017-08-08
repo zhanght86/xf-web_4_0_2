@@ -10,7 +10,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             frameId: "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
-            knowledgeBot:knowledgeBot,  //bot点击事件
             //knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
             openContentConfirm: openContentConfirm, //打开内容对话框
             knowledgeBotVal : "",  //bot 内容
@@ -338,33 +337,9 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //    "categoryPid": "root"
-        //}
-        getBotRoot();
-        //    getDimensions();
-        //    getChannel();
-        //点击 root 的下拉效果
-        function  knowledgeBot(ev){
-            //console.log(1) ;
-            $timeout(function(){
-                angular.element(".rootClassfy").slideToggle();
-            },50)
-        }
-        //获取root 数据
-        function getBotRoot(){
-            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": APPLICATION_ID,
-                "categoryPid": "root"
-            },function(data){
-                console.log(data);
-                $scope.vm.botRoot = data.data;
-                //console.log( APPLICATION_ID);
-            },function(error){
-                console.log(error)
-            });
-        }
+        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+           //"/api/ms/modeling/category/searchbycategoryname"
+        ) ;
         //BOT搜索自动补全
         $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
@@ -376,17 +351,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 }
             })
         });
-        //点击更改bot value
-        $(".aside-navs").on("click","span",function(){
-            //类型节点
-            var pre = $(this).prev() ;
-            angular.element(".icon-jj").css("backgroundPosition","0% 0%");
-            var id = pre.attr("data-option");
-            getBotFullPath(id);    //添加bot分類
-            angular.element(".rootClassfy,.menus").slideToggle();
-            $scope.$apply();
-            //}
-        });
         //点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
@@ -397,72 +361,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 $scope.vm.knowledgeBotVal = "";
             }
         };
-        //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'i',function(){
-            var id = $(this).attr("data-option");
-            var that = $(this);
-            if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":APPLICATION_ID,
-                    "categoryPid": id
-                },function(data){
-                    console.log(data) ;
-                    if(data.data){
-                        var  html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                            var typeClass ;
-                            // 叶子节点 node
-                            if((data.data[i].categoryLeaf == 0)){
-                                typeClass = "bot-leaf"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
-                                typeClass = "bot-edge"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
-                                typeClass = "icon-jj"
-                            }
-                            var  backImage ;
-                            switch(data.data[i].categoryTypeId){
-                                case 160 :
-                                    backImage = " bot-divide" ;
-                                    break  ;
-                                case 161 :
-                                    backImage = " bot-process";
-                                    break  ;
-                                case 162 :
-                                    backImage = " bot-attr" ;
-                                    break  ;
-                                case 163 :
-                                    backImage = " bot-default" ;
-                                    break  ;
-                            }
-                            html+= '<li>' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">' ;
-
-                            html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
-
-                            html+=             '<span>'+data.data[i].categoryName+'</span>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>'
-                        }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
-                    }
-                },function(err){
-                    //layer.msg(err)
-                });
-            }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%");
-                    that.parent().parent().next().slideDown()
-                }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp()
-                }
-            }
-        });
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({
@@ -561,7 +459,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                             var html = $("#emotion-container").html()+$filter('emotion')(val);
                                             $("#emotion-container").html(html) ;
                                             $("#emotinon-backup").val("") ;
-                                            console.log($filter("faceToString")(html))
+                                            //console.log($filter("faceToString")(html))
                                         }
                                     },500) ;
                                     qqFaceWatcher() ;
@@ -805,35 +703,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 }
 
             }
-        }
-        function knowledgeEdit(index){
-            var knowledgeContent ;
-            if($scope.vm.contentType==111){
-                knowledgeContent = $scope.vm.imgSelected.url
-            }else if($scope.vm.contentType==112){
-                knowledgeContent = $scope.vm.voiceSelected.url
-            }else if($scope.vm.contentType==113){
-                //faceToString
-                var html = $("#emotion-container").html() ;
-                console.log(html) ;
-                knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
-
-            }
-            if(!$scope.vm.dimensionArr.id.length){
-                $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
-            };
-            var parameter = {
-                "knowledgeContent": knowledgeContent,
-                "channelIdList": $scope.vm.channel,
-                "knowledgeContentNegative": $scope.vm.contentType.toString(),
-                "dimensionIdList": $scope.vm.dimensionArr.id.length ? $scope.vm.dimensionArr.id : $scope.vm.dimensionsCopy.id,
-                "knowledgeRelatedQuestionOn": $scope.vm.question,    //显示相关问
-                "knowledgeBeRelatedOn": $scope.vm.tip, //在提示
-                "knowledgeCommonOn": $scope.vm.tail,   //弹出评价小尾巴
-                "knowledgeRelevantContentList": $scope.vm.appointRelativeGroup  //业务扩展问
-            };
-            $scope.vm.scanContent[index] = parameter;
-            $scope.vm.isEditIndex = -1 ;
         }
         // 检验标题是否符合
         function checkTitle(title,type){
