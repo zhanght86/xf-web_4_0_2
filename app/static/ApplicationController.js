@@ -140,19 +140,21 @@ knowledge_static_web.controller('ApplicationController',
             }
             //相关问搜索自动补全
             function searchAppointAutoTag(el,url,callback,self){
-                alert()
+                //alert()
                 $(el).autocomplete({
+                    //source: "UnitDescAction?operation=SearchEst",
                     serviceUrl: url,
                     type:'POST',
+                    //extraParams: {title:$.trim($(el).val())} ,
+
                     params:{
                         "title":$(el).val(),
                     },
                     paramName:'title',
-                    delay : 300 ,
-                    type : "string" , 
+                    //delay : 300 ,
                     dataType:'json',
                     transformResult:function(data){
-                        console.log(data)
+                        console.log(data) ;
                         if(data.data){
                            return data.data
                         }
@@ -165,6 +167,7 @@ knowledge_static_web.controller('ApplicationController',
                         self.vm.appointRelativeList = [];  //清除 列表
                     }
                 });
+
             }
             /**
              * 检测扩展问标签是否重复
