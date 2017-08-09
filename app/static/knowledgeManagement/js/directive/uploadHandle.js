@@ -366,7 +366,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             // swf文件路径
                             swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                             formData : {
-                                "userId":USER_LOGIN_NAME,
+                                "userId":USER_ID,
                                 "applicationId":APPLICATION_ID
                                 //"templateType": scope.templateType
                             }  ,   // 上传参数

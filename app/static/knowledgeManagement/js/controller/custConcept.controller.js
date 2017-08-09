@@ -93,6 +93,19 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
             backupsOfExtension : "" //扩展问 编辑备份
         };
+        $scope.master.searchAppointAutoTag($scope,".ipt-txt","/api/ms/conceptKnowledge/getKnowledgeTitle",function(suggestion){
+            console.log(suggestion) ;
+            //$scope.$apply(function(){
+            //    if($scope.vm.appointRelativeGroup.indexOf(suggestion)==-1){
+            //        $scope.vm.appointRelativeGroup.push(suggestion)
+            //    }else{
+            //        layer.msg("重复添加相关问")
+            //    }
+            //    $scope.vm.appointRelative = "";  //清楚title
+            //})
+        })
+
+
         //獲取渠道
         $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //获取维度
@@ -387,6 +400,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             })
         });
 
+
         //点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
@@ -421,7 +435,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 layer.msg("请先输入知识标题") ;
                 return false ;
             }else{
-                var dia = angular.element(".ngdialog ");
                 if(data){    //增加
                     $scope.vm.isEditIndex = index ;
                     $scope.vm.newTitle = data.knowledgeContent;
@@ -457,30 +470,23 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 } else {
                     var callback = saveAddNew;
                 }
-                if(dia.length==0) {
-                    var dialog = ngDialog.openConfirm({
-                        template: "/static/knowledgeManagement/public-html/knowledge_increase.html",
-                        width:"650px",
-                        scope: $scope,
-                        closeByDocument: false,
-                        closeByEscape: true,
-                        showClose: true,
-                        backdrop: 'static',
-                        preCloseCallback: function (e) {    //关闭回掉
-                            if (e === 1) {
-                                callback()
-                            } else {
-                                $scope.vm.isEditIndex = -1  ;
-                                setDialog()
-                            }
-                        }
-
-                    });
-                    $timeout(function(){
-                        $scope.master.searchAppointAutoTag(".appoint","/api/ms/conceptKnowledge/getKnowledgeTitle","",$scope)
-                    },1000)
-
-                }
+                $scope.master.openNgDialog($scope,"/static/knowledgeManagement/public-html/knowledge_increase.html","650px",callback,function(){
+                    $scope.vm.isEditIndex = -1  ;
+                    setDialog()
+                }) ;
+                $timeout(function(){
+                    $scope.master.searchAppointAutoTag($scope,".appoint","/api/ms/conceptKnowledge/getKnowledgeTitle",function(suggestion){
+                        console.log(suggestion) ;
+                           //$scope.$apply(function(){
+                           //    if($scope.vm.appointRelativeGroup.indexOf(suggestion)==-1){
+                           //        $scope.vm.appointRelativeGroup.push(suggestion)
+                           //    }else{
+                           //        layer.msg("重复添加相关问")
+                           //    }
+                           //    $scope.vm.appointRelative = "";  //清楚title
+                           //})
+                       })
+                },2000) ;
             }
         }
         function extensionEdit(type,item,index){
