@@ -359,16 +359,16 @@
     top: 113px;
 }
 /*营销知识新增*/
-.markKnow .step_one{width:600px;height:40px;position:absolute;top:0px;left: 153px;
+.markKnow .step_one{width:600px;height:40px;position:absolute;top:23px;left: 153px;
     z-index:10000000;
     background:url(../../images/faq_yd1.png) no-repeat 0px top;
 }
-.markKnow #step_two{background-image:url(../../images/faq_yd2.png);top:70px;}
-.markKnow #step_three{background-image:url(../../images/faq_yd3.png);top:112px;}
-.markKnow #step_four{background-image:url(../../images/faq_yd4.png);top:154px;}
-.markKnow #step_five{height:328px;background-image:url(../../images/faq_yd5.png);top:202px;}
+.markKnow #step_two{background-image:url(../../images/faq_yd2.png);top:102px;}
+.markKnow #step_three{background-image:url(../../images/faq_yd3.png);top:150px;}
+.markKnow #step_four{background-image:url(../../images/faq_yd5.png);top:250px;}
+.markKnow #step_five{height:328px;background-image:url(../../images/faq_yd4.png);top:335px;}
 /*.markKnow #step_six{height:104px;background-image:url(../../images/table_yd6.png);top:435px;left:228px;}*/
-.markKnow #step_seven{background-image:url(../../images/faq_yd6.png);top:287px;left:228px;}
+.markKnow #step_seven{background-image:url(../../images/faq_yd6.png);top:410px;left:228px;}
 
 .markKnow #step_five .step_one_arrow{
     top: 37px;
@@ -382,11 +382,6 @@
 .markKnow #step_six .step_one_con{
     top: 113px;
 }
-
-
-
-
-
 
 /*批量知识新增*/
 .know_batch_add{ background:#fff;box-sizing:border-box;min-height:500px;}
