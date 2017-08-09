@@ -51,7 +51,7 @@
                             <!--<p class="ipt-txt" id="ipt-txt" >-->
                             <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
                             <!--</p>-->
-                            <i class="btn-menu_1" ng-click="vm.knowledgeBot()" style="right:1px;top:2px;width:23px;height:28px;"></i>
+                            <i class="btn-menu_1" ng-click="master.slideToggle('.rootClassfy')" style="right:1px;top:2px;width:23px;height:28px;"></i> 
                             <div class="rootClassfy aside-navs aside-navs2" >
                                 <ul class="menus show">
                                     <!--//test-->
@@ -138,7 +138,7 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin: 0 5px 5px 0;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -155,7 +155,7 @@
                     </div>
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin: 0 5px 5px 0;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>
@@ -173,7 +173,7 @@
                     <div class="value clearfix">
                         <div class=" tag_box L mr-10">
                             <!--{{item.extensionQuestionTagList}}-->
-                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" style="margin:0 5px 5px 0;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                            <span ng-repeat="val in item.extensionQuestionTagList track by $index" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                 {{val.tagName}}
                             </span>
                         </div>

@@ -6,7 +6,4 @@
 // Define the `know` module
 angular.module('know', [
     'know.auth',
-    'know.detail',
-    'know.knowdoc',
-    'know.template',
 ]);

@@ -335,7 +335,9 @@ angular.module('functionalTestModule').controller('testResultController', [
                 showClose: true,
                 backdrop: 'static',
                 preCloseCallback: function (e) {    //关闭回掉
-                    batchTest();
+                   if(e == 1){
+                       batchTest();
+                   }
                     //$scope.vm.serviceId = vm.listService[0].serviceId ;
                 }
             });

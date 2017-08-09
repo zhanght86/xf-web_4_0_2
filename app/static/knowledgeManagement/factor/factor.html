@@ -43,7 +43,7 @@
                                 <div class="value Div clearfix" id="Div">
                                     <div class="ipt-txt-box L mr-10">
                                         <input class="ipt-txt bd botTagAuto" ng-model="vm.knowledgeBotVal"  id="ipt-txt" type="text"  style="width: 394px;height:32px;padding-right:28px;box-sizing: border-box;"/>
-                                        <i class="btn-menu_1" ng-click="vm.knowledgeBot()" style="right:1px;top:2px;width:23px;height:28px;"></i>
+                                        <i class="btn-menu_1" ng-click="master.slideToggle('.rootClassfy')" style="right:1px;top:2px;width:23px;height:28px;"></i>
 
                                         <div class="rootClassfy aside-navs aside-navs2" >
                                             <ul class="menus show">
@@ -99,7 +99,7 @@
                         <div class="list_facContent_L">业务框架：</div>
                         <div >
                             <select class="input-text" style="width:395px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
-                                <option value="" ng-if="vm.frames.length">--业务框架为空--</option>
+                                <option value="" ng-if="vm.frames.length">--请选择以上业务框架--</option>
                             </select>
                         </div>
                     </div>
@@ -124,12 +124,12 @@
                             <div class="list_facContent_L">概念扩展：</div>
                             <div >
                                 <div class="L extended_query_txt" style="width:345px;border:0;height: 35px;overflow-x: auto;" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                                   <span ng-repeat="val in item.extensionQuestionTagList" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                        {{val.tagName}}
                                     </span>
                                 </div>
                                 <span class="tag_s mr-10 L bd" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                                <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(2,item,itemIndex)"></a>
                                 <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>
@@ -141,14 +141,14 @@
                             <div class="list_facContent_L">概念扩展：</div>
                             <div>
                                 <div class="L extended_query_txt" style="width:345px;border: 0;margin-right:0;height: 35px;overflow-x: auto;" >
-                                   <span ng-repeat="val in item.extensionQuestionTagList" style="margin:0 5px 5px 0;display:inline-block;background: #e1e1e1;padding: 4px;" ng-class="val.exist?'':'tagRepeat'">
+                                   <span ng-repeat="val in item.extensionQuestionTagList" ng-class="{' tag_item':true , ' tagExistFalse':!val.exist}">
                                       {{val.tagName}}
                                     </span>
                                 </div>
                                 <span class="tag_s  bd L mr-10" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center">
                                     普通
                                 </span>
-                                <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" ng-click="vm.extensions.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(0,item,itemIndex)"></a>
                                 <span class="L"><b>来源于</b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>

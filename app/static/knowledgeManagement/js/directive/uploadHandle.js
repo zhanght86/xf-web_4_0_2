@@ -366,7 +366,7 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             // swf文件路径
                             swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                             formData : {
-                                "userId":USER_LOGIN_NAME,
+                                "userId":USER_ID,
                                 "applicationId":APPLICATION_ID
                                 //"templateType": scope.templateType
                             }  ,   // 上传参数
@@ -447,8 +447,11 @@ knowledge_static_web.directive("uploaderHandle3", ["$parse",  "$cookieStore" ,
                             //$percent.css('width', percentage * 100 + '%');
                             //console.log(percentage);
                         });
-                        uploader.on('uploadError', function (file) {
-                            console.log("上传失败")
+                        uploader.on('uploadError', function (file,reason) {
+                            console.log("上传失败");
+                            layer.msg('请检查'+reason);
+                            console.log(reason);         //失败原因;
+
                         });
                         //uploader.on('all', function (type) {
                         //    if (type === 'startUpload') {

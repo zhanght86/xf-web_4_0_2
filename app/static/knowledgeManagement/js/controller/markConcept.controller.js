@@ -92,26 +92,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             nextDiv : nextDiv
             //引到页end
         };
-
         //獲取渠道
-        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                }
-            }, function(error) {
-
-            });
+        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //获取维度
-        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channels = data.data
-                }
-            }, function(error) {
-
-            });
+        $scope.master.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
 
         //組裝數據   擴展問   content
@@ -158,7 +142,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
             $scope.vm.openContentConfirm(saveAddNew); //知识内容弹出框
         }
-
         if($stateParams.knowledgeTitle){
             console.log("======"+$stateParams.knowledgeTitle);
             $scope.vm.title=$stateParams.knowledgeTitle;
@@ -189,7 +172,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 }
             },true) ;
         }
-
         function selelectTitle(title){
             $scope.vm.factorTitle = title ;
             $scope.vm.getFactorByTitle = [] ;
@@ -208,15 +190,10 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         $scope.vm.getFactorByTitle = []
                     }
                     $scope.$apply() ;
-                    //console.log(data);
-                    //$scope.vm.detailByFactorTitle = [] ;
                 },function(){
                     // layer.msg("err or err")
                 });
-
-
         }
-
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
@@ -234,7 +211,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     }
                 }
             },function(){
-                // layer.msg("err or err")
             });
         }
         $scope.$watch("vm.frameCategoryId",function(val,old){
@@ -449,7 +425,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                     "extendQuestionList" : question
                 },function(data){
                     if(data.status == 500){
-                        layer.msg("概念扩展打标失败，请检查服务，重新打标") ;
+                        layer.msg(data.data);
                     }else if(data.status == 10026 ){
                         layer.msg("扩展问添加重复，请重新添加") ;
                     }else if(data.status==11006){

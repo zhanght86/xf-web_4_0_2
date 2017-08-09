@@ -41,7 +41,6 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'applAnalysisModule',
     //深度学习
     'deepLearning'
-
 ]);
 
 /**
@@ -485,7 +484,6 @@ knowledge_static_web
                     },
                 }
             })
-            //
             //深度学习
             .state("deepLearning", {
                 url: "/deepLearning",
@@ -557,7 +555,6 @@ knowledge_static_web
                 }
             })
             //深度学习end
-
             //materialManagement
             .state("materialManagement", {
                 url: "/materialManagement/:userPermission",

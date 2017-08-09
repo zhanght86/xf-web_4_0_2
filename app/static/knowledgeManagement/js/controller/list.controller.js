@@ -11,7 +11,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             frames : [],      //业务框架
             frameId : "",
             botRoot : "",      //根节点
-            knowledgeBot:knowledgeBot,  //bot点击事件
             knowledgeBotVal : "",  //bot 内容
             botSelectAdd : botSelectAdd,
             frameCategoryId : "",
@@ -74,6 +73,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
             dialogExtension : [],
             limitSave : false, //限制多次打标
+//*******************2017/8/3  BEGIN   删除扩展问本地备份 *******************//
+            rmExtensionBackup : [] ,
+//*******************2017/8/3  END   删除扩展问本地备份   *******************//
             //引到页
             showTip : showTip,
             hideTip : hideTip,
@@ -84,26 +86,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             backupsOfExtension : "" //扩展问 编辑备份
         };
 
-        //獲取纬度
-        knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.vm.dimensionsCopy = angular.copy($scope.vm.dimensions);
-                }
-            }, function(error) {
-                console.log(error)
-            });
-        //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channels = data.data ;
-                    console.log(data.data) ;
-                }
-            }, function(error) {
-                console.log(error) ;
-            });
+        //獲取渠道
+        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        //获取维度
+        $scope.master.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         /*
 
@@ -273,33 +259,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "frameQuestionTagList" : frameQuestionTagList
             },function(data){
                 if(data.status==200){
-                    var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                    if(isTagRepeat(data.data,allExtension,title)){
-
-                    }else{
-                        var enten = {}  ;
-                        enten.extensionQuestionTitle = title;
-                        enten.extensionQuestionType = weight ;
-                        enten.wholeDecorateTagList = [
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                        ];
-                        enten.extensionQuestionTagList = [] ;
-                        angular.forEach(data.data,function(tagList){
-                            angular.forEach(tagList.extensionQuestionTagList,function(item){
-                                var tagTem = {
-                                    "exist" : item.exist ,
-                                    "tagClass" : item.tagClass ,
-                                    "tagName" : item.tagName ,
-                                    "tagType" : item.tagType
-                                };
-                                enten.extensionQuestionTagList.push(tagTem) ;
-                            });
-                        });
-                        $scope.vm.extensionsByFrame.push(enten);
-                        $scope.$apply();
-                    }
+                    $scope.$apply(function(){
+                        var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
+                        var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                        if(result != false){
+                            $scope.vm.extensionTitle = "";
+                            $scope.vm.extensionsByFrame.push(result);
+                        }
+                    }) ;
                 }
             });
         }
@@ -324,108 +291,32 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     "extendQuestionList": question
                 }, function (data) {
                     if (data.status == 500) {
-                        layer.msg("概念扩展打标失败，请检查服务，重新打标");
+                        layer.msg(data.data);
                     } else if(data.status == 10026 ){
                          layer.msg("扩展问添加重复，请重新添加");
                     }else if (data.status == 200) {
-                        var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                        if(isTagRepeat(data.data,allExtension,title)){
-
-                        }else{
-                            $scope.vm.extensionTitle = "";
-                            var enten = {}  ;
-                            enten.extensionQuestionTitle = title;
-                            enten.extensionQuestionType = weight ;
-                            enten.wholeDecorateTagList = [
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                                {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                            ];
-                            enten.extensionQuestionTagList = [] ;
-                            angular.forEach(data.data,function(tagList){
-                                angular.forEach(tagList.extensionQuestionTagList,function(item){
-                                    var tagTem = {
-                                        "exist" : item.exist ,
-                                        "tagClass" : item.tagClass ,
-                                        "tagName" : item.tagName ,
-                                        "tagType" : item.tagType
-                                    };
-                                    enten.extensionQuestionTagList.push(tagTem) ;
-                                });
-                            });
-                            if(!source){
-                                $scope.vm.extensions.push(enten);
-                            }else{
-                                $scope.vm.extensionByTitleTag = new Array(enten)
+                        $scope.$apply(function(){
+                            var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
+                            var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                            if(result != false){
+                                $scope.vm.extensionTitle = "";
+                                if(!source){
+                                    $scope.vm.extensions.push(result);
+                                }else{
+                                    $scope.vm.extensionByTitleTag = new Array(result)
+                                }
                             }
-                        }
-                        if(!source){
-                            $scope.vm.extensionTitle = "";
-                        }
-                        $scope.$apply();
+                        })
                     }
                 }, function () {
 
                 });
             }
         }
-        //判断扩展问标签是否重复
-        //data.data
-        function isTagRepeat(current,allExtension,title){
-            console.log(allExtension) ;
-            var current = angular.copy(current) ;
-            var isRepeat = false ;
-            var tag = [] ;
-            angular.forEach(current,function(tagList){
-                angular.forEach(tagList.extensionQuestionTagList,function(item){
-                    if(item.exist){   //标签存在情况下
-                        tag.push(item.tagName);
-                    }
-                });
-            });
-            angular.forEach(allExtension,function(extension){
-                var tagLen = 0 ;
-                var itemTag = [] ;
-                angular.forEach(extension.extensionQuestionTagList,function(item){
-                    if(item.exist){       //存在标签
-                        itemTag.push(item.tagName);
-                    }
-                    if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
-                        tagLen += 1;
-                    }
-                }) ;
-                if(tagLen == itemTag.length && tag.length == itemTag.length){
-                    layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
-                    return   isRepeat = true ;
-                }
-            }) ;
-            return isRepeat
-        }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        //{
-        //    "categoryApplicationId": "360619411498860544",
-        //    "categoryPid": "root"
-        //}
-        getBotRoot();
-        //点击 root 的下拉效果
-        function  knowledgeBot(ev){
-            $timeout(function(){
-                angular.element(".rootClassfy").slideToggle();
-            },50)
-        }
-        //获取root 数据
-        function getBotRoot(){
-            httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                "categoryApplicationId": APPLICATION_ID,
-                "categoryPid": "root"
-            },function(data){
-                //console.log(data);
-                $scope.vm.botRoot = data.data;
-                //console.log( APPLICATION_ID);
-            },function(){
-
-            });
-        }
+        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+            //"/api/ms/modeling/category/searchbycategoryname"
+        ) ;
         //BOT搜索自动补全
         $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
@@ -437,21 +328,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 }
             })
         });
-        //点击更改bot value
-        $(".aside-navs").on("click","span",function(){
-            //类型节点
-            var pre = $(this).prev() ;
-            //if(pre.hasClass("bot-edge")){
-            //    layer.msg("请可用选择节点") ;
-            //    return ;
-            //}else{
-                angular.element(".icon-jj").css("backgroundPosition","0% 0%");
-                var id = pre.attr("data-option");
-                getBotFullPath(id);    //添加bot分類
-                angular.element(".rootClassfy,.menus").slideToggle();
-                $scope.$apply();
-            //}
-        });
+
         //点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
@@ -461,72 +338,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 $scope.vm.knowledgeBotVal = "";
             }
         };
-        //点击下一级 bot 下拉数据填充以及下拉效果
-        $(".aside-navs").on("click",'i',function(){
-            var id = $(this).attr("data-option");
-            var that = $(this);
-            if(!that.parent().parent().siblings().length){
-                that.css("backgroundPosition","0% 100%");
-                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId":APPLICATION_ID,
-                    "categoryPid": id
-                },function(data){
-                    console.log(data) ;
-                    if(data.data){
-                        var  html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                            var typeClass ;
-                            // 叶子节点 node
-                            if((data.data[i].categoryLeaf == 0)){
-                                typeClass = "bot-leaf"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
-                                typeClass = "bot-edge"　;
-                            }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
-                                typeClass = "icon-jj"
-                            }
-                            var  backImage ;
-                            switch(data.data[i].categoryTypeId){
-                                case 160 :
-                                    backImage = " bot-divide" ;
-                                    break  ;
-                                case 161 :
-                                    backImage = " bot-process";
-                                    break  ;
-                                case 162 :
-                                    backImage = " bot-attr" ;
-                                    break  ;
-                                case 163 :
-                                    backImage = " bot-default" ;
-                                    break  ;
-                            }
-                            html+= '<li>' +
-                                '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;">' ;
-
-                            html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
-
-                            html+=             '<span>'+data.data[i].categoryName+'</span>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>'
-                        }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown()
-                    }
-                },function(err){
-                    //layer.msg(err)
-                });
-            }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%");
-                    that.parent().parent().next().slideDown()
-                }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp()
-                }
-            }
-        });
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({

@@ -629,7 +629,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
         function searchByFrameTitle(current,type){
             console.log("===searchByFrameTitle===");
-            if($("#keyWords").val()){
+            if(nullCheck($("#keyWords").val())==true){
                 httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                     "frameCategoryId": $scope.vm.botSelectValue,
                     "frameTitle": "%"+$("#keyWords").val()+"%",
@@ -656,12 +656,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                if($("#keyWords").val()){
-                    loadFrameLibrary(current,0);
-                }else{
+                console.log("======="+$("#keyWords").val());
+                if(nullCheck($("#keyWords").val())==true){
                     searchByFrameTitle(current,0);
+                }else{
+                    loadFrameLibrary(current,0);
                 }
-
             }
         });
         //添加框架
@@ -848,7 +848,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         layer.confirm("删除以后不能恢复，确认删除？",{
                             btn:['确认','取消'],
                             shade:false
-                        },function(){
+                        },function(index){
+                            layer.close(index);
                             console.log("======elementId======"+elementId);
                             httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
@@ -905,6 +906,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         '   </div>'+
                         '</div>';
                     $("#concept_extension").append(html);
+
                 }
             }
         }
@@ -1208,14 +1210,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         if($(this).attr("element-id")==null){
                             return;
                         }
-                        var obj = $(this).parent().parent().remove();
+                        var obj = $(this).parent().parent();
                         var elementId=$(this).attr("element-id");
                         layer.confirm("删除以后不能恢复，确认删除？",{
                             btn:['确认','取消'],
                             shade:false
                         },function(){
                             console.log("======elementId======"+elementId);
-                            $(this).parent().parent().remove();
                             httpRequestPost("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
                             },function(data){
@@ -1852,8 +1853,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     '   <td>'+
                     '       <select class="mining-type-add bd" disabled="disabled">'+
                     '           <option value=10017>NLP</option>'+
-                    /*'           <option value=10017>OEC</option>'+
-                    '           <option value=10018>GATE</option>'+*/
+                        /*'           <option value=10017>OEC</option>'+
+                         '           <option value=10018>GATE</option>'+*/
                     '       </select>'+
                     '   </td>'+
                     '   <td><input style="width: 200px;" type="text" class="input_text ele-asked-add" value="'+$scope.vm.elementAskContentArray[i]+'" disabled="disabled"/></td>'+
@@ -1908,13 +1909,18 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $("#conceptExtendQuestionErrorObj").html("概念标题不能与概念扩展重复");
                     return true;
                 }
+                var flag = false;
                 $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index1,value1){
                     console.log($(value1).val());
                     if($(value).val()==$(value1).val()){
                         $("#conceptExtendQuestionErrorObj").html("不能与已有概念扩展重复");
+                        flag = true;
                         return true;
                     }
                 });
+                if(flag){
+                    return true;
+                }
                 $("#conceptExtendQuestionErrorObj").html('');
                 var arr = [];
                 arr[0]=$(value).val();
@@ -1927,10 +1933,14 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             if(data.data.length>0){
                                 if(data.data[0]!=null){
                                     appendTag(data.data[0],$(value).val());
+
                                 }
                             }
                         }
                     }
+                    $.each($(".exten_problem").find("input").filter(":eq(0)"),function(index,value){
+                        $(value).val('');
+                    });
                 },function(err){
                     console.log(err);
                     $("#conceptExtendQuestionErrorObj").html("打标失败，请正确发布节点后再进行打标操作!");
@@ -1946,16 +1956,17 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             tagHtml+='</div>';
             var html =  '<div class="framework mb-10">'+
-                        '   <span class="framework_s mt-7">概念扩展：</span>' +
-                        '   <div class="formControlsForConcept">'+
-                        '       <input type="hidden" value="'+originStr+'"/>'+
-                        tagHtml+
-                        '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+
-                        '           <img src="../../images/images/delete_img.png">'+
-                        '       </a>'+
-                        '   </div>'+
-                        '</div>';
+                '   <span class="framework_s mt-7">概念扩展：</span>' +
+                '   <div class="formControlsForConcept">'+
+                '       <input type="hidden" value="'+originStr+'"/>'+
+                tagHtml+
+                '       <a href="javascript:;" class="del-button" onclick="rem_ques(this);">'+
+                '           <img src="../../images/images/delete_img.png">'+
+                '       </a>'+
+                '   </div>'+
+                '</div>';
             $("#concept_extension").append(html);
+            $('.extended_query_txt').val('');                   //2017 nnf 添加；
         }
         //添加表格子元素
         function addEle(){
@@ -2051,25 +2062,25 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
 
             var html =  '<tr>'+
-                        '   <td><input type="checkbox" class="sid"/></td>'+
-                        '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-name-add" placeholder="地区" value="'+eleName+'" disabled="disabled"/></td>'+
-                        '   <td>'+
-                        '       <select class="ele-type-add bd">'+
-                        '           <option value=10014>字符串</option>'+
-                        '           <option value=10015>数字</option>'+
-                        '           <option value=10016>范围</option>'+
-                        '       </select>'+
-                        '   </td>'+
-                        '   <td>'+
-                        '       <select class="mining-type-add bd" disabled="disabled">'+
-                        '           <option value=10017>NLP</option>'+
-                        /*'           <option value=10017>OEC</option>'+
-                        '           <option value=10018>GATE</option>'+*/
-                        '       </select>'+
-                        '   </td>'+
-                        '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+
-                        '   <td class="pr"><input type="text" style="width: 180px;" class="input_text ele-concept-add" placeholder="从概念库中选择" value="'+relateConceptVals+'" data-option="'+relateConceptIds+'" disabled="disabled"/></td>'+
-                        '</tr>';
+                '   <td><input type="checkbox" class="sid"/></td>'+
+                '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-name-add" placeholder="地区" value="'+eleName+'" disabled="disabled"/></td>'+
+                '   <td>'+
+                '       <select class="ele-type-add bd">'+
+                '           <option value=10014>字符串</option>'+
+                '           <option value=10015>数字</option>'+
+                '           <option value=10016>范围</option>'+
+                '       </select>'+
+                '   </td>'+
+                '   <td>'+
+                '       <select class="mining-type-add bd" disabled="disabled">'+
+                '           <option value=10017>NLP</option>'+
+                    /*'           <option value=10017>OEC</option>'+
+                     '           <option value=10018>GATE</option>'+*/
+                '       </select>'+
+                '   </td>'+
+                '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+
+                '   <td class="pr"><input type="text" style="width: 180px;" class="input_text ele-concept-add" placeholder="从概念库中选择" value="'+relateConceptVals+'" data-option="'+relateConceptIds+'" disabled="disabled"/></td>'+
+                '</tr>';
             $("#add-item").prepend(html);
 
             $("#add-item").find("tr").filter(":eq(0)").find(".ele-type-add").val(eleType);
@@ -2085,23 +2096,31 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //删除表格子元素
         function delEle(){
             console.log("delEle");
-            $.each($("#add-item").find(".sid"),function(index,value){
-                console.log($(value).prop("checked"));
-                if($(value).prop("checked")==true){
-                    if ($(value).parent().parent().attr("element-id")!=null) {
-                        httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
-                            "elementId":$(value).parent().parent().attr("element-id")
-                        },function(data){
-                            if(responseView(data)==true){
-                                loadFrameLibrary(1,0);
+            layer.confirm("确认删除？",{
+                btn:['确认','取消'],
+                shade:false
+            },function(index){
+                layer.close(index);
+                $.each($("#add-item").find(".sid"),function(index,value){
+                    console.log($(value).prop("checked"));
+                    if($(value).prop("checked")==true){
+                        if ($(value).parent().parent().attr("element-id")!=null) {
+                            httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
+                                "elementId":$(value).parent().parent().attr("element-id")
+                            },function(data){
+                                if(responseView(data)==true){
+                                    loadFrameLibrary(1,0);
 
-                            }
-                        },function(err){
-                            console.log(err);
-                        });
+                                }
+                            },function(err){
+                                console.log(err);
+                            });
+                        }
+                        $(value).parent().parent().remove();
                     }
-                    $(value).parent().parent().remove();
-                }
+                });
+            },function(){
+                console.log("cancel");
             });
         }
         function splitAuto(val) {

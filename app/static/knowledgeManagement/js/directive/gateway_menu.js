@@ -49,7 +49,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
                                 templateId:$scope.targetId,
                                 requestId:"String",
                                 //设置用户信息
-                                userName: USER_NAME
+                                userName: USER_LOGIN_NAME
                             };
                             if ($scope.processMethod == true) {
                                 if (!$scope.targetId || $scope.targetId == null) {
@@ -183,7 +183,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout',"$location","$state",
                                 "templateName": $scope.vm.temName,
                                 "requestId":"String",
                                 //此处设置上传用户信息
-                                "userId":USER_NAME
+                                "userId":USER_LOGIN_NAME
                             });
                             uploader.start() ;
                             return false;

@@ -102,7 +102,7 @@ function myBrowser(){
     }; //判断是否IE浏览器
 }
 //请求方式
-function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
+function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall,async) {
     ajaxType == "POST"? "POST" :ajaxType;
     //if(ajaxType === "post"){
     //阻塞线程  ie8 不支持
@@ -127,6 +127,7 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
     $.ajax(url, {
         dataType: 'json', //服务器返回json格式数据
         type: "POST", //HTTP请求类型
+        async:async=="false"?false:true,
         timeout: timeout?timeout:100000, //超时时间设置为10秒；
         headers: header,
         data: data,

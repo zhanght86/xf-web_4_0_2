@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/5/23.
  */
 // 聊天知识库 上传
-knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
-    function($parse,$cookieStore) {
+knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,"$state",
+    function($parse,$cookieStore,$state) {
     return {
         restrict:'EA',
         scope:{
@@ -79,7 +79,8 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,
                  }else if(response.status==10001){
                     layer.msg("导入失败")
                  }else {
-                    layer.msg("导入成功",{time : 2000})
+                    layer.msg("导入成功",{time : 2000});
+                    $state.reload();
                 }
             });
 

@@ -1,7 +1,7 @@
 /**
  * Created by 41212 on 2017/4/24.
  */
-(function() {
+//(function() {
     "use strict";
     angular.module("knowledgeManagementModule").service("knowledgeAddServer", knowledgeAddServer);
     knowledgeAddServer.$injector = ["$resource"];
@@ -95,4 +95,4 @@
         }
         //functtionqueryKnowDocByDocId = $resource('/api/knowledgeDocumentation/selectDocumentationById', {}, {});
     }
-})();
+//}
