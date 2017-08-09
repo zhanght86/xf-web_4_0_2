@@ -147,6 +147,44 @@ function httpRequestPost(url, data, sucCallBack,falCallback, needToken, ajaxType
         }
     })
 }
+function httpRequestPostParam(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
+    ajaxType == "POST"? "POST" :ajaxType;
+    //if(ajaxType === "post"){
+    //阻塞线程  ie8 不支持
+    //    jQuery.support.cors = true;
+    //}
+    //转换字符
+
+    //if (typeof(data) == 'string') {
+    //    data = JSON.parse(data);
+    //}
+
+    //设置默认需要  tooken
+    if (!needToken) {
+        //header.Authorization = getToken();
+    }
+    $.ajax(url, {
+        dataType: 'json', //服务器返回json格式数据
+        type: "POST", //HTTP请求类型
+        timeout: timeout?timeout:100000, //超时时间设置为10秒；
+        data: data,
+        success: function(data) {
+            sucCallBack(data);
+        },
+        error: function(xhr, type, errorThrown) {
+            if(falCallback){
+                falCallback(xhr, type, errorThrown);
+            }
+        },
+        complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+            if(status=='timeout'){//超时,status还有success,error等值的情况
+                //ajaxTimeoutTest.abort();
+                //layer.msg("请求超时");
+                console.log("请求超时");
+            }
+        }
+    })
+}
 function httpRequestPostAsync(url, data, sucCallBack,falCallback, needToken, ajaxType,timeout,timeoutCall) {
     ajaxType == "POST"? "POST" :ajaxType;
     //if(ajaxType === "post"){
