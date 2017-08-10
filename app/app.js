@@ -643,6 +643,20 @@ knowledge_static_web
                     }
                 }
             })
+            //新建图文消息
+            .state("materialManagement.addtemes", {
+                url: "/addtemes",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/pictureLibrary/add_tw_mes.html',
+                        controller: "addTwMesController"
+                    }
+                }
+            })
             //知识管理knowledgeManagement
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",
