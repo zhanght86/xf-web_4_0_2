@@ -23,46 +23,26 @@
                     <td class="bold"  width="10%">操作</td>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>文件1</td>
-                    <td>知识库</td>
-                    <td>导入成功</td>
-                    <td>niunafang</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>2017-06-29 09:30:31</td>
-                    <td><a href="javascript:;" class="c_blue">查看</a></td>
-                </tr>
-                <tr>
-                    <td>文件1</td>
-                    <td>概念库</td>
-                    <td>导入成功</td>
-                    <td>niunafang</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>2017-06-29 09:30:31</td>
-                    <td>导入失败</td>
-                </tr>
-                <tr>
-                    <td>文件1</td>
-                    <td>框架库</td>
-                    <td>导入成功</td>
-                    <td>niunafang</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>2017-06-29 09:30:31</td>
-                    <td>导入失败</td>
-                </tr>
-                <tr>
-                    <td>文件1</td>
-                    <td>聊天知识库</td>
-                    <td>导入成功</td>
-                    <td>niunafang</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>2017-06-29 09:30:31</td>
-                    <td>导入失败</td>
-                </tr>
+                    <tr class="type1" ng-repeat="item in vm.uploadRecordList" >
+                        <td>{{item.uploadName}}</td>
+                        <td ng-if="item.uploadType==170">业务知识批量</td>
+                        <td ng-if="item.uploadType==171">要素知识批量</td>
+                        <td ng-if="item.uploadType==172">营销知识批量</td>
+                        <td ng-if="item.uploadType==173">聊天知识库批量</td>
+                        <td ng-if="item.uploadType==174">类目库批量</td>
+                        <td ng-if="item.uploadType==175">概念库批量</td>
+                        <td ng-if="item.uploadType==176">框架库批量</td>
+                        <td ng-if="item.uploadStatus==180">正在处理</td>
+                        <td ng-if="item.uploadStatus==181">导入成功</td>
+                        <td>{{item.userName}}</td>
+                        <td>{{item.uploadSum}}</td>
+                        <td>{{item.uploadSuccess}}</td>
+                        <td>{{item.uploadTime}}</td>
+                        <td>
+                            <button  ng-if="item.uploadSum!=item.uploadSuccess" class="btn1 btn1_blue" ng-click="downRecordFile(item.uploadId)">查看</button>
+                            <button  class="btn1 btn1_blue"  ng-click="deleteRecord(item.uploadId)">删除</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>

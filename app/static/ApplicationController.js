@@ -4,9 +4,9 @@
  * info  控制器嵌套
  */
 knowledge_static_web.controller('ApplicationController',
-    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout",
+    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout","ngDialog" ,
         '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer","$cookieStore",
-        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,
+        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,ngDialog ,
                   $state , localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
 /***************************************************************  MASTER   **************************************************************************************/
                /**
@@ -21,6 +21,7 @@ knowledge_static_web.controller('ApplicationController',
                 //method for DownStream simple
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
+                    openNgDialog : openNgDialog ,  //打开弹框
                 //method for Downstream
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
@@ -33,15 +34,58 @@ knowledge_static_web.controller('ApplicationController',
                     //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
 
             /* bot 下拉树的公共方法 */
-                botTreeOperate : botTreeOperate
+                   botTreeOperate : botTreeOperate
 
             } ;
+            //滑动
             function slideToggle(el,callBack){
                 $timeout(function(){
                     angular.element(el).slideToggle();
                 },50)
                 if(callBack){
                     callBack()
+                }
+            }
+            /**
+             * 打开弹框
+             * @params ｛self｝  $scope
+             * @params ｛tempUrl｝  “”          模板地址
+             * @params ｛closeIssue｝   fn        条件关闭
+             * @params ｛closeClear｝   fn       无条件关闭
+             * @params ｛closeCondition｝ fn    关闭弹框回调
+             * @params ｛complex｝  {Booleans}  是否可以打开多个弹框 默认 “false”一个
+             * */
+            function openNgDialog(self,tempUrl,width,closeIssue,closeClear,closeCondition,complex){
+                var diaSize = angular.element(".ngdialog ").length;
+                if(complex != "true" && diaSize<1){
+                    open() ;
+                }else  if(complex == "true"){
+                    open() ;
+                }
+                function open(){
+                    var dialog = ngDialog.openConfirm({
+                        template: tempUrl,
+                        width:width,
+                        scope: self,
+                        closeByDocument: false,
+                        closeByEscape: true,
+                        showClose: true,
+                        backdrop: 'static',
+                        preCloseCallback: function (e) {    //关闭回掉
+                            if (e === 1) {
+                                if(closeIssue){
+                                    closeIssue()
+                                }
+                            } else {
+                                if(closeClear){
+                                    closeClear()
+                                }
+                            }
+                            if(closeCondition){
+                                closeCondition()
+                            }
+                        }
+                    });
                 }
             }
             //獲取纬度
@@ -126,47 +170,93 @@ knowledge_static_web.controller('ApplicationController',
                         return result;
                     },
                     onSelect: function(suggestion) {
+                        console.log(suggestion) ;
                         callback(suggestion) ;
-                        //$scope.$apply(function(){
-                        //    $scope.vm.botFullPath = {
-                        //        "className" : suggestion.value.split("/"),
-                        //        "classificationId" : suggestion.data,
-                        //        "classificationType" : suggestion.type
-                        //    } ;
-                        //    $scope.vm.knowledgeBotVal = suggestion.value;
-                        //})
                     }
                 });
             }
             //相关问搜索自动补全
-            function searchAppointAutoTag(el,url,callback,self){
-                //alert()
+            function searchAppointAutoTag(self,el,url,callback){
                 $(el).autocomplete({
-                    //source: "UnitDescAction?operation=SearchEst",
                     serviceUrl: url,
                     type:'POST',
-                    //extraParams: {title:$.trim($(el).val())} ,
-
                     params:{
                         "title":$(el).val(),
                     },
+                    autoSelectFirst : false ,
+                    minChars : 1 ,
+                    autoFill : false ,
                     paramName:'title',
-                    //delay : 300 ,
                     dataType:'json',
+                    zIndex : 99999 ,
                     transformResult:function(data){
-                        console.log(data) ;
-                        if(data.data){
-                           return data.data
-                        }
+
+                        var result = {
+                            suggestions : ["55555"]
+                        };
+                        //if(data.data){
+                        //    angular.forEach(data.data,function(item){
+                        //        result.suggestions.push(item)
+                        //    }) ;
+                        //}
+                        return result;
                     },
                     onSelect: function(suggestion) {
-                        if(self.vm.appointRelativeGroup.indexOf(suggestion)==-1){
-                            self.vm.appointRelativeGroup.push(suggestion)
-                        }
-                        self.vm.appointRelative = "";  //清楚title
-                        self.vm.appointRelativeList = [];  //清除 列表
+                        console.log(suggestion) ;
+                        //callback(suggestion) ;
                     }
                 });
+                //$(el).autocomplete({
+                //    //deferRequestBy:300 ,//keyUp之后发起请求的间隔时间. Default: 0.
+                //    serviceUrl: url,
+                //    type:'POST',
+                //    params:{
+                //        "title":$(el).val()
+                //    },
+                //    paramName:'title',
+                //    //delay : 300 ,
+                //    dataType:'json',
+                //    zIndex : 10000 ,
+                //    transformResult:function(data){
+                //        var result = {
+                //            suggestions : []
+                //        };
+                //        if(data.data){
+                //            angular.forEach(data.data,function(item){
+                //                result.suggestions.push({
+                //                    data:item,
+                //                    value:item,
+                //                    type : item
+                //                })
+                //            }) ;
+                //        }
+                //        return result;
+                //        //var result = {
+                //        //    suggestions : []
+                //        //};
+                //        //if(data.data){
+                //        //    //angular.forEach(data.data,function(item,index){
+                //        //        result.suggestions = data.data
+                //        //}
+                //        //return data.data;
+                //    },
+                //    onSelect: function(suggestion) {
+                //        console.log(suggestion) ;
+                //        suggestion = suggestion.value ;
+                //        callback(suggestion);
+                //        //console.log(self.vm.appointRelativeGroup) ;
+                //        //self.$apply(function(){
+                //        //    suggestion = suggestion.value ;
+                //        //    if(self.vm.appointRelativeGroup.indexOf(suggestion)==-1){
+                //        //        self.vm.appointRelativeGroup.push(suggestion)
+                //        //    }else{
+                //        //        layer.msg("重复添加相关问")
+                //        //    }
+                //        //    self.vm.appointRelative = "";  //清楚title
+                //        //    //self.vm.appointRelativeList = [];  //清除 列表
+                //        //})
+                //    }
+                //});
 
             }
             /**
