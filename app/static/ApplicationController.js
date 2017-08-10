@@ -176,36 +176,51 @@ knowledge_static_web.controller('ApplicationController',
                 });
             }
             //相关问搜索自动补全
-            function searchAppointAutoTag(self,el,url,callback){
-                $(el).autocomplete({
-                    serviceUrl: url,
-                    type:'POST',
-                    params:{
-                        "title":$(el).val(),
-                    },
-                    autoSelectFirst : false ,
-                    minChars : 1 ,
-                    autoFill : false ,
-                    paramName:'title',
-                    dataType:'json',
-                    zIndex : 99999 ,
-                    transformResult:function(data){
-
-                        var result = {
-                            suggestions : ["55555"]
-                        };
-                        //if(data.data){
-                        //    angular.forEach(data.data,function(item){
-                        //        result.suggestions.push(item)
-                        //    }) ;
-                        //}
-                        return result;
-                    },
-                    onSelect: function(suggestion) {
-                        console.log(suggestion) ;
-                        //callback(suggestion) ;
-                    }
-                });
+            /**
+             * @params ｛self｝  $scope
+             * @params ｛url｝
+             * @params ｛el｝
+             * @params ｛self｝  responseList
+             *
+             * */
+            function searchAppointAutoTag(self,el,url,responseList,callback){
+                $(el).on("input",function(){
+                   var title = $(el).val() ;
+                    httpRequestPost(url,{"title":title },function(data){
+                        self.$apply(function(){
+                            self.vm[responseList] = data.data
+                        })
+                    },function(){}) ;
+                }) ;
+                //$(el).autocomplete({
+                //    serviceUrl: url,
+                //    type:'POST',
+                //    params:{
+                //        "title":$(el).val(),
+                //    },
+                //    autoSelectFirst : false ,
+                //    minChars : 1 ,
+                //    autoFill : false ,
+                //    paramName:'title',
+                //    dataType:'json',
+                //    zIndex : 99999 ,
+                //    transformResult:function(data){
+                //
+                //        var result = {
+                //            suggestions : ["55555"]
+                //        };
+                //        //if(data.data){
+                //        //    angular.forEach(data.data,function(item){
+                //        //        result.suggestions.push(item)
+                //        //    }) ;
+                //        //}
+                //        return result;
+                //    },
+                //    onSelect: function(suggestion) {
+                //        console.log(suggestion) ;
+                //        //callback(suggestion) ;
+                //    }
+                //});
                 //$(el).autocomplete({
                 //    //deferRequestBy:300 ,//keyUp之后发起请求的间隔时间. Default: 0.
                 //    serviceUrl: url,

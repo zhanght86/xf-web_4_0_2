@@ -8,6 +8,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
       //console.log($stateParams)
         $scope.vm = {
             knowledgeId : "",
+            knowledgeOrigin : 120 , //知识来源
             frames: [],      //业务框架
             frameId: "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -69,7 +70,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
 
             appointRelative : "",
             appointRelativeList :[],
-            //addAppoint  : addAppoint,
+            addAppoint  : addAppoint,
             removeAppointRelative : removeAppointRelative ,
             //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
@@ -93,19 +94,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
             backupsOfExtension : "" //扩展问 编辑备份
         };
-        $scope.master.searchAppointAutoTag($scope,".ipt-txt","/api/ms/conceptKnowledge/getKnowledgeTitle",function(suggestion){
-            console.log(suggestion) ;
-            //$scope.$apply(function(){
-            //    if($scope.vm.appointRelativeGroup.indexOf(suggestion)==-1){
-            //        $scope.vm.appointRelativeGroup.push(suggestion)
-            //    }else{
-            //        layer.msg("重复添加相关问")
-            //    }
-            //    $scope.vm.appointRelative = "";  //清楚title
-            //})
-        })
-
-
         //獲取渠道
         $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //获取维度
@@ -124,6 +112,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
             // 时间
             if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
                 $scope.vm.isTimeTable = true
@@ -154,16 +143,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
+            $scope.vm.knowledgeOrigin = 122 ;
             $timeout(function(){$scope.vm.openContentConfirm(saveAddNew);},0)
-
         }
 
         if($stateParams.knowledgeTitle){
             console.log("======"+$stateParams.knowledgeTitle);
             $scope.vm.title=$stateParams.knowledgeTitle;
         }
-
-
 // 通过类目id 获取框架
         function getFrame(id){
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
@@ -475,7 +462,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     setDialog()
                 }) ;
                 $timeout(function(){
-                    $scope.master.searchAppointAutoTag($scope,".appoint","/api/ms/conceptKnowledge/getKnowledgeTitle",function(suggestion){
+                    $scope.master.searchAppointAutoTag($scope,".appoint","/api/ms/conceptKnowledge/getKnowledgeTitle","appointRelativeList",function(suggestion){
                         console.log(suggestion) ;
                            //$scope.$apply(function(){
                            //    if($scope.vm.appointRelativeGroup.indexOf(suggestion)==-1){
@@ -568,12 +555,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 "userId" : USER_ID ,
                 "sceneId" :SCENE_ID ,
                 "knowledgeTitle": $scope.vm.title,//
-                 "knowledgeType": 101,
+                "knowledgeType": 101,
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:"",  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:"",     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
-                "knowledgeCreator": USER_LOGIN_NAME  //操作人
+                "knowledgeCreator": USER_LOGIN_NAME , //操作人
+                "knowledgeOrigin"  : $scope.vm.knowledgeOrigin , //知识来源
             };
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
@@ -814,14 +802,14 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //*************************************************************************
 
-        //function addAppoint(item,arr){
-        //    if(arr.indexOf(item)==-1){
-        //        arr.push(item)
-        //    }
-        //    $scope.vm.appointRelative = "";  //清楚title
-        //    $scope.vm.appointRelativeList = [];  //清除 列表
-        //
-        //}
+        function addAppoint(item,arr){
+            if(arr.indexOf(item)==-1){
+                arr.push(item)
+            }
+            $scope.vm.appointRelative = "";  //清楚title
+            $scope.vm.appointRelativeList = [];  //清除 列表
+
+        }
         // 動態加載 title
         //$scope.$watch("vm.appointRelative",function(title){
         //    //console.log(title);

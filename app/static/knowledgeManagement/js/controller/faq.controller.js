@@ -9,6 +9,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         console.log($stateParams);
         $scope.vm = {
             knowledgeId : "" ,
+            knowledgeOrigin : 120 , //知识来源
             frames : [],      //业务框架
             frameId : "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -135,6 +136,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
 
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
             //内容
@@ -158,6 +160,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
             $scope.vm.title = $scope.vm.docmentation.documentationTitle;
             $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
+            $scope.vm.knowledgeOrigin = 122 ;
             $timeout(function(){$scope.vm.openContentConfirm(saveAddNew);},0) ;
              //知识内容弹出框
         }
@@ -460,7 +463,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 //"knowledgeCreator": $scope.vm.userId, //创建人
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
                 "knowledgeCreator": USER_LOGIN_NAME, //操作人
-                "knowledgeType": 100  //知识类型
+                "knowledgeType": 100  ,//知识类型
+                "knowledgeOrigin" : $scope.vm.knowledgeOrigin
             };
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ;

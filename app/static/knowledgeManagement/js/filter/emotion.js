@@ -4,9 +4,9 @@
  */
 angular.module('knowledge_static_web').filter('emotion', function () {
     return function (str) {
-            str = str.replace(/\</g,'&lt;');
-
-            str = str.replace(/\>/g,'&gt;');
+            //str = str.replace(/\</g,'&lt;');
+            //
+            //str = str.replace(/\>/g,'&gt;');
 
             str = str.replace(/\n/g,'<br/>');
 
