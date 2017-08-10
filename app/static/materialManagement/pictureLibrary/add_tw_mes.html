@@ -16,12 +16,12 @@
             </div>
             <div class="R tw_mes_r">
                 <div class="tit mt20 mb20">
-                    <input type="text" placeholder="请必须输入标题" class="input_text mr20 f16" />
-                    <span class="remainWords1">0/64</span>
+                    <input type="text" placeholder="请必须输入标题" ng-model="vm.title" maxlength="60" class="input_text mr20 f16" />
+                    <span ><span>{{vm.title.length}}</span>/60</span>
                 </div>
                 <div class="author mt20 mb20">
-                    <input type="text" placeholder="请输入作者" class="input_text mr20 " />
-                    <span class="remainWords1">0/8</span>
+                    <input type="text" placeholder="请输入作者" ng-model="vm.author" maxlength="8" class="input_text mr20 " />
+                    <span ><span>{{vm.author.length}}</span>/8</span>
                 </div>
                 <div class="mt20 mb20" >
                     <!--加载编辑器的容器-->
