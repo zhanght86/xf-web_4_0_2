@@ -520,8 +520,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             } ;
             if(!$scope.vm.extensionTitle && !source){
                 layer.msg("扩展问不能为空")
-            }else if(title == $scope.vm.title && !source){
-                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!chackTitleAndextEnsionQuestion($scope.vm.title,$scope.vm.extensionTitle)){
                 layer.msg("扩展问和标题重复请重新输入扩展问") ;
                 return ;

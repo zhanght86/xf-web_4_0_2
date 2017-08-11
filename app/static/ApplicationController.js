@@ -4,9 +4,9 @@
  * info  控制器嵌套
  */
 knowledge_static_web.controller('ApplicationController',
-    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout","ngDialog" ,
+    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout","ngDialog" ,"$interval" ,
         '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer","$cookieStore",
-        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,ngDialog ,
+        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,ngDialog ,$interval ,
                   $state , localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
 /***************************************************************  MASTER   **************************************************************************************/
                /**
@@ -22,6 +22,8 @@ knowledge_static_web.controller('ApplicationController',
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
                     openNgDialog : openNgDialog ,  //打开弹框
+                    setNgTimeOut : setNgTimeOut ,  //延时器
+                    setNgInterval : setNgInterval ,//定时器
                 //method for Downstream
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
@@ -45,6 +47,12 @@ knowledge_static_web.controller('ApplicationController',
                 if(callBack){
                     callBack()
                 }
+            }
+            function setNgTimeOut(callBack,time){
+                $timeout(callBack,time)
+            }
+            function setNgInterval(callBack,time){
+                $interval(callBack,time)
             }
             /**
              * 打开弹框
@@ -184,14 +192,38 @@ knowledge_static_web.controller('ApplicationController',
              *
              * */
             function searchAppointAutoTag(self,el,url,responseList,callback){
-                $(el).on("input",function(){
-                   var title = $(el).val() ;
-                    httpRequestPost(url,{"title":title },function(data){
-                        self.$apply(function(){
-                            self.vm[responseList] = data.data
-                        })
-                    },function(){}) ;
-                }) ;
+                return {
+                    listener : listener ,
+                    blur : blur ,
+                    onSelect : onSelect ,
+                    remove : remove
+                } ;
+                function listener(){
+                    $(el).on("input",function(){
+                        var title = $(el).val() ;
+                        httpRequestPost(url,{"title":title },function(data){
+                            console.log(1);
+                            self.$apply(function(){
+                                self.vm[responseList] = data.data
+                            })
+                        },function(){}) ;
+                    }) ;
+                } ;
+               function blur(){
+                   $timeout(function(){
+                       console.log(2) ;
+                       self.$apply(function(){
+                           self.vm[responseList] = [] ;
+                       })
+                   },200)
+               } ;
+                function onSelect(){
+
+                }  ;
+                function remove(){
+
+                }
+
                 //$(el).autocomplete({
                 //    serviceUrl: url,
                 //    type:'POST',
