@@ -39,7 +39,8 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
             polar:0,
             batchUpload:batchUpload,
             exportAll:exportAll,
-            batchDelete:batchDelete
+            batchDelete:batchDelete,
+            downloadTemplate:downloadTemplate
         };
 
         /**
@@ -364,6 +365,9 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
                     initUpload('/api/ms/modeling/concept/poc/sentiment/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
                 }, 100);
             }
+        }
+        function downloadTemplate(){
+            downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","sentiment_concept_template.xlsx");
         }
         //全选
         $("#selectAll").on("click",function(){
