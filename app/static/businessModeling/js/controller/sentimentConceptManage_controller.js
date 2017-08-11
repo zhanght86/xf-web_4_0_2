@@ -145,6 +145,10 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
                 request.sentimentConceptKey=$scope.vm.percent+value+$scope.vm.percent;
             }else if($("#searchType").val()=="sentimentConceptClassify"){
                 request.sentimentConceptClassify=$("#sentimentConceptClassify").val();
+            }else if($("#searchType").val()=="sentimentConceptStrength"){
+                request.sentimentConceptStrength=value;
+            }else if($("#searchType").val()=="sentimentConceptPolar"){
+                request.sentimentConceptPolar=value;
             }
             return request;
         }
