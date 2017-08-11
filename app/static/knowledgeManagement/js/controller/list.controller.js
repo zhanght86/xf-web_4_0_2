@@ -8,6 +8,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
               knowledgeAddServer,$window,$stateParams,$interval,$filter,$animate) {
         $scope.vm = {
             knowledgeId : "" ,
+            knowledgeOrigin :120 ,
             frames : [],      //业务框架
             frameId : "",
             botRoot : "",      //根节点
@@ -115,6 +116,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
             //内容
@@ -435,8 +437,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:"",     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
-                "knowledgeCreator": USER_LOGIN_NAME  //操作人
-            };
+                "knowledgeCreator": USER_LOGIN_NAME , //操作人
+                "knowledgeOrigin" : $scope.vm.knowledgeOrigin
+           };
             var obj = {};
             obj.knowledgeContent = $scope.vm.newTitle;
             obj.knowledgeContentNegative = $scope.vm.knowledgeContentNegative;

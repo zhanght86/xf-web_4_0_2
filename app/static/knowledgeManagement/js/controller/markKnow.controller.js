@@ -6,6 +6,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
         $scope.vm = {
             knowledgeId : "",
+            knowledgeOrigin : 120 ,
             frames: [],      //业务框架
             frameId: "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -103,6 +104,12 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 //*******************2017/8/3  BEGIN   删除扩展问本地备份 *******************//
             rmExtensionBackup : [] ,
 //*******************2017/8/3  END   删除扩展问本地备份   *******************//
+
+//*******************2017/8/9  添加链接 BEGIN *******************//
+            addLint : addLint ,
+            isNewLinkAble : isNewLinkAble ,
+            newLint : "" ,
+//*******************2017/8/9  添加链接  END *******************//
             //引到页
             showTip : showTip,
             hideTip : hideTip,
@@ -130,6 +137,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
+
             // 时间
             if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
                 $scope.vm.isTimeTable = true
@@ -557,7 +566,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:"",     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
-                "knowledgeCreator": USER_LOGIN_NAME  //操作人
+                "knowledgeCreator": USER_LOGIN_NAME , //操作人
+                "knowledgeOrigin" : $scope.vm.knowledgeOrigin
             };
 
             //var knowledgeContent ;
@@ -923,6 +933,38 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             } ;
             return isPass
         }
+
+        //*******************2017/8/9  添加链接 BEGIN *******************//
+        function addLint(){
+            var addLink = ngDialog.openConfirm({
+                template:"/static/knowledgeManagement/markKnow/addLink.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    console.log(e)
+                    if(e === 1){
+                        var aLink = "<a href='"+$scope.vm.newLink+"' target='_blank'>"+$scope.vm.newLink+"</a>" ;
+                        var html = $("#emotion-container").html() + aLink ;
+
+                        $("#emotion-container").html(html)
+                        console.log($scope.vm.newLink)
+                    }
+                    $scope.vm.newLink = ""
+                }
+            })
+        }
+        function isNewLinkAble(val){
+            var regex =/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/i
+            if(regex.test(val)){
+                ngDialog.close(ngDialog.latestID,1) ;
+            }else{
+                layer.msg("请输入正确的链接地址")
+            }
+        }
+//*******************2017/8/9  添加链接  END *******************//
 //*******************       2017/7/14      END *******************//
         function addAppoint(item,arr){
             if(arr.indexOf(item)==-1){

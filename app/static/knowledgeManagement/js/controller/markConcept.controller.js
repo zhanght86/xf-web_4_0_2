@@ -6,6 +6,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$interval,$stateParams,$filter) {
         $scope.vm = {
             knowledgeId: "",
+            knowledgeOrigin : 120 ,
             frames: [],      //业务框架
             frameId: "",
             knowledgeAdd : knowledgeAdd ,
@@ -111,6 +112,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
+            $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
             // 时间
             if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
                 $scope.vm.isTimeTable = true
@@ -820,7 +822,8 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
                 "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
-                "knowledgeCreator": USER_LOGIN_NAME  //操作人
+                "knowledgeCreator": USER_LOGIN_NAME , //操作人
+                "knowledgeOrigin" : $scope.vm.knowledgeOrigin
             };
             params.knowledgeContents =  $scope.vm.scanContent;
             params.extensionQuestions =  $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
