@@ -290,6 +290,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 return false
             }else{
                 httpRequestPost("/api/ms/faqKnowledge/checkExtensionQuestion",{
+                    "applicationId": APPLICATION_ID,
                     title : title
                 },function(data){
                     if(data.status == 500){
