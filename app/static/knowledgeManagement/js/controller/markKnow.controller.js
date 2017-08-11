@@ -401,7 +401,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                 "url" : data.knowledgeContent
                             };
                             break ;
-                        case  "112 ":
+                        case  "112":
                             $scope.vm.voiceSelected = {
                                 "name" : data.knowledgeContent
                             };
@@ -606,7 +606,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         console.log(getParams());
                         if (data.status == 200) {
                             //if ($scope.vm.docmentation) {
-                            //    $scope.vm.knowledgeClassifyCall();
+                            //    $scope.vm.knowledgeClassifyCall();knowledgeAdd
                             //}else{
                                 $state.go('knowledgeManagement.custOverview');
                             //}
