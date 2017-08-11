@@ -34,7 +34,8 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                 httpRequestPost(api,{
                     "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
                     "applicationId": APPLICATION_ID ,
-                    "chatKnowledgeModifier": params.chatKnowledgeModifier,
+                     "userId"  : USER_ID ,
+                    //"chatKnowledgeModifier": params.chatKnowledgeModifier,
                     "chatKnowledgeTopic": params.standardQuestion,
                     "chatQuestionList" : params.extendedQuestionArr,
                     "chatKnowledgeContentList" : params.contentArr

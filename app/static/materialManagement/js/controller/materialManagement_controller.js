@@ -161,7 +161,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 extendedQuestionArr :data.chatQuestionList,
                 contentArr : data.chatKnowledgeContentList,
                 applicationId: APPLICATION_ID,
-                chatKnowledgeModifier : data.chatKnowledgeModifier,
+                //chatKnowledgeModifier : data.chatKnowledgeModifier,
                 chatKnowledgeId : data.chatKnowledgeId,
                 chatKnowledgeSource:data.chatKnowledgeSource,   //类型 101  概念      100 faq
                 editUrl : data.chatKnowledgeSource==100?"materialManagement.faqChat":"materialManagement.conceptChat",

@@ -777,7 +777,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.editUrl = "knowledgeManagement.factorAdd";
                 obj.knowledgeType = 103 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/ms/elementKnowledgeAdd/addElementKnowledge" ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "/api/ms/elementKnowledgeAdd/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api =  "/api/ms/elementKnowledgeAdd/addElementKnowledge"
+                }
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');

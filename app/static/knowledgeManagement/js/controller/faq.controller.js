@@ -538,6 +538,14 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.params = params;
                 obj.editUrl = "knowledgeManagement.faqAdd";
                 obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "/api/ms/faqKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api = "/api/ms/faqKnowledge/addFAQKnowledge"
+                }
                 obj.knowledgeType = 101 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
                 $window.knowledgeScan = obj;
