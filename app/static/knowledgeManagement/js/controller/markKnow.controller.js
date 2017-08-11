@@ -206,7 +206,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 // 在未生成扩展问情況
                 getExtensionByFrame(val);
                 //}
-
             }
         });
 
@@ -312,8 +311,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             } ;
             if(!title){
                 layer.msg("扩展问不能为空")
-            }else if(title == $scope.vm.title && !source){
-                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtensionByTitle(obj)){
                 layer.msg("生成扩展问重复,已阻止添加");
                 return false
@@ -404,7 +401,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                 "url" : data.knowledgeContent
                             };
                             break ;
-                        case  "112 ":
+                        case  "112":
                             $scope.vm.voiceSelected = {
                                 "name" : data.knowledgeContent
                             };
@@ -609,7 +606,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         console.log(getParams());
                         if (data.status == 200) {
                             //if ($scope.vm.docmentation) {
-                            //    $scope.vm.knowledgeClassifyCall();
+                            //    $scope.vm.knowledgeClassifyCall();knowledgeAdd
                             //}else{
                                 $state.go('knowledgeManagement.custOverview');
                             //}

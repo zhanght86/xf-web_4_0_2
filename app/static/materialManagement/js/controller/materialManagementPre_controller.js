@@ -15,6 +15,7 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
         };
         function save(){
             var params = $scope.vm.scanData ;
+            console.log(params) ;
             //if(check(params)){
                 var api ;
                 switch(params.type){
@@ -25,10 +26,16 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                         api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
                         break ;
                 }
+                if(params.type == 101){
+                    api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
+                }else if(params.type == 100){
+                    api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
+                }
                 httpRequestPost(api,{
                     "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
                     "applicationId": APPLICATION_ID ,
-                    "chatKnowledgeModifier": params.chatKnowledgeModifier,
+                     "userId"  : USER_ID ,
+                    //"chatKnowledgeModifier": params.chatKnowledgeModifier,
                     "chatKnowledgeTopic": params.standardQuestion,
                     "chatQuestionList" : params.extendedQuestionArr,
                     "chatKnowledgeContentList" : params.contentArr

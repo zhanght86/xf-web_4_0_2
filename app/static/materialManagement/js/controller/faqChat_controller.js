@@ -83,7 +83,7 @@ angular.module('materialManagement').controller('faqChatController', [
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
                 layer.msg("扩展不能为空",{time:1000});
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
-                layer.msg("扩展问题重复，请重新输入",{time:1000});
+                layer.msg("扩展问题重复，请重新输入");
             }else{
                 httpRequestPost("/api/ms/chatKnowledge/checkChatKnowledgeContent",{
                     "chatKnowledgeContent" : $scope.vm.contentVal
@@ -96,7 +96,7 @@ angular.module('materialManagement').controller('faqChatController', [
                         $scope.vm.contentVal = "";
                         $scope.$apply();
                     }else{
-                        layer.msg("扩展问重复",{time:1000})
+                        layer.msg("扩展问重复")
                     }
                 },function(err){
                     console.log(err)

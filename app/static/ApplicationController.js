@@ -4,9 +4,9 @@
  * info  控制器嵌套
  */
 knowledge_static_web.controller('ApplicationController',
-    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout","ngDialog" ,
+    ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout","ngDialog" ,"$interval" ,
         '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer","$cookieStore",
-        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,ngDialog ,
+        function ($scope, $location, $anchorScroll, AuthService, TipService,AUTH_EVENTS,$timeout ,ngDialog ,$interval ,
                   $state , localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
 /***************************************************************  MASTER   **************************************************************************************/
                /**
@@ -22,6 +22,8 @@ knowledge_static_web.controller('ApplicationController',
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
                     openNgDialog : openNgDialog ,  //打开弹框
+                    setNgTimeOut : setNgTimeOut ,  //延时器
+                    setNgInterval : setNgInterval ,//定时器
                 //method for Downstream
                     getDimensions : getDimensions ,
                     getChannels : getChannels ,
@@ -45,6 +47,12 @@ knowledge_static_web.controller('ApplicationController',
                 if(callBack){
                     callBack()
                 }
+            }
+            function setNgTimeOut(callBack,time){
+                $timeout(callBack,time)
+            }
+            function setNgInterval(callBack,time){
+                $interval(callBack,time)
             }
             /**
              * 打开弹框
@@ -181,98 +189,44 @@ knowledge_static_web.controller('ApplicationController',
              * @params ｛url｝
              * @params ｛el｝
              * @params ｛self｝  responseList
-             *
+             *  defs :  {listener}{blur}{select}{remove}    监听输入 -  失去焦点隐藏 - 选择添加 - 删除所选项
              * */
             function searchAppointAutoTag(self,el,url,responseList,callback){
-                $(el).on("input",function(){
-                   var title = $(el).val() ;
-                    httpRequestPost(url,{"title":title },function(data){
-                        self.$apply(function(){
-                            self.vm[responseList] = data.data
-                        })
-                    },function(){}) ;
-                }) ;
-                //$(el).autocomplete({
-                //    serviceUrl: url,
-                //    type:'POST',
-                //    params:{
-                //        "title":$(el).val(),
-                //    },
-                //    autoSelectFirst : false ,
-                //    minChars : 1 ,
-                //    autoFill : false ,
-                //    paramName:'title',
-                //    dataType:'json',
-                //    zIndex : 99999 ,
-                //    transformResult:function(data){
-                //
-                //        var result = {
-                //            suggestions : ["55555"]
-                //        };
-                //        //if(data.data){
-                //        //    angular.forEach(data.data,function(item){
-                //        //        result.suggestions.push(item)
-                //        //    }) ;
-                //        //}
-                //        return result;
-                //    },
-                //    onSelect: function(suggestion) {
-                //        console.log(suggestion) ;
-                //        //callback(suggestion) ;
-                //    }
-                //});
-                //$(el).autocomplete({
-                //    //deferRequestBy:300 ,//keyUp之后发起请求的间隔时间. Default: 0.
-                //    serviceUrl: url,
-                //    type:'POST',
-                //    params:{
-                //        "title":$(el).val()
-                //    },
-                //    paramName:'title',
-                //    //delay : 300 ,
-                //    dataType:'json',
-                //    zIndex : 10000 ,
-                //    transformResult:function(data){
-                //        var result = {
-                //            suggestions : []
-                //        };
-                //        if(data.data){
-                //            angular.forEach(data.data,function(item){
-                //                result.suggestions.push({
-                //                    data:item,
-                //                    value:item,
-                //                    type : item
-                //                })
-                //            }) ;
-                //        }
-                //        return result;
-                //        //var result = {
-                //        //    suggestions : []
-                //        //};
-                //        //if(data.data){
-                //        //    //angular.forEach(data.data,function(item,index){
-                //        //        result.suggestions = data.data
-                //        //}
-                //        //return data.data;
-                //    },
-                //    onSelect: function(suggestion) {
-                //        console.log(suggestion) ;
-                //        suggestion = suggestion.value ;
-                //        callback(suggestion);
-                //        //console.log(self.vm.appointRelativeGroup) ;
-                //        //self.$apply(function(){
-                //        //    suggestion = suggestion.value ;
-                //        //    if(self.vm.appointRelativeGroup.indexOf(suggestion)==-1){
-                //        //        self.vm.appointRelativeGroup.push(suggestion)
-                //        //    }else{
-                //        //        layer.msg("重复添加相关问")
-                //        //    }
-                //        //    self.vm.appointRelative = "";  //清楚title
-                //        //    //self.vm.appointRelativeList = [];  //清除 列表
-                //        //})
-                //    }
-                //});
-
+                return {
+                    listener : listener ,
+                    blur : blur ,
+                    select : select ,
+                    remove : remove
+                } ;
+                function listener(){
+                    $(el).on("input",function(){
+                        var title = $(el).val() ;
+                        httpRequestPost(url,{"title":title },function(data){
+                            self.$apply(function(){
+                                self.vm[responseList] = data.data
+                            })
+                        },function(){}) ;
+                    }) ;
+                }
+               function blur(){
+                   $timeout(function(){
+                       self.$apply(function(){
+                           self.vm[responseList] = [] ;
+                       })
+                   },200)
+               }
+                function select(item,arr){
+                        if(arr.indexOf(item)==-1){
+                            arr.push(item)
+                        }else{
+                            layer.msg("相关问添加重复")
+                        }
+                        //self.appointRelative = "";  //清楚title
+                        //$scope.vm.appointRelativeList = [];  //清除 列表
+                }
+                function remove(item){
+                   self.vm.appointRelativeGroup.remove(item);
+                }
             }
             /**
              * 检测扩展问标签是否重复

@@ -47,10 +47,10 @@
             <div>
                 <div class="mb-10" style="position: relative;padding-left:100px;">
                     <span class="pa" style="left:0;top:0;">指定相关知识:</span>
-                    <input type="text" class="appoint input-text extended_query_txt"  placeholder="" style="width:279px;">
+                    <input type="text" class="appoint input-text extended_query_txt"  ng-blur='master.searchAppointAutoTag(this,"","","appointRelativeList").blur()' placeholder="" style="width:279px;">
                     <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position:static;">
                         <li ng-repeat="item in vm.appointRelativeList track by $index"
-                            ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
+                            ng-click="master.searchAppointAutoTag().select(item,vm.appointRelativeGroup)">{{item}}</li>
                     </ul>
                 </div>
                 <!-- -->
@@ -59,7 +59,7 @@
                     <ul>
                         <li ng-repeat="item in vm.appointRelativeGroup track by $index">
                             <span class="mr-30">{{$index+1}}、{{item}}  </span>
-                            <a  ng-click="vm.removeAppointRelative(item)"><img src="../../../images/images/delete_img.png" alt=""></a>
+                            <a  ng-click="master.searchAppointAutoTag(this).remove(item)"><img src="../../../images/images/delete_img.png" alt=""></a>
                         </li>
                     </ul>
                 </div>

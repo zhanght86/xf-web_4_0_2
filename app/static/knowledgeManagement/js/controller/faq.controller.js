@@ -285,13 +285,12 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
              } ;
             if(!title){
                 layer.msg("扩展问不能为空")
-            }else if(title == $scope.vm.title){
-                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtension(obj ,  $scope.vm.extensions)){
                 layer.msg('根据"'+title+'"生成扩展问重复,已阻止添加');
                 return false
             }else{
                 httpRequestPost("/api/ms/faqKnowledge/checkExtensionQuestion",{
+                    "applicationId": APPLICATION_ID,
                     title : title
                 },function(data){
                     if(data.status == 500){
@@ -539,6 +538,14 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.params = params;
                 obj.editUrl = "knowledgeManagement.faqAdd";
                 obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "/api/ms/faqKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api = "/api/ms/faqKnowledge/addFAQKnowledge"
+                }
                 obj.knowledgeType = 101 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
                 $window.knowledgeScan = obj;

@@ -282,8 +282,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             } ;
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
-            }else if(title == $scope.vm.title && !source){
-                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtensionByTitle(obj)){
                 layer.msg("生成扩展问重复,已阻止添加");
                 return false
@@ -513,7 +511,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 obj.params = params;
                 obj.knowledgeType = 102 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/ms/listKnowledge/editKnowledge" ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "/api/ms/listKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api = "/api/ms/listKnowledge/editKnowledge" ;
+                }
                 obj.editUrl = "knowledgeManagement.listAdd";
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
