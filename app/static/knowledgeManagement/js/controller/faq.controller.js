@@ -285,8 +285,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
              } ;
             if(!title){
                 layer.msg("扩展问不能为空")
-            }else if(title == $scope.vm.title){
-                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtension(obj ,  $scope.vm.extensions)){
                 layer.msg('根据"'+title+'"生成扩展问重复,已阻止添加');
                 return false

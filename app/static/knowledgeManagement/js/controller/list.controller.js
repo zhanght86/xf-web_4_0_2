@@ -282,8 +282,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             } ;
             if(!$scope.vm.extensionTitle){
                 layer.msg("扩展问不能为空")
-            }else if(title == $scope.vm.title && !source){
-                return layer.msg("扩展问题不能与标题相同,请返回修改") ;
             }else if(!checkExtensionByTitle(obj)){
                 layer.msg("生成扩展问重复,已阻止添加");
                 return false
