@@ -88,6 +88,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                         $scope.vm.delArr = [] ;
                         $scope.vm.listData = data.data.objs;
                         $scope.vm.paginationConf = {
+
                             currentPage: index,//当前页
                             totalItems: data.data.total, //总条数
                             pageSize: $scope.vm.pageSize,//第页条目数
@@ -109,21 +110,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "&chatQuestionContent="+$scope.vm.chatQuestionContent;
             var url = "/api/ms/chatKnowledge/exportExcel"+urlParams  ;//请求的url
             $window.open(url,"_blank") ;
-
-           /* httpRequestPost("/api/ms/chatKnowledge/exportExcel",{
-                "applicationId": APPLICATION_ID,
-                "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
-                "chatKnowledgeModifier": $scope.vm.searchHeighFlag?$scope.vm.chatKnowledgeModifier:null,
-                "modifyTimeType":  $scope.vm.searchHeighFlag?$scope.vm.modifyTimeType:null,
-                "chatQuestionContent": $scope.vm.searchHeighFlag?$scope.vm.chatQuestionContent:null,
-            },function(data){
-                if(data.status==500){
-                    layer.msg("导出失败")
-                }else{
-                    window.open("/api/ms/chatKnowledge/downloadExcel?fileName="+ data.data,"_blank");
-                }
-            },function(err){})*/
-
         }
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
