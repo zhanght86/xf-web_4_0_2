@@ -170,6 +170,12 @@ angular.module('homePage').controller('homePageNavController', [
                     return '问法测试';
                 case 'functionalTest.sessionTest':
                     return '会话测试';
+                case 'functionalTest.batchTest':
+                    return '批量测试';
+                case 'functionalTest.participle':
+                    return '分词应用';
+                case 'functionalTest.participleResult':
+                    return '分词测试结果';
                 case 'knowledgeManagement.custOverview':
                     return '知识总览';
                 case 'knowledgeManagement.markOverview':
