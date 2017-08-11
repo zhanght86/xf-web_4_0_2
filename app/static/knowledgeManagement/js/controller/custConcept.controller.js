@@ -470,7 +470,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                            //    }
                            //    $scope.vm.appointRelative = "";  //清楚title
                            //})
-                       })
+                       }).listener()
                 },2000) ;
             }
         }

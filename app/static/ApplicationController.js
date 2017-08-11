@@ -192,14 +192,38 @@ knowledge_static_web.controller('ApplicationController',
              *
              * */
             function searchAppointAutoTag(self,el,url,responseList,callback){
-                $(el).on("input",function(){
-                   var title = $(el).val() ;
-                    httpRequestPost(url,{"title":title },function(data){
-                        self.$apply(function(){
-                            self.vm[responseList] = data.data
-                        })
-                    },function(){}) ;
-                }) ;
+                return {
+                    listener : listener ,
+                    blur : blur ,
+                    onSelect : onSelect ,
+                    remove : remove
+                } ;
+                function listener(){
+                    $(el).on("input",function(){
+                        var title = $(el).val() ;
+                        httpRequestPost(url,{"title":title },function(data){
+                            console.log(1);
+                            self.$apply(function(){
+                                self.vm[responseList] = data.data
+                            })
+                        },function(){}) ;
+                    }) ;
+                } ;
+               function blur(){
+                   $timeout(function(){
+                       console.log(2) ;
+                       self.$apply(function(){
+                           self.vm[responseList] = [] ;
+                       })
+                   },200)
+               } ;
+                function onSelect(){
+
+                }  ;
+                function remove(){
+
+                }
+
                 //$(el).autocomplete({
                 //    serviceUrl: url,
                 //    type:'POST',
