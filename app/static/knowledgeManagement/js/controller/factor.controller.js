@@ -830,9 +830,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标");
-                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false;
