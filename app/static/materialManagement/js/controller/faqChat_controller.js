@@ -118,7 +118,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     contentArr : $scope.vm.contentArr,
                     chatKnowledgeModifier : $scope.vm.userName,
                     //editUrl : "materialManagement.faqChat",
-                    type : 0
+                    chatKnowledgeSource : 100
                 };
                 $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
             }

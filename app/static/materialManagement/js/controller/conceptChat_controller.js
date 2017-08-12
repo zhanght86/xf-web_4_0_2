@@ -151,7 +151,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                 contentArr : $scope.vm.contentArr,
                 chatKnowledgeModifier : $scope.vm.userName,
                 //editUrl : "materialManagement.conceptChat",
-                type : 1
+                chatKnowledgeSource : 101
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
         }
