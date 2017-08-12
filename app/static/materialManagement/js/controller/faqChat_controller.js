@@ -102,7 +102,6 @@ angular.module('materialManagement').controller('faqChatController', [
                     console.log(err)
                 })
             }
-
         }
        //刪除
         function remove(item,arr){
@@ -118,7 +117,7 @@ angular.module('materialManagement').controller('faqChatController', [
                     contentArr : $scope.vm.contentArr,
                     chatKnowledgeModifier : $scope.vm.userName,
                     //editUrl : "materialManagement.faqChat",
-                    chatKnowledgeSource : 100
+                    chatKnowledgeSource : "100"
                 };
                 $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
             }

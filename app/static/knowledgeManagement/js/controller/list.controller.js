@@ -517,7 +517,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
-                    obj.api = "/api/ms/listKnowledge/editKnowledge" ;
+                    obj.api = "/api/ms/listKnowledge/addKnowledge" ;
                 }
                 obj.editUrl = "knowledgeManagement.listAdd";
                 $window.knowledgeScan = obj;

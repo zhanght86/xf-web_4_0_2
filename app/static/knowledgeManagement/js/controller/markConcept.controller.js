@@ -887,7 +887,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 obj.editUrl = "knowledgeManagement.ConceptAdd";
                 if($scope.vm.knowledgeId){
                     //编辑
-                    obj.api = "marketingKnowledge/editKnowledge" ;
+                    obj.api = "marketingKnowledge/editMarketingKnowledge" ;
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增

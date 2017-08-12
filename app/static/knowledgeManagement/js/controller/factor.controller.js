@@ -779,7 +779,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.knowledgeId = $scope.vm.knowledgeId ;
                 if($scope.vm.knowledgeId){
                     //编辑
-                    obj.api = "/api/ms/elementKnowledgeAdd/editKnowledge" ;
+                    obj.api = "/api/ms/elementKnowledgeAdd/editElementKnowledge" ;
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
