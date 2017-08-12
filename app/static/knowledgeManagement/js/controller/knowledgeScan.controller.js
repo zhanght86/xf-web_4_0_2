@@ -16,6 +16,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             save :save,
             tableData : knowledgeScan.knowledgeType==103?JSON.parse(knowledgeScan.params.knowledgeContents[0].knowledgeContent):""
         };
+        console.log(knowledgeScan) ;
         /**
          * 展示渠道维度使用
          * */

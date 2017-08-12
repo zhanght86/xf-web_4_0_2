@@ -873,8 +873,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         });
                     }
                 }
-
-
         }
         function scan(){
             if(!checkSave()){
