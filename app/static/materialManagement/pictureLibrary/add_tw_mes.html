@@ -25,7 +25,8 @@
                 </div>
                 <div class="mt20 mb20" >
                     <!--加载编辑器的容器-->
-                    <script id="container" name="content" type="text/plain" style="width:95%;background:none;border:0;margin:0;min-height: 300px;">这里写你的初始化内容</script>
+                    <!--<script id="container" name="content" type="text/plain" style="width:95%;background:none;border:0;margin:0;min-height: 300px;">这里写你的初始化内容</script>-->
+                    <div class="ueditor" config="vm.config" ng-model="vm.content"></div>
                 </div>
                 <div class="pb20 mb20" style="border-bottom:1px solid #e3e3e3;">
                     <input type="checkbox" />
@@ -52,10 +53,7 @@
         </div>
     </div>
 </div>
-
-
-
-<!-- 实例化编辑器 -->
-<script type="text/javascript">
-    var ue = UE.getEditor('container');
-</script>
+<!--&lt;!&ndash; 实例化编辑器 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+    <!--var ue = UE.getEditor('container');-->
+<!--</script>-->
