@@ -540,7 +540,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
                 if($scope.vm.knowledgeId){
                     //编辑
-                    obj.api = "/api/ms/faqKnowledge/editKnowledge" ;
+                    obj.api = "/api/ms/faqKnowledge/editFAQKnowledge" ;
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增

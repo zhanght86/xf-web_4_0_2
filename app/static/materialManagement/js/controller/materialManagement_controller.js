@@ -165,7 +165,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 chatKnowledgeId : data.chatKnowledgeId,
                 chatKnowledgeSource:data.chatKnowledgeSource,   //类型 101  概念      100 faq
                 editUrl : data.chatKnowledgeSource==100?"materialManagement.faqChat":"materialManagement.conceptChat",
-                type : data.chatKnowledgeSource
+                //type : data.chatKnowledgeSource
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
         }

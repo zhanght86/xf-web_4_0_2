@@ -873,8 +873,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                         });
                     }
                 }
-
-
         }
         function scan(){
             if(!checkSave()){
@@ -887,7 +885,7 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
                 obj.editUrl = "knowledgeManagement.ConceptAdd";
                 if($scope.vm.knowledgeId){
                     //编辑
-                    obj.api = "marketingKnowledge/editKnowledge" ;
+                    obj.api = "marketingKnowledge/editMarketingKnowledge" ;
                     params.knowledgeId = $scope.vm.knowledgeId ;
                 }else{
                     //新增
@@ -991,9 +989,6 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标") ;
-                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空") ;
                 return false

@@ -17,6 +17,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ngConfirm',
     'ng.shims.placeholder',
     'pagination',
+    'ngAnimate',
     //上傳功能
     'angularFileUpload',
     //先行
