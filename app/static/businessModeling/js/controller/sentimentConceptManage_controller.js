@@ -62,6 +62,7 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
             })
         }
         function loadSentimentConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
@@ -78,7 +79,7 @@ angular.module('businessModelingModule').controller('sentimentConceptManageContr
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    if(nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
+                    if(nullCheck($("#sentimentConceptClassify").val())==true || nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
                         searchSentimentConcept(current);
                     }else{
                         loadSentimentConceptTable(current);

@@ -61,6 +61,7 @@ angular.module('businessModelingModule').controller('sensitiveConceptManageContr
             });
         }
         function loadSensitiveConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页

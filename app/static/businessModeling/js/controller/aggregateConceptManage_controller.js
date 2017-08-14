@@ -65,6 +65,7 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
         }
 
         function loadCollectiveConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页

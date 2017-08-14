@@ -62,6 +62,7 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
             })
         }
         function loadSemanticExpressionConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页

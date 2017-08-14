@@ -64,6 +64,7 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
             });
         }
         function loadCorrectionConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页

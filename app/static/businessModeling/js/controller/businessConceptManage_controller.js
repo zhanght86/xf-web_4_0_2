@@ -69,6 +69,7 @@ angular.module('businessModelingModule').controller('businessConceptManageContro
             });
         }
         function loadBusinessConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
