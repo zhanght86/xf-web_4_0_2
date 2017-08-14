@@ -401,7 +401,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                 "url" : data.knowledgeContent
                             };
                             break ;
-                        case  "112 ":
+                        case  "112":
                             $scope.vm.voiceSelected = {
                                 "name" : data.knowledgeContent
                             };
@@ -606,7 +606,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         console.log(getParams());
                         if (data.status == 200) {
                             //if ($scope.vm.docmentation) {
-                            //    $scope.vm.knowledgeClassifyCall();
+                            //    $scope.vm.knowledgeClassifyCall();knowledgeAdd
                             //}else{
                                 $state.go('knowledgeManagement.custOverview');
                             //}
@@ -763,9 +763,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false ;
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标") ;
-
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空")
             }else{

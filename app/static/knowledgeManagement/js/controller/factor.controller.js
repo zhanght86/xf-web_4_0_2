@@ -632,6 +632,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
+            if($scope.vm.slideFlag){
+                $(".senior_div").css('overflow','visible');
+            }
         }
 
 /**
@@ -777,7 +780,14 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 obj.editUrl = "knowledgeManagement.factorAdd";
                 obj.knowledgeType = 103 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/ms/elementKnowledgeAdd/addElementKnowledge" ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "/api/ms/elementKnowledgeAdd/editElementKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api =  "/api/ms/elementKnowledgeAdd/addElementKnowledge"
+                }
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
                 $window.open(url,'_blank');
@@ -823,9 +833,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标");
-                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false;

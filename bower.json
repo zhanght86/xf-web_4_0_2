@@ -12,7 +12,7 @@
     "angular-resource": "1.2.x",
     "angular-cookies": "1.2.x",
     "angular-sanitize": "1.2.x",
-    "angular-animate": "1.2.x",
+    "angular-animate": "^1.6.5",
     "angular-touch": "1.2.x",
     "angular-route": "1.2.x",
     "font-awesome": "4.3.0",

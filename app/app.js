@@ -17,6 +17,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ngConfirm',
     'ng.shims.placeholder',
     'pagination',
+    'ngAnimate',
     //上傳功能
     'angularFileUpload',
     //先行
@@ -915,6 +916,32 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'static/functionalTesting/viewDetails.html',
                         controller: "viewDetailsController"
+                    }
+                }
+            })
+            .state("functionalTest.participle", {
+                url: "/participle",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functionalTesting/participle.html',
+                        controller: "participleController"
+                    }
+                }
+            })
+            .state("functionalTest.participleResult", {
+                url: "/participleResult",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functionalTesting/participleResult.html',
+                        controller: "participleResultController"
                     }
                 }
             })

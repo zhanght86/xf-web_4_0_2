@@ -10,31 +10,32 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
         $scope.vm = {
             scanData : angular.fromJson($stateParams.scanData),
             save : save ,
-            edit : edit ,
-            editUrl : angular.fromJson($stateParams.scanData).type?"materialManagement.conceptChat":"materialManagement.faqChat" 
+            edit : edit , 
+            editUrl : angular.fromJson($stateParams.scanData).chatKnowledgeSource=="101"?"materialManagement.conceptChat":"materialManagement.faqChat"
         };
         function save(){
             var params = $scope.vm.scanData ;
             console.log(params) ;
             //if(check(params)){
                 var api ;
-                switch(params.type){
-                    case 1 :
+                switch(params.chatKnowledgeSource){
+                    case "100" :
                         api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
                         break ;
-                    case  0 :
+                    case  "101":
                         api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
                         break ;
                 }
-                if(params.type == 101){
-                    api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
-                }else if(params.type == 100){
-                    api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
-                }
+                //if(params.chatKnowledgeSource == 101){
+                //    api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
+                //}else if(params.chatKnowledgeSource == 100){
+                //    api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
+                //}
                 httpRequestPost(api,{
                     "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
                     "applicationId": APPLICATION_ID ,
-                    "chatKnowledgeModifier": params.chatKnowledgeModifier,
+                     "userId"  : USER_ID ,
+                    //"chatKnowledgeModifier": params.chatKnowledgeModifier,
                     "chatKnowledgeTopic": params.standardQuestion,
                     "chatQuestionList" : params.extendedQuestionArr,
                     "chatKnowledgeContentList" : params.contentArr

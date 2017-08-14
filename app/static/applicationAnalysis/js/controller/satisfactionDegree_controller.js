@@ -1,6 +1,6 @@
 /**
  * Created by Administrator on 2016/6/3.
- * 控制器
+ * 满意率 控制器
  */
 angular.module('applAnalysisModule').controller('satisfactionDegreeController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter",

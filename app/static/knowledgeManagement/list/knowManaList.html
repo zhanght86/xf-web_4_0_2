@@ -223,13 +223,11 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="mb-10" style="position: relative;">
+                                    <div class="mb-10 clearfix" style="position: relative;z-index:1000;">
                                         <span>指定相关知识:</span>
                                         <input type="text" class=" appoint input-text extended_query_txt" ng-model="vm.appointRelative"  placeholder="" style="width:380px;">
-                                        <ul class="listItem" ng-if="vm.appointRelativeList.length" style="position: absolute;
-                            left: 91px;z-index: 2;height: 200px;width:380px;overflow: scroll ;">
-                                            <li ng-repeat="item in vm.appointRelativeList track by $index" style="min-width: 280px;
-                                             cursor:pointer;background: #e1e1e1;text-indent: 1em;line-height: 26px"
+                                        <ul class="specify_know_ul" ng-if="vm.appointRelativeList.length" >
+                                            <li ng-repeat="item in vm.appointRelativeList track by $index"
                                                 ng-click="vm.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
                                         </ul>
                                     </div>

@@ -388,6 +388,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
+            if($scope.vm.slideFlag){
+                $(".senior_div").css('overflow','visible');
+            }
+
         }
         //根據 標題 生成 bot 跟 扩展问
         function getBotAndExtensionByTitle(){
@@ -511,7 +515,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 obj.params = params;
                 obj.knowledgeType = 102 ;
                 obj.knowledgeId = $scope.vm.knowledgeId ;
-                obj.api = "/api/ms/listKnowledge/editKnowledge" ;
+                if($scope.vm.knowledgeId){
+                    //编辑
+                    obj.api = "/api/ms/listKnowledge/editKnowledge" ;
+                    params.knowledgeId = $scope.vm.knowledgeId ;
+                }else{
+                    //新增
+                    obj.api = "/api/ms/listKnowledge/addKnowledge" ;
+                }
                 obj.editUrl = "knowledgeManagement.listAdd";
                 $window.knowledgeScan = obj;
                 var url = $state.href('knowledgeManagement.knowledgeScan');
@@ -574,9 +585,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
-            }else if(!params.knowledgeTitleTag.length ){
-                layer.msg("知识标题未打标") ;
-                return false ;
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false ;

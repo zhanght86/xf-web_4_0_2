@@ -449,14 +449,14 @@
 .chatKnowBase .webuploader-pick{height:30px;line-height:17px;}
 /*指定相关知识样式*/
 .knowPopup{}
-.knowPopup .listItem{position: absolute; left: 100px;z-index: 2;max-height: 200px;overflow: auto ;width:279px;}
+.knowPopup .listItem{position: absolute; left: 100px;z-index: 99999;max-height: 200px;overflow: auto ;width:279px;}
 .knowPopup .listItem li{width: 100%; cursor:pointer;background: #eae8e8;padding-left:10px;box-sizing:border-box;line-height: 26px;}
 .knowPopup .listItem li:hover{background:#dcdbdb;}
 
 .knowledgeList .specify_know_ul,.knowledgeFactor .specify_know_ul{position: absolute;
-    left: 100px;z-index: 2;max-height: 200px;width:380px;overflow: scroll ;box-sizing: border-box;background:#e1e1e1;}
+    left: 91px;z-index: 99999;max-height: 200px;width:380px;overflow: auto ;box-sizing: border-box;background:#e1e1e1;}
 .knowledgeList .specify_know_ul li,.knowledgeFactor .specify_know_ul li{width: 100%;
-    cursor:pointer;background: #e1e1e1;padding-left:5px;line-height: 26px}
+    cursor:pointer;background: #e1e1e1;padding-left:5px;line-height: 26px;min-height:26px;}
 
 /*参数设置*/
 .parameterSetting .jqrsz-item2{border-top:0;padding:0;margin-top:0;}

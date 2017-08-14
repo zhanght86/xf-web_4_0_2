@@ -56,7 +56,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             dimensionArr : [],  //選擇的維度
             dimensionsCopy :[]
             ,
-
             checkChannelDimension : checkChannelDimension ,
             //高级选项内容
             slideDown : slideDown,
@@ -65,14 +64,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             question : 1,
             tip : 1,
             tail : 1 ,
-
             knowledgeTitleTag : [],
-
             appointRelative : "",
             appointRelativeList :[],
-            addAppoint  : addAppoint,
-            removeAppointRelative : removeAppointRelative ,
-            //vm.appointRelativeGroup.push(item)
             appointRelativeGroup : [],
             replaceType : 0 ,
             enterEvent : enterEvent,
@@ -640,9 +634,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         };
 
  /* *********************              弹框相关           **************************/ //
-        function removeAppointRelative(item){
-            $scope.vm.appointRelativeGroup.remove(item);
-        }
 //重置参数
         function setDialog() {
             $scope.vm.newTitle = "";
@@ -733,9 +724,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }else if(!params.knowledgeContents.length){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false ;
-            }else if(!params.knowledgeTitleTag.length){
-                layer.msg("知识标题未打标") ;
-
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("分类知识Bot不能为空")
             }else{
@@ -800,14 +788,13 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 //*************************************************************************
 
-        function addAppoint(item,arr){
-            if(arr.indexOf(item)==-1){
-                arr.push(item)
-            }
-            $scope.vm.appointRelative = "";  //清楚title
-            $scope.vm.appointRelativeList = [];  //清除 列表
-
-        }
+        //function addAppoint(item,arr){
+        //    if(arr.indexOf(item)==-1){
+        //        arr.push(item)
+        //    }
+        //    $scope.vm.appointRelative = "";  //清楚title
+        //    $scope.vm.appointRelativeList = [];  //清除 列表
+        //}
         // 動態加載 title
         //$scope.$watch("vm.appointRelative",function(title){
         //    //console.log(title);

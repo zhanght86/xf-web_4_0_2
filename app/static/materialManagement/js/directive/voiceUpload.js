@@ -22,13 +22,15 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     pick: '#picker',
                 });
                 uploader.on( 'fileQueued', function( file ) {
-                    //if(scope.fileNames.length>1){
-                    //    scope.fileNames = []
-                    //}
+                    console.log(file.ext) ;
+                    if(file.ext != "mp3" &&  file.ext != "amr"){
+                        console.log(uploader) ;
+                        return layer.msg("请选择 mp3 或 amr 类型语音文件上传")
+                    }
                     scope.$apply(function(){
                         scope.vm.isUploadStart = false ;
                         scope.fileNames.push(file.name) ;
-                        console.log(scope.fileName)
+                        //console.log(scope.fileName)
                     }) ;
                 });
                 uploader.on( 'uploadProgress', function( file, percentage ) {
