@@ -388,6 +388,10 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
+            if($scope.vm.slideFlag){
+                $(".senior_div").css('overflow','visible');
+            }
+
         }
         //根據 標題 生成 bot 跟 扩展问
         function getBotAndExtensionByTitle(){

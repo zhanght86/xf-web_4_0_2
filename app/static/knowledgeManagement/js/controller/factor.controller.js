@@ -632,6 +632,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         function slideDown(){
             $scope.vm.slideFlag = ! $scope.vm.slideFlag;
             $(".senior_div").slideToggle();
+            if($scope.vm.slideFlag){
+                $(".senior_div").css('overflow','visible');
+            }
         }
 
 /**
