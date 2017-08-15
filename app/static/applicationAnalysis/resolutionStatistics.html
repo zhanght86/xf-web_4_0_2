@@ -12,7 +12,7 @@
             <select class="sel bd L mr-5" id="channel_id" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
                 <option  value="" >全部维度</option>
             </select>
-            <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelUpdateId as site.channelName for site in vm.channels">
+            <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in vm.channels">
                 <option  value="" >全部渠道</option>
             </select>
              <span>
@@ -23,9 +23,9 @@
              </span>
             <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找" />
         </div>
-        <div class="mb-20" style="height:20px;">
-            <a href="javascript:;" class="R c_blue">导出图表</a>
-        </div>
+        <!--<div class="mb-20" style="height:20px;">-->
+            <!--<a href="javascript:;" class="R c_blue">导出图表</a>-->
+        <!--</div>-->
         <div class="clearfix reso_echart_divbox" >
             <div class="L reso_echart_div bd" id="resolution_echart">
                 <!--<img src="../../../images/u30009.png" width="100%"/>-->

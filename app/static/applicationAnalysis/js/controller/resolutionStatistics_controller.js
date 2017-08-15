@@ -12,7 +12,7 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
             channels : [] ,
             channelId  : "" ,
             dimensionId : "" ,
-            timeType : 0,
+            timeType : 1,
             timeStart : "",
             timeEnd : "",
         };
@@ -20,31 +20,51 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
         $scope.master.getDimensions($scope,["dimensions"]) ;
         //获取维度
         $scope.master.getChannels($scope,["channels"]) ;
+        getList() ;
         //表格列表
-        function getList(index){
-            httpRequestPost("/api/analysis/",{
-                "startTime": $scope.vm.startTime,
-                "endTime": $scope.vm.endTime,
-                "operationLogAuthor" : $scope.vm.operationLogAuthor
-            },function(data){
-                if(data.status == 200){
-                    $scope.$apply(function(){
+        function getList(){
+            var parameter = {
+                "channelId": $scope.vm.channelId,
+                "dimensionId": $scope.vm.dimensionId,
+                "startTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
+                "requestTimeType":$scope.vm.timeType,
+                "applicationId" : APPLICATION_ID ,
+                "index": 0 ,
+                "pageSize" : 1000
+            } ;
+            // 解决率统计图表数据
+            httpRequestPost("/api/analysis/solutionStatistics/qaAskSolutionStatistics",parameter,function(data){
+                console.log(data) ;
+                if(data.status == 10014){
+                    var chart = [{value:data.data.noSolutionTotal, name:'未解决'},
+                                 {value:data.data.total, name:'解决'}] ;
+                    solutionRateChartSet(chart) ;
 
-                    });
+                }
+            },function(error){console.log(error)});
+            // 回复数图表数据
+            httpRequestPost("/api/analysis/solutionStatistics/qaAskMatchStatistics",parameter,function(data){
+                console.log(data) ;
+                if(data.status == 10014){
+                    specificRateChartSet(data.data.responseOfStandardTotal,data.data.responseOfGreetingTotal,
+                                        data.data.sensitiveWordResponseTotal,data.data.repeatQuestionResponseTotal,
+                                        data.data.expiredKnowledgeResponseTotal,data.data.unknownQuestionResponseTotal)
+
                 }
             },function(error){console.log(error)});
         }
         var solutionRateChart , specificRateChart  ;
+        //初始化两个表格
         void function(){
             //左图
             solutionRateChart = echarts.init(document.getElementById('resolution_echart'));
 
             //右图
             specificRateChart = echarts.init(document.getElementById('resolution_echart2'));
-        }() ;
-        //getList(1) ;
-        chartsSetOption()
-        function chartsSetOption(data1,data2){
+        }() ;;
+        // 解决率统计图表
+        function solutionRateChartSet(data){
             solutionRateChart.setOption({
                 title : {
                     text: '解决率统计',
@@ -64,10 +84,7 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                         type: 'pie',
                         radius : '55%',
                         center: ['50%', '60%'],
-                        data:[
-                            {value:500, name:'未解决'},
-                            {value:2000, name:'解决'},
-                        ],
+                        data:data,
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
@@ -78,6 +95,9 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                     }
                 ]
             }) ;
+        }
+        // 回复数图表
+        function specificRateChartSet(val1,val2,val3,val4,val5,val6){
             specificRateChart.setOption({
                 tooltip : {
                     trigger: 'item',
@@ -86,7 +106,7 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                 legend: {
                     orient : 'vertical',
                     x : 'left',
-                    data:['直接回答','推荐回答','引导回答','未知回答','引导成功','敏感词回答']
+                    data:['标准回答数','寒暄回复数','敏感词回复数','重复问题回复数','过去知识回复数','未知问题回复数']
                 },
                 toolbox: {
                     show : true,
@@ -112,7 +132,7 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                 calculable : true,
                 series : [
                     {
-                        name:'访问来源',
+                        //name:'访问来源',
                         type:'pie',
                         radius : ['50%', '70%'],
                         itemStyle : {
@@ -136,12 +156,12 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                             }
                         },
                         data:[
-                            {value:335, name:'直接回答'},
-                            {value:310, name:'推荐回答'},
-                            {value:234, name:'引导回答'},
-                            {value:135, name:'未知回答'},
-                            {value:548, name:'引导成功'},
-                            {value:1000, name:'敏感词回答'}
+                            {value:val1, name:'标准回答数'},
+                            {value:val2, name:'寒暄回复数'},
+                            {value:val3, name:'敏感词回复数'},
+                            {value:val4, name:'重复问题回复数'},
+                            {value:val5, name:'过去知识回复数'},
+                            {value:val6, name:'未知问题回复数'}
                         ]
                     }
                 ]
