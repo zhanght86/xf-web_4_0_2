@@ -203,9 +203,9 @@ angular.module('homePage').controller('homePageNavController', [
                 case 'applAnalysis.sessionDetails':
                     return '会话明细统计';
                 case 'applAnalysis.satisfactionDegree':
-                    return '满意率统计';
+                    return '会话满意度统计';
                 case 'applAnalysis.resolutionStatistics':
-                    return '解决率统计';
+                    return '问答解决率统计';
                 case 'applAnalysis.reinforcementLearn':
                     return '智能学习';
                 case 'applAnalysis.newKnowledgeDiscoveryLearn':
