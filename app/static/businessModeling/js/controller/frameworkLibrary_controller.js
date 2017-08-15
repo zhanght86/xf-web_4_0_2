@@ -452,6 +452,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 "pageSize": $scope.vm.pageSize
             },function(data){
                 if(data.data){
+                    clearSelectAll();
                     $scope.vm.listData = data.data;
                     $scope.vm.paginationConf={
                         currentPage: current,//当前页
@@ -637,6 +638,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     "pageSize": $scope.vm.pageSize
                 },function(data){
                     if(data.data){
+                        clearSelectAll();
                         $scope.vm.listData = data.data;
                         $scope.vm.paginationConf={
                             currentPage: current,//当前页

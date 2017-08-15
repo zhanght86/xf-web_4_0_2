@@ -63,6 +63,7 @@ angular.module('businessModelingModule').controller('disableConceptManageControl
             })
         }
         function loadStopConcept(current,data){
+            clearSelectAll();
             $scope.vm.listData = data.data;
             $scope.vm.paginationConf = {
                 currentPage: current,//当前页
