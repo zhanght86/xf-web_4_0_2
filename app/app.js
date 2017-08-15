@@ -645,6 +645,19 @@ knowledge_static_web
                 }
             })
             //新建图文消息
+            .state("materialManagement.teletextMessage", {
+                url: "/teletextMessage",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/teletextMessage/teletextMessage.html',
+                        controller: "teletextMessageController"
+                    }
+                }
+            })
             .state("materialManagement.addtemes", {
                 url: "/addtemes",
                 views: {
@@ -653,7 +666,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/pictureLibrary/add_tw_mes.html',
+                        templateUrl: 'static/materialManagement/teletextMessage/add_tw_mes.html',
                         controller: "addTwMesController"
                     }
                 }
