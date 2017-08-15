@@ -6,7 +6,10 @@
                 <p class="mb20">图文列表</p>
                 <div class="bd  pd-10"  style="background:#fff;">
                     <dl class="pr add_tw_dl" >
-                        <dt><img src="../../../images/u1134.png" /></dt>
+                        <dt>
+                            <img ng-if="vm.imgSelected" ng-src="/img/{{vm.imgSelected.url}}" />
+                            <img ng-if="!vm.imgSelected" ng-src="../../../images/u1134.png" />
+                        </dt>
                         <dd class="pa">
                             <span></span>
                             <p>标题</p>
@@ -39,7 +42,7 @@
                 </div>
                 <div class="mb10 upload_btndiv">
                     <button class="mr10 butn">本地上传</button>
-                    <button class="butn" ng-click="vm.selectMat()">从图片库选择</button>
+                    <button class="butn" ng-click="vm.selectLocalImg()">从图片库选择</button>
                 </div>
                 <div class="mb10">
                     <input type="checkbox" />

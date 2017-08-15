@@ -6,7 +6,6 @@
             <div class="con_box mb25 p30 mt-10" style="min-height:500px;">
                 <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 110px;">
                     <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
-                        <option value="0">全部时间</option>
                         <option value="1">今日</option>
                         <option value="2">昨日</option>
                         <option value="3">过去7天</option>
@@ -15,7 +14,7 @@
                     <select class="sel bd L mr-5" id="channel_id" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
                         <option  value="" >全部维度</option>
                     </select>
-                    <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelUpdateId as site.channelName for site in vm.channels">
+                    <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in vm.channels">
                         <option  value="" >全部渠道</option>
                     </select>
                     <span>
