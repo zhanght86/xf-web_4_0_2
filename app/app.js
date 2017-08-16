@@ -598,7 +598,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/faqChat.html',
+                        templateUrl: 'static/materialManagement/faq/faqChat.html',
                         controller: "faqChatController"
                     }
                 }
@@ -611,7 +611,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/conceptChat.html',
+                        templateUrl: 'static/materialManagement/concept/conceptChat.html',
                         controller: "conceptChatController"
                     }
                 }
@@ -678,7 +678,6 @@ knowledge_static_web
                 controller: "knowledgeManagementController"
 
             })
-
             //客服知識總覽
             .state("knowledgeManagement.custOverview", {
                 url: "/custOverview",

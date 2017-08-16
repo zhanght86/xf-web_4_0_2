@@ -7,9 +7,14 @@ angular.module('materialManagement').controller('addTwMesController', [
     function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
         $scope.vm = {
-            title:'',
-            author:'',
-            selectMat:selectMat,
+            selectLocalImg:selectLocalImg,
+            imageList : "" ,
+            imgPaginationConf : {
+                pageSize: 8,//第页条目数
+                pagesLength: 10//分页框数量
+            },
+            imgSelected : "" ,
+            selectImage : selectImage ,
         };
         $scope.vm.config = {
             "autoHeight" : true ,
@@ -48,21 +53,45 @@ angular.module('materialManagement').controller('addTwMesController', [
             ,zIndex : 9999     //编辑器层级的基数,默认是900
             ,enableAutoSave: false
             ,autoSyncData: false
-        }
-
-        function selectMat(){
-            var dialog = ngDialog.openConfirm({
-                template:"/static/materialManagement/pictureLibrary/selectImage2.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
+        } ;
+        getPicList(1) ;
+       function getPicList(index){
+            httpRequestPost("/api/ms/picture/queryPicture",{
+                "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
+                "pageSize": $scope.vm.imgPaginationConf.pageSize
+            },function(data){
+                if(data.status == 200){
+                    $scope.$apply(function(){
+                        $scope.vm.imageList = data.data.objs ;
+                        $scope.vm.imgPaginationConf.currentPage =index ;
+                        $scope.vm.imgPaginationConf.totalItems =data.data.total ;
+                    })
                 }
-            });
+            },function(err){
+                console.log(err)
+            }) ;
+        }
+        var picTimer ;
+        $scope.$watch('vm.imgPaginationConf.currentPage', function(current){
+            if(current){
+                if (picTimer) {
+                    $timeout.cancel(picTimer)
+                }
+                picTimer = $timeout(function () {
+                    getPicList(current);
+                }, 100)
+            }
+        },true);
+        function selectImage(item){
+                $scope.vm.imgSelected = {
+                    "url" : item.pictureUrl ,
+                    "id" : item.pictureId,
+                    "name" : item.pictureName
+                } ;
+            ngDialog.close(ngDialog.latestID) ;
+        }
+        function selectLocalImg(){
+            $scope.master.openNgDialog($scope,"/static/materialManagement/image-text-store/selectImage.html","")
         }
 
 
