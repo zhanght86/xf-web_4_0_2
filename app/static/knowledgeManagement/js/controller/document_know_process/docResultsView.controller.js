@@ -3,8 +3,10 @@
  *  知识文档分析结果控制器
  */
 angular.module('knowledgeManagementModule').controller('doc_results_viewController', [
-    '$scope', 'DetailService','localStorageService','$state','$stateParams',"$timeout",'ngDialog','$cookieStore',
-    function ($scope,DetailService,localStorageService,$state,$stateParams,$timeout,ngDialog,$cookieStore) {
+    /*'$scope', 'DetailService','localStorageService','$state','$stateParams',"$timeout",'ngDialog','$cookieStore',*/
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","DetailService","$filter",
+    /*function ($scope,DetailService,localStorageService,$state,$stateParams,$timeout,ngDialog,$cookieStore) {*/
+    function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,DetailService,$filter) {
         var self = this;
         if($stateParams.knowDocId != null)
             $state.go("back.doc_results_view");
@@ -13,16 +15,251 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
         $scope.knowDocUserName = $stateParams.knowDocUserName;
 
         $scope.vm={
+            applicationId : $cookieStore.get("applicationId"),
+            modifier: $cookieStore.get("userId"),
             knowIgnoreAllConfirm : knowIgnoreAllConfirm, //忽略全部
+            knowAddAll : knowAddAll, //添加全部
             knowIgnoreConfirm :knowIgnoreConfirm, //忽略单条知识
             addKnowClass : addKnowClass, //添加知识点分类
             refreshFn : refreshFn,
+            botRoot : "",      //根节点
+            knowledgeBotVal : "",  //bot 内容
+            botSelectAdd : botSelectAdd,
+            botClassfy : [],   //类目
+            creatSelectBot : [], //手选生成 bot
             stateUrlVal: "knowledgeManagement.faqAdd",
             stateUrl : [
                         {value:"knowledgeManagement.faqAdd", name:"FAQ知识"},
                         {value:"knowledgeManagement.singleAddConcept", name:"概念型知识"}
-                       ]
+                       ],
+            stateVal: 2,
+            state : [{value:2, name:"FAQ知识"},
+                     {value:3, name:"概念型知识"}],
+            botTreeOperate:botTreeOperate,
+            searchBotAutoTag:searchBotAutoTag,
+            slideToggle:slideToggle
 
+        }
+
+        //点击bot分类的 加号
+        function botSelectAdd(){
+            if($scope.vm.botFullPath){
+                $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
+                $scope.vm.botFullPath = "";
+                $scope.vm.knowledgeBotVal = "";
+            }
+        };
+
+        botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+            //"/api/ms/modeling/category/searchbycategoryname"
+        );
+
+        //滑动
+        function slideToggle(el,callBack){
+            $timeout(function(){
+                angular.element(el).slideToggle();
+            },50)
+            if(callBack){
+                callBack()
+            }
+        }
+        //BOT搜索自动补全
+        searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+            $scope.$apply(function(){
+                var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
+                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                $scope.vm.knowledgeBotVal = suggestion.value;
+                if(botResult != false){
+                    $scope.vm.botFullPath= botResult;
+                }
+            })
+        });
+
+        //BOT搜索自动补全
+        function searchBotAutoTag(el,url,callback){
+            $(el).autocomplete({
+                serviceUrl: url,
+                type:'POST',
+                params:{
+                    "categoryName":$(el).val(),
+                    "categoryAttributeName":"node",
+                    "categoryApplicationId":APPLICATION_ID
+                },
+                paramName:'categoryName',
+                dataType:'json',
+                transformResult:function(data){
+                    var result = {
+                        suggestions : []
+                    };
+                    if(data.data){
+                        angular.forEach(data.data,function(item){
+                            result.suggestions.push({
+                                data:item.categoryId,
+                                value:item.categoryName,
+                                type : item.categoryTypeId
+                            })
+                        }) ;
+                    }
+                    return result;
+                },
+                onSelect: function(suggestion) {
+                    console.log(suggestion) ;
+                    callback(suggestion) ;
+                }
+            });
+        }
+
+        /*bot*/
+        function botTreeOperate(self1,initUrl,getNodeUrl,selectCall,searchAutoUrl){
+            var tree = {
+                init : function(){
+                    httpRequestPost(initUrl,{
+                        "categoryApplicationId": APPLICATION_ID,
+                        "categoryPid": "root"
+                    },function(data){
+                        self1.vm.botRoot = data.data;
+                    },function(error){
+                        console.log(error)
+                    });
+                } ,
+                getChildNode : getChildNode ,
+                selectNode : selectNode ,
+            } ;
+            function getChildNode(){
+                $(".aside-navs").on("click",'i',function(){
+                    var id = $(this).attr("data-option");
+                    var that = $(this);
+                    if(!that.parent().parent().siblings().length){
+                        that.css("backgroundPosition","0% 100%");
+                        httpRequestPost(getNodeUrl,{
+                            "categoryApplicationId":APPLICATION_ID,
+                            "categoryPid": id
+                        },function(data){
+                            console.log(data) ;
+                            if(data.data){
+                                var  html = '<ul class="menus">';
+                                for(var i=0;i<data.data.length;i++){
+                                    var typeClass ;
+                                    // 叶子节点 node
+                                    if((data.data[i].categoryLeaf == 0)){
+                                        typeClass = "bot-leaf"　;
+                                    }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "edge" )){
+                                        typeClass = "bot-edge"　;
+                                    }else if((data.data[i].categoryLeaf != 0) && (data.data[i].categoryAttributeName == "node" )){
+                                        typeClass = "icon-jj"
+                                    }
+                                    var  backImage ;
+                                    switch(data.data[i].categoryTypeId){
+                                        case 160 :
+                                            backImage = " bot-divide" ;
+                                            break  ;
+                                        case 161 :
+                                            backImage = " bot-process";
+                                            break  ;
+                                        case 162 :
+                                            backImage = " bot-attr" ;
+                                            break  ;
+                                        case 163 :
+                                            backImage = " bot-default" ;
+                                            break  ;
+                                    }
+                                    html+= '<li>' +
+                                        '<div class="slide-a">'+
+                                        ' <a class="ellipsis" href="javascript:;">' ;
+
+                                    html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
+
+                                    html+=             '<span>'+data.data[i].categoryName+'</span>'+
+                                        '</a>' +
+                                        '</div>' +
+                                        '</li>'
+                                }
+                                html+="</ul>";
+                                $(html).appendTo((that.parent().parent().parent()));
+                                that.parent().parent().next().slideDown()
+                            }
+                        },function(err){
+                            //layer.msg(err)
+                        });
+                    }else{
+                        if(that.css("backgroundPosition")=="0% 0%"){
+                            that.css("backgroundPosition","0% 100%");
+                            that.parent().parent().next().slideDown()
+                        }else{
+                            that.css("backgroundPosition","0% 0%");
+                            that.parent().parent().next().slideUp()
+                        }
+                    }
+                });
+            }
+            function selectNode(){
+                $(".aside-navs").on("click","span",function(){
+                    //类型节点
+                    var pre = $(this).prev() ;
+                    angular.element(".icon-jj").css("backgroundPosition","0% 0%");
+                    var id = pre.attr("data-option");
+                    selectCall(id) ;   //添加bot分類
+                    angular.element(".rootClassfy,.menus").slideToggle();
+                    //$scope.$apply();
+                    //}
+                });
+            }
+            tree.init() ;
+            tree.getChildNode() ;
+            tree.selectNode() ;
+            //return tree ;
+        }
+
+        // 获取Bot全路径
+        function getBotFullPath(id){
+            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
+                categoryId: id
+            },function(data){
+                if(data.status = 10000){
+                    var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
+                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                    $scope.$apply(function(){
+                        console.log(data) ;
+                        $scope.vm.knowledgeBotVal = data.categoryFullName;
+                        if(botResult != false){
+                            //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
+                            $scope.vm.botFullPath= botResult;
+                        }
+                    });
+                }
+            },function(error){console.log(error)});
+        }
+
+        //  主页保存 获取参数
+        function getParams(){
+            var categoryIds = [];
+            $.each($scope.vm.creatSelectBot,function(index,value){
+                console.log($(value).classificationId);
+                categoryIds.push($(value).classificationId);
+            });
+            var params =  {
+                "applicationId": $scope.vmapplicationId,
+                "userId" : $scope.vm.modifier,
+                "categoryIds" : categoryIds,
+                "documentationId" : $scope.knowDocId,
+                "knowledgeStatus" : $scope.vm.stateVal
+            };
+            params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
+            return params
+        }
+
+//        提交 检验参数
+        function checkSave(){
+            var params = getParams();
+            console.log(params) ;
+            if(!$scope.vm.categoryIds.length){
+                layer.msg("知识类目不能为空，请选择分类");
+                return false;
+            }else if(!params.documentationId){
+                return false;
+            }else{
+                return true;
+            }
         }
 
         /**
@@ -42,6 +279,34 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         $scope.ignoreDocKnowAll();
+                    }
+                }
+            });
+        }
+        /**
+         * 添加全部
+         */
+        function knowAddAll(){
+            var dialog = ngDialog.openConfirm({
+                template:"/static/knowledgeManagement/document_know_process/doc_results_viewDialog_add_all.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                width:'820px',
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                        if(checkSave()){
+                            httpRequestPost("/api/ms/knowledgeDocumentation/batchAddKnowledge",getParams(),function(data){
+                                if(data.status == 200){
+                                    layer.msg(data.info);
+                                }
+                                console.log(data);
+                            },function(error){
+                                console.log(error)
+                            });
+                        }
                     }
                 }
             });
