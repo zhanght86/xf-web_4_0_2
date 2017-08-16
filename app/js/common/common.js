@@ -1041,11 +1041,10 @@ function initUpload(url){
                         uploader.refresh();
                         break;
                     case 'uploading':
-                        $('#filePicker2').addClass('element-invisible');
-                        $upload.text('暂停上传');
+                        $upload.text('上传中');
                         break;
                     case 'paused':
-                        $upload.text('继续上传');
+                        $upload.text('上传中');
                         break;
                     case 'confirm':
                         $('#filePicker2').removeClass('element-invisible');
