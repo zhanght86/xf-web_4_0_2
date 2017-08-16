@@ -13,6 +13,10 @@
             </ul>
         </div>
         <pagination ng-if="(vm.imgPaginationConf.totalItems) && (vm.imgPaginationConf.totalItems>0)" conf="vm.imgPaginationConf"></pagination>
+        <div class="text-c">
+            <button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>
+            <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>
+        </div>
     </form>
 </div>
 <style>

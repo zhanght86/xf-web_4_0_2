@@ -7,6 +7,8 @@ angular.module('materialManagement').controller('addTwMesController', [
     function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
         $scope.vm = {
+            title : '',
+            author :'',
             selectLocalImg:selectLocalImg,
             imageList : "" ,
             imgPaginationConf : {
