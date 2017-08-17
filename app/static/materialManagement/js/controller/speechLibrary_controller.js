@@ -16,7 +16,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
             } ,
             uploadSpeech :uploadSpeech,
             voiceTitle :"",
-            isUploadStart : false
+            isUploadStart : false,
+            changeName:changeName,
         };
         getVoiceList(1) ;
         function getVoiceList(index){
@@ -87,6 +88,23 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     //} else {
                     //
                     //}
+                }
+            });
+        }
+
+        //修改名称
+        function changeName(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/static/materialManagement/speechLibrary/changeName.html",
+                width:"400px",
+                scope: $scope,
+                closeByNavigation: false,
+                overlay: true,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                preCloseCallback: function (e) {    //关闭回掉
+
                 }
             });
         }
