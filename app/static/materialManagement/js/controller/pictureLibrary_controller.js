@@ -21,6 +21,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         getPicList(1) ;
         function getPicList(index){
             httpRequestPost("/api/ms/picture/queryPicture",{
+                "applicationId" : APPLICATION_ID,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
