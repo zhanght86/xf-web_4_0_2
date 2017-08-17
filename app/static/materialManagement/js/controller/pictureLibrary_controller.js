@@ -9,7 +9,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
             imageList : [] ,        //所有图片列表
-            removeImg : removeImg , //刪除
+            removeImg : removeImg ,//刪除
             paginationConf : {
                                 pageSize: 8,//第页条目数
                                 pagesLength: 10,//分页框数量
@@ -72,7 +72,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         },true);
 
         //修改名称
-        function changeName(callback){
+        function changeName(item){
+            $scope.vm.pictureName=item.pictureName;
+            $scope.vm.pictureId=item.pictureId;
             var dialog = ngDialog.openConfirm({
                 template: "/static/materialManagement/pictureLibrary/changeName.html",
                 scope: $scope,

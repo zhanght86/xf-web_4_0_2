@@ -35,30 +35,15 @@
                         </div>
                     </td>
                     <td>{{item.pictureName}}</td>
-                    <td>140.3kb</td>
-                    <td>2017-08-15</td>
-                    <td>zhangzheng</td>
+                    <td>{{item.pictureSize}}</td>
+                    <td>{{item.pictureCreateTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.pictureUserName}}</td>
                     <td>
-                        <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>
+                        <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>
                         <a href="javascript:;" class="c_red" ng-click="vm.removeImg(item,$index)">删除</a>
                     </td>
                 </tr>
-                <!--<tr>-->
-                    <!--<td><input type="checkbox" /></td>-->
-                    <!--<td>-->
-                        <!--<div >-->
-                            <!--<img src="../../images/u13699.png" />-->
-                        <!--</div>-->
-                    <!--</td>-->
-                    <!--<td>湖边景色.jpg</td>-->
-                    <!--<td>140.3kb</td>-->
-                    <!--<td>2017-08-15</td>-->
-                    <!--<td>zhangzheng</td>-->
-                    <!--<td>-->
-                        <!--<a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>-->
-                        <!--<a href="javascript:;" class="c_red">删除</a>-->
-                    <!--</td>-->
-                <!--</tr>-->
+
             </table>
 
         </div>
