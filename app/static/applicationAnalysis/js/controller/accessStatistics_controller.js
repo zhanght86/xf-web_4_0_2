@@ -21,12 +21,13 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             timerSearchEndTime : "",    //结束时间
             queryAccessDataByTime : queryAccessDataByTime ,
             isTimerChartShow : true ,
+            exportByTime : exportByTime ,
 
-    //访问渠道
+            //访问渠道
             accessSearchTimeType : 1  ,  //渠道time类型
             accessSearchStartTime : "" , //开始时间
             accessSearchEndTime : "" ,   //结束时间
-            queryAccessDataByType : queryAccessDataByChannel
+            queryAccessDataByType : queryAccessDataByChannel,
         };
         //***********************************   20117/17 ADD    OPERATOR  : MILES **************************************************************//
         //維度
@@ -179,6 +180,29 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             return timer ;
         }
         //*********************************************************************************************************************************8//
+        function exportByTime(){
+            httpRequestPost("/api/analysis/access/export",{
+                "applicationId":APPLICATION_ID ,
+                "startTime":$scope.vm.timerSearchStartTime ,
+                "endTime":$scope.vm.timerSearchEndTime ,
+                "requestTimeType" : $scope.vm.TimerSearchTimeType ,
+                "dimensionId" : $scope.vm.dimensionId,
+                "channelId" : $scope.vm.channelId
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    //layer.msg("导出失败")
+                    console.log("导出失败");
+                }else{
+                    //alert(data.data);
+                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                }
+                console.log();
+
+            },function(err){})
+        }
+
+
         //左上表格数据
         void function getTopLeft(){
             httpRequestPost("/api/analysis/access/queryAccessDataTopLeft",{
