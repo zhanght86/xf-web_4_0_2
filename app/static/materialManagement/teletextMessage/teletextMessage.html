@@ -1,13 +1,20 @@
 <div class="warp" style="margin-top:20px;">
-    <div class="tc mb-10">
-        <input type="text" class="input-text" ng-model="vm.titAuthor" placeholder="请输入标题/作者" style="width:300px;"/>
-        <input type="button" value="查找" class="btn1 btn1_blue" ng-click="vm.showImg(1)"/>
-    </div>
+    <!--<div class="tc mb-10">-->
+        <!--<input type="text" class="input-text" ng-model="vm.titAuthor" placeholder="请输入标题/作者" style="width:300px;"/>-->
+        <!--<input type="button" value="查找" class="btn1 btn1_blue" ng-click="vm.showImg(1)"/>-->
+    <!--</div>-->
     <div class="p20" style="background:#fff;">
-        <div class="clearfix mb-20">
+        <div class="clearfix mb-20" style="padding-left: 12px;padding-right:12px;">
             <span class="L">
-                <button  class="btn1 btn1_blue" ui-sref="materialManagement.addtemes">添加图文消息</button>
+                <button  class="btn1 btn1_blue" ui-sref="materialManagement.addtemes">新建图文</button>
             </span>
+            <div class="R dib">
+                <span class="L mr-10">
+                    <input type="text" class="L input-text" ng-model="vm.titAuthor" placeholder="请输入查询图文的名称" style="width:250px;"/>
+                    <input type="button" value="" class="L tw_btn " ng-click="vm.showImg(1)"/>
+                </span>
+                <button class="L btn1 btn_delete">批量删除</button>
+            </div>
             <!--<span class="R">共有数据<b>{{vm.imageList.total}}</b>条</span>-->
         </div>
         <div class="voice_box_div  clearfix">

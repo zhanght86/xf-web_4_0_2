@@ -575,7 +575,9 @@
 .add_tw_dl dd p{color:#fff;position:absolute;left:5px;top:5px;}
 
 .tw_mes_r{width:890px;box-sizing:border-box;}
-.tw_mes_r .tit .input_text{width:80%;height:40px;line-height:40px;border-top:0;border-left:0;border-right:0;}
-.tw_mes_r .author .input_text{width:80%;border:0;}
+.tw_mes_r .tit .input_text{width:80%;height:40px;line-height:40px;}
+.tw_mes_r .author .input_text{width:80%;}
 .upload_btndiv .butn{height:30px;padding:0 10px;border:1px solid #e3e3e3;background:#fff;border-radius:2px;}
 .upload_btndiv .butn:hover{background:#D9E0E7;}
+
+.tw_btn{width:50px;height:31px;background:url(../../images/tw_search_png.png) #3e91e7 no-repeat center center;margin-left:-1px;cursor: pointer;}
