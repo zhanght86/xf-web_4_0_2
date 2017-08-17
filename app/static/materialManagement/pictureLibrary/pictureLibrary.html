@@ -15,8 +15,8 @@
             </span>
             <div class="R dib">
                 <span class="L mr-10">
-                    <input type="text" class="L input-text"  placeholder="请输入查询图片的名称" style="width:200px;"/>
-                    <input type="button" value="" class="L tw_btn " />
+                    <input type="text" class="L input-text"  placeholder="请输入查询图片的名称"  ng-model="vm.pictureName"   style="width:200px;"/>
+                    <input type="button" value=""  ng-click="vm.napSearch()" class="L tw_btn " />
                 </span>
                 <button class="L btn1 btn1_blue mr-10">导出</button>
                 <button class="L btn1 btn_delete">批量删除</button>
