@@ -218,6 +218,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                                 }
                             })
                         });
+                        $scope.vm.tableList.data.listTableType.splice($scope.vm.tableColumn,1) ;
                         $scope.vm.tableColumn = null
                     }
                     break;
