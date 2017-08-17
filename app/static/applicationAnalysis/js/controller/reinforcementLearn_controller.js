@@ -126,12 +126,19 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             $scope.vm.knowledgeList=null;
             if(nullCheck($("#inputValue").val())==true){
                 httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
-                    "applicationId" : $scope.vm.applicationId,
-                    "knowledgeTitle": $("#inputValue").val(),
+                    "applicationId":$scope.vm.applicationId,
                     "index": (index-1)*$scope.vm.pageSize1,
                     "pageSize": $scope.vm.pageSize1,
-                    "sourceType": 0,
-                    "updateTimeType": 0
+                    "sceneIds":null,
+                    "knowledgeTitle": $("#inputValue").val(),
+                    "knowledgeContent":null,
+                    "knowledgeUpdate":null,
+                    "knowledgeExpDateEnd":null,
+                    "knowledgeExpDateStart":null,
+                    "knowledgeOrigin":0,
+                    "updateTimeType":0,
+                    "knowledgeType":"",
+                    "knowledgeExtensionQuestion":""
                 },function(data){
                     $scope.vm.knowledgeList = data.data.objs;
                     $scope.vm.paginationConf2 = {
