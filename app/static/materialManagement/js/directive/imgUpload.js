@@ -27,6 +27,16 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 console.log(file + "file  add success");
             });
             uploader.on( 'uploadProgress', function( file, percentage ) {
+                // var $li = $( '#'+file.id ),
+                //     $percent = $li.find('.progress span');
+                //
+                // // 避免重复创建
+                // if ( !$percent.length ) {
+                //     $percent = $('<div class="progress"><span></span></div>')
+                //         .appendTo( $li )
+                //         .find('span');
+                // }
+                // $percent.css( 'width', percentage * 100 + '%' );
 
             });
             uploader.on('uploadError', function (file) {
@@ -36,10 +46,17 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 if(response.status == 500){
                     layer.msg("模板错误")
                 }else{
-                    layer.msg("上传成功");
-                    $state.reload() ;
+                    //layer.msg("上传成功");
+                    //$state.reload() ;
                 }
-                console.log(response)
+                //console.log(response)
+            });
+            // 所有文件上传成功 之后 刷新数据列表
+            uploader.on('uploadFinished', function (file) {
+                   layer.msg("上传成功");
+                   scope.isUpload = false;
+                   $state.reload();
+                   console.log(response);
             });
 
         }
