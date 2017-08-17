@@ -598,7 +598,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/faqChat.html',
+                        templateUrl: 'static/materialManagement/faq/faqChat.html',
                         controller: "faqChatController"
                     }
                 }
@@ -611,7 +611,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/conceptChat.html',
+                        templateUrl: 'static/materialManagement/concept/conceptChat.html',
                         controller: "conceptChatController"
                     }
                 }
@@ -645,6 +645,19 @@ knowledge_static_web
                 }
             })
             //新建图文消息
+            .state("materialManagement.teletextMessage", {
+                url: "/teletextMessage",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/teletextMessage/teletextMessage.html',
+                        controller: "teletextMessageController"
+                    }
+                }
+            })
             .state("materialManagement.addtemes", {
                 url: "/addtemes",
                 views: {
@@ -653,7 +666,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/pictureLibrary/add_tw_mes.html',
+                        templateUrl: 'static/materialManagement/teletextMessage/add_tw_mes.html',
                         controller: "addTwMesController"
                     }
                 }
@@ -665,7 +678,6 @@ knowledge_static_web
                 controller: "knowledgeManagementController"
 
             })
-
             //客服知識總覽
             .state("knowledgeManagement.custOverview", {
                 url: "/custOverview",

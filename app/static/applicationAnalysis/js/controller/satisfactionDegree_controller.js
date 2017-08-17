@@ -19,9 +19,9 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             sendDimensions : [] ,
             sendChannels : [],
 
-            timeType : 0,
-            timeStart : $filter('date')(new Date(), 'yyyy-MM-dd'),
-            timeEnd : $filter('date')(new Date(), 'yyyy-MM-dd'),
+            timeType : 1,
+            timeStart :"",
+            timeEnd :"",
 
             "orderForSessionNumber": null,
 

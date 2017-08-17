@@ -203,9 +203,9 @@ angular.module('homePage').controller('homePageNavController', [
                 case 'applAnalysis.sessionDetails':
                     return '会话明细统计';
                 case 'applAnalysis.satisfactionDegree':
-                    return '满意率统计';
+                    return '会话满意度统计';
                 case 'applAnalysis.resolutionStatistics':
-                    return '解决率统计';
+                    return '问答解决率统计';
                 case 'applAnalysis.reinforcementLearn':
                     return '智能学习';
                 case 'applAnalysis.newKnowledgeDiscoveryLearn':
@@ -220,6 +220,8 @@ angular.module('homePage').controller('homePageNavController', [
                     return '图片库';
                 case 'materialManagement.speechLibrary':
                     return '语音库';
+                case 'materialManagement.teletextMessage':
+                    return '图文消息库';
                 case 'deepLearning.deeplearnConfig':
                     return '模型构建';
                 case 'deepLearning.deepLearningCon':
