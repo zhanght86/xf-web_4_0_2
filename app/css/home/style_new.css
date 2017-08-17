@@ -580,4 +580,10 @@
 .upload_btndiv .butn{height:30px;padding:0 10px;border:1px solid #e3e3e3;background:#fff;border-radius:2px;}
 .upload_btndiv .butn:hover{background:#D9E0E7;}
 
-.tw_btn{width:50px;height:31px;background:url(../../images/tw_search_png.png) #3e91e7 no-repeat center center;margin-left:-1px;cursor: pointer;}
+.tw_btn{width:50px;height:31px;background:url(../../images/tw_search_png.png) #529ff6 no-repeat center center;margin-left:-1px;cursor: pointer;}
+.pic_box_wrap{width:100%;}
+.pic_box_wrap .pic_tab{}
+.pic_box_wrap .pic_tab .tr1 td{background:#eefcff;}
+.pic_box_wrap .pic_tab td{text-align: center;padding:8px 0;border:1px solid #ddd;}
+.pic_box_wrap .pic_box{width:221px;height:171px;overflow:hidden;}
+.pic_box_wrap .pic_box img{width:100%;}

@@ -13,7 +13,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             paginationConf : {
                                 pageSize: 8,//第页条目数
                                 pagesLength: 10,//分页框数量
-                             }
+                             },
+            changeName:changeName,
+
 
         };
         getPicList(1) ;
@@ -67,6 +69,27 @@ angular.module('materialManagement').controller('pictureLibraryController', [
 
             }
         },true);
+
+        //修改名称
+        function changeName(callback){
+            var dialog = ngDialog.openConfirm({
+                template: "/static/materialManagement/pictureLibrary/changeName.html",
+                scope: $scope,
+                width:'400px',
+                closeByNavigation: false,
+                overlay: true,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                preCloseCallback: function (e) {    //关闭回掉
+                    if (e === 1) {
+
+                    } else {
+
+                    }
+                }
+            });
+        }
     }
 ]);
 
