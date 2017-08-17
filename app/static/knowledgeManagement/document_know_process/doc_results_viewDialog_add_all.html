@@ -18,7 +18,7 @@
                 </div>
                 <div class="item-line mb-10">
                     <div class="lable" style="text-align: left;">
-                        BOT路径：
+                        请选择添加该条知识的BOT：
                     </div>
                     <div class="value Div clearfix">
                         <div class="ipt-txt-box L mr-10">
@@ -42,10 +42,10 @@
                 </div>
                 <!--手选生成-->
                 <div class="item-line mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
-                    <div class="lable"> BOT路径：</div>
+                    <div class="lable" style="text-align: left;"> 已选BOT：</div>
                     <div class="value Div clearfix">
                         <div class="ipt-txt-box mr-10 L">
-                            <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
+                            <div class="ipt-txt" style="line-height:24px;">
                                 <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                             </div>
                         </div>

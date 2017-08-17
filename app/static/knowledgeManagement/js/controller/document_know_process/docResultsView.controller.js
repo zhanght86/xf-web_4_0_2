@@ -39,7 +39,7 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
             searchBotAutoTag:searchBotAutoTag,
             slideToggle:slideToggle
 
-        }
+        };
 
         //点击bot分类的 加号
         function botSelectAdd(){
@@ -48,32 +48,17 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                 $scope.vm.botFullPath = "";
                 $scope.vm.knowledgeBotVal = "";
             }
-        };
-
-        botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
-            //"/api/ms/modeling/category/searchbycategoryname"
-        );
+        }
 
         //滑动
         function slideToggle(el,callBack){
             $timeout(function(){
                 angular.element(el).slideToggle();
-            },50)
+            },50);
             if(callBack){
                 callBack()
             }
         }
-        //BOT搜索自动补全
-        searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
-            $scope.$apply(function(){
-                var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
-                $scope.vm.knowledgeBotVal = suggestion.value;
-                if(botResult != false){
-                    $scope.vm.botFullPath= botResult;
-                }
-            })
-        });
 
         //BOT搜索自动补全
         function searchBotAutoTag(el,url,callback){
@@ -110,7 +95,8 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
         }
 
         /*bot*/
-        function botTreeOperate(self1,initUrl,getNodeUrl,selectCall,searchAutoUrl){
+        function botTreeOperate(self1,initUrl,getNodeUrl,selectCall){
+            console.log("=====coming=====");
             var tree = {
                 init : function(){
                     httpRequestPost(initUrl,{
@@ -122,9 +108,9 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                         console.log(error)
                     });
                 } ,
-                getChildNode : getChildNode ,
-                selectNode : selectNode ,
-            } ;
+                getChildNode : getChildNode,
+                selectNode : selectNode
+            };
             function getChildNode(){
                 $(".aside-navs").on("click",'i',function(){
                     var id = $(this).attr("data-option");
@@ -235,16 +221,16 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
             var categoryIds = [];
             $.each($scope.vm.creatSelectBot,function(index,value){
                 console.log($(value).classificationId);
-                categoryIds.push($(value).classificationId);
+                console.log(value.classificationId);
+                categoryIds.push(value.classificationId);
             });
             var params =  {
-                "applicationId": $scope.vmapplicationId,
-                "userId" : $scope.vm.modifier,
+                "applicationId": APPLICATION_ID,
+                "userId" : USER_ID,
                 "categoryIds" : categoryIds,
                 "documentationId" : $scope.knowDocId,
                 "knowledgeStatus" : $scope.vm.stateVal
             };
-            params.classificationAndKnowledgeList = $scope.vm.botClassfy.concat($scope.vm.creatSelectBot);
             return params
         }
 
@@ -252,7 +238,7 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
         function checkSave(){
             var params = getParams();
             console.log(params) ;
-            if(!$scope.vm.categoryIds.length){
+            if(!params.categoryIds.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false;
             }else if(!params.documentationId){
@@ -300,7 +286,7 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                         if(checkSave()){
                             httpRequestPost("/api/ms/knowledgeDocumentation/batchAddKnowledge",getParams(),function(data){
                                 if(data.status == 200){
-                                    layer.msg(data.info);
+                                    layer.msg("添加成功");
                                 }
                                 console.log(data);
                             },function(error){
@@ -310,6 +296,22 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                     }
                 }
             });
+            if(dialog){
+                $timeout(function(){
+                    botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath);
+                    //BOT搜索自动补全
+                    searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+                        $scope.$apply(function(){
+                            var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
+                                botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                            $scope.vm.knowledgeBotVal = suggestion.value;
+                            if(botResult != false){
+                                $scope.vm.botFullPath= botResult;
+                            }
+                        })
+                    });
+                },100);
+            }
         }
         function knowIgnoreConfirm(knowledgeId){
             var dialog = ngDialog.openConfirm({
