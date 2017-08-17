@@ -56,6 +56,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
         //表格列表
         function getList(index){
             //console.log((index-1)*$scope.vm.pageSize );
+            getPieData();
             httpRequestPost("/api/analysis/satisfaction/searchList",{
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
