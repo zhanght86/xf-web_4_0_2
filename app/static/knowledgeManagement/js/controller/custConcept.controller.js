@@ -711,13 +711,17 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             return  result ;
         }
 
+
 //        提交 检验参数
         function checkSave(){
+
             var params = getParams();
             console.log(params) ;
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false ;
+            }else if(!$scope.master.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
+                layer.msg("标题未打标")
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false

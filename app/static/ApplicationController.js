@@ -36,8 +36,8 @@ knowledge_static_web.controller('ApplicationController',
                     //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
 
             /* bot 下拉树的公共方法 */
-                   botTreeOperate : botTreeOperate
-
+                   botTreeOperate : botTreeOperate ,
+                   isTitleHasExt : isTitleHasExt
             } ;
             //滑动
             function slideToggle(el,callBack){
@@ -396,6 +396,19 @@ knowledge_static_web.controller('ApplicationController',
                 tree.selectNode() ;
                 //return tree ;
             }
+
+//*******************2017/8/18  BEGIN   校验title生成扩展问 *******************//
+            function isTitleHasExt(title,allExt){
+                var result = false ;
+                //params.extensionQuestions
+                angular.forEach(allExt,function(item,index){
+                    if(item.extensionQuestionTitle == title){
+                        result = true ;
+                    }
+                }) ;
+                return result ;
+            }
+//*******************2017/8/18  END   校验title生成扩展问   *******************//
 
 /***********************************************************************************************************************************************************************/
 
