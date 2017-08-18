@@ -9,19 +9,21 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
             imageList : [] ,        //所有图片列表
-            removeImg : removeImg , //刪除
+            removeImg : removeImg ,//刪除
             paginationConf : {
                                 pageSize: 8,//第页条目数
                                 pagesLength: 10,//分页框数量
                              },
             changeName:changeName,
-
+            pictureName:null,
+            napSearch:napSearch,
 
         };
         getPicList(1) ;
         function getPicList(index){
             httpRequestPost("/api/ms/picture/queryPicture",{
                 "applicationId" : APPLICATION_ID,
+                "pictureName" : $scope.vm.pictureName,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
@@ -38,6 +40,12 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 console.log(err)
             }) ;
         }
+
+        function  napSearch(){
+            getPicList(1) ;
+        }
+
+
         function removeImg(item,index){
             layer.confirm('确认删除该图片？', {
                 btn: ['确定','取消'] //按钮
@@ -58,6 +66,21 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }, function(){
             });
         }
+
+        function updateImg(){
+            httpRequestPost("/api/ms/picture/updatePicture",{
+                "pictureName":$scope.vm.pictureName,
+                "pictureId":  $scope.vm.pictureId
+            },function(data){
+                if(data.status == 200){
+                    getPicList(1)
+                }else if(data.status == 500){
+                    layer.msg("名称根寻失败") ;
+                }
+            },function(err){
+                console.log(err)
+            }) ;
+        }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -72,7 +95,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         },true);
 
         //修改名称
-        function changeName(callback){
+        function changeName(item){
+            $scope.vm.pictureName=item.pictureName;
+            $scope.vm.pictureId=item.pictureId;
             var dialog = ngDialog.openConfirm({
                 template: "/static/materialManagement/pictureLibrary/changeName.html",
                 scope: $scope,
@@ -84,7 +109,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 showClose: true,
                 preCloseCallback: function (e) {    //关闭回掉
                     if (e === 1) {
-
+                        updateImg();
                     } else {
 
                     }

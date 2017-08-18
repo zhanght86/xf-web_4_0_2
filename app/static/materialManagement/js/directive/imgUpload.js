@@ -15,6 +15,10 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 // swf文件路径
                 swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                 server: "/api/ms/picture/upload",
+                formData : {
+                    "applicationId":APPLICATION_ID,
+                    "userName":USER_NAME
+                }  ,   // 上传参数
                 //accept: {
                 //    title: 'Images',
                 //    extensions: 'jpg,,png',
