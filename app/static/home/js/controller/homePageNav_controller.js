@@ -220,6 +220,8 @@ angular.module('homePage').controller('homePageNavController', [
                     return '图片库';
                 case 'materialManagement.speechLibrary':
                     return '语音库';
+                case 'materialManagement.documentLibrary':
+                    return '文档库';
                 case 'materialManagement.teletextMessage':
                     return '图文消息库';
                 case 'deepLearning.deeplearnConfig':

@@ -284,9 +284,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 "extensionQuestionType" : weight
              } ;
             if(!title){
-                layer.msg("扩展问不能为空")
+                layer.msg("扩展问题不能为空")
             }else if(!checkExtension(obj ,  $scope.vm.extensions)){
-                layer.msg('根据"'+title+'"生成扩展问重复,已阻止添加');
+                layer.msg('根据"'+title+'"生成扩展问题重复,已阻止添加');
                 return false
             }else{
                 httpRequestPost("/api/ms/faqKnowledge/checkExtensionQuestion",{
@@ -294,7 +294,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     title : title
                 },function(data){
                     if(data.status == 500){
-                        layer.msg('根据"'+title+'"生成扩展问重复') ;
+                        layer.msg('根据"'+title+'"生成扩展问题重复') ;
                         $scope.vm.extensionTitle = "" ;
                     }else if(data.status==200){
                         $scope.vm.extensionTitle = "" ;
@@ -447,6 +447,30 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 },function(err){
                    console.log(err)
                 });
+                if(!checkExtension({
+                        "extensionQuestionTitle" : $scope.vm.title ,
+                        "extensionQuestionType" : 60
+                    } ,  $scope.vm.extensions)){
+                    //layer.msg('根据"'+$scope.vm.title+'"生成扩展问题重复,已阻止添加');
+                    return false
+                }else{
+                    httpRequestPost("/api/ms/faqKnowledge/checkExtensionQuestion",{
+                        "applicationId": APPLICATION_ID,
+                        title : $scope.vm.title
+                    },function(data){
+                        if(data.status == 500){
+                            //layer.msg('根据"'+title+'"生成扩展问题重复') ;
+                            //$scope.vm.extensionTitle = "" ;
+                        }else if(data.status==200){
+                            //$scope.vm.extensionTitle = "" ;
+                            $scope.vm.extensions.push(
+                                {"extensionQuestionTitle" : $scope.vm.title ,
+                                "extensionQuestionType" : 60}); 
+                            $scope.$apply()
+                        }
+                        //console.log(data);
+                    },function(error){console.log(error)});
+                }
             }else{
                 $scope.vm.titleTip = "知识标题不能为空"
             }
@@ -639,6 +663,8 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false
+            }else if(!$scope.master.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
+                layer.msg("标题未打标")
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
