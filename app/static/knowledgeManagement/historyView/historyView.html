@@ -25,21 +25,14 @@
                 <tbody>
                     <tr class="type1" ng-repeat="item in vm.uploadRecordList" >
                         <td>{{item.uploadName}}</td>
-                        <td ng-if="item.uploadType==170">业务知识批量</td>
-                        <td ng-if="item.uploadType==171">要素知识批量</td>
-                        <td ng-if="item.uploadType==172">营销知识批量</td>
-                        <td ng-if="item.uploadType==173">聊天知识库批量</td>
-                        <td ng-if="item.uploadType==174">类目库批量</td>
-                        <td ng-if="item.uploadType==175">概念库批量</td>
-                        <td ng-if="item.uploadType==176">框架库批量</td>
-                        <td ng-if="item.uploadStatus==180">正在处理</td>
-                        <td ng-if="item.uploadStatus==181">导入成功</td>
+                        <td>{{item.uploadType | uploadRecordTypeFilter}}</td>
+                        <td>{{item.uploadStatus | uploadRecordStatus}}</td>
                         <td>{{item.userName}}</td>
                         <td>{{item.uploadSum}}</td>
                         <td>{{item.uploadSuccess}}</td>
-                        <td>{{item.uploadTime}}</td>
+                        <td>{{item.uploadTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td>
-                            <button  ng-if="item.uploadSum!=item.uploadSuccess" class="btn1 btn1_blue mr-10" ng-click="downRecordFile(item.uploadId)">查看</button>
+                            <button  ng-if="item.uploadSum!=item.uploadSuccess" class="btn1 btn1_blue mr-10" ng-click="downRecordFile(item.uploadName)">查看</button>
                             <button  class="btn1 btn_green"  ng-click="deleteRecord(item.uploadId)">删除</button>
                         </td>
                     </tr>

@@ -80,6 +80,35 @@ angular.module('knowledge_static_web').filter('weightFilter', function () {
                 break;
         }
     };
+})
+.filter('uploadRecordTypeFilter', function () {
+    return function (value) {
+        switch (value){
+            case 170 : return "业务知识";break;
+            case 171 : return "要素知识";break;
+            case 172 : return "营销知识";break;
+            case 173 : return "聊天知识库";break;
+            case 174 : return "类目库";break;
+            case 1750 : return "语义刻画概念库";break;
+            case 1751 : return "同义概念库";break;
+            case 1752 : return "业务概念库";break;
+            case 1753 : return "停用概念库";break;
+            case 1754 : return "纠错概念库";break;
+            case 1755 : return "集合概念库";break;
+            case 1756 : return "敏感概念库";break;
+            case 1757 : return "强制分词概念库";break;
+            case 1758 : return "情感概念库";break;
+            case 176 : return "框架库";break;
+        }
+    };
+})
+.filter('uploadRecordStatus', function () {
+    return function (value) {
+        switch (value){
+            case 180 : return "正在处理";break;
+            case 181 : return "导入完成";break;
+        }
+    };
 });
 
 //angular.module('knowledge_static_web').filter('strReplace', function () {

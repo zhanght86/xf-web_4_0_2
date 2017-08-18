@@ -72,8 +72,8 @@ angular.module('knowledgeManagementModule').controller('historyViewController', 
          * 下载记录文件
          * @param uploadId 历史ID
          */
-        $scope.downRecordFile = function(uploadId){
-            var urlParams = "?applicationId="+APPLICATION_ID+"&uploadId="+uploadId;
+        $scope.downRecordFile = function(uploadName){
+            var urlParams = "?applicationId="+APPLICATION_ID+"&uploadName="+uploadName;
             var url = $scope.vm.downRecord+urlParams  ;//请求的url
             $window.open(url,"_blank") ;
         }
