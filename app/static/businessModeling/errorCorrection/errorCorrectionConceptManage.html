@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tr ng-repeat="item in vm.listData">
-                <td><input type="checkbox" value="{{item.correctionConceptKId}}" name="sid"></td>
+                <td><input type="checkbox" value="{{item.correctionConceptId}}" name="sid"></td>
                 <td>{{item.correctionConceptKey}}</td>
                 <td>
                     <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.correctionConceptTerm.split('；')"><i ng-if="$index!=0 && i " style="color: #333;">, </i>{{i}} </span>
