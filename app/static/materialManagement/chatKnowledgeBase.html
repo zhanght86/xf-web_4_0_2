@@ -7,18 +7,27 @@
             </div>
             <div class="r-cont-bd">
                 <div class="csso-cz-box clearfix  mb-10">
-                    <div class="L pr chat_add_div">
-                        <p class="bd mr-10 chat_add_p" >FAQ型聊天新增</p>
-                        <ul class="bd pa chat_add_ul" >
-                            <li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>
-                            <li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>
-                        </ul>
+                    <div class="L ">
+                        <div class="L pr chat_add_div ">
+                            <p class="bd mr-10 chat_add_p" >FAQ型聊天新增</p>
+                            <ul class="bd pa chat_add_ul" >
+                                <li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>
+                                <li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>
+                            </ul>
+                        </div>
+                        <div class="L ">
+                            <div uploader-base ></div>
+                        </div>
                     </div>
                     <div class="R">
                         <div class="L mr-10 pr">
                             <div class="clearfix">
-                                <input class="input_text L mr-10" ng-model="vm.chatKnowledgeTopic" type="text" placeholder="请输入知识标题" >
-                                <button class="btn1 btn1_blue L mr-10 f14" ng-click="vm.search(1)" >查找</button>
+                                <!--<input class="input_text L mr-10" ng-model="vm.chatKnowledgeTopic" type="text" placeholder="请输入知识标题" >-->
+                                <!--<button class="btn1 btn1_blue L mr-10 f14" ng-click="vm.search(1)" >查找</button>-->
+                                <span class="L mr-10">
+                                    <input type="text" class="L input-text"  placeholder="请输入知识标题"  ng-model="vm.chatKnowledgeTopic"   style="width:200px;"/>
+                                    <input type="button" value=""  ng-click="vm.search(1)" class="L tw_btn " />
+                                </span>
                                 <button class="L btn se-search-btn advanced_sear_btn" style="border: 1px solid #3ea9fb;" ng-click="vm.searchHeighFlag=!vm.searchHeighFlag">高级查找</button>
                             </div>
                             <div class="advanced_search bd" >
@@ -44,19 +53,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="L mr-10">
-                            <div uploader-base ></div>
-                        </div>
-                        <button class="btn1 L btn_green  mr-10 f14"  ng-click="vm.exportExcel()">知识导出</button>
+                        <button class="btn1 L btn_green  mr-10 f14"  ng-click="vm.exportExcel()">导出</button>
                         <a href="/api/ms/chatKnowledge/download?fileName=chatKnowledgeTemplate.xls" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>
-                        <button class="btn1 R btn_delete f14" ng-click="vm.delKnowledge()">刪除</button>
+                        <button class="btn1 R btn_delete f14" ng-click="vm.delKnowledge()">批量刪除</button>
                     </div>
                 </div>
                 <div class="clearfix csso-bd bd pl-20 pr-20 mt-30" style="min-height:400px;">
+                    <div class="mt-20" style="margin-bottom:-10px;">
+                        <input type="checkbox" ng-click="vm.selectAll()"  ng-checked="vm.selectAllCheck"/> 全选
+                    </div>
                     <ul class="csso-lsit">
                         <li ng-if="vm.listData" ng-repeat="item in vm.listData">
                             <div class="mb-10">
-                                <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>
+                                <!--<input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>-->
+                                <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-checked="vm.delArr.inArray(item.chatKnowledgeId)" ng-click="vm.selectSingle(item.chatKnowledgeId)"/>
                                 <a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.chatKnowledgeTopic}}</a>
                             </div>
                             <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>

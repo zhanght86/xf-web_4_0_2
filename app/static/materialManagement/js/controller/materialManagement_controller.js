@@ -17,9 +17,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             pageSize : 5  , //默认每页数量
             getType : 0 ,    // 默认请求 0    查找 1
 //刪除知识
-            getDel : getDel,
+            //getDel : getDel,
             delKnowledge : delKnowledge,
             delArr : [],
+            selectAll : selectAll,
+            selectAllCheck : false,
+            selectSingle : selectSingle,
+
 //高级查询
             searchHeighFlag : false ,
             "chatKnowledgeModifier": "",
@@ -28,15 +32,49 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             "chatQuestionContent": "",
             selectTimeType : selectTimeType
         };
-        //$.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
-        function getDel(ev,id){
-            var  self =$(ev.target);
-            if(self.prop("checked")){
-                $scope.vm.delArr.push(id)
+        //全选
+        function selectAll(){
+            if(!$scope.vm.selectAllCheck){
+                $scope.vm.selectAllCheck = true;
+                $scope.vm.delArr = [];
+                angular.forEach($scope.vm.listData,function(item){
+                    $scope.vm.delArr.push(item.chatKnowledgeId);
+                });
             }else{
-                $scope.vm.delArr.remove(id)
+                $scope.vm.selectAllCheck = false;
+                $scope.vm.delArr = [];
             }
         }
+        //单选
+        function selectSingle(id){
+            if($scope.vm.delArr.inArray(id)){
+                $scope.vm.delArr.remove(id);
+                $scope.vm.selectAllCheck = false;
+            }else{
+                $scope.vm.delArr.push(id);
+
+            }
+            if($scope.vm.delArr.length==$scope.vm.listData.length){
+                $scope.vm.selectAllCheck = true;
+            }
+            console.log( $scope.vm.delArr);
+        }
+
+        //全选按钮清空
+        function initBatchTest(){
+            $scope.vm.delArr = [] ;
+            $scope.vm.selectAllCheck = false;
+        }
+
+        //$.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
+        // function getDel(ev,id){
+        //     var  self =$(ev.target);
+        //     if(self.prop("checked")){
+        //         $scope.vm.delArr.push(id)
+        //     }else{
+        //         $scope.vm.delArr.remove(id)
+        //     }
+        // }
         function delKnowledge(){
             console.log($scope.vm.delArr) ;
             if(!$scope.vm.delArr.length){
@@ -49,6 +87,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                         "applicationId": APPLICATION_ID,
                         "ids":$scope.vm.delArr
                     },function(){
+                        initBatchTest();
                         layer.msg("删除成功") ;
                         $state.reload();
                     })
@@ -148,6 +187,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     if($scope.vm.getType==1 ){
                         search(current)
                     }else if($scope.vm.getType==0){
+                        initBatchTest();
                         getData(current);
                     }
                 }, 100)

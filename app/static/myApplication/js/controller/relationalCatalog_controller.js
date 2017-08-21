@@ -65,7 +65,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
-        console.log("========"+JSON.stringify(params));
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
             serviceUrl: "/api/ms/modeling/category/searchbycategoryname",
@@ -88,31 +87,27 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 return result;
             },
             onSelect: function(suggestion) {
-                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNode(suggestion);
                 $scope.vm.suggestionValue=suggestion.value;
                 $scope.vm.suggestionData=suggestion.data;
             }
         });
         $interval(function(){
-            console.log("===suggestionData===:"+$scope.vm.suggestionData);
-                if($scope.vm.suggestionData){
-                    var suggestion = new Object();
-                    suggestion.value=$scope.vm.suggestionValue;
-                    suggestion.data=$scope.vm.suggestionData;
-                    if(locationFlag(suggestion)){
-                        location(suggestion);
-                        $scope.vm.suggestionValue="";
-                        $scope.vm.suggestionData="";
-                    }
+            if(nullCheck($scope.vm.suggestionData)==true){
+                var suggestion = new Object();
+                suggestion.value=$scope.vm.suggestionValue;
+                suggestion.data=$scope.vm.suggestionData;
+                if(locationFlag(suggestion)){
+                    location(suggestion);
+                    $scope.vm.suggestionValue="";
+                    $scope.vm.suggestionData="";
                 }
-        },100);
+            }
+        },2000);
         //搜寻节点
         function searchNode(suggestion){
             var currentNodeId = suggestion.data;
-            console.log('currentNodeId:'+currentNodeId);
             var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
-            console.log($(firstNode).next().html()+"======"+$(firstNode).attr("data-option")+'currentNodeId:'+currentNodeId+"======"+$(firstNode).css("backgroundPosition"));
             if($(firstNode).css("backgroundPosition")=="0% 0%"){
                 appendTree(firstNode);
             }else if($(firstNode).parent().parent().next()==null){
@@ -126,8 +121,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $scope.vm.categoryAttributeName = $(firstNode).next().attr("node-option");
                 $(firstNode).next().attr("style","color:black;font-weight:bold;");
                 updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
-                console.log($scope.vm.botSelectValue);
-                console.log($scope.vm.categoryAttributeName);
                 disableAttributeType();
                 $scope.$apply();
             }else{
@@ -141,7 +134,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 if($(value).attr("data-option")==$(node).attr("data-option")){
                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
-                        console.log("===hit===");
                         clearColor();
                         $scope.vm.knowledgeBotVal = $(currNode).next().html();
                         $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
@@ -149,8 +141,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
                         $(currNode).next().attr("style","color:black;font-weight:bold;");
                         updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
-                        console.log($scope.vm.botSelectValue);
-                        console.log($scope.vm.categoryAttributeName);
                         disableAttributeType();
                         $scope.$apply();
                         flag = true;
@@ -188,7 +178,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     if(scrollHeight-100>0){
                         offset = (((initHeight+1)/sum)*(scrollHeight-100));
                     }
-                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
@@ -204,7 +193,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             var sum = $(".aside-navs").find("i").length;
             $.each($(".aside-navs").find("i"),function(index,value){
                 if($(value).attr("data-option")==currentNodeId){
-                    console.log(currentNodeId+"===exists===");
                     var lib = $(".libraryFt");
                     var scrollHeight=0;
                     if(lib.length>0){
@@ -251,7 +239,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     appendTree(firstNode);
                 }
             },function(){
-                console.log("err or err");
             });
         }
         $(".aside-navs").on("click","span",function(){
@@ -266,8 +253,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
             updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
-            console.log($scope.vm.botSelectValue);
-            console.log($scope.vm.categoryAttributeName);
             disableAttributeType();
             $scope.$apply();
         });
@@ -280,9 +265,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
         }
         $(".aside-navs").on("click",".edit",function(){
-            console.log("edit");
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
-            console.log($scope.vm.botInfo);
             botInfoToCategoryAttribute();
             editBot();
         });
@@ -336,7 +319,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 reloadBot(data,2);
                             }
                         },function(err){
-                            console.log(err);
                         });
                     }else{
                     }
@@ -374,9 +356,7 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
             }
         }
         $(".aside-navs").on("click",".delete",function(){
-            console.log("delete");
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
-            console.log($scope.vm.botInfo);
             botInfoToCategoryAttribute();
             deleteBot();
         });
@@ -401,7 +381,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                                 reloadBot(data,1);
                             }
                         },function(err){
-                            console.log(err);
                         });
                     }else{
                     }
@@ -442,7 +421,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                         that.parent().parent().next().slideDown();
                     }
                 },function(err){
-                    console.log(err);
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -501,7 +479,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                 }
                 $("#category-describe").val('')
             },function(err){
-                console.log(err);
             });
             $scope.vm.categoryDescribe="";
         }
@@ -537,7 +514,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     flag = true;
                 }
             },function(err){
-                console.log(err);
             });
             return flag;
         }
@@ -548,7 +524,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     if($(value).find("i").attr("data-option")==$scope.vm.categoryId){
                         var length = $(value).parent().find("li").length-1;
                         //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
-                        console.log("==========="+length+"=====");
                         if(length==0 && type==1){
                             $(value).parent().prev().find("i").attr("style","display:none");
                         }
@@ -604,11 +579,8 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                             }
                             var sty = styleSwitch(data.data[0].categoryTypeId,1,nodeType);
                             sty = sty.substring(7,sty.length-1);
-                            console.log("===="+sty);
-                            console.log("====obj===="+obj);
                             if($(value).parent().parent().next()!=null){
                                 var len = $(value).parent().parent().next().find("li").length;
-                                console.log("====len===="+len);
                                 if(len>0){
                                     $(value).parent().parent().next().append(html);
                                 }else{
@@ -675,7 +647,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
                     $(value).attr("disabled",null);
                     $(value).attr("style","");
                 }else{
-                    console.log($(value).val() +"======"+ $scope.vm.botSelectType);
                     if(($(value).val()==$scope.vm.botSelectType)>0){
                         $("#category-type").val($scope.vm.botSelectType);
                         $(value).attr("disabled",null);
@@ -719,7 +690,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         }
         //节点样式转换
         function nodeStyleSwitch(attrType){
-            console.log("===nodeStyleSwitch===");
             if(attrType=="edge"){
                 return "style='color:#ED7D31;'";
             }else{
@@ -728,7 +698,6 @@ angular.module('myApplicationModule').controller('relationalCatalogController',[
         }
         //显示节点描述
         function categoryDescribeView(describeStr){
-            console.log("===describe===");
             if(nullCheck(describeStr)==true){
                 return "title='"+describeStr+"'";
             }

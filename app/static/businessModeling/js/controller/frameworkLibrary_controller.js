@@ -115,15 +115,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 return result;
             },
             onSelect: function(suggestion) {
-                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNodeForFrame(suggestion);
                 $scope.vm.suggestionValue=suggestion.value;
                 $scope.vm.suggestionData=suggestion.data;
             }
         });
         $interval(function(){
-            console.log("===suggestionData===:"+$scope.vm.suggestionData);
-            if($scope.vm.suggestionData){
+            if(nullCheck($scope.vm.suggestionData)==true){
                 var suggestion = new Object();
                 suggestion.value=$scope.vm.suggestionValue;
                 suggestion.data=$scope.vm.suggestionData;
@@ -133,7 +131,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $scope.vm.suggestionData="";
                 }
             }
-        },100);
+        },2000);
         //定位
         function locationForFrame(suggestion){
             var currentNodeId = suggestion.data;
@@ -150,7 +148,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     if(scrollHeight-100>0){
                         offset = (((initHeight+1)/sum)*(scrollHeight-100));
                     }
-                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
@@ -166,7 +163,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             var sum = $(".aside-navs").find("i").length;
             $.each($(".aside-navs").find("i"),function(index,value){
                 if($(value).attr("data-option")==currentNodeId){
-                    console.log(currentNodeId+"===exists===");
                     var lib = $(".libraryFt");
                     var scrollHeight=0;
                     if(lib.length>0){
@@ -185,9 +181,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //搜寻节点
         function searchNodeForFrame(suggestion){
             var currentNodeId = suggestion.data;
-            console.log('currentNodeId:'+currentNodeId);
             var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
-            console.log($(firstNode).next().html()+"======"+$(firstNode).attr("data-option")+'currentNodeId:'+currentNodeId+"======"+$(firstNode).css("backgroundPosition"));
             if($(firstNode).css("backgroundPosition")=="0% 0%"){
                 appendTree(firstNode);
             }else if($(firstNode).parent().parent().next()==null){
@@ -199,7 +193,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $scope.vm.botSelectValue = $(firstNode).next().attr("data-option");
                 $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
                 $(firstNode).next().attr("style","color:black;font-weight:bold;");
-                console.log(1,$scope.vm.botSelectValue);
                 loadFrameLibrary(1,0);
                 $scope.$apply();
             }else{
@@ -213,13 +206,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 if($(value).attr("data-option")==$(node).attr("data-option")){
                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
-                        console.log("===hit===");
                         clearColor();
                         $scope.vm.knowledgeBotVal = $(currNode).next().html();
                         $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
                         $scope.vm.botSelectType = $(currNode).next().attr("type-option");
                         $(currNode).next().attr("style","color:black;font-weight:bold;");
-                        console.log($scope.vm.botSelectValue);
                         loadFrameLibrary(1,0);
                         $scope.$apply();
                         flag = true;
@@ -230,7 +221,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return false;
                         }
                         //展开
-                        console.log("==="+$(currNode).css("backgroundPosition"));
                         if($(currNode).css("backgroundPosition")=="0% 0%"){
                             appendTree(currNode);
                         }else if($(currNode).parent().parent().next()==null){
@@ -275,7 +265,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
 
             },function(){
-                console.log("err or err");
             });
         }
         $(".aside-navs").on("click","span",function(){
@@ -289,14 +278,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }else if(categoryAttributeName=="edge"){
                 $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
-            console.log($scope.vm.botSelectValue);
-            console.log($scope.vm.botSelectType);
             loadFrameLibrary(1,0);
             $scope.$apply();
         });
         //节点样式转换
         function nodeStyleSwitch(attrType){
-            console.log("===nodeStyleSwitch===");
             if(attrType=="edge"){
                 return "style='color:#ED7D31;'";
             }else{
@@ -305,7 +291,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //显示节点描述
         function categoryDescribeView(describeStr){
-            console.log("===describe===");
             if(nullCheck(describeStr)==true){
                 return "title='"+describeStr+"'";
             }
@@ -334,7 +319,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         });
         //清空全选
         function clearSelectAll(){
-            console.log("=====clearSelectAll=====");
             $("#selectAll").attr("checked",false);
             $("#selectAll").prop("checked",false);
         }
@@ -394,7 +378,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
-                            console.log(data.data[i].categoryAttributeName);
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
@@ -402,7 +385,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
                     }
                 },function(err){
-                    console.log(err);
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -465,17 +447,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }
                 $scope.$apply();
             },function(err){
-                console.log(err);
             });
         }
         //修改框架
         function editFrame(item){
-            console.log("======"+$(item)+"======");
             $scope.vm.frameTypeId=item.frameTypeId;
-            console.log("======frameTypeId======"+$scope.vm.frameTypeId);
             $scope.vm.frameInfo=JSON.stringify(item);
             var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
-            console.log(frameInfo);
             //赋值
             assembleFrame();
 
@@ -491,9 +469,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //删除框架
         function deleteFrame(item){
-            console.log("======"+item+"======");
             var frameId = item.frameId;
-            console.log("======delete frame======"+frameId);
             layer.confirm('确认删除？', {
                 btn: ['确认','取消'], //按钮
                 shade: 0.3 //不显示遮罩
@@ -505,10 +481,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         loadFrameLibrary(1,0);
                     }
                 },function(err){
-                    console.log(err);
                 });
             }, function(){
-                console.log("cancel");
             });
         }
 
@@ -624,12 +598,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
         }
 
         function searchByFrameTitle(current,type){
-            console.log("===searchByFrameTitle===");
             if(nullCheck($("#keyWords").val())==true){
                 httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                     "frameCategoryId": $scope.vm.botSelectValue,
@@ -651,14 +623,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                     $scope.$apply();
                 },function(err){
-                    console.log(err);
                 });
             }
         }
 
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                console.log("======="+$("#keyWords").val());
                 if(nullCheck($("#keyWords").val())==true){
                     searchByFrameTitle(current,0);
                 }else{
@@ -682,7 +652,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#frameTitle").val();
                         if(lengthCheck($("#frameTitle").val(),0,50)==false){
                             $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -752,13 +721,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
             return flag;
         }
         //添加表达式
         function addFaq(){
-            console.log("addFaq");
             var dialog = ngDialog.openConfirm({
                 template:"/static/businessModeling/faqNewFrame.html",
                 width:"500px",
@@ -781,7 +748,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if(dialog){
                 $timeout(function(){
                     $("#faqFrameTitle").blur(function(){
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#faqFrameTitle").val();
                         if(lengthCheck($("#faqFrameTitle").val(),0,50)==false){
                             $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -800,7 +766,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //修改表达式
         function updateFaq(){
-            console.log("updateFaq");
             var dialog = ngDialog.openConfirm({
                 template:"/static/businessModeling/updateFaqFrame.html",
                 width:"625px",
@@ -825,7 +790,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $timeout(function () {
                     fillFaqUpdatePage();
                     $("#faqFrameTitle").blur(function(){
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#faqFrameTitle").val();
                         if(lengthCheck($("#faqFrameTitle").val(),0,50)==false){
                             $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -841,7 +805,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     });
                     //单个删除元素
                     $("#faq_extension").on("click",'.del',function(){
-                        console.log("======deletebyelementId======");
                         if($(this).attr("element-id")==null){
                             return;
                         }
@@ -852,7 +815,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             shade:false
                         },function(index){
                             layer.close(index);
-                            console.log("======elementId======"+elementId);
                             httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
                             },function(data){
@@ -860,10 +822,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                     $(obj).remove();
                                 }
                             },function(err){
-                                console.log(err);
                             });
                         },function(){
-                            console.log("cancel");
                         });
                     });
                 }, 100);
@@ -882,16 +842,13 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     $("#concept_title").attr("element-id",$scope.vm.elementIdArray[i]);
                 }else{
                     var originStr = $scope.vm.elementContentArray[i];
-                    console.log("===="+originStr);
                     var idx1 = originStr.indexOf($scope.vm.textAndTagSplit);
                     if(idx1<=0){
                         return;
                     }
                     var originalText = originStr.substring(0,idx1);
-                    console.log("===="+originalText);
                     var tagStr = originStr.substring(idx1+1,originStr.length);
                     var tagArr = tagStr.split($scope.vm.conceptSplit);
-                    console.log("===="+tagArr);
                     var tagHtml = '<div class="tag_box">';
                     for(var j=0;j<tagArr.length;j++){
                         tagHtml+='<span class="tag_s">'+tagArr[j]+'</span>';
@@ -956,7 +913,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //表达式类型数据校验
         function faqValidata(type){
             //框架标题校验
-            console.log($scope.vm.frameTitle);
             if(lengthCheck($scope.vm.frameTitle,0,50)==false){
                 $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                 return false;
@@ -970,7 +926,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             //扩展问题校验
             var length = $(".exten_problem").find("input").filter(":gt(0)").length;
-            console.log(length);
             if(length==0){
                 $("#faqExtendQuestionErrorObj").html("至少应该有一个扩展问题");
                 return false;
@@ -998,7 +953,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
         }
         function faqRequestUpdate(){
@@ -1024,12 +978,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
         }
         //添加概念表达式
         function addConcept(){
-            console.log("addConcept");
             var dialog = ngDialog.openConfirm({
                 template:"/static/businessModeling/conceptNewFrame.html",
                 width:"625px",
@@ -1052,7 +1004,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if(dialog){
                 $timeout(function(){
                     $("#conceptFrameTitle").blur(function(){
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#conceptFrameTitle").val();
                         if(lengthCheck($("#conceptFrameTitle").val(),0,50)==false){
                             $("#conceptFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -1067,7 +1018,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         }
                     });
                     $("#concept_title").blur(function(){
-                        console.log("concept_title");
                         if(lengthCheck($("#concept_title").val(),0,50)==false){
                             $("#conceptTitleErrorObj").html("概念标题为空或超过长度限制50");
                         }else if(isHtmlLabel($("#concept_title").val())){
@@ -1082,7 +1032,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //概念框架验证 0:添加 1:修改
         function conceptValidate(type){
             //框架标题校验
-            console.log($scope.vm.frameTitle);
             if(lengthCheck($scope.vm.frameTitle,0,50)==false){
                 $("#conceptFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                 return false;
@@ -1096,7 +1045,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             //扩展问题校验
             var length = $(".exten_problem").find("input").filter(":gt(0)").length;
-            console.log(length);
             if(length==0){
                 $("#conceptExtendQuestionErrorObj").html("至少应该有一个概念扩展");
                 return false;
@@ -1114,7 +1062,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 if(contentInfo.indexOf($scope.vm.conceptSplit)>0){
                     contentInfo=contentInfo.substring(0,contentInfo.length-1);
                 }
-                console.log("==="+contentInfo);
                 $scope.vm.elementAskContentArray[index]=$scope.vm.defaultString;
                 $scope.vm.elementAttributeIdArray[index]=10026;
                 $scope.vm.elementContentArray[index]=contentInfo;
@@ -1153,12 +1100,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
         }
         //修改概念表达式
         function updateConcept(){
-            console.log("updateConcept");
             var dialog = ngDialog.openConfirm({
                 template:"/static/businessModeling/updateConceptFrame.html",
                 width:"625px",
@@ -1182,7 +1127,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $timeout(function () {
                     fillConceptUpdatePage();
                     $("#conceptFrameTitle").blur(function(){
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#conceptFrameTitle").val();
                         if(lengthCheck($("#conceptFrameTitle").val(),0,50)==false){
                             $("#conceptFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -1197,7 +1141,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         }
                     });
                     $("#concept_title").blur(function(){
-                        console.log("concept_title");
                         if(lengthCheck($("#concept_title").val(),0,50)==false){
                             $("#conceptTitleErrorObj").html("概念标题为空或超过长度限制50");
                         }else if(isHtmlLabel($("#concept_title").val())){
@@ -1208,7 +1151,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     });
                     //单个删除元素
                     $("#concept_extension").on("click",'.del',function(){
-                        console.log("======deletebyelementId======");
                         if($(this).attr("element-id")==null){
                             return;
                         }
@@ -1218,7 +1160,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             btn:['确认','取消'],
                             shade:false
                         },function(){
-                            console.log("======elementId======"+elementId);
                             httpRequestPost("/api/ms/modeling/frame/deleteelementbyid",{
                                 "elementId":elementId
                             },function(data){
@@ -1226,10 +1167,8 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                     $(obj).remove();
                                 }
                             },function(err){
-                                console.log(err);
                             });
                         },function(){
-                            console.log("cancel");
                         });
                     });
                 }, 100);
@@ -1257,12 +1196,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     loadFrameLibrary(1,0);
                 }
             },function(err){
-                console.log(err);
             });
         }
         //添加要素
         function addElement(){
-            console.log("addElement");
             var dialog = ngDialog.openConfirm({
                 template:"/static/businessModeling/factorNewFrame.html",
                 width:"800px",
@@ -1286,7 +1223,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $timeout(function () {
                     //选择全部
                     $("#selectAll").click(function(){
-                        console.log($(this).prop("checked"));
                         if($(this).prop("checked")==true){
                             $.each($("#add-item").find(".sid"),function(index,value){
                                 $(value).prop("checked",true);
@@ -1298,7 +1234,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         }
                     });
                     $("#elementFrameTitle").blur(function(){
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#elementFrameTitle").val();
                         if(lengthCheck($("#elementFrameTitle").val(),0,50)==false){
                             $("#elementFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -1338,7 +1273,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#ele-name-error").attr("style","display:none;");
                         }
                         $.each($("#add-item").find("tr"),function(index,value){
-                            console.log("====="+$(value).find(".ele-name-add").val());
                             if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
                                 $("#ele-name-error").html('要素名称不能与已有要素名称重复');
                                 $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
@@ -1363,7 +1297,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#ele-asked-error").attr("style","display:none;");
                         }
                         $.each($("#add-item").find("tr"),function(index,value){
-                            console.log("====="+$(value).find(".ele-asked-add").val());
                             if($(".ele-asked").val()==$(value).find(".ele-asked-add").val()){
                                 $("#ele-asked-error").html('反问不能与已有反问重复');
                                 $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
@@ -1402,7 +1335,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     });
                     var keyword = "";
                     var keywordarr = $("#ele-concept-autocomplete").val().split(",");
-                    console.log("====keywordarr===="+keywordarr);
                     keyword = keywordarr[keywordarr.length];
                     var conceptParams = {
                         "conceptKeyword":keyword,
@@ -1436,13 +1368,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return result;
                         },
                         onSelect: function(suggestion) {
-                            console.log("==="+JSON.stringify(conceptParams));
-                            console.log('You selected: ' + suggestion.value + ',' + suggestion.data);
                             $scope.vm.relateConcept.put(suggestion.value,suggestion.data);
                             var selectConceptValue = "";
                             if($("#ele-concept-autocomplete").val()!=suggestion.value){
                                 var terms = splitAuto($("#ele-concept-autocomplete").val());
-                                console.log("===terms==="+terms);
                                 for(var i=0;i<terms.length;i++){
                                     if(terms[i]==suggestion.value){
                                         //如果重复不添加
@@ -1458,7 +1387,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 $("#ele-concept-autocomplete").val(selectConceptValue+suggestion.value+",");
                             }
                             var selectConceptId = "";
-                            console.log("===hashMap==="+$scope.vm.relateConcept);
                             var selectedTerms = splitAuto($("#ele-concept-autocomplete").val());
                             for(var i=0;i<selectedTerms.length;i++){
                                 if($scope.vm.relateConcept.get(selectedTerms[i])!=null){
@@ -1466,13 +1394,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 }
                             }
                             selectConceptId=selectConceptId.substring(0,selectConceptId.length-1);
-                            console.log("===selectConceptId==="+selectConceptId);
                             $("#ele-concept-autocomplete").attr("data-option",selectConceptId);
                         },
                         onSearchStart:function(){
-                            console.log("====onSearchStart=====");
                             var selectConceptId = "";
-                            console.log("===hashMap==="+$scope.vm.relateConcept);
                             var selectedTerms = splitAuto($("#ele-concept-autocomplete").val());
                             for(var i=0;i<selectedTerms.length;i++){
                                 if($scope.vm.relateConcept.get(selectedTerms[i])!=null){
@@ -1480,7 +1405,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 }
                             }
                             selectConceptId=selectConceptId.substring(0,selectConceptId.length-1);
-                            console.log("===selectConceptId==="+selectConceptId);
                             $("#ele-concept-autocomplete").attr("data-option",selectConceptId);
                         }
                     });
@@ -1489,7 +1413,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //元素类型验证
         function elementValidate(type){
-            console.log($scope.vm.frameTypeId);
             $scope.vm.frameTitle=$("#elementFrameTitle").val();
             if(lengthCheck($("#elementFrameTitle").val(),0,50)==false){
                 $("#elementFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -1503,7 +1426,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 return false;
             }
             var length = $("#add-item").find("tr").length;
-            console.log(length);
             if(length==0){
                 $("#elementNumberErr").html("至少应该有一个要素");
                 return false;
@@ -1516,13 +1438,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         function elementAssemble(type){
             requestArrayReset();
             $.each($("#add-item").find("tr"),function(index,value){
-                console.log("====="+$(value).find(".ele-name-add").val());
                 $scope.vm.elementAskContentArray[index]=$(value).find(".ele-asked-add").val();
                 $scope.vm.elementAttributeIdArray[index]=$scope.vm.defaultInt;
                 $scope.vm.elementContentArray[index]=$(value).find(".ele-name-add").val();
                 $scope.vm.elementFrameIdArray[index]=$scope.vm.defaultString;
                 $scope.vm.elementMiningTypeIdArray[index]=$(value).find(".mining-type-add").val();
-                console.log("====="+$(value).find(".ele-concept-add").attr("data-option")+"===123");
                 if($(value).find(".ele-concept-add").attr("data-option")==""){
                     $scope.vm.elementRelateConceptArray[index]=$scope.vm.defaultString;
                 }else{
@@ -1560,7 +1480,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
         }
         //元素类型修改请求
@@ -1587,12 +1506,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     }
                 }
             },function(err){
-                console.log(err);
             });
         }
         //修改要素
         function updateElement(){
-            console.log("updateConcept");
             var dialog = ngDialog.openConfirm({
                 template:"/static/businessModeling/updateFactorFrame.html",
                 width:"840px",
@@ -1615,7 +1532,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     fillElementUpdatePage();
                     //选择全部
                     $("#selectAll").click(function(){
-                        console.log($(this).prop("checked"));
                         if($(this).prop("checked")==true){
                             $.each($("#add-item").find(".sid"),function(index,value){
                                 $(value).prop("checked",true);
@@ -1627,7 +1543,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         }
                     });
                     $("#elementFrameTitle").blur(function(){
-                        console.log($scope.vm.frameTypeId);
                         $scope.vm.frameTitle=$("#elementFrameTitle").val();
                         if(lengthCheck($("#elementFrameTitle").val(),0,50)==false){
                             $("#elementFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
@@ -1667,7 +1582,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#ele-name-error").attr("style","display:none;");
                         }
                         $.each($("#add-item").find("tr"),function(index,value){
-                            console.log("====="+$(value).find(".ele-name-add").val());
                             if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
                                 $("#ele-name-error").html('要素名称不能与已有要素名称重复');
                                 $("#ele-name-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
@@ -1692,7 +1606,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             $("#ele-asked-error").attr("style","display:none;");
                         }
                         $.each($("#add-item").find("tr"),function(index,value){
-                            console.log("====="+$(value).find(".ele-asked-add").val());
                             if($(".ele-asked").val()==$(value).find(".ele-asked-add").val()){
                                 $("#ele-asked-error").html('反问不能与已有反问重复');
                                 $("#ele-asked-error").attr("style","display:inline-block;left: 10px;top:30px;z-index:9999;");
@@ -1731,7 +1644,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                     });
                     var keyword = "";
                     var keywordarr = $("#ele-concept-autocomplete").val().split(",");
-                    console.log("====keywordarr===="+keywordarr);
                     keyword = keywordarr[keywordarr.length];
                     var conceptParams = {
                         "conceptKeyword":keyword,
@@ -1765,13 +1677,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                             return result;
                         },
                         onSelect: function(suggestion) {
-                            console.log("==="+JSON.stringify(conceptParams));
-                            console.log('You selected: ' + suggestion.value + ',' + suggestion.data);
                             $scope.vm.relateConcept.put(suggestion.value,suggestion.data);
                             var selectConceptValue = "";
                             if($("#ele-concept-autocomplete").val()!=suggestion.value){
                                 var terms = splitAuto($("#ele-concept-autocomplete").val());
-                                console.log("===terms==="+terms);
                                 for(var i=0;i<terms.length;i++){
                                     if(terms[i]==suggestion.value){
                                         //如果重复不添加
@@ -1787,7 +1696,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 $("#ele-concept-autocomplete").val(selectConceptValue+suggestion.value+",");
                             }
                             var selectConceptId = "";
-                            console.log("===hashMap==="+$scope.vm.relateConcept);
                             var selectedTerms = splitAuto($("#ele-concept-autocomplete").val());
                             for(var i=0;i<selectedTerms.length;i++){
                                 if($scope.vm.relateConcept.get(selectedTerms[i])!=null){
@@ -1795,13 +1703,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 }
                             }
                             selectConceptId=selectConceptId.substring(0,selectConceptId.length-1);
-                            console.log("===selectConceptId==="+selectConceptId);
                             $("#ele-concept-autocomplete").attr("data-option",selectConceptId);
                         },
                         onSearchStart:function(){
-                            console.log("====onSearchStart=====");
                             var selectConceptId = "";
-                            console.log("===hashMap==="+$scope.vm.relateConcept);
                             var selectedTerms = splitAuto($("#ele-concept-autocomplete").val());
                             for(var i=0;i<selectedTerms.length;i++){
                                 if($scope.vm.relateConcept.get(selectedTerms[i])!=null){
@@ -1809,7 +1714,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 }
                             }
                             selectConceptId=selectConceptId.substring(0,selectConceptId.length-1);
-                            console.log("===selectConceptId==="+selectConceptId);
                             $("#ele-concept-autocomplete").attr("data-option",selectConceptId);
                         }
                     });
@@ -1820,12 +1724,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         function fillElementUpdatePage(){
             for(var i=0;i<$scope.vm.elementIdArray.length;i++){
                 var originStr = $scope.vm.elementRelateConceptArray[i];
-                console.log("===="+originStr);
                 var conceptValue = "";
                 var idx1 = originStr.indexOf($scope.vm.textAndTagSplit);
                 if(idx1>=0){
                     var conceptValueArr = originStr.split($scope.vm.conceptSplit);
-                    console.log("===="+conceptValueArr);
 
                     for(var j=0;j<conceptValueArr.length;j++){
                         httpRequestPostAsync("/api/ms/modeling/frame/searchconceptbyid",{
@@ -1835,13 +1737,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                                 conceptValue+=data.conceptWithWeight.name+",";
                             }
                         },function(err){
-                            console.log(err);
                         });
                     }
                     conceptValue=conceptValue.substring(0,conceptValue.length-1);
                 }
 
-                console.log("===conceptValue==="+conceptValue);
                 var html =  '<tr element-id="'+$scope.vm.elementIdArray[i]+'">'+
                     '   <td><input type="checkbox" class="sid"/></td>'+
                     '   <td><input type="text" style="width: 200px;" class="input_text ele-name-add" disabled="disabled" value="'+$scope.vm.elementContentArray[i]+'"/></td>'+
@@ -1876,7 +1776,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             layer.msg(data.info);
             if(data.status==$scope.vm.success){
-                console.log("===success===");
                 return true;
             }
             return false;
@@ -1898,7 +1797,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         //概念打标
         function concept_marking(){
             $.each($(".exten_problem").find("input").filter(":eq(0)"),function(index,value){
-                console.log("==========="+$(value).val());
                 if(lengthCheck($(value).val(),0,255)==false){
                     $("#conceptExtendQuestionErrorObj").html("概念扩展不能为空或长度超过255");
                     return true;
@@ -1913,7 +1811,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 }
                 var flag = false;
                 $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index1,value1){
-                    console.log($(value1).val());
                     if($(value).val()==$(value1).val()){
                         $("#conceptExtendQuestionErrorObj").html("不能与已有概念扩展重复");
                         flag = true;
@@ -1944,7 +1841,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                         $(value).val('');
                     });
                 },function(err){
-                    console.log(err);
                     $("#conceptExtendQuestionErrorObj").html("打标失败，请正确发布节点后再进行打标操作!");
                 });
             });
@@ -1972,7 +1868,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //添加表格子元素
         function addEle(){
-            console.log("addEle");
             var eleName = $(".ele-name").val();
             if(lengthCheck(eleName,0,50)==false){
                 $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
@@ -1988,7 +1883,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             var flag1 = false;
             $.each($("#add-item").find("tr"),function(index,value){
-                console.log("====="+$(value).find(".ele-name-add").val());
                 if(eleName==$(value).find(".ele-name-add").val()){
                     $("#ele-name-error").html('要素名称不能与已有要素名称重复');
                     $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999");
@@ -2017,7 +1911,6 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             }
             var flag2 = false;
             $.each($("#add-item").find("tr"),function(index,value){
-                console.log("====="+$(value).find(".ele-asked-add").val());
                 if(eleAsked==$(value).find(".ele-asked-add").val()){
                     $("#ele-asked-error").html('反问不能与已有反问重复');
                     $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
@@ -2031,14 +1924,11 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             $("#ele-asked-error").attr("style","display:none;");
             var relateConceptIds = "";
             var relateConceptVals = "";
-            console.log("====="+$(".ele-concept").attr("data-option"));
             if($(".ele-concept").attr("data-option")==undefined || $(".ele-concept").attr("data-option")==""){
 
             }else{
                 relateConceptIds = $(".ele-concept").attr("data-option");
-                console.log($(".ele-concept").attr("data-option"));
                 relateConceptVals = $(".ele-concept").val();
-                console.log($(".ele-concept").val());
                 relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
                 var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
                 if(lengthCheck(sumConceptStr,0,255)==false){
@@ -2097,14 +1987,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
         //删除表格子元素
         function delEle(){
-            console.log("delEle");
             layer.confirm("确认删除？",{
                 btn:['确认','取消'],
                 shade:false
             },function(index){
                 layer.close(index);
                 $.each($("#add-item").find(".sid"),function(index,value){
-                    console.log($(value).prop("checked"));
                     if($(value).prop("checked")==true){
                         if ($(value).parent().parent().attr("element-id")!=null) {
                             httpRequestPostAsync("/api/ms/modeling/frame/deleteelementbyid",{
@@ -2115,14 +2003,12 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
 
                                 }
                             },function(err){
-                                console.log(err);
                             });
                         }
                         $(value).parent().parent().remove();
                     }
                 });
             },function(){
-                console.log("cancel");
             });
         }
         function splitAuto(val) {

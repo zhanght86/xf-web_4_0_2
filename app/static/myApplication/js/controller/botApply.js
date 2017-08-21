@@ -81,7 +81,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
             "categoryAttributeName":"node",
             "categorySceneId":categorySceneId
         };
-        console.log("========"+toCategoryLibraryString(params));
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
             serviceUrl: "/api/ms/modeling/categorylibrary/searchbycategoryname",
@@ -104,15 +103,13 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 return result;
             },
             onSelect: function(suggestion) {
-                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 searchNodeForBot(suggestion);
                 $scope.vm.suggestionValue=suggestion.value;
                 $scope.vm.suggestionData=suggestion.data;
             }
         });
         $interval(function(){
-            console.log("===suggestionData===:"+$scope.vm.suggestionData);
-            if($scope.vm.suggestionData){
+            if(nullCheck($scope.vm.suggestionData)==true){
                 var suggestion = new Object();
                 suggestion.value=$scope.vm.suggestionValue;
                 suggestion.data=$scope.vm.suggestionData;
@@ -122,7 +119,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     $scope.vm.suggestionData="";
                 }
             }
-        },100);
+        },2000);
         function locationForBot(suggestion){
             var currentNodeId = suggestion.data;
             var initHeight = 0;
@@ -138,7 +135,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     if(scrollHeight-100>0){
                         offset = (((initHeight+1)/sum)*(scrollHeight-100));
                     }
-                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
@@ -163,7 +159,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     if(scrollHeight-100>0){
                         offset = (((initHeight+1)/sum)*(scrollHeight-100));
                     }
-                    console.log("===location==="+offset+"===="+sum);
                     $(".libraryFt").animate({
                         scrollTop:offset+"px"
                     },800);
@@ -179,7 +174,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
             var sum = $("#library").find("i").length;
             $.each($("#library").find("i"),function(index,value){
                 if($(value).attr("data-option")==currentNodeId){
-                    console.log(currentNodeId+"===exists===");
                     var lib = $(".libraryFt");
                     var scrollHeight=0;
                     if(lib.length>0){
@@ -198,9 +192,7 @@ angular.module('myApplicationModule').controller('botApplyController', [
         //搜寻节点
         function searchNodeForBot(suggestion){
             var currentNodeId = suggestion.data;
-            console.log('currentNodeId:'+currentNodeId);
             var firstNode = $("#library").find("i").filter(":eq(0)");
-            console.log($(firstNode).next().html()+"======"+$(firstNode).attr("data-option")+'currentNodeId:'+currentNodeId+"======"+$(firstNode).css("backgroundPosition"));
             if($(firstNode).css("backgroundPosition")=="0% 0%"){
                 appendLibraryTree(firstNode);
             }else if($(firstNode).parent().parent().next()==null){
@@ -213,8 +205,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
                 $scope.vm.categoryLibraryAttributeName = $(firstNode).next().attr("node-option");
                 $(firstNode).next().attr("style","color:black;font-weight:bold;");
-                console.log($scope.vm.botLibrarySelectValue);
-                console.log($scope.vm.categoryLibraryAttributeName);
                 $scope.$apply();
             }else{
                 recursionForBot(suggestion,firstNode);
@@ -227,15 +217,12 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 if($(value).attr("data-option")==$(node).attr("data-option")){
                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
-                        console.log("===hit===");
                         clearColorLibrary();
                         $scope.vm.knowledgeBotLibraryVal = $(currNode).next().html();
                         $scope.vm.botLibrarySelectValue = $(currNode).next().attr("data-option");
                         $scope.vm.botSelectType = $(currNode).next().attr("type-option");
                         $scope.vm.categoryLibraryAttributeName = $(currNode).next().attr("node-option");
                         $(currNode).next().attr("style","color:black;font-weight:bold;");
-                        console.log($scope.vm.botLibrarySelectValue);
-                        console.log($scope.vm.categoryLibraryAttributeName);
                         $scope.$apply();
                         flag = true;
                         //跳出
@@ -245,7 +232,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             return true;
                         }
                         //展开
-                        console.log("==="+$(currNode).css("backgroundPosition"));
                         if($(currNode).css("backgroundPosition")=="0% 0%"){
                             appendLibraryTree(currNode);
                         }else if($(currNode).parent().parent().next()==null){
@@ -288,7 +274,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     appendTree(firstNode);
                 }
             },function(){
-                console.log("err or err");
             });
         }
         function initBotLibrary(){
@@ -318,12 +303,10 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     appendLibraryTree(firstNode);
                 }
             },function(){
-                console.log("err or err");
             });
         }
         //节点样式转换
         function nodeStyleSwitch(attrType){
-            console.log("===nodeStyleSwitch===");
             if(attrType=="edge"){
                 return "style='color:#ED7D31;'";
             }else{
@@ -332,7 +315,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
         }
         //显示节点描述
         function categoryDescribeView(describeStr){
-            console.log("===describe===");
             if(nullCheck(describeStr)==true){
                 return "title='"+describeStr+"'";
             }
@@ -348,8 +330,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
             }else if($scope.vm.categoryAttributeName=="edge"){
                 $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
-            console.log($scope.vm.botSelectValue);
-            console.log($scope.vm.categoryAttributeName);
             $scope.$apply()
         });
         $("#library").on("click","span",function(){
@@ -363,8 +343,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
             }else if($scope.vm.categoryLibraryAttributeName=="edge"){
                 $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
-            console.log($scope.vm.botLibrarySelectValue);
-            console.log($scope.vm.categoryLibraryAttributeName);
             $scope.$apply()
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
@@ -402,7 +380,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         that.parent().parent().next().slideDown();
                     }
                 },function(err){
-                    console.log(err);
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -440,7 +417,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         that.parent().parent().next().slideDown();
                     }
                 },function(err){
-                    console.log(err);
                 });
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
@@ -494,8 +470,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
         }
         //套用
         function applyCategory(){
-            console.log($scope.vm.botLibrarySelectValue);
-            console.log($scope.vm.botSelectValue);
             if(applyValid()==false){
                 return;
             }
@@ -509,7 +483,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     initBot();
                 }
             },function(err){
-                console.log(err);
             });
         }
         //套用验证
@@ -519,7 +492,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 layer.msg("请选择要套用的bot节点");
                 return false;
             }
-            console.log($scope.vm.categoryAttributeName+"===="+$scope.vm.categoryLibraryAttributeName);
             if($scope.vm.categoryAttributeName==$scope.vm.categoryLibraryAttributeName){
                 if($scope.vm.categoryAttributeName=="edge"){
                     layer.msg("关系以下必须添加节点");
@@ -531,23 +503,17 @@ angular.module('myApplicationModule').controller('botApplyController', [
             return true;
         }
         $("#category").on("click",".delete",function(){
-            console.log("delete");
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
-            console.log($scope.vm.botInfo);
             botInfoToCategoryAttribute();
             deleteBot();
         });
         $("#library").on("click",".edit",function(){
-            console.log("edit");
             $scope.vm.botLibraryInfo = $(this).parent().attr("bot-info");
-            console.log($scope.vm.botLibraryInfo);
             botLibraryInfoToCategoryAttribute();
             editBotLibrary();
         });
         $("#library").on("click",".delete",function(){
-            console.log("delete");
             $scope.vm.botLibraryInfo = $(this).parent().attr("bot-info");
-            console.log($scope.vm.botLibraryInfo);
             botLibraryInfoToCategoryAttribute();
             deleteBotLibrary();
         });
@@ -572,7 +538,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 reloadBot(data,1);
                             }
                         },function(err){
-                            console.log(err);
                         });
                     }else{
                     }
@@ -619,7 +584,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                         var currPid = $(value).attr("data-option");
                         var length = $(value).parent().find("li").length-1;
                         //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
-                        console.log("==========="+length+"=====");
                         if(length==0 && type==1){
                             $(value).parent().prev().find("i").attr("style","display:none");
                         }
@@ -669,11 +633,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             var obj = $(value).parent().parent().next();
                             var sty = styleSwitch(data.data[0].categoryTypeId,1,data.data[0].categoryAttributeName);
                             sty = sty.substring(7,sty.length-1);
-                            console.log("===="+sty);
-                            console.log("====obj===="+obj);
                             if($(value).parent().parent().next()!=null){
                                 var len = $(value).parent().parent().next().find("li").length;
-                                console.log("====len===="+len);
                                 if(len>0){
                                     $(value).parent().parent().next().append(html);
                                 }else{
@@ -726,7 +687,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
                             }
                         }
-                        console.log("=========="+$("#categoryLibraryNameAdd").val());
                         httpRequestPost("/api/ms/modeling/categorylibrary/add",{
                             "categoryPid": $scope.vm.botLibrarySelectValue,
                             "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
@@ -743,7 +703,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             }
                             $("#categoryLibraryDescribe").val('');
                         },function(err){
-                            console.log(err);
                         });
                     }else{
                     }
@@ -794,7 +753,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     flag = true;
                 }
             },function(err){
-                console.log(err);
             });
             return flag;
         }
@@ -847,7 +805,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             }
                             $("#categoryLibraryDescribe").val('')
                         },function(err){
-                            console.log(err);
                         });
                     }else{
                     }
@@ -875,14 +832,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
                     attrArr[3]={name:"属性",value:162};
                     for(var index=0;index<attrArr.length;index++){
                         if($scope.vm.categoryLibraryAttributeName=="edge"){
-                            console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                             $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                         }else{
                             if((attrArr[index].value==$scope.vm.botSelectType)>0){
-                                console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                                 $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                             }else{
-                                console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                                 $("#categoryLibraryTypeId").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                             }
                         }
@@ -911,7 +865,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                                 reloadBotLibrary(data,1);
                             }
                         },function(err){
-                            console.log(err);
                         });
                     }else{
                     }
@@ -947,7 +900,6 @@ angular.module('myApplicationModule').controller('botApplyController', [
                 $.each($("#library").find("li"),function(index,value){
                     if($(value).find("i").attr("data-option")==$scope.vm.botLibrarySelectValue){
                         //删除以后判断 子级以下是否还有节点 如果没有隐藏下拉开关
-                        console.log("==========="+length+"=====");
                         if(length==0 && type==1){
                             $(value).parent().prev().find("i").attr("style","display:none");
                         }
@@ -1003,11 +955,8 @@ angular.module('myApplicationModule').controller('botApplyController', [
                             }
                             var sty = styleSwitch(data.data[0].categoryTypeId,1,nodeType);
                             sty = sty.substring(7,sty.length-1);
-                            console.log("===="+sty);
-                            console.log("====obj===="+obj);
                             if($(value).parent().parent().next()!=null){
                                 var len = $(value).parent().parent().next().find("li").length;
-                                console.log("====len===="+len);
                                 if(len>0){
                                     $(value).parent().parent().next().append(html);
                                 }else{
@@ -1037,14 +986,11 @@ angular.module('myApplicationModule').controller('botApplyController', [
             attrArr[3]={name:"属性",value:162};
             for(var index=0;index<attrArr.length;index++){
                 if($scope.vm.categoryLibraryAttributeName=="node"){
-                    console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                     $("#categoryLibraryTypeIdAdd").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                 }else{
                     if((attrArr[index].value==$scope.vm.botSelectType)>0){
-                        console.log("0==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                         $("#categoryLibraryTypeIdAdd").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                     }else{
-                        console.log("1==="+attrArr[index].value+"=="+$scope.vm.botSelectType);
                         $("#categoryLibraryTypeIdAdd").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
                     }
                 }

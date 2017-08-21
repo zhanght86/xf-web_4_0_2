@@ -671,6 +671,20 @@ knowledge_static_web
                     }
                 }
             })
+            //文档库
+            .state("materialManagement.documentLibrary", {
+                url: "/documentLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/documentLibrary/documentLibrary.html',
+                        controller: "documentLibraryController"
+                    }
+                }
+            })
             //知识管理knowledgeManagement
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",
