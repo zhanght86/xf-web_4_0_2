@@ -25,7 +25,7 @@
         <div class="pic_box_wrap clearfix">
             <table class="pic_tab">
                 <tr class="tr1">
-                    <td width="5%"><input type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/> </td>
+                    <td width="5%"><input type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"  /> </td>
                     <td width="22%">图片预览</td>
                     <td width="23%">图片名称</td>
                     <td width="12%">文件大小</td>
@@ -34,7 +34,7 @@
                     <td width="13%">操作</td>
                 </tr>
                 <tr ng-repeat="item in vm.imageList.objs">
-                    <td><input type="checkbox"  ng-checked="vm.pictureIds.inArray(item.pictureId)" /></td>
+                    <td><input type="checkbox"  ng-checked="vm.pictureIds.inArray(item.pictureId)" ng-click="vm.selectSingle(item.pictureId)"/></td>
                     <td>
                         <div >
                             <img ng-src="/img/{{item.pictureUrl}}" />
