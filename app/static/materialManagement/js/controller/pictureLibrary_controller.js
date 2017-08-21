@@ -11,7 +11,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             imageList : [] ,        //所有图片列表
             removeImg : removeImg ,//刪除
             paginationConf : {
-                                pageSize: 8,//第页条目数
+                                pageSize: 4,//第页条目数
                                 pagesLength: 10,//分页框数量
                              },
             changeName:changeName,
@@ -49,18 +49,24 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         function  napSearch(){
             getPicList(1) ;
         }
-            function selectAll(items){
-            alert(1111)
+        //全选
+            function selectAll(){
+           // alert(1111)
             if($scope.vm.isSelectAll){
                 $scope.vm.isSelectAll = false ;
                 $scope.vm.pictureIds = [] ;
             }else{
                 $scope.vm.isSelectAll = true ;
                 $scope.vm.pictureIds = [] ;
-                angular.forEach(items,function(val){
+                angular.forEach($scope.vm.imageList.objs,function(val){
                     $scope.vm.pictureIds.push(val.pictureId)
                 });
             }
+        }
+        //全选清空；
+        function initBatchTest(){
+            $scope.vm.pictureIds = [] ;
+            $scope.vm.isSelectAll = false;
         }
 
 
@@ -74,6 +80,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 },function(data){
                     if(data.status == 200){ 
                         layer.msg("图片删除成功") ;
+                        initBatchTest();
                         getPicList(1)
                     }else if(data.status == 500){
                         layer.msg("图片删除失败") ;
@@ -122,6 +129,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
+                    initBatchTest();
                     getPicList(current);
                 }, 100)
 
