@@ -19,13 +19,13 @@
                     <input type="button" value=""  ng-click="vm.napSearch()" class="L tw_btn " />
                 </span>
                 <button class="L btn1 btn1_blue mr-10"  ng-click="vm.exportExcel()">导出</button>
-                <button class="L btn1 btn_delete">批量删除</button>
+                <button class="L btn1 btn_delete"  ng-click="vm.batchDeletePicture()">批量删除</button>
             </div>
         </div>
         <div class="pic_box_wrap clearfix">
             <table class="pic_tab">
                 <tr class="tr1">
-                    <td width="5%"><input type="checkbox" /> </td>
+                    <td width="5%"><input type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/> </td>
                     <td width="22%">图片预览</td>
                     <td width="23%">图片名称</td>
                     <td width="12%">文件大小</td>
@@ -34,7 +34,7 @@
                     <td width="13%">操作</td>
                 </tr>
                 <tr ng-repeat="item in vm.imageList.objs">
-                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox"  ng-checked="vm.pictureIds.inArray(item.pictureId)" /></td>
                     <td>
                         <div >
                             <img ng-src="/img/{{item.pictureUrl}}" />

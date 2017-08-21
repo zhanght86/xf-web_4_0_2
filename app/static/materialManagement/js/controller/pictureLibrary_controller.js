@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('materialManagement').controller('pictureLibraryController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
+    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout","$window",
+    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout,$window) {
         $state.go("materialManagement.pictureLibrary");
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
@@ -15,9 +15,13 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                                 pagesLength: 10,//分页框数量
                              },
             changeName:changeName,
+            pictureIds : [],
             pictureName:null,
             napSearch:napSearch,
             exportExcel:exportExcel,
+            batchDeletePicture:batchDeletePicture,
+            isSelectAll  : false ,  // 全选 删除
+            selectAll : selectAll  ,//選擇全部
 
         };
         getPicList(1) ;
@@ -44,6 +48,19 @@ angular.module('materialManagement').controller('pictureLibraryController', [
 
         function  napSearch(){
             getPicList(1) ;
+        }
+            function selectAll(items){
+            alert(1111)
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false ;
+                $scope.vm.pictureIds = [] ;
+            }else{
+                $scope.vm.isSelectAll = true ;
+                $scope.vm.pictureIds = [] ;
+                angular.forEach(items,function(val){
+                    $scope.vm.pictureIds.push(val.pictureId)
+                });
+            }
         }
 
 
@@ -77,6 +94,11 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
             $window.open(url,"_blank") ;
         }
+
+        function batchDeletePicture(){
+
+        }
+
 
 
         function updateImg(){
