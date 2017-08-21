@@ -17,6 +17,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             changeName:changeName,
             pictureName:null,
             napSearch:napSearch,
+            exportExcel:exportExcel,
 
         };
         getPicList(1) ;
@@ -66,6 +67,17 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }, function(){
             });
         }
+
+        /**
+         * 图片导出
+         */
+        function exportExcel(){
+            var urlParams =
+                "?applicationId="+APPLICATION_ID;
+            var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
+            $window.open(url,"_blank") ;
+        }
+
 
         function updateImg(){
             httpRequestPost("/api/ms/picture/updatePicture",{
