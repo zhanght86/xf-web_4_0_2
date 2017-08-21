@@ -22,6 +22,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             queryAccessDataByTime : queryAccessDataByTime ,
             isTimerChartShow : true ,
             exportByTime : exportByTime ,
+            exportByChannel : exportByChannel,
 
             //访问渠道
             accessSearchTimeType : 1  ,  //渠道time类型
@@ -182,6 +183,27 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
         //*********************************************************************************************************************************8//
         function exportByTime(){
             httpRequestPost("/api/analysis/access/export",{
+                "applicationId":APPLICATION_ID ,
+                "startTime":$scope.vm.timerSearchStartTime ,
+                "endTime":$scope.vm.timerSearchEndTime ,
+                "requestTimeType" : $scope.vm.TimerSearchTimeType ,
+                "dimensionId" : $scope.vm.dimensionId,
+                "channelId" : $scope.vm.channelId
+            },function(data){
+                console.log(data)
+                if(data.status==500){
+                    //layer.msg("导出失败")
+                    console.log("导出失败");
+                }else{
+                    //alert(data.data);
+                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                }
+                console.log();
+
+            },function(err){})
+        }
+        function exportByChannel(){
+            httpRequestPost("/api/analysis/access/exportByChannel",{
                 "applicationId":APPLICATION_ID ,
                 "startTime":$scope.vm.timerSearchStartTime ,
                 "endTime":$scope.vm.timerSearchEndTime ,

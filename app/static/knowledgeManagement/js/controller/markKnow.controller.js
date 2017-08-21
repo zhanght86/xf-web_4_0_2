@@ -864,7 +864,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         function getPicList(index){
             httpRequestPost("/api/ms/picture/queryPicture",{
                 "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
-                "pageSize": $scope.vm.imgPaginationConf.pageSize
+                "pageSize": $scope.vm.imgPaginationConf.pageSize ,
+                "applicationId":APPLICATION_ID
             },function(data){
                 if(data.status == 200){
                     $scope.$apply(function(){
@@ -881,7 +882,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         function getVoiceList(index){
             httpRequestPost("/api/ms/voiceManage/queryVioce ",{
                 "index": (index-1)*$scope.vm.voicePaginationConf.pageSize,
-                "pageSize": $scope.vm.voicePaginationConf.pageSize
+                "pageSize": $scope.vm.voicePaginationConf.pageSize ,
+                "applicationId":APPLICATION_ID
             },function(data){
                 if(data.status == 200){
                     $scope.$apply(function(){

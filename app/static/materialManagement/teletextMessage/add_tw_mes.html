@@ -6,14 +6,19 @@
                 <p class="mb20">图文列表</p>
                 <div class="bd  pd-10"  style="background:#fff;">
                     <dl class="pr add_tw_dl" >
-                        <dt><img src="../../../images/u1134.png" /></dt>
+                        <dt>
+                            <img ng-if="vm.imgSelected" ng-src="/img/{{vm.imgSelected.url}}" />
+                            <img ng-if="!vm.imgSelected" src="../../../images/u1134.png" />
+                        </dt>
                         <dd class="pa">
                             <span></span>
-                            <p>标题</p>
+                            <p style="text-align: center;width:96%" ng-bind="vm.imgSelected?vm.imgSelected.name:'未选择图片'"></p>
                         </dd>
                     </dl>
                 </div>
             </div>
+
+            <div id="myEditor"></div>
             <div class="R tw_mes_r">
                 <p class="mt10">图文内容</p>
                 <div class="tit mt10 mb20">
