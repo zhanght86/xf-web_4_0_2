@@ -18,6 +18,8 @@ knowledge_static_web.controller('ApplicationController',
                 //const for Downstream
                     headImage : $cookieStore.get("robotHead") ,
                     applicationName : APPLICATION_NAME,
+                    channelList : "",
+                    dimensionList : "",
                 //method for DownStream simple
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
@@ -97,11 +99,24 @@ knowledge_static_web.controller('ApplicationController',
                 }
             }
             //獲取纬度
+            void function(){
+                //var dimensions = [] ;
+                knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
+                    function(data) {
+                        if(data.data){
+                            $scope.master.dimensionList = data.data ;
+                        }
+                    }, function(error) {
+                        console.log(error)
+                    });
+                //return dimensions ;
+            }()
             function getDimensions(self,arr){
                 //var dimensions = [] ;
                 knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
+                            $scope.master.dimensionList = data.data ;
                             angular.forEach(arr,function(item){
                                 self.vm[item] = data.data
                             }) ;
@@ -112,12 +127,25 @@ knowledge_static_web.controller('ApplicationController',
                     });
                 //return dimensions ;
             }
+            void function(){
+                //var  channels = [] ;
+                knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
+                    function(data) {
+                        if(data.data){
+                            $scope.master.channelList = data.data ;
+                        }
+                    }, function(error) {
+                        console.log(error) ;
+                    });
+                //return   channels ;
+            }()
             //获取渠道
             function getChannels(self,arr){
                 //var  channels = [] ;
                 knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
+                            $scope.master.channelList = data.data ;
                             angular.forEach(arr,function(item){
                                 self.vm[item] = data.data
                             }) ;

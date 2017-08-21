@@ -23,7 +23,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
         function getVoiceList(index){
             httpRequestPost("/api/ms/voiceManage/queryVioce ",{
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                "pageSize": $scope.vm.paginationConf.pageSize ,
+                "applicationId":APPLICATION_ID
             },function(data){
                 if(data.status == 200){
                     $scope.$apply(function(){

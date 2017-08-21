@@ -465,7 +465,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                             //$scope.vm.extensionTitle = "" ;
                             $scope.vm.extensions.push(
                                 {"extensionQuestionTitle" : $scope.vm.title ,
-                                "extensionQuestionType" : 60}); 
+                                "extensionQuestionType" : 60});
                             $scope.$apply()
                         }
                         //console.log(data);

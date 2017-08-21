@@ -26,7 +26,6 @@ angular.module('materialManagement').controller('teletextMessageController', [
                 pageSize:$scope.vm.paginationConf.pageSize,
                 graphicMessageTitle:$scope.vm.titAuthor,
                 // graphicMessageAuthor:$scope.vm.titAuthor
-
             },function(data){
                 if(data.status == 500){
                     layer.msg("请求失败",{time:1000});
@@ -40,7 +39,6 @@ angular.module('materialManagement').controller('teletextMessageController', [
                         console.log($scope.vm.paginationConf)
                     })
                 }
-
             },function(error){
                 console.log(error);
             })  ;

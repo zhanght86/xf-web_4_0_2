@@ -33,11 +33,12 @@ knowledge_static_web.directive("teletextUpload", ["$parse","$state", function($p
                 console.log("上传失败")
             });
             uploader.on('uploadSuccess', function (file,response) {
+                console.log(response)
                 if(response.status == 500){
                     layer.msg("模板错误")
                 }else{
                     layer.msg("上传成功");
-                    $state.reload() ;
+                    //$state.reload() ;
                 }
                 console.log(response)
             });

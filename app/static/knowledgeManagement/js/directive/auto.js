@@ -25,6 +25,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
         replace: true,
         //require: 'ngModel',
         link: function ($scope, elem, attr, ctrl) {
+
             $scope.search = " ";
             $scope.flag = false;
             //$scope.$apply(function(){
@@ -35,6 +36,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             source.id = [];
             source.name = [];
             var timer = $interval(function(){
+                console.log($scope.source) ;
                   if($scope.source){
                       $interval.cancel(timer);
                       angular.forEach($scope.source,function(item){
