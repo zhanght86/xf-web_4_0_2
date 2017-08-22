@@ -35,9 +35,9 @@
                 <tr ng-repeat="item in vm.voiceList.objs">
                     <td><input type="checkbox" /></td>
                     <td>{{item.voiceName}}</td>
-                    <td>140.3kb</td>
-                    <td>2017-08-15</td>
-                    <td>zhangzheng</td>
+                    <td>{{item.voiceSize}}</td>
+                    <td>{{item.voiceModifyTime}}</td>
+                    <td>{{item.voiceUserName}}</td>
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>
                         <a href="javascript:;" class="c_red" ng-click="vm.removeVoice(item,$index)">删除</a>
