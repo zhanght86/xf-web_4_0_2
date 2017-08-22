@@ -51,7 +51,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             getPicList(1) ;
         }
         //全选
-            function selectAll(){
+        function selectAll(){
             if($scope.vm.isSelectAll){
                 $scope.vm.isSelectAll = false ;
                 $scope.vm.pictureIds = [] ;
@@ -95,7 +95,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 },function(data){
                     if(data.status == 200){ 
                         layer.msg("图片删除成功") ;
-                      //  initBatchTest();
+
                         getPicList(1)
                     }else if(data.status == 500){
                         layer.msg("图片删除失败") ;
@@ -116,7 +116,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
             $window.open(url,"_blank") ;
         }
-     //批量删除
+       //批量删除
         function batchDeletePicture(){
            console.log($scope.vm.pictureIds);
             if(!$scope.vm.pictureIds.length){
@@ -130,7 +130,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     },function(data){
                         if(data.status == 200){
                             layer.msg("图片删除成功") ;
-                            //  initBatchTest();
+                            initBatchTest();
                             getPicList(1)
                         }else if(data.status == 500){
                             layer.msg("图片删除失败") ;
@@ -144,9 +144,20 @@ angular.module('materialManagement').controller('pictureLibraryController', [
 
         }
 
+        var timeout ;
+        $scope.$watch('vm.paginationConf.currentPage', function(current){
+            if(current){
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    initBatchTest();
+                    getPicList(current);
+                }, 100)
 
-
-
+            }
+        },true);
+        //
         function updateImg(){
             httpRequestPost("/api/ms/picture/updatePicture",{
                 "pictureName":$scope.vm.pictureName,
@@ -161,20 +172,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 console.log(err)
             }) ;
         }
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    initBatchTest();
-                    getPicList(current);
-                }, 100)
-
-            }
-        },true);
-
         //修改名称
         function changeName(item){
             $scope.vm.pictureName=item.pictureName;
