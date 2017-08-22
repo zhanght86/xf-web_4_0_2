@@ -35,9 +35,9 @@
                 <tr ng-repeat="item in vm.voiceList.objs">
                     <td><input type="checkbox" /></td>
                     <td>{{item.voiceName}}</td>
-                    <td>140.3kb</td>
-                    <td>2017-08-15</td>
-                    <td>zhangzheng</td>
+                    <td>{{item.voiceSize}}</td>
+                    <td>{{item.voiceModifyTime}}</td>
+                    <td>{{item.voiceUserName}}</td>
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>
                         <a href="javascript:;" class="c_red" ng-click="vm.removeVoice(item,$index)">删除</a>
@@ -57,8 +57,15 @@
             </table>
 
         </div>
-        <div class="tr"><span >本页<b>0</b>条，共有<b>{{vm.voiceList.total}}</b>条</span></div>
-        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+
+        <div class="cl">
+            <div class="L pd-20">
+                <span >本页<b>{{vm.voiceList.objs.length}}</b>条，共有<b>{{vm.voiceList.total}}</b>条</span>
+            </div>
+            <div class="R">
+                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+            </div>
+        </div>
     </div>
 </div>
 <style>

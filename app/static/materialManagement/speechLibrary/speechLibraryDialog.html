@@ -3,49 +3,20 @@
         <span class="framework_s">语音标题：</span>
         <input type="text" class="bd input-text" ng-model="vm.voiceTitle"/>
     </div>
-    <!--<div class="framework mb-10">-->
-        <!--<span class="framework_s">语音分类：</span>-->
-        <!--<div class="pr voice_classific">-->
-            <!--<p class="bd"  ng-click="vm.showUl=!vm.showUl"></p>-->
-            <!--<ul class="voice_classific_ul clearfix bd" ng-hide="vm.showUl">-->
-                <!--<li>原创dsasdasdasd</li>-->
-                <!--<li>微电影</li>-->
-                <!--<li>网络剧</li>-->
-                <!--<li>音乐</li>-->
-                <!--<li>搞笑</li>-->
-                <!--<li>动漫</li>-->
-                <!--<li>游戏</li>-->
-                <!--<li>资讯</li>-->
-                <!--<li>拍客</li>-->
-                <!--<li>新闻</li>-->
-                <!--<li>体育</li>-->
-                <!--<li>财经</li>-->
-                <!--<li>科技</li>-->
-                <!--<li>汽车</li>-->
-                <!--<li>房产</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
+
     <div class="framework mb-10">
         <span class="framework_s">语音上传：</span>
         <div class="bd voice_upload_div  mb-10">
             <div class="p10">
-                <!--<dl class="voice_upload_dl clearfix bd">-->
-                    <!--<dt class="L">-->
-                        <!--<img src="../../../images/u1134.png" />-->
+
                         <span voice-upload></span>
-                    <!--</dt>-->
-                    <!--<dd class="L">-->
-                        <!--<p>无标题</p>-->
-                        <!--<p>3.34</p>-->
-                    <!--</dd>-->
-                <!--</dl>-->
+
             </div>
             <div class="clearfix pd-5" style="border-top:1px solid #eee;">
                 <p class="L">格式支持mp3、amr
                     <!--，文件大小不超过2M，语音时长不超过30秒-->
                 </p>
-                <!--<button class="R btn1 btn1_blue">重新上传</button>-->
+
             </div>
         </div>
         <button class="btn1 btn1_blue" id="startUpload" ng-click="vm.isUploadStart=true">提交</button>

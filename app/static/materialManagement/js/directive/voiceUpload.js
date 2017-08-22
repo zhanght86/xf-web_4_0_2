@@ -19,6 +19,7 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     // swf文件路径
                     swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                     server: "/api/ms/voiceManage/uploadVoice",
+
                     pick: '#picker',
                 });
                 uploader.on( 'fileQueued', function( file ) {
@@ -57,7 +58,9 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                             layer.msg("请添加语音标题")
                         }else{
                             uploader.options.formData = {
-                                "voiceName" : scope.vm.voiceTitle
+                                "voiceName" : scope.vm.voiceTitle,
+                                "applicationId":APPLICATION_ID,
+                                "voiceUserName":USER_NAME
                             } ;
                             uploader.upload() ;
                         }
