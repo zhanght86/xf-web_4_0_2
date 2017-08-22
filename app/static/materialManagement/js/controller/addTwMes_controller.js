@@ -6,18 +6,22 @@ angular.module('materialManagement').controller('addTwMesController', [
     '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout",
     function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
+
         $scope.vm = {
-            title : '',
-            author :'',
-            selectLocalImg:selectLocalImg,
-            imageList : "" ,
-            imgPaginationConf : {
+            raphicMessageId :"" , //图文知识id 编辑使用
+            title : '',                     //标题
+            author :'',                     //作者
+            link : "" ,                      // 链接
+            selectLocalImg:selectLocalImg,  //选择本地图片
+            imageList : "" ,         //图片库所有图片
+            imgPaginationConf : {    //图片库分页
                 pageSize: 8,//第页条目数
                 pagesLength: 10//分页框数量
             },
-            imgSelected : "" ,
-            selectImage : selectImage ,
-            storeKnow : storeKnow
+            imgSelected : "" ,       //已选择图片库选择封面图片
+            selectImage : selectImage , //选择图片库图片
+            storeKnow : storeKnow ,  //保存知识
+            ueditorText : "",    //编辑器内容
         };
 
         //设置富文本编辑器
@@ -58,18 +62,12 @@ angular.module('materialManagement').controller('addTwMesController', [
             ,zIndex : 9999     //编辑器层级的基数,默认是900
             ,enableAutoSave: false
             ,autoSyncData: false
-            ,saveInterval: 5000000, // 将其设置大点，模拟去掉自动保存功能
+            ,saveInterval: 5000000// 将其设置大点，模拟去掉自动保存功能
         } ;
-        //UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-        //UE.Editor.prototype.getActionUrl = function(action) {
-        //    return '/api/ms/graphicMessage/upload';
-        //    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadvideo') {
-        //
-        //    } else {
-        //        return this._bkGetActionUrl.call(this, action);
-        //    }
-        //}
-
+         // 获取编辑图文知识
+         if($stateParams.imgTextId){
+             getImgText($stateParams.imgTextId)
+         }
         //获取本地图片
         getPicList(1) ;
        function getPicList(index){
@@ -103,23 +101,25 @@ angular.module('materialManagement').controller('addTwMesController', [
         },true);
         // 选择图片
         function selectImage(item){
-                $scope.vm.imgSelected = {
-                    "url" : item.pictureUrl ,
-                    "id" : item.pictureId,
-                    "name" : item.pictureName
-                } ;
-            ngDialog.close(ngDialog.latestID) ;
+                $scope.vm.imgSelected = item.pictureUrl ;
+            //$scope.vm.imgSelected = {
+            //        "url" : item.pictureUrl ,
+            //        "id" : item.pictureId,
+            //        "name" : item.pictureName
+            //    } ;
+            ngDialog.close(ngDialog.latestID);
         }
         function selectLocalImg(){
             $scope.master.openNgDialog($scope,"/static/materialManagement/image-text-store/selectImage.html","")
         }
     //    验证标题/api/ms/graphicMessage/checkGraphicTitle
-        function isTitleStandard(title){
+        function isTitleStandard(title,callBack){
             httpRequestPost("/api/ms/graphicMessage/checkGraphicTitle",{
-                "graphicMessageTitle": title,
+                "graphicMessageTitle": title ,
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status == 200){
+                    callBack() ;
                     //标题验证通过
                 }else if(response.status == 500){
                  //layer.msg("标题验证失败")
@@ -137,24 +137,35 @@ angular.module('materialManagement').controller('addTwMesController', [
              graphicMessageTitle	String	是	20	图文标题
              pictureUrl	String	是	20	图片路劲
            */
-        function storeKnow(){
-            httpRequestPost("/api/ms/graphicMessage/insert",{
+        function storeKnow(author,ueditorText,link,title,picUrl,raphicMessageId){
+            // 参数 url
+            var parameter = {
                 "applicationId": APPLICATION_ID ,
-                "graphicMessageAuthor": APPLICATION_ID ,
-                "graphicMessageText": APPLICATION_ID ,
-                "graphicMessageTextLink": APPLICATION_ID ,
-                "graphicMessageTitle": APPLICATION_ID ,
-                "pictureUrl": APPLICATION_ID
-            },function(response){
-                if(response.status == 200){
-                //    保存成功
-                }else if(response.status == 500){
-                //    保存失敗
-                }
-            },function(err){console.log(err)}) ;
+                "graphicMessageAuthor": author,
+                "graphicMessageText": ueditorText ,
+                "graphicMessageTextLink": link ,
+                "graphicMessageTitle": title ,
+                "pictureUrl": picUrl
+            }  ,
+               api;
+            // 根据图文id 判断  url 跟 parameter
+            $scope.vm.raphicMessageId?
+                void function(){
+                    parameter.raphicMessageId = raphicMessageId;
+                    api="/api/ms/graphicMessage/update"}():
+                api="/api/ms/graphicMessage/insert";
+            isTitleStandard($scope.vm.title,function(){
+                httpRequestPost("/api/ms/graphicMessage/insert",parameter,
+                    function(response){
+                    if(response.status == 200){
+                        $state.go("materialManagement.teletextMessage");
+                        //    保存成功
+                    }else if(response.status == 500){
+                        //    保存失敗
+                    }
+                },function(err){console.log(err)}) ;
+            }) ;
         }
-
-
 
         /*
                      编辑
@@ -171,25 +182,6 @@ angular.module('materialManagement').controller('addTwMesController', [
                 }
             },function(error){console.log(err)})
         }
-        //编辑保存知识
-        function updataImgText(){
-            httpRequestPost("/api/ms/graphicMessage/update",{
-                "applicationId": APPLICATION_ID ,
-                "graphicMessageAuthor": APPLICATION_ID ,
-                "graphicMessageText": APPLICATION_ID ,
-                "graphicMessageTextLink": APPLICATION_ID ,
-                "graphicMessageTitle": APPLICATION_ID ,
-                "pictureUrl": APPLICATION_ID ,
-                "raphicMessageId"	:  APPLICATION_ID
-            },function(response){
-                if(response.status == 200){
-                    //    保存成功
-                }else if(response.status == 500){
-                    //    保存失敗
-                }
-            })
-        }
-
     }
 ]);
 

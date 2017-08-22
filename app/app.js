@@ -659,7 +659,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.addtemes", {
-                url: "/addtemes",
+                url: "/addtemes/:imgTextId",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',
