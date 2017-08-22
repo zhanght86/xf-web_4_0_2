@@ -12,7 +12,7 @@
                         </dt>
                         <dd class="pa">
                             <span></span>
-                            <p style="text-align: center;width:96%" ng-bind="vm.imgSelected?vm.imgSelected.name:'未选择图片'"></p>
+                            <p style="text-align: center;width:96%" ng-bind="vm.title" title="{{vm.title}}" ></p>
                         </dd>
                     </dl>
                 </div>
@@ -31,8 +31,8 @@
                 </div>
                 <div class="mt20 mb20" >
                     <!--加载编辑器的容器-->
-                    <!--<script id="container" name="content" type="text/plain" style="width:95%;background:none;border:0;margin:0;min-height: 300px;">这里写你的初始化内容</script>-->
-                    <div class="ueditor" config="vm.config" ng-model="vm.content"></div>
+                   <!--{{vm.ueditorCotent}}-->
+                    <div class="ueditor" config="vm.config" ng-model="vm.ueditorText"></div>
                 </div>
                 <div class="pb20 mb20" style="border-bottom:1px solid #e3e3e3;">
                     <input type="checkbox" />
@@ -53,13 +53,9 @@
                     封面图片显示在正文中
                 </div>
                 <div class="mb10 upload_btndiv">
-                    <button class="mr10 btn1 btn1_blue">提交</button>
+                    <button class="mr10 btn1 btn1_blue" ng-click="vm.storeKnow(vm.author,vm.ueditorText,vm.link,vm.title,vm.imgSelected,vm.raphicMessageId)">提交</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--&lt;!&ndash; 实例化编辑器 &ndash;&gt;-->
-<!--<script type="text/javascript">-->
-    <!--var ue = UE.getEditor('container');-->
-<!--</script>-->
