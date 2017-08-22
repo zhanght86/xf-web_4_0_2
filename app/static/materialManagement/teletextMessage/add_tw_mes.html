@@ -29,15 +29,18 @@
                     <input type="text" placeholder="请输入作者" ng-model="vm.author" maxlength="20" class="input_text mr20 " />
                     <span ><span>{{vm.author.length}}</span>/20</span>
                 </div>
+
                 <div class="mt20 mb20" >
                     <!--加载编辑器的容器-->
-                   <!--{{vm.ueditorCotent}}-->
-                    <div class="ueditor" config="vm.config" ng-model="vm.ueditorText"></div>
+                    <script class="ueditor" config="vm.config" id="ueditor" ng-model="vm.ueditorText" type="text/plain" ng-required="true"></script>
+                    <!--<script id="container" name="content" type="text/plain" style="width:95%;background:none;border:0;margin:0;min-height: 300px;">这里写你的初始化内容</script>-->
+                   <!--{{vm.ueditorText}}-->
+                    <!--<div class="ueditor" config="vm.config" id="ueditor" ng-model="vm.ueditorText"></div>-->
                 </div>
                 <div class="pb20 mb20" style="border-bottom:1px solid #e3e3e3;">
-                    <input type="checkbox" />
+                    <!--<input type="checkbox" />-->
                     原文链接
-                    <input type="text" placeholder="设置原文链接后，图文中的内容将会失效" class="input_text ml20" style="width:500px;border-radius:2px;"/>
+                    <input type="text" placeholder="设置原文链接后，图文中的内容将会失效" ng-model="vm.link" class="input_text ml20" style="width:500px;border-radius:2px;"/>
                 </div >
                 <p class="mb20">发布样式编辑</p>
                 <div class="mb10">
@@ -48,14 +51,20 @@
                     <button teletext-upload class=" btn1" style="padding: 0;"></button>
                     <button class="butn" ng-click="vm.selectLocalImg()">从图片库选择</button>
                 </div>
-                <div class="mb10">
-                    <input type="checkbox" />
-                    封面图片显示在正文中
+                <div class="mb10 upload_btndiv">
+                    <!--<input type="checkbox" />-->
+                    <button class="butn" ng-click="vm.insertCoverImg(vm.imgSelected)">封面图片显示在正文中</button>
+
                 </div>
                 <div class="mb10 upload_btndiv">
-                    <button class="mr10 btn1 btn1_blue" ng-click="vm.storeKnow(vm.author,vm.ueditorText,vm.link,vm.title,vm.imgSelected,vm.raphicMessageId)">提交</button>
+                    <button class="mr10 btn1 btn1_blue" ng-click="vm.storeKnow(vm.title,vm.author,vm.ueditorText,vm.link,vm.imgSelected,vm.raphicMessageId)">提交</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+ <!--实例化编辑器 -->
+<!--<script type="text/javascript">-->
+    <!--var ue = UE.getEditor('container');-->
+    <!--ue.execCommand('inserthtml', "<div>asdf asdf </div>");-->
+<!--</script>-->

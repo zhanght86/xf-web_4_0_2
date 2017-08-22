@@ -42,6 +42,7 @@ http://inhu.net
                   console.error("Please import the local resources of ueditor!");
                   return;
                 }
+                console.log(attr.id)
                 _UEConfig = $S.config ? $S.config : {};
                 _editorId = attr.id ? attr.id : "_editor" + (Date.now());
                 element[0].id = _editorId;
