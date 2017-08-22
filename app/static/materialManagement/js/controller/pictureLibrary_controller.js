@@ -22,7 +22,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             batchDeletePicture:batchDeletePicture,
             isSelectAll  : false ,  // 全选 删除
             selectAll : selectAll  ,//選擇全部
-            selectSingle:selectSingle,
+            
 
         };
         getPicList(1) ;
@@ -62,21 +62,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     $scope.vm.pictureIds.push(val.pictureId)
                 });
             }
-        }
-        //单选删除
-        function  selectSingle(id){
-            if($scope.vm.pictureIds.inArray(id)){
-                $scope.vm.pictureIds.remove(id);
-                $scope.vm.isSelectAll = false;
-            }else{
-                $scope.vm.pictureIds.push(id);
-
-            }
-            if($scope.vm.pictureIds.length==$scope.vm.imageList.length){
-                $scope.vm.isSelectAll = true;
-            }
-            console.log( $scope.vm.pictureIds);
-        }
+        }       
 
         //全选清空；
         function initBatchTest(){
@@ -84,7 +70,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             $scope.vm.isSelectAll = false;
         }
 
-
+        //单个删除 
         function removeImg(item,index){
             layer.confirm('确认删除该图片？', {
                 btn: ['确定','取消'] //按钮
@@ -95,7 +81,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 },function(data){
                     if(data.status == 200){ 
                         layer.msg("图片删除成功") ;
-
                         getPicList(1)
                     }else if(data.status == 500){
                         layer.msg("图片删除失败") ;
