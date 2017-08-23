@@ -590,7 +590,7 @@
 
 .pic_bar .progress{width:100%;height:10px;background:#ccc;position:relative;left:0;top:0;border-radius:12px;overflow:hidden;}
 .pic_bar .progress .bar_span{position:absolute;left:0;top:0;display:block;width:10%;height:100%;background:blue;border-radius:12px;}
-
+.graphicDetails_div img{max-width:100%;}
 
 
 
