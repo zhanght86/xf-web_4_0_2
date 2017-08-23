@@ -21,7 +21,7 @@
             <div class="picture_div bd L" ng-repeat="item in vm.imageList.objs">
                 <dl class="picture_dl teletext_dl " >
                     <!--{{item}}-->
-                    <dt ><a ui-sref="materialManagement.graphicDetails"><img ng-src="/img/{{item.pictureUrl}}"/></a></dt>
+                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.graphicMessageId})"><img ng-src="/img/{{item.pictureUrl}}"/></a></dt>
                     <dd class="cl">
                         <p class="L titp">{{item.graphicMessageTitle}}</p>
                         <span class="R time_span">{{item.graphicUpdateTime |date : 'yyyy-MM-dd '}}</span>

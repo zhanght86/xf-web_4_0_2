@@ -49,7 +49,16 @@ angular.module('businessModelingModule').controller('errorCorrectionConceptManag
          * 加载分页条
          * @type
          */
-        loadCorrectionConceptTable(1);
+        init();
+
+        function init(){
+            $scope.vm.paginationConf = {
+                currentPage: 1,
+                totalItems: 0,
+                pageSize: 0,
+                pagesLength: 8
+            };
+        }
         //请求列表
         function loadCorrectionConceptTable(current){
             httpRequestPost("/api/ms/modeling/concept/correction/listByAttribute",{

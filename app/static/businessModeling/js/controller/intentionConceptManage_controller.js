@@ -46,7 +46,16 @@ angular.module('businessModelingModule').controller('intentionConceptManageContr
          * 加载分页条
          * @type
          */
-        loadForceSegmentConceptTable(1);
+        init();
+
+        function init(){
+            $scope.vm.paginationConf = {
+                currentPage: 1,
+                totalItems: 0,
+                pageSize: 0,
+                pagesLength: 8
+            };
+        }
         //请求列表
         function loadForceSegmentConceptTable(current){
             httpRequestPost("/api/ms/modeling/concept/forceSegment/listByAttribute",{

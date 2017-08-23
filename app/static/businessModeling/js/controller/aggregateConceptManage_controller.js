@@ -49,7 +49,16 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        loadCollectiveConceptTable(1);
+        init();
+
+        function init(){
+            $scope.vm.paginationConf = {
+                currentPage: 1,
+                totalItems: 0,
+                pageSize: 0,
+                pagesLength: 8
+            };
+        }
         //请求列表
         function loadCollectiveConceptTable(current){
             httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",{

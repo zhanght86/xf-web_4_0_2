@@ -1,12 +1,16 @@
 <div  style="max-width:1200px;margin:20px auto 0;">
     <div class="pd-30" style="background:#fff;">
-        <h3 class="f16 mb-20 tc "><b>疯狂的石头:云南腾冲全民寻宝挖玉停不下来(图)</b></h3>
-        <P  class="tr">2016-09-27 张琼琼</P>
+       <a style="cursor: pointer" ui-sref="materialManagement.teletextMessage"><<返回</a>
+        <h3 class="f16 mb-20 tc "><b>{{vm.title}}</b></h3>
+        <P  class="tr">{{vm.graphicCreateTime | date : 'yyyy-MM-dd '}}  {{vm.author}}</P>
         <div>
-            <div class="tc mb-10 graphicDetails_div">
-                <img src="../../../images/u25160.png" style="max-width:100%;"/>
-            </div>
-            <div style="text-indent: 2em;">极边第一城，昔日的腾冲百宝街，家家雕玉件，户户闻机声。当年翡翠商人通过马帮驮回来的原石，开出来品相不佳或加工残留的碎玉，成为修路砌房的基脚，如今老城区改造，挖地一尺必有玉。电筒，锄头，男女老幼，全城挖宝，为玉而动。</div>
+            <!--<div class="tc mb-10 graphicDetails_div">-->
+                <!--<img ng-src="img/{{vm.imgSelected}}" style="max-width:100%;"/>-->
+            <!--</div>-->
+            <div class="imgTextDetail" style="text-indent: 2em;" ng-bind-html="vm.ueditorText | toHtml"></div>
+        </div>
+        <div ng-if="vm.link">
+          阅读原文 <a href="vm.link"></a>
         </div>
     </div>
 </div>

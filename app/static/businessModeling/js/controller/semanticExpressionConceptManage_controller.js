@@ -47,7 +47,16 @@ angular.module('businessModelingModule').controller('semanticExpressionConceptMa
          * 加载分页条
          * @type
          */
-        loadSemanticExpressionConceptTable(1);
+        init();
+
+        function init(){
+            $scope.vm.paginationConf = {
+                currentPage: 1,
+                totalItems: 0,
+                pageSize: 0,
+                pagesLength: 8
+            };
+        }
         //请求列表
         function loadSemanticExpressionConceptTable(current){
             httpRequestPost("/api/ms/modeling/concept/semanticexpression/listByAttribute",{

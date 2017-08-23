@@ -34,7 +34,7 @@
                     <td width="13%">操作</td>
                 </tr>
                 <tr ng-repeat="item in vm.imageList.objs">
-                    <td><input type="checkbox"  /></td>
+                    <td><input type="checkbox"  ng-checked=""/></td>
                     <td>
                         <div >
                             <img ng-src="/img/{{item.pictureUrl}}" />
