@@ -37,6 +37,9 @@ knowledge_static_web.directive("teletextUpload", ["$parse","$state", function($p
                 if(response.status == 500){
                     layer.msg("模板错误")
                 }else{
+                    scope.$apply(function(){
+                        scope.vm.imgSelected = response.data ;
+                    }) ;
                     layer.msg("上传成功");
                     //$state.reload() ;
                 }
