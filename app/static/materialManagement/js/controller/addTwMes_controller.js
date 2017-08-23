@@ -65,6 +65,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         } ;
          // 获取编辑图文知识
          if($stateParams.imgTextId){
+             $scope.vm.raphicMessageId = $stateParams.imgTextId ;
              getImgText($stateParams.imgTextId)
          }
         //获取本地图片
@@ -127,7 +128,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                     }  ,
                     api;
                 // 根据图文id 判断  url 跟 parameter
-                $scope.vm.raphicMessageId?
+                raphicMessageId?
                     void function(){
                         parameter.raphicMessageId = raphicMessageId;
                         api="/api/ms/graphicMessage/update"}():
