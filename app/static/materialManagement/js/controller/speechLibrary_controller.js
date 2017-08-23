@@ -9,7 +9,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
         $scope.vm = {
             getVoiceList : getVoiceList , //获取图片列表
             voiceList : [] ,        //所有声音列表
-            removeVoice : removeVoice , //刪除
+            //removeVoice : removeVoice , //刪除
             paginationConf : {
                 pageSize: 4,//第页条目数
                 pagesLength: 10,//分页框数量
@@ -25,6 +25,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             voiceName :'',
             voiceId : '',
             searchVoice : searchVoice,
+            selectSingle : selectSingle,
         };
 
         getVoiceList(1) ;
@@ -74,26 +75,26 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 console.log(error);
             });
         }
-        function removeVoice(item,index){
-            layer.confirm('确认删除该语音？', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                httpRequestPost("/api/ms/voiceManage/deleteVoice",{
-                    "voiceUrl": item.voiceUrl,
-                    "voiceId": item.voiceId
-                },function(data){
-                    if(data.status == 200){
-                        layer.msg("语音删除成功") ;
-                        getVoiceList(1) ;
-                    }else if(data.status == 500){
-                        layer.msg("语音删除失败") ;
-                    }
-                },function(err){
-                    console.log(err)
-                }) ;
-            }, function(){
-            });
-        }
+        // function removeVoice(item,index){
+        //     layer.confirm('确认删除该语音？', {
+        //         btn: ['确定','取消'] //按钮
+        //     }, function(){
+        //         httpRequestPost("/api/ms/voiceManage/deleteVoice",{
+        //             "voiceUrl": item.voiceUrl,
+        //             "voiceId": item.voiceId
+        //         },function(data){
+        //             if(data.status == 200){
+        //                 layer.msg("语音删除成功") ;
+        //                 getVoiceList(1) ;
+        //             }else if(data.status == 500){
+        //                 layer.msg("语音删除失败") ;
+        //             }
+        //         },function(err){
+        //             console.log(err)
+        //         }) ;
+        //     }, function(){
+        //     });
+        // }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -177,6 +178,21 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     $scope.vm.voiceIds.push(val.voiceId);
                 })
             }
+            console.log($scope.vm.voiceIds);
+        }
+        //单选
+        function selectSingle(id){
+            if($scope.vm.voiceIds.inArray(id)){
+                $scope.vm.voiceIds.remove(id);
+                $scope.vm.isSelectAll = false;
+            }else{
+                $scope.vm.voiceIds.push(id);
+
+            }
+            if($scope.vm.voiceIds.length==$scope.vm.voiceList.objs.length){
+                $scope.vm.isSelectAll = true;
+            }
+            console.log( $scope.vm.voiceIds);
         }
         //全选清空
         function initBatchTest(){
@@ -184,8 +200,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
             $scope.vm.voiceIds=[];
         }
         //批量删除
-        function batchDeleteVoice(){
-            console.log($scope.vm.voiceIds);
+        function batchDeleteVoice(voiceIds){
+            //console.log($scope.vm.voiceIds);
             if(!$scope.vm.voiceIds.length){
                 layer.msg("请选择要删除的语音")
             }else{
@@ -193,7 +209,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     httpRequestPost("/api/ms/voiceManage/batchDeleteVoice",{
-                        "voiceIds": $scope.vm.voiceIds
+                        "voiceIds": voiceIds
                     },function(data){
                         if(data.status == 200){
                             layer.msg("语音删除成功") ;
