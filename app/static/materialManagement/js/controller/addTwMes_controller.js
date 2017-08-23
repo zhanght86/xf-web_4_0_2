@@ -38,12 +38,14 @@ angular.module('materialManagement').controller('addTwMesController', [
                 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
                 'link', 'unlink',
                 // 'anchor',
-                '|', 'imagenone', //'imageleft', 'imageright', 'imagecenter', '|',
-                'simpleupload', 'insertimage', 'emotion',
+                '|'//, 'imagenone' , 'imageleft', 'imageright', 'imagecenter', '|',
+                ,'simpleupload',
+                //'insertimage',
+                'emotion',
                 //'scrawl',
                 'insertvideo',
                 //'music',
-                'attachment', 'map',
+                //'attachment', 'map',
                 //'gmap',
                 'insertframe', //'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
                 'horizontal',
@@ -62,6 +64,10 @@ angular.module('materialManagement').controller('addTwMesController', [
             ,enableAutoSave: false
             ,autoSyncData: false
             ,saveInterval: 5000000// 将其设置大点，模拟去掉自动保存功能
+            ,compressSide:1     //等比压缩的基准，确定maxImageSideLength参数的参照对象。0为按照最长边，1为按照宽度，2为按照高度
+            //scaleEnabled
+            //是否可以拉伸长高,默认true(当开启时，自动长高失效)
+            //,scaleEnabled:false
         } ;
          // 获取编辑图文知识
          if($stateParams.imgTextId){
@@ -139,7 +145,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         function insertCoverImg(url){
             if(url){
                 UE.getEditor('ueditor').focus();
-                UE.getEditor('ueditor').execCommand('inserthtml', '<img src="/img/'+ url+'" style="width:200px;height:120px" alt=""/>');
+                UE.getEditor('ueditor').execCommand('inserthtml', '<img src="/img/'+ url+'" alt=""/>',{style:"width:200px;height:120px;"});
             }else{
                 layer.msg("请先选择封面图片")
             }
