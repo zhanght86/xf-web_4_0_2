@@ -6919,7 +6919,7 @@
                             //设置四周的留边
                         '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
                             // 设置 图片显示大小
-                           'img{width:200px;height:120px}' +
+                           'img{width:200px;height:120px;margin:2px}' +
 
                             //设置默认字体和字号
                             //font-family不能呢随便改，在safari下fillchar会有解析问题
