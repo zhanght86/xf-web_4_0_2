@@ -22,7 +22,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             batchDeletePicture:batchDeletePicture,
             isSelectAll  : false ,  // 全选 删除
             selectAll : selectAll  ,//選擇全部
-            
 
         };
         getPicList(1) ;

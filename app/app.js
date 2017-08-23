@@ -672,7 +672,7 @@ knowledge_static_web
                 }
             })
             .state("materialManagement.graphicDetails", {
-                url: "/graphicDetails",
+                url: "/graphicDetails/:imgTextId",
                 views: {
                     'header': {
                         templateUrl: 'static/home/homePageNav.html',

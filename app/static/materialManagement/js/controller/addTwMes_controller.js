@@ -188,7 +188,6 @@ angular.module('materialManagement').controller('addTwMesController', [
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status == 200){
-                    $scope.vm.graphicMessageId = response.data.graphicMessageId ;
                     $scope.vm.title = response.data.graphicMessageTitle ;
                     $scope.vm.author = response.data.graphicMessageAuthor ;
                     $scope.vm.ueditorText = response.data.graphicMessageText ;
@@ -197,7 +196,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                 }else if(response.status == 500){
                 //    获取失败
                 }
-            },function(error){console.log(err)})
+            },function(error){console.log(error)})
         }
     }
 ]);
