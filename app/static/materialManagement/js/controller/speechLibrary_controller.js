@@ -3,8 +3,8 @@
  * 控制器
  */ 
 angular.module('materialManagement').controller('speechLibraryController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
+    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout","$window",
+    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout,$window) {
         $state.go("materialManagement.speechLibrary");
         $scope.vm = {
             getVoiceList : getVoiceList , //获取图片列表
@@ -17,6 +17,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             uploadSpeech :uploadSpeech,
             voiceTitle :"",
             isUploadStart : false,
+            exportExcel:exportExcel,
             changeName:changeName,
             isSelectAll : false,
             selectAll : selectAll,
@@ -101,6 +102,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
+                    initBatchTest();
                     getVoiceList(current);
                 }, 100)
 
@@ -125,6 +127,15 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     //}
                 }
             });
+        }
+        /**
+         * 图片导出
+         */
+        function exportExcel(){
+            var urlParams =
+                "?applicationId="+APPLICATION_ID;
+            var url = "/api/ms/voiceManage/exportExcel"+urlParams  ;//请求的url
+            $window.open(url,"_blank") ;
         }
 
         //修改名称

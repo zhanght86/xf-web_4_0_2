@@ -6917,7 +6917,10 @@
                         '<html xmlns=\'http://www.w3.org/1999/xhtml\' class=\'view\' ><head>' +
                         '<style type=\'text/css\'>' +
                             //设置四周的留边
-                        '.view{padding:0;word-wrap:break-word;cursor:text;height:120px;width:200px}\n' +
+                        '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
+                            // 设置 图片显示大小
+                           'img{width:200px;height:120px;margin:2px}' +
+
                             //设置默认字体和字号
                             //font-family不能呢随便改，在safari下fillchar会有解析问题
                         'body{margin:8px;font-family:sans-serif;font-size:16px;}' +
@@ -24526,6 +24529,9 @@
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', link);
+                                //设置图片宽高
+                                //loader.setAttribute('width', "200px");
+                                //loader.setAttribute('height', "120px");
                                 loader.setAttribute('_src', link);
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
