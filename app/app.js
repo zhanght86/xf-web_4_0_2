@@ -1066,7 +1066,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/applicationAnalysis/reinforcementLearn.html',
+                        templateUrl: 'static/applicationAnalysis/reinforcementLearn.html',
                         controller: "reinforcementLearnController"
                     }
                 }
@@ -1079,7 +1079,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'know_index/applicationAnalysis/newKnowledgeDiscoveryLearn.html',
+                        templateUrl: 'static/applicationAnalysis/newKnowledgeDiscoveryLearn.html',
                         controller: "newKnowledgeDiscoveryLearnController"
                     }
                 }

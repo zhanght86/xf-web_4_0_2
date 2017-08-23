@@ -45,7 +45,16 @@ angular.module('businessModelingModule').controller('botConceptManageController'
          * 加载分页条
          * @type
          */
-        loadBotConceptTable(1);
+        init();
+
+        function init(){
+            $scope.vm.paginationConf = {
+                currentPage: 1,
+                totalItems: 0,
+                pageSize: 0,
+                pagesLength: 8
+            };
+        }
         //请求列表
         function loadBotConceptTable(current){
             httpRequestPost("/api/ms/modeling/concept/bot/listByAttribute",{

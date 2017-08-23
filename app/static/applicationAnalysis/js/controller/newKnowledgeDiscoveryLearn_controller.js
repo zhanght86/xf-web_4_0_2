@@ -98,7 +98,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 pageSize: 1,//第页条目数
                 pagesLength: 8//分页框数量
             };
-            $scope.$apply();
         });
         //表格列表
         function searchNewKnowledgeDiscovery(index){
