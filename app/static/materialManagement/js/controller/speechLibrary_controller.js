@@ -101,6 +101,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
+                    initBatchTest();
                     getVoiceList(current);
                 }, 100)
 
