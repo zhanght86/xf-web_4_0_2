@@ -671,6 +671,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("materialManagement.graphicDetails", {
+                url: "/graphicDetails",
+                views: {
+                    'header': {
+                        templateUrl: 'static/home/homePageNav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/materialManagement/teletextMessage/graphicDetails.html',
+                        controller: "graphicDetailsController"
+                    }
+                }
+            })
             //文档库
             .state("materialManagement.documentLibrary", {
                 url: "/documentLibrary",
