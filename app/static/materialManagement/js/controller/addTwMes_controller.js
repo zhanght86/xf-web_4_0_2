@@ -65,7 +65,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         } ;
          // 获取编辑图文知识
          if($stateParams.imgTextId){
-             $scope.vm.raphicMessageId = $stateParams.imgTextId ;
+             $scope.vm.graphicMessageId = $stateParams.imgTextId ;
              getImgText($stateParams.imgTextId)
          }
         //获取本地图片
@@ -139,7 +139,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         function insertCoverImg(url){
             if(url){
                 UE.getEditor('ueditor').focus();
-                UE.getEditor('ueditor').execCommand('inserthtml', '<img src="/img/'+ url+'" alt=""/>');
+                UE.getEditor('ueditor').execCommand('inserthtml', '<img src="/img/'+ url+'" style="width:200px;height:120px" alt=""/>');
             }else{
                 layer.msg("请先选择封面图片")
             }
