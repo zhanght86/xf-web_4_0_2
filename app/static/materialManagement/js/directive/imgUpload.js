@@ -17,7 +17,7 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 server: "/api/ms/picture/upload",
                 formData : {
                     "applicationId":APPLICATION_ID,
-                    "userName":USER_NAME
+                    "userName":USER_LOGIN_NAME
                 }  ,   // 上传参数
                 //accept: {
                 //    title: 'Images',
@@ -26,11 +26,25 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 //
                 //},
                 pick: '#picker',
+                fileNumLimit : 10
             });
-            uploader.on( 'fileQueued', function( file ) {
-                console.log(file + "file  add success");
+
+            uploader.on( 'fileQueued', function( file ,file2,file3 ) {
+                if(scope.vm.uploadParemeter.queueNumber<10){
+                    scope.vm.uploadParemeter.queueNumber +=1 ;
+                }
+                console.log(uploader) ;
+                //if(file)
+                //scope.vm.uploadParemeter.uploadParemeter+=1
+                //console.log(file + "file  add success");
+            });
+
+            uploader.on( 'fileDequeued', function() {
             });
             uploader.on( 'uploadProgress', function( file, percentage ) {
+                scope.vm.uploadParemeter.process = percentage * 100 + '%' ;
+                $(".progress .bar_span").css("width",percentage * 100 + '%');
+                console.log(percentage) ;
                 // var $li = $( '#'+file.id ),
                 //     $percent = $li.find('.progress span');
                 //
@@ -60,7 +74,7 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                    layer.msg("上传成功");
                    scope.isUpload = false;
                    $state.reload();
-                   console.log(response);
+                   //console.log(response);
             });
 
         }
