@@ -47,7 +47,16 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
          * 加载分页条
          * @type
          */
-        loadSynonymConceptTable(1);
+        init();
+
+        function init(){
+            $scope.vm.paginationConf = {
+                currentPage: 1,
+                totalItems: 0,
+                pageSize: 0,
+                pagesLength: 8
+            };
+        }
         //请求列表
         function loadSynonymConceptTable(current){
             httpRequestPost("/api/ms/modeling/concept/synonym/listByAttribute",{

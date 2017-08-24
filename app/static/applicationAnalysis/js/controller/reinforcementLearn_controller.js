@@ -93,7 +93,6 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                 pageSize: 1,//第页条目数
                 pagesLength: 8//分页框数量
             };
-            $scope.$apply();
         });
      //表格列表
         function searchReinforcement(index){
@@ -233,7 +232,7 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             getRecommend(requestId);
             $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
-                template:"/know_index/applicationAnalysis/associateLearn.html",
+                template:"/static/applicationAnalysis/associateLearn.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
