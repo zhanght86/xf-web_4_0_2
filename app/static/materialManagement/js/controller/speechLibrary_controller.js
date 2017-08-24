@@ -27,6 +27,12 @@ angular.module('materialManagement').controller('speechLibraryController', [
             voiceId : '',
             searchVoice : searchVoice,
             selectSingle : selectSingle,
+            uploadParemeter : {           //进度条；
+                queueNumber : 0,            //添加语音的数量，
+                uploadNumber : 0,           //上传的数量;
+                process :"0%"               //上传进度
+            }
+
         };
 
         getVoiceList(1) ;

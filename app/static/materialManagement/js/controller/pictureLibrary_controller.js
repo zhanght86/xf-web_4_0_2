@@ -4,7 +4,7 @@
  */
 angular.module('materialManagement').controller('pictureLibraryController', [
     '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout","$window",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout,$window) {
+    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout, $window) {
         $state.go("materialManagement.pictureLibrary");
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
