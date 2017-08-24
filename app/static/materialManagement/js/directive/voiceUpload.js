@@ -21,6 +21,8 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     server: "/api/ms/voiceManage/uploadVoice",
 
                     pick: '#picker',
+                    fileNumLimit :1
+
                 });
                 uploader.on( 'fileQueued', function( file ) {
                     console.log(file.ext) ;
