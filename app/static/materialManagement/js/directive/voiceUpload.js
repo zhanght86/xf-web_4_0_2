@@ -34,7 +34,10 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                         //console.log(scope.fileName)
                     }) ;
                 });
+                //上传进度条；
                 uploader.on( 'uploadProgress', function( file, percentage ) {
+                    scope.vm.uploadParemeter.process = percentage * 100+'%';
+                    $('progress .bar_span').css('width',percentage * 100+'%');
 
                 });
                 uploader.on('uploadError', function (file) {
