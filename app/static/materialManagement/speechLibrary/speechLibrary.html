@@ -1,8 +1,8 @@
 <div class="warp" style="margin-top:20px;">
     <div class="p20" style="background:#fff;">
         <!--//图片上传时显示进度条-->
-        <div class="pic_bar mt-10 ">
-            <p class="tc mb-10">10%</p>
+        <div class="pic_bar mt-10 " ng-show="vm.uploadParemeter.queueNumber">
+            <p class="tc mb-10">{{vm.uploadParemeter.process}}</p>
             <div class="progress mb-20">
                 <span class="bar_span"></span>
             </div>
