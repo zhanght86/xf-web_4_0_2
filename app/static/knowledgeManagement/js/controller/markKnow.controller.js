@@ -426,7 +426,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         case  "114" :  // 图文
                             $scope.vm.imgTextSelected = {
                                 "id" : data.knowledgeContent ,
-                                "name" : data.knowledgeContent
+                                "name" : data.knowledgeContentName ,
+                                "url":data.knowledgeContentUrl
                             };
                             break ;
                     }
@@ -697,27 +698,12 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 
         function addNewOrEditKnow(index){
             if(isNewKnowledgeTitle()){
-                var knowledgeContent ;
-                if($scope.vm.contentType==111){
-                    knowledgeContent = $scope.vm.imgSelected.url
-                }else if($scope.vm.contentType==112){
-                    knowledgeContent = $scope.vm.voiceSelected.url
-                }else if($scope.vm.contentType==113){
-                    //faceToString
-                    knowledgeContent = $("#emotion-container").html() ;
-                    //console.log($("#emotion-container").html()) ;
-                    //var html = $("#emotion-container").html() ;
-                    //knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
-                }else if($scope.vm.contentType==114){
-                    //faceToString
-                    knowledgeContent = $scope.vm.imgTextSelected.id ;
 
-                }
                 if(!$scope.vm.dimensionArr.id.length){
                     $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
                 };
                var parameter = {
-                   "knowledgeContent": knowledgeContent,
+                   "knowledgeContent": "",
                    "channelIdList": $scope.vm.channel,
                    "knowledgeContentNegative": $scope.vm.contentType.toString(),
                    "dimensionIdList": $scope.vm.dimensionArr.id.length ? $scope.vm.dimensionArr.id : $scope.vm.dimensionsCopy.id,
@@ -726,6 +712,24 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                    "knowledgeCommonOn": $scope.vm.tail,   //弹出评价小尾巴
                    "knowledgeRelevantContentList": $scope.vm.appointRelativeGroup  //业务扩展问
                };
+                if($scope.vm.contentType==111){
+                    parameter.knowledgeContent = $scope.vm.imgSelected.url
+                }else if($scope.vm.contentType==112){
+                    parameter.knowledgeContent = $scope.vm.voiceSelected.url
+                }else if($scope.vm.contentType==113){
+                    //faceToString
+                    parameter.knowledgeContent = $("#emotion-container").html() ;
+                    //console.log($("#emotion-container").html()) ;
+                    //var html = $("#emotion-container").html() ;
+                    //knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
+                }else if($scope.vm.contentType==114){
+                    //faceToString
+                    parameter.knowledgeContent = $scope.vm.imgTextSelected.id ;
+                    parameter.knowledgeContentDetail = {
+                        "name": $scope.vm.imgTextSelected.name ,
+                        "url" : $scope.vm.imgTextSelected.url
+                    } ;
+                }
                 if(index>=0){
                     $scope.vm.scanContent[index] = parameter ;
                 }else{
@@ -962,7 +966,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 showClose : true,
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
-                    console.log(e)
+                    //console.log(e)
                     if(e === 1){
                         var aLink = "<a href='"+$scope.vm.newLink+"' target='_blank'>"+$scope.vm.newLink+"</a>" ;
                         var html = $("#emotion-container").html() + aLink ;
@@ -1037,18 +1041,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     })
                 }
             },function(error){ console.log(error);})  ;
-        }
-        function getImgTextPicUrlById(id){
-            httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
-                "graphicMessageId" : id ,
-                "applicationId": APPLICATION_ID
-            },function(response){
-                if(response.status == 200){
-                    $scope.vm.imgTextSelected.url = response.data.pictureUrl ;
-                }else if(response.status == 500){
-                    //    获取失败
-                }
-            },function(error){console.log(error)})
         }
         //分页定时器
         var timeoutImgText ;
