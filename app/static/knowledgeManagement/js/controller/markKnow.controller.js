@@ -45,7 +45,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [],     //所有渠道
             channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
@@ -131,8 +130,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
         };
         //獲取渠道
         $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-        //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
+
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
@@ -409,13 +407,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     switch (data.knowledgeContentNegative){
                         case  "111" :  //图片
                             $scope.vm.imgSelected = {
-                                "name" : data.knowledgeContent ,
-                                "url" : data.knowledgeContent
+                                "name" : data.knowledgeContentDetail.name ,
+                                "url" : data.knowledgeContent ,
                             };
                             break ;
                         case  "112": //声音
                             $scope.vm.voiceSelected = {
-                                "name" : data.knowledgeContent
+                                "name" : data.knowledgeContentDetail.name ,
+                                "url" : data.knowledgeContent
                             };
                             break ;
                         case  "113" :    //表情
@@ -426,8 +425,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         case  "114" :  // 图文
                             $scope.vm.imgTextSelected = {
                                 "id" : data.knowledgeContent ,
-                                "name" : data.knowledgeContentName ,
-                                "url":data.knowledgeContentUrl
+                                "name" : data.knowledgeContentDetail.name ,
+                                "url":data.knowledgeContentDetail.url
                             };
                             break ;
                     }
@@ -714,8 +713,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                };
                 if($scope.vm.contentType==111){
                     parameter.knowledgeContent = $scope.vm.imgSelected.url
+                    parameter.knowledgeContentDetail = {
+                        "name" : $scope.vm.imgSelected.name
+                    }
                 }else if($scope.vm.contentType==112){
                     parameter.knowledgeContent = $scope.vm.voiceSelected.url
+                    parameter.knowledgeContentDetail = {
+                        "name" : $scope.vm.voiceSelected.name
+                    }
                 }else if($scope.vm.contentType==113){
                     //faceToString
                     parameter.knowledgeContent = $("#emotion-container").html() ;
@@ -727,7 +732,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     parameter.knowledgeContent = $scope.vm.imgTextSelected.id ;
                     parameter.knowledgeContentDetail = {
                         "name": $scope.vm.imgTextSelected.name ,
-                        "url" : $scope.vm.imgTextSelected.url
+                        "url" : $scope.vm.imgTextSelected.url ,
                     } ;
                 }
                 if(index>=0){
@@ -837,7 +842,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
-                                            angular.forEach($scope.vm.channels,function(all){
+                                            angular.forEach($scope.master.channelList,function(all){
                                                 if(all.channelCode==v){
                                                     channelTip = all.channelName
                                                 }

@@ -28,7 +28,7 @@
         <img name="title" ng-if="!vm.imgSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
              style="width: 150px;height: 150px;cursor:pointer;"/>
 
-        <p ng-if="vm.imgSelected">已添加：{{vm.imgSelected.name}}</p>
+        <p ng-if="vm.imgSelected" style="margin-top: 10px;text-align: center">已添加：{{vm.imgSelected.name}}</p>
     </div>
     <!-- pic-text-->
     <div name="imgText" class="miles-textArea-container" ng-show="vm.contentType==114"
@@ -38,7 +38,7 @@
         <img name="title" ng-if="!vm.imgTextSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
              style="width: 150px;height: 150px;cursor:pointer;"/>
 
-        <p ng-if="vm.imgTextSelected">已添加：{{vm.imgTextSelected.name}}</p>
+        <p ng-if="vm.imgTextSelected" style="margin-top: 10px;text-align: center">已添加：{{vm.imgTextSelected.name}}</p>
     </div>
     <!--voice-->
     <div name="voice" class="miles-textArea-container" ng-show="vm.contentType==112"
@@ -48,7 +48,7 @@
         <img name="title" ng-if="!vm.voiceSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
              style="width: 150px;height: 150px;cursor:pointer;"/>
 
-        <p ng-if="vm.voiceSelected">已添加：{{vm.voiceSelected.name}}</p>
+        <p ng-if="vm.voiceSelected" style="margin-top: 10px;text-align: center">已添加：{{vm.voiceSelected.name}}</p>
     </div>
 
     <div class="channel_div  mb-10 mt-10" style="padding-left:0;">
@@ -56,8 +56,8 @@
         <div class="checkboxStr mb-10">
             <div>渠道：</div>
             <!--{{vm.channel}}-->
-            <label ng-repeat="channel in vm.channels track by $index">
-                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode,$event)" ng-checked="vm.channel.inArray(channel.channelCode)">
+            <label ng-repeat="channel in master.channelList track by $index">
+                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode,$event)" ng-checked="master.channelList.inArray(channel.channelCode)">
                 {{channel.channelName}}
             </label>
         </div>

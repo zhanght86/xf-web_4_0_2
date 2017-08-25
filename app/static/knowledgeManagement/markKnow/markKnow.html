@@ -118,16 +118,17 @@
                                 <div class="value">
                                     <div class="ipt-txt-box clearfix">
                                         <div class="textareaDiv textareaDiv1 textareaDiv2 L ">
+                                            <!--{{item}}-->
                                             <!--<p ng-else ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p> -->
                                             <p ng-if="item.knowledgeContentNegative == 113" ng-bind-html="item.knowledgeContent | toHtml"></p>
                                             <!--<p ng-if="item.knowledgeContentNegative == 111" ng-repeat="text in item.knowledgeContent.split('\n')">{{item.knowledgeContent}}</p>-->
                                             <div ng-if="item.knowledgeContentNegative == 112" style="text-align: center">
-                                                <p>语音名称：{{item.knowledgeContent | imgNameFiler}}</p>
-                                                <p><img src="/images/audio_pic1.png" title="{{item.knowledgeContent | imgNameFiler}}" style="width: 120px;height: 80px;margin-top: 10px;" alt=""/></p>
+                                                <p>语音名称：{{item.knowledgeContentDetail.name}}</p>
+                                                <p><img src="/images/audio_pic1.png" title="{{item.knowledgeContentDetail.name}}" style="width: 120px;height: 80px;margin-top: 10px;" alt=""/></p>
                                             </div>
                                             <div ng-if="item.knowledgeContentNegative == 111" style="text-align: center">
-                                                <p>图片名称：{{item.knowledgeContent | imgNameFiler}}</p>
-                                                <p><img ng-src="/img/{{item.knowledgeContent}}" title="{{item.knowledgeContent | imgNameFiler}}" style="width: 120px;height: 80px;margin-top: 10px;" alt=""/></p>
+                                                <p>图片名称：{{item.knowledgeContentDetail.name}}</p>
+                                                <p><img ng-src="/img/{{item.knowledgeContent}}" title="{{item.knowledgeContentDetail.name}}" style="width: 120px;height: 80px;margin-top: 10px;" alt=""/></p>
 
                                             </div>
                                             <div ng-if="item.knowledgeContentNegative == 114" style="text-align: center">
