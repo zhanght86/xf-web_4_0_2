@@ -19,12 +19,12 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                     "applicationId":APPLICATION_ID,
                     "userName":USER_LOGIN_NAME
                 }  ,   // 上传参数
-                //accept: {
-                //    title: 'Images',
-                //    extensions: 'jpg,,png',
-                //    mimeTypes: 'image/*'
-                //
-                //},
+                accept: {
+                   title: 'Images',
+                   extensions: 'jpg,,png',
+                   mimeTypes: 'image/*'
+
+                },
                 pick: '#picker',
                 fileNumLimit : 10
             });
@@ -57,8 +57,31 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 // $percent.css( 'width', percentage * 100 + '%' );
 
             });
-            uploader.on('uploadError', function (file) {
+            uploader.on('error',function(type){
+                switch (type) {
+                    case 'Q_EXCEED_NUM_LIMIT':
+                        layer.msg("单次最多上传10张图！");
+                        break;
+                    case 'Q_EXCEED_SIZE_LIMIT':
+                        layer.msg("错误：文件总大小超出限制！");
+                        break;
+                    // case 'F_EXCEED_SIZE':
+                    //     layer.msg("文件大小不能超过1.95M");
+                    //     break;
+                    case 'Q_TYPE_DENIED':
+                        layer.msg("请上传 jpg, png 格式文件");
+                        break;
+                    case 'F_DUPLICATE':
+                        layer.msg("错误：请勿重复上传该文件！");
+                        break;
+                    default:
+                        layer.msg("请检查"+type+"后重新上传");
+                        break;
+                }
+            });
+            uploader.on('uploadError', function (file,reason) {
                 console.log("上传失败")
+                layer.msg('请检查'+reason);
             });
             uploader.on('uploadSuccess', function (file,response) {
                 if(response.status == 500){
