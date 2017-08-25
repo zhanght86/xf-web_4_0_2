@@ -118,7 +118,6 @@
                                 <div class="value">
                                     <div class="ipt-txt-box clearfix">
                                         <div class="textareaDiv textareaDiv1 textareaDiv2 L ">
-                                            <!--{{item}}-->
                                             <!--<p ng-else ng-repeat="text in item.knowledgeContent.split('\n')">{{text}}</p> -->
                                             <p ng-if="item.knowledgeContentNegative == 113" ng-bind-html="item.knowledgeContent | toHtml"></p>
                                             <!--<p ng-if="item.knowledgeContentNegative == 111" ng-repeat="text in item.knowledgeContent.split('\n')">{{item.knowledgeContent}}</p>-->
@@ -146,13 +145,13 @@
                             <div class="item-line" id="item-line">
                                 <!--<div class="left"></div>-->
                                 <div class="optionDiv">渠道：
-                                    <span class="mr-10" ng-repeat="val in item.channelIdList track by $index">{{val | channel:vm.channels}}</span>
+                                    <span class="mr-10" ng-repeat="val in item.channelIdList track by $index">{{val | channel:master.channelList}}</span>
                                 </div>
                             </div>
                             <div class="item-line" id="item-line">
                                 <!--<div class="left"></div>-->
                                 <div class="optionDiv">维度:
-                                    <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:master.dimensionList}}</span>
+                                    <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>
                                 </div>
                             </div>
                             <!-- 扩展问生成标签-->
