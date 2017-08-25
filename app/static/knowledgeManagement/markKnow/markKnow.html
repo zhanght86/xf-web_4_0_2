@@ -152,7 +152,7 @@
                             <div class="item-line" id="item-line">
                                 <!--<div class="left"></div>-->
                                 <div class="optionDiv">维度:
-                                    <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>
+                                    <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:master.dimensionList}}</span>
                                 </div>
                             </div>
                             <!-- 扩展问生成标签-->
