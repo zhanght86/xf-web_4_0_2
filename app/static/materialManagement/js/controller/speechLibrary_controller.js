@@ -218,7 +218,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
         //批量删除
         function batchDeleteVoice(voiceIds){
             //console.log($scope.vm.voiceIds);
-            if(!$scope.vm.voiceIds.length){
+            if(!voiceIds.length){
                 layer.msg("请选择要删除的语音")
             }else{
                 layer.confirm('确认删除语音？', {
