@@ -36,7 +36,7 @@
                     <td><input type="checkbox" ng-checked="vm.voiceIds.inArray(item.voiceId)" ng-click="vm.selectSingle(item.voiceId)"/></td>
                     <td>{{item.voiceName}}</td>
                     <td>{{item.voiceSize}}</td>
-                    <td>{{item.voiceModifyTime}}</td>
+                    <td>{{item.voiceModifyTime | date : "yyyy-MM-dd HH:mm:ss"}}</td>
                     <td>{{item.voiceUserName}}</td>
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>
