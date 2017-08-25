@@ -1,6 +1,6 @@
 /**
  * Created by Administrator on 2016/6/3.
- * 控制器
+ * 控制器  访问统计
  */
 angular.module('applAnalysisModule').controller('accessStatisticsController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
@@ -60,7 +60,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             });
         }();
         //访问数据渠道统计
-        var myChart2 = echarts.init(document.getElementById('access_echart_div2'));
+        var accessChart = echarts.init(document.getElementById('access_echart_div2'));
         //访问数据时间统计
         var TimerChart = echarts.init(document.getElementById('access_echart_div'));
         //myChart.setOption(option);
@@ -205,9 +205,9 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
         function exportByChannel(){
             httpRequestPost("/api/analysis/access/exportByChannel",{
                 "applicationId":APPLICATION_ID ,
-                "startTime":$scope.vm.timerSearchStartTime ,
-                "endTime":$scope.vm.timerSearchEndTime ,
-                "requestTimeType" : $scope.vm.TimerSearchTimeType ,
+                "startTime":$scope.vm.accessSearchStartTime ,
+                "endTime":$scope.vm.accessSearchEndTime ,
+                "requestTimeType" : $scope.vm.accessSearchTimeType ,
                 "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
@@ -425,6 +425,36 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 "endTime":$scope.vm.accessSearchEndTime ,
                 "requestTimeType" : $scope.vm.accessSearchTimeType ,
             },function(data){
+                var tableList = [
+                    {
+                        name : "微信"  ,
+                        tableList :[
+""
+                         ]
+                    } ,
+                    {
+                        name : "web"  ,
+                        tableList :[
+
+                         ]
+                    } ,
+                    {
+                        name : "app"  ,
+                        tableList :[
+
+                         ]
+                    }
+                ] ;
+                //有效用户数
+                //有效会话数
+                //总会话数
+                //总用户人数
+                for(var key in data.data){
+                    if(key == "总会话数")
+                    angular.forEach(data.data["总会话数"],function(item,index){
+                        tableList
+                    })
+                }
                 //vx
                 var data130 =[];
                 //web
@@ -486,6 +516,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                         data132.push({_key:3,_value:$scope.dataChannelVilidUser[i]["users"]});
                     }
                 }
+                $scope.$apply()
 
                 $scope.data130 = data130;
                 $scope.data131 = data131;
@@ -579,7 +610,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                     ]
                 };
                 // 使用刚指定的配置项和数据显示图表。
-                myChart2.setOption(option2);
+                accessChart.setOption(option2);
 
 
             },function(){
