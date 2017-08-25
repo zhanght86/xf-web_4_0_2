@@ -75,7 +75,7 @@ knowledge_static_web.controller('ApplicationController',
                 function open(){
                     var dialog = ngDialog.openConfirm({
                         template: tempUrl,
-                        width:width,
+                        width:width?width:"450px",
                         scope: self,
                         closeByDocument: false,
                         closeByEscape: true,

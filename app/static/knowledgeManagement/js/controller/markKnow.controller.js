@@ -12,7 +12,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
             //knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
-            openContentConfirm: openContentConfirm, //打开内容对话框
+            //openContentConfirm: openContentConfirm, //打开内容对话框
             knowledgeBotVal : "",  //bot 内容
             botSelectAdd : botSelectAdd,
             frameCategoryId : "",
@@ -80,7 +80,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             isEditIndex : -1,   // 知识内容 弹框
             // -1 为内容新增
             // index 为知识的编辑索引
-  //*******************2017/7/14*******************//
+  //*******************2017/7/14 BEGIN*******************//
             contentType : 113 ,  //新增内容类型
             imgPaginationConf : {
                 pageSize: 8,//第页条目数
@@ -91,7 +91,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 pagesLength: 10//分页框数量
             } ,
             getPicList : getPicList ,   //获得所有图片
-            selectMultimedia : selectMultimedia,   //图片选择弹出框
+            selectMultimedia : selectMultimedia,   //图片，语音，图文选择弹出框
             imageList : [] ,     //所有图片文件
             addMultimedia : addMultimedia , //选择图片
             imgSelected : "",    // 已选图片
@@ -100,7 +100,17 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             getVoiceList : getVoiceList,  //获取素有声音文件
             voiceSelected : "" ,    //以选择声音文件
             qqFaceText : "" ,
-//*******************2017/7/14*******************//
+//*******************2017/7/14 END *******************//
+
+//*******************2017/8/24 图文 BEGIN *******************//
+            imgTextPaginationConf : {
+                pageSize: 8,//第页条目数
+                pagesLength: 10//分页框数量
+            },
+            imgTextList : "" ,
+            imgTextSelected : "" ,
+//*******************2017/8/24 图文  EDN *******************//
+
 //*******************2017/8/3  BEGIN   删除扩展问本地备份 *******************//
             rmExtensionBackup : [] ,
 //*******************2017/8/3  END   删除扩展问本地备份   *******************//
@@ -159,6 +169,8 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 obj.knowledgeContentNegative = item.knowledgeContentNegative ;
                 if(item.knowledgeContentNegative==113){
                     obj.knowledgeContent = $filter("emotion")(item.knowledgeContent);
+                }else if(item.knowledgeContentNegative==114){
+                    //getImgTextPicUrlById()
                 }else{
                     obj.knowledgeContent = item.knowledgeContent;
                 }
@@ -258,25 +270,25 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 }
             },function(error){console.log(error)});
         }
-        //打开知识内容对话框
-        function openContentConfirm(callback) {
-            var dialog = ngDialog.openConfirm({
-                template: "/static/knowledgeManagement/public-html/knowledge_increase.html",
-                width:"650px",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                        callback();
-                    } else {
-                        setDialog();//清空内容对话框
-                    }
-                }
-            });
-        }
+        ////打开知识内容对话框
+        //function openContentConfirm(callback) {
+        //    var dialog = ngDialog.openConfirm({
+        //        template: "/static/knowledgeManagement/public-html/knowledge_increase.html",
+        //        width:"650px",
+        //        scope: $scope,
+        //        closeByDocument: false,
+        //        closeByEscape: true,
+        //        showClose: true,
+        //        backdrop: 'static',
+        //        preCloseCallback: function (e) {    //关闭回掉
+        //            if (e === 1) {
+        //                callback();
+        //            } else {
+        //                setDialog();//清空内容对话框
+        //            }
+        //        }
+        //    });
+        //}
         //y业务框架生成扩展问校验
         function checkExtensionByFrame(extensionQuestionList,frameQuestionTagList,oldWord){
             //var title = oldWord.extensionQuestionTitle ;
@@ -395,21 +407,27 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 if(data){    //增加
                 /* **************** 2017/8/2   知识内容编辑  BEGIN     **************/ //
                     switch (data.knowledgeContentNegative){
-                        case  "111" :
+                        case  "111" :  //图片
                             $scope.vm.imgSelected = {
                                 "name" : data.knowledgeContent ,
                                 "url" : data.knowledgeContent
                             };
                             break ;
-                        case  "112":
+                        case  "112": //声音
                             $scope.vm.voiceSelected = {
                                 "name" : data.knowledgeContent
                             };
                             break ;
-                        case  "113" :
+                        case  "113" :    //表情
                             $timeout(function(){
                                 $("#emotion-container").html(data.knowledgeContent) ;
                             },100);
+                            break ;
+                        case  "114" :  // 图文
+                            $scope.vm.imgTextSelected = {
+                                "id" : data.knowledgeContent ,
+                                "name" : data.knowledgeContent
+                            };
                             break ;
                     }
                     $scope.vm.contentType  = data.knowledgeContentNegative ;  //新增内容类型
@@ -430,6 +448,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     $scope.vm.tail = data.knowledgeCommonOn;
                     $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
                 }
+                //$scope.master.openNgDialog($scope,"/static/knowledgeManagement/public-html/selectMedia.html","450px",addNewOrEditKnow,"",setDialog,"true") ;
                 if(dia.length==0) {
                     var dialog = ngDialog.openConfirm({
                         template: "/static/knowledgeManagement/public-html/markKnow_increase.html",
@@ -689,6 +708,10 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     //console.log($("#emotion-container").html()) ;
                     //var html = $("#emotion-container").html() ;
                     //knowledgeContent = $filter("faceToString")(html).replace(/<div>/,"\n").replace(/<div>/g,"").replace(/<\/div>/g,'\n').replace(/<br>/g,'\n') ;
+                }else if($scope.vm.contentType==114){
+                    //faceToString
+                    knowledgeContent = $scope.vm.imgTextSelected.id ;
+
                 }
                 if(!$scope.vm.dimensionArr.id.length){
                     $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
@@ -830,31 +853,30 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 //*******************       2017/7/14  BEGIN    *******************//
         //弹出选择图片声音对话框
         function selectMultimedia(){
-            var dialog = ngDialog.openConfirm({
-                template:"/static/knowledgeManagement/public-html/selectImage.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
-                }
-            });
+            $scope.master.openNgDialog($scope,"/static/knowledgeManagement/public-html/selectMedia.html","450px","","","","true") ;
         }
         function addMultimedia(item){
+            // 111 图片
             if($scope.vm.contentType==111){
                 $scope.vm.imgSelected = {
                     "url" : item.pictureUrl ,
                     "id" : item.pictureId,
                     "name" : item.pictureName
                 } ;
+            //    声音
             }else if($scope.vm.contentType==112){
                 $scope.vm.voiceSelected = {
                     "url" : item.voiceUrl ,
                     "id" : item.voiceId ,
                     "name" : item.voiceName
+                } ;
+            //    图文
+            }else if($scope.vm.contentType==114){
+                console.log(item)
+                $scope.vm.imgTextSelected = {
+                    "url" : item.pictureUrl ,
+                    "id" : item.graphicMessageId ,
+                    "name" : item.graphicMessageTitle
                 } ;
             }
             ngDialog.close(ngDialog.latestID) ;
@@ -893,9 +915,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         console.log($scope.vm.voicePaginationConf)
                     })
                 }
-            },function(err){
-                console.log(err)
-            }) ;
+            },function(err){ console.log(err)}) ;
         }
         var picTimer ;
         $scope.$watch('vm.imgPaginationConf.currentPage', function(current){
@@ -921,14 +941,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         },true);
         function isNewKnowledgeTitle(){
-            var info = "" , isPass = true;
-            if($scope.vm.contentType == 111 && !$scope.vm.imgSelected.url){         //图片
-                isPass = false;
-            }else if($scope.vm.contentType == 112 && !$scope.vm.voiceSelected.name){  //声音
-                isPass = false;
-            }else if($scope.vm.contentType == 113 &&  !$("#emotion-container").html()){  //表情
-                isPass = false;
-            } ;
+            var info = "" , isPass = false;
+            if(!(($scope.vm.contentType == 111 && !$scope.vm.imgSelected.url) ||
+                 ($scope.vm.contentType == 112 && !$scope.vm.voiceSelected.name) ||
+                 ($scope.vm.contentType == 113 &&  !$("#emotion-container").html()) ||
+                 ($scope.vm.contentType == 114 &&  !$scope.vm.imgTextSelected.id)
+                )){
+                isPass = true;
+            }
             return isPass
         }
 
@@ -994,6 +1014,56 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 console.log(error)
             });
         }
+
+//*******************2017/8/24 @图文 根据图文id获取图片url @根据图片获取name  BEGIN  *******************//
+        queryImgText(1);
+        //查询
+        function queryImgText(index) {
+            httpRequestPost("/api/ms/graphicMessage/queryGraphicMessage",{
+                applicationId:APPLICATION_ID,
+                index:(index - 1)*$scope.vm.imgTextPaginationConf.pageSize,
+                pageSize:$scope.vm.imgTextPaginationConf.pageSize
+            },function(data){
+                if(data.status == 500){
+                    layer.msg("请求失败",{time:1000});
+                }else if(data.status == 200){
+                    console.log(data);
+                    $scope.$apply(function(){
+                        $scope.vm.imgTextList = data.data.objs ;
+                        $scope.vm.imgTextPaginationConf.currentPage =index ;
+                        $scope.vm.imgTextPaginationConf.totalItems =data.data.total ;
+                        $scope.vm.imgTextPaginationConf.numberOfPages = data.data.total/$scope.vm.imgTextPaginationConf.pageSize ;
+                        console.log($scope.vm.imgTextPaginationConf)
+                    })
+                }
+            },function(error){ console.log(error);})  ;
+        }
+        function getImgTextPicUrlById(id){
+            httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
+                "graphicMessageId" : id ,
+                "applicationId": APPLICATION_ID
+            },function(response){
+                if(response.status == 200){
+                    $scope.vm.imgTextSelected.url = response.data.pictureUrl ;
+                }else if(response.status == 500){
+                    //    获取失败
+                }
+            },function(error){console.log(error)})
+        }
+        //分页定时器
+        var timeoutImgText ;
+        $scope.$watch('vm.imgTextPaginationConf.currentPage', function(current){
+            if(current){
+                if (timeoutImgText) {
+                    $timeout.cancel(timeoutImgText);
+                }
+                timeoutImgText = $timeout(function () {
+                    queryImgText(current);
+                }, 0);
+            }
+        },true);
+
+//*******************2017/8/24 图文 END  *******************//
         //引导页方法
         function showTip(){
             $('.shadow_div').show();
