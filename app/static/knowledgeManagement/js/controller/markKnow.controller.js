@@ -160,17 +160,38 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             angular.forEach(data.extensionQuestions,function(item){
             });
             //内容
-            angular.forEach(data.knowledgeContents,function(item){
-                var obj = {} ;
-
+            angular.forEach(data.knowledgeContents,function(item,index){
+                var obj = {
+                    "knowledgeContentNegative" : item.knowledgeContentNegative
+                } ;
                 //維度，添加預覽效果   以name id 的 形式显示
-                obj.knowledgeContentNegative = item.knowledgeContentNegative ;
-                if(item.knowledgeContentNegative==113){
+                if(item.knowledgeContentNegative==113){         //emotion
                     obj.knowledgeContent = $filter("emotion")(item.knowledgeContent);
-                }else if(item.knowledgeContentNegative==114){
-                    //getImgTextPicUrlById()
-                }else{
-                    obj.knowledgeContent = item.knowledgeContent;
+                }else if(item.knowledgeContentNegative==111){  // pic
+                    $scope.master.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
+                        obj.knowledgeContentDetail = {
+                            "name" : response.pictureName,
+                        } ;
+                        obj.knowledgeContent = item.knowledgeContent
+                         console.log(response)
+                    }) ;
+                }else if(item.knowledgeContentNegative==112){   //voice
+                    $scope.master.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
+                        obj.knowledgeContentDetail = {
+                            "name" : response.voiceName
+                        } ;
+                        obj.knowledgeContent = item.knowledgeContent
+                        console.log(response)
+                    }) ;
+                }else if(item.knowledgeContentNegative==114){  //img-text
+                    $scope.master.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
+                        obj.knowledgeContentDetail = {
+                            "name" : response.graphicMessageTitle,
+                            "url" : response.pictureUrl
+                        } ;
+                        obj.knowledgeContent = item.knowledgeContent
+                        console.log(response)
+                    }) ;
                 }
                 obj.channelIdList =  item.channelIdList ;
                 obj.dimensionIdList =  item.dimensionIdList ;
