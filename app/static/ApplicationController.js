@@ -42,6 +42,7 @@ knowledge_static_web.controller('ApplicationController',
                    botTreeOperate : botTreeOperate ,
                    isTitleHasExt : isTitleHasExt
             } ;
+
             //滑动
             function slideToggle(el,callBack){
                 $timeout(function(){
