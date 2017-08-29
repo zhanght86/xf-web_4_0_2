@@ -41,7 +41,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             //高级选项
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [],     //所有渠道
             channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
@@ -101,9 +100,8 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             backupsOfExtension : "" //扩展问 编辑备份
         };
         //獲取渠道
-        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-        //获取维度
-        $scope.MASTER.getChannels($scope,["channels"]) ;
+        $scope.$parent.$parent.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
         //
