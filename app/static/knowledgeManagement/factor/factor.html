@@ -185,7 +185,7 @@
                                             <tr ng-repeat="(indexRow,row) in vm.tableList.data.listTable track by $index">
                                                 <td ng-repeat="(indexColumn,item) in row track by $index" ng-click="vm.tableRow=indexRow;vm.tableColumn=indexColumn">
                                                     <!--{{item}}-->
-                                                    <textarea ng-if="indexRow==0" ng-model="item" value=""  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="width:100%;background:inherit;cursor:pointer">{{item}}</textarea>
+                                                    <textarea ng-if="indexRow==0" ng-model="item" value=""  ng-disabled="indexColumn==0"  ng-click="indexColumn==0?'':vm.editList(indexRow,indexColumn);" style="width:100%;height:19px;background:inherit;cursor:pointer">{{item}}</textarea>
                                                     <!--<input type="text" ng-if="indexRow==0&&indexColumn!=0" ng-model="item"   style="background:inherit"/>-->
                                                     <textarea  ng-if="indexRow!=0" ng-model="item" value="" ng-change="vm.tableChange(indexRow,indexColumn,item)" style="width:100%;">{{item}}</textarea>
                                                 </td>
