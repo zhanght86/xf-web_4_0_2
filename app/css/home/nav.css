@@ -352,6 +352,20 @@
 }
 
 
+.homePageNav .icon-nav_fcyy {
+    background-position: -69px -101px;
+    width: 16px;
+    height: 8px;
+}
+.homePageNav .header .menu_1 a:hover .icon-nav_fcyy{
+    background-position: -69px -109px;
+    width: 16px;
+    height: 6px;
+}
+
+
+
+
 .homePageNav .header-r{float: right;}
 .homePageNav .user-admin{position: relative; float: left;}
 .homePageNav .user-admin .user-name{position: relative; padding-right: 12px; max-width: 68px; font-size: 14px; color: #fff; display: block; text-align: center;}

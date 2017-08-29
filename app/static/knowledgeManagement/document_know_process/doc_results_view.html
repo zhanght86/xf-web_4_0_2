@@ -6,7 +6,12 @@
         <ul class="doc_listul bd" style="border-bottom:0;">
             <li ng-repeat="knowDoc in  knowItems" on-render-finish="" style="border-bottom:1px solid #eee;padding:20px 30px;margin-botton:10px;">
                 <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>{{knowDoc.knowledgeTitle}}</a></p>
-                <p class="mb-10" style=" overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;-webkit-box-orient: vertical; word-break: break-all;"><b>知识内容：</b>{{knowDoc.knowledgeContent}}</p>
+                <div class="mb-10 pr" style="padding-left:80px;">
+                    <b class="pa" style="left:0;top:0;">知识内容：</b>
+                    <div style="width:100%;height:30px;overflow: hidden; text-overflow:ellipsis; white-space:nowrap;">
+                        <a href="javascript:;" title="{{ knowDoc.knowledgeContent }}">{{knowDoc.knowledgeContent}}</a>
+                    </div>
+                </div>
                 <div class="clearfix">
                     <div class="L">
                         <span class="mr-20"><span>作者：</span>{{knowDocUserName}}</span>

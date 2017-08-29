@@ -101,7 +101,7 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                             uploader.options.formData = {
                                 "voiceName" : scope.vm.voiceTitle,
                                 "applicationId":APPLICATION_ID,
-                                "voiceUserName":USER_NAME
+                                "voiceUserName":USER_LOGIN_NAME
                             } ;
                             uploader.upload() ;
                         }

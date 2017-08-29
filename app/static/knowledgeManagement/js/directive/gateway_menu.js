@@ -76,7 +76,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
                     FilesAdded: function (up, files) {
                         plupload.each(files, function (file) {
 
-                                if(file.name.length>=24){
+                                if(file.name.length>20){
                                     layer.msg("文件名称过长,请返回修改") ;
                                     up.removeFile(file);
                                 }else{
