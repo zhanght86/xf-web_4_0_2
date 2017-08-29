@@ -4,12 +4,11 @@
  */
 angular.module('materialManagement').controller('pictureLibraryController', [
     '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout","$window",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout,$window) {
+    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout, $window) {
         $state.go("materialManagement.pictureLibrary");
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
-            imageList : [] ,        //所有图片列表
-            removeImg : removeImg ,//刪除
+            imageList : "" ,        //所有图片列表
             paginationConf : {
                                 pageSize: 4,//第页条目数
                                 pagesLength: 10,//分页框数量
@@ -22,7 +21,12 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             batchDeletePicture:batchDeletePicture,
             isSelectAll  : false ,  // 全选 删除
             selectAll : selectAll  ,//選擇全部
-
+            singleAdd : singleAdd , //单个添加
+            uploadParemeter : {
+                queueNumber : 0 ,
+                uploadNumber : 0 ,
+                process : "0%"
+            }
         };
         getPicList(1) ;
         function getPicList(index){
@@ -33,6 +37,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
                 if(data.status == 200){
+                    initBatchTest() ;
                     $scope.$apply(function(){
                         $scope.vm.imageList = data.data ;
                         $scope.vm.paginationConf.currentPage =index ;
@@ -61,34 +66,48 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     $scope.vm.pictureIds.push(val.pictureId)
                 });
             }
-        }       
+        }
+        function singleAdd(id,allId,isAll,len){
+            console.log(allId) ;
+            if(allId.inArray(id)){
+                allId.remove(id) ;
+                $scope.vm.isSelectAll = false ;
+            }else{
+                allId.push(id) ;
+                if(allId.length == len){
+                    $scope.vm.isSelectAll = true ;
+                }
+            }
+        }
 
-        //全选清空；
+        //全选清空选择按钮；
         function initBatchTest(){
             $scope.vm.pictureIds = [] ;
             $scope.vm.isSelectAll = false;
         }
 
-        //单个删除 
-        function removeImg(item,index){
-            layer.confirm('确认删除该图片？', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                httpRequestPost("/api/ms/picture/deletePicture",{
-                    "fileurl": item.pictureUrl,
-                    "pictureId": item.pictureId
-                },function(data){
-                    if(data.status == 200){ 
-                        layer.msg("图片删除成功") ;
-                        getPicList(1)
-                    }else if(data.status == 500){
-                        layer.msg("图片删除失败") ;
-                    }
-                },function(err){
-                    console.log(err)
-                }) ;
-            }, function(){
-            });
+        //删除图片
+        function batchDeletePicture(pictureIds){
+            if(!pictureIds.length){
+                layer.msg("请选择要删除的图片")
+            }else{
+                layer.confirm('确认删除图片？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    httpRequestPost("/api/ms/picture/batchDeletePicture",{
+                        "pictureIds": pictureIds
+                    },function(data){
+                        if(data.status == 200){
+                            layer.msg("图片删除成功") ;
+                            getPicList(1) ;
+                        }else if(data.status == 500){
+                            layer.msg("图片删除失败") ;
+                        }
+                    },function(err){
+                        console.log(err) ;
+                    }) ;
+                }, function(error){ console.log(error)});
+            }
         }
 
         /**
@@ -100,34 +119,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
             $window.open(url,"_blank") ;
         }
-       //批量删除
-        function batchDeletePicture(){
-           console.log($scope.vm.pictureIds);
-            if(!$scope.vm.pictureIds.length){
-                layer.msg("请选择要删除的图片")
-            }else{
-                layer.confirm('确认删除图片？', {
-                    btn: ['确定','取消'] //按钮
-                }, function(){
-                    httpRequestPost("/api/ms/picture/batchDeletePicture",{
-                        "pictureIds": $scope.vm.pictureIds
-                    },function(data){
-                        if(data.status == 200){
-                            layer.msg("图片删除成功") ;
-                            initBatchTest();
-                            getPicList(1)
-                        }else if(data.status == 500){
-                            layer.msg("图片删除失败") ;
-                        }
-                    },function(err){
-                        console.log(err)
-                    }) ;
-                }, function(){
-                });
-            }
 
-        }
-
+        //图片分页
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -135,7 +128,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    initBatchTest();
                     getPicList(current);
                 }, 100)
 

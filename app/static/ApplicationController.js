@@ -36,11 +36,13 @@ knowledge_static_web.controller('ApplicationController',
                     removeExtensionHasTag : removeExtensionHasTag , //对删除的扩展问备份     营销 概念 列表 富文本知识新增
                     //getFrameByClassId : getFrameByClassId  //通过类目id 获取业务框架
                     //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
+                    getMediaParmeter : getMediaParmeter ,  // 《《富文本知识新增》》 根据id 获取图文封面图片url ，title 方法
 
             /* bot 下拉树的公共方法 */
                    botTreeOperate : botTreeOperate ,
                    isTitleHasExt : isTitleHasExt
             } ;
+
             //滑动
             function slideToggle(el,callBack){
                 $timeout(function(){
@@ -75,7 +77,7 @@ knowledge_static_web.controller('ApplicationController',
                 function open(){
                     var dialog = ngDialog.openConfirm({
                         template: tempUrl,
-                        width:width,
+                        width:width?width:"450px",
                         scope: self,
                         closeByDocument: false,
                         closeByEscape: true,
@@ -262,7 +264,7 @@ knowledge_static_web.controller('ApplicationController',
              * */
             function isExtensionTagRepeat(current,allExtension,title,weight){
                 console.log(allExtension) ;
-                var isRepeat = false ;
+                var isRepeat = true ;
                 var tag = [] ;
                 angular.forEach(current,function(tagList){
                     angular.forEach(tagList.extensionQuestionTagList,function(item){
@@ -284,11 +286,11 @@ knowledge_static_web.controller('ApplicationController',
                     }) ;
                     if(tagLen == itemTag.length && tag.length == itemTag.length){
                         layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
-                        return   isRepeat = true ;
+                        return   isRepeat = false ;
                     }
                 }) ;
                 //判断是否是重复
-                if(isRepeat == false){
+                if(isRepeat != false){
                     var extension = {
                         "extensionQuestionTitle" : title ,
                         "extensionQuestionType" : weight ,
@@ -437,6 +439,60 @@ knowledge_static_web.controller('ApplicationController',
                 return result ;
             }
 //*******************2017/8/18  END   校验title生成扩展问   *******************//
+
+//*******************2017/8/25  BEGIN   根据id 获取图文封面图片url ，title 方法 *******************//
+            function getMediaParmeter(type,params,callBack){
+                var api ,parameter = {
+                    "applicationId": APPLICATION_ID
+                } ;
+                switch (type){
+                    case  "111" :  //pic
+                        api = "/api/ms/picture/queryPictureUrl" ;
+                        parameter.pictureUrl   = params ;
+                        break ;
+                    case  "112" :  //voice
+                        api = "/api/ms/voiceManage/queryVoiceUrl" ;
+                        parameter.voiceUrl= params ;
+                        break ;
+                    case  "114" :  //img-text
+                        api = "/api/ms/graphicMessage/findOneGraphicMessage" ;
+                        parameter.graphicMessageId  = params ;
+                        break;
+                }
+                httpRequestPost(api,parameter,function(response){
+                    if(response.status == 200){
+                        callBack(response.data) ;
+                        //self.vm.imgTextSelected.url = response.data.pictureUrl ;
+                    }else if(response.status == 500){
+                        //    获取失败
+                    }
+                },function(error){console.log(error)})
+            } ;
+            //function getImgParmeter(self,url,callBack){
+            //    httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
+            //        "graphicMessageId" : id ,
+            //        "applicationId": APPLICATION_ID
+            //    },function(response){
+            //        if(response.status == 200){
+            //            self.vm.imgTextSelected.url = response.data.pictureUrl ;
+            //        }else if(response.status == 500){
+            //            //    获取失败
+            //        }
+            //    },function(error){console.log(error)})
+            //}
+            //function getVoiceParmeter(self,url,callBack){
+            //    httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
+            //        "graphicMessageId" : id ,
+            //        "applicationId": APPLICATION_ID
+            //    },function(response){
+            //        if(response.status == 200){
+            //            self.vm.imgTextSelected.url = response.data.pictureUrl ;
+            //        }else if(response.status == 500){
+            //            //    获取失败
+            //        }
+            //    },function(error){console.log(error)})
+            //}
+//*******************2017/8/25  END   根据id 获取图文封面图片url ，title 方法   *******************//
 
 /***********************************************************************************************************************************************************************/
 

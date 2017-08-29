@@ -168,6 +168,7 @@
                                                     </p>
                                                     <p ng-if="item.knowledgeContentNegative==112">语音</p>
                                                     <p ng-if="item.knowledgeContentNegative==113">文本</p>
+                                                    <p ng-if="item.knowledgeContentNegative==114">图文</p>
                                                 </li>
                                                 <!-- 列表 概念  faq 知識-->
                                                 <li ng-if="item.knowledgeType!=103 && item.knowledgeType!=106" title="{{item.knowledgeContent}}">
@@ -191,7 +192,7 @@
                                 <div class="csso-info oh">
                                     <div class="fr">
                                         <span class="mr-20">作者：{{item.knowledgeCreator}}</span>
-                                        <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                        <span>更新时间：{{item.knowledgeModifyTime |  date : 'yyyy-MM-dd'}}</span>
                                     </div>
                                 </div>
                             </li>

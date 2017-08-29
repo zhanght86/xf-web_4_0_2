@@ -52,17 +52,18 @@
                         <!--<p  ng-if="vm.knowledgeType==106 && item.knowledgeContentNegative==110">{{item.knowledgeContent}}</p>-->
                         <p  ng-if="vm.knowledgeType==106 && item.knowledgeContentNegative==111">图片</p>
                         <p ng-if="vm.knowledgeType==106 &&  item.knowledgeContentNegative==112">语音</p>
+                        <p ng-if="vm.knowledgeType==106 &&  item.knowledgeContentNegative==114">图文</p>
                         <!--{{item.knowledgeContent}}-->
                         <p ng-if="vm.knowledgeType==106 &&  item.knowledgeContentNegative==113" ng-bind-html="item.knowledgeContent | emotion  | toHtml">文本</p>
                         <p ng-if="vm.knowledgeType!=106">{{item.knowledgeContent}}</p>
                     </li>
                     <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.channelIdList">
                         <span class="pa preview_span2">渠道:</span>
-                        <span ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}<span></span></span>
+                        <span ng-repeat="val in item.channelIdList">{{val | channel:master.channelList}}<span></span></span>
                     </li>
                     <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.dimensionIdList">
                         <span class="pa preview_span2">维度:</span>
-                        <span  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                        <span  ng-repeat="val in item.dimensionIdList">{{val | dimension:master.dimensionList}}</span>
                     </li>
                 </ul>
                 <!--   其他   -->
@@ -80,7 +81,7 @@
                     </li>
                     <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.dimensionIdList">
                         <span class="pa preview_span2">维度:</span>
-                        <span  ng-repeat="val in item.dimensionIdList">{{val | dimension:vm.dimensions}}</span>
+                        <span  ng-repeat="val in item.dimensionIdList">{{val | dimension:master.dimensionList}}</span>
                     </li>
                 </ul>
             </li>

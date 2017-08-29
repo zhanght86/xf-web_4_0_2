@@ -10,20 +10,11 @@ angular.module('knowledgeManagementModule').controller('knowledgeScanController'
             knowledgeType : knowledgeScan.params.knowledgeType,
             listData : null,
             knowledgeData : knowledgeScan.params ,
-            dimensions : "",
-            channels : "",
             editUrl : knowledgeScan.editUrl,
             save :save,
             tableData : knowledgeScan.knowledgeType==103?JSON.parse(knowledgeScan.params.knowledgeContents[0].knowledgeContent):""
         };
         console.log(knowledgeScan) ;
-        /**
-         * 展示渠道维度使用
-         * */
-        //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions"]) ;
-        //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
         //保存方法  根据url  获取 保存路径
         function save(){
             httpRequestPost(knowledgeScan.api,$scope.vm.knowledgeData,function(data){

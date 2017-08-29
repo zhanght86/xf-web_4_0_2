@@ -7,6 +7,7 @@ angular.module('materialManagement').controller('addTwMesController', [
     function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
         $scope.vm = {
+            ip : "" , // 图片 ip路径
             raphicMessageId :"" , //图文知识id 编辑使用
             title : '',                     //标题
             author :'',                     //作者
@@ -74,6 +75,11 @@ angular.module('materialManagement').controller('addTwMesController', [
              $scope.vm.graphicMessageId = $stateParams.imgTextId ;
              getImgText($stateParams.imgTextId)
          }
+        void function(){
+            httpRequestPost("/api/ms/picture/getIP",{},function(response){
+                $scope.vm.ip = response.data
+            },function(error){})
+        }() ;
         //获取本地图片
         getPicList(1) ;
        function getPicList(index){
@@ -145,7 +151,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         function insertCoverImg(url){
             if(url){
                 UE.getEditor('ueditor').focus();
-                UE.getEditor('ueditor').execCommand('inserthtml', '<img src="/img/'+ url+'" alt=""/>',{style:"width:200px;height:120px;"});
+                UE.getEditor('ueditor').execCommand('inserthtml', '<img src="'+ url+'" alt=""/>',{style:"width:200px;height:120px;"});
             }else{
                 layer.msg("请先选择封面图片")
             }
