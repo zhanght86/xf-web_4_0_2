@@ -56,8 +56,8 @@
         <div class="checkboxStr mb-10">
             <div>渠道：</div>
             <!--{{vm.channel}}-->
-            <label ng-repeat="channel in master.channelList track by $index">
-                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode,$event)" ng-checked="master.channelList.inArray(channel.channelCode)">
+            <label ng-repeat="channel in MASTER.channelList track by $index">
+                <input style="vertical-align: middle; margin:-2px 2px 0px 0;" type="checkbox"  ng-click="vm.selectChannel(channel.channelCode,$event)" ng-checked="MASTER.channelList.inArray(channel.channelCode)">
                 {{channel.channelName}}
             </label>
         </div>

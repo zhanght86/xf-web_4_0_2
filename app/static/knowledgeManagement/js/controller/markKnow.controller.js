@@ -129,7 +129,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             backupsOfExtension : "" //扩展问 编辑备份
         };
         //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
 
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
@@ -168,7 +168,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 if(item.knowledgeContentNegative==113){         //emotion
                     obj.knowledgeContent = $filter("emotion")(item.knowledgeContent);
                 }else if(item.knowledgeContentNegative==111){  // pic
-                    $scope.master.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
+                    $scope.MASTER.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
                         obj.knowledgeContentDetail = {
                             "name" : response.pictureName,
                         } ;
@@ -176,7 +176,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                          console.log(response)
                     }) ;
                 }else if(item.knowledgeContentNegative==112){   //voice
-                    $scope.master.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
+                    $scope.MASTER.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
                         obj.knowledgeContentDetail = {
                             "name" : response.voiceName
                         } ;
@@ -184,7 +184,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                         console.log(response)
                     }) ;
                 }else if(item.knowledgeContentNegative==114){  //img-text
-                    $scope.master.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
+                    $scope.MASTER.getMediaParmeter(item.knowledgeContentNegative,item.knowledgeContent,function(response){
                         obj.knowledgeContentDetail = {
                             "name" : response.graphicMessageTitle,
                             "url" : response.pictureUrl
@@ -279,7 +279,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             },function(data){
                 if(data.status = 10000){
                     var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
-                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                        botResult = $scope.MASTER.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
                     $scope.$apply(function(){
                         $scope.vm.knowledgeBotVal = data.categoryFullName;
                         if(botResult != false){
@@ -322,7 +322,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 if(data.status==200){
                     $scope.$apply(function(){
                         var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                        var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                        var result = $scope.MASTER.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
                         if(result != false){
                             $scope.vm.extensionTitle = "";
                             $scope.vm.extensionsByFrame.push(result);
@@ -357,7 +357,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     } else if (data.status == 200) {
                         $scope.$apply(function(){
                             var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                            var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                            var result = $scope.MASTER.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
                             if(result != false){
                                 $scope.vm.extensionTitle = "";
                                 if(!source){
@@ -374,14 +374,14 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+        $scope.MASTER.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
            //"/api/ms/modeling/category/searchbycategoryname"
         ) ;
         //BOT搜索自动补全
-        $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+        $scope.MASTER.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
                 var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                    botResult = $scope.MASTER.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
                 $scope.vm.knowledgeBotVal = suggestion.value;
                 if(botResult != false){
                     $scope.vm.botFullPath= botResult;
@@ -469,7 +469,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     $scope.vm.tail = data.knowledgeCommonOn;
                     $scope.vm.appointRelativeGroup = data.knowledgeRelevantContentList;
                 }
-                //$scope.master.openNgDialog($scope,"/static/knowledgeManagement/public-html/selectMedia.html","450px",addNewOrEditKnow,"",setDialog,"true") ;
+                //$scope.MASTER.openNgDialog($scope,"/static/knowledgeManagement/public-html/selectMedia.html","450px",addNewOrEditKnow,"",setDialog,"true") ;
                 if(dia.length==0) {
                     var dialog = ngDialog.openConfirm({
                         template: "/static/knowledgeManagement/public-html/markKnow_increase.html",
@@ -575,7 +575,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                             var allBot = angular.copy($scope.vm.creatSelectBot) ;
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
-                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
+                                var botResult = $scope.MASTER.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
                                 if(botResult != false){
                                     $scope.vm.botClassfy.push(botResult);
                                 }
@@ -810,7 +810,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false ;
-            }else if(!$scope.master.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
+            }else if(!$scope.MASTER.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
                 layer.msg("标题未打标")
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");
@@ -863,7 +863,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
-                                            angular.forEach($scope.master.channelList,function(all){
+                                            angular.forEach($scope.MASTER.channelList,function(all){
                                                 if(all.channelCode==v){
                                                     channelTip = all.channelName
                                                 }
@@ -883,7 +883,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
 //*******************       2017/7/14  BEGIN    *******************//
         //弹出选择图片声音对话框
         function selectMultimedia(){
-            $scope.master.openNgDialog($scope,"/static/knowledgeManagement/public-html/selectMedia.html","450px","","","","true") ;
+            $scope.MASTER.openNgDialog($scope,"/static/knowledgeManagement/public-html/selectMedia.html","450px","","","","true") ;
         }
         function addMultimedia(item){
             // 111 图片

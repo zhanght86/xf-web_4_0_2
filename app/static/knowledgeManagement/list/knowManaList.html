@@ -48,7 +48,7 @@
                                         <!--<p class="ipt-txt" id="ipt-txt" >-->
                                         <!--<span ng-repeat="item in vm.knowledgeBotVal" >{{item}}<i ng-if="$index!=vm.knowledgeBotVal.length-1">,</i></span>-->
                                         <!--</p>-->
-                                        <i class="btn-menu_1" ng-click="master.slideToggle('.rootClassfy')" style="right:1px;top:2px;width:23px;height:28px;"></i>
+                                        <i class="btn-menu_1" ng-click="MASTER.slideToggle('.rootClassfy')" style="right:1px;top:2px;width:23px;height:28px;"></i>
                                         <div class="rootClassfy aside-navs aside-navs2">
                                             <ul class="menus show">
                                                 <!--//test-->
@@ -132,7 +132,7 @@
                                         </span>
                                 </div>
                                 <span class="tag_s mr-10 L" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center;">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                                <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" ng-click="vm.extensionByTitleTag.splice($index,1);MASTER.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(2,item,itemIndex)"></a>
                                 <span class="L"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>
@@ -150,7 +150,7 @@
                                         </span>
                                 </div>
                                 <span class="tag_s mr-10 L" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center;">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                                <a href="javascript:;" ng-click="vm.extensions.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" ng-click="vm.extensions.splice($index,1);MASTER.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(0,item,itemIndex)"></a>
                                 <span class="L"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>
@@ -167,7 +167,7 @@
                                     </span>
                                 </div>
                                 <span class="tag_s mr-10 L" style="background: #e0eaf1;border: 1px solid #eee;height: 25px;line-height: 25px;padding: 0 10px;text-align: center;">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                                <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1);master.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                                <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1);MASTER.removeExtensionHasTag(this,'rmExtensionBackup',item)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                                 <a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.extensionEdit(1,item,itemIndex)"></a>
                                 <span class="L"><b>来源于: </b> <span>{{item.extensionQuestionTitle}}</span></span>
                             </div>

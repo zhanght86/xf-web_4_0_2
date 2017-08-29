@@ -92,9 +92,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
         };
         //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
+        $scope.MASTER.getChannels($scope,["channels"]) ;
         // 相关问题 键盘选择
         //function selectEvent(e){
         //        var  srcObj = e.srcElement ? e.srcElement : e.target;
@@ -266,7 +266,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 //console.log(data)
                 if(data.status = 10000){
                     var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                        botResult = $scope.MASTER.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
                     $scope.$apply(function(){
                         $scope.vm.knowledgeBotVal = data.categoryFullName;
                         if(botResult != false){
@@ -306,14 +306,14 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+        $scope.MASTER.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
             //"/api/ms/modeling/category/searchbycategoryname"
         ) ;
         //BOT搜索自动补全
-        $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+        $scope.MASTER.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
                 var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                    botResult = $scope.MASTER.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
                     $scope.vm.knowledgeBotVal = suggestion.value;
                     if(botResult != false){
                         $scope.vm.botFullPath= botResult;
@@ -436,7 +436,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                             //添加校验是否添加校验  获取所有bot 验证是否重复
                             var allBot = angular.copy($scope.vm.creatSelectBot) ;
                             angular.forEach(data.data, function (item) {
-                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
+                                var botResult = $scope.MASTER.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
                                 if(botResult != false){
                                     $scope.vm.botClassfy.push(botResult);
                                 }
@@ -663,7 +663,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false
-            }else if(!$scope.master.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
+            }else if(!$scope.MASTER.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
                 layer.msg("标题未打标")
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");

@@ -10,7 +10,7 @@
             <div class="imgTextDetail tc mb-10 graphicDetails_div"  ng-bind-html="vm.ueditorText | toHtml"></div>
         </div>
         <div ng-if="vm.link">
-          阅读原文 <a href="vm.link"></a>
+          <a ng-href="{{vm.link}}">阅读原文 </a>
         </div>
     </div>
 </div>

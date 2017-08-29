@@ -24,7 +24,7 @@ angular.module('materialManagement').controller('teletextMessageController', [
                 applicationId:$scope.vm.applicationId,
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
-                graphicMessageTitle:$scope.vm.titAuthor,
+                graphicMessageTitle:$scope.vm.titAuthor
                 // graphicMessageAuthor:$scope.vm.titAuthor
             },function(data){
                 if(data.status == 500){
@@ -58,17 +58,17 @@ angular.module('materialManagement').controller('teletextMessageController', [
         },true);
         //删除图片
         function removeImg(item,index){
-            layer.confirm('确认删除该图片？', {
+            layer.confirm('确认删除该图文消息？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
                 httpRequestPost("/api/ms/graphicMessage/deleteGraphicMessage",{
                     graphicMessageIds : new Array(item.graphicMessageId)
                 },function(data){
                     if(data.status == 200){
-                        layer.msg("图片删除成功") ;
+                        layer.msg("图文消息删除成功") ;
                         showImg(1)
                     }else if(data.status == 500){
-                        layer.msg("图片删除失败") ;
+                        layer.msg("图文消息删除失败") ;
                     }
                 },function(err){
                     console.log(err)

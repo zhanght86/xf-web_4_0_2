@@ -249,38 +249,50 @@ function getBeforeDate(n,type,revert){
     //*params  n 時間
     //*params type  是否返回每一天日期
     //*params revert  是否返回日期排序
-    var s ;
-    var n = n;
-    var d = new Date();
-    var year = d.getFullYear();
-    var mon=d.getMonth()+1;
-    var day=d.getDate();
-    if(day <= n){
-        if(mon>1) {
-            mon=mon-1;
+    //var s ;
+    //var n = n;
+    //var d = new Date();
+    //var year = d.getFullYear();
+    //var mon=d.getMonth()+1;
+    //var day=d.getDate();
+    //if(day <= n){
+    //    if(mon>1) {
+    //        mon=mon-1;
+    //    }
+    //    else {
+    //        year = year-1;
+    //        mon = 12;
+    //    }
+    //}
+    //if(type){
+    //    s = [] ;
+    //    for(var i = 1 ;i<n+1; i++){
+    //        d.setDate(d.getDate()-1);
+    //        day=d.getDate();
+    //        var y  = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
+    //        s.push(y)
+    //    }
+    //}else{
+    //    d.setDate(d.getDate()-n);
+    //    day=d.getDate();
+    //    s = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
+    //}
+    //if(revert){
+    //    s= s.reverse() ;
+    //}
+    //return s;
+        var days = [] ;
+        var current = new Date() ;
+        for(var i = 1; i<n+1; i++){
+            var today  = new Date(current.getTime()-i*1000*24*3600);
+            var year = today.getFullYear() ;
+            var month = (today.getMonth()+1)>=10?(today.getMonth()+1):("0"+(today.getMonth()+1)) ;
+            var day =  today.getDate() ;
+            var date = year + "-" + month + "-" + day
+            days.push(date) ;
         }
-        else {
-            year = year-1;
-            mon = 12;
-        }
-    }
-    if(type){
-        s = [] ;
-        for(var i = 1 ;i<n+1; i++){
-            d.setDate(d.getDate()-1);
-            day=d.getDate();
-            var y  = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
-            s.push(y)
-        }
-    }else{
-        d.setDate(d.getDate()-n);
-        day=d.getDate();
-        s = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
-    }
-    if(revert){
-        s= s.reverse() ;
-    }
-    return s;
+        return days.reverse()
+
 }
 //具体时间转换为时间戳
 function dateToString(str){

@@ -80,7 +80,7 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 }
             });
             uploader.on('uploadError', function (file,reason) {
-                console.log("上传失败")
+                console.log("上传失败") ;
                 layer.msg('请检查'+reason);
             });
             uploader.on('uploadSuccess', function (file,response) {

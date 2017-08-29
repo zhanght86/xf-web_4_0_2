@@ -203,7 +203,7 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
             },function(data){
                 if(data.status = 10000){
                     var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
-                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                        botResult = $scope.MASTER.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
                     $scope.$apply(function(){
                         console.log(data) ;
                         $scope.vm.knowledgeBotVal = data.categoryFullName;
@@ -303,7 +303,7 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                     searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
                         $scope.$apply(function(){
                             var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                                botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                                botResult = $scope.MASTER.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
                             $scope.vm.knowledgeBotVal = suggestion.value;
                             if(botResult != false){
                                 $scope.vm.botFullPath= botResult;

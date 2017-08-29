@@ -35,10 +35,10 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
                 "applicationId": APPLICATION_ID
             },function(data){          //类名重複
                 if(data.data===10005){
-                    $scope.master.headImage= "";//头像
+                    $scope.MASTER.headImage= "";//头像
                 }else{
                     $cookieStore.put('robotHead','/img/'+data.data.robotHead);
-                    $scope.master.headImage = '/img/'+data.data.robotHead ;
+                    $scope.MASTER.headImage = '/img/'+data.data.robotHead ;
                     $scope.vm.robotName = data.data.robotName; //机器人名称
                     $scope.$apply();
                 }

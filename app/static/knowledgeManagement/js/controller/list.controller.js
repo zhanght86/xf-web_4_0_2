@@ -88,9 +88,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         };
 
         //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
+        $scope.MASTER.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         /*
 
@@ -238,7 +238,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     //添加校验是否添加校验
                     console.log(data) ;
                     var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
-                        botResult = $scope.master.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                        botResult = $scope.MASTER.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
                     console.log(botResult) ;
                     $scope.$apply(function(){
                         $scope.vm.knowledgeBotVal = data.categoryFullName;
@@ -263,7 +263,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 if(data.status==200){
                     $scope.$apply(function(){
                         var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                        var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                        var result = $scope.MASTER.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
                         if(result != false){
                             $scope.vm.extensionTitle = "";
                             $scope.vm.extensionsByFrame.push(result);
@@ -297,7 +297,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                     }else if (data.status == 200) {
                         $scope.$apply(function(){
                             var allExtension = $scope.vm.extensions.concat($scope.vm.extensionsByFrame,$scope.vm.extensionByTitleTag) ;
-                            var result = $scope.master.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
+                            var result = $scope.MASTER.isExtensionTagRepeat(data.data,allExtension,title,weight) ;
                             if(result != false){
                                 $scope.vm.extensionTitle = "";
                                 if(!source){
@@ -314,14 +314,14 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             }
         }
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        $scope.master.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
+        $scope.MASTER.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
             //"/api/ms/modeling/category/searchbycategoryname"
         ) ;
         //BOT搜索自动补全
-        $scope.master.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+        $scope.MASTER.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
             $scope.$apply(function(){
                 var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                    botResult = $scope.master.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                    botResult = $scope.MASTER.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
                 $scope.vm.knowledgeBotVal = suggestion.value;
                 if(botResult != false){
                     $scope.vm.botFullPath= botResult;
@@ -414,7 +414,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                             var allBot = angular.copy($scope.vm.creatSelectBot) ;
                             //生成bot
                             angular.forEach(data.data.classifyList, function (item) {
-                                var botResult = $scope.master.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
+                                var botResult = $scope.MASTER.isBotRepeat(item.id,item.fullPath,item.type,allBot) ;
                                 if(botResult != false){
                                     $scope.vm.botClassfy.push(botResult);
                                 }
@@ -585,7 +585,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if(!params.knowledgeTitle){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
-            }else if(!$scope.master.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
+            }else if(!$scope.MASTER.isTitleHasExt($scope.vm.title,params.extensionQuestions)){
                 layer.msg("标题未打标")
             }else if(!params.classificationAndKnowledgeList.length){
                 layer.msg("知识类目不能为空，请选择分类");

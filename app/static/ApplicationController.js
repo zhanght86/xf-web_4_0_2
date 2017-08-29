@@ -10,17 +10,19 @@ knowledge_static_web.controller('ApplicationController',
                   $state , localStorageService,$stateParams,$sce,$window,KnowDocService,knowledgeAddServer,$cookieStore) {
 /***************************************************************  MASTER   **************************************************************************************/
                /**
-                * @Name  master
+                * @Name  MASTER
                 * @For   下游调用
                 * @Info  self === $scope
                 * */
-            $scope.master = { 
+            $scope.MASTER = {
                 //const for Downstream
                     headImage : $cookieStore.get("robotHead") ,
                     applicationName : APPLICATION_NAME,
                     channelList : "",
                     dimensionList : "",
                 //method for DownStream simple
+                    queryChannelList : queryChannelList ,  //获取维度
+                    querydimensionList : querydimensionList ,  //获取维度
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
                     openNgDialog : openNgDialog ,  //打开弹框
@@ -42,7 +44,10 @@ knowledge_static_web.controller('ApplicationController',
                    botTreeOperate : botTreeOperate ,
                    isTitleHasExt : isTitleHasExt
             } ;
-
+            if(APPLICATION_ID){
+                querydimensionList(APPLICATION_ID) ;
+                queryChannelList(APPLICATION_ID)
+            }
             //滑动
             function slideToggle(el,callBack){
                 $timeout(function(){
@@ -101,24 +106,24 @@ knowledge_static_web.controller('ApplicationController',
                 }
             }
             //獲取纬度
-            void function(){
+            function querydimensionList(applicationId){
                 //var dimensions = [] ;
-                knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
+                knowledgeAddServer.getDimensions({ "applicationId" : applicationId},
                     function(data) {
                         if(data.data){
-                            $scope.master.dimensionList = data.data ;
+                            $scope.MASTER.dimensionList = data.data ;
                         }
                     }, function(error) {
                         console.log(error)
                     });
                 //return dimensions ;
-            }()
+            };
             function getDimensions(self,arr){
                 //var dimensions = [] ;
                 knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
-                            $scope.master.dimensionList = data.data ;
+                            $scope.MASTER.dimensionList = data.data ;
                             angular.forEach(arr,function(item){
                                 self.vm[item] = data.data
                             }) ;
@@ -129,25 +134,25 @@ knowledge_static_web.controller('ApplicationController',
                     });
                 //return dimensions ;
             }
-            void function(){
+             function queryChannelList(applicationId){
                 //var  channels = [] ;
-                knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
+                knowledgeAddServer.getChannels({ "applicationId" : applicationId},
                     function(data) {
                         if(data.data){
-                            $scope.master.channelList = data.data ;
+                            $scope.MASTER.channelList = data.data ;
                         }
                     }, function(error) {
                         console.log(error) ;
                     });
                 //return   channels ;
-            }()
+            }
             //获取渠道
             function getChannels(self,arr){
                 //var  channels = [] ;
                 knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
                     function(data) {
                         if(data.data){
-                            $scope.master.channelList = data.data ;
+                            $scope.MASTER.channelList = data.data ;
                             angular.forEach(arr,function(item){
                                 self.vm[item] = data.data
                             }) ;

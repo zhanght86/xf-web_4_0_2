@@ -94,9 +94,9 @@ angular.module('knowledgeManagementModule').controller('newConceptController', [
             //引到页end
         };
         //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
+        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
+        $scope.MASTER.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
 
         //組裝數據   擴展問   content

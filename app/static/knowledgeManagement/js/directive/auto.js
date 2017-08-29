@@ -36,7 +36,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             source.id = [];
             source.name = [];
             var timer = $interval(function(){
-                console.log($scope.source) ;
+                console.log($scope.source)
                   if($scope.source){
                       $interval.cancel(timer);
                       angular.forEach($scope.source,function(item){

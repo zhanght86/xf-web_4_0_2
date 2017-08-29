@@ -17,9 +17,9 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
             timeEnd : "",
         };
         //獲取渠道
-        $scope.master.getDimensions($scope,["dimensions"]) ;
+        $scope.MASTER.getDimensions($scope,["dimensions"]) ;
         //获取维度
-        $scope.master.getChannels($scope,["channels"]) ;
+        $scope.MASTER.getChannels($scope,["channels"]) ;
         getList() ;
         //表格列表
         function getList(){

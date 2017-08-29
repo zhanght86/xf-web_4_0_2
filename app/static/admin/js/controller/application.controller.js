@@ -23,6 +23,8 @@ angular.module('adminModule').controller('adminContentController', [
             $cookieStore.put("sceneId",id);
             $cookieStore.put("applicationId",applicationId);
             $.getScript('/js/common/config.js');
+            $scope.MASTER.queryChannelList(applicationId) ;
+            $scope.MASTER.querydimensionList(applicationId) ;
         }
         getUserInfo();
         myApplication();

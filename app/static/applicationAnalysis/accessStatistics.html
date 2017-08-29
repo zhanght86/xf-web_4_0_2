@@ -10,20 +10,9 @@
                         <td>访客访问次数</td>
                         <td>有效访问次数</td>
                     </tr>
-                    <tr>
-                        <td>今日</td>
-                        <td ng-bind="dataTopRightToday[0]"></td>
-                        <td ng-bind="dataTopRightToday[1]"></td>
-                    </tr>
-                    <tr>
-                        <td>昨日</td>
-                        <td ng-bind="dataTopRightTom[0]"></td>
-                        <td ng-bind="dataTopRightTom[1]"></td>
-                    </tr>
-                    <tr>
-                        <td>历史最高</td>
-                        <td  ng-bind="dataTopRightHis[0]"></td>
-                        <td ng-bind="dataTopRightHis[1]"></td>
+                    <tr ng-repeat="item in vm.dataTopLeft track by $index">
+                        <td>{{item.name}}</td>
+                        <td ng-repeat="val in item.data track by $index" >{{val}}</td>
                     </tr>
                 </table>
             </div>
@@ -31,21 +20,21 @@
                 <div class="visitor_div1 mb-10 clearfix">
                     <span class="dib L" style="width:50%;">
                         今日有效访客总数
-                        <strong class="mr-30" ng-bind="dataTopLeftToday[0]"></strong>
+                        <strong class="mr-30" ng-bind="vm.dataTopRigth.today[0]"></strong>
                     </span>
                     <span class="dib L" style="width:50%;">
                         今日有效会话总数
-                        <strong ng-bind="dataTopLeftToday[1]"></strong>
+                        <strong ng-bind="vm.dataTopRigth.today[1]"></strong>
                     </span>
                 </div>
                 <div class="visitor_div1 clearfix">
                     <span class="dib L" style="width:50%;">
                         历史访客总数
-                        <strong class="mr-30" ng-bind="dataTopLeftHis[0]"></strong>
+                        <strong class="mr-30" ng-bind="vm.dataTopRigth.history[0]"></strong>
                     </span>
                     <span class="dib L" style="width:50%;">
                         历史会话总数
-                        <strong ng-bind="dataTopLeftHis[1]"></strong>
+                        <strong ng-bind="vm.dataTopRigth.history[1]"></strong>
                     </span>
                 </div>
             </div>
@@ -66,11 +55,11 @@
                         <!--<select class="sel bd L mr-5" ng-model="vm.channelId" ng-options="channel.channelName as channel.channelCode for channel in vm.channels">-->
                             <!--<option value="">全部渠道</option>-->
                         <!--</select>-->
-                        <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in vm.channels">
+                        <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
                             <option  value="" >全部渠道</option>
                         </select>
                         <!--纬度-->
-                        <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
+                        <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">
                             <option  value="" >全部维度</option>
                         </select>
                         <span>
@@ -150,7 +139,7 @@
                                 </thead>
                                 <tbody>
                                 <!--<td ng-if="data130[0]._value == null">0</td>-->
-                                <tr >
+                                <tr>
                                     <td>微信</td>
                                     <td ng-bind="data130[0]._value?data130[0]._value:0"></td>
                                     <td ng-bind="data130[1]._value?data130[1]._value:0"></td>

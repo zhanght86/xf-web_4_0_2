@@ -22,7 +22,8 @@ angular.module('materialManagement').controller('addTwMesController', [
             selectImage : selectImage , //选择图片库图片
             storeKnow : storeKnow ,  //保存知识
             ueditorText : "",    //编辑器内容
-            insertCoverImg : insertCoverImg // 插入封面图片到编辑器
+            insertCoverImg : insertCoverImg ,// 插入封面图片到编辑器
+            saveLimit : false ,
         };
         //设置富文本编辑器
         $scope.vm.config = {
@@ -44,13 +45,13 @@ angular.module('materialManagement').controller('addTwMesController', [
                 //'insertimage',
                 'emotion',
                 //'scrawl',
-                'insertvideo',
+                //'insertvideo',
                 //'music',
                 //'attachment', 'map',
                 //'gmap',
-                'insertframe', //'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+                //'insertframe', //'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
                 'horizontal',
-                'date', 'time','wordimage', //'spechars', 'snapscreen', 'wordimage', '|',
+                'date', 'time',//'wordimage', //'spechars', 'snapscreen', 'wordimage', '|',
                 //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
                 // 'print', 'preview', 'searchreplace', 'help', 'drafts'
             ]]
@@ -117,7 +118,7 @@ angular.module('materialManagement').controller('addTwMesController', [
             ngDialog.close(ngDialog.latestID);
         }
         function selectLocalImg(){
-            $scope.master.openNgDialog($scope,"/static/materialManagement/image-text-store/selectImage.html","")
+            $scope.MASTER.openNgDialog($scope,"/static/materialManagement/image-text-store/selectImage.html","")
         }
             /*
              applicationId	String	是	100	应用ID
@@ -127,25 +128,30 @@ angular.module('materialManagement').controller('addTwMesController', [
              graphicMessageTitle	String	是	20	图文标题
              pictureUrl	String	是	20	图片路劲
            */
-        function storeKnow(title,author,ueditorText,link,picUrl,raphicMessageId){
-            if(canStore(title,author,ueditorText,picUrl)){
-                // 参数 url
-                var parameter = {
-                        "applicationId": APPLICATION_ID ,
-                        "graphicMessageAuthor": author,
-                        "graphicMessageText": ueditorText ,
-                        "graphicMessageTextLink": link ,
-                        "graphicMessageTitle": title ,
-                        "pictureUrl": picUrl
-                    }  ,
-                    api;
-                // 根据图文id 判断  url 跟 parameter
-                raphicMessageId?
-                    void function(){
-                        parameter.raphicMessageId = raphicMessageId;
-                        api="/api/ms/graphicMessage/update"}():
-                    api="/api/ms/graphicMessage/insert";
-                save(api,parameter)
+        function storeKnow(title,author,ueditorText,link,picUrl,graphicMessageId){
+            if(!$scope.vm.storeLimit){
+                if(canStore(title,author,ueditorText,picUrl)){
+                    $scope.vm.storeLimit = true ;
+                    // 参数 url
+                    var parameter = {
+                            "applicationId": APPLICATION_ID ,
+                            "graphicMessageAuthor": author,
+                            "graphicMessageText": ueditorText ,
+                            "graphicMessageTextLink": link ,
+                            "graphicMessageTitle": title ,
+                            "pictureUrl": picUrl
+                        }  ,
+                        api;
+                    // 根据图文id 判断  url 跟 parameter
+                    graphicMessageId?
+                        void function(){
+                            parameter.graphicMessageId = graphicMessageId;
+                            api="/api/ms/graphicMessage/update"}():
+                        api="/api/ms/graphicMessage/insert";
+                    save(api,parameter)
+                }
+            }else{
+                layer.msg("知识保存中......")
             }
         }
         function insertCoverImg(url){
@@ -180,9 +186,10 @@ angular.module('materialManagement').controller('addTwMesController', [
                         $state.go("materialManagement.teletextMessage");
                         //    保存成功
                     }else if(response.status == 500){
+                        $scope.vm.storeLimit = false ;
                         //    保存失敗
                     }
-                },function(err){console.log(err)}) ;
+                },function(err){$scope.vm.storeLimit = false;console.log(err)}) ;
         }
         // 检测时候都符合
         /*
