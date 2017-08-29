@@ -25,7 +25,6 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
         replace: true,
         //require: 'ngModel',
         link: function ($scope, elem, attr, ctrl) {
-
             $scope.search = " ";
             $scope.flag = false;
             //$scope.$apply(function(){
@@ -35,15 +34,22 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             var source = {};
             source.id = [];
             source.name = [];
-            var timer = $interval(function(){
-                console.log($scope.source)
-                  if($scope.source){
+            $scope.$watch("source",function(newV,oldV,scope){
+                if(newV){
+
+                }
+            }) ;
+            var timer = $timeout(function(){
+                console.log($scope.$parent.$parent.$parent.MASTER.dimensionList)
+                  if($scope.$parent.$parent.$parent.MASTER.dimensionList){
+                      //console.log($scope.$parent.$parent.$parent.MASTER.dimensionList)
                       $interval.cancel(timer);
                       angular.forEach($scope.source,function(item){
                           source.name.push(item.dimensionName);
                           source.id.push(item.dimensionId);
-                          $scope.source = source;
                       });
+                      $scope.source = source;
+                      //$scope.$apply()
                       //console.log($scope.result);
                       if($scope.result&&$scope.source.name){
                           //console.log($scope.result);
@@ -83,7 +89,7 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
                           $("#input").val("")
                       });
                   }
-              },100);
+              },1000);
             console.debug($scope);
         }
     };
