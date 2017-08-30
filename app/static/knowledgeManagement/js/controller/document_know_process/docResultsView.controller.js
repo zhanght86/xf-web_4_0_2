@@ -279,7 +279,7 @@ angular.module('knowledgeManagementModule').controller('doc_results_viewControll
                 closeByDocument:false,
                 closeByEscape: true,
                 showClose : true,
-                width:'820px',
+                width:'775px',
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
