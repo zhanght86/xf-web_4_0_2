@@ -169,6 +169,7 @@ function httpRequestPostParam(url, data, sucCallBack,falCallback, needToken, aja
         type: "POST", //HTTP请求类型
         timeout: timeout?timeout:100000, //超时时间设置为10秒；
         data: data,
+        cache:false,
         success: function(data) {
             sucCallBack(data);
         },
@@ -215,6 +216,7 @@ function httpRequestPostAsync(url, data, sucCallBack,falCallback, needToken, aja
         timeout: 10000, //超时时间设置为10秒；
         headers: header,
         data: data,
+        cache:false,
         success: function(data) {
             sucCallBack(data);
         },

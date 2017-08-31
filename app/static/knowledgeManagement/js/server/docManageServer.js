@@ -3,20 +3,20 @@
  */
 angular.module('knowledgeManagementModule').factory('KnowDocService',['$resource',function ($resource) {
     var knowDocService = {};
-    knowDocService.queryKnowDocList = $resource('/api/ms/knowledgeDocumentation/queryDocumentationList', {}, {});
+    knowDocService.queryKnowDocList = $resource('/api/ms/knowledgeDocumentation/queryDocumentationList', {}, {},{ cache:false});
     knowDocService.queryDetailByDocId = $resource('/api/ms/knowledgeDocumentation/selectDocumentationKnowledge', {}, {});
     knowDocService.deleteKnowDoc = $resource('/api/ms/knowledgeDocumentation/deleteDocumentation', {}, {});
     return knowDocService;
 }]).factory('DetailService',['$resource',function ($resource) {
     var detailService = {};
-    //ÖªÊ¶ÎÄµµ
-    //²éÑ¯ÎÄµµÖªÊ¶ÏêÇé
+    //çŸ¥è¯†æ–‡æ¡£
+    //æŸ¥è¯¢æ–‡æ¡£çŸ¥è¯†è¯¦æƒ…
     detailService.queryKnowDocByDocId = $resource('/api/ms/knowledgeDocumentation/selectDocumentationById', {}, {});
-    //²éÑ¯ÎÄµµÖªÊ¶µã
+    //æŸ¥è¯¢æ–‡æ¡£çŸ¥è¯†ç‚¹
     detailService.queryDocKnowItems = $resource('api/ms/knowledgeDocumentation/selectDocumentationKnowledgeList', {}, {});
-    //ºöÂÔÎÄµµÈ«²¿ÖªÊ¶µã
+    //å¿½ç•¥æ–‡æ¡£å…¨éƒ¨çŸ¥è¯†ç‚¹
     detailService.ignoreDocKnowAll = $resource('api/ms/knowledgeDocumentation/ignoreDocumentationKnowledgeAll', {}, {});
-    //ºöÂÔÎÄµµµ¥¸öÖªÊ¶µã
+    //å¿½ç•¥æ–‡æ¡£å•ä¸ªçŸ¥è¯†ç‚¹
     detailService.ignoreDocKnow = $resource('api/ms/knowledgeDocumentation/ignoreDocumentationKnowledge', {}, {});
     return detailService;
 }]).factory('TemplateService',['$resource',function ($resource) {

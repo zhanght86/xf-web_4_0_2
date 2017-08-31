@@ -132,30 +132,42 @@ angular.module('myApplicationSettingModule').controller('relateManageController'
             if($scope.vm.serviceIds==null||$scope.vm.serviceIds.length==0){
                 layer.msg("请选择要取消的服务");
             }else{
-                var dialog = ngDialog.openConfirm({
-                    template:"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html",
-                    scope: $scope,
-                    closeByDocument:false,
-                    closeByEscape: true,
-                    showClose : true,
-                    backdrop : 'static',
-                    preCloseCallback:function(e){    //关闭回掉
-                        if(e === 1){
-                            httpRequestPost(API_APPLICATION+"/relation/cancelRelatedService",{
-                                "serviceIds" : $scope.vm.serviceIds //当前选中的关联服务id
-                            },function(data){
-                                if(data.status==200){
-                                    layer.msg("取消关联成功");
-                                    listApplicationServiceData(1);
-                                }else{
-                                    layer.msg("取消关联出错了");
-                                }
-                            },function(){
-                                layer.msg("请求失敗");
-                            })
-                        }
+                $scope.$parent.MASTER.openNgDialog($scope,"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html","",function(){ httpRequestPost(API_APPLICATION+"/relation/cancelRelatedService",{
+                    "serviceIds" : $scope.vm.serviceIds //当前选中的关联服务id
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("取消关联成功");
+                        listApplicationServiceData(1);
+                    }else{
+                        layer.msg("取消关联出错了");
                     }
-                });
+                },function(){
+                    layer.msg("请求失敗");
+                })},"","","") ;
+                //var dialog = ngDialog.openConfirm({
+                //    template:"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html",
+                //    scope: $scope,
+                //    closeByDocument:false,
+                //    closeByEscape: true,
+                //    showClose : true,
+                //    backdrop : 'static',
+                //    preCloseCallback:function(e){    //关闭回掉
+                //        if(e === 1){
+                //            httpRequestPost(API_APPLICATION+"/relation/cancelRelatedService",{
+                //                "serviceIds" : $scope.vm.serviceIds //当前选中的关联服务id
+                //            },function(data){
+                //                if(data.status==200){
+                //                    layer.msg("取消关联成功");
+                //                    listApplicationServiceData(1);
+                //                }else{
+                //                    layer.msg("取消关联出错了");
+                //                }
+                //            },function(){
+                //                layer.msg("请求失敗");
+                //            })
+                //        }
+                //    }
+                //});
             }
 
         }
