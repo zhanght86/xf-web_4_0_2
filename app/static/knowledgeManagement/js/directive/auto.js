@@ -34,63 +34,64 @@ knowledge_static_web.directive("autoComplete", function($compile,$timeout,$inter
             var source = {};
             source.id = [];
             source.name = [];
-            $scope.$watch("source",function(newV,oldV,scope){
-                if(newV){
+            var intervaler = $interval(function(){
+                if($scope.$parent.$parent.$parent.MASTER.dimensionList){
+                    $interval.cancel(intervaler) ;
+                    var timer = $timeout(function(){
+                        //console.log($scope.$parent.$parent.$parent.MASTER.dimensionList);
+                        if($scope.$parent.$parent.$parent.MASTER.dimensionList){
+                            //console.log($scope.$parent.$parent.$parent.MASTER.dimensionList)
+                            $interval.cancel(timer);
+                            angular.forEach($scope.$parent.$parent.$parent.MASTER.dimensionList,function(item){
+                                source.name.push(item.dimensionName);
+                                source.id.push(item.dimensionId);
+                            });
+                            //console.log($scope.$$watchers)
+                            $scope.source = source;
+                            //$scope.$apply()
+                            //console.log($scope.result);
+                            if($scope.result&&$scope.source.name){
+                                //console.log($scope.result);
+                                angular.forEach($scope.result,function(item){
+                                    $scope.source.name.remove(item.dimensionName);
+                                    $scope.source.id.remove(item.dimensionId);
+                                    result.name.push(item.dimensionName);
+                                    result.id.push(item.dimensionId)
+                                });
+                                $scope.result = result
+                            }
+                            //});
+                            $scope.addItem = function(index,item){
+                                $scope.result.name.push(item);
+                                $scope.result.id.push($scope.source.id[index]);
+                                $scope.source.name.splice(index,1);
+                                $scope.source.id.splice(index,1);
+                                $("#input").val("")
+                            };
+                            $scope.removeItem = function(index,item){
+                                $scope.source.name.push(item);
+                                $scope.source.id.push($scope.result.id[index]);
+                                $scope.result.name.splice(index,1);
+                                $scope.result.id.splice(index,1);
+                                $("#input").val("")
+                            };
 
+                            $(document).on("click",function(event){
+                                var event = event || window.event;
+                                if($(event.target).attr('class')!= "miles-autoInput L"){
+                                    $scope.$apply(function(){
+                                        $scope.flag = false;
+                                    })
+                                }else{
+                                    $scope.flag = true;
+                                    angular.element(elem).find(".miles-autoInput").focus();
+                                }
+                                $("#input").val("")
+                            });
+                        }
+                    },500);
                 }
-            }) ;
-            var timer = $timeout(function(){
-                console.log($scope.$parent.$parent.$parent.MASTER.dimensionList)
-                  if($scope.$parent.$parent.$parent.MASTER.dimensionList){
-                      //console.log($scope.$parent.$parent.$parent.MASTER.dimensionList)
-                      $interval.cancel(timer);
-                      angular.forEach($scope.source,function(item){
-                          source.name.push(item.dimensionName);
-                          source.id.push(item.dimensionId);
-                      });
-                      $scope.source = source;
-                      //$scope.$apply()
-                      //console.log($scope.result);
-                      if($scope.result&&$scope.source.name){
-                          //console.log($scope.result);
-                          angular.forEach($scope.result,function(item){
-                              $scope.source.name.remove(item.dimensionName);
-                              $scope.source.id.remove(item.dimensionId);
-                              result.name.push(item.dimensionName);
-                              result.id.push(item.dimensionId)
-                          });
-                          $scope.result = result
-                      }
-                      //});
-                      $scope.addItem = function(index,item){
-                          $scope.result.name.push(item);
-                          $scope.result.id.push($scope.source.id[index]);
-                          $scope.source.name.splice(index,1);
-                          $scope.source.id.splice(index,1);
-                          $("#input").val("")
-                      };
-                      $scope.removeItem = function(index,item){
-                          $scope.source.name.push(item);
-                          $scope.source.id.push($scope.result.id[index]);
-                          $scope.result.name.splice(index,1);
-                          $scope.result.id.splice(index,1);
-                          $("#input").val("")
-                      };
-                      $(document).on("click",function(event){
-                          var event = event || window.event;
-                          if($(event.target).attr('class')!= "miles-autoInput L"){
-                              $scope.$apply(function(){
-                                  $scope.flag = false;
-                              })
-                          }else{
-                              $scope.flag = true;
-                              angular.element(elem).find(".miles-autoInput").focus();
-                          }
-                          $("#input").val("")
-                      });
-                  }
-              },1000);
-            console.debug($scope);
+            },50) ;
         }
     };
 }).directive("tagAutoComplete", function($compile,$timeout,$interval) {

@@ -1,31 +1,23 @@
 /**
- * Description:关联管理控制js
- * Author: chengjianhua@ultrapower.com.cn
+ * Description:关联管理 ---》》》 营销知识显示
+ * Author: miles
  * Date: 2017/4/28 16:30
  */
-angular.module('myApplicationSettingModule').controller('AssociationManageController', [
+angular.module('myApplicationSettingModule').controller('relateManageController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
-            applicationId: $cookieStore.get("applicationId"),
-            userId : $cookieStore.get("userId"), //获取用户id
             applicationServiceData : "",   // 本应用服务列表数据
             paginationConf : ""  ,//分页条件
             pageSize : 5 , //默认每页数量
             dataTotal: "", //节点数据记录总数
-
             serviceIds : [], //当前选中的关联服务id
             relatedServiceIds : [], //当前选中的被关联的服务id
             searchWord : "", //检索词
-
-            selectRelatedServiceId : selectRelatedServiceId, //选择被关联的服务
             selectServiceId : selectServiceId, //选择关联的服务
-
             addRelatedService : addRelatedService, //关联服务弹窗
             cancelRelatedService : cancelRelatedService, //取消关联服务弹窗
             listApplicationServiceData : listApplicationServiceData //分页查询本应用的服务
-            
-
         };
 
         $scope.other = {
@@ -42,9 +34,8 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
         listApplicationServiceData(1);
         //请求应用本身的服务列表
         function listApplicationServiceData(index){
-            console.log("aa");
-            httpRequestPost("/api/application/relation/listServiceRelation",{
-                "applicationId": $scope.vm.applicationId,
+            httpRequestPost(API_APPLICATION+"/relation/listServiceRelation",{
+                "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
                 "searchWord": $scope.vm.searchWord
@@ -59,7 +50,7 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败")
+                console.log("请求失败")
             })
         }
         var timeout ;
@@ -74,10 +65,11 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
 
             }
         },true);
+        listOtherApplicationServiceData(1) ;
         //请求其他应用本身的服务列表
         function listOtherApplicationServiceData(index){
-            httpRequestPost("/api/application/relation/listOtherApplicationService",{
-                "applicationId": $scope.vm.applicationId,
+            httpRequestPost(API_APPLICATION+"/relation/listOtherApplicationService",{
+                "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.other.pageSize,
                 "pageSize": $scope.other.pageSize
             },function(data){
@@ -91,7 +83,7 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
                 };
                 $scope.$apply();
             },function(){
-                layer.msg("请求失败")
+                console.log("请求失败")
             })
         }
         var timeout2 ;
@@ -106,45 +98,33 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
             }
         },true);
 
-        function addRelatedService(){
+        function addRelatedService(ids){
             if($scope.vm.serviceIds==null||$scope.vm.serviceIds.length==0){
                 layer.msg("请选择服务");
             }else{
-                listOtherApplicationServiceData(1);
-                var dialog = ngDialog.openConfirm({
-                    template:"/static/myApplication/applicationConfig/AssociationManageDialog.html",
-                    scope: $scope,
-                    closeByDocument:false,
-                    closeByEscape: true,
-                    showClose : true,
-                    backdrop : 'static',
-                    preCloseCallback:function(e){    //关闭回掉
-                        if(e === 1){
-                            if($scope.vm.relatedServiceIds==null||$scope.vm.relatedServiceIds.length==0){
-                                layer.msg("请选择要关联的服务");
+                $scope.$parent.MASTER.openNgDialog($scope,"/static/myApplication/applicationConfig/relate_manage/add_relate.html","",function(){
+                    if($scope.vm.relatedServiceIds==null||$scope.vm.relatedServiceIds.length==0 || !$scope.vm.relatedServiceIds){
+                        layer.msg("请选择要关联的服务");
+                    }else{
+                        httpRequestPost(API_APPLICATION+"/relation/relatedService",{
+                            "applicationId" : APPLICATION_ID, //本应用的id
+                            "userId": USER_ID,
+                            "serviceIds" : $scope.vm.serviceIds, //当前选中的关联服务id
+                            "relatedServiceIds" : new Array($scope.vm.relatedServiceIds) //当前选中的被关联的服务id
+                        },function(data){
+                            if(data.status==200){
+                                layer.msg("关联成功");
+                                listApplicationServiceData(1);
                             }else{
-                                httpRequestPost("/api/application/relation/relatedService",{
-                                    "applicationId" : $scope.vm.applicationId, //本应用的id
-                                    "userId": $scope.vm.userId,
-                                    "serviceIds" : $scope.vm.serviceIds, //当前选中的关联服务id
-                                    "relatedServiceIds" : $scope.vm.relatedServiceIds //当前选中的被关联的服务id
-                                },function(data){
-                                    if(data.status==200){
-                                        layer.msg("关联成功");
-                                        listApplicationServiceData(1);
-                                    }else{
-                                        layer.msg("关联出错了");
-                                    }
-                                },function(){
-                                    layer.msg("请求失敗");
-                                })
+                                layer.msg("关联出错了");
                             }
-                        }else{
-                            $scope.vm.serviceIds=[]; //当前选中的关联服务id
-                            $scope.vm.relatedServiceIds=[]; //当前选中的被关联的服务id
-                        }
-                    }
-                });
+                        },function(){
+                            console.log("请求失敗");
+                        })
+                }},function(){
+                    $scope.vm.serviceIds=[]; //当前选中的关联服务id
+                    $scope.vm.relatedServiceIds=[]; //当前选中的被关联的服务id
+                    },"","") ;
             }
 
         }
@@ -152,49 +132,45 @@ angular.module('myApplicationSettingModule').controller('AssociationManageContro
             if($scope.vm.serviceIds==null||$scope.vm.serviceIds.length==0){
                 layer.msg("请选择要取消的服务");
             }else{
-                var dialog = ngDialog.openConfirm({
-                    template:"/static/myApplication/applicationConfig/AssociationManageDialog2.html",
-                    scope: $scope,
-                    closeByDocument:false,
-                    closeByEscape: true,
-                    showClose : true,
-                    backdrop : 'static',
-                    preCloseCallback:function(e){    //关闭回掉
-                        if(e === 1){
-                            httpRequestPost("/api/application/relation/cancelRelatedService",{
-                                "serviceIds" : $scope.vm.serviceIds //当前选中的关联服务id
-                            },function(data){
-                                if(data.status==200){
-                                    layer.msg("取消关联成功");
-                                    listApplicationServiceData(1);
-                                }else{
-                                    layer.msg("取消关联出错了");
-                                }
-                            },function(){
-                                layer.msg("请求失敗");
-                            })
-                        }
+                $scope.$parent.MASTER.openNgDialog($scope,"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html","",function(){ httpRequestPost(API_APPLICATION+"/relation/cancelRelatedService",{
+                    "serviceIds" : $scope.vm.serviceIds //当前选中的关联服务id
+                },function(data){
+                    if(data.status==200){
+                        layer.msg("取消关联成功");
+                        listApplicationServiceData(1);
+                    }else{
+                        layer.msg("取消关联出错了");
                     }
-                });
+                },function(){
+                    layer.msg("请求失敗");
+                })},"","","") ;
+                //var dialog = ngDialog.openConfirm({
+                //    template:"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html",
+                //    scope: $scope,
+                //    closeByDocument:false,
+                //    closeByEscape: true,
+                //    showClose : true,
+                //    backdrop : 'static',
+                //    preCloseCallback:function(e){    //关闭回掉
+                //        if(e === 1){
+                //            httpRequestPost(API_APPLICATION+"/relation/cancelRelatedService",{
+                //                "serviceIds" : $scope.vm.serviceIds //当前选中的关联服务id
+                //            },function(data){
+                //                if(data.status==200){
+                //                    layer.msg("取消关联成功");
+                //                    listApplicationServiceData(1);
+                //                }else{
+                //                    layer.msg("取消关联出错了");
+                //                }
+                //            },function(){
+                //                layer.msg("请求失敗");
+                //            })
+                //        }
+                //    }
+                //});
             }
 
         }
-
-
-
-        //选择被关联的服务id
-        function selectRelatedServiceId(relatedServiceId){
-            if($scope.vm.relatedServiceIds==null){
-                $scope.vm.relatedServiceIds=[];
-            }
-            var index=$scope.vm.relatedServiceIds.inArray(relatedServiceId);
-            if(index){
-                $scope.vm.relatedServiceIds.remove(relatedServiceId);
-            }else{
-                $scope.vm.relatedServiceIds.push(relatedServiceId);
-            }
-        }
-
         //选择关联的服务id
         function selectServiceId(serviceId){
             //if($scope.vm.serviceIds==null){

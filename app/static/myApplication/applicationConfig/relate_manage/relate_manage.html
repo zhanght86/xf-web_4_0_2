@@ -10,8 +10,8 @@
             </div>
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
-                    <button class="L btn1 btn1_blue mr-10" ng-click="vm.addRelatedService()">关联</button>
-                    <button class="btn1 btn_green" ng-click="vm.cancelRelatedService()">取消关联</button>
+                    <button class="L btn1 btn1_blue mr-10" ng-click="vm.addRelatedService([vm.serviceIds])">关联</button>
+                    <button class="btn1 btn_green" ng-click="vm.cancelRelatedService(vm.serviceIds)">取消关联</button>
                 </div>
                 <div>
                     <table class="stop_word_tab" >
@@ -24,8 +24,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr  ng-repeat="item in vm.applicationServiceData">
-                            <td><input type="radio" name="serviceId" ng-click="vm.selectServiceId(item.serviceId)"/></td>
+                        <tr  ng-repeat="item in vm.applicationServiceData"> {{vm.serviceIds}}
+                            <td><input type="radio" name="serviceId" ng-value="item.serviceId" ng-model="vm.serviceIds" /></td>
                             <td>{{item.serviceName}}</td>
                             <td>{{item.relatedServiceNames}}</td>
                             <td>{{item.relatedServiceSceneNames}}</td>

@@ -9,13 +9,13 @@ var
             *
            **/
 
-          API_USER = "/api/user/",
+          API_USER = "/api/user",
           /**
             * 应用管理
             * APPLICATION
            **/
 
-          API_APPLICATION = "/api/application/",
+          API_APPLICATION = "/api/application",
 
         /**
             * 业务建模
@@ -28,7 +28,7 @@ var
             * 知识管理
             *
            **/
-          API_MS = "/api/ms/",
+          API_MS = "/api/ms",
 
 
           /**
@@ -42,11 +42,11 @@ var
             * 素材管理
             * login
            **/
-          API_MATERIAL = "/api/ms/",
+          API_MATERIAL = "/api/ms",
 
 
           /**
             * 应用分析
             *
            **/
-          API_ANALYSIS = "/api/analysis/"
+          API_ANALYSIS = "/api/analysis"

@@ -29,6 +29,7 @@
                 create: {
                     method: ajaxType?ajaxType:'POST',
                     params: {},
+                    cache:false ,
                     timeout: timeout?timeout:10000, //超时时间设置为10秒；
                     headers: header,
                     //interceptor: {
@@ -41,7 +42,7 @@
                     //}
                 }
             });
-            return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);
+            return _resource.create(angular.toJson(params)).$promise.then(onSuccess, onError);
         }
 
 
@@ -50,6 +51,7 @@
             var _resource = $resource(url, {}, {
                 create: {
                     method: 'POST',
+                    cache: false  ,
                     params: {}
                 }
             });
@@ -60,7 +62,8 @@
             var _resource = $resource(url, {}, {
                 create: {
                     method: 'POST',
-                    params: {}
+                    params: {} ,
+                    cache: false
                 }
             });
             return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);

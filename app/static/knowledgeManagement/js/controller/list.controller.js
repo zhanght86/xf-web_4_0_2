@@ -44,8 +44,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             newTitle: "",    //标题
             knowledgeContentNegative : "",
             channel : [],     //新添加的 channel
-            channels : [],     //所有渠道
-            channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
             dimensions : []
@@ -89,8 +87,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-        //获取维度
-        $scope.MASTER.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         /*
 

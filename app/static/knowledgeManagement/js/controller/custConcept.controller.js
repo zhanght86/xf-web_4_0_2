@@ -47,8 +47,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [],     //所有渠道
-            channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
             dimensions : []
@@ -90,8 +88,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         };
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-        //获取维度
-        $scope.MASTER.getChannels($scope,["channels"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
@@ -773,7 +769,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
-                                            angular.forEach($scope.vm.channels,function(all){
+                                            angular.forEach($scope.$parent.$parent.MASTER.channelList,function(all){
                                                 if(all.channelCode==v){
                                                     channelTip = all.channelName
                                                 }

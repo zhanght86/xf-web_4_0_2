@@ -1,10 +1,10 @@
-
 /**
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
 angular.module('myApplicationModule').controller('relationalCatalogController',[
-    '$scope','localStorageService','$timeout', '$state','$stateParams','ngDialog','$cookieStore','$interval',function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore,$interval) {
+    '$scope','localStorageService','$timeout', '$state','$stateParams','ngDialog','$cookieStore','$interval',
+    function ($scope,localStorageService,$timeout,$state,$stateParams,ngDialog,$cookieStore,$interval) {
         $scope.vm = {
             success : 10000,
             illegal : 10003,

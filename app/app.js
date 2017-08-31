@@ -388,6 +388,7 @@ knowledge_static_web
                     },
                 }
             })
+            // 关联管理  ---》》》营销显示
             .state("setting.association", {
                 url: "/association",
                 views: {
@@ -396,8 +397,8 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/myApplication/applicationConfig/AssociationManage.html',
-                        controller: "AssociationManageController"
+                        templateUrl: 'static/myApplication/applicationConfig/relate_manage/relate_manage.html',
+                        controller: "relateManageController"
                     },
                 }
             })
@@ -1228,15 +1229,17 @@ knowledge_static_web
     }]);
     knowledge_static_web.config(function ($httpProvider) {
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json;"x-session-token":"" } ';
+        //$httpProvider.defaults.headers.post['cache'] = 'false';
 
         if (!$httpProvider.defaults.headers.get) {
             $httpProvider.defaults.headers.get = {};
         }
-        $httpProvider.interceptors.push([
-            '$injector',
-            function ($injector) {
-                return $injector.get('AuthInterceptor');
-            }
-        ]);
+        // 时间戳问题
+        //$httpProvider.interceptors.push([
+        //    '$injector',
+        //    function ($injector) {
+        //        return $injector.get('AuthInterceptor');
+        //    }
+        //]);
     });
