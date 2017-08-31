@@ -276,7 +276,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 "extensionQuestionTitle" : $scope.vm.extensionTitle,
                 "extensionQuestionType" : $scope.vm.extensionWeight
             } ;
-            if(!$scope.vm.extensionTitle){
+            if(!title){
                 layer.msg("扩展问不能为空")
             }else if(!checkExtensionByTitle(obj)){
                 layer.msg("生成扩展问重复,已阻止添加");
@@ -402,6 +402,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.vm.titleTip = "知识标题重复";
                         $scope.$apply();
                     }else if(data.status == 200){
+                        getExtension($scope.vm.title,"60",1) ; //生成扩展问 
                         $scope.$apply(function(){
                             //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
