@@ -43,7 +43,7 @@
                             <div class="list_facContent mb-10">
                                 <div class="list_facContent_L">BOT路径：</div>
                                 <div>
-                                    <div class="value Div clearfix" id="Div">
+                                    <div class="value Div clearfix" >
                                         <div class="ipt-txt-box L mr-10">
                                             <input class="ipt-txt bd botTagAuto" style="padding-right:28px;width:395px;height:32px;box-sizing: border-box;" botTagAuto ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text"  style="width: 380px;border: solid 1px #ddd;"/>
                                             <!--<p class="ipt-txt" id="ipt-txt" >-->
@@ -73,7 +73,7 @@
                         <div class="exten_problem"  ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                             <div class="list_facContent mb-10">
                                 <div class="list_facContent_L">BOT路径：</div>
-                                <div class=" clearfix" id="Div">
+                                <div class=" clearfix" >
                                     <div class="ipt-txt-box L " style="width: 395px;border: 1px solid #e1e1e1;margin-right: 10px;">
                                         <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                             <!--<span>{{item.className.join("/")}}</span>-->
@@ -143,13 +143,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="item-line" id="item-line">
+                            <div class="item-line item_line" >
                                 <!--<div class="left"></div>-->
                                 <div class="optionDiv">渠道：
                                     <span class="mr-10" ng-repeat="val in item.channelIdList track by $index">{{val | channel:$parent.$parent.MASTER.channelList}}</span>
                                 </div>
                             </div>
-                            <div class="item-line" id="item-line">
+                            <div class="item-line item_line" >
                                 <!--<div class="left"></div>-->
                                 <div class="optionDiv">维度:
                                     <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>

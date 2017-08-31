@@ -46,7 +46,7 @@
                     <div class="lable">
                         BOT路径：
                     </div>
-                    <div class="value Div clearfix" id="Div">
+                    <div class="value Div clearfix" >
                         <div class="ipt-txt-box L mr-10">
                             <input class="ipt-txt bd botTagAuto" style="padding-right:28px;width:407px;height:32px;box-sizing: border-box;"  ng-model="vm.knowledgeBotVal"  id="ipt-txt" type="text"/>
                             <i class="btn-menu_1" ng-click="MASTER.slideToggle('.rootClassfy')" style="right:1px;top:2px;width:23px;height:28px;"></i>
@@ -70,7 +70,7 @@
  <!--bot  标题 点击生成  -->
                 <div class="item-line mb-10" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                     <div class="lable"> BOT路径：</div>
-                    <div class="value Div clearfix" id="Div">
+                    <div class="value Div clearfix" >
                         <div class="ipt-txt-box L mr-10">
                             <div class="ipt-txt" style="overflow:hidden;line-height:24px;width:407px;">
                                 <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
@@ -82,7 +82,7 @@
  <!--bot  類目數 点击生成  -->
                 <div class="item-line mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
                     <div class="lable"> BOT路径：</div>
-                    <div class="value Div clearfix" id="Div">
+                    <div class="value Div clearfix" >
                         <div class="ipt-txt-box L mr-10">
                             <div class="ipt-txt" style="overflow:hidden;line-height:24px;width:407px;">
                                 <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
@@ -174,13 +174,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item-line" id="item-line">
+                    <div class="item-line item_line" >
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
                             <span class="mr-10" ng-repeat="val in item.channelIdList">{{val | channel:vm.channels}}</span>
                         </div>
                     </div>
-                    <div class="item-line" id="item-line">
+                    <div class="item-line item_line" >
                         <div class="left"></div>
                         <div class="optionDiv">
                             维度:

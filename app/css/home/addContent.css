@@ -343,7 +343,7 @@
     box-sizing: initial;
 }
 
-#item-line{
+.item_line{
     height: 16px;
     padding: 5px 0;
     min-height:25px;
