@@ -127,7 +127,7 @@
                     <div class="item-line" id="item-line">
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span class="mr-10" ng-repeat="val in item.channelIdList track by $index">{{val | channel:vm.channels}}</span>
+                            <span class="mr-10" ng-repeat="val in item.channelIdList track by $index">{{val | channel:$parent.MASTER.channelList}}</span>
                         </div>
                     </div>
                     <div class="item-line" id="item-line">

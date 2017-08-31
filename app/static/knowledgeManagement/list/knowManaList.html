@@ -189,7 +189,7 @@
                             <div class="channel_div  mb-10">
                                 <span class="channel_s">渠道：</span>
                                 <div>
-                                    <label class="mr-10" ng-repeat="channel in vm.channels">
+                                    <label class="mr-10" ng-repeat="channel in $parent.$parent.MASTER.channelList">
                                         <input style="vertical-align: middle; margin:0px 0 0px 0;" type="checkbox" ng-checked="vm.channel.inArray(channel.channelCode)" ng-click="vm.selectChannel(channel.channelCode)">
                                         {{channel.channelName}}
                                     </label>

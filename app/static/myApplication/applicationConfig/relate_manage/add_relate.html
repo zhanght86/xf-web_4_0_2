@@ -11,7 +11,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in other.applicationServiceData">
-                <td><input  type="radio" name="relatedServiceId" ng-click="vm.selectRelatedServiceId(item.serviceId)"/></td>
+                <td><input  type="radio" name="relatedServiceId"  ng-click="vm.selectRelatedServiceId(item.serviceId)"/></td>
                 <td>{{item.serviceName}}</td>
                 <td ng-if="item.sceneId==1">客服</td>
                 <td ng-if="item.sceneId==2">营销</td>

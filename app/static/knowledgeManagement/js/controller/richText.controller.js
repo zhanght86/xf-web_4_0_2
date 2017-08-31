@@ -45,7 +45,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channelArr : [] ,
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
             dimensions : []
@@ -53,7 +52,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             dimensionArr : [],  //選擇的維度
             dimensionsCopy :[]
             ,
-
             checkChannelDimension : checkChannelDimension ,
             //高级选项内容
             slideDown : slideDown,

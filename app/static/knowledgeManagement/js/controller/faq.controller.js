@@ -39,8 +39,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             extensionWeight :60,
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
-
-
             //展示内容
             scanContent : [],
             save : save ,   //保存
@@ -48,7 +46,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
-            channels : [],     //所有渠道
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
             dimensions : []
@@ -93,8 +90,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         };
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-        //获取维度
-        $scope.MASTER.getChannels($scope,["channels"]) ;
         // 相关问题 键盘选择
         //function selectEvent(e){
         //        var  srcObj = e.srcElement ? e.srcElement : e.target;
@@ -695,12 +690,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //选择渠道
         function selectChannel(channelId,e){
-            var  srcObj = e.srcElement ? e.srcElement : e.target;
-            //$scope.vm.isChannelSelect = false ;
-            //checkChannelDimension($scope.vm.channel,val.id) ;
-            //if(checkChannelDimension($scope.vm.channel,$scope.vm.dimensionArr.id,type)){
-            //    $(srcObj).attr("checked","false")
-            //}
             if($scope.vm.channel.inArray(channelId)){
                 $scope.vm.channel.remove(channelId);
             }else{
@@ -744,7 +733,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                                     angular.forEach(dimension,function(key,indexDimension){
                                         if(key==value){
                                             var channelTip;
-                                            angular.forEach($scope.vm.channels,function(all){
+                                            angular.forEach($scope.$parent.MASTER.channelList,function(all){
                                                 if(all.channelCode==v){
                                                     channelTip = all.channelName
                                                 }

@@ -388,6 +388,7 @@ knowledge_static_web
                     },
                 }
             })
+            // 关联管理  ---》》》营销显示
             .state("setting.association", {
                 url: "/association",
                 views: {
@@ -396,8 +397,8 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/myApplication/applicationConfig/AssociationManage.html',
-                        controller: "AssociationManageController"
+                        templateUrl: 'static/myApplication/applicationConfig/relate_manage/relate_manage.html',
+                        controller: "relateManageController"
                     },
                 }
             })
