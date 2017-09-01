@@ -16,9 +16,7 @@
   padding: 5px;
   position: relative;
 }
-.panel-title {
-  background: url('images/blank.gif') no-repeat;
-}
+
 .panel-header-noborder {
   border-width: 0 0 1px 0;
 }
@@ -86,27 +84,7 @@
   border: 0;
   overflow: hidden;
 }
-.panel-loading {
-  background: url('images/loading.gif') no-repeat 10px 10px;
-}
-.panel-tool-close {
-  background: url('images/panel_tools.png') no-repeat -16px 0px;
-}
-.panel-tool-min {
-  background: url('images/panel_tools.png') no-repeat 0px 0px;
-}
-.panel-tool-max {
-  background: url('images/panel_tools.png') no-repeat 0px -16px;
-}
-.panel-tool-restore {
-  background: url('images/panel_tools.png') no-repeat -16px -16px;
-}
-.panel-tool-collapse {
-  background: url('images/panel_tools.png') no-repeat -32px 0;
-}
-.panel-tool-expand {
-  background: url('images/panel_tools.png') no-repeat -32px -16px;
-}
+
 .panel-header,
 .panel-body {
   border:none;
@@ -161,12 +139,7 @@
 .accordion-noborder .accordion-body {
   border-width: 0 0 1px;
 }
-.accordion-collapse {
-  background: url('images/accordion_arrows.png') no-repeat 0 0;
-}
-.accordion-expand {
-  background: url('images/accordion_arrows.png') no-repeat -16px 0;
-}
+
 .accordion {
   background: #ffffff;
   border-color: #95B8E7;
@@ -682,29 +655,14 @@
   border-color: #ffa8a8;
   background-color: #fff3f3;
 }
-.passwordbox-open {
-  background: url('images/passwordbox_open.png') no-repeat center center;
-}
-.passwordbox-close {
-  background: url('images/passwordbox_close.png') no-repeat center center;
-}
+
 .filebox .textbox-value {
   vertical-align: top;
   position: absolute;
   top: 0;
   left: -5000px;
 }
-.filebox-label {
-  display: inline-block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  left: 0;
-  top: 0;
-  z-index: 10;
-  background: url('images/blank.gif') no-repeat;
-}
+
 .l-btn-disabled .filebox-label {
   cursor: default;
 }
@@ -725,9 +683,7 @@
 .combo-panel {
   overflow: auto;
 }
-.combo-arrow {
-  background: url('images/combo_arrow.png') no-repeat center center;
-}
+
 .combo-panel {
   background-color: #ffffff;
 }
@@ -880,18 +836,6 @@
   filter: alpha(opacity=10);
   opacity: 0.10;
   z-index: 4;
-}
-.layout-button-up {
-  background: url('images/layout_arrows.png') no-repeat -16px -16px;
-}
-.layout-button-down {
-  background: url('images/layout_arrows.png') no-repeat -16px 0;
-}
-.layout-button-left {
-  background: url('images/layout_arrows.png') no-repeat 0 0;
-}
-.layout-button-right {
-  background: url('images/layout_arrows.png') no-repeat 0 -16px;
 }
 .layout-split-proxy-h,
 .layout-split-proxy-v {
@@ -1227,15 +1171,6 @@
   margin-bottom: -1px;
   margin-left: -1px;
 }
-.tabs-scroller-left {
-  background: #E0ECFF url('images/tabs_icons.png') no-repeat 1px center;
-}
-.tabs-scroller-right {
-  background: #E0ECFF url('images/tabs_icons.png') no-repeat -15px center;
-}
-.tabs li a.tabs-close {
-  background: url('images/tabs_icons.png') no-repeat -34px center;
-}
 .tabs li a.tabs-inner:hover {
   background: #eaf2ff;
   color: #000000;
@@ -1530,30 +1465,6 @@
 .datagrid-view .validatebox-invalid {
   border-color: #ffa8a8;
 }
-.datagrid-sort .datagrid-sort-icon {
-  display: inline;
-  padding: 0 13px 0 0;
-  background: url('images/datagrid_icons.png') no-repeat -64px center;
-}
-.datagrid-sort-desc .datagrid-sort-icon {
-  display: inline;
-  padding: 0 13px 0 0;
-  background: url('images/datagrid_icons.png') no-repeat -16px center;
-}
-.datagrid-sort-asc .datagrid-sort-icon {
-  display: inline;
-  padding: 0 13px 0 0;
-  background: url('images/datagrid_icons.png') no-repeat 0px center;
-}
-.datagrid-row-collapse {
-  background: url('images/datagrid_icons.png') no-repeat -48px center;
-}
-.datagrid-row-expand {
-  background: url('images/datagrid_icons.png') no-repeat -32px center;
-}
-.datagrid-mask-msg {
-  background: #ffffff url('images/loading.gif') no-repeat scroll 5px center;
-}
 .datagrid-header,
 .datagrid-td-rownumber {
   background-color: #efefef;
@@ -1788,24 +1699,6 @@
   text-align: center;
   margin: 0;
 }
-.pagination-first {
-  background: url('images/pagination_icons.png') no-repeat 0 center;
-}
-.pagination-prev {
-  background: url('images/pagination_icons.png') no-repeat -16px center;
-}
-.pagination-next {
-  background: url('images/pagination_icons.png') no-repeat -32px center;
-}
-.pagination-last {
-  background: url('images/pagination_icons.png') no-repeat -48px center;
-}
-.pagination-load {
-  background: url('images/pagination_icons.png') no-repeat -64px center;
-}
-.pagination-loading {
-  background: url('images/loading.gif') no-repeat center center;
-}
 .pagination-page-list,
 .pagination .pagination-num {
   border-color: #95B8E7;
@@ -1865,22 +1758,6 @@
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-}
-.calendar-prevmonth {
-  left: 20px;
-  background: url('images/calendar_arrows.png') no-repeat -18px -2px;
-}
-.calendar-nextmonth {
-  right: 20px;
-  background: url('images/calendar_arrows.png') no-repeat -34px -2px;
-}
-.calendar-prevyear {
-  left: 3px;
-  background: url('images/calendar_arrows.png') no-repeat -1px -2px;
-}
-.calendar-nextyear {
-  right: 3px;
-  background: url('images/calendar_arrows.png') no-repeat -49px -2px;
 }
 .calendar-body {
   position: relative;
@@ -1946,14 +1823,6 @@
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-}
-.calendar-menu-prev {
-  margin-right: 10px;
-  background: url('images/calendar_arrows.png') no-repeat 2px 2px;
-}
-.calendar-menu-next {
-  margin-left: 10px;
-  background: url('images/calendar_arrows.png') no-repeat -45px 2px;
 }
 .calendar-menu-month {
   text-align: center;
@@ -2038,10 +1907,6 @@
 .datebox-close {
   float: right;
 }
-.datebox .combo-arrow {
-  background-image: url('images/datebox_arrow.png');
-  background-position: center center;
-}
 .datebox-button {
   background-color: #F4F4F4;
 }
@@ -2093,18 +1958,6 @@
 .spinner .textbox-icon-disabled {
   opacity: 0.6;
   filter: alpha(opacity=60);
-}
-.spinner-arrow-up {
-  background: url('images/spinner_arrows.png') no-repeat 1px center;
-}
-.spinner-arrow-down {
-  background: url('images/spinner_arrows.png') no-repeat -15px center;
-}
-.spinner-button-up {
-  background: url('images/spinner_arrows.png') no-repeat -32px center;
-}
-.spinner-button-down {
-  background: url('images/spinner_arrows.png') no-repeat -48px center;
 }
 .progressbar {
   border-width: 1px;
@@ -2187,9 +2040,6 @@
 }
 .searchbox .textbox-button-left {
   border-width: 0 1px 0 0;
-}
-.searchbox-button {
-  background: url('images/searchbox_button.png') no-repeat center center;
 }
 .searchbox .l-btn-plain {
   background: #E0ECFF;
@@ -2277,7 +2127,6 @@
 }
 .slider-v .slider-rule span {
   width: 5px;
-  height: 'auto';
   border-left: 0;
   border-width: 1px 0 0 0;
   border-style: solid;
@@ -2286,9 +2135,6 @@
   float: left;
   top: 0;
   left: 23px;
-}
-.slider-handle {
-  background: url('images/slider_handle.png') no-repeat;
 }
 .slider-inner {
   border-color: #95B8E7;
@@ -2385,9 +2231,6 @@
   -webkit-box-shadow: 2px 2px 3px #cccccc;
   box-shadow: 2px 2px 3px #cccccc;
   filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=2,MakeShadow=false,ShadowOpacity=0.2);
-}
-.menu-rightarrow {
-  background: url('images/menu_arrows.png') no-repeat -32px center;
 }
 .menu-line {
   border-left: 1px solid #ccc;
@@ -2503,10 +2346,6 @@
 .m-btn-large .l-btn-icon-bottom .l-btn-text {
   margin-bottom: 50px;
 }
-.m-btn-downarrow,
-.s-btn-downarrow {
-  background: url('images/menu_arrows.png') no-repeat 0 center;
-}
 .m-btn-plain-active,
 .s-btn-plain-active {
   border-color: #b7d2ff;
@@ -2541,18 +2380,6 @@
   width: 32px;
   height: 32px;
   margin: 0 10px 10px 0;
-}
-.messager-error {
-  background: url('images/messager_icons.png') no-repeat scroll -64px 0;
-}
-.messager-info {
-  background: url('images/messager_icons.png') no-repeat scroll 0 0;
-}
-.messager-question {
-  background: url('images/messager_icons.png') no-repeat scroll -32px 0;
-}
-.messager-warning {
-  background: url('images/messager_icons.png') no-repeat scroll -96px 0;
 }
 .messager-progress {
   padding: 10px;
@@ -2602,64 +2429,6 @@
   vertical-align: top;
   overflow: hidden;
 }
-.tree-expanded {
-  background: url('images/tree_icons.png') no-repeat -18px 0px;
-}
-.tree-expanded-hover {
-  background: url('images/tree_icons.png') no-repeat -50px 0px;
-}
-.tree-collapsed {
-  background: url('images/tree_icons.png') no-repeat 0px 0px;
-}
-.tree-collapsed-hover {
-  background: url('images/tree_icons.png') no-repeat -32px 0px;
-}
-.tree-lines .tree-expanded,
-.tree-lines .tree-root-first .tree-expanded {
-  background: url('images/tree_icons.png') no-repeat -144px 0;
-}
-.tree-lines .tree-collapsed,
-.tree-lines .tree-root-first .tree-collapsed {
-  background: url('images/tree_icons.png') no-repeat -128px 0;
-}
-.tree-lines .tree-node-last .tree-expanded,
-.tree-lines .tree-root-one .tree-expanded {
-  background: url('images/tree_icons.png') no-repeat -80px 0;
-}
-.tree-lines .tree-node-last .tree-collapsed,
-.tree-lines .tree-root-one .tree-collapsed {
-  background: url('images/tree_icons.png') no-repeat -64px 0;
-}
-.tree-line {
-  background: url('images/tree_icons.png') no-repeat -176px 0;
-}
-.tree-join {
-  background: url('images/tree_icons.png') no-repeat -192px 0;
-}
-.tree-joinbottom {
-  background: url('images/tree_icons.png') no-repeat -160px 0;
-}
-.tree-folder {
-  background: url('images/tree_icons.png') no-repeat -208px 0;
-}
-.tree-folder-open {
-  background: url('images/tree_icons.png') no-repeat -224px 0;
-}
-.tree-file {
-  background: url('images/tree_icons.png') no-repeat -240px 0;
-}
-.tree-loading {
-  background: url('images/loading.gif') no-repeat center center;
-}
-.tree-checkbox0 {
-  background: url('images/tree_icons.png') no-repeat -208px -18px;
-}
-.tree-checkbox1 {
-  background: url('images/tree_icons.png') no-repeat -224px -18px;
-}
-.tree-checkbox2 {
-  background: url('images/tree_icons.png') no-repeat -240px -18px;
-}
 .tree-title {
   font-size: 12px;
   display: inline-block;
@@ -2686,12 +2455,6 @@
   left: 2px;
   top: 50%;
   margin-top: -9px;
-}
-.tree-dnd-yes {
-  background: url('images/tree_icons.png') no-repeat -256px 0;
-}
-.tree-dnd-no {
-  background: url('images/tree_icons.png') no-repeat -256px -18px;
 }
 .tree-node-top {
   border-top: 1px dotted red;
