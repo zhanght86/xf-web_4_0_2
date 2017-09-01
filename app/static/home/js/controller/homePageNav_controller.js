@@ -194,8 +194,11 @@ angular.module('homePage').controller('homePageNavController', [
                     return '营销知识新增';
                 case 'knowledgeManagement.knowBatchAdditions':
                     return '知识批量新增';
-                case (url.match(/^gateway/) || {}).input:
+               // case (url.match(/^gateway/) || {}).input:
+                case 'back.gateway':
                     return '文档加工新增';
+                case 'knowledgeManagement.historyView':
+                    return '历史查看';
                 case 'applAnalysis.accessStatistics':
                     return '访问统计';
                 case 'applAnalysis.knowledgeRanking':
