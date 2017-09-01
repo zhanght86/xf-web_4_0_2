@@ -1,26 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
 
+/*首页*/
 
-h2 {
-	font-size:18px;
-	font-weight:bold;
-	margin:0;
-	margin-bottom:15px;
+/*.header{height:80px;box-sizing:border-box;padding-top:25px;}*/
+.header_wrap{
+	height: 104px;
+	background-color: #03a3ff;
+	overflow: hidden;
 }
-.demo-info{
-	padding:0 0 12px 0;
+.header_r{
+	overflow: hidden;
+	line-height: 1;
+	margin: 26px 0;
+	padding: 18px 0;
 }
-.demo-tip{
-	display:none;
-}
-.label-top{
-	display: block;
-	height: 22px;
-	line-height: 22px;
-	vertical-align: middle;
-}
-
+.header_b .logo{margin:26px 200px 0 0;color:#fff;display: inline-block;}
 .search .txt{width:370px;height:34px;line-height:34px;padding-left:5px;box-sizing:border-box;border:1px solid #3e91e7;}
 .search .btn{width:46px;height:34px;background:url(../../../images/search_img.png) #3e91e7 no-repeat center center;cursor:pointer;}
 .header_ra{background:url(../../../images/arrow.png) no-repeat right 10px;padding-right:10px;padding-bottom:10px;}
@@ -111,16 +106,6 @@ h2 {
 .page .page_b{color:#52e5dc;font-size:12px;}
 .page .page_txt{width:29px;height:26px;border:1px solid #eaeaea;padding-left:5px;}
 .page .go_span{width:34px;height:31px;line-height:31px;text-align:center;background:#f7ad56;display:inline-block;color:#fff;cursor:pointer;font-size:12px;border-radius:2px;}
-
-.paging{overflow: hidden; line-height: 26px; text-align: right; padding: 20px;}
-.paging li{float: left; }
-.paging a{ font-size: 14px;  height: 26px; line-height: 26px; text-align: center; display: block; *display: inline-block; *zoom: 1; }
-.paging a:hover,.paging a.active{ background-color: #d8f1ff;  color: #03a3ff;}
-.paging .prev{background: url(../../../images/paging-Prev.png) no-repeat center;}
-.paging .next{background: url(../../../images/paging-next.png) no-repeat center;}
-.paging .prev:hover,.paging .next:hover{background-color:#FFF;}
-.paging .paging-tj{color: #666;}
-.paging .paging-page{margin: 0 6px; width: 32px; height: 28px; line-height: 28px; text-align: center; background-color: #f8f8f8; border: none;}
 
 
 /*应用管理*/
