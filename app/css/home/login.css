@@ -1,4 +1,5 @@
-.login-cont{ width: 1220px; height: 568px;position: absolute; left: 50%; top: 50%; margin-left: -610px; margin-top: -284px; background: url(../../images/images/logo-bg.png) no-repeat left top;}
+/*.login-cont{ width: 1220px; height: 568px;position: absolute; left: 50%; top: 50%; margin-left: -610px; margin-top: -284px; background: url(../../images/images/logo-bg.png) no-repeat left top;}*/
+.login-cont{ width: 1220px; height: 568px;position: absolute; left: 50%; top: 50%; margin-left: -610px; margin-top: -284px; }
 .login-cont:after{position: absolute; right: 0; top: 290px; content: ""; width: 65px; height: 42px; display: block; background: url(../../images/images/pic-xq1.png) no-repeat left top;}
 .login-box{ width: 430px; height: 472px; margin-left: 700px; margin-top: 70px; background: url(../../images/images/logbox-bg.png) no-repeat center;}
 .login-box .hd{text-align: center; font-size: 22px; color: #74bcfc; padding: 36px 0;}
