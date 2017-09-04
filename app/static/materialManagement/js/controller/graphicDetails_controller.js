@@ -21,12 +21,13 @@ angular.module('materialManagement').controller('graphicDetailsController', [
         }else{
             $state.go("materialManagement.teletextMessage")
         }
-         function getImgText(graphicMessageId){
+        function getImgText(graphicMessageId){
             httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
                 "graphicMessageId" : graphicMessageId ,
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status == 200){
+                    console.log(response);
                     $scope.$apply(function(){
                         $scope.vm.title = response.data.graphicMessageTitle ;
                         $scope.vm.author = response.data.graphicMessageAuthor ;
