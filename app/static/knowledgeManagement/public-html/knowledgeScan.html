@@ -57,7 +57,7 @@
                         <p ng-if="vm.knowledgeType==106 &&  item.knowledgeContentNegative==113" ng-bind-html="item.knowledgeContent | emotion  | toHtml">文本</p>
                         <p ng-if="vm.knowledgeType!=106">{{item.knowledgeContent}}</p>
                     </li>
-                    <li class="preview_li pr" style="padding-left: 80px;" ng-if="item.channelIdList">
+                    <li class="preview_li pr" style="padding-left: 80px;min-height:25px;" ng-if="item.channelIdList">
                         <span class="pa preview_span2">渠道:</span>
                         <span ng-repeat="val in item.channelIdList">{{val | channel:master.channelList}}<span></span></span>
                     </li>
