@@ -75,21 +75,57 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         tab('.tab_tit span', '.tab_con');
 
         //list 分页变化加载数据
+        // $scope.$watch('vm.paginationConf.currentPage', function(current){
+        //     if(current){
+        //         searchNewKnowledgeDiscovery(current);
+        //     }
+        // });
+        var timer ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
-                searchNewKnowledgeDiscovery(current);
+                if (timer) {
+                    $timeout.cancel(timer)
+                }
+                timer = $timeout(function () {
+                    searchNewKnowledgeDiscovery(current);
+                }, 100)
             }
-        });
+        },true);
+
+        // $scope.$watch('vm.paginationConf1.currentPage', function(current){
+        //     if(current){
+        //         listNoReview(current);
+        //     }
+        // });
+        var timer1 ;
         $scope.$watch('vm.paginationConf1.currentPage', function(current){
             if(current){
-                listNoReview(current);
+                if (timer1) {
+                    $timeout.cancel(timer1)
+                }
+                timer1 = $timeout(function () {
+                    listNoReview(current);
+                }, 100)
             }
-        });
+        },true);
+
+        // $scope.$watch('vm.paginationConf2.currentPage', function(current){
+        //     if(current){
+        //         searchByKnowledgeTitle(current);
+        //     }
+        // });
+        var timer2 ;
         $scope.$watch('vm.paginationConf2.currentPage', function(current){
             if(current){
-                searchByKnowledgeTitle(current);
+                if (timer2) {
+                    $timeout.cancel(timer2)
+                }
+                timer2 = $timeout(function () {
+                    searchByKnowledgeTitle(current);
+                }, 100)
             }
-        });
+        },true);
+
         $scope.$watch('vm.channelId1', function(){
             $scope.vm.listData1 = null;
             $scope.vm.paginationConf1 = {
