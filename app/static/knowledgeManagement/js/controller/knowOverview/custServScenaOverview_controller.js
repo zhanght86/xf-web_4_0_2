@@ -226,6 +226,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 $scope.vm.knowledgeTitle = null,         //知识标题默认值null
                 $scope.vm.knowledgeContent = null,        //知识内容默认值null
                 $scope.vm.knowledgeUpdate = null,        //作者默认值null
+                $scope.vm.knowledgeCreator = null,          //作者默认为空
                 $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
                 $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
                 $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
