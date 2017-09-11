@@ -45,7 +45,7 @@
                     <div class="lable">
                         BOT路径：
                     </div>
-                    <div class="value Div clearfix" id="Div">
+                    <div class="value Div clearfix" >
                         <div class="ipt-txt-box L mr-10">
                             <input class="ipt-txt bd" style="height:32px;padding-right: 28px;box-sizing: border-box;" ng-click="vm.knowledgeBot()" ng-model="vm.knowledgeBotVal" readonly id="ipt-txt" type="text" ng-disabled/>
                             <!--<p class="ipt-txt" id="ipt-txt" >-->
@@ -72,7 +72,7 @@
                 <!--bot  标题 点击生成  -->
                 <div class="item-line clearfix" ng-if="vm.botClassfy.length" ng-repeat="item in  vm.botClassfy track by $index">
                     <div class="lable"> BOT分类：</div>
-                    <div class="value Div clearfix" id="Div">
+                    <div class="value Div clearfix" >
                         <div class="ipt-txt-box L mr-10">
                             <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                 <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
@@ -84,7 +84,7 @@
                  <!--手选生成-->
                 <div class="item-line clearfix mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
                     <div class="lable"> BOT分类：</div>
-                    <div class="value Div" id="Div">
+                    <div class="value Div" >
                         <div class="ipt-txt-box L">
                             <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                 <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>

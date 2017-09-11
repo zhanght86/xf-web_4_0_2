@@ -25,7 +25,7 @@ body{
 table{border-collapse:collapse;border-spacing:0;}
 ul,ol{list-style:none;}
 img{border:0;}
-input,text,button,radio,checkbox,select,password,textarea{border:0;}
+input,text,button,checkbox,select,textarea{border:0;}
 
 .clearfix:after{clear:both;content:'';display:block;width: 0;height: 0;visibility:hidden;}
 .clearfix{zoom:1;}
@@ -33,7 +33,7 @@ input,text,button,radio,checkbox,select,password,textarea{border:0;}
 h1,h2,h3,h4{font-weight:normal;}
 a{text-decoration:none;outline:none;blr:expression(this.onFocus=this.blur());}
 a:focus{outline:none;}
-a:hidefocus{outline:none;}
+/*a:hidefocus{outline:none;}*/
 
 a:link,a:visited,a:hover,a:active{text-decoration:none;}
 /*a,
@@ -51,6 +51,7 @@ a {color:inherit}
 .dn{display:none;}
 .db{display:block;}
 .dib{display:inline-block;}
+.hide{display:none}
 
 /*定位 对齐*/
 .pr{position:relative;}

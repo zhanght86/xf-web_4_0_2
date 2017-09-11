@@ -4,11 +4,6 @@
 	@功能: 重设浏览器默认样式
 */
 
-/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
-html{color:#000;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
-
-/* 内外边距通常让各个浏览器样式的表现位置不同 */
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {margin:0;padding:0;}
 
 /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {display:block;}
@@ -16,9 +11,6 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {d
 /* HTML5 媒体文件跟 img 保持一致 */
 audio,canvas,video,img {display: inline-block;*display: inline;*zoom: 1;max-width:100%;}
 
-/* 要注意表单元素并不继承父级 font 的问题 */
-/*body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5FAE\8F6F\96C5\9ED1,\5b8b\4f53;}*/
-/*input,select,textarea{font-size:100%;}*/
 
 /* 单词换行 */
 p { word-wrap: break-word;}
@@ -93,9 +85,7 @@ textarea{resize:none;}
 .fr{float:right;}
 
 /*文字排版*/  
-.f12{font-size:12px;} 
-.f14{font-size:14px;} 
-.f16{font-size:16px;} 
+
 .f18{font-size:18px;}
 .fb{font-weight:bold} 
 .fn{font-weight:normal;} 
@@ -141,7 +131,7 @@ textarea{resize:none;}
 .tac{text-align:center;}
 .tal{text-align:left;}
 .tar{text-align:right;}
-.dib{display:inline-block;}
+
 .vab{vertical-align:bottom;}
 .vam{vertical-align:middle;}
 .vat{vertical-align:top;}
@@ -209,62 +199,6 @@ textarea{resize:none;}
 .my-select3 dl {overflow-y:auto;overflow-x:hidden;zoom:1;border:1px solid #e5e5e5;margin-top:-1px;}
 .my-select3 dd {height:32px;line-height:32px;padding:0 10px;background:#fff;overflow:hidden;border-top:1px solid #dedede;width:100%;margin-top:-1px;}
 .my-on-select{z-index: 1030;}
-
-/*.alert {*/
-    /*padding: 8px 35px 8px 14px;*/
-    /*margin-bottom: 18px;*/
-    /*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);*/
-    /*background-color: #fcf8e3;*/
-    /*border: 1px solid #fbeed5;*/
-    /*-webkit-border-radius: 4px;*/
-    /*-moz-border-radius: 4px;*/
-    /*border-radius: 4px;*/
-/*}*/
-/*.alert, .alert-heading {*/
-    /*color: #c09853;*/
-/*}*/
-/*.alert .close {*/
-    /*position: relative;*/
-    /*top: -2px;*/
-    /*right: -21px;*/
-    /*line-height: 18px;*/
-/*}*/
-/*.alert-success {*/
-    /*background-color: #dff0d8;*/
-    /*!*background-color: #35ff33;*!*/
-    /*border-color: #d6e9c6;*/
-/*}*/
-/*.alert-success, .alert-success .alert-heading {*/
-    /*color: #468847;*/
-    /*!*color: #1e2688;*!*/
-/*}*/
-/*.alert-danger, .alert-error {*/
-    /*background-color: #f2dede;*/
-    /*border-color: #eed3d7;*/
-/*}*/
-/*.alert-danger,*/
-/*.alert-error,*/
-/*.alert-danger .alert-heading,*/
-/*.alert-error .alert-heading {*/
-    /*color: #b94a48;*/
-/*}*/
-/*.alert-info {*/
-    /*background-color: #d9edf7;*/
-    /*border-color: #bce8f1;*/
-/*}*/
-/*.alert-info, .alert-info .alert-heading {*/
-    /*color: #3a87ad;*/
-/*}*/
-/*.alert-block {*/
-    /*padding-top: 14px;*/
-    /*padding-bottom: 14px;*/
-/*}*/
-/*.alert-block > p, .alert-block > ul {*/
-    /*margin-bottom: 0;*/
-/*}*/
-/*.alert-block p + p {*/
-    /*margin-top: 5px;*/
-/*}*/
 
 .alert {
     padding: 15px;

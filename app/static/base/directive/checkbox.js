@@ -43,7 +43,7 @@ knowledge_static_web.directive("checkbox", function($parse) {
             },
             template:
             '<div class="my-checkbox" ng-click="toggle()">'+
-            '<label ng-class="flag?\'\':\'my-checkbox-on\'"></label>'+
+            '<label ng-class="flag?\'\':\'my-checkbox-on\'" style="margin-right:0;"></label>'+
             '</div>',
             link:function(scope,element,attrs){
                 scope.$watch("result",function(val){
