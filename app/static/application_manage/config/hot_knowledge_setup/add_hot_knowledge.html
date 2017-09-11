@@ -1,0 +1,48 @@
+<div class="" style="padding:15px 0;">
+    <h3 class="f16 tc mb-20">添加热点问题</h3>
+    <div style="height:360px;overflow:auto;">
+        <div class="framework cl">
+            <span class="framework_s bold">已选知识：</span>
+            <div >
+                <ul id="already_select" ng-repeat="item in vm.selectedKnow track by $index">
+                    <!--{{item}}-->
+                    <li><span class="mr-10">{{item.chatKnowledgeTopic}}</span>
+                        <a href="javascript:;" ng-click="vm.selectedKnow.splice($index,1)" class="c-red">X</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mb-10 framework">
+            <span class="framework_s bold">未选知识：</span>
+            <div >
+                <div class="mb-10">
+                    <input id="inputValue" type="text" placeholder="请输入要查找的知识" ng-model="vm.knowledgeTitle" style="width:220px" class="input-text">
+                    <!--<button class="btn1 btn1_blue" >查找</button>-->
+                    <!--<button class="btn1 btn_green" >全部</button>-->
+                    <button class="btn1 btn1_blue" type="button"  ng-click="vm.queryKnowledgeList(1)">查找</button>
+                </div>
+                <table class="table table-border  table-bordered" id="knowledge-tab" style="width: 88%;">
+                    <thead class="text-c bg-1">
+                    <tr>
+                        <th><input  class="selectAllBtnDialog" type="checkbox" ng-click="vm.selectAllKnow($event)" ng-checked="vm.isAllKnowSelected"/></th>
+                        <th>知识标题</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-c">
+                    <!--{{vm.knowledgeList}}-->
+                    <tr ng-repeat="item in vm.knowledgeList track by $index">
+                        <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="vm.selectSingleKnow($event,item.knowledgeId,item.knowledgeTitle,$index)"/></td>
+                        <td>{{item.knowledgeTitle}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <pagination ng-if="vm.knowPaginationConf.totalItems && vm.knowPaginationConf.totalItems>0" conf="vm.knowPaginationConf" style="width: 96%;"></pagination>
+
+    </div>
+    <div class="row tc">
+        <button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>
+        <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
+    </div>
+</div>

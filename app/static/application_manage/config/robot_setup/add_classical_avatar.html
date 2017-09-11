@@ -1,0 +1,18 @@
+<div class="pd-30 add-classical-avatar">
+    <form class="form form-horizontal" >
+        <div>
+            <ul class="classic_head_ul clearfix">
+                <li ng-repeat="item in vm.classicHead" ng-class="vm.newRobotHead == item ? 'active' : ''"
+                    ng-click="vm.newRobotHead=item">
+                    <img ng-src="../../images/{{item}}">
+                </li>
+            </ul>
+        </div>
+        <div class="row cl">
+            <div class="text-c">
+                <button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>
+                <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>
+            </div>
+        </div>
+    </form>
+</div>

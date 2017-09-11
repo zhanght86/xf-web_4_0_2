@@ -52,7 +52,7 @@ layer api
   //layer.load(0, {shade: false});
  //layer.confirm('您是如何看待前端开发？', {
         //    btn: ['重要','奇葩'] //按钮
-        //}, function(){
+        //}, function(index){
         //    layer.msg('的确很重要', {icon: 3},1000);
         //}, function(){
         //    layer.msg('也可以这样', {
@@ -63,3 +63,11 @@ layer api
 
 文件名称统一修改为 _first_second
 css 中划线
+服务改写
+module 大驼峰 其他小驼峰
+
+
+problem 维度---维度子集--update
+$log  代替 console.log()
+
+改写 相关问 为指令

@@ -264,3 +264,9 @@
   padding-left: 24px;
   cursor: pointer;
 }
+.cur-point {
+  cursor: pointer;
+}
+.cur-disable {
+  cursor: not-allowed;
+}

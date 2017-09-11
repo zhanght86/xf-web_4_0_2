@@ -74,9 +74,9 @@ knowledge_static_web.controller('ApplicationController',
              * */
             function openNgDialog(self,tempUrl,width,closeIssue,closeClear,closeCondition,complex){
                 var diaSize = angular.element(".ngdialog ").length;
-                if(complex != "true" && diaSize<1){
+                if(complex  && diaSize<complex){
                     open() ;
-                }else  if(complex == "true"){
+                }else  if(!complex && diaSize<1){
                     open() ;
                 }
                 function open(){

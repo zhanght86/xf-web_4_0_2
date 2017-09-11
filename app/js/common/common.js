@@ -289,8 +289,8 @@ function getBeforeDate(n,type,revert){
             var today  = new Date(current.getTime()-i*1000*24*3600);
             var year = today.getFullYear() ;
             var month = (today.getMonth()+1)>=10?(today.getMonth()+1):("0"+(today.getMonth()+1)) ;
-            var day =  today.getDate() ;
-            var date = year + "-" + month + "-" + day
+            var day =  (today.getDate()>=10)?(today.getDate()):("0"+(today.getDate()))  ;
+            var date = year + "-" + month + "-" + day ;
             days.push(date) ;
         }
         return days.reverse()

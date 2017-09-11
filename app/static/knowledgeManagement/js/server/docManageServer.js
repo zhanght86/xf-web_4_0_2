@@ -1,6 +1,6 @@
 /**
  * Created by dell on 2017/8/5.
- */
+ */ 
 angular.module('knowledgeManagementModule').factory('KnowDocService',['$resource',function ($resource) {
     var knowDocService = {};
     knowDocService.queryKnowDocList = $resource('/api/ms/knowledgeDocumentation/queryDocumentationList', {}, {});

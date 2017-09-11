@@ -86,7 +86,9 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             nextDiv : nextDiv,
             //引到页end
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
-            isChannelSelect : true       // 渠道维度添加是 的 判断 删除哪个
+            isChannelSelect : true ,       // 渠道维度添加是 的 判断 删除哪个
+            backUpExt: backUpExt , // 扩展问 假删除
+            extensionDeleted : []
         };
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
@@ -229,6 +231,16 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                     //console.log(data);
                     if(data.data[0].elements){
                         angular.forEach(data.data[0].elements,function(item){
+                            var isLocalHasExt = addLocalExtension(item.elementContent)  ;
+                            if(isLocalHasExt){
+                                if(type){
+                                    $scope.vm.extensionsByFrame.pop();
+                                    $scope.vm.extensionsByFrame.push(isLocalHasExt)
+                                }else{
+                                    $scope.vm.extensionsByFrame.push(isLocalHasExt)
+                                }
+                                return ;
+                            }
                             var obj = {} ;
                             obj.extensionQuestionTitle  = item.elementContent;
                             obj.extensionQuestionType = 60;
@@ -274,6 +286,11 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         }
         //添加扩展问
         function getExtension(title,weight){
+            var isLocalHasExt = addLocalExtension(title)  ;
+            if(isLocalHasExt){
+                $scope.vm.extensions.push(isLocalHasExt);
+                return ;
+            }
             var obj = {
                 "extensionQuestionTitle" : title ,
                 "extensionQuestionType" : weight
@@ -787,6 +804,34 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 console.log(error)
             });
         }
+
+//********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
+        // 假删除本地备份
+        function backUpExt(item){
+            if(!$scope.vm.extensionDeleted.inArray(item)){
+                $scope.vm.extensionDeleted.push(item)
+            }
+        }
+        function addLocalExtension(title){
+            var result = false ;
+            if($scope.vm.extensionDeleted){
+                angular.forEach($scope.vm.extensionDeleted,function(item,index){
+                    if(title == item.extensionQuestionTitle){
+                        result = item ;
+                        $scope.vm.extensionDeleted.splice(index,1)
+                    }
+                })
+            }
+            return result ;
+        }
+//********************************  2017/9/1 扩展问删除备份  EDN ***********************************************
+
+
+
+
+
+
+
 
         //引导页方法
         function showTip(){

@@ -97,7 +97,9 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             nextDiv : nextDiv,
             //引到页end
             isDecorateSimple : false  ,// true 单独修饰  false  整体修饰
-            backupsOfExtension : "" //扩展问 编辑备份
+            backupsOfExtension : "" ,//扩展问 编辑备份
+            backUpExt: backUpExt , // 扩展问 假删除
+            extensionDeleted : []
         };
         //獲取渠道
         $scope.$parent.$parent.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
@@ -155,7 +157,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList!=null?item.knowledgeRelevantContentList : [];  //业务扩展问
             });
         }else{
             init();
@@ -512,6 +514,15 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
         //手动添加扩展问
         function getExtension(title,weight,source){
             //source  0 默认  1 标题;
+            var isLocalHasExt = addLocalExtension(title)  ;
+            if(isLocalHasExt){
+                if(!source){
+                    $scope.vm.extensions.push(isLocalHasExt);
+                }else{
+                    $scope.vm.extensionByTitleTag = new Array(isLocalHasExt)
+                }
+                return ;
+            }
             var question = new Array(title);
             var obj = {
                 "extensionQuestionTitle" : $scope.vm.extensionTitle,
@@ -883,6 +894,26 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 console.log("获取指定相关知识失败")
             });
         }
+        //********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
+        // 假删除本地备份
+        function backUpExt(item){
+            if(!$scope.vm.extensionDeleted.inArray(item)){
+                $scope.vm.extensionDeleted.push(item)
+            }
+        }
+        function addLocalExtension(title){
+            var result = false ;
+            if($scope.vm.extensionDeleted){
+                angular.forEach($scope.vm.extensionDeleted,function(item,index){
+                    if(title == item.extensionQuestionTitle){
+                        result = item ;
+                        $scope.vm.extensionDeleted.splice(index,1)
+                    }
+                })
+            }
+            return result ;
+        }
+//********************************  2017/9/1 扩展问删除备份  EDN ***********************************************
         //引导页方法
         function showTip(){
             $('.shadow_div').show();

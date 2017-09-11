@@ -132,7 +132,7 @@
                            {{item.extensionQuestionTitle}}
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                        <a href="javascript:;" ng-click="vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" ng-click="vm.backUpExt(item);vm.extensions.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <!--<span class="L" ng-if="item.source"><b>来源于: </b> <span>{{item.source}}</span></span>-->
                     </div>
                 </div>
@@ -146,12 +146,12 @@
                             {{item.extensionQuestionTitle}}
                         </div>
                         <span class="tag_s mr-10 L">{{item.extensionQuestionType==60?'普通':'否定'}}</span>
-                        <a href="javascript:;" ng-click="vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
+                        <a href="javascript:;" ng-click="vm.backUpExt(item);vm.extensionsByFrame.splice($index,1)" class="L mr-10" ><img src="../../../images/images/delete_img.png" alt="" ></a>
                         <!--<a href="javascript:;" class="L edit_a mr-10 mt-5" ng-click="vm.KnowledgeEdit()"></a>-->
                         <span class="L" ng-if="item.source"><b>来源于: </b> <span>{{item.source}}</span></span>
                     </div>
                 </div>
-            </div>
+            </div> {{vm.extensionDeleted}}
             <div class="jqrsz-item">
                 <!--<div class="item-line">-->
                     <!--<div class="lable" >-->

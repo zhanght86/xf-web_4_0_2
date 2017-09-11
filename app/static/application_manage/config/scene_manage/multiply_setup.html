@@ -1,0 +1,104 @@
+<div class="scene_setup pd-20" >
+    <h3 class="f16 mb-20 tc bold">多轮交互配置</h3>
+    <form name="myScene" class="css-form" novalidate>
+    <div>
+        <h3 class="f14 mb-10  c-999">类目模糊:</h3>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">是否支持：</span>
+            <div>
+                <div class="dib pt-5 mr-15">
+                    <div switch value="vm.multipleConversation.categoryFuzzyOn"></div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">-->
+            <!--<span class="framework_s">推荐问题相似度：</span>-->
+            <!--<div>-->
+                <!--<input type="number" step="0.1" class="bd" min="0" max="1" style="width:190px;"-->
+                     <!--name="recommendedSimilarity"  ng-model="vm.recommendedSimilarity" required/>-->
+                <!--&lt;!&ndash;{{mySetting.robotWelcome.$error.len}}&ndash;&gt;-->
+                <!--<div class="c-red" ng-show="myScene.recommendedSimilarity.$dirty && myScene.recommendedSimilarity.$invalid">-->
+                    <!--推荐问题相似度的值必须在0到1之间-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <div >
+        <h3 class="f14 mb-10 c-999">主题缺失:</h3>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">是否支持：</span>
+            <div>
+                <div class="dib pt-5 mr-15">
+                    <div switch value="vm.multipleConversation.subjectMissingOn"></div>
+                </div>
+            </div>
+        </div>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">主题记忆轮数：</span>
+            <div>
+                <input type="number" class="bd" ng-model="vm.multipleConversation.subjectMemoryRounds" required  ng-disabled="vm.multipleConversation.subjectMemoryRounds==''?true:false"/>
+            </div>
+        </div>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">记忆方法：</span>
+            <div>
+                <select class="sel bd" ng-model="vm.multipleConversation.memoryMethod" ng-disabled="vm.memoryMethod==''?true:false">
+                    <!--<option value="0">衰减</option>-->
+                    <option value="1">恒定</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3 class="f14 mb-10 c-999">要素缺失配置:</h3>
+        <!--<div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">-->
+            <!--<span class="framework_s">是否支持：</span>-->
+            <!--<div>-->
+                <!--<div class="dib pt-5 mr-15">-->
+                    <!--<div ng-class="vm.elementMissingOn?'open1 b_box': 'close1 b_box'"-->
+                         <!--ng-click="vm.turnOn(vm.elementMissingOn,'elementMissingOn')" style="float:left;margin-right:10px;">-->
+                        <!--<div  ng-class="vm.multipleConversation.elementMissingOn?'open2 s_box': 'close2 s_box'"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">-->
+            <!--<span class="framework_s">要素推荐模式：</span>-->
+            <!--<div>-->
+                <!--<input type="number" class="bd" ng-model="vm.multipleConversation.elementRecommendationOrder" required/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">支持非零点启动：</span>
+            <div>
+                <select class="sel bd" ng-model="vm.multipleConversation.nonZeroStartOn">
+                    <option value="1">支持</option>
+                    <option value="0">不支持</option>
+                </select>
+            </div>
+        </div>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">是否完全匹配：</span>
+            <div>
+                <select class="sel bd" ng-model="vm.multipleConversation.matchCompleteOn">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">是否作为标签匹配：</span>
+            <div>
+                <select class="sel bd" ng-model="vm.multipleConversation.matchTagOn">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="text-c">
+        <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="保存"/>
+        <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+    </div>
+   </div>
+   </form>
+</div>

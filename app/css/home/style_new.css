@@ -598,5 +598,42 @@
 .pic_bar .progress .bar_span{position:absolute;left:0;top:0;display:block;width:0;height:100%;background:blue;border-radius:12px;}
 .graphicDetails_div img{max-width:100%;}
 
-
-
+/* 应用管理 场景管理 */
+.scene_setup .framework{padding-left:135px;}
+.scene_setup .framework_s{font-size:14px;}
+/* 机器人设置样式*/
+.robotSetup .setting_div .input-text{width:406px;}
+.robotSetup .setting_div .textarea{width:406px;}
+/*机器人设置自定义头像弹框样式*/
+.add_custom_avatar .ipt-txt-box .ipt-txt{ border:1px solid gray; }
+.add_custom_avatar .file {
+    width: 100px;
+    height: 38px;
+    display: inline-block;
+    font-size: 15px;
+    overflow: hidden;
+    position: relative;
+}
+.add_custom_avatar .file input {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+/* 机器人经典头像设置弹框*/
+.add-classical-avatar  .classic_head_ul li {
+    width: 23%;
+    height: 85px;
+    margin-right: 2%;
+    margin-bottom: 10px;
+    float: left;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    overflow:hidden;
+}
+.add-classical-avatar .classic_head_ul li.active {
+    border-color: red;
+}

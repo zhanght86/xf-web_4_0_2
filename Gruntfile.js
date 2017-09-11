@@ -10,7 +10,7 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 //separator: ';\n'  //文件间分隔符
             },
             allInOne: { //所有JS文件全部合并成一份文件
-                src: ['app/know/**/*_module.js','app/static/**/*_module.js'],
+                src: ['app/know/**/*module.js','app/static/**/*module.js'],
                 dest: 'app/dest/src-concated/js/<%= pkg.name %>_module.js'
             },
             othersInOne: {

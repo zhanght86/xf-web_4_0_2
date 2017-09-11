@@ -1,0 +1,28 @@
+<div class=" pd30">
+    <h3 class="bold mb-20 tc">关联其他服务</h3>
+    <div>
+        <table class="stop_word_tab" >
+            <thead>
+            <tr>
+                <th class="bold" width="10%"></th>
+                <th class="bold" width="45%">服务名称</th>
+                <th class="bold" width="45%">应用类型</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in other.applicationServiceData">
+                <td><input  type="radio" name="relatedServiceId" ng-value="item.serviceId" ng-model="vm.relatedServiceIds" /></td>
+                <td>{{item.serviceName}}</td>
+                <td ng-if="item.sceneId==1">客服</td>
+                <td ng-if="item.sceneId==2">营销</td>
+            </tr>
+            </tbody>
+        </table>
+        <pagination ng-if="other.paginationConf.totalItems && other.paginationConf.totalItems>0"
+                    conf="other.paginationConf"></pagination>
+    </div>
+    <div class="tc mt-20">
+        <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" ng-disabled="vm.relatedServiceIds.length==0" value="关联"/>
+        <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+    </div>
+</div>

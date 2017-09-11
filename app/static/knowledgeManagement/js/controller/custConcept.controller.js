@@ -84,7 +84,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             nextDiv : nextDiv,
             //引到页end
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
-            backupsOfExtension : "" //扩展问 编辑备份
+            backupsOfExtension : "" , //扩展问 编辑备份
+            backUpExt: backUpExt , // 扩展问 假删除
+            extensionDeleted : []
         };
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
@@ -276,6 +278,11 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var title = extensionQuestionList[0] ;
             var weight = oldWord.extensionQuestionType ;
             console.log(oldWord,title);
+            var isLocalHasExt = addLocalExtension(title)  ;
+            if(isLocalHasExt){
+                $scope.vm.extensionsByFrame.push(isLocalHasExt);
+                return ;
+            }
             httpRequestPost("/api/ms/conceptKnowledge/checkFrameTag",{
                 "applicationId": APPLICATION_ID,
                 "extensionQuestionList" : extensionQuestionList,
@@ -318,6 +325,15 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //手动添加扩展问
         function getExtension(title,weight,source){
             //source  0 默认  1 标题
+            var isLocalHasExt = addLocalExtension(title)  ;
+            if(isLocalHasExt){
+                 if(!source){
+                     $scope.vm.extensions.push(isLocalHasExt);
+                 }else{
+                     $scope.vm.extensionByTitleTag = new Array(isLocalHasExt)
+                 }
+                return ;
+            }
             var question = new Array(title);
             var obj = {
                 "extensionQuestionTitle" : $scope.vm.extensionTitle,
@@ -786,6 +802,26 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             });
             return isRepeat
         }
+//********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
+        // 假删除本地备份
+        function backUpExt(item){
+            if(!$scope.vm.extensionDeleted.inArray(item)){
+                $scope.vm.extensionDeleted.push(item)
+            }
+        }
+        function addLocalExtension(title){
+            var result = false ;
+            if($scope.vm.extensionDeleted){
+                angular.forEach($scope.vm.extensionDeleted,function(item,index){
+                    if(title == item.extensionQuestionTitle){
+                        result = item ;
+                        $scope.vm.extensionDeleted.splice(index,1)
+                    }
+                })
+            }
+            return result ;
+        }
+//********************************  2017/9/1 扩展问删除备份  EDN ***********************************************
 //*************************************************************************
 
         //function addAppoint(item,arr){

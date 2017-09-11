@@ -82,7 +82,9 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             nextDiv : nextDiv,
             //引到页end
             isDecorateSimple : false  ,// true 单独修饰  false  整体修饰
-            backupsOfExtension : "" //扩展问 编辑备份
+            backupsOfExtension : "",   //扩展问 编辑备份
+            backUpExt: backUpExt , // 扩展问 假删除
+            extensionDeleted : []
         };
 
         //獲取渠道
@@ -145,7 +147,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 $scope.vm.question =item.knowledgeRelatedQuestionOn ;   //显示相关问
                 $scope.vm.tip  =  item.knowledgeBeRelatedOn ; //在提示
                 $scope.vm.tail = item.knowledgeCommonOn ;   //弹出评价小尾巴
-                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList ;  //业务扩展问
+                $scope.vm.appointRelativeGroup = item.knowledgeRelevantContentList!=null?item.knowledgeRelevantContentList : [];  //业务扩展问
                 //console.log(obj)
             });
             //
@@ -251,6 +253,11 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             //var title = oldWord.extensionQuestionTitle ;
             var title = extensionQuestionList[0] ;
             var weight = oldWord.extensionQuestionType ;
+            var isLocalHasExt = addLocalExtension(title)  ;
+            if(isLocalHasExt){
+                $scope.vm.extensionsByFrame.push(isLocalHasExt);
+                return ;
+            }
             httpRequestPost("/api/ms/listKnowledge/checkFrameTag",{
                 "applicationId": APPLICATION_ID,
                 "extensionQuestionList" : extensionQuestionList,
@@ -271,6 +278,15 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
         //手动添加扩展问
         function getExtension(title,weight,source){
             //source  0 默认  1 标题
+            var isLocalHasExt = addLocalExtension(title)  ;
+            if(isLocalHasExt){
+                if(!source){
+                    $scope.vm.extensions.push(isLocalHasExt);
+                }else{
+                    $scope.vm.extensionByTitleTag = new Array(isLocalHasExt)
+                }
+                return ;
+            }
             var question = new Array(title);
             var obj = {
                 "extensionQuestionTitle" : $scope.vm.extensionTitle,
@@ -387,7 +403,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             if($scope.vm.slideFlag){
                 $(".senior_div").css('overflow','visible');
             }
-
         }
         //根據 標題 生成 bot 跟 扩展问
         function getBotAndExtensionByTitle(){
@@ -402,7 +417,7 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                         $scope.vm.titleTip = "知识标题重复";
                         $scope.$apply();
                     }else if(data.status == 200){
-                        getExtension($scope.vm.title,"60",1) ; //生成扩展问 
+                        getExtension($scope.vm.title,"60",1) ; //生成扩展问
                         $scope.$apply(function(){
                             //標題打标结果
                             $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
@@ -633,6 +648,36 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
             });
         }
+
+//********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
+        // 假删除本地备份
+        function backUpExt(item){
+            if(!$scope.vm.extensionDeleted.inArray(item)){
+                $scope.vm.extensionDeleted.push(item)
+            }
+        }
+        function addLocalExtension(title){
+            var result = false ;
+            if($scope.vm.extensionDeleted){
+                angular.forEach($scope.vm.extensionDeleted,function(item,index){
+                    if(title == item.extensionQuestionTitle){
+                        result = item ;
+                        $scope.vm.extensionDeleted.splice(index,1)
+                    }
+                })
+            }
+            return result ;
+        }
+//********************************  2017/9/1 扩展问删除备份  EDN ***********************************************
+
+
+
+
+
+
+
+
+
         //引导页方法
         function showTip(){
             $('.shadow_div').show();
