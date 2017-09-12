@@ -90,27 +90,38 @@ angular.module('materialManagement').controller('conceptChatController', [
             if(item){
                 $scope.vm.contentVal = item.chatKnowledgeContent
             }
-            var dialog = ngDialog.openConfirm({
-                template:"/static/materialManagement/faq/addContentDialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        if(item){
-                            var val = angular.copy( $scope.vm.contentVal ) ;
-                            $scope.vm.contentArr[index].chatKnowledgeContent = val ;
-                            $scope.vm.contentVal = "" ;
-                        }else{
-                            addContent()  ;
-                        }
-                    }else{
-                        $scope.vm.contentVal = "" ;
-                    }
+            // var dialog = ngDialog.openConfirm({
+            //     template:"/static/materialManagement/chat/addContentDialog.html",
+            //     scope: $scope,
+            //     closeByDocument:false,
+            //     closeByEscape: true,
+            //     showClose : true,
+            //     backdrop : 'static',
+            //     preCloseCallback:function(e){    //关闭回掉
+            //         if(e === 1){
+            //             if(item){
+            //                 var val = angular.copy( $scope.vm.contentVal ) ;
+            //                 $scope.vm.contentArr[index].chatKnowledgeContent = val ;
+            //                 $scope.vm.contentVal = "" ;
+            //             }else{
+            //                 addContent()  ;
+            //             }
+            //         }else{
+            //             $scope.vm.contentVal = "" ;
+            //         }
+            //     }
+            // });
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/materialManagement/chat/addContentDialog.html","450px",function(){
+                if(item){
+                    var val = angular.copy( $scope.vm.contentVal ) ;
+                    $scope.vm.contentArr[index].chatKnowledgeContent = val ;
+                    $scope.vm.contentVal = "" ;
+                }else{
+                    addContent()  ;
                 }
-            });
+            },function(){
+                $scope.vm.contentVal = "" ;
+            }) ;
         }
         function addContent(){
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){

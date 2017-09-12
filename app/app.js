@@ -583,12 +583,12 @@ knowledge_static_web
                     }
                 }
             })
-            //深度学习end
+
             //materialManagement
             .state("materialManagement", {
                 url: "/materialManagement/:userPermission",
                 templateUrl: 'static/materialManagement/materialManagement.html',
-                controller: "adminController"
+                //controller: "adminController"
             })
 
             .state("materialManagement.chatKnowledgeBase", {
@@ -599,7 +599,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chatKnowledgeBase.html',
+                        templateUrl: 'static/materialManagement/chat/knowledgeBase/chatKnowledgeBase.html',
                         controller: "chatKnowledgeBaseController"
                     }
                 }
@@ -613,7 +613,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chatKnowledgeBasePreview.html',
+                        templateUrl: 'static/materialManagement/chat/knowledgeBasePrew/chatKnowledgeBasePreview.html',
                         controller: "chatKnowledgeBasePreController"
                     }
                 }
@@ -626,7 +626,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/faq/faqChat.html',
+                        templateUrl: 'static/materialManagement/chat/faq/faqChat.html',
                         controller: "faqChatController"
                     }
                 }
@@ -639,7 +639,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/concept/conceptChat.html',
+                        templateUrl: 'static/materialManagement/chat/concept/conceptChat.html',
                         controller: "conceptChatController"
                     }
                 }
