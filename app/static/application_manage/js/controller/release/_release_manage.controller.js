@@ -288,18 +288,20 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                 if(!serviceId){
                     ApplicationServer.addService.save(parameter,function(data){
                         if(data.status==200){
+                            layer.msg("已成功添加服务");
                             queryServiceList(1);
                         }else{
-                            layer.msg("新增发布服务失败");
+                            layer.msg("新增服务失败");
                         }
                     },function(error){console.log(error);})
                 }else{
                     parameter.serviceId = serviceId ;
                     ApplicationServer.updateService.save(parameter,function(data){
                         if(data.status==200){
+                            layer.msg("服务修改成功");
                             queryServiceList(1);
                         }else{
-                            layer.msg("修改发布服务失败");
+                            layer.msg("服务修改失败");
                         }
                     },function(error){console.log(error);})
                 }

@@ -59,13 +59,12 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="framework mb-10">
                     <span class="framework_s text-r">发布节点：</span>
                     <div >
                         <ul class="bd pd-10 node_ul L mr-10" style="width:100%;min-height:30px;">
-                            <li ng-class="{'btn1_blue':vm.nodeCode==nodeList.using.nodeCode}"
-                                ng-click="vm.nodeCode=nodeList.using.nodeCode">{{vm.nodeList.using.nodeAccessIp}}
+                            <li ng-if="vm.dialogTitle!='发布新服务'" ng-class="{'btn1_blue':vm.nodeCode==vm.nodeList.using.nodeCode}"
+                                ng-click="vm.nodeCode=vm.nodeList.using.nodeCode">{{vm.nodeList.using.nodeAccessIp}}
                             </li>
                             <li ng-repeat="node in vm.nodeList.available"  ng-class="{'btn1_blue':vm.nodeCode==node.nodeCode}"
                                 ng-click="vm.nodeCode=node.nodeCode">{{node.nodeAccessIp}}

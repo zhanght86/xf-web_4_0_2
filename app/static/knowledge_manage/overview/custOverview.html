@@ -83,9 +83,9 @@
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-checked="vm.sourceType==0" ng-click="vm.getSourceType(0)"/>全部</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(120)"/>单条新增</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.getSourceType(122)"/>文档加工</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-checked="vm.sourceType==0" ng-click="vm.sourceType=0"/>全部</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.sourceType=120"/>单条新增</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.sourceType=122"/>文档加工</label>
                                 </div>
                             </div>
 
@@ -129,7 +129,7 @@
                             <!-- 全选-->
                             <span class="L" checkbox-overview ng-click="vm.selectAll(vm.listData)" result="vm.isSelectAll"></span>
 
-                            <span class="L"><span>总计<em>{{vm.knowledgeTotal}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
+                            <span class="L"><span>总计<em>{{vm.paginationConf.totalItems}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
                         </div>
                         <div class="fr"  ng-click="vm.delData()">
                             <a class="ljtClose-btn" href="javascript:;" >

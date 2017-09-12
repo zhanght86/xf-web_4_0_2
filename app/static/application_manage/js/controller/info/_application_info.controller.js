@@ -147,7 +147,6 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status==200){
-                    debugger ;
                     $scope.vm.applicationInfo = {
                         applicationName :response.data.applicationName, //应用名称
                         applicationDescription : response.data.applicationDescription, //应用描述
