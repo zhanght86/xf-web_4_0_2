@@ -3,8 +3,8 @@
  */
 
 angular.module('myApplicationSettingModule').controller('robotSetupController', [
-    '$scope', 'localStorageService' ,"configurationServer", "$state" ,"ngDialog",'$http', "$cookieStore","$rootScope",
-    function ($scope,localStorageService, configurationServer ,$state,ngDialog,$http,$cookieStore,$rootScope) {
+    '$scope', 'localStorageService' ,"ApplicationServer", "$state" ,"ngDialog",'$http', "$cookieStore","$rootScope",
+    function ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$http,$cookieStore,$rootScope) {
         $scope.vm = {
             classicHead:['touxiang1.png','touxiang2.png','touxiang3.png','touxiang4.png', 'touxiang5.png','touxiang6.png','touxiang7.png','touxiang8.png'], //经典头像列表
             //imgUrl : "", //文件服务器地址
@@ -37,7 +37,7 @@ angular.module('myApplicationSettingModule').controller('robotSetupController', 
         //弹出经典头像对话框
         function addClassic(){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/config/robot_setup/add_classical_avatar.html","",function(){
-                configurationServer.storeClassicalAvatar.save({
+                ApplicationServer.storeClassicalAvatar.save({
                     "robotHead": $scope.vm.newRobotHead,
                     "settingId": $scope.vm.settingId
                 },function(data){
@@ -99,7 +99,7 @@ angular.module('myApplicationSettingModule').controller('robotSetupController', 
         queryRobotParameter() ;
         //查看机器人参数
         function queryRobotParameter(){
-            configurationServer.queryRobotParameter.save({
+            ApplicationServer.queryRobotParameter.save({
                 "applicationId": APPLICATION_ID
             },function(data){          //类名重複
                 if(data.data===10005){
@@ -142,7 +142,7 @@ angular.module('myApplicationSettingModule').controller('robotSetupController', 
         //编辑机器人参数
         function editRobot(flag){
             if(flag){
-                configurationServer.updateRobotParameter.save({
+                ApplicationServer.updateRobotParameter.save({
                     "robotUpdateId":USER_ID ,
                     "applicationId": APPLICATION_ID,
                     "robotExpire": $scope.vm.robotExpire,

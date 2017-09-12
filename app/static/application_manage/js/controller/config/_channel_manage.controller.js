@@ -3,8 +3,8 @@
  */
 
 angular.module('myApplicationSettingModule').controller('channelManageController', [
-    '$scope', 'localStorageService' ,"configurationServer","$state" ,"ngDialog","$cookieStore","$timeout",
-    function ($scope,localStorageService, configurationServer,$state,ngDialog,$cookieStore,$timeout) {
+    '$scope', 'localStorageService' ,"ApplicationServer","$state" ,"ngDialog","$cookieStore","$timeout",
+    function ($scope,localStorageService, ApplicationServer,$state,ngDialog,$cookieStore,$timeout) {
         //渠道管理
         $scope.vm = {
             channelData : "",   // 渠道数据
@@ -47,7 +47,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         listChannelData(1);
         //请求渠道列表
         function listChannelData(index){
-            configurationServer.queryChannelList.save({
+            ApplicationServer.queryChannelList.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -81,7 +81,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         listBlackListData(1);
         //请求黑名单列表
         function listBlackListData(index){
-            configurationServer.queryBlacklist.save({
+            ApplicationServer.queryBlacklist.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vmo.pageSize,
                 "pageSize": $scope.vmo.pageSize
@@ -112,7 +112,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         function changeChannel(channelId,statusId){
             $scope.vm.simpleOperateTitle = (statusId == 50001)?"确定要启用吗":"确定要禁用吗" ;
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/base/public_html/simple_operate.html","300px",function(){
-                    configurationServer.changeChannelStatus.save({
+                    ApplicationServer.changeChannelStatus.save({
                         "channelId": channelId
                     },function(response) {
                         if (response.data === 10000) {
@@ -154,7 +154,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
         //添加黑名单
         function addBlacklist(){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/config/channel_manage/add_blacklist.html","500px",function(){
-                configurationServer.addBlacklist.save({
+                ApplicationServer.addBlacklist.save({
                     "applicationId": APPLICATION_ID,
                     "blackListIdentify": $scope.vmo.blackListIdentify,
                     "blackListRemark": $scope.vmo.blackListRemark,
@@ -180,7 +180,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             if(!$scope.vmo.blackListIdentify){
                 layer.msg("请填写正确的ip标识") ;
             }else{
-                configurationServer.checkBlackList.save({
+                ApplicationServer.checkBlackList.save({
                     "applicationId": APPLICATION_ID,
                     "blackListIdentify": $scope.vmo.blackListIdentify,
                     "channelId": $scope.vmo.channelId
@@ -206,7 +206,7 @@ angular.module('myApplicationSettingModule').controller('channelManageController
             }else{
                 $scope.vm.simpleOperateTitle = "确定要删除吗" ;
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/base/public_html/simple_operate.html","300px",function(){
-                    configurationServer.removeBlacklist.save({
+                    ApplicationServer.removeBlacklist.save({
                         "applicationId": APPLICATION_ID,
                         "blackListIds": blackListIds
                     },function(data){

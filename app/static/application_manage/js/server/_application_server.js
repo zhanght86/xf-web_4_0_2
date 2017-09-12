@@ -4,10 +4,9 @@
  * @Module :  应用管理服务
  */
 //"use strict";
-angular.module("myApplicationSettingModule").service("configurationServer",["$resource",function($resource){
+angular.module("myApplicationSettingModule").service("ApplicationServer",["$resource",function($resource){
 //应用信息
 
-//应用开发
 
                 /******************************
                                   *应用配置*

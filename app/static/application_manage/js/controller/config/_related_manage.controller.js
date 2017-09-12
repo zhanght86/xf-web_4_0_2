@@ -4,8 +4,8 @@
  * Date: 2017/4/28 16:30
  */
 angular.module('myApplicationSettingModule').controller('relateManageController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","configurationServer" ,
-    function ($scope,localStorageService,$state,ngDialog,$cookieStore,$timeout,configurationServer) {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","ApplicationServer" ,
+    function ($scope,localStorageService,$state,ngDialog,$cookieStore,$timeout,ApplicationServer) {
         $scope.vm = {
             applicationServiceData : "",   // 本应用服务列表数据
             paginationConf : ""  ,//分页条件
@@ -59,7 +59,7 @@ angular.module('myApplicationSettingModule').controller('relateManageController'
         },true);
         //请求应用本身的服务列表
         function listApplicationServiceData(index){
-            configurationServer.getServersList.save({
+            ApplicationServer.getServersList.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize,
@@ -80,7 +80,7 @@ angular.module('myApplicationSettingModule').controller('relateManageController'
         }
         //请求其他应用本身的服务列表
         function listOtherApplicationServiceData(index){
-            configurationServer.getOtherServersList.save({
+            ApplicationServer.getOtherServersList.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.other.pageSize,
                 "pageSize": $scope.other.pageSize
@@ -107,7 +107,7 @@ angular.module('myApplicationSettingModule').controller('relateManageController'
                     if($scope.vm.relatedServiceIds==null || $scope.vm.relatedServiceIds.length==0 || !$scope.vm.relatedServiceIds){
                         layer.msg("请选择要关联的服务");
                     }else{
-                        configurationServer.addRelate.save({
+                        ApplicationServer.addRelate.save({
                             "applicationId" : APPLICATION_ID, //本应用的id
                             "userId": USER_ID,
                             "serviceIds" :[ids], //当前选中的关联服务id
@@ -133,7 +133,7 @@ angular.module('myApplicationSettingModule').controller('relateManageController'
             if(!serIds.length){
                 layer.msg("请选择要取消的服务");
             }else{
-                $scope.$parent.MASTER.openNgDialog($scope,"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html","",function(){configurationServer.cancelRelate.save({
+                $scope.$parent.MASTER.openNgDialog($scope,"/static/myApplication/applicationConfig/relate_manage/cancel_relate.html","",function(){ApplicationServer.cancelRelate.save({
                     "serviceIds" : [serIds] //当前选中的关联服务id
                 },function(data){
                     if(data.status==200){

@@ -4,8 +4,8 @@
  * Date: 2017/4/10 14:52
  */
 angular.module('myApplicationSettingModule').controller('nodeManageController', [
-    '$scope', 'localStorageService',"configurationServer" ,"$state" ,"ngDialog", "$cookieStore","$timeout",
-    function ($scope,localStorageService, configurationServer ,$state,ngDialog,$cookieStore,$timeout) {
+    '$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog", "$cookieStore","$timeout",
+    function ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$cookieStore,$timeout) {
         $scope.vm = {
             nodeData : "",   // 节点列表数据
             paginationConf : {
@@ -53,7 +53,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         listNodeData(1);
         //请求节点列表
         function listNodeData(index){
-            configurationServer.queryNodeList.save({
+            ApplicationServer.queryNodeList.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
@@ -76,7 +76,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
         },true);
         //查询节点的基本信息
         function findNodeInfo(nodeCode){
-            return configurationServer.queryNodeInfo.save({
+            return ApplicationServer.queryNodeInfo.save({
                 "nodeCode" : nodeCode
             },function(response){
                 if(response.status==200){
@@ -116,7 +116,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                                     nodeCode : item.nodeCode
                                 });
                             });
-                            configurationServer.updateNode.save({
+                            ApplicationServer.updateNode.save({
                                 "nodeId" : $scope.vm.nodeId, //父级节点id
                                 "nodeAccessIp" : $scope.vm.nodeAccessIp, //父级节点访问地址
                                 "statusId" : $scope.vm.statusId, //父级节点状态
@@ -154,7 +154,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                             nodeAccessIp :  item.nodeAccessIp
                         });
                     });
-                    configurationServer.addNode.save({
+                    ApplicationServer.addNode.save({
                         "nodeId" : $scope.vm.nodeId==""?0:$scope.vm.nodeId, //父级节点id
                         "nodeAccessIp" : $scope.vm.nodeAccessIp, //父级节点访问地址
                         "statusId" : $scope.vm.statusId, //父级节点状态
@@ -224,7 +224,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                configurationServer.disableNode.save({
+                ApplicationServer.disableNode.save({
                     "nodeCode": nodeCode
                 },function(data){
                     if(data.status==200){
@@ -244,7 +244,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
                 shade:false
             },function(index){
                 layer.close(index);
-                configurationServer.removetNode.save({
+                ApplicationServer.removetNode.save({
                     "nodeCode": nodeCode
                 },function(data){
                     if(data.status==200){
