@@ -322,16 +322,9 @@ knowledge_static_web
                     },
                 }
             })
-            //// 我的应用myApplication
-            //.state("myApplication", {
-            //    url: "/myApplication/:userPermission",
-            //    templateUrl: 'static/application_manage/main.html',
-            //    controller: "myApplicationController"
-            //})
-
             .state("setting", {
                 url: "/setting",
-                templateUrl: 'static/application_manage/setting.html',
+                templateUrl: 'static/application_manage/main.html',
                 controller:"myApplicationSettingController"
             })
             .state("setting.robot", {
