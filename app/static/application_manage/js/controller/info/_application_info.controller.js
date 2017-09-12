@@ -147,6 +147,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status==200){
+                    debugger ;
                     $scope.vm.applicationInfo = {
                         applicationName :response.data.applicationName, //应用名称
                         applicationDescription : response.data.applicationDescription, //应用描述
@@ -154,6 +155,8 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                         applicationLisence : response.data.applicationLisence, //应用序列号
                         statusId : response.data.statusId, //应用状态
                     } ;
+                    $cookieStore.put("applicationName",response.data.applicationName) ;
+                    APPLICATION_NAME = response.data.applicationName ;
                 }else{
                     layer.msg("查询失败");
                 }
