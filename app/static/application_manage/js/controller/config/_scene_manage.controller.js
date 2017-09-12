@@ -4,8 +4,8 @@
  * Date: 2017/4/5 15:39
  */
 angular.module('myApplicationSettingModule').controller('sceneManageController', [
-    '$scope', 'localStorageService' ,"configurationServer","$state" ,"ngDialog","$cookieStore",
-    function ($scope,localStorageService,configurationServer, $state,ngDialog,$cookieStore) {
+    '$scope', 'localStorageService' ,"ApplicationServer","$state" ,"ngDialog","$cookieStore",
+    function ($scope,localStorageService,ApplicationServer, $state,ngDialog,$cookieStore) {
         $scope.vm = {
             showType : 0 ,  // 0 知识类型  1 交互 方式
             sceneId : $cookieStore.get("sceneId") , // 场景id
@@ -49,7 +49,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
         listExchangeMode();
         //请求知识类型列表
         function queryKnowledgeType(keyword){
-            configurationServer.queryKnowTypeList.save({
+            ApplicationServer.queryKnowTypeList.save({
                 "applicationId": APPLICATION_ID,
                 "keyword": keyword
             },function(response){
@@ -58,7 +58,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
         }
         //请求交互方式列表
         function listExchangeMode(keyword){
-            configurationServer.queryInterviewModeList.save({
+            ApplicationServer.queryInterviewModeList.save({
                 "applicationId": APPLICATION_ID,
                 "keyword": keyword
             },function(data){
@@ -67,7 +67,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
         }
         //多轮交互设置
         function multipleConversationSetup(){
-            configurationServer.searchMultipleConversation.save({
+            ApplicationServer.searchMultipleConversation.save({
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status==200){
@@ -89,7 +89,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
                         var parameter = angular.copy($scope.vm.multipleConversation) ;
                             parameter.userId = USER_ID ;
                             parameter.applicationId = APPLICATION_ID ;
-                        configurationServer.storeMultipleConversation.save(parameter,function(response){
+                        ApplicationServer.storeMultipleConversation.save(parameter,function(response){
                             if(response.status==200){
                                 layer.msg("修改成功！") ;
                             }else{
@@ -116,7 +116,7 @@ angular.module('myApplicationSettingModule').controller('sceneManageController',
         //        backdrop : 'static',
         //        preCloseCallback:function(e){    //关闭回掉
         //            if(e === 1){
-        //                configurationServer.storeInterviewModeSetup.save({
+        //                ApplicationServer.storeInterviewModeSetup.save({
         //                    "applicationId":APPLICATION_ID,
         //                    "categoryFuzzyOn": $scope.vm.categoryFuzzyOn,
         //                    "elementMissingOn": $scope.vm.elementMissingOn,

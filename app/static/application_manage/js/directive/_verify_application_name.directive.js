@@ -3,13 +3,13 @@
  * @Create : 2017/9/11.
  * @Module :  验证应用名称
  */
-angular.module("myApplicationSettingModule").directive('checkName', function(configurationServer,$log){
+angular.module("myApplicationSettingModule").directive('checkName', function(ApplicationServer,$log){
     return {
         require: 'ngModel',
         link: function(scope, ele, attrs, c){
             scope.$watch(attrs.ngModel, function(n){
                 if(!n) return;
-                configurationServer.verifyApplicationName.save({
+                ApplicationServer.verifyApplicationName.save({
                     applicationId: APPLICATION_ID,
                     applicationName: scope.vm.applicationNewName
                 },function(response){

@@ -3,13 +3,13 @@
  * @Create : 2017/9/8.
  * @Module : 检验节点是否合理
  */
-angular.module("myApplicationSettingModule").directive('checkIp', function($http,configurationServer){
+angular.module("myApplicationSettingModule").directive('checkIp', function($http,ApplicationServer){
     return {
         require: 'ngModel',
         link: function(scope, ele, attrs, c){
             scope.$watch(attrs.ngModel, function(n){
                 if(!n) return;
-                configurationServer.verifyNode.save({
+                ApplicationServer.verifyNode.save({
                     nodeAccessIp: scope.vm.nodeAccessIp,
                     nodeCode: scope.vm.nodeCode
                 },function(data){
@@ -28,13 +28,13 @@ angular.module("myApplicationSettingModule").directive('checkIp', function($http
             });
         }
     }
-}).directive('checkNode', function($http,configurationServer){
+}).directive('checkNode', function($http,ApplicationServer){
     return {
         require: 'ngModel',
         link: function(scope, ele, attrs, c){
             scope.$watch(attrs.ngModel, function(n){
                 if(!n) return;
-                configurationServer.verifyNode.save({
+                ApplicationServer.verifyNode.save({
                     nodeId: scope.vm.nodeId,
                     nodeAccessIp: scope.vm.nodeAccessIp,
                     nodeCode: scope.vm.nodeCode

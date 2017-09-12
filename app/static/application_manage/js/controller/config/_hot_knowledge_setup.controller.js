@@ -3,8 +3,8 @@
  * Describe ： 热点知识设置
  */
 angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupController', [
-    '$scope', 'localStorageService',"configurationServer" ,"$state" ,"ngDialog", "$cookieStore","$timeout",
-    function ($scope,localStorageService,configurationServer, $state,ngDialog, $cookieStore,$timeout) {
+    '$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog", "$cookieStore","$timeout",
+    function ($scope,localStorageService,ApplicationServer, $state,ngDialog, $cookieStore,$timeout) {
         $scope.vm = {
     //热点知识
             hotKnowList : "",       // 热点知识 数据
@@ -111,7 +111,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
         queryHotKnowledgeList(1) ;
         //加载热点知识列表
         function queryHotKnowledgeList(index){
-            configurationServer.queryHotKnowledgeList.save({
+            ApplicationServer.queryHotKnowledgeList.save({
                     index:(index - 1)*$scope.vm.hotPaginationConf.pageSize,
                     pageSize:$scope.vm.hotPaginationConf.pageSize,
                     applicationId:APPLICATION_ID ,
@@ -132,7 +132,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
         queryKnowledgeList(1) ;
         //从聊天知识库查询知识
         function queryKnowledgeList(index){
-            configurationServer.queryKnowledgeList.save({
+            ApplicationServer.queryKnowledgeList.save({
                 applicationId:APPLICATION_ID,
                 knowledgeTitle : $scope.vm.knowledgeTitle,
                 pageSize : $scope.vm.knowPaginationConf.pageSize,
@@ -178,7 +178,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
                 layer.msg("请选择要删除的知识！");
             }else{
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/base/public_html/simple_operate.html","300px",function(){
-                    configurationServer.removeHotKnowledge.save({
+                    ApplicationServer.removeHotKnowledge.save({
                         applicationId :  APPLICATION_ID,
                         ids :  $scope.vm.hotKnowDelIds
                     },function(data){
@@ -197,7 +197,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
 
         //知识置顶
         function toTop(item){
-            configurationServer.hotKnowledgeStick.save({
+            ApplicationServer.hotKnowledgeStick.save({
                     applicationId : APPLICATION_ID,
                     hotQuestionId : item.hotQuestionId,
                     hotQuestionOrder : item.hotQuestionOrder
@@ -207,7 +207,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
         }
         //知识上移
         function move(item){
-            configurationServer.hotKnowledgeUp.save({
+            ApplicationServer.hotKnowledgeUp.save({
                     applicationId : APPLICATION_ID,
                     hotQuestionId : item.hotQuestionId,
                     hotQuestionOrder : item.hotQuestionOrder,
@@ -218,7 +218,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
 
         //知识下移
         function down(item){
-            configurationServer.hotKnowledgeDown.save({
+            ApplicationServer.hotKnowledgeDown.save({
                 applicationId : APPLICATION_ID,
                 hotQuestionId : item.hotQuestionId,
                 hotQuestionOrder : item.hotQuestionOrder,
@@ -230,7 +230,7 @@ angular.module('knowledgeManagementModule').controller('hotKnowledgeSetupControl
         function addHotHotKnow(){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/config/hot_knowledge_setup/add_hot_knowledge.html","700px",function(){
                 console.log($scope.vm.seleceAddAll);
-                configurationServer.addHotKnowledge.save({
+                ApplicationServer.addHotKnowledge.save({
                     applicationId : APPLICATION_ID,
                     userId :  USER_ID,
                     hotKnowledgeList : $scope.vm.seleceAddAll

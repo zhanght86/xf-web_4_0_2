@@ -3,7 +3,7 @@
  * @Create : 2017/9/8.
  * @Module : 检验服务名称是否重复
  */
-angular.module("myApplicationSettingModule").directive('checkServiceName', function($http,configurationServer){
+angular.module("myApplicationSettingModule").directive('checkServiceName', function($http,ApplicationServer){
     return {
         require: 'ngModel',
         link: function(scope, ele, attrs, c){
@@ -11,7 +11,7 @@ angular.module("myApplicationSettingModule").directive('checkServiceName', funct
                 if(!n) {
                     return ;
                 }else{
-                    configurationServer.verifyServiceName.save({
+                    ApplicationServer.verifyServiceName.save({
                         serviceName: scope.vm.serviceName,
                         serviceId : scope.vm.serviceId
                     },function(data){

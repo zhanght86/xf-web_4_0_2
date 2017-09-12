@@ -4,8 +4,8 @@
  * Date: 2017/4/10 9:59
  */
 angular.module('myApplicationSettingModule').controller('releaseManageController', [
-    '$scope', 'localStorageService',"configurationServer" ,"$state" ,"ngDialog","$cookieStore","$timeout","$interval",
-    function ($scope,localStorageService, configurationServer ,$state,ngDialog,$cookieStore,$timeout,$interval){
+    '$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog","$cookieStore","$timeout","$interval",
+    function ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$cookieStore,$timeout,$interval){
         $scope.vm = {
             serviceList : "",   // 服务列表数据
             paginationConf :{   // 分页条件
@@ -50,7 +50,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
         queryServiceList(1);    // 获取服务列表
         //请求服务列表
         function queryServiceList(index){
-            configurationServer.queryServiceList.save({
+            ApplicationServer.queryServiceList.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
@@ -62,7 +62,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
         }
         //获取发布类型数据
         function queryServiceTypeList(){
-            configurationServer.queryServiceTypeList.save({
+            ApplicationServer.queryServiceTypeList.save({
             },function(data){
                 if(data.status==200){
                     $scope.vm.serviceTypeList=data.data;
@@ -90,7 +90,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
         //根据服务id查询服务信息
         function findServiceByServiceId(serviceId){
             $scope.vm.dialogTitle="编辑服务";
-            configurationServer.queryServiceById.save({
+            ApplicationServer.queryServiceById.save({
                 "serviceId": serviceId
             },function(data){
                 if(data.status==200){
@@ -107,7 +107,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                             $scope.vm.dimensionSelected.push(dimension);
                         }
                     });
-                    configurationServer.queryParentNodeInfo.save({ // 获取此服务使用的节点
+                    ApplicationServer.queryParentNodeInfo.save({ // 获取此服务使用的节点
                         "nodeCode" : data.data.nodeCode
                     },function(data){
                         if(data.status==200){
@@ -146,7 +146,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                 btn:['确认','取消'],
                 shade:false
             },function(index) {
-                configurationServer.releaseService.save({
+                ApplicationServer.releaseService.save({
                     "serviceId": serviceId,
                     "applicationId": APPLICATION_ID,
                     "userId": USER_ID, //获取用户id
@@ -169,7 +169,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                configurationServer.startService.save({
+                ApplicationServer.startService.save({
                     "serviceId": serviceId
                 },function(data){
                     if(data.status==200){
@@ -187,7 +187,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-               configurationServer.downService.save({
+               ApplicationServer.downService.save({
                    "serviceId": serviceId
                },function(response){
                    if(response.status==200){
@@ -205,7 +205,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                configurationServer.restartService.save({
+                ApplicationServer.restartService.save({
                     "serviceId": serviceId
                 },function(response){
                     if(response.status==200){
@@ -223,7 +223,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                 btn:['确认','取消'],
                 shade:false
             },function(){
-                configurationServer.removeService.save({
+                ApplicationServer.removeService.save({
                     "serviceId": serviceId,
                     "applicationId": APPLICATION_ID,
                     "userId" : USER_ID, //获取用户id
@@ -241,7 +241,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
 
         //获取可用节点数据
         function queryAvailableNodeList(){
-            configurationServer.queryAvailableNodeList.save({
+            ApplicationServer.queryAvailableNodeList.save({
                 },function(data){
                     if(data.status==200){
                         $scope.vm.nodeList.available=data.data;
@@ -286,7 +286,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                     "userName" : USER_LOGIN_NAME //获取用户名称
                 } ;
                 if(!serviceId){
-                    configurationServer.addService.save(parameter,function(data){
+                    ApplicationServer.addService.save(parameter,function(data){
                         if(data.status==200){
                             queryServiceList(1);
                         }else{
@@ -295,7 +295,7 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                     },function(error){console.log(error);})
                 }else{
                     parameter.serviceId = serviceId ;
-                    configurationServer.updateService.save(parameter,function(data){
+                    ApplicationServer.updateService.save(parameter,function(data){
                         if(data.status==200){
                             queryServiceList(1);
                         }else{

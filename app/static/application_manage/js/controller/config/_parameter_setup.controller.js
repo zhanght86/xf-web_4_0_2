@@ -4,8 +4,8 @@
  * @Module :  参数设置 控制器
  */
 angular.module("myApplicationSettingModule").controller("parameterSetupController",[
-    '$scope', 'localStorageService' ,"configurationServer","$state" ,"ngDialog",'$http', "$cookieStore",
-    function($scope,localStorageService, configurationServer ,$state,ngDialog,$http,$cookieStore){
+    '$scope', 'localStorageService' ,"ApplicationServer","$state" ,"ngDialog",'$http', "$cookieStore",
+    function($scope,localStorageService, ApplicationServer ,$state,ngDialog,$http,$cookieStore){
         $scope.vm = {
             settingCommentOn : 1,   //评价开关
             settingDataTimeoutLimit : "",//获取数据时间
@@ -41,7 +41,7 @@ angular.module("myApplicationSettingModule").controller("parameterSetupControlle
         queryParameter();
         //查看机器人参数
         function queryParameter(){
-            configurationServer.queryParameter.save({
+            ApplicationServer.queryParameter.save({
                 "applicationId": APPLICATION_ID
             },function(data){
                 if(data.data===10005){
@@ -72,7 +72,7 @@ angular.module("myApplicationSettingModule").controller("parameterSetupControlle
 
         //编辑应用参数
         function updateParameter(){
-            configurationServer.updateParameter.save({
+            ApplicationServer.updateParameter.save({
                 "applicationId": APPLICATION_ID,
                 "settingCommentOn": $scope.vm.settingCommentOn,
                 "settingDataTimeoutLimit": $scope.vm.settingDataTimeoutLimit,

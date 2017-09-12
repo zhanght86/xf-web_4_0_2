@@ -28,7 +28,6 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //素材管理
     "materialManagement",
     //我的应用
-    "myApplicationModule",
     "myApplicationSettingModule",
     //业务建模
     "businessModelingModule",
@@ -323,16 +322,9 @@ knowledge_static_web
                     },
                 }
             })
-            // 我的应用myApplication
-            .state("myApplication", {
-                url: "/myApplication/:userPermission",
-                templateUrl: 'static/application_manage/main.html',
-                controller: "myApplicationController"
-            })
-
             .state("setting", {
                 url: "/setting",
-                templateUrl: 'static/application_manage/setting.html',
+                templateUrl: 'static/application_manage/main.html',
                 controller:"myApplicationSettingController"
             })
             .state("setting.robot", {

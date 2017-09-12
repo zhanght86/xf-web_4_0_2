@@ -3,8 +3,8 @@
  */
 
 angular.module('knowledgeManagementModule').controller('dimensionManageController', [
-    '$scope', 'localStorageService' ,"configurationServer","$state" ,"ngDialog","$timeout","$interval","$cookieStore",
-    function ($scope,localStorageService,configurationServer, $state,ngDialog,$timeout,$interval,$cookieStore) {
+    '$scope', 'localStorageService' ,"ApplicationServer","$state" ,"ngDialog","$timeout","$interval","$cookieStore",
+    function ($scope,localStorageService,ApplicationServer, $state,ngDialog,$timeout,$interval,$cookieStore) {
         $scope.vm = {
             simpleOperateTitle : "" ,  // 删除修改弹框的title
             operateDimension : operateDimension,   // 添加编辑维度
@@ -38,7 +38,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         // 获取所有维度
         getData(1);
         function getData(index){
-            configurationServer.queryDimensionList.save({
+            ApplicationServer.queryDimensionList.save({
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize ,
                 userId:USER_ID,
@@ -76,7 +76,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         function deleteDimension(dimensionId){
             $scope.vm.simpleOperateTitle = "是否确定删除" ;
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/base/public_html/simple_operate.html","300px",function(){
-                configurationServer.removeDimension.save({
+                ApplicationServer.removeDimension.save({
                     applicationId:APPLICATION_ID ,
                     dimensionId:dimensionId
                 },function(data){
@@ -92,7 +92,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
         //删除子集维度
         function deleteItem(item){
             console.log(item.dimensionId);
-            configurationServer.removeChildDimension.save({
+            ApplicationServer.removeChildDimension.save({
                 dimensionId:item.dimensionId
             },function(response){
                 $scope.vm.oldDimension.remove(item);
@@ -145,7 +145,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                 if(data){  // 编辑
                     parameter.dimensionId = data.dimensionId;// 参数保存使用
                     console.log(data) ;
-                    configurationServer.editDimension.save(parameter, function (response) {
+                    ApplicationServer.editDimension.save(parameter, function (response) {
                         if (response.status == 10002) {
                             layer.msg("该维度已经存在，请重新编辑!");
                             return;
@@ -154,7 +154,7 @@ angular.module('knowledgeManagementModule').controller('dimensionManageControlle
                         layer.msg("维度修改成功!");
                     }, function (error) {console.log(error)}) ;
                 }else{  // 新增
-                    configurationServer.addDimension.save(parameter, function (response) {
+                    ApplicationServer.addDimension.save(parameter, function (response) {
                         if (response.status == 10002) {
                             layer.msg("维度名称重复，请重新添加！")
                         } else {

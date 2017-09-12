@@ -4,10 +4,9 @@
  * @Module :  应用管理服务
  */
 //"use strict";
-angular.module("myApplicationSettingModule").service("configurationServer",["$resource",function($resource){
+angular.module("myApplicationSettingModule").service("ApplicationServer",["$resource",function($resource){
 //应用信息
 
-//应用开发
 
                 /******************************
                                   *应用配置*
@@ -130,15 +129,13 @@ angular.module("myApplicationSettingModule").service("configurationServer",["$re
         //编辑节点
         this.updateNode = $resource(API_APPLICATION+"/node/editNode", {}, {});
         //下线节点
-        this.startNode = $resource(API_APPLICATION+"/service/stopService", {}, {});
-        //重启节点
-        this.restartNode = $resource(API_APPLICATION+"/service/restartService", {}, {});
+        this.startNode = $resource(API_APPLICATION+"/node/stopService", {}, {});
         //禁用节点
-        this.disableNode = $resource(API_APPLICATION+"/service/disabledAndEnabledNode", {}, {});
+        this.disableNode = $resource(API_APPLICATION+"/node/disabledAndEnabledNode", {}, {});
         //删除节点
-        this.removetNode = $resource(API_APPLICATION+"/service/deleteNode", {}, {});
+        this.removetNode = $resource(API_APPLICATION+"/node/deleteNode", {}, {});
         //检验节点是否合理
-        this.verifyNode = $resource(API_APPLICATION+"/service/checkNode", {}, {});
+        this.verifyNode = $resource(API_APPLICATION+"/node/checkNode", {}, {});
                                         /******************************
                                                         *应用信息*
                                                   ********************************/

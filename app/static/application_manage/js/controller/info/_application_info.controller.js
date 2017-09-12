@@ -4,8 +4,8 @@
  * Date: 2017/4/10 17:16
  */
 angular.module('myApplicationSettingModule').controller('applicationInforController', [
-    '$scope', 'localStorageService',"configurationServer" ,"$state" ,"ngDialog","$cookieStore","$rootScope","$timeout","$log",
-    function ($scope,localStorageService,configurationServer , $state, ngDialog,$cookieStore,$rootScope,$timeout,$log) {
+    '$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog","$cookieStore","$rootScope","$timeout","$log",
+    function ($scope,localStorageService,ApplicationServer , $state, ngDialog,$cookieStore,$rootScope,$timeout,$log) {
         $scope.vm = {
             serviceData : "",   // 发布服务列表数据
             paginationConf : {
@@ -48,7 +48,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         listServiceData(1);
         //请求服务列表
         function listServiceData(index){
-            configurationServer.queryServiceList.save({
+            ApplicationServer.queryServiceList.save({
                 "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
@@ -72,7 +72,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         },true);
         //发布服务
         function publishService(serviceId){
-            configurationServer.releaseService.save({
+            ApplicationServer.releaseService.save({
                 "serviceId": serviceId,
                 "applicationId": APPLICATION_ID,
                 "userId" :USER_ID, //获取用户id
@@ -93,7 +93,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 shade:false
             },function(index){
                 layer.close(index);
-                configurationServer.startService.save({
+                ApplicationServer.startService.save({
                     "serviceId": serviceId
                 },function(response){
                     if(response.status==200){
@@ -110,7 +110,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-               configurationServer.downService.save({
+               ApplicationServer.downService.save({
                    "serviceId": serviceId
                },function(response){
                    if(response.status==200){
@@ -129,7 +129,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                configurationServer.restartService.save({
+                ApplicationServer.restartService.save({
                     "serviceId": serviceId
                 },function(response){
                     if(response.status==200){
@@ -143,10 +143,11 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         }
         //查看应用信息
         function findApplicationInfo(applicationId){
-           configurationServer.viewApplicationInfo.save({
+           ApplicationServer.viewApplicationInfo.save({
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status==200){
+                    debugger ;
                     $scope.vm.applicationInfo = {
                         applicationName :response.data.applicationName, //应用名称
                         applicationDescription : response.data.applicationDescription, //应用描述
@@ -154,6 +155,8 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                         applicationLisence : response.data.applicationLisence, //应用序列号
                         statusId : response.data.statusId, //应用状态
                     } ;
+                    $cookieStore.put("applicationName",response.data.applicationName) ;
+                    APPLICATION_NAME = response.data.applicationName ;
                 }else{
                     layer.msg("查询失败");
                 }
@@ -161,7 +164,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
         }
         //查看场景信息
         function findSceneInfo(){
-            configurationServer.viewsceneInfo.save({
+            ApplicationServer.viewsceneInfo.save({
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status==200){
@@ -180,7 +183,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
             $scope.vm.applicationNewName = APPLICATION_NAME ; //待编辑的新应用名称
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/info/edit_application_name.html","",function(){
                 if ($scope.vm.allowSubmit){
-                    configurationServer.updateApplicationName.save({
+                    ApplicationServer.updateApplicationName.save({
                         "applicationId": APPLICATION_ID,
                         "sceneId" : SCENE_ID,
                         "applicationName" : $scope.vm.applicationNewName,
@@ -206,7 +209,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                configurationServer.stopAllService.save({
+                ApplicationServer.stopAllService.save({
                     "applicationId": APPLICATION_ID
                 },function(data){
                     if(data.status==200){
@@ -225,7 +228,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                configurationServer.removeApplication.save({
+                ApplicationServer.removeApplication.save({
                     "applicationId": APPLICATION_ID,
                     "userId" :USER_ID, //获取用户id
                     "userName" : USER_LOGIN_NAME //获取用户名称
