@@ -55,7 +55,7 @@ angular.module('loginModule').controller('loginController', [
                         $cookieStore.put("userId" , data.data.userId);
                         $cookieStore.put("userLoginName" , $scope.vm.userName);
                         $cookieStore.put("userName" , data.data.userName);
-                        $state.go("admin");
+                        $state.go("homePage.manage");
                     }else if(data.status==10007){
                         setRandomNumber();
                         layer.msg("用户名或密码错误");

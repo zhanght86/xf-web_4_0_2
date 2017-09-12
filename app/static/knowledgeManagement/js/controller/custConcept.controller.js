@@ -802,7 +802,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             });
             return isRepeat
         }
-//********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
+/****************************************************************
+                     2017/9/1  mengfei  BEGIN
+            功能    扩展问删除备份
+/*****************************************************************/
         // 假删除本地备份
         function backUpExt(item){
             if(!$scope.vm.extensionDeleted.inArray(item)){
@@ -821,7 +824,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             }
             return result ;
         }
-//********************************  2017/9/1 扩展问删除备份  EDN ***********************************************
+ /*******************************2017/9/1 扩展问删除备份  END *********************/
 //*************************************************************************
 
         //function addAppoint(item,arr){
