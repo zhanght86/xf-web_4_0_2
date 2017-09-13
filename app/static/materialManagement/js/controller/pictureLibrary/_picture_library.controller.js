@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('materialManagement').controller('pictureLibraryController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout","$window",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout, $window) {
+    '$scope',"$state","ngDialog","MaterialServer", "$cookieStore","$stateParams","$timeout","$window",
+    function ($scope,$state,ngDialog,MaterialServer,$cookieStore,$stateParams,$timeout, $window) {
         $state.go("materialManagement.pictureLibrary");
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
@@ -29,8 +29,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }
         };
         getPicList(1) ;
-        function getPicList(index){
-            httpRequestPost("/api/ms/picture/queryPicture",{
+        function getPicList(index){            
+            MaterialServer.getList.save({
                 "applicationId" : APPLICATION_ID,
                 "pictureName" : $scope.vm.pictureName,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
@@ -38,17 +38,15 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             },function(data){
                 if(data.status == 200){
                     initBatchTest() ;
-                    $scope.$apply(function(){
-                        $scope.vm.imageList = data.data ;
-                        $scope.vm.paginationConf.currentPage =index ;
-                        $scope.vm.paginationConf.totalItems =data.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                        console.log($scope.vm.paginationConf)
-                    })
+                    $scope.vm.imageList = data.data ;
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                    console.log($scope.vm.paginationConf)
                 }
             },function(err){
-                console.log(err)
-            }) ;
+                console.log(err);
+            });
         }
 
         function  napSearch(){
@@ -93,8 +91,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }else{
                 layer.confirm('确认删除图片？', {
                     btn: ['确定','取消'] //按钮
-                }, function(){
-                    httpRequestPost("/api/ms/picture/batchDeletePicture",{
+                }, function(){                                       
+                    MaterialServer.delete.save({
                         "pictureIds": pictureIds
                     },function(data){
                         if(data.status == 200){
@@ -104,8 +102,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                             layer.msg("图片删除失败") ;
                         }
                     },function(err){
-                        console.log(err) ;
-                    }) ;
+                        console.log(err);
+                    });
+                    
                 }, function(error){ console.log(error)});
             }
         }
@@ -135,7 +134,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         },true);
         //
         function updateImg(){
-            httpRequestPost("/api/ms/picture/updatePicture",{
+            MaterialServer.updateImg.save({
                 "pictureName":$scope.vm.pictureName,
                 "pictureId":  $scope.vm.pictureId
             },function(data){
@@ -145,29 +144,34 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     layer.msg("名称根寻失败") ;
                 }
             },function(err){
-                console.log(err)
-            }) ;
+                console.log(err);
+            });
         }
         //修改名称
         function changeName(item){
             $scope.vm.pictureName=item.pictureName;
             $scope.vm.pictureId=item.pictureId;
-            var dialog = ngDialog.openConfirm({
-                template: "/static/materialManagement/pictureLibrary/changeName.html",
-                scope: $scope,
-                width:'400px',
-                closeByNavigation: false,
-                overlay: true,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                        updateImg();
-                    } else {
+            // var dialog = ngDialog.openConfirm({
+            //     template: "/static/materialManagement/pictureLibrary/changeName.html",
+            //     scope: $scope,
+            //     width:'400px',
+            //     closeByNavigation: false,
+            //     overlay: true,
+            //     closeByDocument: false,
+            //     closeByEscape: true,
+            //     showClose: true,
+            //     preCloseCallback: function (e) {    //关闭回掉
+            //         if (e === 1) {
+            //             updateImg();
+            //         } else {
+            //
+            //         }
+            //     }
+            // });
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/materialManagement/pictureLibrary/changeName.html','400px',function(){
+                updateImg();
+            },function(){
 
-                    }
-                }
             });
         }
     }
