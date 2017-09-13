@@ -5,8 +5,6 @@
  */
 //"use strict";
 angular.module("myApplicationSettingModule").service("ApplicationServer",["$resource",function($resource){
-//应用信息
-
 
                 /******************************
                                   *应用配置*

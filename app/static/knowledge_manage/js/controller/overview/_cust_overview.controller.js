@@ -1,35 +1,34 @@
-
 /**
  * Created by mileS on 2017/4/3.
  * 客服 知识 总览
  */
 angular.module('knowledgeManagementModule').controller('custOverviewController', [
-    '$scope', 'localStorageService' ,"$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope",
-    function ($scope,localStorageService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope ) {
-        //$state.go("custServScenaOverview.manage");
+    '$scope', 'localStorageService' ,"KnowledgeService","$state" ,"$stateParams","ngDialog","$timeout","$cookieStore","$window","$rootScope","$log",
+    function ($scope,localStorageService,KnowledgeService, $state,$stateParams,ngDialog,$timeout,$cookieStore,$window,$rootScope,$log ) {
         //******************************************** //
         var n = 1;   // 定義淚目數  類別
         //********************************************//
         $scope.vm = {
-            applicationName : $cookieStore.get("applicationName"),
+            applicationName : APPLICATION_NAME,
             creatBot : [],
             frameCategoryId : "",
-
             botRoot : null,
             type : true,
-            listData : [],                  //页面展示内容
+
+            listData : [],           //知识列表
+            newNumber : null ,       //新增条数
+            paginationConf : {       // 分页
+                pageSize : 5 ,
+                pagesLength : 10
+            } ,
             //fn
-            exportExcel:exportExcel,
+            exportExcel:exportExcel ,
             getData : getData ,             //数据获取
             delData : delData ,             //删除
-            knowledgeTotal : null,         //知识总条数
-            newNumber : null ,              //更新条数
-            getNewNumber : getNewNumber ,  //获取更新条数
 
             knowledgeIds : [], //刪除 id ，
             addDelIds : addDelIds ,
             // params set
-            "pageSize": 5,
             sceneIds : [] ,
             "knowledgeTitle": null,         //知识标题默认值null
             "knowledgeContent": null,        //知识内容默认值null
@@ -41,15 +40,12 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
 
             keySearch : keySearch,
             napSearch : napSearch ,
-            getSourceType : getSourceType,
             getUpdateTimeType : getUpdateTimeType,
-
-            scan : scan ,   // 点击标题预览
 
             heighSarch : false ,
             knowledgeType : "" , //搜索知识类型
             searchExtension : "", //搜索的擴展問
-            newKnowledge : "false",
+            newKnowledge : "false", // 新增知识选择下拉
             jumpToNewKonwledge : jumpToNewKonwledge,
             isSelectAll  : false ,  // 全选 删除
             selectAll : selectAll  ,//選擇全部
@@ -58,7 +54,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
             paramsReset : paramsReset //搜索重置参数
         };
         function jumpToNewKonwledge(id){
-            var addUrl=null;
+            var addUrl;
             switch(id){
                 case "100" :
                     addUrl = "knowledgeManagement.faqAdd";
@@ -76,12 +72,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                     addUrl = "knowledgeManagement.markKnow";
                     break;
             }
-            if(!addUrl)
-                return ;
             $state.go(addUrl) ;
-            //var url = $state.href(addUrl);
-            //$window.open(url,'_blank');
-            $scope.vm.newKnowledge = "false";
         }
         // 初始化 数据
         napSearch(false);
@@ -109,19 +100,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
             }
             $scope.vm.heighSarch = false ;
         }
-        function scan(item){
-            var obj = {};
-            obj.applicationId = APPLICATION_ID ;
-            obj.knowledgeId = item.knowledgeId;
-            obj.knowledgeType = item.knowledgeType;
-            $window.knowledgeScan = obj ;
-            var url = $state.href("custKnowledgePreview.manage");
-            $window.open(url,'_blank');
-            //$state.go("custKnowledgePreview.manage")
-        }
-        function getSourceType(val){
-            $scope.vm.sourceType = val
-        }
+
         function getUpdateTimeType(val){
             $scope.vm.updateTimeType = val
         }
@@ -131,9 +110,20 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
          * @param index
          */
         function exportExcel(){
-            var scenceId = $scope.vm.sceneIds.length?$scope.vm.sceneIds:[];
+            var sceneIds = $scope.vm.sceneIds.length?$scope.vm.sceneIds:null;
+            //KnowledgeService.exportCustKnow.get({
+            //    applicationId : APPLICATION_ID,
+            //    sceneIds : sceneIds,
+            //    knowledgeTitle : $scope.vm.knowledgeTitle?$scope.vm.knowledgeTitle:null ,
+            //    knowledgeContent : $scope.vm.knowledgeContent ? $scope.vm.knowledgeContent : null,
+            //    knowledgeCreator : $scope.vm.knowledgeCreator?$scope.vm.knowledgeCreator:null ,
+            //    knowledgeExpDateEnd : $scope.vm.knowledgeExpDateEnd? $scope.vm.knowledgeExpDateEnd : null ,
+            //    knowledgeExpDateStart : $scope.vm.knowledgeExpDateStart? $scope.vm.knowledgeExpDateStart : null ,
+            //    sourceType : $scope.vm.sourceType  ,
+            //    updateTimeType : $scope.vm.updateTimeType ,
+            //}) ;
             var urlParams =
-                "?applicationId="+APPLICATION_ID+"&sceneIds="+scenceId+"&knowledgeTitle="+$scope.vm.knowledgeTitle +
+                "?applicationId="+APPLICATION_ID+"&sceneIds="+sceneIds +"&knowledgeTitle="+$scope.vm.knowledgeTitle +
                 "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
                 "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
                 "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
@@ -162,40 +152,33 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
         }
 
         function getData(index){
-
-            //console.log((index-1)*$scope.vm.pageSize);
-            httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
-                "applicationId" : APPLICATION_ID,
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize,
-                "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-                "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
-                "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-                "knowledgeUpdate": $scope.vm.knowledgeCreator,        //作者默认值null
-                "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
-                "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
-                "knowledgeOrigin":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                "updateTimeType": $scope.vm.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                "knowledgeType" : $scope.vm.knowledgeType ,
-                "knowledgeExtensionQuestion" : $scope.vm.searchExtension
-            },function(data){
-
-                $scope.vm.isSelectAll = false ;
-                $scope.vm.knowledgeIds = [] ;
-                $scope.vm.listData = data.data.objs;
-                $scope.vm.knowledgeTotal = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 10,//分页框数量
-                };
-                $scope.$apply();
-                return true;
-            },function(err){
-                console.log(err);
-            });
-
+            KnowledgeService.queryCustKnowList.save({
+                    "applicationId" : APPLICATION_ID,
+                    "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                    "pageSize": $scope.vm.paginationConf.pageSize,
+                    "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+                    "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
+                    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
+                    "knowledgeUpdate": $scope.vm.knowledgeCreator,        //作者默认值null
+                    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                    "knowledgeOrigin":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                    "updateTimeType": $scope.vm.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                    "knowledgeType" : $scope.vm.knowledgeType ,
+                    "knowledgeExtensionQuestion" : $scope.vm.searchExtension
+                },function(response){
+                    $scope.vm.isSelectAll = false ;
+                    $scope.vm.knowledgeIds = [] ;
+                    if(response.data.total){
+                        $scope.vm.listData = response.data.objs;
+                        $scope.vm.paginationConf.totalItems = response.data.total ;
+                        $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize;
+                    }else{
+                        layer.msg("未查询到数据");
+                        $scope.vm.listData = [];
+                        $scope.vm.paginationConf.totalItems = 0 ;
+                    }
+                },function(error){$log(error);})
         }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -233,23 +216,19 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 $scope.vm.updateTimeType = 0  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
         }
         function delData(){
-            if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0)
-            {
+            if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0) {
                 layer.msg("请选择删除知识",{time:800});
-                return;
             }else{
                 layer.confirm('是否删除当前选中知识？', {
                     btn: ['确定','取消'] //按钮
                 }, function(){
-                    httpRequestPost("/api/ms/knowledgeManage/deleteKnowledge",{
+                    KnowledgeService.removeCustKnow.save({
                         "knowledgeIds":$scope.vm.knowledgeIds
                     },function(data){
-                        $state.reload();
-                        layer.msg("刪除成功",{time:1000});
-                    },function(){
-                        layer.msg("刪除失败",{time:1000});
-                    });
-                }, function(){
+                        getData(1);
+                        getNewNumber();
+                        layer.msg("刪除成功");
+                    },function(error){$log(error)})
                 });
             }
         }
@@ -275,7 +254,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
             console.log(id,arr) ;
         }
         function getNewNumber(){
-            httpRequestPost(" /api/ms/knowledgeManage/overView/searchTotalAndToday",{
+            KnowledgeService.queryCustNewNumber.save({
                 "applicationId" : APPLICATION_ID,
                 "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,						//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                 "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
@@ -286,12 +265,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 "sourceType":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
             },function(data){
                 $scope.vm.newNumber = data.data.total;
-                //console.log(data)
-                return true;
-
-            },function(err){
-               console.log(err)
-            });
+            },function(error){$log(error)})
         }
 
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
