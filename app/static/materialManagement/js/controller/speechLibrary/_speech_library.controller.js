@@ -3,8 +3,8 @@
  * 控制器
  */ 
 angular.module('materialManagement').controller('speechLibraryController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout","$window",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout,$window) {
+    '$scope',"$state","ngDialog","$log", "MaterialServer","$cookieStore","$stateParams","$timeout","$window",
+    function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$window) {
         $state.go("materialManagement.speechLibrary");
         $scope.vm = {
             getVoiceList : getVoiceList , //获取图片列表
@@ -36,72 +36,46 @@ angular.module('materialManagement').controller('speechLibraryController', [
         };
 
         getVoiceList(1) ;
-        function getVoiceList(index){
-            httpRequestPost("/api/ms/voiceManage/queryVioce ",{
+        function getVoiceList(index){            
+            MaterialServer.getVoiceList.save({
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize ,
                 "applicationId":APPLICATION_ID
             },function(data){
                 if(data.status == 200){
-                    $scope.$apply(function(){
-                        console.log(data.data);
-                        $scope.vm.voiceList = data.data ;
-                        $scope.vm.paginationConf.currentPage =index ;
-                        $scope.vm.paginationConf.totalItems =data.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                        console.log($scope.vm.paginationConf)
-                    })
+                    console.log(data.data);                    
+                    $scope.vm.voiceList = data.data ;
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                    console.log($scope.vm.paginationConf);
                 }
             },function(err){
-                console.log(err)
-            }) ;
+                console.log(err);
+            });
         }
         //查询
         function searchVoice(index){
-            //alert(1);
-            httpRequestPost("/api/ms/voiceManage/queryVioce",{
+            MaterialServer.search.save({
                 "index":(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
                 "voiceName":$scope.vm.voiceName
             },function(data){
                 if(data.status==200){
-                    $scope.$apply(function(){
-                        console.log(data.data);
-                        $scope.vm.voiceList = data.data ;
-                        $scope.vm.paginationConf.currentPage =index ;
-                        $scope.vm.paginationConf.totalItems =data.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                        console.log($scope.vm.paginationConf)
-                    });
-
+                    console.log(data.data);
+                    $scope.vm.voiceList = data.data ;
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                    console.log($scope.vm.paginationConf);
                 }else if(data.status==500){
                     layer.msg('查询失败');
                 }
-
-            },function(error){
+            },function(err){
                 console.log(error);
             });
         }
-        // function removeVoice(item,index){
-        //     layer.confirm('确认删除该语音？', {
-        //         btn: ['确定','取消'] //按钮
-        //     }, function(){
-        //         httpRequestPost("/api/ms/voiceManage/deleteVoice",{
-        //             "voiceUrl": item.voiceUrl,
-        //             "voiceId": item.voiceId
-        //         },function(data){
-        //             if(data.status == 200){
-        //                 layer.msg("语音删除成功") ;
-        //                 getVoiceList(1) ;
-        //             }else if(data.status == 500){
-        //                 layer.msg("语音删除失败") ;
-        //             }
-        //         },function(err){
-        //             console.log(err)
-        //         }) ;
-        //     }, function(){
-        //     });
-        // }
+
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -116,23 +90,12 @@ angular.module('materialManagement').controller('speechLibraryController', [
             }
         },true);
         function uploadSpeech(callback){
-            var dialog = ngDialog.openConfirm({
-                template: "/static/materialManagement/speechLibrary/speechLibraryDialog.html",
-                width:"900px",
-                scope: $scope,
-                closeByNavigation: false,
-                overlay: true,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                preCloseCallback: function (e) {    //关闭回掉
-                    $scope.vm.isUploadStart = false ;
-                    //if (e === 1) {
-                    //
-                    //} else {
-                    //
-                    //}
-                }
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/materialManagement/speechLibrary/speechLibraryDialog.html','900px',function(){
+
+            },function(){
+
+            },function(){
+                $scope.vm.isUploadStart = false ;
             });
         }
         /**
@@ -149,26 +112,16 @@ angular.module('materialManagement').controller('speechLibraryController', [
         function changeName(callback){
             $scope.vm.voiceName = callback.voiceName;
             $scope.vm.voiceId = callback.voiceId;
-            var dialog = ngDialog.openConfirm({
-                template: "/static/materialManagement/speechLibrary/changeName.html",
-                width:"400px",
-                scope: $scope,
-                closeByNavigation: false,
-                overlay: true,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                preCloseCallback: function (e) {    //关闭回掉
-                    if(e === 1){
-                        updateVoice();
-                    }else{
+            
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/materialManagement/speechLibrary/changeName.html','400px',function(){
+                updateVoice();
+            },function(){
 
-                    }
-                }
             });
         }
         function updateVoice(){
-            httpRequestPost("/api/ms/voiceManage/updateVoiceName",{
+                     
+            MaterialServer.updateVoice.save({
                 voiceId : $scope.vm.voiceId,
                 voiceName : $scope.vm.voiceName
             },function(data){
@@ -177,9 +130,10 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 }else if(data.status==500){
                     layer.msg('名称根寻失败');
                 }
-            },function(error){
-                console.log(error);
+            },function(err){
+                $log.log(err);
             });
+
         }
 
         //全选
@@ -224,7 +178,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 layer.confirm('确认删除语音？', {
                     btn: ['确定','取消'] //按钮
                 }, function(){
-                    httpRequestPost("/api/ms/voiceManage/batchDeleteVoice",{
+                    MaterialServer.batchDeleteVoice.save({
                         "voiceIds": voiceIds
                     },function(data){
                         if(data.status == 200){
@@ -235,8 +189,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
                             layer.msg("语音删除失败") ;
                         }
                     },function(err){
-                        console.log(err)
-                    }) ;
+                        $log.log(err);
+                    });
                 }, function(){
                 });
             }

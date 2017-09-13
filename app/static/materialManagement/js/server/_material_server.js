@@ -32,9 +32,26 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
 //概念聊天新增
     //扩展问
     this.addExtension2 = $resource(API_MATERIAL+'/chatKnowledge/checkConceCptChatQuestion',{},{});
-
-    
-
+                        /********************************
+                                    * 图片库
+                                ***********************************/
+    //获取列表
+    this.getList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
+    //删除图片
+    this.delete = $resource(API_MATERIAL+'/picture/batchDeletePicture',{},{});
+    //updateImg
+    this.updateImg = $resource(API_MATERIAL+'/picture/updatePicture',{},{});
+                        /********************************
+                                * 语音库
+                                ***********************************/
+    //获取列表
+    this.getVoiceList = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
+    //查询
+    this.search = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
+    //updateVoice
+    this.updateVoice = $resource(API_MATERIAL+'/voiceManage/updateVoiceName',{},{});
+    //批量删除
+    this.batchDeleteVoice =$resource(API_MATERIAL+'/voiceManage/batchDeleteVoice',{},{});
 
 
 
