@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('materialManagement').controller('addTwMesController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
+    '$scope',"$state","ngDialog","$log","MaterialServer", "$cookieStore","$stateParams","$timeout",
+    function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
         $scope.vm = {
             ip : "" , // 图片 ip路径
@@ -28,7 +28,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         //设置富文本编辑器
         $scope.vm.config = {
             "autoHeight" : true ,
-            toolbars: [[
+             toolbars: [[
                 'fullscreen', 'source', '|', 'undo', 'redo', '|',
                 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor',
                 //'backcolor', 'insertorderedlist', 'insertunorderedlist',
@@ -77,28 +77,38 @@ angular.module('materialManagement').controller('addTwMesController', [
              getImgText($stateParams.imgTextId)
          }
         void function(){
-            httpRequestPost("/api/ms/picture/getIP",{},function(response){
+            // httpRequestPost("/api/ms/picture/getIP",{},function(response){
+            //     $scope.vm.ip = response.data
+            // },function(error){})
+            MaterialServer.getIp.save({
+
+            },function(response){
                 $scope.vm.ip = response.data
-            },function(error){})
+            },function(error){
+                $log.log(error);
+            });
+
         }() ;
         //获取本地图片
         getPicList(1) ;
        function getPicList(index){
-            httpRequestPost("/api/ms/picture/queryPicture",{
-                "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
-                "pageSize": $scope.vm.imgPaginationConf.pageSize ,
-                "applicationId":APPLICATION_ID
-            },function(response){
-                if(response.status == 200){
-                    $scope.$apply(function(){
-                        $scope.vm.imageList = response.data.objs ;
-                        $scope.vm.imgPaginationConf.currentPage =index ;
-                        $scope.vm.imgPaginationConf.totalItems =response.data.total ;
-                    })
-                }
-            },function(err){
-                console.log(err)
-            }) ;
+           MaterialServer.getPicList.save({
+               "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
+               "pageSize": $scope.vm.imgPaginationConf.pageSize ,
+               "applicationId":APPLICATION_ID
+           },function(response){
+               if(response.status == 200){
+                   $scope.vm.imageList = response.data.objs ;
+                   $scope.vm.imgPaginationConf.currentPage =index ;
+                   $scope.vm.imgPaginationConf.totalItems =response.data.total ;
+               }else{
+                   $scope.vm.imageList="";
+                   $scope.vm.imgPaginationConf.totalItems=0;
+               }
+           },function(err){
+               console.log(err);
+           });
+
         }
         //设置本地图片分页
         var picTimer ;
@@ -118,7 +128,7 @@ angular.module('materialManagement').controller('addTwMesController', [
             ngDialog.close(ngDialog.latestID);
         }
         function selectLocalImg(){
-            $scope.MASTER.openNgDialog($scope,"/static/materialManagement/image-text-store/selectImage.html","")
+            $scope.MASTER.openNgDialog($scope,"/static/materialManagement/teletextMessage/selectImage.html","")
         }
             /*
              applicationId	String	是	100	应用ID
@@ -154,6 +164,19 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("知识保存中......")
             }
         }
+        //保存
+        function save(api,parameter){
+            httpRequestPost(api,parameter,
+                function(response){
+                    if(response.status == 200){
+                        $state.go("materialManagement.teletextMessage");
+                        //    保存成功
+                    }else if(response.status == 500){
+                        $scope.vm.storeLimit = false ;
+                        //    保存失敗
+                    }
+                },function(err){$scope.vm.storeLimit = false;console.log(err)}) ;
+        }
         function insertCoverImg(url){
             if(url){
                 UE.getEditor('ueditor').focus();
@@ -178,25 +201,13 @@ angular.module('materialManagement').controller('addTwMesController', [
             }
             return result ;
         }
-        //保存
-        function save(api,parameter){
-            httpRequestPost(api,parameter,
-                function(response){
-                    if(response.status == 200){
-                        $state.go("materialManagement.teletextMessage");
-                        //    保存成功
-                    }else if(response.status == 500){
-                        $scope.vm.storeLimit = false ;
-                        //    保存失敗
-                    }
-                },function(err){$scope.vm.storeLimit = false;console.log(err)}) ;
-        }
+
         // 检测时候都符合
         /*
                      编辑
         * */
         function getImgText(graphicMessageId){
-            httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
+            MaterialServer.getImgText.save({
                 "graphicMessageId" : graphicMessageId ,
                 "applicationId": APPLICATION_ID
             },function(response){
@@ -209,7 +220,9 @@ angular.module('materialManagement').controller('addTwMesController', [
                 }else if(response.status == 500){
                 //    获取失败
                 }
-            },function(error){console.log(error)})
+            },function(error){
+                console.log(error);
+            });
         }
     }
 ]);

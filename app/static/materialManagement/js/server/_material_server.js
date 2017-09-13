@@ -52,6 +52,25 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.updateVoice = $resource(API_MATERIAL+'/voiceManage/updateVoiceName',{},{});
     //批量删除
     this.batchDeleteVoice =$resource(API_MATERIAL+'/voiceManage/batchDeleteVoice',{},{});
+                        /********************************
+                                * 图文消息
+                                ***********************************/
+//图文消息首页
+    //查询
+    this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});
+    //删除
+    this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
+//图文详情页
+    //getImgText
+    this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findOneGraphicMessage',{},{});
+                                                
+//添加图文消息
+    //getIp
+    this.getIp = $resource(API_MATERIAL+'/picture/getIP',{},{});
+    //获取本地图片
+    this.getPicList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
+    //编辑
+    
 
 
 

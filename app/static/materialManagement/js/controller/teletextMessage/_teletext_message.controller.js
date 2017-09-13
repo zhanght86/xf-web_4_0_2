@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('materialManagement').controller('teletextMessageController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
+    '$scope',"$state","ngDialog", "$log","MaterialServer","$cookieStore","$stateParams","$timeout",
+    function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.teletextMessage");
         $scope.vm = {
             applicationId:APPLICATION_ID,
@@ -19,8 +19,8 @@ angular.module('materialManagement').controller('teletextMessageController', [
         };
         showImg(1);
         //查询
-        function showImg(index) {
-            httpRequestPost("/api/ms/graphicMessage/queryGraphicMessage",{
+        function showImg(index) {            
+            MaterialServer.showImg.save({
                 applicationId:$scope.vm.applicationId,
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
@@ -29,19 +29,19 @@ angular.module('materialManagement').controller('teletextMessageController', [
             },function(data){
                 if(data.status == 500){
                     layer.msg("请求失败",{time:1000});
-                }else if(data.status == 200){                    
+                    $scope.vm.imageList=[];
+                    $scope.vm.paginationConf.totalItems=0;
+                }else if(data.status == 200){
                     console.log(data);
-                    $scope.$apply(function(){
-                        $scope.vm.imageList = data.data ;
-                        $scope.vm.paginationConf.currentPage =index ;
-                        $scope.vm.paginationConf.totalItems =data.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                        console.log($scope.vm.paginationConf)
-                    })
+                    $scope.vm.imageList = data.data ;
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                    console.log($scope.vm.paginationConf);
                 }
-            },function(error){
-                console.log(error);
-            })  ;
+            },function(err){
+                $log.log(err);
+            });
         }
 
         //分页定时器
@@ -61,7 +61,7 @@ angular.module('materialManagement').controller('teletextMessageController', [
             layer.confirm('确认删除该图文消息？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
-                httpRequestPost("/api/ms/graphicMessage/deleteGraphicMessage",{
+                MaterialServer.removeImg.save({
                     graphicMessageIds : new Array(item.graphicMessageId)
                 },function(data){
                     if(data.status == 200){
@@ -71,8 +71,8 @@ angular.module('materialManagement').controller('teletextMessageController', [
                         layer.msg("图文消息删除失败") ;
                     }
                 },function(err){
-                    console.log(err)
-                }) ;
+                    $log.log(err);
+                })
             }, function(){
             });
         }

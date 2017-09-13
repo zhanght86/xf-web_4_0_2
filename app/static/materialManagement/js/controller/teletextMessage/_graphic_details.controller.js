@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('materialManagement').controller('graphicDetailsController', [
-    '$scope',"$state","ngDialog", "$cookieStore","$stateParams","$timeout",
-    function ($scope,$state,ngDialog,$cookieStore,$stateParams,$timeout) {
+    '$scope',"$state","ngDialog", "$log","MaterialServer","$cookieStore","$stateParams","$timeout",
+    function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.graphicDetails");
         $scope.vm = {
             raphicMessageId :"" , //图文知识id
@@ -21,24 +21,24 @@ angular.module('materialManagement').controller('graphicDetailsController', [
         }else{
             $state.go("materialManagement.teletextMessage")
         }
-        function getImgText(graphicMessageId){
-            httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
+        function getImgText(graphicMessageId){            
+            MaterialServer.getImgText.save({
                 "graphicMessageId" : graphicMessageId ,
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status == 200){
                     console.log(response);
-                    $scope.$apply(function(){
-                        $scope.vm.title = response.data.graphicMessageTitle ;
-                        $scope.vm.author = response.data.graphicMessageAuthor ;
-                        $scope.vm.ueditorText = response.data.graphicMessageText ;
-                        $scope.vm.link = response.data.graphicMessageTextLink ;
-                        $scope.vm.graphicCreateTime = response.data.graphicCreateTime ;
-                    })
+                    $scope.vm.title = response.data.graphicMessageTitle ;
+                    $scope.vm.author = response.data.graphicMessageAuthor ;
+                    $scope.vm.ueditorText = response.data.graphicMessageText ;
+                    $scope.vm.link = response.data.graphicMessageTextLink ;
+                    $scope.vm.graphicCreateTime = response.data.graphicCreateTime ;
                 }else if(response.status == 500){
                     //    获取失败
                 }
-            },function(error){console.log(error)})
+            },function(error){
+                $log.log(error);
+            });
         }
 
     }
