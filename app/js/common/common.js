@@ -1144,6 +1144,44 @@ function initUpload(url){
         });
     })(jQuery);
 }
-	
-	
+
+//function loadFormFile(){
+//    var form=$("<form>");//定义一个form表单
+//    form.attr("style","display:none");
+//    form.attr("target","");
+//    form.attr("method","post");
+//    form.attr("action","exportData");
+//    var input1=$("<input>");
+//    input1.attr("type","hidden");
+//    input1.attr("name","exportData");
+//    input1.attr("value",(new Date()).getMilliseconds());
+//    $("body").append(form);//将表单放置在web中
+//    form.append(input1);
+//    form.submit();//表单提交
+//    form.remove() ;
+//}
+// 下载文件
+function downLoadFiles(container,url){
+     try{
+         container = container?container:document.body
+        var elemIF = document.createElement("iframe");
+        elemIF.src = url;
+        elemIF.href = url;
+        elemIF.class = "downLoad";
+        elemIF.style.display = "none";
+        container.appendChild(elemIF);
+    }catch(e){
+    }
+}
+// 设置下载文件  文件内容为自己定义
+function createDownload(fileName, content){
+    var blob = new Blob([content]);
+    var link = document.createElement("a");
+    link.innerHTML = fileName;
+    link.download = fileName;
+    link.href = URL.createObjectURL(blob);
+    document.getElementsByTagName("body")[0].appendChild(link);
+    console.log(link)
+    link.click()
+}
 	

@@ -56,7 +56,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 $scope.vm.serviceData = response.data;
                 $scope.vm.paginationConf.totalItems = response.total ;
                 $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize ;
-            },function(error){$log(error)})
+            },function(error){$log.log(error)})
         }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -84,7 +84,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 }else{
                     layer.msg("发布服务失败");
                 }
-            },function(error){$log(error)})
+            },function(error){$log.log(error)})
         }
         //上线服务
         function startService(serviceId){
@@ -102,7 +102,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                     }else{
                         layer.msg("上线服务失败");
                     }
-                },function(error){$log(error) })
+                },function(error){$log.log(error) })
         })};
         //下线服务
         function stopService(serviceId){
@@ -119,7 +119,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                    }else{
                        layer.msg("下线服务失败");
                    }
-               },function(){$log(error)})
+               },function(){$log.log(error)})
 
             });
         }
@@ -138,7 +138,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                     }else{
                         layer.msg("重启服务失败");
                     }
-                },function(error){$log(error) })
+                },function(error){$log.log(error) })
             });
         }
         //查看应用信息
@@ -159,7 +159,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 }else{
                     layer.msg("查询失败");
                 }
-            },function(error){$log(error)})
+            },function(error){$log.log(error)})
         }
         //查看场景信息
         function findSceneInfo(){
@@ -175,7 +175,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 }else{
                     layer.msg("查询失败");
                 }
-            },function(){$log(error)})
+            },function(){$log.log(error)})
         }
         //编辑应用的名称
         function editName(){
@@ -198,7 +198,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                         }else{
                             layer.msg("修改失败");
                         }
-                    },function(error){$log(error)})
+                    },function(error){$log.log(error)})
                 }
             }) ;
         }
@@ -218,7 +218,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                     }else{
                         layer.msg("下线所有服务失败");
                     }
-                },function(){$log(error)})
+                },function(){$log.log(error)})
             });
         }
         //删除应用
@@ -238,7 +238,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                     }else{
                         layer.msg("删除失败");
                     }
-                },function(error){$log(error)})
+                },function(error){$log.log(error)})
             });
         }
     }

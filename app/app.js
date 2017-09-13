@@ -20,7 +20,7 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     'ngAnimate',
     //上傳功能
     'angularFileUpload',
-    //先行
+    //登录模块
     'loginModule',
     //'indexModule',
     //首页 模块
@@ -887,7 +887,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/knowledge_manage/public-html/knowledgeScan.html',
+                        templateUrl: 'static/knowledge_manage/public_html/knowledgeScan.html',
                         controller: "knowledgeScanController"
                     }
                 }

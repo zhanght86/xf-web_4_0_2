@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html  lang="zh-cn" ng-app="knowledge_static_web" ng-controller="ApplicationController">
 <head>
-    <!-- livereload  上綫刪除-->
-   <script src="192.0.0.1:35729/livereload.js"></script>
-    <script src="js/common/compatible.js"></script>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -54,10 +51,6 @@
     <!--<link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.min.css"/>-->
     <link rel="stylesheet" href="libs/H_ui/static/h-ui/css/H-ui.reset.css"/>
 
-    <script src="libs/H_ui/static/h-ui/js/H-ui.js"></script>
-    <!--<script src="libs/H_ui/static/h-ui/js/H-ui.min.js"></script>-->
-
-    <script src="libs/H_ui/lib/waterfall.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/plugins/1.0.8/iconfont.css">
     <!-- 合并样式压缩文件-->
     <link rel="stylesheet" href="dest/css/xf.css"/>
@@ -66,7 +59,7 @@
     <link rel="stylesheet" href="css/plugins/common2.css"/>
 
 
-    <link rel="stylesheet" href="css/plugins/layer.css"/>
+    <link rel="stylesheet" href="libs/layui-v2.1.3/layui/css/layui.css"/>
     <link rel="stylesheet" href="css/plugins/autocomplete-0.3.0.min.css"/>
     <!--autocomplete-->
     <link rel="stylesheet" href="libs/autocomplete/styles.css"/>
@@ -82,28 +75,25 @@
     <link rel="stylesheet" href="js/plugins/select2/select2-bootstrap.css" />
 
     <!--下拉搜索框4.8add-->
-    <link rel="stylesheet" href="css/amazeui.chosen.css"/>
+    <!--<link rel="stylesheet" href="css/amazeui.chosen.css"/>-->
+
     <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>-->
 </head>
 <body>
 
 <!-- 弹框-->
 <!--<div alert-bar class="alert_bar" message="tipService.message" type="tipService.type"></div>-->
-    <div class="container" style="width: 100%;margin: 0;padding: 0;" ui-view>
-    </div>
+    <div class="container" style="width: 100%;margin: 0;padding: 0;" ui-view></div>
     <script src="js/common/requestApi.js"></script>
     <script src="js/common/common.js"></script>
     <script src="js/common/config.js"></script>
-    <!--<script src="js/plugins/calendar.js"></script>-->
-    <script src="js/plugins/H-ui.admin.js"></script>
-    <!--<script src="js/plugins/H-ui.js"></script>-->
+
     <script src="js/plugins/jquery.pin.min.js"></script>
     <script src="js/plugins/jquery.placeholder.min.js"></script>
-    <!--<script src="js/plugins/layer.js"></script>-->
-    <script src="js/plugins/layer-nomin.js"></script>
+
+    <script src="libs/layui-v2.1.3/layui/layui.all.js"></script>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/es5-shim/es5-sham.js"></script>
-    <!--<script src="js/plugins/WdatePicker.js"></script>-->
     <!--上传图片-->
     <script src="js/console-sham.js"  charset="utf-8"></script>
     <script src="js/index.js"></script>
@@ -125,10 +115,11 @@
     <script type="text/javascript" src="bower_components/echarts/dist/echarts.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
     <!--下拉复选框-->
-    <script src="js/plugins/select2/select2.js" type="text/javascript"></script>
+<!--9/13 del -->
+    <!--<script src="js/plugins/select2/select2.js" type="text/javascript"></script>-->
 
     <!--下拉搜索框4.8add-->
-    <script src="js/amazeui.chosen.min.js" type="text/javascript"></script>
+    <!--<script src="js/amazeui.chosen.min.js" type="text/javascript"></script>-->
 
     <!--qq 表情     2017/7/14-->
     <script src="libs/qqFace/js/jquery.qqFace.js" type="text/javascript"></script>
@@ -138,10 +129,8 @@
     <!--知识加工上传 最好能统一 -->
     <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
 
-
     <script type="text/javascript" src="js/plupload/moxie.js"></script>
     <script type="text/javascript" src="js/plupload/plupload.dev.js"></script>
-
 
     <!-- flexpaper -->
     <script type="text/javascript" src="js/flexpaper.js"></script>
@@ -150,13 +139,11 @@
 
 
     <!--zTree -->
-    <script src="bower_components/zTree/js/jquery.ztree.all.js" type="text/javascript"></script>
+    <!--<script src="bower_components/zTree/js/jquery.ztree.all.js" type="text/javascript"></script>-->
     <!-- 总入口 后续会拆分成 module 和 config -->
     <script src="app.js"></script>
     <script src="dest/src-concated/js/xf_module.js"></script>
     <script src="dest/src-concated/js/xf.js"></script>
-
-
     <!-- 富文本编辑器 -->
     <script type="text/javascript" src="js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.config.js"></script>
     <script type="text/javascript" src="js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.all.js"></script>
@@ -171,7 +158,6 @@
     <!--拖拽-->
     <script type="text/javascript" src="js/jquery-ui.min.js"></script>
     <script  src="js/home/jquery.plugIn.min.js"></script>
-    <script src="js/home/base.js"></script>
     <script src="js/home/autocomplete-0.3.0.js"></script>
     <script src="bower_components/ui-autocomplete/autocomplete.js"></script>
     <!--tagEditorJs-->
@@ -186,13 +172,6 @@
     <script type="text/javascript">
         $(function(){ $('input, textarea').placeholder(); });
     </script>
-
     <script src="js/progressBar.js"></script>
-
-    <!--//图文编辑插件;-->
-<!--&lt;!&ndash; 配置文件 &ndash;&gt;-->
-<!--<script type="text/javascript" src="../js/ueditor/ueditor.config.js"></script>-->
-<!--&lt;!&ndash; 编辑器源码文件 &ndash;&gt;-->
-<!--<script type="text/javascript" src="../js/ueditor/ueditor.all.js"></script>-->
 </body>
 </html>
