@@ -88,6 +88,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             backUpExt: backUpExt , // 扩展问 假删除
             extensionDeleted : []
         };
+
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
@@ -255,21 +256,10 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
         //打开知识内容对话框
         function openContentConfirm(callback) {
-            var dialog = ngDialog.openConfirm({
-                template: "/static/knowledgeManagement/public-html/knowledge_increase.html",
-                width:"650px",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                        callback();
-                    } else {
-                        setDialog();//清空内容对话框
-                    }
-                }
+            $scope.$parent.$parent.openNgDialog($scope,"/static/knowledge_manage/public_html/knowledge_increase.html","650px",function(){
+                callback();
+            },function(){
+                setDialog();//清空内容对话框
             });
         }
         //y业务框架生成扩展问校验

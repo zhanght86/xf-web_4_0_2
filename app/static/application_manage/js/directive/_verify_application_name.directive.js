@@ -23,7 +23,7 @@ angular.module("myApplicationSettingModule").directive('checkName', function(App
                 },function(error){
                     c.$setValidity('unique', false);
                     scope.vm.allowSubmit=0;
-                    $log(error)
+                    $log.log(error)
                 }) ;
             });
         }
