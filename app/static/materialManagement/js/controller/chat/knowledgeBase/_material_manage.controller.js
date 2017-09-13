@@ -4,8 +4,8 @@
  */
 
 angular.module('materialManagement').controller('chatKnowledgeBaseController', [
-    '$scope',"$state", "$cookieStore","$timeout","$window","$location",
-    function ($scope,$state,$cookieStore,$timeout,$window,$location) {
+    '$scope',"$state","MaterialServer", "$cookieStore","$timeout","$window","$location",
+    function ($scope,$state,MaterialServer,$cookieStore,$timeout,$window,$location) {
         $state.go("materialManagement.chatKnowledgeBase");
         $scope.vm = {
             title : "" ,           //知识标题
@@ -82,15 +82,15 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             }else{
                 layer.confirm('是否确定删除该条知识？', {
                     btn: ['确定','取消'] //按钮
-                }, function(){
-                    httpRequestPost("/api/ms/chatKnowledge/deleteConceCptChatKnowledge",{
+                }, function(){                    
+                    MaterialServer.delKnowledge.save({
                         "applicationId": APPLICATION_ID,
                         "ids":$scope.vm.delArr
                     },function(){
                         initBatchTest();
                         layer.msg("删除成功") ;
                         $state.reload();
-                    })
+                    });
                 });
             }
         }
@@ -107,7 +107,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $scope.vm.getType = 1;
             $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
-            httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
+            
+
+            MaterialServer.search.save({
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.chatKnowledgeModifier,
                 "modifyTimeType":  $scope.vm.modifyTimeType,
@@ -116,28 +118,25 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "pageSize":$scope.vm.pageSize,
             },function(data){
                 if(data.data==10005){
-                    $scope.$apply(function(){
-                        $scope.vm.delArr = [] ;
-                        $scope.vm.listData = data.data.objs;
-                        $scope.vm.paginationConf.totalItems = 0 ;
-                        layer.msg("查询无此相关知识")
-                    });
+                    $scope.vm.delArr = [] ;
+                    $scope.vm.listData = data.data.objs;
+                    $scope.vm.paginationConf.totalItems = 0 ;
+                    layer.msg("查询无此相关知识")
                 }else{
-                    $scope.$apply(function(){
-                        $scope.vm.delArr = [] ;
-                        $scope.vm.listData = data.data.objs;
-                        $scope.vm.paginationConf = {
-
-                            currentPage: index,//当前页
-                            totalItems: data.data.total, //总条数
-                            pageSize: $scope.vm.pageSize,//第页条目数
-                            pagesLength: 8,//分页框数量
-                        };
-                        $scope.vm.title = null;
-                    });
+                    $scope.vm.delArr = [] ;
+                    $scope.vm.listData = data.data.objs;
+                    $scope.vm.paginationConf = {
+                        currentPage: index,//当前页
+                        totalItems: data.data.total, //总条数
+                        pageSize: $scope.vm.pageSize,//第页条目数
+                        pagesLength: 8//分页框数量
+                    };
+                    $scope.vm.title = null;
                 }
+            },function(err){
 
-            },function(err){})
+            });
+
         }
 
         /**
@@ -157,7 +156,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         //请求列表
         function getData(index){
             $scope.vm.getType = 0 ;
-            httpRequestPost("/api/ms/chatKnowledge/queryChatKnowledge",{
+            
+            MaterialServer.getData.save({
                 "applicationId": APPLICATION_ID,
                 "index" :(index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -170,10 +170,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
-                $scope.$apply();
             },function(err){
-                console.log(err)
-            })
+                console.log(err);
+            });
         }
 
         //分页 查询
