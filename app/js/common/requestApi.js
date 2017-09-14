@@ -21,7 +21,7 @@ var
             * 业务建模
             *
            **/
-         API_MODELING = "/api/ms/modeling",
+         API_MODELING = "/api/modeling",
 
 
           /**
@@ -37,7 +37,6 @@ var
            **/
           //API_MS = "/api/ms/",
 
-
           /**
             * 素材管理
             * login
@@ -50,3 +49,4 @@ var
             *
            **/
           API_ANALYSIS = "/api/analysis"
+

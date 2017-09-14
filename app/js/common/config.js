@@ -2,8 +2,8 @@
  * AUTHOR mileS
  * Time 2017/6/15
  * INFO 统一用户信息 cookieֵ
- *  用户IdD  用户名  登录名 应用ID  场景ID
- */document.cookie.indexOf("username3=")
+ *  用户ID  用户名  登录名 应用ID  场景ID
+ */
 ;var
     USER_ID = document.cookie.indexOf("userId=")!=-1?getCookie("userId").replace(/\"/g,""):"" ,
     USER_NAME = document.cookie.indexOf("userName=")!=-1?getCookie("userName").replace(/\"/g,""):"",
