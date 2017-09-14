@@ -49,6 +49,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                     console.log($scope.vm.paginationConf);
+                }else{
+                    $scope.vm.voiceList=[];
+                    $scope.vm.paginationConf.totalItems = 0;
                 }
             },function(err){
                 console.log(err);
@@ -70,6 +73,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     console.log($scope.vm.paginationConf);
                 }else if(data.status==500){
                     layer.msg('查询失败');
+                    $scope.vm.voiceList=[];
+                    $scope.vm.paginationConf.totalItems = 0;
                 }
             },function(err){
                 console.log(error);
@@ -104,8 +109,12 @@ angular.module('materialManagement').controller('speechLibraryController', [
         function exportExcel(){
             var urlParams =
                 "?applicationId="+APPLICATION_ID;
-            var url = "/api/ms/voiceManage/exportExcel"+urlParams  ;//请求的url
-            $window.open(url,"_blank") ;
+            // var url = "/api/ms/voiceManage/exportExcel"+urlParams  ;//请求的url
+           // $window.open(url,"_blank") ;
+
+            var url= MaterialServer.exportVoice + urlParams;
+            downLoadFiles( $(".speechLib")[0],url);
+
         }
 
         //修改名称

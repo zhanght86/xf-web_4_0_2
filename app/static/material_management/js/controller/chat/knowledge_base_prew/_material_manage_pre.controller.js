@@ -27,29 +27,8 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                         // api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
                         api = "addConceCptChatKnowledge" ;
                         break ;
-                }
-                //if(params.chatKnowledgeSource == 101){
-                //    api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
-                //}else if(params.chatKnowledgeSource == 100){
-                //    api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
-                //}
-            
-                // httpRequestPost(api,{
-                //     "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
-                //     "applicationId": APPLICATION_ID ,
-                //      "userId"  : USER_ID ,
-                //     //"chatKnowledgeModifier": params.chatKnowledgeModifier,
-                //     "chatKnowledgeTopic": params.standardQuestion,
-                //     "chatQuestionList" : params.extendedQuestionArr,
-                //     "chatKnowledgeContentList" : params.contentArr
-                // },function(data){
-                //     if(data.data==10004){
-                //         layer.msg("标准问重复") ;
-                //         $state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});
-                //     }else{
-                //         $state.go("materialManagement.chatKnowledgeBase");
-                //     }
-                // }) ;
+                }                
+                
                 MaterialServer[api].save({
                     "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
                     "applicationId": APPLICATION_ID ,

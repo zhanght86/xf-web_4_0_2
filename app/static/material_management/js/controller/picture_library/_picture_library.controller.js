@@ -43,6 +43,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                     console.log($scope.vm.paginationConf)
+                }else{
+                    $scope.vm.imageList= [];
+                    $scope.vm.paginationConf.totalItems=0;
                 }
             },function(err){
                 console.log(err);
@@ -115,8 +118,12 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         function exportExcel(){
             var urlParams =
                 "?applicationId="+APPLICATION_ID;
-            var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
-            $window.open(url,"_blank") ;
+            //var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
+            //$window.open(url,"_blank") ;
+            
+            var url= MaterialServer.exportImg+urlParams;
+            downLoadFiles($(".picLib")[0],url);
+            
         }
 
         //图片分页
@@ -151,23 +158,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         function changeName(item){
             $scope.vm.pictureName=item.pictureName;
             $scope.vm.pictureId=item.pictureId;
-            // var dialog = ngDialog.openConfirm({
-            //     template: "/static/materialManagement/pictureLibrary/changeName.html",
-            //     scope: $scope,
-            //     width:'400px',
-            //     closeByNavigation: false,
-            //     overlay: true,
-            //     closeByDocument: false,
-            //     closeByEscape: true,
-            //     showClose: true,
-            //     preCloseCallback: function (e) {    //关闭回掉
-            //         if (e === 1) {
-            //             updateImg();
-            //         } else {
-            //
-            //         }
-            //     }
-            // });
+
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
                 updateImg();
             },function(){

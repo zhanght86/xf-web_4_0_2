@@ -182,7 +182,6 @@ angular.module('materialManagement').controller('addTwMesController', [
             //         console.log(err);
             //     }
             // ) ;
-
             MaterialServer[api].save(parameter,function(response){
                 if(response.status == 200){
                     $state.go("materialManagement.teletextMessage");

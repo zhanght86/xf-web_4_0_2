@@ -16,6 +16,10 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.searchKnow = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
     //请求列表
     this.getData = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
+    //导出
+    this.exportChat = API_MATERIAL+'/chatKnowledge/exportExcel';
+
+
 
 //聊天知识库预览
     //保存          
@@ -41,6 +45,8 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.deleteImg = $resource(API_MATERIAL+'/picture/batchDeletePicture',{},{});
     //updateImg
     this.updateImg = $resource(API_MATERIAL+'/picture/updatePicture',{},{});
+    //图片导出
+    this.exportImg =API_MATERIAL+'/picture/exportExcel' ;
                         /********************************
                                 * 语音库
                                 ***********************************/
@@ -52,6 +58,8 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.updateVoice = $resource(API_MATERIAL+'/voiceManage/updateVoiceName',{},{});
     //批量删除
     this.batchDeleteVoice =$resource(API_MATERIAL+'/voiceManage/batchDeleteVoice',{},{});
+    //语音导出
+    this.exportVoice =API_MATERIAL+'/voiceManage/exportExcel' ;
                         /********************************
                                 * 图文消息
                                 ***********************************/

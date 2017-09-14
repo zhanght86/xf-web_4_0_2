@@ -32,24 +32,7 @@ angular.module('materialManagement').controller('faqChatController', [
             }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
                 layer.msg("扩展问题重复，请重新输入",{time:1000});
             }else{
-                // httpRequestPost("/api/ms/chatKnowledge/checkFAQChatQuestion",{
-                //     "chatQuestionContent" : $scope.vm.extendedQuestion
-                // },function(data){
-                //     console.log(data);
-                //     if(data.status == 10000){
-                //         var obj = {};
-                //         obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion);
-                //         obj.chatQuestionType = angular.copy($scope.vm.weight);
-                //         $scope.vm.extendedQuestionArr.push(obj);
-                //         $scope.vm.extendedQuestion = "";
-                //         $scope.$apply();
-                //         console.log($scope.vm.extendedQuestionArr)
-                //     }else{
-                //         layer.msg("扩展问重复",{time:1000})
-                //     }
-                // },function(err){
-                //     console.log(err)
-                // })
+
                 MaterialServer.addExtension.save({
                     "chatQuestionContent" : $scope.vm.extendedQuestion
                 },function(data){
@@ -74,27 +57,7 @@ angular.module('materialManagement').controller('faqChatController', [
             if(item){
                 $scope.vm.contentVal = item.chatKnowledgeContent
             }
-            // var dialog = ngDialog.openConfirm({
-            //     template:"/static/materialManagement/chat/addContentDialog.html",
-            //     scope: $scope,
-            //     closeByDocument:false,
-            //     closeByEscape: true,
-            //     showClose : true,
-            //     backdrop : 'static',
-            //     preCloseCallback:function(e){    //关闭回掉
-            //         if(e === 1){
-            //             if(item){
-            //                 var val = angular.copy( $scope.vm.contentVal ) ;
-            //                 $scope.vm.contentArr[index].chatKnowledgeContent = val ;
-            //                 $scope.vm.contentVal = "" ;
-            //             }else{
-            //                 addContent()  ;
-            //             }
-            //         }else{
-            //             $scope.vm.contentVal = "" ;
-            //         }
-            //     }
-            // });
+
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/material_management/chat/add_content_dialog.html","450px",function(){
                 if(item){
                     var val = angular.copy( $scope.vm.contentVal ) ;
@@ -113,22 +76,7 @@ angular.module('materialManagement').controller('faqChatController', [
             }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
-                // httpRequestPost("/api/ms/chatKnowledge/checkChatKnowledgeContent",{
-                //     "chatKnowledgeContent" : $scope.vm.contentVal
-                // },function(data){
-                //     //console.log(data);
-                //     if(data.status == 10000){
-                //         var obj = {};
-                //         obj.chatKnowledgeContent = angular.copy($scope.vm.contentVal);
-                //         $scope.vm.contentArr.push(obj);
-                //         $scope.vm.contentVal = "";
-                //         $scope.$apply();
-                //     }else{
-                //         layer.msg("扩展问重复")
-                //     }
-                // },function(err){
-                //     console.log(err)
-                // })
+
                 MaterialServer.addContent.save({
                     "chatKnowledgeContent" : $scope.vm.contentVal
                 },function(data){
@@ -169,22 +117,7 @@ angular.module('materialManagement').controller('faqChatController', [
         //保存  0 无验证   1  需要验证
         function save(){
                 if(check()){
-                    // httpRequestPost("/api/ms/chatKnowledge/addFAQChatKnowledge",{
-                    //     "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
-                    //     "applicationId": APPLICATION_ID,
-                    //     "chatKnowledgeModifier": $scope.vm.userName,
-                    //     "userId":USER_ID,
-                    //     "chatKnowledgeTopic": $scope.vm.standardQuestion,
-                    //     "chatQuestionList" : $scope.vm.extendedQuestionArr,
-                    //     "chatKnowledgeContentList" : $scope.vm.contentArr,
-                    //     "knoweledgeId" : $scope.vm.knoweledgeId
-                    // },function(data){
-                    //     if(data.data==10004){
-                    //         layer.msg("标准问重复",{time:1000})
-                    //     }else{
-                    //         $state.go("materialManagement.chatKnowledgeBase");
-                    //     }
-                    // },function(err){console.log(err)})
+
                     MaterialServer.addFAQChatKnowledge.save({
                         "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                         "applicationId": APPLICATION_ID,

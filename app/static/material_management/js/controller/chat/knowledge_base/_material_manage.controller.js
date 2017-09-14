@@ -13,8 +13,11 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             exportExcel:exportExcel,//知识导出
             seeDtails:seeDtails,//标题预览
             //searchList : "",   //查询数据结果
-            paginationConf : ""  ,//分页条件
-            pageSize : 5  , //默认每页数量
+            paginationConf : {     //分页条件
+                pageSize : 5  ,    //默认每页数量
+                pagesLength: 10    //分页框数量
+            }  ,
+
             getType : 0 ,    // 默认请求 0    查找 1
 //刪除知识
             //getDel : getDel,
@@ -113,8 +116,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "chatKnowledgeModifier": $scope.vm.chatKnowledgeModifier,
                 "modifyTimeType":  $scope.vm.modifyTimeType,
                 "chatQuestionContent": $scope.vm.chatQuestionContent,
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize":$scope.vm.pageSize,
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize":$scope.vm.paginationConf.pageSize,
             },function(data){
                 if(data.data==10005){
                     $scope.vm.delArr = [] ;
@@ -124,12 +127,17 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }else{
                     $scope.vm.delArr = [] ;
                     $scope.vm.listData = data.data.objs;
-                    $scope.vm.paginationConf = {
-                        currentPage: index,//当前页
-                        totalItems: data.data.total, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8//分页框数量
-                    };
+                    // $scope.vm.paginationConf = {
+                    //     currentPage: index,//当前页
+                    //     totalItems: data.data.total, //总条数
+                    //     pageSize: $scope.vm.pageSize,//第页条目数
+                    //     pagesLength: 8//分页框数量
+                    // };
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                    console.log($scope.vm.paginationConf);
+
                     $scope.vm.title = null;
                 }
             },function(err){
@@ -145,8 +153,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             var urlParams =
                 "?applicationId="+APPLICATION_ID+"&chatKnowledgeTopic="+$scope.vm.chatKnowledgeTopic+"&chatKnowledgeModifier="+$scope.vm.chatKnowledgeModifier +
                 "&chatQuestionContent="+$scope.vm.chatQuestionContent;
-            var url = "/api/ms/chatKnowledge/exportExcel"+urlParams  ;//请求的url
-            $window.open(url,"_blank") ;
+            //var url = "/api/ms/chatKnowledge/exportExcel"+urlParams  ;//请求的url
+            //$window.open(url,"_blank") ;
+
+            var url = MaterialServer.exportChat + urlParams;
+            downLoadFiles(angular.element('.chatKnowBase')[0] ,url);
+            //downLoadFiles($('.chatKnowBase')[0] ,url);
+
         }
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
@@ -158,17 +171,21 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             
             MaterialServer.getData.save({
                 "applicationId": APPLICATION_ID,
-                "index" :(index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize
+                "index" :(index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
                 $scope.vm.delArr = [] ;
                 $scope.vm.listData = data.data.objs;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
+                // $scope.vm.paginationConf = {
+                //     currentPage: index,//当前页
+                //     totalItems: data.data.total, //总条数
+                //     pageSize: $scope.vm.pageSize,//第页条目数
+                //     pagesLength: 8,//分页框数量
+                // };
+                $scope.vm.paginationConf.currentPage =index ;
+                $scope.vm.paginationConf.totalItems =data.data.total ;
+                $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                console.log($scope.vm.paginationConf);
             },function(err){
                 console.log(err);
             });
