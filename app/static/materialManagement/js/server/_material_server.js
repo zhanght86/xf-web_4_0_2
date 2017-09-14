@@ -13,7 +13,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     //删除知识
     this.delKnowledge = $resource(API_MATERIAL+"/chatKnowledge/deleteConceCptChatKnowledge", {}, {});
     //查询
-    this.search = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
+    this.searchKnow = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
     //请求列表
     this.getData = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
 
@@ -38,7 +38,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     //获取列表
     this.getList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
     //删除图片
-    this.delete = $resource(API_MATERIAL+'/picture/batchDeletePicture',{},{});
+    this.deleteImg = $resource(API_MATERIAL+'/picture/batchDeletePicture',{},{});
     //updateImg
     this.updateImg = $resource(API_MATERIAL+'/picture/updatePicture',{},{});
                         /********************************
@@ -47,11 +47,30 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     //获取列表
     this.getVoiceList = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
     //查询
-    this.search = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
+    this.searchVoice = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
     //updateVoice
     this.updateVoice = $resource(API_MATERIAL+'/voiceManage/updateVoiceName',{},{});
     //批量删除
     this.batchDeleteVoice =$resource(API_MATERIAL+'/voiceManage/batchDeleteVoice',{},{});
+                        /********************************
+                                * 图文消息
+                                ***********************************/
+//图文消息首页
+    //查询
+    this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});
+    //删除
+    this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
+//图文详情页
+    //getImgText
+    this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findOneGraphicMessage',{},{});
+                                                
+//添加图文消息
+    //getIp
+    this.getIp = $resource(API_MATERIAL+'/picture/getIP',{},{});
+    //获取本地图片
+    this.getPicList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
+    //编辑
+    
 
 
 
