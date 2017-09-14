@@ -15,7 +15,7 @@ angular.module('materialManagement').controller('documentLibraryController', [
         //修改名称
         function changeName(callback){
             var dialog = ngDialog.openConfirm({
-                template: "/static/materialManagement/documentLibrary/changeName.html",
+                template: "/static/material_management/document_library/change_name.html",
                 width:"400px",
                 scope: $scope,
                 closeByNavigation: false,

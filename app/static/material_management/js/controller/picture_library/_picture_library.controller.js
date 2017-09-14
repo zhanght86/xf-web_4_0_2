@@ -168,7 +168,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             //         }
             //     }
             // });
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/materialManagement/pictureLibrary/changeName.html','400px',function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
                 updateImg();
             },function(){
 

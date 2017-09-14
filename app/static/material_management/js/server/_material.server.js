@@ -69,8 +69,12 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.getIp = $resource(API_MATERIAL+'/picture/getIP',{},{});
     //获取本地图片
     this.getPicList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
-    //编辑
-    
+    //图文消息保存
+    // 编辑
+    this.editTwApi = $resource(API_MATERIAL+'/graphicMessage/update',{},{});
+    //添加
+    this.addTwApi = $resource(API_MATERIAL+'/graphicMessage/insert',{},{});
+
 
 
 

@@ -95,7 +95,7 @@ angular.module('materialManagement').controller('faqChatController', [
             //         }
             //     }
             // });
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/materialManagement/chat/addContentDialog.html","450px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/material_management/chat/add_content_dialog.html","450px",function(){
                 if(item){
                     var val = angular.copy( $scope.vm.contentVal ) ;
                     $scope.vm.contentArr[index].chatKnowledgeContent = val ;

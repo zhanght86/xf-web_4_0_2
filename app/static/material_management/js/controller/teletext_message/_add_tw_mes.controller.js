@@ -128,7 +128,7 @@ angular.module('materialManagement').controller('addTwMesController', [
             ngDialog.close(ngDialog.latestID);
         }
         function selectLocalImg(){
-            $scope.MASTER.openNgDialog($scope,"/static/materialManagement/teletextMessage/selectImage.html","")
+            $scope.MASTER.openNgDialog($scope,"/static/material_management/teletext_message/select_image.html","")
         }
             /*
              applicationId	String	是	100	应用ID
@@ -156,9 +156,11 @@ angular.module('materialManagement').controller('addTwMesController', [
                     graphicMessageId?
                         void function(){
                             parameter.graphicMessageId = graphicMessageId;
-                            api="/api/ms/graphicMessage/update"}():
-                        api="/api/ms/graphicMessage/insert";
-                    save(api,parameter)
+                            //api="/api/ms/graphicMessage/update"}():
+                              api="editTwApi"}():
+                        //api="/api/ms/graphicMessage/insert";
+                          api="addTwApi";
+                    save(api,parameter);
                 }
             }else{
                 layer.msg("知识保存中......")
@@ -166,16 +168,33 @@ angular.module('materialManagement').controller('addTwMesController', [
         }
         //保存
         function save(api,parameter){
-            httpRequestPost(api,parameter,
-                function(response){
-                    if(response.status == 200){
-                        $state.go("materialManagement.teletextMessage");
-                        //    保存成功
-                    }else if(response.status == 500){
-                        $scope.vm.storeLimit = false ;
-                        //    保存失敗
-                    }
-                },function(err){$scope.vm.storeLimit = false;console.log(err)}) ;
+            // httpRequestPost(api,parameter,
+            //     function(response){
+            //         if(response.status == 200){
+            //             $state.go("materialManagement.teletextMessage");
+            //             //    保存成功
+            //         }else if(response.status == 500){
+            //             $scope.vm.storeLimit = false ;
+            //             //    保存失敗
+            //         }
+            //     },function(err){
+            //         $scope.vm.storeLimit = false;
+            //         console.log(err);
+            //     }
+            // ) ;
+
+            MaterialServer[api].save(parameter,function(response){
+                if(response.status == 200){
+                    $state.go("materialManagement.teletextMessage");
+                    //    保存成功
+                }else if(response.status == 500){
+                    $scope.vm.storeLimit = false ;
+                    //    保存失敗
+                }
+            },function(err){
+                $scope.vm.storeLimit = false;
+                console.log(err);
+            });
         }
         function insertCoverImg(url){
             if(url){

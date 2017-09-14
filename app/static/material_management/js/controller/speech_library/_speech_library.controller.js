@@ -90,7 +90,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             }
         },true);
         function uploadSpeech(callback){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/materialManagement/speechLibrary/speechLibraryDialog.html','900px',function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/speech_library_dialog.html','900px',function(){
 
             },function(){
 
@@ -113,7 +113,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             $scope.vm.voiceName = callback.voiceName;
             $scope.vm.voiceId = callback.voiceId;
             
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/materialManagement/speechLibrary/changeName.html','400px',function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/change_name.html','400px',function(){
                 updateVoice();
             },function(){
 

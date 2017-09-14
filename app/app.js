@@ -566,7 +566,7 @@ knowledge_static_web
             //materialManagement
             .state("materialManagement", {
                 url: "/materialManagement/:userPermission",
-                templateUrl: 'static/materialManagement/materialManagement.html',
+                templateUrl: 'static/material_management/main.html',
                 //controller: "adminController"
             })
 
@@ -578,7 +578,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/knowledgeBase/chatKnowledgeBase.html',
+                        templateUrl: 'static/material_management/chat/knowledge_base/chat_knowledge_base.html',
                         controller: "chatKnowledgeBaseController"
                     }
                 }
@@ -592,7 +592,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/knowledgeBasePrew/chatKnowledgeBasePreview.html',
+                        templateUrl: 'static/material_management/chat/knowledge_base_prew/chat_knowledge_base_preview.html',
                         controller: "chatKnowledgeBasePreController"
                     }
                 }
@@ -605,7 +605,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/faq/faqChat.html',
+                        templateUrl: 'static/material_management/chat/faq/faq_chat.html',
                         controller: "faqChatController"
                     }
                 }
@@ -618,7 +618,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/concept/conceptChat.html',
+                        templateUrl: 'static/material_management/chat/concept/concept_chat.html',
                         controller: "conceptChatController"
                     }
                 }
@@ -632,7 +632,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/speechLibrary/speechLibrary.html',
+                        templateUrl: 'static/material_management/speech_library/speech_library.html',
                         controller: "speechLibraryController"
                     }
                 }
@@ -646,7 +646,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/pictureLibrary/pictureLibrary.html',
+                        templateUrl: 'static/material_management/picture_library/picture_library.html',
                         controller: "pictureLibraryController"
                     }
                 }
@@ -660,7 +660,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/teletextMessage/teletextMessage.html',
+                        templateUrl: 'static/material_management/teletext_message/teletext_message.html',
                         controller: "teletextMessageController"
                     }
                 }
@@ -673,7 +673,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/teletextMessage/add_tw_mes.html',
+                        templateUrl: 'static/material_management/teletext_message/add_tw_mes.html',
                         controller: "addTwMesController"
                     }
                 }
@@ -686,7 +686,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/teletextMessage/graphicDetails.html',
+                        templateUrl: 'static/material_management/teletext_message/graphic_details.html',
                         controller: "graphicDetailsController"
                     }
                 }
@@ -700,7 +700,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/documentLibrary/documentLibrary.html',
+                        templateUrl: 'static/material_management/document_library/document_library.html',
                         controller: "documentLibraryController"
                     }
                 }
