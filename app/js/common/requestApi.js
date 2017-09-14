@@ -48,5 +48,5 @@ var
             * 应用分析
             *
            **/
-          API_ANALYSIS = "/api/analysis"
+          API_ANALYSIS = "/api/analysis" ;
 
