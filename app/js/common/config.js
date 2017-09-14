@@ -3,13 +3,13 @@
  * Time 2017/6/15
  * INFO 统一用户信息 cookieֵ
  *  用户IdD  用户名  登录名 应用ID  场景ID
- */
+ */document.cookie.indexOf("username3=")
 ;var
-    USER_ID = getCookie("userId")?getCookie("userId").replace(/\"/g,""):"" ,
-    USER_NAME = getCookie("userName")?getCookie("userName").replace(/\"/g,""):"",
-    USER_LOGIN_NAME = getCookie("userLoginName")?getCookie("userLoginName").replace(/\"/g,""):"",
-    APPLICATION_ID = getCookie("applicationId")?getCookie("applicationId").replace(/\"/g,""):"",
-    APPLICATION_NAME = getCookie("applicationName")?getCookie("applicationName").replace(/\"/g,""):"" ,
-    SCENE_ID = getCookie("sceneId")?getCookie("sceneId").replace(/\"/g,""):"";
+    USER_ID = document.cookie.indexOf("userId=")!=-1?getCookie("userId").replace(/\"/g,""):"" ,
+    USER_NAME = document.cookie.indexOf("userName=")!=-1?getCookie("userName").replace(/\"/g,""):"",
+    USER_LOGIN_NAME = document.cookie.indexOf("userLoginName=")!=-1?getCookie("userLoginName").replace(/\"/g,""):"",
+    APPLICATION_ID = document.cookie.indexOf("applicationId=")!=-1?getCookie("applicationId").replace(/\"/g,""):"",
+    APPLICATION_NAME = document.cookie.indexOf("applicationName=")!=-1?getCookie("applicationName").replace(/\"/g,""):"" ,
+    SCENE_ID = document.cookie.indexOf("sceneId=")!=-1?getCookie("sceneId").replace(/\"/g,""):"";
 
 
