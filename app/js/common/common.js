@@ -1167,7 +1167,7 @@ function downLoadFiles(container,url){
         var elemIF = document.createElement("iframe");
         elemIF.src = url;
         elemIF.href = url;
-        elemIF.class = "downLoad";
+        elemIF.setAttribute('class', 'downLoad');
         elemIF.style.display = "none";
         container.appendChild(elemIF);
     }catch(e){
