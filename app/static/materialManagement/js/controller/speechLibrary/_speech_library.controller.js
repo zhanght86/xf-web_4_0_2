@@ -56,7 +56,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
         }
         //查询
         function searchVoice(index){
-            MaterialServer.search.save({
+            MaterialServer.searchVoice.save({
                 "index":(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
                 "voiceName":$scope.vm.voiceName

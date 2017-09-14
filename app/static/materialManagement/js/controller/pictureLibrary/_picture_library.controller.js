@@ -92,7 +92,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 layer.confirm('确认删除图片？', {
                     btn: ['确定','取消'] //按钮
                 }, function(){                                       
-                    MaterialServer.delete.save({
+                    MaterialServer.deleteImg.save({
                         "pictureIds": pictureIds
                     },function(data){
                         if(data.status == 200){

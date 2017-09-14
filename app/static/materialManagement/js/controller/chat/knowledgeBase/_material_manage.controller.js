@@ -107,9 +107,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $scope.vm.getType = 1;
             $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
-            
 
-            MaterialServer.search.save({
+            MaterialServer.searchKnow.save({
                 "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
                 "chatKnowledgeModifier": $scope.vm.chatKnowledgeModifier,
                 "modifyTimeType":  $scope.vm.modifyTimeType,
