@@ -12,12 +12,11 @@ angular.module('functionalTestModule').controller('participleResultController', 
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         //console.log($stateParams) ;
         $scope.vm = {
-            pageSize : 5,            //每页条数；
-            paginationConf : '',     //分页条件
-            paginationConf1 : '',     //分页条件
-            applicationId : $cookieStore.get("applicationId"),
-            userId : $cookieStore.get("userId"),
-            batchNumberId:$stateParams.batchNumberId,
+            paginationConf : {             //分页条件
+                pageSize : 5,        ////默认每页数量
+                pagesLength: 10//分页框数量
+            },
+
 
 
 

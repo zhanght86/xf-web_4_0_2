@@ -896,7 +896,7 @@ knowledge_static_web
             //测试功能
             .state("functionalTest", {
                 url: "/functionalTest",
-                templateUrl: 'static/functionalTesting/main.html',
+                templateUrl: 'static/functional_testing/main.html',
                 controller: "functionalTestController"
 
             })
@@ -908,7 +908,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/questionTest.html',
+                        templateUrl: 'static/functional_testing/question_test/question_test.html',
                         controller: "questionTestController"
                     }
                 }
@@ -921,7 +921,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/sessionTest.html',
+                        templateUrl: 'static/functional_testing/session_test/session_test.html',
                         controller: "sessionTestController"
                     }
                 }
@@ -934,7 +934,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/batchTest.html',
+                        templateUrl: 'static/functional_testing/batch_test/batch_test/batch_test.html',
                         controller: "batchTestController"
                     }
                 }
@@ -947,7 +947,7 @@ knowledge_static_web
                             controller: "homePageNavController"
                         },
                         'content': {
-                            templateUrl: 'static/functionalTesting/testResult.html',
+                            templateUrl: 'static/functional_testing/batch_test/test_result/test_result.html',
                             controller: "testResultController"
                             }
                         }
@@ -960,7 +960,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/viewDetails.html',
+                        templateUrl: 'static/functional_testing/batch_test/view_details/view_details.html',
                         controller: "viewDetailsController"
                     }
                 }
@@ -973,7 +973,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/participle.html',
+                        templateUrl: 'static/functional_testing/participle/participle.html',
                         controller: "participleController"
                     }
                 }
@@ -986,7 +986,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/participleResult.html',
+                        templateUrl: 'static/functional_testing/participle/participle_result.html',
                         controller: "participleResultController"
                     }
                 }

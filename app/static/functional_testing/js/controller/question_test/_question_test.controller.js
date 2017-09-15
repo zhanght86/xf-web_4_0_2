@@ -2,8 +2,8 @@
  * Created by 41212 on 2017/3/23.
  */
 angular.module('functionalTestModule').controller('questionTestController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$log","FunctionServer","$state","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$log,FunctionServer,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             testTitle : '',
@@ -42,7 +42,6 @@ angular.module('functionalTestModule').controller('questionTestController', [
         }
         //问法测试
         function test(){
-
             $scope.vm.comparisonTextArray=$scope.vm.question.split("\n");         //换行;
             console.log($scope.vm.comparisonTextArray);
 
@@ -58,8 +57,23 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 layer.msg('请输入标准问法和测试问法！');
                 return;
             }
-
-            httpRequestPost("api/application/questionTest/passageway",{
+            // httpRequestPost("api/application/questionTest/passageway",{
+            //     "applicationId": $scope.vm.applicationId,
+            //     "title": $scope.vm.testTitle,
+            //     "comparisonTextArray": $scope.vm.comparisonTextArray
+            // },function(data){
+            //     $scope.vm.show_tit=true;
+            //     //$scope.vm.botRoot = data.data;
+            //     console.log(data);
+            //     if(data.data.status == 500){
+            //         layer.msg(data.data.data,{time:1000});
+            //     }
+            //     $scope.vm.answerRes=data.data.data;
+            //     $scope.$apply();
+            // },function(){
+            //     //layer.msg("err or err")
+            // });
+            FunctionServer.testQuestion.save({
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.testTitle,
                 "comparisonTextArray": $scope.vm.comparisonTextArray
@@ -71,11 +85,11 @@ angular.module('functionalTestModule').controller('questionTestController', [
                     layer.msg(data.data.data,{time:1000});
                 }
                 $scope.vm.answerRes=data.data.data;
-                $scope.$apply();
 
-            },function(){
-                //layer.msg("err or err")
+            },function(err){
+                console.log(err);
             });
+
         }
         //清空问法；
         function emptyInput(){

@@ -6,25 +6,15 @@ angular.module('functionalTestModule').controller('participleController', [
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","knowledgeAddServer",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
         $scope.vm = {
-            applicationId : $cookieStore.get("applicationId"),
-            userId : $cookieStore.get("userId"),
-
-            pageSize : 5,
-            listData :[],           //table 数据
-            listDataTotal : 0 ,      //共几条
-          //  listDataLength : '',
-            paginationConf : '',     //分页条件
-            selectAllCheck : false,
+            paginationConf : {             //分页条件
+                pageSize : 5,        ////默认每页数量
+                pagesLength: 10//分页框数量
+            },
             selectAll : selectAll,
             selectSingle : selectSingle,
             deleteIds:[],
 
-
-
-
         };
-
-
 
         //分页定时器
         var timeout ;
@@ -38,9 +28,6 @@ angular.module('functionalTestModule').controller('participleController', [
                 }, 100);
             }
         },true);
-
-
-
 
         function selectAll(){
             if(!$scope.vm.selectAllCheck){

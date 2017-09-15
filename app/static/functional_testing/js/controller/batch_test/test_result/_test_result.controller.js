@@ -155,7 +155,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             $scope.vm.editKnow = params.knowledgeTitle;
             $scope.vm.editChannel=params.channel;                 //130;
             var dialog = ngDialog.openConfirm({
-                template: "/static/functionalTesting/testResultDialog.html",
+                template: "/static/functional_testing/batch_test/test_result/test_result_dialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -328,7 +328,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 return;
             }
             var dialog = ngDialog.openConfirm({
-                template: "/static/functionalTesting/testDialog.html",
+                template: "/static/functional_testing/batch_test/test_result/test_dialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,

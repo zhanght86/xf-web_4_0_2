@@ -22,7 +22,7 @@ knowledge_static_web.controller('ApplicationController',
                     channelList : "",
                     dimensionList : "",
                 //method for DownStream simple
-                    queryChannelList : queryChannelList ,  //获取维度
+                    queryChannelList : queryChannelList ,  //获取渠道
                     querydimensionList : querydimensionList ,  //获取维度
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack

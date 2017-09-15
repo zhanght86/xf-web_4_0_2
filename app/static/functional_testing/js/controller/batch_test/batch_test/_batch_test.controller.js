@@ -128,7 +128,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
 
             //var timer = $timeout(function(){
             //    var dialog = ngDialog.openConfirm({
-            //        template: "/static/functionalTesting/batchUploadDialog.html",
+            //        template: "/static/functional_testing/batch_test/batch_test/batch_upload_dialog.html",
             //        scope: $scope,
             //        closeByDocument: false,
             //        closeByEscape: true,
@@ -151,7 +151,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 return;
             }
             var dialog = ngDialog.openConfirm({
-                template: "/static/functionalTesting/batchTestDialog.html",
+                template: "/static/functional_testing/batch_test/batch_test_dialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -183,7 +183,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
             if($scope.vm.serviceId) {
                 $scope.vm.batchNumberId = id ;
                 var dialog = ngDialog.openConfirm({
-                    template: "/static/functionalTesting/startUpDialog.html",
+                    template: "/static/functional_testing/batch_test/batch_test/start_up_dialog.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,

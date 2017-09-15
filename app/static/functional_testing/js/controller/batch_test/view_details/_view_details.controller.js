@@ -31,7 +31,9 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             search:search,
             exportExcel:exportExcel
         };
-
+        /**
+         * 获取数据
+         */
         getData(1);
         function getData(index){
             httpRequestPost("/api/application/detail/getDetailList",{
@@ -85,10 +87,12 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             }
             return 1;
         }
-
+        /**
+         * 添加
+         */
         function addKnow(){
             var dialog = ngDialog.openConfirm({
-                template: "/static/functionalTesting/viewDetailsDialog.html",
+                template: "/static/functional_testing/batch_test/view_details/view_details_dialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -127,12 +131,15 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 }
             });
         }
+        /**
+         * 编辑
+         */
         function editKnow(data){
             $scope.vm.detailId = data.detailId;
             $scope.vm.possibleKnowledge = data.possibleKnowledge;
             $scope.vm.knowledgeTitle = data.knowledgeTitle;
             var dialog = ngDialog.openConfirm({
-                template: "/static/functionalTesting/viewDetailsEditDialog.html",
+                template: "/static/functional_testing/batch_test/view_details/view_details_edit_dialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
@@ -169,10 +176,12 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 }
             });
         }
-
+        /**
+         * 删除
+         */
         function deleteKnow(detailId){
             var dialog = ngDialog.openConfirm({
-                template: "/static/functionalTesting/batchTestDialog.html",
+                template: "/static/functional_testing/batch_test/batch_test_dialog.html",
                 scope: $scope,
                 closeByDocument: false,
                 closeByEscape: true,
