@@ -896,7 +896,7 @@ knowledge_static_web
             //测试功能
             .state("functionalTest", {
                 url: "/functionalTest",
-                templateUrl: 'static/functionalTesting/functionalTest.html',
+                templateUrl: 'static/functionalTesting/main.html',
                 controller: "functionalTestController"
 
             })
