@@ -35,7 +35,7 @@ var
             * 测试功能
             * login
            **/
-          //API_MS = "/api/ms/",
+          API_APPLICATION_TEST = "/api/application",
 
           /**
             * 素材管理

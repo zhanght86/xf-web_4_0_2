@@ -566,7 +566,7 @@ knowledge_static_web
             //materialManagement
             .state("materialManagement", {
                 url: "/materialManagement/:userPermission",
-                templateUrl: 'static/materialManagement/materialManagement.html',
+                templateUrl: 'static/material_management/main.html',
                 //controller: "adminController"
             })
 
@@ -578,7 +578,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/knowledgeBase/chatKnowledgeBase.html',
+                        templateUrl: 'static/material_management/chat/knowledge_base/chat_knowledge_base.html',
                         controller: "chatKnowledgeBaseController"
                     }
                 }
@@ -592,7 +592,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/knowledgeBasePrew/chatKnowledgeBasePreview.html',
+                        templateUrl: 'static/material_management/chat/knowledge_base_prew/chat_knowledge_base_preview.html',
                         controller: "chatKnowledgeBasePreController"
                     }
                 }
@@ -605,7 +605,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/faq/faqChat.html',
+                        templateUrl: 'static/material_management/chat/faq/faq_chat.html',
                         controller: "faqChatController"
                     }
                 }
@@ -618,7 +618,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/chat/concept/conceptChat.html',
+                        templateUrl: 'static/material_management/chat/concept/concept_chat.html',
                         controller: "conceptChatController"
                     }
                 }
@@ -632,7 +632,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/speechLibrary/speechLibrary.html',
+                        templateUrl: 'static/material_management/speech_library/speech_library.html',
                         controller: "speechLibraryController"
                     }
                 }
@@ -646,7 +646,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/pictureLibrary/pictureLibrary.html',
+                        templateUrl: 'static/material_management/picture_library/picture_library.html',
                         controller: "pictureLibraryController"
                     }
                 }
@@ -660,7 +660,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/teletextMessage/teletextMessage.html',
+                        templateUrl: 'static/material_management/teletext_message/teletext_message.html',
                         controller: "teletextMessageController"
                     }
                 }
@@ -673,7 +673,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/teletextMessage/add_tw_mes.html',
+                        templateUrl: 'static/material_management/teletext_message/add_tw_mes.html',
                         controller: "addTwMesController"
                     }
                 }
@@ -686,7 +686,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/teletextMessage/graphicDetails.html',
+                        templateUrl: 'static/material_management/teletext_message/graphic_details.html',
                         controller: "graphicDetailsController"
                     }
                 }
@@ -700,7 +700,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/materialManagement/documentLibrary/documentLibrary.html',
+                        templateUrl: 'static/material_management/document_library/document_library.html',
                         controller: "documentLibraryController"
                     }
                 }
@@ -896,7 +896,7 @@ knowledge_static_web
             //测试功能
             .state("functionalTest", {
                 url: "/functionalTest",
-                templateUrl: 'static/functionalTesting/functionalTest.html',
+                templateUrl: 'static/functional_testing/main.html',
                 controller: "functionalTestController"
 
             })
@@ -908,7 +908,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/questionTest.html',
+                        templateUrl: 'static/functional_testing/question_test/question_test.html',
                         controller: "questionTestController"
                     }
                 }
@@ -921,7 +921,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/sessionTest.html',
+                        templateUrl: 'static/functional_testing/session_test/session_test.html',
                         controller: "sessionTestController"
                     }
                 }
@@ -934,7 +934,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/batchTest.html',
+                        templateUrl: 'static/functional_testing/batch_test/batch_test/batch_test.html',
                         controller: "batchTestController"
                     }
                 }
@@ -947,7 +947,7 @@ knowledge_static_web
                             controller: "homePageNavController"
                         },
                         'content': {
-                            templateUrl: 'static/functionalTesting/testResult.html',
+                            templateUrl: 'static/functional_testing/batch_test/test_result/test_result.html',
                             controller: "testResultController"
                             }
                         }
@@ -960,7 +960,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/viewDetails.html',
+                        templateUrl: 'static/functional_testing/batch_test/view_details/view_details.html',
                         controller: "viewDetailsController"
                     }
                 }
@@ -973,7 +973,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/participle.html',
+                        templateUrl: 'static/functional_testing/participle/participle.html',
                         controller: "participleController"
                     }
                 }
@@ -986,7 +986,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/functionalTesting/participleResult.html',
+                        templateUrl: 'static/functional_testing/participle/participle_result.html',
                         controller: "participleResultController"
                     }
                 }
