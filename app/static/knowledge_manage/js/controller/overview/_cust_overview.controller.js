@@ -29,24 +29,27 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
             knowledgeIds : [], //刪除 id ，
             addDelIds : addDelIds ,
             // params set
-            sceneIds : [] ,
+             sceneIds : [] ,
             "knowledgeTitle": null,         //知识标题默认值null
-            "knowledgeContent": null,        //知识内容默认值null
-            "knowledgeCreator": null,        //作者默认值null
-            "knowledgeExpDateEnd": null,        //知识有效期开始值默认值null
-            "knowledgeExpDateStart": null,        //知识有效期结束值默认值null
-             sourceType: 0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-            "updateTimeType": 0 ,  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
 
             keySearch : keySearch,
             napSearch : napSearch ,
-            getUpdateTimeType : getUpdateTimeType,
 
             heighSarch : false ,
-            knowledgeType : "" , //搜索知识类型
-            searchExtension : "", //搜索的擴展問
+
+            seekAdvanceParameter : {
+                "knowledgeType" : "" , //搜索知识类型
+                "searchExtension" : "", //搜索的擴展問
+                "knowledgeTitle": null,         //知识标题默认值null
+                "knowledgeContent": null,        //知识内容默认值null
+                "knowledgeCreator": null,        //作者默认值null
+                "knowledgeExpDateEnd": null,        //知识有效期开始值默认值null
+                "knowledgeExpDateStart": null,        //知识有效期结束值默认值null
+                "sourceType": 0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                "updateTimeType": 0   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            } ,
             newKnowledge : "false", // 新增知识选择下拉
-            jumpToNewKonwledge : jumpToNewKonwledge,
+            jumpToNewKonwledge : jumpToNewKonwledge,  // 添加知识跳转页面
             isSelectAll  : false ,  // 全选 删除
             selectAll : selectAll  ,//選擇全部
 
@@ -100,9 +103,7 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
             }
             $scope.vm.heighSarch = false ;
         }
-        function getUpdateTimeType(val){
-            $scope.vm.updateTimeType = val
-        }
+
         /**
          * 知识导出
          * @param index
@@ -114,25 +115,26 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
                 "&knowledgeContent="+$scope.vm.knowledgeContent+"&knowledgeCreator="+$scope.vm.knowledgeCreator+
                 "&knowledgeExpDateEnd="+$scope.vm.knowledgeExpDateEnd+"&knowledgeExpDateStart="+$scope.vm.knowledgeExpDateStart+
                 "&sourceType="+$scope.vm.sourceType+"&updateTimeType="+$scope.vm.updateTimeType;
-                var url = "/api/ms/knowledgeManage/exportExcel"+urlParams  ;//请求的url
-            downLoadFiles(document.getElementsByClassName("custOver")[0],url)
+                var url = KnowledgeService.custKnowExport+urlParams  ;//请求的url
+            downLoadFiles(angular.element(".customer-over")[0],url)
         }
         function getData(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000})
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
             KnowledgeService.queryCustKnowList.save({
                     "applicationId" : APPLICATION_ID,
                     "index": (index-1)*$scope.vm.paginationConf.pageSize,
                     "pageSize": $scope.vm.paginationConf.pageSize,
                     "sceneIds": $scope.vm.sceneIds.length?$scope.vm.sceneIds:null,	//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
                     "knowledgeTitle": $scope.vm.knowledgeTitle,         //知识标题默认值null
-                    "knowledgeContent": $scope.vm.knowledgeContent,        //知识内容默认值null
-                    "knowledgeUpdate": $scope.vm.knowledgeCreator,        //作者默认值null
-                    "knowledgeExpDateEnd": $scope.vm.knowledgeExpDateEnd,        //知识有效期开始值默认值null
-                    "knowledgeExpDateStart": $scope.vm.knowledgeExpDateStart,        //知识有效期结束值默认值null
-                    "knowledgeOrigin":$scope.vm.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                    "updateTimeType": $scope.vm.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                    "knowledgeType" : $scope.vm.knowledgeType ,
-                    "knowledgeExtensionQuestion" : $scope.vm.searchExtension
+
+                    "knowledgeContent": $scope.vm.seekAdvanceParameter.knowledgeContent,        //知识内容默认值null
+                    "knowledgeUpdate": $scope.vm.seekAdvanceParameter.knowledgeCreator,        //作者默认值null
+                    "knowledgeExpDateEnd": $scope.vm.seekAdvanceParameter.knowledgeExpDateEnd,        //知识有效期开始值默认值null
+                    "knowledgeExpDateStart": $scope.vm.seekAdvanceParameter.knowledgeExpDateStart,        //知识有效期结束值默认值null
+                    "knowledgeOrigin":$scope.vm.seekAdvanceParameter.sourceType,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                    "updateTimeType": $scope.vm.seekAdvanceParameter.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+                    "knowledgeType" : $scope.vm.seekAdvanceParameter.knowledgeType ,     //
+                    "knowledgeExtensionQuestion" : $scope.vm.seekAdvanceParameter.searchExtension    //扩展问
                 },function(response){
                     $scope.vm.isSelectAll = false ;
                     $scope.vm.knowledgeIds = [] ;
@@ -173,17 +175,19 @@ angular.module('knowledgeManagementModule').controller('custOverviewController',
         }
         function paramsReset(){
             //重置 参数 问题
-                $scope.vm.knowledgeType = "" ,
-                $scope.vm.searchExtension = "",
-                $scope.vm.sceneIds = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-                $scope.vm.knowledgeTitle = null,         //知识标题默认值null
-                $scope.vm.knowledgeContent = null,        //知识内容默认值null
-                $scope.vm.knowledgeUpdate = null,        //作者默认值null
-                $scope.vm.knowledgeCreator = null,          //作者默认为空
-                $scope.vm.knowledgeExpDateEnd = null,        //知识有效期开始值默认值null
-                $scope.vm.knowledgeExpDateStart = null,        //知识有效期结束值默认值null
-                $scope.vm.sourceType =0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
-                $scope.vm.updateTimeType = 0  //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            $scope.vm.sceneIds = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
+            $scope.vm.knowledgeTitle = null,         //知识标题默认值null
+            $scope.vm.seekAdvanceParameter =  {
+                "knowledgeType" : "" , //搜索知识类型
+                "searchExtension" : "", //搜索的擴展問
+                "knowledgeTitle": null,         //知识标题默认值null
+                "knowledgeContent": null,        //知识内容默认值null
+                "knowledgeCreator": null,        //作者默认值null
+                "knowledgeExpDateEnd": null,        //知识有效期开始值默认值null
+                "knowledgeExpDateStart": null,        //知识有效期结束值默认值null
+                "sourceType": 0,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
+                "updateTimeType": 0   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
+            }
         }
         function delData(){
             if(!$scope.vm.knowledgeIds || $scope.vm.knowledgeIds.length === 0) {

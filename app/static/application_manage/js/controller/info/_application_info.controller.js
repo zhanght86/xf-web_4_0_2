@@ -119,7 +119,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                    }else{
                        layer.msg("下线服务失败");
                    }
-               },function(){$log.log(error)})
+               },function(error){$log.log(error)})
 
             });
         }

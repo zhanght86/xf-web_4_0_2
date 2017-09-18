@@ -62,11 +62,11 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
 
             knowledgeTitleTag : [],
 
+            //相关问
             appointRelative : "",
             appointRelativeList :[],
-            addAppoint  : addAppoint,
-
             appointRelativeGroup : [],
+
             replaceType : 0 ,
             enterEvent : enterEvent,
 
@@ -612,43 +612,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
                 return true ;
             }
         }
-        // 添加时候 存储对象
-        function saveScan(){
-
-        }
-//*************************************************************************
-
-        function addAppoint(item,arr){
-            if(arr.indexOf(item)==-1){
-                arr.push(item)
-            }
-            $scope.vm.appointRelative = "";  //清楚title
-            $scope.vm.appointRelativeList = [];  //清除 列表
-
-        }
-        // 動態加載 title
-        $scope.$watch("vm.appointRelative",function(title){
-            //console.log(title);
-            if(title){
-                $timeout(getAppointRelative(title),300)
-            }
-        });
-
-        function getAppointRelative(title){
-            httpRequestPost("/api/ms/listKnowledge/getKnowledgeTitle",{
-                "title" : title
-            },function(data){
-                if(data.status == 200){
-                    $scope.vm.appointRelativeList = data.data;
-                    $scope.$apply();
-                }else{
-                }
-                console.log(data);
-            },function(err){
-
-            });
-        }
-
 //********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
         // 假删除本地备份
         function backUpExt(item){

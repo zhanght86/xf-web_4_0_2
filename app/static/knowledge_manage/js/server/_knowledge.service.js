@@ -10,7 +10,8 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
 //   客服知识
         //获取知识列表
         this.queryCustKnowList = $resource(API_MS+"/knowledgeManage/overView/searchList",{},{}) ;
-        //批量导出知识
+        //知识导出
+        this.custKnowExport = API_MS+"/knowledgeManage/exportExcel";
         //this.exportCustKnow  = $resource(API_MS+"/knowledgeManage/overView/searchList?applicationId=:applicationId&sceneIds=:sceneIds&knowledgeTitle=:knowledgeTitle"+
         //     "&knowledgeContent=:knowledgeContent&knowledgeCreator=:knowledgeCreator"+
         //     "&knowledgeExpDateEnd=:knowledgeExpDateEnd&knowledgeExpDateStart=:knowledgeExpDateStart"+
@@ -40,7 +41,24 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         this.queryListKnow = $resource(API_MS+"/listKnowledge/getKnowledge",{},{}) ;
         //要素
         this.queryFactorKnow = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
+
+                                /******************************
+                                             * 知识总览 *
+                                          **********************************/
 //   faq知识新增
-//        this.
+        // 获取相关问
+        this.queryRelatedQuestion = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
+//   概念知识新增
+        // 获取相关问
+        this.queryRelatedQuestion = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
+//   列表知识新增
+        // 获取相关问
+        this.queryListRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
+//  要素知识新增
+        // 获取相关问
+        this.queryFactorRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
+//   富文本知识新增
+        // 获取相关问
+        this.queryRelatedQuestion = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
 
 }]);

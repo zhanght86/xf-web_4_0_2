@@ -1,5 +1,5 @@
 <!--<div ui-view="header"></div>-->
-<div class="main warp custOver">
+<div class="main warp customer-over">
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
@@ -50,52 +50,52 @@
                         <div class="advanced_search bd" style="background:#fff;width:540px;">
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识内容:</span>
-                                <input type="text" class="input_text" ng-model="vm.knowledgeContent"/>
+                                <input type="text" class="input_text" ng-model="vm.seekAdvanceParameter.knowledgeContent"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识扩展问:</span>
-                                <input type="text" ng-model="vm.searchExtension" class="input_text"/>
+                                <input type="text" ng-model="vm.seekAdvanceParameter.searchExtension" class="input_text"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
                                 <span>
-                                    <input type="text" id="startTime" onchange=""  ng-model="vm.knowledgeExpDateStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                                    <input type="text" id="startTime" onchange=""  ng-model="vm.seekAdvanceParameter.knowledgeExpDateStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择开始日期" readonly>
                                     -
-                                    <input type="text" id="endTime"   onchange="" ng-model="vm.knowledgeExpDateEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                                    <input type="text" id="endTime"   onchange="" ng-model="vm.seekAdvanceParameter.knowledgeExpDateEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>
                                 </span>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">作者:</span>
-                                <input type="text" class="input_text" ng-model="vm.knowledgeCreator"/>
+                                <input type="text" class="input_text" ng-model="vm.seekAdvanceParameter.knowledgeCreator"/>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识类型:</span>
                                 <div>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType"  value="" type="radio" name="knoe_type"/>全部</label>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType"  value="100" type="radio" name="knoe_type" />FAQ</label>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>
-                                    <label class="mr-10"><input ng-model="vm.knowledgeType" value="106"  type="radio" name="knoe_type" />富文本</label>
+                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType"  value="" type="radio" name="knoe_type"/>全部</label>
+                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType"  value="100" type="radio" name="knoe_type" />FAQ</label>
+                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>
+                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>
+                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>
+                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="106"  type="radio" name="knoe_type" />富文本</label>
 
                                 </div>
                             </div>
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-checked="vm.sourceType==0" ng-click="vm.sourceType=0"/>全部</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.sourceType=120"/>单条新增</label>
-                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-click="vm.sourceType=122"/>文档加工</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="0" />全部</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="120" />单条新增</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="122" />文档加工</label>
                                 </div>
                             </div>
 
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">更新时间:</span>
                                 <div>
-                                    <label class="mr-10"><input type="radio" name="time" ng-checked="vm.updateTimeType==0" ng-click="vm.getUpdateTimeType(0)"/>不限</label>
-                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(1)"/>近三天</label>
-                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(2)"/>近七天</label>
-                                    <label class="mr-10"><input type="radio" name="time" ng-click="vm.getUpdateTimeType(3)"/>近一月</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-model="vm.seekAdvanceParameter.updateTimeType" value="0"/>不限</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-model="vm.seekAdvanceParameter.updateTimeType" value="1"/>近三天</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-model="vm.seekAdvanceParameter.updateTimeType" value="2"/>近七天</label>
+                                    <label class="mr-10"><input type="radio" name="time" ng-model="vm.seekAdvanceParameter.updateTimeType" value="3"/>近一月</label>
                                 </div>
                             </div>
                             <div class="tc">

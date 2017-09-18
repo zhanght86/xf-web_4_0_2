@@ -1160,7 +1160,7 @@ function initUpload(url){
 //    form.submit();//表单提交
 //    form.remove() ;
 //}
-// 下载文件
+// **************** 9/13  孟飞 文件下载  BEGIN **************************//
 function downLoadFiles(container,url){
      try{
          container = container?container:document.body
@@ -1184,4 +1184,4 @@ function createDownload(fileName, content){
     console.log(link)
     link.click()
 }
-	
+// **************** 9/13  孟飞 文件下载  END **************************//

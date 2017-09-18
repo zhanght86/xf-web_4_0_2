@@ -5,8 +5,12 @@
 //        <!-- 数组重复判断 -->
 Array.prototype.S=String.fromCharCode(2);
 Array.prototype.inArray=function(e){
-    var r=new RegExp(this.S+e+this.S);
-    return (r.test(this.S+this.join(this.S)+this.S));
+    for(var i = 0; i < this.length; i++){
+        if(this[i] == e){return true;}
+    }
+    return false;
+    //var r=new RegExp(this.S+e+this.S);
+    //return (r.test(this.S+this.join(this.S)+this.S));
 };
 //        <!-- 增加数组 remove方法-->
 Array.prototype.indexOf = function (val) {

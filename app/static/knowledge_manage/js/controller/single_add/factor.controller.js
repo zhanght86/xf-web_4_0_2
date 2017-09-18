@@ -50,21 +50,12 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             dimensionsCopy :[]
             ,
 
-            //高级选项内容
-            slideDown : slideDown,
-            slideFlag : false,
+//高级选项内容
+            question : 1,   //相关问题
+            tip : 1,        // 提示
+            tail : 1 ,      //尾巴
+            appointRelativeGroup : [],  //相关知识
 
-            question : 1,
-            tip : 1,
-            tail : 1 ,
-
-            knowledgeTitleTag : [],
-
-            appointRelative : "",
-            appointRelativeList :[],
-            addAppoint  : addAppoint,
-
-            appointRelativeGroup : [],
             replaceType : 0 ,
             enterEvent : enterEvent,  //鍵盤事件
             //表格
@@ -112,8 +103,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             var data = angular.fromJson($stateParams.data) ;
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
-            // 标题打标结果
-            $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
             // 时间
             if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
                 $scope.vm.isTimeTable = true
@@ -639,13 +628,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }
         }
 
-        function slideDown(){
-            $scope.vm.slideFlag = ! $scope.vm.slideFlag;
-            $(".senior_div").slideToggle();
-            if($scope.vm.slideFlag){
-                $(".senior_div").css('overflow','visible');
-            }
-        }
 
 /**
  * 校验标题和扩展问重复
@@ -689,7 +671,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                         getExtension($scope.vm.title,"60",1) ; //生成扩展问
                         $scope.$apply(function(){
                             //標題打标结果
-                            $scope.vm.knowledgeTitleTag = data.data.knowledgeTitleTagList ;
                             $scope.vm.botClassfy = [];   //reset 标题生成bot
                             //添加校验是否添加校验  获取所有bot 验证是否重复
                             var allBot = angular.copy($scope.vm.creatSelectBot) ;
@@ -721,7 +702,7 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
                 "knowledgeTitle": $scope.vm.title,      //知识标题
                 "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
                 "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-                "knowledgeTitleTag" : $scope.vm.knowledgeTitleTag,    //标题打标生成的name
+                //"knowledgeTitleTag" : [],    //标题打标生成的name
                 "knowledgeUpdater": USER_LOGIN_NAME, //操作人
                 "knowledgeCreator": USER_LOGIN_NAME ,  //操作人
                 "knowledgeOrigin" : $scope.vm.knowledgeOrigin
@@ -857,42 +838,6 @@ angular.module('knowledgeManagementModule').controller('knowledgeEssentialContro
             }else{
                 return true
             }
-        }
-        // 添加时候 存储对象
-        //function saveScan(){
-        //    var url = $state.go('custServScenaOverview.manage',{scanData:getParams()});
-        //    window.open(url, '_blank');
-        //}
-//*************************************************************************
-        function addAppoint(item,arr){
-            if(arr.indexOf(item)==-1){
-                arr.push(item)
-            }
-            $scope.vm.appointRelative = null;  //清楚title
-            $scope.vm.appointRelativeList = [];  //清除 列表
-
-        }
-        // 動態加載 title
-        $scope.$watch("vm.appointRelative",function(title){
-            //console.log(title);
-            if(title){
-                $timeout(getAppointRelative(title),300)
-            }
-        });
-
-        function getAppointRelative(title){
-            httpRequestPost("/api/ms/listKnowledge/getKnowledgeTitle",{
-                "title" : title
-            },function(data){
-                if(data.status == 200){
-                    $scope.vm.appointRelativeList = data.data;
-                    $scope.$apply()
-                }else{
-                }
-                //console.log(data);
-            },function(err){
-                console.log("获取指定相关知识失败")
-            });
         }
         //********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
         // 假删除本地备份
