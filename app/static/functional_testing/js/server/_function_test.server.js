@@ -21,8 +21,11 @@ angular.module("functionalTestModule").service("FunctionServer",["$resource",fun
                     /******************************
                          *批量测试*    API_APPLICATION_TEST = "/api/application"
                         ********************************/
-    
-    
+    //页面初始化加载已发布服务
+    this.getService = $resource(API_APPLICATION_TEST+'/service/listServiceByApplicationId',{},{});
+    //查询
+    this.searchFile = $resource(API_APPLICATION_TEST+'/batchTest/findByValue',{},{});
+    //
 
 
 }]);

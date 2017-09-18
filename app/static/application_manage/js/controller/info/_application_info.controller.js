@@ -175,7 +175,7 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 }else{
                     layer.msg("查询失败");
                 }
-            },function(){$log.log(error)})
+            },function(error){$log.log(error)})
         }
         //编辑应用的名称
         function editName(){
