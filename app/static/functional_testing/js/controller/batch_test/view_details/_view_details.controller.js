@@ -7,15 +7,16 @@
  */
 
 angular.module('functionalTestModule').controller('viewDetailsController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore) {
         console.log($stateParams)
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            pageSize:5,
+            paginationConf : {                 //分页条件
+                pageSize : 5  , //默认每页数量
+                pagesLength: 10//分页框数量
+            }  ,
             batchNumberId:$stateParams.batchNumberId,
-            applicationId : $cookieStore.get("applicationId"),
-            userId : $cookieStore.get("userId"),
             listData:[],
             listDataTotal:0,
             possibleKnowledge:"",
@@ -36,25 +37,24 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
          */
         getData(1);
         function getData(index){
-            httpRequestPost("/api/application/detail/getDetailList",{
-                index:(index - 1)*$scope.vm.pageSize,
-                pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId,
+            
+            FunctionServer.DetailgetData.save({
+                index:(index - 1)*$scope.vm.paginationConf.pageSize,
+                pageSize:$scope.vm.paginationConf.pageSize,
+                applicationId:APPLICATION_ID,
                 batchNumberId:$stateParams.batchNumberId
             },function(data){
                 console.log(data);
                 $scope.vm.listData = data.data.detailList;
                 $scope.vm.listDataTotal = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8//分页框数量
-                };
-                $scope.$apply();
-            },function(){
-                layer.msg("请求失败",{time:1000});
-            })  ;
+
+                $scope.vm.paginationConf.currentPage =index ;
+                $scope.vm.paginationConf.totalItems =data.data.total ;
+                $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                console.log($scope.vm.paginationConf);
+            },function(err){
+                $log.log(err);
+            });
         }
 
         function verifyRelease(){
@@ -91,45 +91,37 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
          * 添加
          */
         function addKnow(){
-            var dialog = ngDialog.openConfirm({
-                template: "/static/functional_testing/batch_test/view_details/view_details_dialog.html",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                        if($scope.vm.allowSubmit){
-                            httpRequestPost("/api/application/detail/addKnowledge", {
-                                applicationId: $scope.vm.applicationId,
-                                batchNumberId: $stateParams.batchNumberId,
-                                possibleKnowledge: $scope.vm.possibleKnowledge,
-                                knowledgeTitle: $scope.vm.knowledgeTitle
-                            }, function (data) {
-                                //刷新页面
-                                $state.reload();
-                                if (data.status == 10012) {
-                                    layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
-                                } else if (data.status == 10011) {
-                                    layer.msg("添加成功!",{time:1000});
-                                } else {
-                                    //layer.msg("添加失败!");
-                                    console.log("添加失败!");
-                                }
-                            }, function () {
-                                //layer.msg("请求失败");
-                                console.log("请求失败");
-                            })
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/view_details/view_details_dialog.html','500px',function(){
+                if($scope.vm.allowSubmit){
+                    
+                    FunctionServer.addKnow.save({
+                        applicationId: APPLICATION_ID,
+                        batchNumberId: $stateParams.batchNumberId,
+                        possibleKnowledge: $scope.vm.possibleKnowledge,
+                        knowledgeTitle: $scope.vm.knowledgeTitle
+                    },function(data){
+                        //刷新页面
+                        $state.reload();
+                        if (data.status == 10012) {
+                            layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
+                        } else if (data.status == 10011) {
+                            layer.msg("添加成功!",{time:1000});
+                        } else {
+                            //layer.msg("添加失败!");
+                            console.log("添加失败!");
                         }
-                        $scope.vm.possibleKnowledge = "";
-                            $scope.vm.knowledgeTitle = ""
-                    } else {
-                        $scope.vm.possibleKnowledge = "";
-                            $scope.vm.knowledgeTitle = ""
-                    }
+                    },function(err){
+                        $log.log(err);
+                    });
                 }
+                $scope.vm.possibleKnowledge = "";
+                $scope.vm.knowledgeTitle = ""
+            },function(){
+                $scope.vm.possibleKnowledge = "";
+                $scope.vm.knowledgeTitle = ""
             });
+
         }
         /**
          * 编辑
@@ -138,82 +130,65 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
             $scope.vm.detailId = data.detailId;
             $scope.vm.possibleKnowledge = data.possibleKnowledge;
             $scope.vm.knowledgeTitle = data.knowledgeTitle;
-            var dialog = ngDialog.openConfirm({
-                template: "/static/functional_testing/batch_test/view_details/view_details_edit_dialog.html",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                        if($scope.vm.allowSubmit){
-                            httpRequestPost("/api/application/detail/updateKnowledge", {
-                                possibleKnowledge: $scope.vm.possibleKnowledge,
-                                knowledgeTitle: $scope.vm.knowledgeTitle,
-                                detailId:$scope.vm.detailId,
-                                batchNumberId: $stateParams.batchNumberId,
-                            }, function (data) {
-                                //刷新页面
-                                if (data.status == 10002) {
-                                    layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
-                                } else if (data.status == 10018) {
-                                    $state.reload();
-                                    layer.msg("修改成功!",{time:1000});
-                                } else {
-                                    //layer.msg("修改失败!");
-                                    console.log("修改失败!");
-                                }
-                            }, function () {
-                                //layer.msg("请求失败");
-                                console.log("请求失败");
-                            })
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/view_details/view_details_edit_dialog.html','500px',function(){
+                if($scope.vm.allowSubmit){
+
+                    FunctionServer.editKnow.save({
+                        possibleKnowledge: $scope.vm.possibleKnowledge,
+                        knowledgeTitle: $scope.vm.knowledgeTitle,
+                        detailId:$scope.vm.detailId,
+                        batchNumberId: $stateParams.batchNumberId,
+                    },function(data){
+                        //刷新页面
+                        if (data.status == 10002) {
+                            layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
+                        } else if (data.status == 10018) {
+                            $state.reload();
+                            layer.msg("修改成功!",{time:1000});
+                        } else {
+                            //layer.msg("修改失败!");
+                            console.log("修改失败!");
                         }
-                    } else {
-                        $scope.vm.possibleKnowledge = "";
-                        $scope.vm.knowledgeTitle = "";
-                    }
+                    },function(err){
+                        $log.log(err);
+                    });
                 }
+            },function(){
+                $scope.vm.possibleKnowledge = "";
+                $scope.vm.knowledgeTitle = "";
             });
         }
         /**
          * 删除
          */
         function deleteKnow(detailId){
-            var dialog = ngDialog.openConfirm({
-                template: "/static/functional_testing/batch_test/batch_test_dialog.html",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {    //关闭回掉
-                    if (e === 1) {
-                            httpRequestPost("/api/application/detail/deleteById", {
-                                detailId:detailId
-                            }, function (data) {
-                                //刷新页面
-                                $state.reload();
-                                if (data.status == 10013) {
-                                    layer.msg("删除成功!",{time:1000})
-                                } else if (data.status == 10014) {
-                                    //layer.msg("删除失败!");
-                                    console.log("删除失败!");
-                                }
-                            }, function () {
-                                //layer.msg("请求失败")
-                                console.log("请求失败");
-                            })
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test_dialog.html','400px',function(){
+
+                FunctionServer.deleteKnow.save({
+                    detailId:detailId
+                },function(data){
+                    //刷新页面
+                    $state.reload();
+                    if (data.status == 10013) {
+                        layer.msg("删除成功!",{time:1000})
+                    } else if (data.status == 10014) {
+                        //layer.msg("删除失败!");
+                        console.log("删除失败!");
                     }
-                }
+                },function(err){
+                    $log.log(err);
+                });
+            },function(){
+
             });
         }
 
         function search(index){
-            httpRequestPost("/api/application/detail/findKnowledge",{
-                index:(index - 1)*$scope.vm.pageSize,
-                pageSize:$scope.vm.pageSize,
-                applicationId:$scope.vm.applicationId,
+            FunctionServer.search.save({
+                index:(index - 1)*$scope.vm.paginationConf.pageSize,
+                pageSize:$scope.vm.paginationConf.pageSize,
+                applicationId:APPLICATION_ID,
                 batchNumberId:$stateParams.batchNumberId,
                 possibleKnowledge:$scope.vm.value,
                 knowledgeTitle:$scope.vm.value
@@ -223,46 +198,39 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                     layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
-                    $scope.vm.paginationConf = {
-                        currentPage: 0,//当前页
-                        totalItems: 0, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8//分页框数量
-                    };
-                    $scope.$apply();
+                    $scope.vm.paginationConf.totalItems = 0;
                 }
                 $scope.vm.listData = data.data.detailList;
                 $scope.vm.listDataTotal = data.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8//分页框数量
-                };
-                $scope.$apply();
-            },function(){
-                //layer.msg("请求失败");
-                console.log("请求失败");
-            })  ;
+
+                $scope.vm.paginationConf.currentPage =index ;
+                $scope.vm.paginationConf.totalItems =data.data.total ;
+                $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                console.log($scope.vm.paginationConf);
+            },function(err){
+                $log.log(err);
+            });
         }
 
         /**
          * 知识导出
          */
         function exportExcel(){
-            httpRequestPost("/api/application/detail/export",{
+            FunctionServer.exportExcel.save({
                 batchNumberId:$stateParams.batchNumberId
             },function(data){
-                console.log(data)
+                console.log(data);
                 if(data.status==500){
-                    //layer.msg("导出失败")
                     console.log("导出失败");
                 }else{
-                    window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
+                  //  window.open("/api/application/detail/downloadExcel?fileName="+ data.data);
+                    var url = FunctionServer.downloadExcel + data.data;
+                    downLoadFiles(angular.element('.chat_test_wrap')[0] ,url);
                 }
-                console.log();
 
-            },function(err){})
+            },function(err){
+                $log.log(err);
+            });
 
         }
 
