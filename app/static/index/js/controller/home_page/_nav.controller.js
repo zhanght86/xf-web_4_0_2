@@ -8,10 +8,10 @@ angular.module('homePage').controller('homePageNavController', [
         $scope.urls=$state.current.name;
 
         $scope.vm = {
-                applicationId : $cookieStore.get('applicationId'),
-                sceneId : $cookieStore.get('sceneId'),
+                applicationId : APPLICATION_ID,
+                sceneId : SCENE_ID,
                 loginout : loginout,
-                userName : $cookieStore.get('userName'),
+                userName : USER_NAME,
                 logApplication : logApplication,
                 jump: jump,
                 openServiceConfirm : openServiceConfirm,
@@ -42,6 +42,7 @@ angular.module('homePage').controller('homePageNavController', [
             $cookieStore.remove('sceneId');
             $cookieStore.remove('userId');
             $cookieStore.remove('userName');
+            $cookieStore.remove('userLoginName');
             localStorage.removeItem('history');
             httpRequestPost("/api/user/userOut",{
                 "userId" : USER_ID ,

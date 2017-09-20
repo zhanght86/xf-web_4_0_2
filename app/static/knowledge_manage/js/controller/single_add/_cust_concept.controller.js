@@ -214,7 +214,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             }, function (error) {console.log(error)});
         }
-
         // 获取Bot全路径
         function getBotFullPath(id){
             httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
@@ -380,8 +379,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 }
             })
         });
-
-
         //点击bot分类的 加号
         function botSelectAdd(){
             if($scope.vm.botFullPath){
@@ -451,7 +448,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                 } else {
                     var callback = saveAddNew;
                 }
-                $scope.MASTER.openNgDialog($scope,"/static/knowledgeManagement/public-html/knowledge_increase.html","650px",callback,function(){
+                $scope.MASTER.openNgDialog($scope,"/static/knowledge_manage/public_html/knowledge_increase.html","650px",callback,function(){
                     $scope.vm.isEditIndex = -1  ;
                     setDialog()
                 }) ;
@@ -477,7 +474,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             var dia = angular.element(".ngdialog ");
             if(dia.length==0){
             var extensionEdit = ngDialog.openConfirm({
-                template:"/static/knowledgeManagement/public-html/extension_edit.html",
+                template:"/static/knowledge_manage/public_html/extension_edit.html",
                 width:"500px",
                 scope: $scope,
                 closeByDocument:false,

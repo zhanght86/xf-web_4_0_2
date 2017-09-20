@@ -57,23 +57,35 @@ knowledge_static_web.config(function (localStorageServiceProvider) {
  * @param  {[type]} $stateParams
  * @return {[type]}
  */
-knowledge_static_web.run(function ($rootScope, $state, $stateParams, $location, AuthService, AUTH_EVENTS,localStorageService,$window) {
+knowledge_static_web.run(function ($q,$cookies,$cookieStore,$rootScope, $state, $stateParams, $location, AuthService, AUTH_EVENTS,localStorageService,$window) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-
     //监听路由的变化，一旦发生变化校验用户登录情况
     $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams) {
-
+        $q.defer().resolve() ;
+        layer.closeAll() ;
+        if(fromState.name == ""){   // 登录进系统
+            USER_ID = document.cookie.indexOf("userId=")!=-1?getCookie("userId").replace(/\"/g,""):"" ;
+            USER_NAME = document.cookie.indexOf("userName=")!=-1?getCookie("userName").replace(/\"/g,""):"";
+            USER_LOGIN_NAME = document.cookie.indexOf("userLoginName=")!=-1?getCookie("userLoginName").replace(/\"/g,""):"";
+            APPLICATION_ID = document.cookie.indexOf("applicationId=")!=-1?getCookie("applicationId").replace(/\"/g,""):"";
+            APPLICATION_NAME = document.cookie.indexOf("applicationName=")!=-1?getCookie("applicationName").replace(/\"/g,""):"";
+            SCENE_ID = document.cookie.indexOf("sceneId=")!=-1?getCookie("sceneId").replace(/\"/g,""):"";
+        }else{
+            if(document.cookie.indexOf("userId=")==-1 || document.cookie.indexOf("applicationId=")==-1){
+                self.location = "index.html" ;
+            }
+        }
     });
 
     $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-
+        console.log(event)
     });
     //back button function called from back button's ng-click="back()"
     $rootScope.back = function () {//实现返回的函数
         $state.go($rootScope.previousState_name, $rootScope.previousState_params);
     };
-});
+})
 
 /**
  * 配置路由。
@@ -85,7 +97,7 @@ knowledge_static_web.run(function ($rootScope, $state, $stateParams, $location, 
 knowledge_static_web
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise(function($injector, $location){
-            $location.path('/login');
+            $location.path('/homePage/manage');
         });
         $stateProvider
         //登录路由

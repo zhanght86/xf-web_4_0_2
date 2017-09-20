@@ -8,7 +8,7 @@ angular.module('homePage').controller('adminContentController', [
     '$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore","$rootScope",
     function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore,$rootScope) {
         $scope.vm = {
-            userName : $cookieStore.get("userName"),
+            userName : USER_NAME,
             userPermission : $stateParams.userPermission,
             addApplicationWindow : addApplicationWindow,
             myApplication : "",
@@ -32,7 +32,7 @@ angular.module('homePage').controller('adminContentController', [
         //获取用户信息
         function getUserInfo(){
             httpRequestPost("/api/user/findRoleIdByUserId",{
-                "userId":$cookieStore.get("userId")
+                "userId":USER_ID
             },function(data){
                 //if(data.status==200){
                     console.log(data);

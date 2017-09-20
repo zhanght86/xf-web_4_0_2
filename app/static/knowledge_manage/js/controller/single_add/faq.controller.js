@@ -8,6 +8,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
               knowledgeAddServer,$window,$rootScope,$filter,myService,$location) {
         console.log($stateParams);
         $scope.vm = {
+            apiQueryRelatedQuestion : "queryFapRelatedQuestion" , // 相关文api
             knowledgeId : "" ,
             knowledgeOrigin : 120 , //知识来源
             frames : [],      //业务框架
@@ -63,11 +64,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             question : 1,
             tip : 1,
             tail : 1 ,
-            appointRelative : "",
-            appointRelativeList :[],
             appointRelativeGroup : [],
-            addAppoint  : addAppoint,
-            removeAppointRelative : removeAppointRelative,
             replaceType : 0,
 
             enterEvent : enterEvent ,
@@ -92,27 +89,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         };
         //獲取渠道
         $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-        // 相关问题 键盘选择
-        //function selectEvent(e){
-        //        var  srcObj = e.srcElement ? e.srcElement : e.target;
-        //        var keycode = window.event?e.keyCode:e.which;
-        //    switch(keycode){
-        //        case 13 :
-        //            if(arr.indexOf(item)==-1){
-        //                arr.push(item)
-        //            }
-        //            $scope.vm.appointRelative = null;  //清楚title
-        //            $scope.vm.appointRelativeList = [];  //清除 列表
-        //            break ;
-        //        case 40 :
-        //            if(arr.indexOf(item)==-1){
-        //                arr.push(item)
-        //            }
-        //            $scope.vm.appointRelative = null;  //清楚title
-        //            $scope.vm.appointRelativeList = [];  //清除 列表
-        //            break ;
-        //    }
-        //}
+
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
@@ -346,7 +323,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
             var dia = angular.element(".ngdialog");
             if(dia.length==0) {
                 var replace = ngDialog.openConfirm({
-                    template: "/static/knowledgeManagement/faq/replace.html",
+                    template: "/static/knowledge_manage/faq/replace.html",
                     scope: $scope,
                     closeByDocument: false,
                     closeByEscape: true,
@@ -407,7 +384,7 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
         //打开知识内容对话框
         function openContentConfirm(callback){
             var dialog = ngDialog.openConfirm({
-                template: "/static/knowledgeManagement/public-html/knowledge_increase.html",
+                template: "/static/knowledge_manage/public_html/knowledge_increase.html",
                 width:"650px",
                 scope: $scope,
                 closeByNavigation: false,
@@ -594,10 +571,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
          *               弹框相关
          *
          */ // ****************************************** //
-
-        function removeAppointRelative(item){
-            $scope.vm.appointRelativeGroup.remove(item);
-        }
 //重置参数
         function setDialog(){
              $scope.vm.newTitle = "";
@@ -773,36 +746,6 @@ angular.module('knowledgeManagementModule').controller('knowManaFaqController', 
                 });
             //}
             return isRepeat
-        }
-//*************************************************************************
-
-        function addAppoint(item,arr){
-            if(arr.indexOf(item)==-1){
-                arr.push(item)
-            }
-            $scope.vm.appointRelative = null;  //清楚title
-            $scope.vm.appointRelativeList = [];  //清除 列表
-        }
-        // 動態加載 title
-        $scope.$watch("vm.appointRelative",function(title){
-            //console.log(title);
-            if(title){
-                $timeout(getAppointRelative(title),300)
-            }
-        });
-
-        function getAppointRelative(title){
-            httpRequestPost("/api/ms/conceptKnowledge/getKnowledgeTitle",{
-                "title" : title
-            },function(data){
-                if(data.status == 200){
-                    $scope.vm.appointRelativeList = data.data;
-                    $scope.$apply()
-                }else{
-                }
-            },function(error){
-                console.log(error)
-            });
         }
 
 //********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************

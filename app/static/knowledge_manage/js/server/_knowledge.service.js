@@ -47,10 +47,10 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
                                           **********************************/
 //   faq知识新增
         // 获取相关问
-        this.queryRelatedQuestion = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
+        this.queryFapRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;
 //   概念知识新增
         // 获取相关问
-        this.queryRelatedQuestion = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
+        this.queryConceptRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;
 //   列表知识新增
         // 获取相关问
         this.queryListRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
@@ -59,6 +59,6 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         this.queryFactorRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
 //   富文本知识新增
         // 获取相关问
-        this.queryRelatedQuestion = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
+        this.queryRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;
 
 }]);
