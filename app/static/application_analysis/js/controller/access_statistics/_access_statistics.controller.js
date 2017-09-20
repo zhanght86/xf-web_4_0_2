@@ -3,8 +3,8 @@
  * 控制器  访问统计
  */
 angular.module('applAnalysisModule').controller('accessStatisticsController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$interval" ,
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$interval) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$interval" ,
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$interval) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
@@ -201,8 +201,31 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             return timer ;
         }
         //*********************************************************************************************************************************8//
+
+        /**
+         * 访问数据时间统计 导出表格
+         * **/
         function exportByTime(){
-            httpRequestPost("/api/analysis/access/export",{
+            // httpRequestPost("/api/analysis/access/export",{
+            //     "applicationId":APPLICATION_ID ,
+            //     "startTime":$scope.vm.timerSearchStartTime ,
+            //     "endTime":$scope.vm.timerSearchEndTime ,
+            //     "requestTimeType" : $scope.vm.TimerSearchTimeType ,
+            //     "dimensionId" : $scope.vm.dimensionId,
+            //     "channelId" : $scope.vm.channelId
+            // },function(data){
+            //     console.log(data)
+            //     if(data.status==500){
+            //         //layer.msg("导出失败")
+            //         console.log("导出失败");
+            //     }else{
+            //         //alert(data.data);
+            //         window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+            //     }
+            //     console.log();
+            //
+            // },function(err){})
+            AppAnalysisServer.exportByTime.save({
                 "applicationId":APPLICATION_ID ,
                 "startTime":$scope.vm.timerSearchStartTime ,
                 "endTime":$scope.vm.timerSearchEndTime ,
@@ -210,20 +233,47 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
-                console.log(data)
+                console.log(data);
                 if(data.status==500){
                     //layer.msg("导出失败")
                     console.log("导出失败");
                 }else{
                     //alert(data.data);
-                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    //window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    var url=AppAnalysisServer.exportByTimeUrl+data.data;
+                    downLoadFiles(angular.element('.StatisticsByTime')[0] ,url);
+
                 }
                 console.log();
+            },function(err){
+                $log.log(err);
+            });
 
-            },function(err){})
         }
+        /**
+         * 访问数据渠道统计 导出表格
+         * **/
         function exportByChannel(){
-            httpRequestPost("/api/analysis/access/exportByChannel",{
+            // httpRequestPost("/api/analysis/access/exportByChannel",{
+            //     "applicationId":APPLICATION_ID ,
+            //     "startTime":$scope.vm.accessSearchStartTime ,
+            //     "endTime":$scope.vm.accessSearchEndTime ,
+            //     "requestTimeType" : $scope.vm.accessSearchTimeType ,
+            //     "dimensionId" : $scope.vm.dimensionId,
+            //     "channelId" : $scope.vm.channelId
+            // },function(data){
+            //     console.log(data)
+            //     if(data.status==500){
+            //         //layer.msg("导出失败")
+            //         console.log("导出失败");
+            //     }else{
+            //         //alert(data.data);
+            //         window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+            //     }
+            //     console.log();
+            //
+            // },function(err){})
+            AppAnalysisServer.exportByChannel.save({
                 "applicationId":APPLICATION_ID ,
                 "startTime":$scope.vm.accessSearchStartTime ,
                 "endTime":$scope.vm.accessSearchEndTime ,
@@ -237,50 +287,52 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                     console.log("导出失败");
                 }else{
                     //alert(data.data);
-                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    //window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    var url = AppAnalysisServer.exportByChannelUrl+data.data;
+                    downLoadFiles(angular.element('.StatisticsByChannel')[0] ,url);
                 }
                 console.log();
-
-            },function(err){})
+            },function(err){
+                $log.log(err);
+            });
         }
 
         //左上表格数据
-        void function getTopLeft(){
-            httpRequestPost("/api/analysis/access/queryAccessDataTopLeft",{
-                "applicationId":APPLICATION_ID,
+        void function getTopLeft(){            
+            AppAnalysisServer.getTopLeft.save({
+                "applicationId":APPLICATION_ID
             },function(data){
-                $scope.$apply(function(){
-                    $scope.vm.dataTopLeft = [
-                        {
-                            "name" : "今日",
-                            "data" : data.data["今天"]
-                        } ,
-                        {
-                            "name" : "昨天",
-                            "data" : data.data["昨天"]
-                        } ,
-                        {
-                            "name" : "历史最高",
-                            "data" : data.data["历史最高"]
-                        }
-                    ] ;
-                })
-            },function(){})
+                $scope.vm.dataTopLeft = [
+                    {
+                        "name" : "今日",
+                        "data" : data.data["今天"]
+                    } ,
+                    {
+                        "name" : "昨天",
+                        "data" : data.data["昨天"]
+                    } ,
+                    {
+                        "name" : "历史最高",
+                        "data" : data.data["历史最高"]
+                    }
+                ] ;
+            },function(err){
+                $log.log(err);
+            });
+
         }();
         //右上表格数据
        void function getTopRight(){
-            httpRequestPost("/api/analysis/access/queryAccessDataTopright",{
-                "applicationId":APPLICATION_ID
-            },function(data){
-                $scope.$apply(function(){
-                    $scope.vm.dataTopRigth ={
-                         "today":data.data["今日"] ,
-                         "history":data.data["历史"]
-                        } ;
-                })
-            },function(){
-
-            })
+           AppAnalysisServer.getTopRight.save({
+               "applicationId":APPLICATION_ID
+           },function(data){
+               $scope.vm.dataTopRigth ={
+                   "today":data.data["今日"] ,
+                   "history":data.data["历史"]
+               } ;
+           },function(err){
+                $log.log(err);
+           });
         }();
         //访问数据时间统计
         function queryAccessDataByTime(){
