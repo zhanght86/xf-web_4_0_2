@@ -256,7 +256,8 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.knowledgeList=null;
             $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
-                template:"/static/applicationAnalysis/associateLearn.html",
+                template:"/static/application_analysis/reinforcement_learn/associate_learn.html",
+                width:'460px',
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -420,7 +421,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.knowledgeContent = content ;
             console.log("======="+$scope.vm.knowledgeContent);
             var dialog = ngDialog.openConfirm({
-                template:"/static/applicationAnalysis/switchKnowledgeType.html",
+                template:"/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html",
                 width:'500px',
                 scope: $scope,
                 closeByDocument:false,
@@ -443,7 +444,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.currQuestion="用户问题:"+content;
             $scope.vm.currKnowledgeTitle=knowledgeTitle;
             ngDialog.openConfirm({
-                template:"/static/applicationAnalysis/associateLearnCheck.html",
+                template:"/static/application_analysis/new_know_discovery_learn/associate_learn_check.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -474,7 +475,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 console.log(err);
             });
             ngDialog.openConfirm({
-                template:"/static/applicationAnalysis/content.html",
+                template:"/static/application_analysis/new_know_discovery_learn/content.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

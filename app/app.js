@@ -995,7 +995,7 @@ knowledge_static_web
             //应用分析
             .state("applAnalysis", {
                 url: "/applAnalysis",
-                templateUrl: 'static/applicationAnalysis/applAnalysis.html',
+                templateUrl: 'static/application_analysis/main.html',
                 controller: "applAnalysisController"
 
             })
@@ -1007,7 +1007,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/sessionDetails.html',
+                        templateUrl: 'static/application_analysis/session_details/session_details.html',
                         controller: "sessionDetailsController"
                     }
                 }
@@ -1020,7 +1020,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/satisfactionDegree.html',
+                        templateUrl: 'static/application_analysis/satisfaction_degree/satisfaction_degree.html',
                         controller: "satisfactionDegreeController"
                     }
                 }
@@ -1034,7 +1034,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/accessStatistics.html',
+                        templateUrl: 'static/application_analysis/access_statistics/access_statistics.html',
                         controller: "accessStatisticsController"
                     }
                 }
@@ -1047,7 +1047,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/knowledgeRanking.html',
+                        templateUrl: 'static/application_analysis/knowledge_ranking/knowledge_ranking.html',
                         controller: "knowledgeRankingController"
                     }
                 }
@@ -1060,7 +1060,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/resolutionStatistics.html',
+                        templateUrl: 'static/application_analysis/resolution_statistics/resolution_statistics.html',
                         controller: "resolutionStatisticsController"
                     }
                 }
@@ -1073,7 +1073,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/reinforcementLearn.html',
+                        templateUrl: 'static/application_analysis/reinforcement_learn/reinforcement_learn.html',
                         controller: "reinforcementLearnController"
                     }
                 }
@@ -1086,7 +1086,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/newKnowledgeDiscoveryLearn.html',
+                        templateUrl: 'static/application_analysis/new_know_discovery_learn/new_know_discovery_learn.html',
                         controller: "newKnowledgeDiscoveryLearnController"
                     }
                 }
@@ -1099,7 +1099,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/operationLog.html',
+                        templateUrl: 'static/application_analysis/operation_log/operation_log.html',
                         controller: "operationLogController"
                     }
                 }
@@ -1112,7 +1112,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/applicationAnalysis/sessionLog.html',
+                        templateUrl: 'static/application_analysis/session_log/session_log.html',
                         controller: "sessionLogController"
                     }
                 }

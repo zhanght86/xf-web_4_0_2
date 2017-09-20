@@ -43,7 +43,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             $scope.vm.userId = id;
             getScanData(id,1);
             ngDialog.openConfirm({
-                template:"/static/applicationAnalysis/sessionDetailsDialog.html",
+                template:"/static/application_analysis/session_details/session_details_dialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
