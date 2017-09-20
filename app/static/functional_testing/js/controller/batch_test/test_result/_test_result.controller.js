@@ -165,8 +165,9 @@ angular.module('functionalTestModule').controller('testResultController', [
                         if(data.status == 10002){
                             layer.msg("该测试问法已经存在，请重新添加!",{time:1000})
                         }else if (data.status == 10000) {
+                            $state.reload();
                             layer.msg("修改成功",{time:1000});
-                            showData(1);
+                            //showData(1);
                         }else if(data.status == 10004){
                             //layer.msg("修改失败");
                             console.log("修改失败");
