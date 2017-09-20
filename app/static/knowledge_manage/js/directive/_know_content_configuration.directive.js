@@ -3,15 +3,22 @@
  * @Create : 2017/9/15.
  * @Module :  list factor 知识内容 组件
  */
-angular.module("knowledgeManagementModule").directive("listRelatedQuestion",["KnowledgeService","$timeout",function(KnowledgeService,$timeout){
+angular.module("knowledgeManagementModule").directive("knowContentConfiguration",
+    ["KnowledgeService","$templateCache","$timeout","$sce",
+    function(KnowledgeService,$templateCache,$timeout,$sce){
     // 要素 列表
     return {
-        //replace : true, //格式可以替换
-        //transclude : false, //能够让你移动一个标识符的原始子节点到一个新模板的位置
-        //scope : {
-        //
-        //} ,
-        templateUrl : "/static/knowledge_manage/components/know_content_not_dialog.html" ,
+        restrict: 'A',
+        template :
+            function(scope,attr){
+                var result  ;
+                if (attr["templateType"]==true){//如果解析不了，默认的无弹框
+                    result = $templateCache.get("has-dialog") ;
+                }else{
+                    result =  $templateCache.get("not-dialog")
+                }
+                return result
+            },
         link : function(scope,el,attr,ctr){
             scope.dirCont = {
                 search : false ,
@@ -31,7 +38,7 @@ angular.module("knowledgeManagementModule").directive("listRelatedQuestion",["Kn
                          timer = $timeout(function () {
                                 scope.dirCont.empty = false ;
                                 scope.dirCont.search = true ;
-                                KnowledgeService[attr.listRelatedQuestion].save({
+                                KnowledgeService[attr.knowContentConfiguration].save({
                                     "title" : val
                                 },function(response){
                                     if(response.status == 200 ){
@@ -58,7 +65,7 @@ angular.module("knowledgeManagementModule").directive("listRelatedQuestion",["Kn
                     if(arr.indexOf(item)==-1){
                         arr.push(item)
                     }
-                } ;
+                }
             // 光标移开
             function leaveAppointEnter(){
                 $timeout(function(){
@@ -76,4 +83,25 @@ angular.module("knowledgeManagementModule").directive("listRelatedQuestion",["Kn
             }
         }
     }
-}]);
+}])
+// 相关问题 键盘选择
+//function selectEvent(e){
+//        var  srcObj = e.srcElement ? e.srcElement : e.target;
+//        var keycode = window.event?e.keyCode:e.which;
+//    switch(keycode){
+//        case 13 :
+//            if(arr.indexOf(item)==-1){
+//                arr.push(item)
+//            }
+//            $scope.vm.appointRelative = null;  //清楚title
+//            $scope.vm.appointRelativeList = [];  //清除 列表
+//            break ;
+//        case 40 :
+//            if(arr.indexOf(item)==-1){
+//                arr.push(item)
+//            }
+//            $scope.vm.appointRelative = null;  //清楚title
+//            $scope.vm.appointRelativeList = [];  //清除 列表
+//            break ;
+//    }
+//}
