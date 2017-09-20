@@ -267,7 +267,7 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             getRecommend(requestId);
             $scope.vm.currQuestion="用户问题:"+content;
             var dialog = ngDialog.openConfirm({
-                template:"/static/applicationAnalysis/associateLearn.html",
+                template:"/static/application_analysis/reinforcement_learn/associate_learn.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

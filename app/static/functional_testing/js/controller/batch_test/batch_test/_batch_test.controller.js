@@ -7,7 +7,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
     function ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,knowledgeAddServer) {
         $scope.vm = {
             //applicationId : $cookieStore.get("applicationId"),
-            //userId : $cookieStore.get("userId"),
+            userId : $cookieStore.get("userId"),
             deleteQuestion : deleteQuestion,
             uploadQuestion : uploadQuestion,
             startUp : startUp,
@@ -41,15 +41,15 @@ angular.module('functionalTestModule').controller('batchTestController', [
 
         };
         //获取渠道
-        knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-            function(data) {
-                if(data.data){
-                    $scope.vm.channelList = data.data;
-                }
-            }, function(error) {
-                console.log(error);
-                //layer.msg("获取渠道失败，请刷新页面");
-            });
+        // knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
+        //     function(data) {
+        //         if(data.data){
+        //             $scope.vm.channelList = data.data;
+        //         }
+        //     }, function(error) {
+        //         console.log(error);
+        //         //layer.msg("获取渠道失败，请刷新页面");
+        //     });
         //页面初始化加载已发布服务
         getService();
         function getService(){
@@ -83,7 +83,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         searchFile(1) ;
         //查询
         function searchFile(index){
-            FunctionServer.searchFile.save({
+            FunctionServer.BatchsearchFile.save({
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
                 applicationId:APPLICATION_ID,
@@ -157,36 +157,10 @@ angular.module('functionalTestModule').controller('batchTestController', [
             if($scope.vm.deleteIds.length == 0){
                 layer.msg("请选择要删除的文件！",{time:1000});
                 return;
-            }
-            // var dialog = ngDialog.openConfirm({
-            //     template: "/static/functional_testing/batch_test/batch_test_dialog.html",
-            //     scope: $scope,
-            //     closeByDocument: false,
-            //     closeByEscape: true,
-            //     showClose: true,
-            //     backdrop: 'static',
-            //     preCloseCallback: function (e) {    //关闭回掉
-            //         if(e === 1){
-            //             httpRequestPost("/api/application/batchTest/batchDeleteByIds",{
-            //                 applicationId :  APPLICATION_ID,
-            //                 ids :  $scope.vm.deleteIds
-            //             },function(data){
-            //                 if(data.status == 10013){
-            //                     initBatchTest();
-            //                     //$scope.vm.selectAllCheck = false;
-            //                     $state.reload();
-            //                     layer.msg("删除成功",{time:1000});
-            //                 }else{
-            //                     layer.msg("删除失败");
-            //                 }
-            //             },function(){
-            //                 console.log('请求失败');
-            //             });
-            //         }
-            //     }
-            // });
+            }            
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test_dialog.html','400px',function(){
-                httpRequestPost("/api/application/batchTest/batchDeleteByIds",{
+
+                FunctionServer.batchDelete.save({
                     applicationId :  APPLICATION_ID,
                     ids :  $scope.vm.deleteIds
                 },function(data){
@@ -198,8 +172,8 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     }else{
                         layer.msg("删除失败");
                     }
-                },function(){
-                    console.log('请求失败');
+                },function(err){
+                    $log.log(err);
                 });
             },function(){
 
@@ -208,19 +182,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
         //启动
         function startUp(id){
             if($scope.vm.serviceId) {
-                $scope.vm.batchNumberId = id ;
-                // var dialog = ngDialog.openConfirm({
-                //     template: "/static/functional_testing/batch_test/batch_test/start_up_dialog.html",
-                //     scope: $scope,
-                //     closeByDocument: false,
-                //     closeByEscape: true,
-                //     showClose: true,
-                //     backdrop: 'static',
-                //     preCloseCallback: function (e) {    //关闭回掉
-                //           $scope.vm.channel = "" ;
-                //           //$scope.vm.serviceId = vm.listService[0].serviceId ;
-                //     }
-                // });
+                $scope.vm.batchNumberId = id ;                
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test/start_up_dialog.html','450px',function(){
 
                 },function(){
@@ -247,7 +209,27 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         return name = item.channelName  ;
                     }
                 }) ;
-                httpRequestPost("/api/application/batchTest/getChannelAndUserName", {
+                // httpRequestPost("/api/application/batchTest/getChannelAndUserName", {
+                //     batchNumberId:  id,
+                //     //userId: $scope.vm.userId,
+                //     userId : USER_ID,
+                //     //channel:$scope.vm.channel,
+                //     channelName : name,
+                //     channel:channelId,
+                //     applicationId:APPLICATION_ID,
+                //     serviceId:$scope.vm.serviceId,
+                // }, function (data) {
+                //     if(data.status == 20002){
+                //         layer.msg(data.data,{time:1000});
+                //     }
+                //     if(data.status == 10018){
+                //         searchFile($scope.vm.paginationConf.currentPage);
+                //         startTest(id,name,channelId);
+                //     }
+                // }, function () {
+                //     console.log('请求失败');
+                // },"","",60000);
+                FunctionServer.start.save({
                     batchNumberId:  id,
                     //userId: $scope.vm.userId,
                     userId : USER_ID,
@@ -256,7 +238,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                     channel:channelId,
                     applicationId:APPLICATION_ID,
                     serviceId:$scope.vm.serviceId,
-                }, function (data) {
+                },function (data) {
                     if(data.status == 20002){
                         layer.msg(data.data,{time:1000});
                     }
@@ -264,27 +246,55 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         searchFile($scope.vm.paginationConf.currentPage);
                         startTest(id,name,channelId);
                     }
-                }, function () {
-                    console.log('请求失败');
-                },"","",60000);
+                },function(err){
+                    $log.log(err);
+                });
                 ngDialog.closeAll() ;
             }
         }
 
         function stopTest(id){
-            httpRequestPost("/api/application/batchTest/startTest", {
+            // httpRequestPost("/api/application/batchTest/startTest", {
+            //     batchNumberId: id,
+            //     batchStatusId : 21007
+            // }, function (data) {
+            //     console.log(data);
+            //     if(data.status=10000){
+            //         searchFile($scope.vm.paginationConf.currentPage) ;
+            //     }
+            // });
+            FunctionServer.stopTest.save({
                 batchNumberId: id,
                 batchStatusId : 21007
-            }, function (data) {
+            },function(data){
                 console.log(data);
                 if(data.status=10000){
                     searchFile($scope.vm.paginationConf.currentPage) ;
                 }
+            },function(){
+
             });
         }
 
         function startTest(id,name,channelId){
-            httpRequestPost("/api/application/batchTest/startTest", {
+            // httpRequestPost("/api/application/batchTest/startTest", {
+            //     batchNumberId: id,
+            //     //userId: $scope.vm.userId,
+            //     userId : USER_ID,
+            //     channelName : name ,
+            //     channel:channelId,
+            //     applicationId:APPLICATION_ID,
+            //     serviceId:$scope.vm.serviceId,
+            //     //serviceId:22
+            // }, function (data) {
+            //     console.log(data);
+            //     if(data.status=10000){
+            //         searchFile($scope.vm.paginationConf.currentPage) ;
+            //     }
+            // }, function () {
+            //     //layer.msg("请求失败");
+            // },"","",3600000);
+            FunctionServer.startTest.save({
                 batchNumberId: id,
                 //userId: $scope.vm.userId,
                 userId : USER_ID,
@@ -293,14 +303,14 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 applicationId:APPLICATION_ID,
                 serviceId:$scope.vm.serviceId,
                 //serviceId:22
-            }, function (data) {
+            },function(data){
                 console.log(data);
                 if(data.status=10000){
                     searchFile($scope.vm.paginationConf.currentPage) ;
                 }
-            }, function () {
-                //layer.msg("请求失败");
-            },"","",3600000);
+            },function(err){
+                $log.log(err);
+            });
         }
 
         function selectAll(){

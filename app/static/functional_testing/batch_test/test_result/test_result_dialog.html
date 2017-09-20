@@ -16,7 +16,12 @@
     <div class="framework mb-10">
         <span class="framework_s ">渠道:</span>
         <div class="">
-            <label class="mr-10" ng-repeat="channel in vm.channelList"><input type="radio" name="channel" ng-checked="(vm.editChannel==channel.channelCode)?true:false" ng-click="vm.editChannel=channel.channelCode" /> {{channel.channelName}}</label>
+            <!--<label class="mr-10" ng-repeat="channel in vm.channelList">-->
+                <!--<input type="radio" name="channel" ng-checked="(vm.editChannel==channel.channelCode)?true:false" ng-click="vm.editChannel=channel.channelCode" /> {{channel.channelName}}-->
+            <!--</label>-->
+            <label class="mr-10"  ng-repeat="channel in $parent.$parent.MASTER.channelList track by $index">
+                <input type="radio"  name="channel" ng-model="vm.channel" ng-value="channel.channelCode"/> {{channel.channelName}}
+            </label>
         </div>
     </div>
     <div class="tc mt-20">
