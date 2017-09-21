@@ -45,7 +45,7 @@
                 <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1">访问数据渠道统计 </span>
             </div>
             <div class="tab_con pt30 pb30">
-                <div ng-show="vm.contentType==0">
+                <div ng-show="vm.contentType==0" class="StatisticsByTime">
                     <div class="data_time_statis_top " style="width:910px;">
                         <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.TimerSearchTimeType">
                             <option value="1" >今日</option>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-show="vm.contentType==1" >
+                <div ng-show="vm.contentType==1"  class="StatisticsByChannel">
                     <div class="data_time_statis_top " style="width:605px;">
                         <select class="sel bd L mr-5" id="request_time_typeId" ng-model="vm.accessSearchTimeType">
                             <option value="1">今日</option>
