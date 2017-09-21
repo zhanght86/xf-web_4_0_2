@@ -108,7 +108,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
 
      //表格列表
         function getList(index){
-            AppAnalysisServer.getList.save({
+            AppAnalysisServer.sessionGetList.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,

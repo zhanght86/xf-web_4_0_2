@@ -54,10 +54,16 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     //获取对应user 的 对话列表
     this.getScanData = $resource(API_ANALYSIS+'/userSession/searchTimeBar',{},{});
     ///表格列表
-    this.getList = $resource(API_ANALYSIS+'/userSession/searchList',{},{});
+    this.sessionGetList = $resource(API_ANALYSIS+'/userSession/searchList',{},{});
     ////弹窗获取
     this.getdetail = $resource(API_ANALYSIS+'/userSession/searchTimeBarContent',{},{});
-
+                                    /******************************
+                                                *会话满意度统计*    API_ANALYSIS = "/api/analysis" ;
+                                         ********************************/
+    //表格列表
+    this.satisfactionGetList = $resource(API_ANALYSIS+'/satisfaction/searchList',{},{});
+    //获取Echart 图数据
+    this.getPieData = $resource(API_ANALYSIS+'/satisfaction/chartAndTotal',{},{} );
 
 
 }]);

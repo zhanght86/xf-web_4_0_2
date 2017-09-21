@@ -3,15 +3,16 @@
  * 满意率 控制器
  */
 angular.module('applAnalysisModule').controller('satisfactionDegreeController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            applicationId :$cookieStore.get("applicationId"),
             getList : getList ,
             listData : null ,   // table 数据
-            paginationConf : null ,//分页条件
-            pageSize : 5  , //默认每页数量
+            paginationConf:{    //分页条件
+                pageSize : 5,
+                pagesLength : 10
+            },
             dimensions : [] ,
             channels : [] ,
             channelId  : null ,
@@ -24,9 +25,7 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             timeEnd :"",
 
             "orderForSessionNumber": null,
-
             "orderForUnsatisfiedNumber": null,
-
             "orderForSatisfactionRate": null,
 
             sotrBySe : sotrBySe ,
@@ -55,38 +54,38 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
         }
         //表格列表
         function getList(index){
-            //console.log((index-1)*$scope.vm.pageSize );
+            //console.log((index-1)*$scope.vm.paginationConf.pageSize );
             getPieData();
-            httpRequestPost("/api/analysis/satisfaction/searchList",{
+
+            AppAnalysisServer.satisfactionGetList.save({
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
-                "applicationId" : $scope.vm.applicationId,
+                "applicationId" : APPLICATION_ID,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize,
-
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
                 "orderForSatisfactionRate": $scope.vm.orderForSatisfactionRate,
-
                 "orderForSessionNumber": $scope.vm.orderForSessionNumber,
-
                 "orderForUnsatisfiedNumber": $scope.vm.orderForUnsatisfiedNumber,
             },function(data){
                 //console.log(data.data);
                 $scope.vm.listData = data.data.objs;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: Math.ceil(data.data.total/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
-                $scope.$apply();
+                // $scope.vm.paginationConf = {
+                //     currentPage: index,//当前页
+                //     totalItems: Math.ceil(data.data.total/5), //总条数
+                //     pageSize: 1,//第页条目数
+                //     pagesLength: 8,//分页框数量
+                // };
+                $scope.vm.paginationConf.currentPage =index ;
+                $scope.vm.paginationConf.totalItems =data.data.total ;
+                $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                console.log($scope.vm.paginationConf);
                 console.log(data)
-            },function(){
-
-            })
+            },function(err){
+                $log.log(err);
+            });
         };
         //list 分页变化加载数据
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -94,13 +93,13 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
                 getList(current);
             }
         });
-
+        //获取Echart 图数据
         function getPieData(){
-            httpRequestPost("/api/analysis/satisfaction/chartAndTotal",{
-                "applicationId" : $scope.vm.applicationId,
+
+            AppAnalysisServer.getPieData.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
-
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
@@ -151,46 +150,16 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
                 // 使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option);
             },function(err){
-                //layer.msg("获取满意度失败，请刷新页面")
                 console.log("获取满意度失败，请刷新页面");
             });
         }
 
         init();
         function init(){
-            getDimensions();
-            getChannel();
+            //getDimensions();
+            //getChannel();
             getList(1);
             getPieData()
-        }
-        //維度
-
-        function  getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.$apply()
-                }
-            },function(err){
-               // layer.msg("获取维度失败，请刷新页面")
-                console.log("获取维度失败，请刷新页面");
-            });
-        }
-        //渠道
-        function  getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data;
-                    $scope.$apply()
-                }
-            },function(err){
-                //layer.msg("获取渠道失败，请刷新页面")
-                console.log("获取渠道失败，请刷新页面");
-            });
         }
 
         
