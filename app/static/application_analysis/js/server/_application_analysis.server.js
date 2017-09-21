@@ -28,7 +28,7 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     //访问数据渠道统计
     this.queryAccessDataByChannel = $resource(API_ANALYSIS+'/access/queryAccessDataByType',{},{});
                                 /******************************
-                                            *访问统计*    API_ANALYSIS = "/api/analysis" ;
+                                            *知识点排名统计*    API_ANALYSIS = "/api/analysis" ;
                                             ********************************/
     //未匹配问题
     this.getList = $resource(API_ANALYSIS+'/noMatch/searchList',{},{});
@@ -44,7 +44,20 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.exportNoMatchExcel = $resource(API_ANALYSIS+'/noMatch/export',{},{});
     //未匹配问题导出表格路径
     this.exportNoMatchExcelUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
-                                             
+                                    /******************************
+                                                *会话明细统计*    API_ANALYSIS = "/api/analysis" ;
+                                            ********************************/
+    //导出
+    this.exportExcel = $resource(API_ANALYSIS+'/userSession/export',{},{});
+    //导出路径
+    this.exportExcelUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
+    //获取对应user 的 对话列表
+    this.getScanData = $resource(API_ANALYSIS+'/userSession/searchTimeBar',{},{});
+    ///表格列表
+    this.getList = $resource(API_ANALYSIS+'/userSession/searchList',{},{});
+    ////弹窗获取
+    this.getdetail = $resource(API_ANALYSIS+'/userSession/searchTimeBarContent',{},{});
+
 
 
 }]);
