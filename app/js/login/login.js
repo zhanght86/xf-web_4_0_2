@@ -44,7 +44,6 @@
                 }else if(response.status == 10002){
                     reset_tip("该用户已停用!") ;
                 }
-                console.log(typeof response)
             },
             error : function(error){
                 console.log(error);

@@ -101,11 +101,11 @@ knowledge_static_web
         });
         $stateProvider
         //登录路由
-            .state("login", {
-                url: "/login",
-                templateUrl: 'static/login/login.html',
-                controller: "loginController"
-            })
+        //    .state("login", {
+        //        url: "/login",
+        //        templateUrl: 'static/login/login.html',
+        //        controller: "loginController"
+        //    })
             // 首页路由
             .state("homePage", {
                     url: "/homePage",

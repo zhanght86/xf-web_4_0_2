@@ -47,6 +47,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             //弹框相关
             newTitle: "",    //标题
             channel : [],     //新添加的 channel
+
             selectChannel : selectChannel , //獲取渠道
             dimension  : "",
             dimensions : []
@@ -89,8 +90,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             extensionDeleted : []
         };
 
-        //獲取渠道
-        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         //組裝數據   擴展問   content
         //BOT路径设置为 选择添加                  再次增加判断重复
@@ -213,25 +212,6 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
                     $scope.$apply();
                 }
             }, function (error) {console.log(error)});
-        }
-        // 获取Bot全路径
-        function getBotFullPath(id){
-            httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
-                categoryId: id
-            },function(data){
-                if(data.status = 10000){
-                    var allBot = angular.copy($scope.vm.creatSelectBot.concat($scope.vm.botClassfy)) ,
-                        botResult = $scope.MASTER.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
-                    $scope.$apply(function(){
-                        console.log(data) ;
-                        $scope.vm.knowledgeBotVal = data.categoryFullName;
-                        if(botResult != false){
-                            //$scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
-                            $scope.vm.botFullPath= botResult;
-                        }
-                    });
-                }
-            },function(error){console.log(error)});
         }
         // 知识文档分类回调
         function knowledgeClassifyCall() {
@@ -365,30 +345,7 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         }
 
 ////////////////////////////////////// ///          Bot     /////////////////////////////////////////////////////
-        $scope.MASTER.botTreeOperate($scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
-            //"/api/ms/modeling/category/searchbycategoryname"
-        ) ;
-        //BOT搜索自动补全
-        $scope.MASTER.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
-            $scope.$apply(function(){
-                var allBot = angular.copy($scope.vm.botClassfy.concat($scope.vm.creatSelectBot)) ,
-                    botResult = $scope.MASTER.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
-                $scope.vm.knowledgeBotVal = suggestion.value;
-                if(botResult != false){
-                    $scope.vm.botFullPath= botResult;
-                }
-            })
-        });
-        //点击bot分类的 加号
-        function botSelectAdd(){
-            if($scope.vm.botFullPath){
-                console.log($scope.vm.botFullPath)
-                $scope.vm.creatSelectBot.push($scope.vm.botFullPath);
-                $scope.vm.frameCategoryId = $scope.vm.botFullPath.classificationId;
-                $scope.vm.botFullPath = "";
-                $scope.vm.knowledgeBotVal = "";
-            }
-        };
+
 ////////////////////////////////////////           Bot     //////////////////////////////////////////////////////
 //        function replace(id){
 //                var replace = ngDialog.openConfirm({

@@ -109,7 +109,7 @@ knowledge_static_web.controller('ApplicationController',
             //獲取纬度
             function querydimensionList(applicationId){
                 //var dimensions = [] ;
-                knowledgeAddServer.getDimensions({ "applicationId" : applicationId},
+                return knowledgeAddServer.getDimensions({ "applicationId" : applicationId},
                     function(data) {
                         if(data.data){
                             $scope.MASTER.dimensionList = data.data ;
@@ -137,7 +137,7 @@ knowledge_static_web.controller('ApplicationController',
             }
              function queryChannelList(applicationId){
                 //var  channels = [] ;
-                knowledgeAddServer.getChannels({ "applicationId" : applicationId},
+               return knowledgeAddServer.getChannels({ "applicationId" : applicationId},
                     function(data) {
                         if(data.data){
                             $scope.MASTER.channelList = data.data ;
@@ -423,8 +423,6 @@ knowledge_static_web.controller('ApplicationController',
                         var id = pre.attr("data-option");
                         selectCall(id) ;   //添加bot分類
                         angular.element(".rootClassfy,.menus").slideToggle();
-                        //$scope.$apply();
-                        //}
                     });
                 }
                 tree.init() ;
