@@ -11,6 +11,7 @@
 .from-box .item{margin-bottom: 20px; border:1px solid #e2e2e2; padding: 0 4px; position: relative;}
 .from-box .item .yzm{cursor:pointer;position: absolute; right: 0; top: 0; text-align: center; font-size: 16px; width: 68px; height: 100%; line-height: 35px; background-color: #f1f1f1; color: #3ea9fb; display: block;}
 .from-box .login-btn{cursor:pointer;height: 38px; line-height: 38px; text-align: center; border-radius: 4px; background-color: #3ea9fb; color: #fff; font-size: 16px; display: block;}
+/*  2017/9/20 独立登录页 修改chrome中input默认黄色背景   */
 .login-cont input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset !important;
 }

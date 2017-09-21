@@ -12,5 +12,4 @@
     APPLICATION_ID = document.cookie.indexOf("applicationId=")!=-1?getCookie("applicationId").replace(/\"/g,""):"",
     APPLICATION_NAME = document.cookie.indexOf("applicationName=")!=-1?getCookie("applicationName").replace(/\"/g,""):"" ,
     SCENE_ID = document.cookie.indexOf("sceneId=")!=-1?getCookie("sceneId").replace(/\"/g,""):"";
-console.log(USER_NAME) ;
 

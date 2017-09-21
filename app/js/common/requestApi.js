@@ -21,7 +21,7 @@ var
             * 业务建模
             *
            **/
-         API_MODELING = "/api/modeling",
+         API_MODELING = "/api/ms/modeling",
 
 
           /**

@@ -43,18 +43,23 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         this.queryFactorKnow = $resource(API_MS+"/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId",{},{}) ;
 
                                 /******************************
-                                             * 知识总览 *
+                                             * 知识单条新增 *
                                           **********************************/
+//   bot
+//        获取bot全路径
+        this.getBotFullPath = $resource(API_MS+"/category/getcategoryfullname")
 //   faq知识新增
         // 获取相关问
         this.queryFapRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;
 //   概念知识新增
         // 获取相关问
         this.queryConceptRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;
+
+
 //   列表知识新增
         // 获取相关问
         this.queryListRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
-//  要素知识新增
+//   要素知识新增
         // 获取相关问
         this.queryFactorRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
 //   富文本知识新增
