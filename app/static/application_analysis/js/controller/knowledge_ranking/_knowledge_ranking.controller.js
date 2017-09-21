@@ -3,11 +3,11 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('knowledgeRankingController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$window",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$window",
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            applicationId :APPLICATION_ID,
+           // applicationId :APPLICATION_ID,
             getList : getList ,
             getKnowledgeList:getKnowledgeList,
             listData : null ,
@@ -33,9 +33,9 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
         var myChartQuestion = echarts.init(document.getElementById('questionRanking'));
         //未匹配問題
         function getList(index){
-            getKnowledgeList(1);
-            httpRequestPost("/api/analysis/noMatch/searchList",{
-                "applicationId" : $scope.vm.applicationId,
+            getKnowledgeList(1);            
+            AppAnalysisServer.getList.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -45,23 +45,23 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 "pageSize": 10
             },function(data){
                 console.log(data) ;
-                $scope.$apply(function(){
-                    var xData=[] ,yData=[] ;
-                    angular.forEach(data.data.objs,function(item,index){
-                        xData.push(item.userQuestion) ;
-                        yData.push(item.questionNumber) ;
-                        console.log(xData)
-                    }) ;
-                    myChartQuestion.setOption(setEchartOption(xData,yData));
-                    $scope.vm.listData = data.data.objs;
-                    $scope.vm.listDataTotal = data.data.total;
-                });
+                var xData=[] ,yData=[] ;
+                angular.forEach(data.data.objs,function(item,index){
+                    xData.push(item.userQuestion) ;
+                    yData.push(item.questionNumber) ;
+                    console.log(xData)
+                }) ;
+                myChartQuestion.setOption(setEchartOption(xData,yData));
+                $scope.vm.listData = data.data.objs;
+                $scope.vm.listDataTotal = data.data.total;
+            },function(err){
+                $log.log(err);
             });
         }
         //知識點排名
         function getKnowledgeList(index){
-            httpRequestPost("/api/analysis/knowledgeRanking/searchKnowledgeRankingList",{
-                "applicationId" : $scope.vm.applicationId,
+            AppAnalysisServer.getKnowledgeList.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -71,30 +71,31 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 "pageSize": 10
             },function(data){
                 console.log(data) ;
-                $scope.$apply(function(){
-                    var xData=[] ,yData=[] ;
-                    angular.forEach(data.data.objs,function(item,index){
-                        xData.push(item.knowledgeTitle) ;
-                        yData.push(item.questionNumber)
-                        console.log(xData)
-                    }) ;
-                    myChart.setOption(setEchartOption(xData,yData));
-                    $scope.vm.listDataK = data.data.objs;
-                    $scope.vm.listDataTotalK = data.data.total;
-                });
+                var xData=[] ,yData=[] ;
+                angular.forEach(data.data.objs,function(item,index){
+                    xData.push(item.knowledgeTitle) ;
+                    yData.push(item.questionNumber)
+                    console.log(xData)
+                }) ;
+                myChart.setOption(setEchartOption(xData,yData));
+                $scope.vm.listDataK = data.data.objs;
+                $scope.vm.listDataTotalK = data.data.total;
+            },function(err){
+                $log.log(err);
             });
         }
         init();
         function init(){
-            getDimensions();
-            getChannel();
+            //getDimensions();
+            //getChannel();
             getKnowledgeList(1);
             getList(1);
         }
+        /*
         //維度
         function getDimensions(){
             httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
+                "applicationId" : APPLICATION_ID
             },function(data){
                 if(data.data){
                     $scope.vm.dimensions = data.data;
@@ -103,12 +104,13 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
             },function(err){
                 console.log(err);
             });
+
         }
 
         //渠道
         function getChannel(){
             httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : $scope.vm.applicationId
+                "applicationId" : APPLICATION_ID
             },function(data){
                 if(data.data){
                     $scope.vm.channels = data.data;
@@ -118,6 +120,7 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 console.log(err);
             });
         };
+        */
 
         //function exportKnowledgeExcel(){
         //    var urlParams =
@@ -127,9 +130,12 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
         //    $window.open(url,"_blank") ;
         //}
 
-        function exportKnowledgeExcel(){
-            httpRequestPost("/api/analysis/knowledgeRanking/export",{
-                "applicationId" : $scope.vm.applicationId,
+        /*
+         **知识点排名导出表格；
+         */
+        function exportKnowledgeExcel(){            
+            AppAnalysisServer.exportKnowledgeExcel.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -138,22 +144,27 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 "index": 0,
                 "pageSize": 10
             },function(data){
-                console.log(data)
-                if(data.status==500){
-                    //layer.msg("导出失败")
+                console.log(data);
+                if(data.status==500){                    
                     console.log("导出失败");
                 }else{
                     //alert(data.data);
-                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                   // window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                     var url = AppAnalysisServer.exportKnowledgeExcelUrl + data.data;
+                     downLoadFiles($('.knowledgeRanking')[0],url);
+
                 }
                 console.log();
-
-            },function(err){})
+            },function(err){
+                $log.log(err);
+            });
         }
-
+        /*
+        **未匹配问题统计导出表格；
+        */
         function exportNoMatchExcel(){
-            httpRequestPost("/api/analysis/noMatch/export",{
-                "applicationId" : $scope.vm.applicationId,
+            AppAnalysisServer.exportNoMatchExcel.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -162,17 +173,22 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 "index": 0,
                 "pageSize": 10
             },function(data){
-                console.log(data)
+                console.log(data);
                 if(data.status==500){
                     //layer.msg("导出失败")
                     console.log("导出失败");
                 }else{
                     //alert(data.data);
-                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    //window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    var url = AppAnalysisServer.exportNoMatchExcelUrl+data.data;
+                    downLoadFiles($('.noMatch')[0],url);
+
                 }
                 console.log();
 
-            },function(err){})
+            },function(err){
+                $log.log(err);
+            });
 
         }
         function setEchartOption(xData,yData){
