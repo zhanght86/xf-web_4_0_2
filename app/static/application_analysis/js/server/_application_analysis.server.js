@@ -90,6 +90,18 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.exportExcelSessionLog = $resource(API_ANALYSIS+'/userSession/export',{},{});
     //导出表格路径
     this.exportExcelSessionLogUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
+                            /******************************
+                                    *智能学习*    API_ANALYSIS = "/api/analysis" ;
+                                ********************************/
+
+
+
+
+                            /******************************
+                                  *未匹配问题聚类*    API_ANALYSIS = "/api/analysis" ;
+                                 ********************************/
+    
+
 
 
 
