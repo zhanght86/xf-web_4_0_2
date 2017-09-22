@@ -90,45 +90,7 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
             //getChannel();
             getKnowledgeList(1);
             getList(1);
-        }
-        /*
-        //維度
-        function getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : APPLICATION_ID
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-
-        }
-
-        //渠道
-        function getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : APPLICATION_ID
-            },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-        };
-        */
-
-        //function exportKnowledgeExcel(){
-        //    var urlParams =
-        //        "?applicationId="+APPLICATION_ID+"&channelId="+$scope.vm.channelId+"&dimensionId="+$scope.vm.dimensionId +
-        //        "&requestTimeType="+$scope.vm.timeType + "&startTime="+$scope.vm.timeStart + "&endTime="+$scope.vm.timeEnd;
-        //    var url = "/api/analysis/download/export"+urlParams  ;//请求的url
-        //    $window.open(url,"_blank") ;
-        //}
+        }           
 
         /*
          **知识点排名导出表格；

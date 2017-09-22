@@ -3,11 +3,10 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('sessionLogController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            applicationId :$cookieStore.get("applicationId"),
             scan:scan ,
             getList : getList ,
             listData : null ,   // table 数据
@@ -43,18 +42,10 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
         function scan(id){
             $scope.vm.userId = id;
             getScanData(id,1);
-            ngDialog.openConfirm({
-                template:"/static/application_analysis/session_details/session_details_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                width:'930px',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                    }
-                }
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/session_details/session_details_dialog.html','930px',function(){
+
+            },function(){
+
             });
         }
         function clearHistory(){
@@ -67,8 +58,8 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
         function getScanData(id,index){
             //清空历史数据
             clearHistory();
-            httpRequestPost("/api/analysis/userSession/searchTimeBar",{
-                "applicationId" : $scope.vm.applicationId,
+            AppAnalysisServer.getScanData.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -81,9 +72,10 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 if(data!=null){
                     $scope.vm.total = data.data.total/$scope.vm.pageSize<1?1:data.data.total/$scope.vm.pageSize;
                     $scope.vm.timeList = data.data.objs;
-                    $scope.$apply();
                     getdetail($scope.vm.timeList[0].sessionId,1);
                 }
+            },function(err){
+                $log.log(err);
             });
         }
 
@@ -121,8 +113,8 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
 
         //表格列表
         function getList(index){
-            httpRequestPost("/api/analysis/userSession/searchList",{
-                "applicationId" : $scope.vm.applicationId,
+            AppAnalysisServer.getSessionLogList.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -135,25 +127,24 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
             },function(data){
                 if(data.info　== "没有查询到记录"){
                     layer.msg("此时间段内查询无会话日志") ;
-                    $scope.$apply(function(){
-                        $scope.vm.paginationConf.totalItems =0 ;
-                        $scope.vm.listData = '';
-                    });
+                    $scope.vm.paginationConf.totalItems =0 ;
+                    $scope.vm.listData = '';
                     //$scope.vm.paginationConf.currentPage =index ;
 
                 }else{
-                    $scope.$apply(function(){
-                        $scope.vm.paginationConf.currentPage =index ;
-                        $scope.vm.paginationConf.totalItems =data.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = Math.ceil(data.data.total/ $scope.vm.paginationConf.pageSize) ;
-                        $scope.vm.listData = data.data;
-                    });
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = Math.ceil(data.data.total/ $scope.vm.paginationConf.pageSize) ;
+                    $scope.vm.listData = data.data;
                 }
+            },function(err){
+                $log.log(err);
             });
         }
         //获取
         function getdetail(sessionId,index){
-            httpRequestPost("/api/analysis/userSession/searchTimeBarContent",{
+
+            AppAnalysisServer.getdetail.save({
                 "sessionId" : sessionId,
                 "index": (index-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize
@@ -161,11 +152,11 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 if(data!=null){
                     $scope.vm.talkDetail = data.data.objs;
                     $scope.vm.talkDetailTotal = data.data.total;
-                    $scope.$apply();
                 }
             },function(err){
-                console.log(err);
+                $log.log(err);
             });
+
         }
         function nextPage(){
             if($scope.vm.currentPage<$scope.vm.total){
@@ -186,40 +177,14 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
         }
         init();
         function init(){
-            getDimensions();
-            getChannel();
+            //getDimensions();
+            //getChannel();
             getList(1);
         }
-        //維度
-        function getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-        }
-
-        //渠道
-        function getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-        };
+        //导出表格
         function exportExcel(){
-            httpRequestPost("/api/analysis/userSession/export",{
-                "applicationId" : $scope.vm.applicationId,
+            AppAnalysisServer.exportExcelSessionLog.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
@@ -229,16 +194,20 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 "index": 0,
                 "pageSize": 10
             },function(data){
-                console.log(data)
-                if(data.status==500){
-                    //layer.msg("导出失败")
+                console.log(data);
+                if(data.status==500){                    
                     console.log("导出失败");
                 }else{
                     //alert(data.data);
-                    window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    //window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
+                    var url= AppAnalysisServer.exportExcelSessionLogUrl+data.data;
+                    downLoadFiles($('.session_log')[0],url);
                 }
                 console.log();
-            },function(err){})
+            },function(err){
+                $log.log(err);
+            });
+
 
         }
 

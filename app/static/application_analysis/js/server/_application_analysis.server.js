@@ -64,6 +64,33 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.satisfactionGetList = $resource(API_ANALYSIS+'/satisfaction/searchList',{},{});
     //获取Echart 图数据
     this.getPieData = $resource(API_ANALYSIS+'/satisfaction/chartAndTotal',{},{} );
+                                /******************************
+                                        *问答解决率统计*    API_ANALYSIS = "/api/analysis" ;
+                                        ********************************/
+    //表格列表
+    //解决率统计图表数据
+    this.resolutionStatistics = $resource(API_ANALYSIS+'/solutionStatistics/qaAskSolutionStatistics',{},{});
+    //回复数图表数据
+    this.replyStatistics = $resource(API_ANALYSIS+'/solutionStatistics/qaAskMatchStatistics',{},{});
+                                /******************************
+                                             *操作日志*    API_ANALYSIS = "/api/analysis" ;
+                                        ********************************/
+    //表格列表
+    this.getData = $resource(API_ANALYSIS+'/operationLog/searchOperationLog',{},{});
+                                /******************************
+                                        *会话日志*    API_ANALYSIS = "/api/analysis" ;
+                                     ********************************/
+    //获取对应user 的 对话列表
+    this.getScanData = $resource(API_ANALYSIS+'/userSession/searchTimeBar',{},{});
+    //表格列表
+    this.getSessionLogList = $resource(API_ANALYSIS+'/userSession/searchList',{},{});
+    //获取
+    this.getdetail = $resource(API_ANALYSIS+'/userSession/searchTimeBarContent',{},{});
+    //导出表格
+    this.exportExcelSessionLog = $resource(API_ANALYSIS+'/userSession/export',{},{});
+    //导出表格路径
+    this.exportExcelSessionLogUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
+
 
 
 }]);

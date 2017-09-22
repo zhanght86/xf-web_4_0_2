@@ -3,8 +3,8 @@
  * 控制器 
  */
 angular.module('applAnalysisModule').controller('operationLogController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             listData : "",          //数据列表
@@ -20,7 +20,7 @@ angular.module('applAnalysisModule').controller('operationLogController', [
         getData(1) ;
         //表格列表
         function getData(index){
-            httpRequestPost("/api/analysis/operationLog/searchOperationLog",{
+            AppAnalysisServer.getData.save({
                 "startTime": $scope.vm.startTime,
                 "endTime": $scope.vm.endTime,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
@@ -28,15 +28,18 @@ angular.module('applAnalysisModule').controller('operationLogController', [
                 "operationLogAuthor" : $scope.vm.operationLogAuthor
             },function(data){
                 if(data.status == 200){
-                    $scope.$apply(function(){
-                        $scope.vm.listData = data.data ;
-                        $scope.vm.paginationConf.currentPage = index ;
-                        $scope.vm.paginationConf.totalItems =data.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = Math.ceil(data.data.total/ $scope.vm.paginationConf.pageSize) ;
-                        console.log($scope.vm.paginationConf);
-                    });
+                    $scope.vm.listData = data.data ;
+                    $scope.vm.paginationConf.currentPage = index ;
+                    $scope.vm.paginationConf.totalItems =data.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = Math.ceil(data.data.total/ $scope.vm.paginationConf.pageSize) ;
+                    console.log($scope.vm.paginationConf);
+                }else{
+                    $scope.vm.listData ="";
+                    $scope.vm.paginationConf.totalItems = 0;
                 }
-            },function(error){console.log(error)});
+            },function(err){
+                $log.log(err);
+            });
         }
 
         var timeout ;
