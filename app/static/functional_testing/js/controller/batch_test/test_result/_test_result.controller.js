@@ -30,7 +30,7 @@ angular.module('functionalTestModule').controller('testResultController', [
             selectInput :'',
             matchCondition :'0',
             answerCondition :'0',
-            selectAllCheck : false,   //checkbox默认你状态；
+            selectAllCheck : false,   //checkbox默认状态；
             selectAll : selectAll,
             selectSingle : selectSingle,
             batchTest : batchTest,
@@ -50,8 +50,12 @@ angular.module('functionalTestModule').controller('testResultController', [
         };
         
         showData(1);
-        //加载表格
+
+        /*****************
+         * //加载表格
+         * *****************/
         function showData(index){
+            var i = layer.msg('资源加载中',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.showData.save({
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
@@ -59,6 +63,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 batchNumberId:$scope.vm.batchNumberId
             },function(data){
                 console.log(data);
+                layer.close(i);
                 if(data.status == 10005){
                     layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData=[];
@@ -73,11 +78,13 @@ angular.module('functionalTestModule').controller('testResultController', [
                     console.log($scope.vm.paginationConf);
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
-
-        //分页定时器
+        /*****************
+         * //分页定时器
+         * *****************/
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -103,7 +110,9 @@ angular.module('functionalTestModule').controller('testResultController', [
             }
         },true);
 
-        //验证
+        /*****************
+         * //验证
+         * *****************/
         function verifyRelease(){
             if($scope.vm.editTitle == null || $scope.vm.editTitle == ""){
                 layer.msg("测试问法不能为空",{time:1000});
@@ -137,7 +146,9 @@ angular.module('functionalTestModule').controller('testResultController', [
             return 1;
         }
 
-        //修改
+        /*****************
+         * //修改
+         * *****************/
         function editQuestion(params){
             console.log(params)
             $scope.vm.editTitle = params.possibleKnowledge;
@@ -181,8 +192,11 @@ angular.module('functionalTestModule').controller('testResultController', [
                 
             });
         }
-        //查询
+        /*****************
+         * //查询
+         * *****************/
         function searchFile(index){
+            var i = layer.msg('查询中',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             $scope.vm.paginationConf.totalItems= 0;
             FunctionServer.searchFile.save({
                 index:(index - 1)*$scope.vm.paginationConf1.pageSize,
@@ -194,6 +208,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 possibleKnowledge : $scope.vm.selectInput,
                 knowledgeTitle : $scope.vm.selectInput
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status == 10014){
                     $scope.vm.listData = data.data.testResultList;
@@ -209,16 +224,20 @@ angular.module('functionalTestModule').controller('testResultController', [
                     layer.msg("没有查询到记录!",{time:1000});
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
 
-        //导出功能
+        /*****************
+         * //导出功能
+         * *****************/
         function exportExcel(){
-
+            var i = layer.msg('导出中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             FunctionServer.exportExcel.save({
                 batchNumberId:$stateParams.batchNumberId
             },function (data) {
+                layer.close(i);
                 console.log(data)
                 if(data.status==500){
                     //layer.msg("导出失败")
@@ -230,11 +249,14 @@ angular.module('functionalTestModule').controller('testResultController', [
                 }
                 
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
 
-        //全选
+        /*****************
+         * //全选
+         * *****************/
         function selectAll(){
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
@@ -248,7 +270,9 @@ angular.module('functionalTestModule').controller('testResultController', [
             }
             //console.log( $scope.vm.deleteIds);
         }
-        //单选
+        /*****************
+         * //单选
+         * *****************/
         function selectSingle(id){
             if($scope.vm.deleteIds.inArray(id)){
                 $scope.vm.deleteIds.remove(id);
@@ -261,7 +285,9 @@ angular.module('functionalTestModule').controller('testResultController', [
             }
             //console.log( $scope.vm.deleteIds);
         }
-        //批量测试
+        /*****************
+         * //批量测试
+         * *****************/
         function batchTest(){
             if($scope.vm.serviceId) {
 
@@ -291,7 +317,9 @@ angular.module('functionalTestModule').controller('testResultController', [
 
 
         }
-        //测试弹窗
+        /*****************
+         * //测试弹窗
+         * *****************/
         function testDialog(){
             if($scope.vm.deleteIds.length == 0){
                 layer.msg("请选择要测试的知识！",{time:1000});
@@ -305,7 +333,9 @@ angular.module('functionalTestModule').controller('testResultController', [
             });
 
         }
-        //页面初始化加载已发布服务
+        /*****************
+         * //页面初始化加载已发布服务
+         * *****************/
         getService();
         function getService(){
             FunctionServer.getService.save({
