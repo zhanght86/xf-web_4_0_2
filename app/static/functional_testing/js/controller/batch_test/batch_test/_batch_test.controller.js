@@ -68,7 +68,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
          * //获取列表  、查询
          * *****************/
         function searchFile(index){
-            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:50000});
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.BatchsearchFile.save({
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
@@ -119,7 +119,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                 timeout = $timeout(function () {
                     initBatchTest();
                     searchFile(current);
-                }, 100);
+                }, 0);
             }
         },true);
 

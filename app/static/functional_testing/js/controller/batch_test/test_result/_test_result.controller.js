@@ -93,7 +93,7 @@ angular.module('functionalTestModule').controller('testResultController', [
                 }
                 timeout = $timeout(function () {
                     showData(current);
-                    searchFile(current);
+                    //searchFile(current);
                 }, 0);
             }
         },true);

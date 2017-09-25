@@ -35,7 +35,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             "chatQuestionContent": "",
             selectTimeType : selectTimeType
         };
-        //全选
+        /**
+         * 全选
+         */
         function selectAll(){
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
@@ -48,7 +50,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 $scope.vm.delArr = [];
             }
         }
-        //单选
+        /**
+         * 单选
+         */
         function selectSingle(id){
             if($scope.vm.delArr.inArray(id)){
                 $scope.vm.delArr.remove(id);
@@ -63,7 +67,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             console.log( $scope.vm.delArr);
         }
 
-        //全选按钮清空
+        /**
+         * //全选按钮清空
+         */
         function initBatchTest(){
             $scope.vm.delArr = [] ;
             $scope.vm.selectAllCheck = false;
@@ -78,6 +84,9 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         //         $scope.vm.delArr.remove(id)
         //     }
         // }
+        /**
+         * 删除
+         */
         function delKnowledge(){
             console.log($scope.vm.delArr) ;
             if(!$scope.vm.delArr.length){
@@ -89,10 +98,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     MaterialServer.delKnowledge.save({
                         "applicationId": APPLICATION_ID,
                         "ids":$scope.vm.delArr
-                    },function(){
+                    },function(response){
                         initBatchTest();
-                        layer.msg("删除成功") ;
                         $state.reload();
+                        //getData(1) ;
+                        layer.msg("删除成功") ;
+                    },function(err){
+                        $log.log(err);
                     });
                 });
             }
@@ -106,7 +118,11 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             }
         });
 // 时间   1   仅三天   2  近七天   3  近一个月
+        /**
+         * 查询
+         */
         function search(index){
+            var i = layer.msg('查询中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             $scope.vm.getType = 1;
             $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
@@ -119,6 +135,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
             },function(data){
+                layer.close(i);
                 if(data.data==10005){
                     $scope.vm.delArr = [] ;
                     $scope.vm.listData = data.data.objs;
@@ -141,7 +158,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                     $scope.vm.title = null;
                 }
             },function(err){
-
+                layer.close(i);
+                $log.log(err);
             });
 
         }
@@ -165,33 +183,34 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $scope.vm.modifyTimeType = type;
         }
          getData(1) ;
-        //请求列表
+
+        /**
+         * 请求列表
+         */
         function getData(index){
+            var i = layer.msg('资源加载中...', {icon: 16,shift:-1,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             $scope.vm.getType = 0 ;
-            
             MaterialServer.getData.save({
                 "applicationId": APPLICATION_ID,
                 "index" :(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
+                layer.close(i);
                 $scope.vm.delArr = [] ;
                 $scope.vm.listData = data.data.objs;
-                // $scope.vm.paginationConf = {
-                //     currentPage: index,//当前页
-                //     totalItems: data.data.total, //总条数
-                //     pageSize: $scope.vm.pageSize,//第页条目数
-                //     pagesLength: 8,//分页框数量
-                // };
+
                 $scope.vm.paginationConf.currentPage =index ;
                 $scope.vm.paginationConf.totalItems =data.data.total ;
                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                 console.log($scope.vm.paginationConf);
             },function(err){
+                layer.close(i);
                 console.log(err);
             });
         }
-
-        //分页 查询
+        /**
+        *分页 查询
+        */
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -205,10 +224,13 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                         initBatchTest();
                         getData(current);
                     }
-                }, 100)
+                }, 0)
             }
         });
-        //点击标题预览内容
+
+        /**
+         *点击标题预览内容
+         */
         function seeDtails(data){
             console.log(data);
             var params = {
