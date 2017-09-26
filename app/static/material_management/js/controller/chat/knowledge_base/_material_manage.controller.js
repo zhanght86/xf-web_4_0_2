@@ -188,7 +188,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
          * 请求列表
          */
         function getData(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shift:-1,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            var i = layer.msg('资源加载中...',{icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             $scope.vm.getType = 0 ;
             MaterialServer.getData.save({
                 "applicationId": APPLICATION_ID,
@@ -212,8 +212,8 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         *分页 查询
         */
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout)
                 }

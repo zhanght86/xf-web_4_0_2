@@ -140,8 +140,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
          * 图片分页
          */
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout)
                 }

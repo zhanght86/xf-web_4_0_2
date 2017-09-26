@@ -52,8 +52,8 @@ angular.module('materialManagement').controller('teletextMessageController', [
 
         //分页定时器
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout);
                 }
