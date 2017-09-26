@@ -92,8 +92,18 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.exportExcelSessionLogUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
                             /******************************
                                     *智能学习*    API_ANALYSIS = "/api/analysis" ;
+                                                 API_MS = "/api/ms",
                                 ********************************/
-
+    //表格列表 未学习
+    this.searchReinforcement = $resource(API_ANALYSIS+'/knowledgeLearn/reinforcementLearnUnlearn',{},{});
+    //表格列表 已学习
+    this.listNoReview = $resource(API_ANALYSIS+'/knowledgeLearn/listNoReview',{},{});
+    //表格列表 学习弹窗
+    this.searchByKnowledgeTitle = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
+    //忽略
+    this.ignore = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
+    //获取推荐知识
+    //this.getRecommend = $resource();
 
 
 

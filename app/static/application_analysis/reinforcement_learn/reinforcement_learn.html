@@ -4,11 +4,11 @@
     <div class="content_wrap page-container" style="padding:0;">
         <div class="wrap mb30 " style="margin-top:20px;">
             <div class="tab_tit">
-                <span class="cur" style="width:80px;">未学习  </span>
-                <span class="" style="width:80px;">已学习 </span>
+                <span ng-class="vm.contentType==0?'cur':''" ng-click="vm.contentType=0" style="width:80px;">未学习  </span>
+                <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1" style="width:80px;">已学习 </span>
             </div>
             <div class="tab_con pt10 pb30">
-                <div class="db">
+                <div ng-show="vm.contentType==0" >
                     <div class="con_box mb25 p30 mt10" style="min-height:500px;">
                         <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;padding-left: 45px;">
                             <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
@@ -19,10 +19,10 @@
                                 <option value="4">过去30天</option>
                             </select>
 
-                            <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in vm.channels">
-                                <option  value="" >全部渠道</option>
+                            <select class="sel bd L mr-5" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
+                                <option value="">全部渠道</option>
                             </select>
-                            <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
+                            <select class="sel bd L mr-5"  ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">
                                 <option  value="" >全部维度</option>
                             </select>
 
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="dn">
+                <div ng-show="vm.contentType==1">
                     <div class="con_box mb25 p30 mt10" style="min-height:500px;">
                         <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;padding-left: 20px;">
                             <!--<select class="sel bd L mr-5" id="request_time_type1" ng-model="vm.timeType1">-->
@@ -82,10 +82,10 @@
                                 <!--<option value="4">过去30天</option>-->
                             <!--</select>-->
 
-                            <select class="sel bd L mr-5" id="channel_id1" ng-model="vm.channelId1" ng-options="site.channelCode as site.channelName for site in vm.channels">
-                                <option  value="" >全部渠道</option>
+                            <select class="sel bd L mr-5" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
+                                <option value="">全部渠道</option>
                             </select>
-                            <select class="sel bd L mr-5" id="dimensionId1" ng-model="vm.dimensionId1" ng-options="site.dimensionId as site.dimensionName for site in vm.dimensions">
+                            <select class="sel bd L mr-5"  ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">
                                 <option  value="" >全部维度</option>
                             </select>
 
