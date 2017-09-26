@@ -18,8 +18,11 @@ angular.module('applAnalysisModule').controller('operationLogController', [
             }
         };
         getData(1) ;
-        //表格列表
+        /**
+         * 表格列表
+         **/
         function getData(index){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.getData.save({
                 "startTime": $scope.vm.startTime,
                 "endTime": $scope.vm.endTime,
@@ -27,6 +30,7 @@ angular.module('applAnalysisModule').controller('operationLogController', [
                 "pageSize": $scope.vm.paginationConf.pageSize,
                 "operationLogAuthor" : $scope.vm.operationLogAuthor
             },function(data){
+                layer.close(i);
                 if(data.status == 200){
                     $scope.vm.listData = data.data ;
                     $scope.vm.paginationConf.currentPage = index ;
@@ -38,15 +42,19 @@ angular.module('applAnalysisModule').controller('operationLogController', [
                     $scope.vm.paginationConf.totalItems = 0;
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
 
+        /**
+         * 分页监控
+         **/
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
-                    $timeout.cancel(timeout)
+                    $timeout.cancel(timeout);
                 }
                 timeout = $timeout(function () {
                     getData(current);

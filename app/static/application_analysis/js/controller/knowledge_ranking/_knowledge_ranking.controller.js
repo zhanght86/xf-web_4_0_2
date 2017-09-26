@@ -28,11 +28,17 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
             exportNoMatchExcel : exportNoMatchExcel, //未匹配问题导出
             contentType:0
         };
-        //init echart 图表
+
+        /**
+         * init echart 图表
+         */
         var myChart = echarts.init(document.getElementById('knowRanking'));
         var myChartQuestion = echarts.init(document.getElementById('questionRanking'));
-        //未匹配問題
-        function getList(index){
+
+        /**
+         * 未匹配問題
+         */
+        function getList(index){            
             getKnowledgeList(1);            
             AppAnalysisServer.getList.save({
                 "applicationId" : APPLICATION_ID,
@@ -58,8 +64,12 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 $log.log(err);
             });
         }
-        //知識點排名
+
+        /**
+         * 知識點排名
+         */
         function getKnowledgeList(index){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.getKnowledgeList.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
@@ -70,6 +80,7 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 "index": 0,
                 "pageSize": 10
             },function(data){
+                layer.close(i);
                 console.log(data) ;
                 var xData=[] ,yData=[] ;
                 angular.forEach(data.data.objs,function(item,index){
@@ -81,18 +92,23 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 $scope.vm.listDataK = data.data.objs;
                 $scope.vm.listDataTotalK = data.data.total;
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
+
+        /**
+         * 初始化
+         */
         init();
         function init(){
             //getDimensions();
             //getChannel();
             getKnowledgeList(1);
             getList(1);
-        }           
+        }
 
-        /*
+        /**
          **知识点排名导出表格；
          */
         function exportKnowledgeExcel(){            
@@ -121,9 +137,9 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
                 $log.log(err);
             });
         }
-        /*
-        **未匹配问题统计导出表格；
-        */
+        /**
+        *未匹配问题统计导出表格；
+        **/
         function exportNoMatchExcel(){
             AppAnalysisServer.exportNoMatchExcel.save({
                 "applicationId" : APPLICATION_ID,

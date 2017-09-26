@@ -32,12 +32,18 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             queryAccessDataByType : queryAccessDataByChannel,
         };
         //***********************************   20117/17 ADD    OPERATOR  : MILES **************************************************************//
-        //访问数据时间统计
+        /**
+         * 访问数据时间统计 echart
+         * **/
         var TimerChart = echarts.init(document.getElementById('access_echart_div'));
-        //访问数据渠道统计
+        /**
+         * 访问数据渠道统计 echart
+         * **/
         var accessChart = echarts.init(document.getElementById('access_echart_div2'));
         //myChart.setOption(option);
-        //改变echart 数据
+        /**
+         * 改变 echart 数据   时间统计
+         * **/
         function setTimerChartOption(xData,yData1,yData2){
             return {
                 title : {
@@ -112,7 +118,9 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 ]
             }
         }
-        //访问数据渠道统计
+        /**
+         * 改变 echart 数据   渠道统计
+         * **/
         function setAccessChartOption(ydata130,ydata131,ydata132){
             return {
                 title: {
@@ -159,7 +167,9 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 ]
             };
         }
-        //原始数据获取
+        /**
+         * 原始数据获取
+         * **/
         function getOriginData(n ,data){
             var originData = {
                 "时间"       : [] ,
@@ -189,7 +199,10 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             }
           return originData
         }
-        //获取小时时间间隔
+
+        /**
+         * 获取小时时间间隔
+         * **/
         function getHourStep(time){
             var timer ;
             if(time < 10){
@@ -259,7 +272,9 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             });
         }
 
-        //左上表格数据
+        /**
+         * 左上表格数据
+         * **/
         void function getTopLeft(){            
             AppAnalysisServer.getTopLeft.save({
                 "applicationId":APPLICATION_ID
@@ -283,8 +298,10 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
             });
 
         }();
-        //右上表格数据
-       void function getTopRight(){
+        /**
+         * 右上表格数据
+         * **/
+        void function getTopRight(){
            AppAnalysisServer.getTopRight.save({
                "applicationId":APPLICATION_ID
            },function(data){
@@ -296,8 +313,11 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 $log.log(err);
            });
         }();
-        //访问数据时间统计
+        /**
+         * 访问数据时间统计
+         * **/
         function queryAccessDataByTime(){
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             var xData,yData1,yData2 ;
             var dateJump ; //获取时间间隔
             if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
@@ -318,6 +338,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
+                layer.close(i);
                 if(data.data["有效用户数"].length==0 && data.data["有效会话数"].length==0 && data.data["总会话数"].length==0 && data.data["总用户人数"].length==0){
                     layer.msg("所查询时间段有效数据为空") ;
                     $scope.vm.timerData = "" ;
@@ -426,18 +447,23 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                     TimerChart.setOption(setTimerChartOption(xData,yData1,yData2)) ;
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         };
         queryAccessDataByTime();
-        //访问数据渠道统计
-        function queryAccessDataByChannel(){            
+        /**
+         * 访问数据渠道统计
+         * **/
+        function queryAccessDataByChannel(){
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             AppAnalysisServer.queryAccessDataByChannel.save({
                 "applicationId":APPLICATION_ID,
                 "startTime":$scope.vm.accessSearchStartTime ,
                 "endTime":$scope.vm.accessSearchEndTime ,
                 "requestTimeType" : $scope.vm.accessSearchTimeType ,
             },function(data){
+                layer.close(i);
                 var tableList = [] ;
                 // 初始渠道
                 var  intervaler = $interval(function(){
@@ -560,6 +586,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 //}
                 //vx
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         };

@@ -38,7 +38,9 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
             exportExcel : exportExcel  //导出
         };
 
-        // 点击查看
+        /**
+         * 点击查看
+         **/
         function scan(id){
             $scope.vm.userId = id;
             getScanData(id,1);
@@ -54,7 +56,10 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
             $scope.vm.timeList = null;
             $scope.vm.talkDetail = null;
         }
-        //获取对应user 的 对话列表
+
+        /**
+         * 获取对应user 的 对话列表
+         **/
         function getScanData(id,index){
             //清空历史数据
             clearHistory();
@@ -79,10 +84,12 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
             });
         }
 
-        //list 分页变化加载数据
+        /**
+         * list 分页变化加载数据
+         **/
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout)
                 }
@@ -93,7 +100,9 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
             }
         },true);
 
-        //排序  按会话数量
+        /**
+         * 排序  按会话数量
+         */
         $scope.$watch('vm.orderForSessionNumber', function(){
             if($scope.vm.paginationConf.currentPage){
                 getList($scope.vm.paginationConf.currentPage);
@@ -101,7 +110,9 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 getList(1);
             }
         });
-        //排序 按时间
+        /**
+         * 排序 按时间
+         */
         $scope.$watch('vm.orderForSessionTime', function(){
             $scope.vm.orderForSessionNumber=null;
             if($scope.vm.paginationConf.currentPage){
@@ -111,8 +122,11 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
             }
         });
 
-        //表格列表
+        /**
+         * 表格列表
+         */
         function getList(index){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.getSessionLogList.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
@@ -125,6 +139,7 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 "orderForSessionNumber": $scope.vm.orderForSessionNumber,
                 "orderForSessionTime": $scope.vm.orderForSessionTime
             },function(data){
+                layer.close(i);
                 if(data.info　== "没有查询到记录"){
                     layer.msg("此时间段内查询无会话日志") ;
                     $scope.vm.paginationConf.totalItems =0 ;
@@ -138,10 +153,14 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                     $scope.vm.listData = data.data;
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
-        //获取
+
+        /**
+         * 获取
+         */
         function getdetail(sessionId,index){
 
             AppAnalysisServer.getdetail.save({
@@ -175,14 +194,22 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 getdetail( $scope.vm.timeList[0].sessionId,1);
             }
         }
+
+        /**
+         * 初始化
+         */
         init();
         function init(){
             //getDimensions();
             //getChannel();
             getList(1);
         }
-        //导出表格
+
+        /**
+         *  导出表格
+         */
         function exportExcel(){
+            var i = layer.msg('导出中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.exportExcelSessionLog.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
@@ -194,6 +221,7 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 "index": 0,
                 "pageSize": 10
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status==500){                    
                     console.log("导出失败");
@@ -205,6 +233,7 @@ angular.module('applAnalysisModule').controller('sessionLogController', [
                 }
                 console.log();
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
 

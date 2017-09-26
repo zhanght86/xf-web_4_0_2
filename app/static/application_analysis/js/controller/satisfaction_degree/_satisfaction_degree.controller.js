@@ -52,11 +52,14 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             $scope.vm.orderForSessionNumber=null,
             getList(1)
         }
-        //表格列表
+
+        /**
+         *  表格列表
+         **/
         function getList(index){
             //console.log((index-1)*$scope.vm.paginationConf.pageSize );
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             getPieData();
-
             AppAnalysisServer.satisfactionGetList.save({
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
@@ -70,30 +73,39 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
                 "orderForSessionNumber": $scope.vm.orderForSessionNumber,
                 "orderForUnsatisfiedNumber": $scope.vm.orderForUnsatisfiedNumber,
             },function(data){
+                layer.close(i);
                 //console.log(data.data);
                 $scope.vm.listData = data.data.objs;
-                // $scope.vm.paginationConf = {
-                //     currentPage: index,//当前页
-                //     totalItems: Math.ceil(data.data.total/5), //总条数
-                //     pageSize: 1,//第页条目数
-                //     pagesLength: 8,//分页框数量
-                // };
                 $scope.vm.paginationConf.currentPage =index ;
                 $scope.vm.paginationConf.totalItems =data.data.total ;
                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                 console.log($scope.vm.paginationConf);
                 console.log(data)
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         };
-        //list 分页变化加载数据
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                getList(current);
+
+        /**
+         *  list 分页变化加载数据
+         **/
+        var timeout;
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
+                if(timeout){
+                    $timeout.cancel(timeout);
+                }
+                timeout = $timeout(function(){
+                    getList(current);
+                } ,0);
             }
         });
-        //获取Echart 图数据
+
+        /**
+         *  获取Echart 图数据
+         **/
+
         function getPieData(){
 
             AppAnalysisServer.getPieData.save({
@@ -154,6 +166,9 @@ angular.module('applAnalysisModule').controller('satisfactionDegreeController', 
             });
         }
 
+        /**
+         * 初始化数据
+         **/
         init();
         function init(){
             //getDimensions();

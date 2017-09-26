@@ -38,9 +38,15 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             exportExcel : exportExcel  //导出
         };
 
-        //init echart 图表
+
+        /**
+         *  init echart 图表
+         */
         var myChart = echarts.init(document.getElementById('sessionDetail'));
-        // 点击查看
+
+        /**
+         * 点击查看
+         * */
         function scan(id){
             $scope.vm.userId = id;
             getScanData(id,1);
@@ -56,7 +62,9 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             $scope.vm.timeList = null;
             $scope.vm.talkDetail = null;
         }
-        //获取对应user 的 对话列表
+        /**
+         * 获取对应user 的 对话列表
+         **/
         function getScanData(id,index){
             //清空历史数据
             clearHistory();            
@@ -81,14 +89,18 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             });
         }
 
-        //list 分页变化加载数据
+        /**
+         * list 分页变化加载数据
+         **/
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
                 getList(current);
             }
         });
 
-        //排序  按会话数量
+        /**
+         * 排序  按会话数量
+         **/
         $scope.$watch('vm.orderForSessionNumber', function(){
             if($scope.vm.paginationConf.currentPage){
                 getList($scope.vm.paginationConf.currentPage);
@@ -96,7 +108,10 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 getList(1);
             }
         });
-        //排序 按时间
+
+        /**
+         * 排序 按时间
+         **/
         $scope.$watch('vm.orderForSessionTime', function(){
             $scope.vm.orderForSessionNumber=null;
             if($scope.vm.paginationConf.currentPage){
@@ -106,8 +121,11 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             }
         });
 
-     //表格列表
+        /**
+         * 表格列表
+         **/
         function getList(index){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.sessionGetList.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
@@ -120,6 +138,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 "orderForSessionNumber": $scope.vm.orderForSessionNumber,
                 "orderForSessionTime": $scope.vm.orderForSessionTime
             },function(data){
+                layer.close(i);
                 console.log(data) ;
                 var xData=[] ,yData=[] ;
                 angular.forEach(data.data.objs,function(item,index){
@@ -130,10 +149,14 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 myChart.setOption(setEchartOption(xData,yData));
                 $scope.vm.listData = data.data.objs;
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
-        //弹窗获取
+
+        /**
+         * 弹窗获取
+         **/
         function getdetail(sessionId,index){            
             AppAnalysisServer.getdetail.save({
                 "sessionId" : sessionId,
@@ -166,6 +189,10 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 getdetail( $scope.vm.timeList[0].sessionId,1);
             }
         }
+
+        /**
+         * 初始化数据
+         **/
         init();
         function init(){
            // getDimensions();
@@ -173,8 +200,11 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             getList(1);
         }
 
-        //导出表格
+        /**
+         * 导出表格
+         **/
         function exportExcel(){
+            var i = layer.msg('导出中...',{icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000});
             AppAnalysisServer.exportExcel.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
@@ -186,6 +216,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 "index": 0,
                 "pageSize": 10
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status==500){
                     //layer.msg("导出失败")
@@ -198,6 +229,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
                 }
                 console.log();
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
 
