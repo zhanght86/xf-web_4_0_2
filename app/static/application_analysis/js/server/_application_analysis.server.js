@@ -103,9 +103,11 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     //忽略
     this.ignore = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
     //获取推荐知识
-    //this.getRecommend = $resource();
-
-
+    this.getRecommend = $resource(API_ANALYSIS+'/userSession/getOneRecommend',{},{});
+    //组装知识学习数据
+    this.assembleLearnData = $resource(API_ANALYSIS+'/knowledgeLearn/learnByContent',{},{});
+    //通过 不通过
+    this.review = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
 
                             /******************************
                                   *未匹配问题聚类*    API_ANALYSIS = "/api/analysis" ;
