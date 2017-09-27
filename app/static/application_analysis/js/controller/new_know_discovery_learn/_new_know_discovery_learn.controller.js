@@ -6,9 +6,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
     '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
     function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
-            applicationId :$cookieStore.get("applicationId"),
-            userId :$cookieStore.get("userId"),
-            userName :$cookieStore.get("userLoginName"),
             searchNewKnowledgeDiscovery : searchNewKnowledgeDiscovery ,
             listNoReview : listNoReview ,
             listData : null ,   // table 数据
@@ -40,7 +37,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             review:review,
             statusId:0,
             passStatusId:0,
-            tab:tab,
             currQuestion:"",
             searchByKnowledgeTitle:searchByKnowledgeTitle,
             knowledgeList:null,
@@ -51,7 +47,9 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             associateCheck:associateCheck,
             currKnowledgeTitle:null ,
             knowledgeContent : "",
-            keyLogin:keyLogin
+            keyLogin:keyLogin,
+            contentType : 0 ,  //默认显示未学习
+
         };
         function keyLogin(e){
             var srcObj = e.srcElement ? e.srcElement : e.target;
@@ -62,24 +60,17 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 srcObj.focus() ;
             }
         }
-        //选项卡
-        function tab(obj1, obj2) {
-            $(obj1).click(function () {
-                $(this).addClass('cur').siblings().removeClass();
-                $(obj2).children('div').eq($(this).index()).attr('class', 'db').siblings().attr('class', 'dn');
-                searchNewKnowledgeDiscovery(1);
-                listNoReview(1);
-            });
+
+        //获取
+        init();
+        function init(){
+           // getDimensions();
+           // getChannel();
+            searchNewKnowledgeDiscovery(1);
+            listNoReview(1);
         }
 
-        tab('.tab_tit span', '.tab_con');
-
-        //list 分页变化加载数据
-        // $scope.$watch('vm.paginationConf.currentPage', function(current){
-        //     if(current){
-        //         searchNewKnowledgeDiscovery(current);
-        //     }
-        // });
+        //list 分页变化加载数据        
         var timer ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
             if(current){
@@ -92,11 +83,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             }
         },true);
 
-        // $scope.$watch('vm.paginationConf1.currentPage', function(current){
-        //     if(current){
-        //         listNoReview(current);
-        //     }
-        // });
         var timer1 ;
         $scope.$watch('vm.paginationConf1.currentPage', function(current){
             if(current){
@@ -109,11 +95,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             }
         },true);
 
-        // $scope.$watch('vm.paginationConf2.currentPage', function(current){
-        //     if(current){
-        //         searchByKnowledgeTitle(current);
-        //     }
-        // });
         var timer2 ;
         $scope.$watch('vm.paginationConf2.currentPage', function(current){
             if(current){
@@ -142,7 +123,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 question = "%"+$scope.vm.question+"%";
             }
             httpRequestPost("/api/analysis/knowledgeLearn/newKnowledgeDiscoveryLearnUnlearn",{
-                "applicationId" : $scope.vm.applicationId,
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "question": question,
                 "dimensionId": $scope.vm.dimensionId,
@@ -165,7 +146,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         function searchByKnowledgeTitle(index){
             if(nullCheck($("#inputValue").val())==true){
                 httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
-                    "applicationId":$scope.vm.applicationId,
+                    "applicationId": APPLICATION_ID,
                     "index": (index-1)*$scope.vm.pageSize1,
                     "pageSize": $scope.vm.pageSize1,
                     "sceneIds":null,
@@ -198,7 +179,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 question = "%"+$scope.vm.question1+"%";
             }
             httpRequestPost("/api/analysis/knowledgeLearn/listNoReview",{
-                "applicationId" : $scope.vm.applicationId,
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId1,
                 "question": question,
                 "dimensionId": $scope.vm.dimensionId1,
@@ -221,14 +202,8 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 $scope.$apply();
             });
         }
-        //获取
-        init();
-        function init(){
-            getDimensions();
-            getChannel();
-            searchNewKnowledgeDiscovery(1);
-            listNoReview(1);
-        }
+
+        //忽略
         function ignore(){
             var ids = document.getElementsByName("sid");
             var id_array = [];
@@ -255,19 +230,11 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         function associate(requestId,content){
             $scope.vm.knowledgeList=null;
             $scope.vm.currQuestion="用户问题:"+content;
-            var dialog = ngDialog.openConfirm({
-                template:"/static/application_analysis/reinforcement_learn/associate_learn.html",
-                width:'460px',
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                        assembleLearnData(requestId);
-                    }
-                }
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','460px',function () {
+                assembleLearnData(requestId);
+            },function(){
+
             });
         }
 
@@ -331,8 +298,8 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 httpRequestPost("/api/analysis/knowledgeLearn/review",{
                     "ids" : id_array,
                     "pass_status_id": pass,
-                    "userId":$scope.vm.userId,
-                    "userName":$scope.vm.userName
+                    "userId": USER_ID,
+                    "userName": USER_NAME
                 },function(data){
                     if(data.info){
                         layer.msg(data.info);
@@ -343,33 +310,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 });
             });
         }
-        //維度
-        function getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-        }
 
-        //渠道
-        function getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-        }
         //全选
         $("#selectAll").on("click",function(){
             var ids = document.getElementsByName("sid");
@@ -420,18 +361,11 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         function learn(requestId,content){
             $scope.vm.knowledgeContent = content ;
             console.log("======="+$scope.vm.knowledgeContent);
-            var dialog = ngDialog.openConfirm({
-                template:"/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html",
-                width:'500px',
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                    }
-                }
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html','500px',function(){
+
+            },function(){
+
             });
         }
 
@@ -443,17 +377,11 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
         function associateCheck(content,knowledgeTitle){
             $scope.vm.currQuestion="用户问题:"+content;
             $scope.vm.currKnowledgeTitle=knowledgeTitle;
-            ngDialog.openConfirm({
-                template:"/static/application_analysis/new_know_discovery_learn/associate_learn_check.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                    }
-                }
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/associate_learn_check.html','450px',function(){
+
+            },function () {
+
             });
         }
 
@@ -474,18 +402,11 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             },function(err){
                 console.log(err);
             });
-            ngDialog.openConfirm({
-                template:"/static/application_analysis/new_know_discovery_learn/content.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                width:'930px',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                    }
-                }
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/content.html','930px',function(){
+
+            },function(){
+
             });
         }
     }
