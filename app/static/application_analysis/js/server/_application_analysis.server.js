@@ -110,10 +110,25 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.review = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
 
                             /******************************
-                                  *未匹配问题聚类*    API_ANALYSIS = "/api/analysis" ;
+                                  *未匹配问题聚类*    API_ANALYSIS = "/api/analysis" ;    API_MS = "/api/ms",
                                  ********************************/
-    
+    //表格列表 未学习
+    this.searchNewKnowledgeDiscovery = $resource(API_ANALYSIS+'/knowledgeLearn/newKnowledgeDiscoveryLearnUnlearn',{},{});
+    //表格列表 已学习
+    this.listNoReview2 = $resource(API_ANALYSIS+'/knowledgeLearn/listNoReview',{},{});
+    //未学习关联弹窗
+    this.searchByKnowledgeTitle2 = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
+    //忽略
+    this.ignore2 = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
+    //关联
+    this.assembleLearnData2 = $resource(API_ANALYSIS+'/knowledgeLearn/learnByContent',{},{});
+    //通过 不通过
+    this.review2 = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
+    //学习
 
+    //关联知识查看
+
+    //上下文
 
 
 
