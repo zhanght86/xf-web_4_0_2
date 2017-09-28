@@ -12,7 +12,7 @@ angular.module("knowledgeManagementModule").directive("knowContentConfiguration"
         template :
             function(scope,attr){
                 var result  ;
-                if (attr["templateType"]==true){//如果解析不了，默认的无弹框
+                if (attr["templateType"]=="true"){//如果解析不了，默认的无弹框
                     result = $templateCache.get("has-dialog") ;
                 }else{
                     result =  $templateCache.get("not-dialog")
@@ -62,9 +62,12 @@ angular.module("knowledgeManagementModule").directive("knowContentConfiguration"
             }) ;
             //点击添加相关问
               function addAppoint(item,arr){
+                  console.log(scope.vm.knowledgeRelevantContentList)
                     if(arr.indexOf(item)==-1){
                         arr.push(item)
                     }
+                  console.log(arr)
+                  console.log(scope.vm.knowledgeRelevantContentList)
                 }
             // 光标移开
             function leaveAppointEnter(){

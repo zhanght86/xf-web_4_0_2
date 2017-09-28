@@ -81,14 +81,8 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             prevDiv : prevDiv,
             nextDiv : nextDiv,
             //引到页end
-            isDecorateSimple : false  ,// true 单独修饰  false  整体修饰
-            backupsOfExtension : "",   //扩展问 编辑备份
-            backUpExt: backUpExt , // 扩展问 假删除
-            extensionDeleted : []
         };
 
-        //獲取渠道
-        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         /*
 

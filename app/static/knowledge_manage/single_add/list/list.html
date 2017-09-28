@@ -17,26 +17,28 @@
                         <div class="list_facContent_L">知识标题：</div>
                         <div >
                             <input  type="text" class="bk-gray input-text " autofocus  placeholder="请输入标题" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
-                            <a href="javascript:;" title="自动匹配BOT" ng-click="vm.getBotAndExtensionByTitle()" class=" mr-15"><img src="../../../../images/match_img.png" width="25" height="25"></a>
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
-
-                    <div class="list_facContent mb-10">
-                        <div class="list_facContent_L">知识有效期：</div>
-                        <div >
-                            <div class="dib">
-                                <label>
-                                    <input style=" margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> 启用
-                                </label>
-                                <div style="margin-top: 10px;" ng-show="vm.isTimeTable">
-                                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择开始日期" readonly>
-                                    -
-                                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- 时间-->
+                    <span select-start-end-time="noDialog"></span>
+                    <!--  bot -->
+                    <!--<span bot-class-tree="" ></span>-->
+                    <!--<div class="list_facContent mb-10">-->
+                        <!--<div class="list_facContent_L">知识有效期：</div>-->
+                        <!--<div >-->
+                            <!--<div class="dib">-->
+                                <!--<label>-->
+                                    <!--<input style=" margin-top: -2px;" type="checkbox" ng-model="vm.isTimeTable"> 启用-->
+                                <!--</label>-->
+                                <!--<div style="margin-top: 10px;" ng-show="vm.isTimeTable">-->
+                                    <!--<input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择开始日期" readonly>-->
+                                    <!-&#45;&#45;-->
+                                    <!--<input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:190px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
                     <div class="bot_box">
                         <div class="list_facContent mb-10">

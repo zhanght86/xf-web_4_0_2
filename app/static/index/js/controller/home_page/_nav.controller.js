@@ -27,9 +27,9 @@ angular.module('homePage').controller('homePageNavController', [
         }else{
             document.getElementsByTagName("body")[0].style.cssText = "background: #f8f8f8";
         }
-        if(!$cookieStore.get('userId')){
-            $state.go("login")
-        }
+        //if(!$cookieStore.get('userId')){
+        //    $state.go("login")
+        //}
         function logApplication(){
             if($scope.vm.sceneId){
                 $state.go("setting.Infor")
@@ -48,7 +48,7 @@ angular.module('homePage').controller('homePageNavController', [
                 "userId" : USER_ID ,
                 "userLoginName" : USER_LOGIN_NAME
             },function(){});
-            $state.go("login");
+            self.location = "index.html" ;
         }
         //初始化分页配置
         self.initSearch = function (column) {

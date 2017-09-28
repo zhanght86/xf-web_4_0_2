@@ -24,7 +24,7 @@ angular.module('homePage').controller('adminContentController', [
             $cookieStore.put("applicationId",applicationId);
             $.getScript('/js/common/config.js');
             $scope.MASTER.queryChannelList(applicationId) ;
-            $scope.MASTER.querydimensionList(applicationId) ;
+            $scope.MASTER.queryDimensionList(applicationId) ;
         }
         getUserInfo();
         myApplication();

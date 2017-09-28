@@ -12,7 +12,7 @@
                 </p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.knowledgeExpDateStart">
                     <span>知识有效期：</span>
-                    {{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd hh:mm:ss'}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd hh:mm:ss'}}
+                    {{vm.listData.knowledgeBase.knowledgeExpDateStart  |  date : 'yyyy-MM-dd '}} 至 {{vm.listData.knowledgeBase.knowledgeExpDateEnd |  date : 'yyyy-MM-dd '}}
                 </p>
                 <p class="mb-10" ng-if="vm.listData.knowledgeBase.classificationAndKnowledgeList" ng-repeat="item in vm.listData.knowledgeBase.classificationAndKnowledgeList track by $index"><span ng-class="$index==0?'':'mileVs'">BOT路径：</span> <b  style="font-weight:normal;">{{item.className.join("/")}}</b></p>
             </li>
@@ -73,7 +73,7 @@
                         <!--<span ng-class="indexVal?'':'mileVs'">已添加知识：</span>-->
                         <!--<span style="width:100%;">{{indexVal}}{{val}}</span>-->
                     <!--</p>-->
-                    <div class="pr" style="padding-left:150px;">
+                    <div class="pr" ng-if="item.knowledgeRelevantContentList.length" style="padding-left:150px;">
                         <span  class="pa dib" style="width:150px;left:0;top:0;color:#666;">已添加知识：</span>
                         <div>
                             <p class="mb-10" ng-repeat=" (indexVal,val) in item.knowledgeRelevantContentList track by $index">
