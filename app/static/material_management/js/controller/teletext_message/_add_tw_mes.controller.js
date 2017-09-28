@@ -25,7 +25,10 @@ angular.module('materialManagement').controller('addTwMesController', [
             insertCoverImg : insertCoverImg ,// 插入封面图片到编辑器
             saveLimit : false ,
         };
-        //设置富文本编辑器
+
+        /**
+         *设置富文本编辑器
+         */
         $scope.vm.config = {
             "autoHeight" : true ,
              toolbars: [[
@@ -71,7 +74,10 @@ angular.module('materialManagement').controller('addTwMesController', [
             //是否可以拉伸长高,默认true(当开启时，自动长高失效)
             //,scaleEnabled:false
         } ;
-         // 获取编辑图文知识
+
+        /**
+         *获取编辑图文知识
+         */
          if($stateParams.imgTextId){
              $scope.vm.graphicMessageId = $stateParams.imgTextId ;
              getImgText($stateParams.imgTextId)
@@ -89,7 +95,9 @@ angular.module('materialManagement').controller('addTwMesController', [
             });
 
         }() ;
-        //获取本地图片
+        /**
+        *获取本地图片
+        */
         getPicList(1) ;
        function getPicList(index){
            MaterialServer.getPicList.save({
@@ -110,7 +118,10 @@ angular.module('materialManagement').controller('addTwMesController', [
            });
 
         }
-        //设置本地图片分页
+
+        /**
+         *设置本地图片分页
+         */
         var picTimer ;
         $scope.$watch('vm.imgPaginationConf.currentPage', function(current){
             if(current){
@@ -119,10 +130,13 @@ angular.module('materialManagement').controller('addTwMesController', [
                 }
                 picTimer = $timeout(function () {
                     getPicList(current);
-                }, 100)
+                }, 0)
             }
         },true);
-        // 选择图片
+
+        /**
+         * 选择图片
+         */
         function selectImage(item){
             $scope.vm.imgSelected = item.pictureUrl ;
             ngDialog.close(ngDialog.latestID);
@@ -166,7 +180,10 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("知识保存中......")
             }
         }
-        //保存
+
+        /**
+         * 保存
+         */
         function save(api,parameter){
             // httpRequestPost(api,parameter,
             //     function(response){
@@ -203,7 +220,9 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("请先选择封面图片")
             }
         }
-        //验证必填
+        /**
+         * 验证必填
+         */
         function canStore(title,author,ueditorText,picUrl,callBack){
             var result = false ;
             if(!title){
@@ -220,7 +239,11 @@ angular.module('materialManagement').controller('addTwMesController', [
             return result ;
         }
 
-        // 检测时候都符合
+
+        /**
+         *  检测时候都符合
+         *
+         */
         /*
                      编辑
         * */

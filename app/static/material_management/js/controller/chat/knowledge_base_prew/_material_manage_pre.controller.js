@@ -44,8 +44,8 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                     }else{
                         $state.go("materialManagement.chatKnowledgeBase");
                     }
-                },function(){
-
+                },function(err){
+                    console.log(err);
                 });
             //}
         }

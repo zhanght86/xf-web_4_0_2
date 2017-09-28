@@ -17,9 +17,13 @@ angular.module('materialManagement').controller('teletextMessageController', [
             showImg : showImg,
             removeImg : removeImg,
         };
+
         showImg(1);
-        //查询
-        function showImg(index) {            
+        /**
+         * 查询
+         */
+        function showImg(index) {
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.showImg.save({
                 applicationId:$scope.vm.applicationId,
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
@@ -27,6 +31,7 @@ angular.module('materialManagement').controller('teletextMessageController', [
                 graphicMessageTitle:$scope.vm.titAuthor
                 // graphicMessageAuthor:$scope.vm.titAuthor
             },function(data){
+                layer.close(i);
                 if(data.status == 500){
                     layer.msg("请求失败",{time:1000});
                     $scope.vm.imageList=[];
@@ -40,14 +45,15 @@ angular.module('materialManagement').controller('teletextMessageController', [
                     console.log($scope.vm.paginationConf);
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
 
         //分页定时器
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout);
                 }
@@ -56,7 +62,9 @@ angular.module('materialManagement').controller('teletextMessageController', [
                 }, 0);
             }
         },true);
-        //删除图片
+        /**
+         * 删除图片
+         */
         function removeImg(item,index){
             layer.confirm('确认删除该图文消息？', {
                 btn: ['确定','取消'] //按钮
@@ -66,7 +74,8 @@ angular.module('materialManagement').controller('teletextMessageController', [
                 },function(data){
                     if(data.status == 200){
                         layer.msg("图文消息删除成功") ;
-                        showImg(1)
+                        //showImg(1)
+                        $state.reload();
                     }else if(data.status == 500){
                         layer.msg("图文消息删除失败") ;
                     }

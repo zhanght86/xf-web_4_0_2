@@ -3,21 +3,26 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore",
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore) {
         $scope.vm = {
-            applicationId :$cookieStore.get("applicationId"),
-            userId :$cookieStore.get("userId"),
-            userName :$cookieStore.get("userLoginName"),
             searchNewKnowledgeDiscovery : searchNewKnowledgeDiscovery ,
             listNoReview : listNoReview ,
             listData : null ,   // table 数据
-            paginationConf : null ,//分页条件
-            pageSize : 5  , //默认每页数量
-            listData1 : null ,   // table 数据
-            paginationConf1 : null ,//分页条件
-            paginationConf2 : null ,//分页条件
-            pageSize1 : 5  , //默认每页数量
+            paginationConf : {      //分页条件
+                pageSize : 5  , //默认每页数量
+                pagesLength : 10
+            },
+
+            listData1 : null ,       // table 数据
+            paginationConf1 : {       //分页条件
+                pageSize : 5  , //默认每页数量
+                pagesLength : 10
+            } ,
+            paginationConf2 : {       //分页条件
+                pageSize : 5  , //默认每页数量
+                pagesLength : 10
+            } ,
             dimensions : [] ,
             channels : [] ,
             channelId  : null ,
@@ -40,7 +45,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             review:review,
             statusId:0,
             passStatusId:0,
-            tab:tab,
             currQuestion:"",
             searchByKnowledgeTitle:searchByKnowledgeTitle,
             knowledgeList:null,
@@ -51,7 +55,9 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             associateCheck:associateCheck,
             currKnowledgeTitle:null ,
             knowledgeContent : "",
-            keyLogin:keyLogin
+            keyLogin:keyLogin,
+            contentType : 0 ,  //默认显示未学习
+
         };
         function keyLogin(e){
             var srcObj = e.srcElement ? e.srcElement : e.target;
@@ -62,44 +68,38 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 srcObj.focus() ;
             }
         }
-        //选项卡
-        function tab(obj1, obj2) {
-            $(obj1).click(function () {
-                $(this).addClass('cur').siblings().removeClass();
-                $(obj2).children('div').eq($(this).index()).attr('class', 'db').siblings().attr('class', 'dn');
-                searchNewKnowledgeDiscovery(1);
-                listNoReview(1);
-            });
+
+        /**
+         *  页面初始化 获取
+         **/
+        init();
+        function init(){
+           // getDimensions();
+           // getChannel();
+            searchNewKnowledgeDiscovery(1);
+            listNoReview(1);
         }
 
-        tab('.tab_tit span', '.tab_con');
-
-        //list 分页变化加载数据
-        // $scope.$watch('vm.paginationConf.currentPage', function(current){
-        //     if(current){
-        //         searchNewKnowledgeDiscovery(current);
-        //     }
-        // });
+        /**
+         * 未学习分页监控
+         **/
         var timer ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timer) {
-                    $timeout.cancel(timer)
+                    $timeout.cancel(timer);
                 }
                 timer = $timeout(function () {
                     searchNewKnowledgeDiscovery(current);
                 }, 100)
             }
         },true);
-
-        // $scope.$watch('vm.paginationConf1.currentPage', function(current){
-        //     if(current){
-        //         listNoReview(current);
-        //     }
-        // });
+        /**
+         * 已学习分页监控
+         **/
         var timer1 ;
-        $scope.$watch('vm.paginationConf1.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf1.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timer1) {
                     $timeout.cancel(timer1)
                 }
@@ -108,12 +108,9 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 }, 100)
             }
         },true);
-
-        // $scope.$watch('vm.paginationConf2.currentPage', function(current){
-        //     if(current){
-        //         searchByKnowledgeTitle(current);
-        //     }
-        // });
+        /**
+         * 未学习关联弹窗 分页监控
+         **/
         var timer2 ;
         $scope.$watch('vm.paginationConf2.currentPage', function(current){
             if(current){
@@ -128,46 +125,55 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
 
         $scope.$watch('vm.channelId1', function(){
             $scope.vm.listData1 = null;
-            $scope.vm.paginationConf1 = {
-                currentPage: 0,//当前页
-                totalItems: 0, //总条数
-                pageSize: 1,//第页条目数
-                pagesLength: 8//分页框数量
-            };
+            // $scope.vm.paginationConf1 = {
+            //     currentPage: 0,//当前页
+            //     totalItems: 0, //总条数
+            //     pageSize: 1,//第页条目数
+            //     pagesLength: 8//分页框数量
+            // };
         });
-        //表格列表
+
+        /**
+         *  表格列表 未学习
+         **/
         function searchNewKnowledgeDiscovery(index){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             var question = null;
             if(nullCheck($scope.vm.question)==true){
                 question = "%"+$scope.vm.question+"%";
-            }
-            httpRequestPost("/api/analysis/knowledgeLearn/newKnowledgeDiscoveryLearnUnlearn",{
-                "applicationId" : $scope.vm.applicationId,
+            }            
+            AppAnalysisServer.searchNewKnowledgeDiscovery.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "question": question,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
+                layer.close(i);
                 $scope.vm.listData = data.qaLogs;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: Math.ceil(data.qalogTotal/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8//分页框数量
-                };
-                $scope.$apply();
+                $scope.vm.paginationConf.currentPage = index;
+                $scope.vm.paginationConf.totalItems = data.qalogTotal;
+                $scope.vm.paginationConf.numberOfPages = data.qalogTotal/$scope.vm.paginationConf.pageSize;
+                console.log($scope.vm.paginationConf);
+            },function(err){
+                layer.close(i);
+                console.log(err);
             });
         }
+        /**
+         *  表格列表 未学习关联弹窗
+         **/
         function searchByKnowledgeTitle(index){
             if(nullCheck($("#inputValue").val())==true){
-                httpRequestPost("/api/ms/knowledgeManage/overView/searchList",{
-                    "applicationId":$scope.vm.applicationId,
-                    "index": (index-1)*$scope.vm.pageSize1,
-                    "pageSize": $scope.vm.pageSize1,
+
+                AppAnalysisServer.searchByKnowledgeTitle2.save({
+                    "applicationId": APPLICATION_ID,
+                    "index": (index-1)*$scope.vm.paginationConf2.pageSize,
+                    "pageSize": $scope.vm.paginationConf2.pageSize,
                     "sceneIds":null,
                     "knowledgeTitle": $("#inputValue").val(),
                     "knowledgeContent":null,
@@ -180,55 +186,55 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                     "knowledgeExtensionQuestion":""
                 },function(data){
                     $scope.vm.knowledgeList = data.data.objs;
-                    $scope.vm.paginationConf2 = {
-                        currentPage: index,//当前页
-                        totalItems: Math.ceil(data.data.total/5), //总条数
-                        pageSize: 1,//第页条目数
-                        pagesLength: 8//分页框数量
-                    };
-                    $scope.$apply();
+                    $scope.vm.paginationConf2.currentPage =index ;
+                    $scope.vm.paginationConf2.totalItems =data.data.total ;
+                    $scope.vm.paginationConf2.numberOfPages = data.data.total/$scope.vm.paginationConf2.pageSize ;
+                    console.log($scope.vm.paginationConf2);
+                },function(err){
+                    console.log(err);
                 });
             }else{
                 layer.msg("请输入要查找的标题");
             }
         }
+        /**
+         *  表格列表 已学习
+         **/
         function listNoReview(index){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             var question = null;
             if(nullCheck($scope.vm.question1)==true){
                 question = "%"+$scope.vm.question1+"%";
             }
-            httpRequestPost("/api/analysis/knowledgeLearn/listNoReview",{
-                "applicationId" : $scope.vm.applicationId,
+            AppAnalysisServer.listNoReview2.save({
+                "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId1,
                 "question": question,
                 "dimensionId": $scope.vm.dimensionId1,
                 "requestTimeType":$scope.vm.timeType1,
                 "startTime": $scope.vm.timeStart1,
                 "endTime": $scope.vm.timeEnd1,
-                "index": (index-1)*$scope.vm.pageSize1,
-                "pageSize": $scope.vm.pageSize1,
+                "index": (index-1)*$scope.vm.paginationConf1.pageSize,
+                "pageSize": $scope.vm.paginationConf1.pageSize,
                 "status_id": $scope.vm.statusId,
                 "pass_status_id": $scope.vm.passStatusId,
                 "learn_type": 1
             },function(data){
+                layer.close(i);
                 $scope.vm.listData1 = data.reviewRecords;
-                $scope.vm.paginationConf1 = {
-                    currentPage: index,//当前页
-                    totalItems: Math.ceil(data.reviewRecordTotal/5), //总条数
-                    pageSize: 1,//第页条目数
-                    pagesLength: 8//分页框数量
-                };
-                $scope.$apply();
+                $scope.vm.paginationConf1.currentPage = index;
+                $scope.vm.paginationConf1.totalItems = data.reviewRecordTotal;
+                $scope.vm.paginationConf1.numberOfPages = data.reviewRecordTotal/$scope.vm.paginationConf1.pageSize;
+                console.log($scope.vm.paginationConf1);
+            },function(err){
+                layer.close(i);
+                console.log(err);
             });
         }
-        //获取
-        init();
-        function init(){
-            getDimensions();
-            getChannel();
-            searchNewKnowledgeDiscovery(1);
-            listNoReview(1);
-        }
+
+        /**
+         *  忽略
+         **/
         function ignore(){
             var ids = document.getElementsByName("sid");
             var id_array = [];
@@ -245,29 +251,26 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 layer.close(index);
                 var request = new Object();
                 request.ids=id_array;
-                httpRequestPost("/api/analysis/knowledgeLearn/ignoreByContent",request,function(data){
+                AppAnalysisServer.ignore2.save(request,function(data){
                     if(data!=null){
                         searchNewKnowledgeDiscovery($scope.vm.paginationConf.currentPage);
                     }
+                },function(err){
+                    $log.log(err);
                 });
             });
         }
+        /**
+         * 关联
+         **/
         function associate(requestId,content){
             $scope.vm.knowledgeList=null;
             $scope.vm.currQuestion="用户问题:"+content;
-            var dialog = ngDialog.openConfirm({
-                template:"/static/application_analysis/reinforcement_learn/associate_learn.html",
-                width:'460px',
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                        assembleLearnData(requestId);
-                    }
-                }
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','460px',function () {
+                assembleLearnData(requestId);
+            },function(){
+
             });
         }
 
@@ -292,7 +295,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            httpRequestPost("/api/analysis/knowledgeLearn/learnByContent",{
+            AppAnalysisServer.assembleLearnData2.save({
                 "qalog_id" : requestId,
                 "knowledge_id":id_array.pop(),
                 "knowledge_type":knowledgeType,
@@ -304,10 +307,14 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                     layer.msg(data.info);
                     searchNewKnowledgeDiscovery(1);
                 }
-            },function(err){
+            },function (err) {
                 console.log(err);
             });
         }
+
+        /**
+         * 通过 不通过
+         **/
         function review(pass){
             var ids = document.getElementsByName("sid1");
             var id_array = [];
@@ -327,12 +334,12 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 return;
             }
             layer.confirm('确认要'+msg+'吗？', function (index) {
-                layer.close(index);
-                httpRequestPost("/api/analysis/knowledgeLearn/review",{
+                layer.close(index);                
+                AppAnalysisServer.review2.save({
                     "ids" : id_array,
                     "pass_status_id": pass,
-                    "userId":$scope.vm.userId,
-                    "userName":$scope.vm.userName
+                    "userId": USER_ID,
+                    "userName": USER_NAME
                 },function(data){
                     if(data.info){
                         layer.msg(data.info);
@@ -343,33 +350,62 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 });
             });
         }
-        //維度
-        function getDimensions(){
-            httpRequestPost("/api/application/dimension/list",{
-                "applicationId" : $scope.vm.applicationId
-            },function(data){
-                if(data.data){
-                    $scope.vm.dimensions = data.data;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
+
+        /**
+         * 学习
+         **/
+        function learn(requestId,content){
+            $scope.vm.knowledgeContent = content ;
+            console.log("======="+$scope.vm.knowledgeContent);
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html','500px',function(){
+
+            },function(){
+
             });
         }
 
-        //渠道
-        function getChannel(){
-            httpRequestPost("/api/application/channel/listChannels",{
-                "applicationId" : $scope.vm.applicationId
+        /**
+         * 关联知识查看
+         * @param content
+         * @param knowledgeTitle
+         */
+        function associateCheck(content,knowledgeTitle){
+            $scope.vm.currQuestion="用户问题:"+content;
+            $scope.vm.currKnowledgeTitle=knowledgeTitle;
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/associate_learn_check.html','450px',function(){
+
+            },function () {
+
+            });
+        }
+
+        /**
+         * 上下文
+         * @param requestId
+         */
+        function content(requestId){
+            httpRequestPost("/api/analysis/userSession/searchContent",{
+                "qalogId" : requestId,
+                "index": 0,
+                "pageSize": 32767
             },function(data){
-                if(data.data){
-                    $scope.vm.channels = data.data;
+                if(data!=null){
+                    $scope.vm.talkDetail = data.data.objs;
                     $scope.$apply();
                 }
             },function(err){
                 console.log(err);
             });
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/content.html','930px',function(){
+
+            },function(){
+
+            });
         }
+
         //全选
         $("#selectAll").on("click",function(){
             var ids = document.getElementsByName("sid");
@@ -415,78 +451,6 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             console.log("=====clearSelectAll1=====");
             $("#selectAll1").attr("checked",false);
             $("#selectAll1").prop("checked",false);
-        }
-        //学习
-        function learn(requestId,content){
-            $scope.vm.knowledgeContent = content ;
-            console.log("======="+$scope.vm.knowledgeContent);
-            var dialog = ngDialog.openConfirm({
-                template:"/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html",
-                width:'500px',
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                    }
-                }
-            });
-        }
-
-        /**
-         * 关联知识查看
-         * @param content
-         * @param knowledgeTitle
-         */
-        function associateCheck(content,knowledgeTitle){
-            $scope.vm.currQuestion="用户问题:"+content;
-            $scope.vm.currKnowledgeTitle=knowledgeTitle;
-            ngDialog.openConfirm({
-                template:"/static/application_analysis/new_know_discovery_learn/associate_learn_check.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                    }
-                }
-            });
-        }
-
-        /**
-         * 上下文
-         * @param requestId
-         */
-        function content(requestId){
-            httpRequestPost("/api/analysis/userSession/searchContent",{
-                "qalogId" : requestId,
-                "index": 0,
-                "pageSize": 32767
-            },function(data){
-                if(data!=null){
-                    $scope.vm.talkDetail = data.data.objs;
-                    $scope.$apply();
-                }
-            },function(err){
-                console.log(err);
-            });
-            ngDialog.openConfirm({
-                template:"/static/application_analysis/new_know_discovery_learn/content.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                width:'930px',
-                preCloseCallback:function(e){
-                    if(e === 1){
-                    }
-                }
-            });
         }
     }
 ]);

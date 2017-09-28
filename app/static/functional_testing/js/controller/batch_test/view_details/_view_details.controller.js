@@ -37,13 +37,14 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
          */
         getData(1);
         function getData(index){
-            
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             FunctionServer.DetailgetData.save({
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
                 applicationId:APPLICATION_ID,
                 batchNumberId:$stateParams.batchNumberId
             },function(data){
+                layer.close(i);
                 console.log(data);
                 $scope.vm.listData = data.data.detailList;
                 $scope.vm.listDataTotal = data.data.total;
@@ -53,10 +54,13 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                 console.log($scope.vm.paginationConf);
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
-
+        /**
+         * 校验
+         */
         function verifyRelease(){
             if($scope.vm.possibleKnowledge == null || $scope.vm.possibleKnowledge == ""){
                 layer.msg("测试问法不能为空!",{time:1000});
@@ -183,8 +187,11 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
 
             });
         }
-
+        /**
+         * 查询
+         */
         function search(index){
+            var i = layer.msg('查询中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             FunctionServer.search.save({
                 index:(index - 1)*$scope.vm.paginationConf.pageSize,
                 pageSize:$scope.vm.paginationConf.pageSize,
@@ -193,6 +200,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 possibleKnowledge:$scope.vm.value,
                 knowledgeTitle:$scope.vm.value
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status == 10005){
                     layer.msg("查询到记录为空",{time:1000});
@@ -208,6 +216,7 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                 console.log($scope.vm.paginationConf);
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
@@ -216,9 +225,11 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
          * 知识导出
          */
         function exportExcel(){
+            var i = layer.msg('导出中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             FunctionServer.exportExcel.save({
                 batchNumberId:$stateParams.batchNumberId
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status==500){
                     console.log("导出失败");
@@ -229,14 +240,15 @@ angular.module('functionalTestModule').controller('viewDetailsController', [
                 }
 
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
 
         }
 
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout);
                 }

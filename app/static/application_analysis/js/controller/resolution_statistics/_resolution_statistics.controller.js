@@ -3,8 +3,8 @@
  * 控制器
  */
 angular.module('applAnalysisModule').controller('resolutionStatisticsController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
-    function ($scope,localStorageService,$state, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
+    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
+    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             getList : getList ,
@@ -17,12 +17,16 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
             timeEnd : "",
         };
         //獲取渠道
-        $scope.MASTER.getDimensions($scope,["dimensions"]) ;
+        //$scope.MASTER.getDimensions($scope,["dimensions"]) ;
         //获取维度
-        $scope.MASTER.getChannels($scope,["channels"]) ;
+        //$scope.MASTER.getChannels($scope,["channels"]) ;
+
+        /**
+         * 表格列表
+         **/
         getList() ;
-        //表格列表
         function getList(){
+            var i = layer.msg('资源加载中',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             var parameter = {
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
@@ -34,28 +38,44 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                 "pageSize" : 1000
             } ;
             // 解决率统计图表数据
-            httpRequestPost("/api/analysis/solutionStatistics/qaAskSolutionStatistics",parameter,function(data){
-                console.log(data) ;
-                if(data.status == 10014){
-                    var chart = [{value:data.data.noSolutionTotal, name:'未解决'},
-                                 {value:data.data.total, name:'解决'}] ;
-                    solutionRateChartSet(chart) ;
+            AppAnalysisServer.resolutionStatistics.save(parameter
+                ,function(data){
+                    layer.close(i);
+                    console.log(data) ;
+                    if(data.status == 10014){
+                        var chart = [{value:data.data.noSolutionTotal, name:'未解决'},
+                                     {value:data.data.total, name:'解决'}] ;
+                        solutionRateChartSet(chart) ;
 
+                    }
+                },function(err){
+                    layer.close(i);
+                    $log.log(err);
                 }
-            },function(error){console.log(error)});
+            );
+
             // 回复数图表数据
-            httpRequestPost("/api/analysis/solutionStatistics/qaAskMatchStatistics",parameter,function(data){
-                console.log(data) ;
-                if(data.status == 10014){
-                    specificRateChartSet(data.data.responseOfStandardTotal,data.data.responseOfGreetingTotal,
-                                        data.data.sensitiveWordResponseTotal,data.data.repeatQuestionResponseTotal,
-                                        data.data.expiredKnowledgeResponseTotal,data.data.unknownQuestionResponseTotal)
+            AppAnalysisServer.replyStatistics.save(parameter
+                ,function(data){
+                    layer.close(i);
+                    console.log(data) ;
+                    if(data.status == 10014){
+                        specificRateChartSet(data.data.responseOfStandardTotal,data.data.responseOfGreetingTotal,
+                                            data.data.sensitiveWordResponseTotal,data.data.repeatQuestionResponseTotal,
+                                            data.data.expiredKnowledgeResponseTotal,data.data.unknownQuestionResponseTotal)
 
+                    }
+                },function(err){
+                    layer.close(i);
+                    $log.log(err);
                 }
-            },function(error){console.log(error)});
+            );
         }
         var solutionRateChart , specificRateChart  ;
-        //初始化两个表格
+
+        /**
+         * 初始化两个表格
+         **/
         void function(){
             //左图
             solutionRateChart = echarts.init(document.getElementById('resolution_echart'));
@@ -63,7 +83,10 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
             //右图
             specificRateChart = echarts.init(document.getElementById('resolution_echart2'));
         }() ;;
-        // 解决率统计图表
+
+        /**
+         * 解决率统计图表 Echart
+         **/
         function solutionRateChartSet(data){
             solutionRateChart.setOption({
                 title : {
@@ -96,7 +119,10 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
                 ]
             }) ;
         }
-        // 回复数图表
+
+        /**
+         * 回复数图表   Echart
+         **/
         function specificRateChartSet(val1,val2,val3,val4,val5,val6){
             specificRateChart.setOption({
                 tooltip : {

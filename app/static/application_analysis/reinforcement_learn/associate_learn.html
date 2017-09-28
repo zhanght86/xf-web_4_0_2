@@ -1,9 +1,9 @@
 <div class="pd-20" >
-    <div>
+    <div class="mb-10">
         <p>{{vm.currQuestion}}</p>
     </div>
     <div class="text-c mb-10">
-        <input type="text" id="inputValue" style="width: 316px;" ng-keydown="vm.keyLogin($event)" class="input-text txt_corre" />
+        <input type="text" id="inputValue" ng-model="inputValue" style="width: 316px;" ng-keydown="vm.keyLogin($event)" class="input-text txt_corre" />
         <input type="button" value="查找" ng-click="vm.searchByKnowledgeTitle(1)" class="btn1"/>
     </div>
     <div>
@@ -33,10 +33,7 @@
     </div>
 </div>
 <style>
-    .ngdialog.ngdialog-theme-default .ngdialog-content{
-        width:930px;
-        min-height: 400px;
-    }
+
 </style>
 
 

@@ -19,7 +19,9 @@ angular.module('functionalTestModule').controller('questionTestController', [
             show_tit:false
 
         };
-        //比较测试回答有没有重的词；
+        /*****************
+            * //比较测试回答有没有重的词；
+        * *****************/
         function check(val,matchedWordTagResults){
             var allLen = matchedWordTagResults.length ;
             angular.forEach(matchedWordTagResults,function (tag) {
@@ -40,7 +42,10 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 return true ;
             }
         }
-        //问法测试
+
+        /*****************
+         * //开始测试
+         * *****************/
         function test(){
             $scope.vm.comparisonTextArray=$scope.vm.question.split("\n");         //换行;
             console.log($scope.vm.comparisonTextArray);
@@ -57,27 +62,13 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 layer.msg('请输入标准问法和测试问法！');
                 return;
             }
-            // httpRequestPost("api/application/questionTest/passageway",{
-            //     "applicationId": $scope.vm.applicationId,
-            //     "title": $scope.vm.testTitle,
-            //     "comparisonTextArray": $scope.vm.comparisonTextArray
-            // },function(data){
-            //     $scope.vm.show_tit=true;
-            //     //$scope.vm.botRoot = data.data;
-            //     console.log(data);
-            //     if(data.data.status == 500){
-            //         layer.msg(data.data.data,{time:1000});
-            //     }
-            //     $scope.vm.answerRes=data.data.data;
-            //     $scope.$apply();
-            // },function(){
-            //     //layer.msg("err or err")
-            // });
+            var i = layer.msg("资源加载中...",{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.testQuestion.save({
                 "applicationId": $scope.vm.applicationId,
                 "title": $scope.vm.testTitle,
                 "comparisonTextArray": $scope.vm.comparisonTextArray
             },function(data){
+                layer.close(i);
                 $scope.vm.show_tit=true;
                 //$scope.vm.botRoot = data.data;
                 console.log(data);
@@ -87,11 +78,15 @@ angular.module('functionalTestModule').controller('questionTestController', [
                 $scope.vm.answerRes=data.data.data;
 
             },function(err){
+                layer.close(i);
                 console.log(err);
             });
 
         }
-        //清空问法；
+
+        /*****************
+         * //清空问法；
+         * *****************/
         function emptyInput(){
             $scope.vm.testTitle='';
             $scope.vm.question='';

@@ -34,14 +34,18 @@ angular.module('materialManagement').controller('speechLibraryController', [
             }
 
         };
-
+        /**
+         * 获取语音列表
+         */
         getVoiceList(1) ;
-        function getVoiceList(index){            
+        function getVoiceList(index){
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.getVoiceList.save({
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize ,
                 "applicationId":APPLICATION_ID
             },function(data){
+                layer.close(i);
                 if(data.status == 200){
                     console.log(data.data);                    
                     $scope.vm.voiceList = data.data ;
@@ -54,16 +58,21 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     $scope.vm.paginationConf.totalItems = 0;
                 }
             },function(err){
+                layer.close(i);
                 console.log(err);
             });
         }
-        //查询
+        /**
+         * 查询
+         */
         function searchVoice(index){
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.searchVoice.save({
                 "index":(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
                 "voiceName":$scope.vm.voiceName
             },function(data){
+                layer.close(i);
                 if(data.status==200){
                     console.log(data.data);
                     $scope.vm.voiceList = data.data ;
@@ -77,20 +86,21 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     $scope.vm.paginationConf.totalItems = 0;
                 }
             },function(err){
+                layer.close(i);
                 console.log(error);
             });
         }
 
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
                 if (timeout) {
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
                     initBatchTest();
                     getVoiceList(current);
-                }, 100)
+                }, 0)
 
             }
         },true);
@@ -117,7 +127,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
 
         }
 
-        //修改名称
+        /**
+         * 修改名称
+         */
         function changeName(callback){
             $scope.vm.voiceName = callback.voiceName;
             $scope.vm.voiceId = callback.voiceId;
@@ -129,13 +141,14 @@ angular.module('materialManagement').controller('speechLibraryController', [
             });
         }
         function updateVoice(){
-                     
             MaterialServer.updateVoice.save({
                 voiceId : $scope.vm.voiceId,
                 voiceName : $scope.vm.voiceName
             },function(data){
                 if(data.status==200){
-                    getVoiceList(1);
+                    layer.msg('语音名称修改成功');
+                    //getVoiceList(1);
+                    $state.reload();
                 }else if(data.status==500){
                     layer.msg('名称根寻失败');
                 }
@@ -145,7 +158,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
 
         }
 
-        //全选
+        /**
+         * 全选
+         */
         function selectAll(){
             if($scope.vm.isSelectAll){
                 $scope.vm.isSelectAll = false;
@@ -159,7 +174,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
             }
             console.log($scope.vm.voiceIds);
         }
-        //单选
+        /**
+         * 单选
+         */
         function selectSingle(id){
             if($scope.vm.voiceIds.inArray(id)){
                 $scope.vm.voiceIds.remove(id);
@@ -173,12 +190,16 @@ angular.module('materialManagement').controller('speechLibraryController', [
             }
             console.log( $scope.vm.voiceIds);
         }
-        //全选清空
+        /**
+         * 全选清空
+         */
         function initBatchTest(){
             $scope.vm.isSelectAll=false;
             $scope.vm.voiceIds=[];
         }
-        //批量删除
+        /**
+         * 批量删除
+         */
         function batchDeleteVoice(voiceIds){
             //console.log($scope.vm.voiceIds);
             if(!voiceIds.length){
