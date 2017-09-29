@@ -380,22 +380,6 @@ knowledge_static_web.controller('ApplicationController',
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             $scope.currentUser = null;
             $scope.isAuthorized = AuthService.isAuthorized;
             $scope.currentPage = 1;
@@ -462,16 +446,6 @@ knowledge_static_web.controller('ApplicationController',
                     //否则 用localStore中的参数去初始化
                     return localStorageService.get($state.current.name);
                 }
-            };
-
-            /**
-             * 非空判断
-             */
-            $scope.notEmpty = function (param) {
-                if(param!=null && param!=undefined && $.trim(param)!=''){
-                    return true;
-                }
-                return false;
             };
 
             /**

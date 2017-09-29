@@ -16,8 +16,6 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             frames : [],      //业务框架
             frameId : "",
             botRoot : "",      //根节点
-            knowledgeBotVal : "",  //bot 内容
-
             frameCategoryId : "",
             title : "",   //标题
             titleTip :  "",
@@ -25,14 +23,13 @@ angular.module('knowledgeManagementModule').controller('knowManaListController',
             timeStart : "",      //起始时间
             timeEnd : "",
             isTimeTable : false,  //时间表隐藏
-
+//bot
             creatSelectBot : [], //手选生成 bot
 
 //扩展问
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
 //展示内容
-            scanContent : [],
             save : save ,   //保存
             scan :scan ,   //预览
 //高级选项

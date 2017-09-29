@@ -69,13 +69,19 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         // 获取相关问
         this.queryFactorRelatedQuestion = $resource(API_MS+"/factorKnowledge/getKnowledgeTitle",{},{}) ;
         // 检验扩展问
-        this.queryFactorExtension = $resource(API_MS+"/factorKnowledge/checkExtensionQuestion",{},{}) ;
+        this.queryFactorExtension = $resource(API_MS+"/elementKnowledgeAdd/checkDistribute",{},{}) ;
         // 保存
-        this.storeFactorKnow = $resource(API_MS+"/factorKnowledge/addFactorKnowledge",{},{}) ;
+        this.storeFactorKnow = $resource(API_MS+"/elementKnowledgeAdd/addElementKnowledge",{},{}) ;
         // 编辑
-        this.updateFactorKnow = $resource(API_MS+"/factorKnowledge/editKnowledge",{},{}) ;
+        this.updateFactorKnow = $resource(API_MS+"/elementKnowledgeAdd/editElementKnowledge",{},{}) ;
 //   富文本知识新增
         // 获取相关问
-        this.queryRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;
+        this.queryRichTextRelatedQuestion = $resource(API_MS+"/richtextKnowledge/getKnowledgeTitle",{},{}) ;
+        // 检验扩展问
+        this.queryRichTextExtension = $resource(API_MS+"/elementKnowledgeAdd/checkDistribute",{},{}) ;
+        // 保存
+        this.storeRichTextKnow = $resource(API_MS+"/elementKnowledgeAdd/addElementKnowledge",{},{}) ;
+        // 编辑
+        this.updateRichTextKnow = $resource(API_MS+"/elementKnowledgeAdd/editElementKnowledge",{},{}) ;
 
 }]);
