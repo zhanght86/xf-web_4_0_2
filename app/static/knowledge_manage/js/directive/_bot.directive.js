@@ -9,7 +9,11 @@ angular.module("knowledgeManagementModule").directive("botClassTree",
         return {
             restrict : "A" ,
             template : function(scope,attr){
-                return $templateCache.get("bot-class") ;
+                if(attr.botClassTree=="dialog"){
+                    return $templateCache.get("bot-class")
+                }else{
+                    return $templateCache.get("bot-class-not-dialog")
+                }
             } ,
             link : function(scope,attr,el,ctr){
                 scope.dirBot = {

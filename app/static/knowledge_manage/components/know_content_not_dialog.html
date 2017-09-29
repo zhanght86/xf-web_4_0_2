@@ -2,15 +2,15 @@
     <div class="channel_div  mb-10">
         <span class="channel_s">渠道：</span>
         <div>
-            <label class="mr-10" ng-repeat="channel in $parent.$parent.MASTER.channelList">
-                <input style="vertical-align: middle; margin:0 ;" type="checkbox" ng-checked="vm.channel.inArray(channel.channelCode)" ng-click="vm.selectChannel(channel.channelCode)">
+            <label class="mr-10" ng-repeat="channel in $parent.$parent.MASTER.channelList track by $index">
+                <input style="vertical-align: middle; margin:0 ;" type="checkbox" ng-click="$parent.knowCtr.selectChannel(this,channel.channelCode)" ng-checked="vm.channelIdList.inArray(channel.channelCode)">
                 {{channel.channelName}}
                 </label>
             </div>
         </div>
     <div class="channel_div mb-10">
         <span class="channel_s">维度：</span>
-        <div auto-complete  source="vm.dimensionsCopy" result="vm.dimensionArr"></div>
+        <div auto-complete result="vm.dimensionArr"></div>
         </div>
     <div class="channel_div mb-10" style="padding-left:80px;">
         <span class="channel_s" >高级选项：</span>
@@ -25,11 +25,11 @@
             <div class="dib pt-5 mr-15">
                 <span switch value="vm.question"></span>
                 <span>显示相关问题</span>
-                </div>
+            </div>
             <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
                 <span switch value="vm.tip"></span>
                 <span>在相关问题内提示</span>
-                </div>
+            </div>
             <div class="dib pt-5 mr-15" style="margin-left: 81px;">
                 <span switch value="vm.tail"></span>
                 <span>弹出评价小尾巴</span>

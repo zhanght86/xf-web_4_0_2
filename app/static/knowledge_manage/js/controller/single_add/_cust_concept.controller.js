@@ -36,9 +36,9 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
 //D 知识内容配置
-            newTitle : "",   //标题
+            newTitle : "",           //标题
             channelIdList : [],      //新添加的渠道
-            dimensionList : [],      //選擇的維度
+            dimensionArr : [],      //選擇的維度
             question : 1,            //显示相关问题
             tip : 1,                 //相关提示
             tail : 1 ,               //小尾巴
@@ -60,24 +60,19 @@ angular.module('knowledgeManagementModule').controller('conceptController', [
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
         if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
             var data = angular.fromJson($stateParams.data) ;
-            //console.log($stateParams.data);
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
             $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
             // 时间
-            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
-                $scope.vm.isTimeTable = true
-            }
+            $scope.vm.isTimeTable = (data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd)
             $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
             $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             //bot路径
             $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
             //扩展问
             $scope.vm.extensionsByFrame = data.extensionQuestions;
-            angular.forEach(data.extensionQuestions,function(item){
-            });
             //内容
             angular.forEach(data.knowledgeContents,function(item){
                 $scope.vm.scanContent.push({

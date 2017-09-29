@@ -29,7 +29,7 @@
                 <!-- 时间-->
                 <span select-start-end-time="dialog"></span>
                 <!--  bot -->
-                <span bot-class-tree="" ></span>
+                <span bot-class-tree="dialog" ></span>
  <!--bot  類目數 点击生成  -->
                 <div class="item-line mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
                     <div class="lable"> BOT路径：</div>
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="jqrsz-item" style="overflow: visible">
-                <span ext-has-tag="noTag"  api="queryFaqExtension"></span>
+                <span concept-extension="dialog" tag="false" api="queryFaqExtension"></span>
 <!--手动添加 -->
                 <div class="item-line mb-10"  style="overflow: visible" ng-if="vm.extensions" ng-repeat="item in vm.extensions track by $index">
                     <div class="lable" ng-class="'milesVh'">

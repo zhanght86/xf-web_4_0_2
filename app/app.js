@@ -20,8 +20,8 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //'ngAnimate',
     //上傳功能
     'angularFileUpload',
-    //登录模块
-    'loginModule',
+    ////登录模块
+    //'loginModule',
     //'indexModule',
     //首页 模块
     'homePage',

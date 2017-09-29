@@ -8,10 +8,10 @@ angular.module("knowledgeManagementModule").directive("selectStartEndTime",
         return {
             restrict : "A" ,
             template : function(scope,attr){
-                if(attrs.selectStartEndTime=="dialog"){
+                if(attr.selectStartEndTime=="dialog"){
                     return $templateCache.get("select-start-end-time")
                 }else{
-                    return $templateCache.get("select-start-end-time-no-dialog")
+                    return $templateCache.get("select-start-end-time-not-dialog")
                 }
             },
             link : function(scope,attr,el,ctr){

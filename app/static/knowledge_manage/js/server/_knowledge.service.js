@@ -59,9 +59,21 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
 //   列表知识新增
         // 获取相关问
         this.queryListRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
+        // 检验扩展问
+        this.queryListExtension = $resource(API_MS+"/listKnowledge/checkExtensionQuestion",{},{}) ;
+        // 保存
+        this.storeListKnow = $resource(API_MS+"/listKnowledge/addListKnowledge",{},{}) ;
+        // 编辑
+        this.updateListKnow = $resource(API_MS+"/listKnowledge/editKnowledge",{},{}) ;
 //   要素知识新增
         // 获取相关问
-        this.queryFactorRelatedQuestion = $resource(API_MS+"/listKnowledge/getKnowledgeTitle",{},{}) ;
+        this.queryFactorRelatedQuestion = $resource(API_MS+"/factorKnowledge/getKnowledgeTitle",{},{}) ;
+        // 检验扩展问
+        this.queryFactorExtension = $resource(API_MS+"/factorKnowledge/checkExtensionQuestion",{},{}) ;
+        // 保存
+        this.storeFactorKnow = $resource(API_MS+"/factorKnowledge/addFactorKnowledge",{},{}) ;
+        // 编辑
+        this.updateFactorKnow = $resource(API_MS+"/factorKnowledge/editKnowledge",{},{}) ;
 //   富文本知识新增
         // 获取相关问
         this.queryRelatedQuestion = $resource(API_MS+"/conceptKnowledge/getKnowledgeTitle",{},{}) ;

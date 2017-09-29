@@ -3,13 +3,17 @@
  * @Create : 2017/9/19.
  * @Module : 概念扩展
  */
-angular.module("knowledgeManagementModule").directive("extHasTag",
+angular.module("knowledgeManagementModule").directive("conceptExtension",
     ["KnowledgeService","$templateCache","$timeout","$sce","localStorageService",
     function(KnowledgeService,$templateCache,$timeout,$sce,localStorageService){
     return {
         restrict : "A" ,
         template : function(scope,attr){
-            return $templateCache.get("ext-has-tag") ;
+            if(attr.conceptExt=="dialog"){
+                return $templateCache.get("ext")
+            }else{
+                return $templateCache.get("ext-not-dialog")
+            }
         } ,
         link : function(scope,el,attr,ctr){
             scope.dirExtHasTag = {
@@ -73,7 +77,7 @@ angular.module("knowledgeManagementModule").directive("extHasTag",
                     }
                 }
                 var parameter =  {"applicationId": APPLICATION_ID} ,call;  // 参数以及成功回调
-                if(attr.extHasTag=="hasTag"){                              // 需要打标签的 （非faq）
+                if(attr.tag=='true'){                              // 需要打标签的 （非faq）
                     parameter.extendQuestionList = new Array(title) ;      // 公用应用id
                     call = function(res){
                         if (res.status == 500) {
