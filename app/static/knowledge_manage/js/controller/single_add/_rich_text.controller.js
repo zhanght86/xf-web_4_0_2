@@ -5,74 +5,44 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
     '$scope', 'localStorageService' ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","FileUploader","knowledgeAddServer","$window","$stateParams","$interval","$filter",
     function ($scope,localStorageService, $state,ngDialog,$cookieStore,$timeout,$compile,FileUploader,knowledgeAddServer,$window,$stateParams,$interval,$filter) {
         $scope.vm = {
-            knowledgeId : "",
-            knowledgeOrigin : 120 ,
+            ctrName : "concept" ,
+            apiQueryRelatedQuestion : "queryRichTextRelatedQuestion" , // 相关问 api
+            localNameOfExt : "cust_rich_text_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
+            knowledgeOrigin : 120 , //知识来源
+            knowledgeId : "",       // 知识编辑 id
+//标题
+            title : "",   //标题
+            titleTip :  "",
+//时间
+            timeStart : "",      //起始时间
+            timeEnd : "",
+            isTimeTable : false,  //时间表隐藏
+//bot
             frames: [],      //业务框架
             frameId: "",
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             botRoot : "",      //根节点
-            //knowledgeClassifyCall: knowledgeClassifyCall, //知识分类的回调方法
-            //openContentConfirm: openContentConfirm, //打开内容对话框
-            knowledgeBotVal : "",  //bot 内容
-            botSelectAdd : botSelectAdd,
-            frameCategoryId : "",
-            title : "",   //标题
-            titleTip :  "",
-            timeStart : "",      //起始时间
-            timeEnd : "",
-            isTimeTable : false,  //时间表隐藏
-
-            //生成  知识标题 打标生成 BOT 扩展问
-            getBotAndExtensionByTitle : getBotAndExtensionByTitle,
-            //creatBot : [],
-
-            botClassfy : [],   //类目
+            frameCategoryId : "" ,
             creatSelectBot : [], //手选生成 bot
-
-            //扩展问
-            extensionTitle : "",
-            extensionWeight :60,
-            getExtension : getExtension,  //獲取擴展問
+//扩展问
             extensions : [],      //手動生成
             extensionsByFrame : [],  //業務框架生成
-            extensionByTitleTag : [] , //标题打标生成扩展问
-            extensionEdit : extensionEdit,
-
-            //展示内容
+//展示内容
             scanContent : [],
             save : save ,   //保存
             scan :scan ,   //预览
-            //弹框相关
+            increaseCheck  : increaseCheck , //知识新增弹框保存按钮
+//D 知识内容配置
             newTitle: "",    //标题
-            channel : [],     //新添加的 channel
-            selectChannel : selectChannel , //獲取渠道
-            dimension  : "",
-            dimensions : []
-            ,  //所有维度
-            dimensionArr : [],  //選擇的維度
-            dimensionsCopy :[]
-            ,
-            checkChannelDimension : checkChannelDimension ,
-            //高级选项内容
-            slideDown : slideDown,
-            slideFlag : false,
-
+            channelIdList : [],     //渠道
+            dimensionArr : [],  //维度
             question : 1,
-            tip : 1,
             tail : 1 ,
-
-            knowledgeTitleTag : [],
-
-            appointRelative : "",
-            appointRelativeList :[],
-            addAppoint  : addAppoint,
-            removeAppointRelative : removeAppointRelative ,
-            //vm.appointRelativeGroup.push(item)
+            tip : 1,
             appointRelativeGroup : [],
+
             replaceType : 0 ,
             enterEvent : enterEvent,
-            dialogExtension : [],
-
             limitSave : false ,
             isEditIndex : -1,   // 知识内容 弹框
             // -1 为内容新增
@@ -108,10 +78,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             imgTextSelected : "" ,
 //*******************2017/8/24 图文  EDN *******************//
 
-//*******************2017/8/3  BEGIN   删除扩展问本地备份 *******************//
-            rmExtensionBackup : [] ,
-//*******************2017/8/3  END   删除扩展问本地备份   *******************//
-
 //*******************2017/8/9  添加链接 BEGIN *******************//
             addLint : addLint ,
             isNewLinkAble : isNewLinkAble ,
@@ -121,36 +87,21 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             showTip : showTip,
             hideTip : hideTip,
             prevDiv : prevDiv,
-            nextDiv : nextDiv,
+            nextDiv : nextDiv
             //引到页end
-            increaseCheck  : increaseCheck , //知识新增弹框保存按钮
-            backupsOfExtension : "" ,//扩展问 编辑备份
-            backUpExt: backUpExt , // 扩展问 假删除
-            extensionDeleted : []
         };
-        //獲取渠道
-        $scope.MASTER.getDimensions($scope,["dimensions","dimensionsCopy"]) ;
-
         //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-        //組裝數據   擴展問   content
-        //BOT路径设置为 选择添加                  再次增加判断重复
-        //
-        //标题
         if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
             var data = angular.fromJson($stateParams.data) ;
             //console.log($stateParams.data);
             //标题
             $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
-            // 标题打标结果
-            $scope.vm.knowledgeTitleTag = data.knowledgeBase.knowledgeTitleTag ;
             //knowledgeId
             $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
             $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
 
             // 时间
-            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
-                $scope.vm.isTimeTable = true
-            }
+            $scope.vm.isTimeTable = (data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd)
             $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
             $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
             //bot路径
@@ -468,7 +419,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                     $scope.vm.contentType  = data.knowledgeContentNegative ;  //新增内容类型
                  /* **************** 2017/8/2   知识内容编辑 END   **************/ //
                     $scope.vm.isEditIndex = index ;
-                    $scope.vm.channel = data.channelIdList;
+                    $scope.vm.channelIdList = data.channelIdList;
                     angular.forEach($scope.vm.dimensions,function(item){
                         if(data.dimensionIdList.inArray(item.dimensionId)){
                             var obj = {
@@ -719,7 +670,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             $scope.vm.voiceSelected = "" ,    //以选择声音文件
           /* **************** 2017/8/2   重置参数 END   **************/ //
             $scope.vm.slideFlag = false ;
-            $scope.vm.channel = [];
+            $scope.vm.channelIdList = [];
             $scope.vm.dimension = [];
             $scope.vm.question = 1;    //显示相关问
             $scope.vm.tip = 1;   //在提示
@@ -738,7 +689,7 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 };
                var parameter = {
                    "knowledgeContent": "",
-                   "channelIdList": $scope.vm.channel,
+                   "channelIdList": $scope.vm.channelIdList,
                    "knowledgeContentNegative": $scope.vm.contentType.toString(),
                    "dimensionIdList": $scope.vm.dimensionArr.id.length ? $scope.vm.dimensionArr.id : $scope.vm.dimensionsCopy.id,
                    "knowledgeRelatedQuestionOn": $scope.vm.question,    //显示相关问
@@ -839,60 +790,22 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         }
 //***************************    save check channel dimension  **********************************************
-        function increaseCheck(){
+        function increaseCheck(close){
             //判斷维度是否为空 0 不变 1 全维度
             if(!$scope.vm.dimensionArr.id.length){
                 $scope.vm.dimensionArr=angular.copy($scope.vm.dimensionsCopy)
             };
-            if(!isNewKnowledgeTitle() && !$scope.vm.channel.length){
+            if(!isNewKnowledgeTitle() && !$scope.vm.channelIdList.length){
                 layer.msg("请填写知识内容,并选择渠道后保存")
             }else if(!isNewKnowledgeTitle()){
                 layer.msg("请填写知识内容后保存")
-            }else if(!$scope.vm.channel.length){
+            }else if(!$scope.vm.channelIdList.length){
                 layer.msg("请选择渠道后保存")
-            }else if(checkChannelDimension($scope.vm.channel,$scope.vm.dimensionArr.id)){
+            }else if($scope.$parent.knowCtr.checkChannelDimension($scope.vm.scanContent,$scope.vm.isEditIndex,$scope.vm.channelIdList,$scope.vm.dimensionArr)){
                 //存在重复条件
             }else{
-                ngDialog.closeAll(1) ;
+                close(1) ;
             }
-        }
-        //选择渠道
-        function selectChannel(channelId){
-            if($scope.vm.channel.inArray(channelId)){
-                $scope.vm.channel.remove(channelId);
-            }else{
-                $scope.vm.channel.push(channelId);
-            }
-        }
-        function checkChannelDimension(channel,dimension){
-            var isRepeat  = false;
-            //    新增的 channel = []  dimension = [] ,
-            //   页面以添加 scanContent.dimensions   scanContent.channels
-            angular.forEach($scope.vm.scanContent,function(item,contentIndex){
-                if($scope.vm.isEditIndex != contentIndex){
-                    angular.forEach(item.channelIdList,function(v){
-                        angular.forEach(channel,function(val,indexChannel) {
-                            if(val == v){
-                                angular.forEach(item.dimensionIdList,function(value){
-                                    angular.forEach(dimension,function(key,indexDimension){
-                                        if(key==value){
-                                            var channelTip;
-                                            angular.forEach($scope.MASTER.channelList,function(all){
-                                                if(all.channelCode==v){
-                                                    channelTip = all.channelName
-                                                }
-                                            });
-                                            layer.msg("重复添加"+"渠道 "+channelTip+" 维度 "+$scope.vm.dimensionArr.name[indexDimension]);
-                                            isRepeat = true
-                                        }
-                                    })
-                                })
-                            }
-                        });
-                    });
-                }
-            });
-            return isRepeat
         }
 //*******************       2017/7/14  BEGIN    *******************//
         //弹出选择图片声音对话框
@@ -1027,37 +940,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         }
 //*******************2017/8/9  添加链接  END *******************//
-//*******************       2017/7/14      END *******************//
-        function addAppoint(item,arr){
-            if(arr.indexOf(item)==-1){
-                arr.push(item)
-            }
-            $scope.vm.appointRelative = "";  //清楚title
-            $scope.vm.appointRelativeList = [];  //清除 列表
-
-        }
-        // 動態加載 title
-        $scope.$watch("vm.appointRelative",function(title){
-            //console.log(title);
-            if(title){
-                $timeout(getAppointRelative(title),300)
-            }
-        });
-
-        function getAppointRelative(title){
-            httpRequestPost("/api/ms/richtextKnowledge/getKnowledgeTitle",{
-                "title" : title
-            },function(data){
-                if(data.status == 200){
-                    $scope.vm.appointRelativeList = data.data;
-                    $scope.$apply()
-                }else{
-                }
-                console.log(data);
-            },function(error){
-                console.log(error)
-            });
-        }
 
 //*******************2017/8/24 @图文 根据图文id获取图片url @根据图片获取name  BEGIN  *******************//
         queryImgText(1);
@@ -1094,40 +976,6 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
                 }, 0);
             }
         },true);
-
-
-
-//********************************  2017/9/1 扩展问删除备份  BEGIN ***********************************************
-        // 假删除本地备份
-        function backUpExt(item){
-            if(!$scope.vm.extensionDeleted.inArray(item)){
-                $scope.vm.extensionDeleted.push(item)
-            }
-        }
-        function addLocalExtension(title){
-            var result = false ;
-            if($scope.vm.extensionDeleted){
-                angular.forEach($scope.vm.extensionDeleted,function(item,index){
-                    if(title == item.extensionQuestionTitle){
-                        result = item ;
-                        $scope.vm.extensionDeleted.splice(index,1)
-                    }
-                })
-            }
-            return result ;
-        }
-//********************************  2017/9/1 扩展问删除备份  EDN ***********************************************
-
-
-
-
-
-
-
-
-
-
-
 //*******************2017/8/24 图文 END  *******************//
         //引导页方法
         function showTip(){
@@ -1170,6 +1018,5 @@ angular.module('knowledgeManagementModule').controller('markKnowController', [
             }
         }
         //引导页方法end
-
     }
 ]);

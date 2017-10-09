@@ -20,33 +20,35 @@ knowledge_static_web.controller('ApplicationController',
                     headImage : $cookieStore.get("robotHead") ,
                     applicationName : APPLICATION_NAME,
                     channelList : "",
+                    channelListIds :[],
                     dimensionList : "",
+                    dimensionListIds : [] ,
                 //method for DownStream simple
                     queryChannelList : queryChannelList ,  //获取渠道
-                    querydimensionList : querydimensionList ,  //获取维度
+                    queryDimensionList : queryDimensionList ,  //获取维度
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
                     openNgDialog : openNgDialog ,  //打开弹框
                     setNgTimeOut : setNgTimeOut ,  //延时器
                     setNgInterval : setNgInterval ,//定时器
                 //method for Downstream
-                    getDimensions : getDimensions ,
-                    getChannels : getChannels ,
-                    isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
+                //    getDimensions : getDimensions ,
+                //    getChannels : getChannels ,
+
                     searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
                     searchAppointAutoTag : searchAppointAutoTag ,    //相关问搜索自动补全
-                    isExtensionTagRepeat : isExtensionTagRepeat ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
-                    removeExtensionHasTag : removeExtensionHasTag , //对删除的扩展问备份     营销 概念 列表 富文本知识新增
+                    //isExtensionTagRepeat : isExtensionTagRepeat ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
+                    //removeExtensionHasTag : removeExtensionHasTag , //对删除的扩展问备份     营销 概念 列表 富文本知识新增
                     //getFrameByClassId : getFrameByClassId  //通过类目id 获取业务框架
                     //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
                     getMediaParmeter : getMediaParmeter ,  // 《《富文本知识新增》》 根据id 获取图文封面图片url ，title 方法
 
             /* bot 下拉树的公共方法 */
                    botTreeOperate : botTreeOperate ,
-                   isTitleHasExt : isTitleHasExt
+                   //isTitleHasExt : isTitleHasExt
             } ;
             if(APPLICATION_ID){
-                querydimensionList(APPLICATION_ID) ;
+                queryDimensionList(APPLICATION_ID) ;
                 queryChannelList(APPLICATION_ID)
             }
             //滑动
@@ -69,9 +71,9 @@ knowledge_static_web.controller('ApplicationController',
              * @params ｛self｝  $scope
              * @params ｛tempUrl｝  “”          模板地址
              * @params ｛closeIssue｝   fn        条件关闭
-             * @params ｛closeClear｝   fn       无条件关闭
-             * @params ｛closeCondition｝ fn    关闭弹框回调
-             * @params ｛complex｝  {Booleans}  是否可以打开多个弹框 默认 “false”一个
+             * @params ｛closeClear｝   fn        无条件关闭
+             * @params ｛closeCondition｝ fn      关闭回调
+             * @params ｛complex｝  {Booleans}    是否可以打开多个弹框 默认 “false”一个
              * */
             function openNgDialog(self,tempUrl,width,closeIssue,closeClear,closeCondition,complex){
                 var diaSize = angular.element(".ngdialog ").length;
@@ -107,85 +109,40 @@ knowledge_static_web.controller('ApplicationController',
                 }
             }
             //獲取纬度
-            function querydimensionList(applicationId){
+            function queryDimensionList(applicationId){
                 //var dimensions = [] ;
                 return knowledgeAddServer.getDimensions({ "applicationId" : applicationId},
                     function(data) {
                         if(data.data){
+                            $scope.MASTER.dimensionListIds = [] ;
                             $scope.MASTER.dimensionList = data.data ;
+                            angular.forEach(data.data,function(item,index){
+                                $scope.MASTER.dimensionListIds.push(item.dimensionId)
+                            })
                         }
                     }, function(error) {
                         console.log(error)
                     });
                 //return dimensions ;
             };
-            function getDimensions(self,arr){
-                //var dimensions = [] ;
-                knowledgeAddServer.getDimensions({ "applicationId" : APPLICATION_ID},
-                    function(data) {
-                        if(data.data){
-                            $scope.MASTER.dimensionList = data.data ;
-                            angular.forEach(arr,function(item){
-                                self.vm[item] = data.data
-                            }) ;
-                            //dimensions = data.data ;
-                        }
-                    }, function(error) {
-                        console.log(error)
-                    });
-                //return dimensions ;
-            }
+
              function queryChannelList(applicationId){
                 //var  channels = [] ;
                return knowledgeAddServer.getChannels({ "applicationId" : applicationId},
                     function(data) {
                         if(data.data){
+                            $scope.MASTER.channelListIds = [] ;
                             $scope.MASTER.channelList = data.data ;
+                            angular.forEach(data.data,function(item,index){
+                                $scope.MASTER.channelListIds.push(item.channelCode)
+                            })
                         }
                     }, function(error) {
                         console.log(error) ;
                     });
                 //return   channels ;
             }
-            //获取渠道
-            function getChannels(self,arr){
-                //var  channels = [] ;
-                knowledgeAddServer.getChannels({ "applicationId" : APPLICATION_ID},
-                    function(data) {
-                        if(data.data){
-                            $scope.MASTER.channelList = data.data ;
-                            angular.forEach(arr,function(item){
-                                self.vm[item] = data.data
-                            }) ;
-                        }
-                    }, function(error) {
-                        console.log(error) ;
-                    });
-                //return   channels ;
-            }
-            function isBotRepeat(id,path,type,allBot){
-                //className  classificationId  classificationType(不推送)
-                //重复 提示   不重复返回bot对象
-                // 校验对象  className
-                var result = {             //定义bot对象
-                    "className" : path,
-                    "classificationId" : id,
-                    "classificationType" : type?type:67
-                } ;    //返回對象
-                var len = allBot.length;  //所有bot 長度
-                // 集合转为string 便于比较  并不改变原数组
-                var backUpPath = angular.copy(path).join("/") ;
-                if(len){                  //需要验证
-                    angular.forEach(allBot,function(item){
-                        console.log(item.className.join("/"),backUpPath) ;
-                        if(item.className.join("/") == backUpPath){
-                            result = false ;
-                            return  layer.msg("添加分类重复，已阻止添加");
-                        }
-                    });
-                }
-                return result;
-            }
+
             //BOT搜索自动补全
             function searchBotAutoTag(el,url,callback){
                 $(el).autocomplete({
@@ -264,73 +221,7 @@ knowledge_static_web.controller('ApplicationController',
                    self.vm.appointRelativeGroup.remove(item);
                 }
             }
-            /**
-             * 检测扩展问标签是否重复
-             * false   return   ；  true  return ext
-             * */
-            function isExtensionTagRepeat(current,allExtension,title,weight){
-                console.log(allExtension) ;
-                var isRepeat = true ;
-                var tag = [] ;
-                angular.forEach(current,function(tagList){
-                    angular.forEach(tagList.extensionQuestionTagList,function(item){
-                        if(item.exist){   //标签存在情况下
-                            tag.push(item.tagName);
-                        }
-                    });
-                });
-                angular.forEach(allExtension,function(extension){
-                    var tagLen = 0 ;
-                    var itemTag = [] ;
-                    angular.forEach(extension.extensionQuestionTagList,function(item){
-                        if(item.exist){       //存在标签
-                            itemTag.push(item.tagName);
-                        }
-                        if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
-                            tagLen += 1;
-                        }
-                    }) ;
-                    if(tagLen == itemTag.length && tag.length == itemTag.length){
-                        layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
-                        return   isRepeat = false ;
-                    }
-                }) ;
-                //判断是否是重复
-                if(isRepeat != false){
-                    var extension = {
-                        "extensionQuestionTitle" : title ,
-                        "extensionQuestionType" : weight ,
-                        "wholeDecorateTagList" : [
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                            {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                        ] ,
-                        "extensionQuestionTagList" : []
-                    }  ;
-                    angular.forEach(current,function(tagList){
-                        angular.forEach(tagList.extensionQuestionTagList,function(item){
-                            var tagTem = {
-                                "exist" : item.exist ,
-                                "tagClass" : item.tagClass ,
-                                "tagName" : item.tagName ,
-                                "tagType" : item.tagType
-                            };
-                            extension.extensionQuestionTagList.push(tagTem) ;
-                        });
-                    });
-                    isRepeat = extension
-                }
-                return isRepeat
-            }
-            function removeExtensionHasTag(self,container,item){
-                item.wholeDecorateTagList = [
-                    {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"36"},
-                    {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"37"},
-                    {"wholeDecorateTagNameList":[],"wholeDecorateTagType":"38"}
-                ] ;
-                self.vm[container].push(item)  ;
-                //return container ;
-            }
+
 
             /*bot*/
             function botTreeOperate(self,initUrl,getNodeUrl,selectCall,searchAutoUrl){
@@ -387,15 +278,13 @@ knowledge_static_web.controller('ApplicationController',
                                                 break  ;
                                         }
                                         html+= '<li>' +
-                                            '<div class="slide-a">'+
-                                            ' <a class="ellipsis" href="javascript:;">' ;
-
-                                        html+=            '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
-
-                                        html+=             '<span>'+data.data[i].categoryName+'</span>'+
-                                            '</a>' +
-                                            '</div>' +
-                                            '</li>'
+                                                    '<div class="slide-a">'+
+                                                        ' <a class="ellipsis" href="javascript:;">' ;
+                                        html+=              '<i class="'+typeClass + backImage +'" data-option="'+data.data[i].categoryId+'"></i>' ;
+                                        html+=              '<span>'+data.data[i].categoryName+'</span>'+
+                                                        '</a>' +
+                                                    '</div>' +
+                                                '</li>'
                                     }
                                     html+="</ul>";
                                     $(html).appendTo((that.parent().parent().parent()));
@@ -426,24 +315,13 @@ knowledge_static_web.controller('ApplicationController',
                     });
                 }
                 tree.init() ;
-                tree.getChildNode() ;
-                tree.selectNode() ;
+                $timeout(function(){
+                    tree.getChildNode() ;
+                    tree.selectNode() ;
+                },200)
+
                 //return tree ;
             }
-
-//*******************2017/8/18  BEGIN   校验title生成扩展问 *******************//
-            function isTitleHasExt(title,allExt){
-                var result = false ;
-                //params.extensionQuestions
-                angular.forEach(allExt,function(item,index){
-                    if(item.extensionQuestionTitle == title){
-                        result = true ;
-                    }
-                }) ;
-                return result ;
-            }
-//*******************2017/8/18  END   校验title生成扩展问   *******************//
-
 //*******************2017/8/25  BEGIN   根据id 获取图文封面图片url ，title 方法 *******************//
             function getMediaParmeter(type,params,callBack){
                 var api ,parameter = {
@@ -499,22 +377,6 @@ knowledge_static_web.controller('ApplicationController',
 //*******************2017/8/25  END   根据id 获取图文封面图片url ，title 方法   *******************//
 
 /***********************************************************************************************************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -584,16 +446,6 @@ knowledge_static_web.controller('ApplicationController',
                     //否则 用localStore中的参数去初始化
                     return localStorageService.get($state.current.name);
                 }
-            };
-
-            /**
-             * 非空判断
-             */
-            $scope.notEmpty = function (param) {
-                if(param!=null && param!=undefined && $.trim(param)!=''){
-                    return true;
-                }
-                return false;
             };
 
             /**

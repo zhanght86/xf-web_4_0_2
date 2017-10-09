@@ -17,7 +17,7 @@ module.exports = function (grunt) {     //wrapper  grunt 信息
                 src: ['app/know*/**/*.js','app/static/**/*.js'],
                 dest: 'app/dest/src-concated/js/<%= pkg.name %>.js',
                 options: {
-                    banner: "'use strict';\n",
+                    banner: "\n",
                     process: function (src, filepath) {
                         if (filepath.indexOf('module') > 0){
                             return "";

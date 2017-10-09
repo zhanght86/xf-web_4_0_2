@@ -1,0 +1,15 @@
+<div class="item-line mb-10"  style="overflow: visible">
+    <div class="lable">
+        概念扩展：
+    </div>
+    <div class="value" style="overflow: visible">
+        <div class="clearfix" style="width: 500px;height: 34px;">
+            <input type="text " class="L" placeholder="请输入问题" ng-model="dirExtHasTag.title" style="padding-left:6px;height:33px;line-height:33px;display: inline-block;width: 321px;border: 1px solid #e1e1e1;border-right: 0;">
+            <select  ng-model="dirExtHasTag.type"  class="bd L mr-10" style="display: inline-block;width:84px;height:33px;line-height:33px;">
+                <option value="60">普通</option>
+                <option value="61">否定</option>
+            </select>
+            <a href="javascript:;" class="L mr-15 mt-5" ng-click="dirExtHasTag.getExtension(vm.knowledgeId,vm.localNameOfExt,dirExtHasTag.title,dirExtHasTag.type,vm.extensions)"><img src="../../../../images/images/add_img.png" alt=""></a>
+        </div>
+    </div>
+</div>

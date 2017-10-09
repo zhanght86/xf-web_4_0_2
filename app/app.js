@@ -20,8 +20,8 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //'ngAnimate',
     //上傳功能
     'angularFileUpload',
-    //登录模块
-    'loginModule',
+    ////登录模块
+    //'loginModule',
     //'indexModule',
     //首页 模块
     'homePage',
@@ -45,8 +45,9 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
  * 配置 localStorageServiceProvider
  */
 knowledge_static_web.config(function (localStorageServiceProvider) {
-    localStorageServiceProvider.setPrefix('know');
-    localStorageServiceProvider.setNotify(true, true);
+    localStorageServiceProvider.setPrefix('xf')
+                               .setNotify(true, true)
+                               .setStorageType('localStorage')
 });
 
 /**
@@ -64,6 +65,9 @@ knowledge_static_web.run(function ($q,$cookies,$cookieStore,$rootScope, $state, 
     $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams) {
         $q.defer().resolve() ;
         layer.closeAll() ;
+        if(document.cookie.indexOf("userId=")==-1 || document.cookie.indexOf("userLoginName=")==-1){
+            self.location = "index.html" ;
+        }
         if(fromState.name == ""){   // 登录进系统
             USER_ID = document.cookie.indexOf("userId=")!=-1?getCookie("userId").replace(/\"/g,""):"" ;
             USER_NAME = document.cookie.indexOf("userName=")!=-1?getCookie("userName").replace(/\"/g,""):"";
@@ -71,15 +75,11 @@ knowledge_static_web.run(function ($q,$cookies,$cookieStore,$rootScope, $state, 
             APPLICATION_ID = document.cookie.indexOf("applicationId=")!=-1?getCookie("applicationId").replace(/\"/g,""):"";
             APPLICATION_NAME = document.cookie.indexOf("applicationName=")!=-1?getCookie("applicationName").replace(/\"/g,""):"";
             SCENE_ID = document.cookie.indexOf("sceneId=")!=-1?getCookie("sceneId").replace(/\"/g,""):"";
-        }else{
-            if(document.cookie.indexOf("userId=")==-1 || document.cookie.indexOf("applicationId=")==-1){
-                self.location = "index.html" ;
-            }
         }
     });
 
     $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-        console.log(event)
+        console.log(event, toState, toParams, fromState, fromParams)
     });
     //back button function called from back button's ng-click="back()"
     $rootScope.back = function () {//实现返回的函数
@@ -1208,11 +1208,12 @@ knowledge_static_web
             })
 
     }]);
-    knowledge_static_web.config(function ($httpProvider) {
+    knowledge_static_web.config(function ($httpProvider,$locationProvider) {
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/json;"x-session-token":"" } ';
         //$httpProvider.defaults.headers.post['cache'] = 'false';
-
+        // 去除地址栏的 #
+        //$locationProvider.html5Mode(true);
         if (!$httpProvider.defaults.headers.get) {
             $httpProvider.defaults.headers.get = {};
         }

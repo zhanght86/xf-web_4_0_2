@@ -59,20 +59,20 @@ angular.module('knowledgeManagementModule').controller('custPreviewController', 
                 $state.go(editUrl,{data:angular.toJson($scope.vm.listData)})
             }
            void function(){
-               var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000})
+               var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
                KnowledgeService[api].save({
                     "knowledgeId" : $scope.vm.knowledgeId,
                     "applicationId" : APPLICATION_ID
-                },function(data){
-                   layer.close(i)
+                },function(response){
+                   layer.close(i) ;
                     if($scope.vm.knowledgeType == 103){
-                        var data = data.data ;
+                         var data = response.data ;
                         var table = data.knowledgeContents[0].knowledgeTable ;
                         data.knowledgeContents[0].knowledgeContent = table;
                         delete data.knowledgeContents[0].knowledgeTable;
                         $scope.vm.listData = data;
                     }else{
-                        $scope.vm.listData = data.data;
+                        $scope.vm.listData = response.data;
                     }
                 },function(error){
                    $log.log(error);

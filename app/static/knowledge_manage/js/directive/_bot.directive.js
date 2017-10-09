@@ -9,29 +9,33 @@ angular.module("knowledgeManagementModule").directive("botClassTree",
         return {
             restrict : "A" ,
             template : function(scope,attr){
-                return $templateCache("bot-class") ;
+                if(attr.botClassTree=="dialog"){
+                    return $templateCache.get("bot-class")
+                }else{
+                    return $templateCache.get("bot-class-not-dialog")
+                }
             } ,
             link : function(scope,attr,el,ctr){
                 scope.dirBot = {
-                    botSelectAdd : botSelectAdd
+                    botSelectAdd : botSelectAdd ,
+                    knowledgeBotVal : "",  //bot 内容
                 } ;
                 function getBotFullPath(id){
-                    httpRequestPost("/api/ms/modeling/category/getcategoryfullname",{
+                    KnowledgeService.getBotFullPath.save({
                         categoryId: id
                     },function(data){
                         if(data.status = 10000){
-                            var allBot = angular.copy(scope.vm.creatSelectBot.concat(scope.vm.botClassfy)) ,
-                                botResult = scope.MASTER.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
-                            scope.$apply(function(){
+                            var allBot = angular.copy(scope.vm.creatSelectBot) ,
+                                botResult = scope.$parent.knowCtr.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
+                            //scope.$apply(function(){
                                 console.log(data) ;
-                                scope.vm.knowledgeBotVal = data.categoryFullName;
+                                scope.dirBot.knowledgeBotVal = data.categoryFullName;
                                 if(botResult != false){
-                                    //scope.vm.knowledgeBotVal = data.categoryFullName.split("/");
-                                    scope.vm.botFullPath= botResult;
+                                    scope.vm.botFullPath = botResult;
                                 }
-                            });
+                            //});
                         }
-                    },function(error){console.log(error)});
+                    },function(error){console.log(error)})
                 }
                 scope.MASTER.botTreeOperate(scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
                     //"/api/ms/modeling/category/searchbycategoryname"
@@ -39,9 +43,9 @@ angular.module("knowledgeManagementModule").directive("botClassTree",
                 //BOT搜索自动补全
                 scope.MASTER.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
                     scope.$apply(function(){
-                        var allBot = angular.copy(scope.vm.botClassfy.concat(scope.vm.creatSelectBot)) ,
-                            botResult = scope.MASTER.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
-                        scope.vm.knowledgeBotVal = suggestion.value;
+                        var allBot = angular.copy(scope.vm.creatSelectBot) ,
+                            botResult = scope.$parent.knowCtr.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
+                        scope.dirBot.knowledgeBotVal = suggestion.value;
                         if(botResult != false){
                             scope.vm.botFullPath= botResult;
                         }
@@ -54,9 +58,9 @@ angular.module("knowledgeManagementModule").directive("botClassTree",
                         scope.vm.creatSelectBot.push(scope.vm.botFullPath);
                         scope.vm.frameCategoryId = scope.vm.botFullPath.classificationId;
                         scope.vm.botFullPath = "";
-                        scope.vm.knowledgeBotVal = "";
+                        scope.dirBot.knowledgeBotVal = "";
                     }
-                };
+                }
             }
         }
 }]);
