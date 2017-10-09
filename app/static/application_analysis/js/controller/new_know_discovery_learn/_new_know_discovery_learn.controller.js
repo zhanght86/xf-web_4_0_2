@@ -57,6 +57,16 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             knowledgeContent : "",
             keyLogin:keyLogin,
             contentType : 0 ,  //默认显示未学习
+            //未学习全选 单选；
+            selectAllCheck : false,
+            selectAll : selectAll,
+            selectSingle : selectSingle,
+            unstudyArr : [],
+            //已学习全选 单选；
+            selectAllCheck1 : false,
+            selectAll1 : selectAll1,
+            selectSingle1 : selectSingle1,
+            studyArr : [],
 
         };
         function keyLogin(e){
@@ -91,6 +101,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 }
                 timer = $timeout(function () {
                     searchNewKnowledgeDiscovery(current);
+                    clearSelect();
                 }, 100)
             }
         },true);
@@ -105,6 +116,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 }
                 timer1 = $timeout(function () {
                     listNoReview(current);
+                    clearSelect1();
                 }, 100)
             }
         },true);
@@ -154,6 +166,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
                 layer.close(i);
+                clearSelect();
                 $scope.vm.listData = data.qaLogs;
                 $scope.vm.paginationConf.currentPage = index;
                 $scope.vm.paginationConf.totalItems = data.qalogTotal;
@@ -221,6 +234,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                 "learn_type": 1
             },function(data){
                 layer.close(i);
+                clearSelect1();
                 $scope.vm.listData1 = data.reviewRecords;
                 $scope.vm.paginationConf1.currentPage = index;
                 $scope.vm.paginationConf1.totalItems = data.reviewRecordTotal;
@@ -236,24 +250,19 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
          *  忽略
          **/
         function ignore(){
-            var ids = document.getElementsByName("sid");
-            var id_array = [];
-            for (var i = 0; i < ids.length; i++) {
-                if (ids[i].checked) {
-                    id_array.push(ids[i].value);
-                }
-            }
-            if (id_array.length == 0) {
+            if ($scope.vm.unstudyArr.length == 0) {
                 layer.msg("请选择要忽略的记录！");
                 return;
             }
             layer.confirm('确认要忽略吗？', function (index) {
                 layer.close(index);
                 var request = new Object();
-                request.ids=id_array;
+                request.ids=$scope.vm.unstudyArr;
                 AppAnalysisServer.ignore2.save(request,function(data){
                     if(data!=null){
                         searchNewKnowledgeDiscovery($scope.vm.paginationConf.currentPage);
+                        layer.msg('已忽略',{time:2000});
+                        clearSelect();
                     }
                 },function(err){
                     $log.log(err);
@@ -267,7 +276,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             $scope.vm.knowledgeList=null;
             $scope.vm.currQuestion="用户问题:"+content;
 
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','460px',function () {
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','480px',function () {
                 assembleLearnData(requestId);
             },function(){
 
@@ -316,27 +325,20 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
          * 通过 不通过
          **/
         function review(pass){
-            var ids = document.getElementsByName("sid1");
-            var id_array = [];
-            for (var i = 0; i < ids.length; i++) {
-                if (ids[i].checked) {
-                    id_array.push(ids[i].value);
-                }
-            }
             var msg = "";
             if(pass==0){
                 msg = "拒绝";
             }else{
                 msg = "通过";
             }
-            if (id_array.length == 0) {
+            if ($scope.vm.studyArr.length == 0) {
                 layer.msg("请选择要"+msg+"的记录！");
                 return;
             }
             layer.confirm('确认要'+msg+'吗？', function (index) {
                 layer.close(index);                
                 AppAnalysisServer.review2.save({
-                    "ids" : id_array,
+                    "ids" : $scope.vm.studyArr,
                     "pass_status_id": pass,
                     "userId": USER_ID,
                     "userName": USER_NAME
@@ -344,6 +346,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                     if(data.info){
                         layer.msg(data.info);
                         listNoReview(1);
+                        clearSelect1();
                     }
                 },function(err){
                     console.log(err);
@@ -386,14 +389,13 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
          * @param requestId
          */
         function content(requestId){
-            httpRequestPost("/api/analysis/userSession/searchContent",{
+            AppAnalysisServer.content.save({
                 "qalogId" : requestId,
                 "index": 0,
                 "pageSize": 32767
             },function(data){
                 if(data!=null){
                     $scope.vm.talkDetail = data.data.objs;
-                    $scope.$apply();
                 }
             },function(err){
                 console.log(err);
@@ -406,51 +408,84 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
             });
         }
 
-        //全选
-        $("#selectAll").on("click",function(){
-            var ids = document.getElementsByName("sid");
-            var flag = false;
-            if(this.checked){
-                flag = true;
+        /**
+         * 未学习全选
+         */
+        function selectAll(){
+            if(!$scope.vm.selectAllCheck){
+                $scope.vm.selectAllCheck = true;
+                $scope.vm.unstudyArr = [];
+                angular.forEach($scope.vm.listData,function(item){
+                    $scope.vm.unstudyArr.push(item.content);
+                });
+            }else{
+                $scope.vm.selectAllCheck = false;
+                $scope.vm.unstudyArr = [];
             }
-            $.each(ids,function(index,value){
-                if(flag){
-                    $(value).attr("checked",true);
-                    $(value).prop("checked",true);
-                }else{
-                    $(value).attr("checked",false);
-                    $(value).prop("checked",false);
-                }
-            });
-        });
-        //清空全选
-        function clearSelectAll(){
-            console.log("=====clearSelectAll=====");
-            $("#selectAll").attr("checked",false);
-            $("#selectAll").prop("checked",false);
+            //console.log($scope.vm.unstudyArr);
         }
-        //全选
-        $("#selectAll1").on("click",function(){
-            var ids = document.getElementsByName("sid1");
-            var flag = false;
-            if(this.checked){
-                flag = true;
+        /**
+         * 未学习单选
+         */
+        function selectSingle(id){
+            if($scope.vm.unstudyArr.inArray(id)){
+                $scope.vm.unstudyArr.remove(id);
+                $scope.vm.selectAllCheck = false;
+            }else{
+                $scope.vm.unstudyArr.push(id);
             }
-            $.each(ids,function(index,value){
-                if(flag){
-                    $(value).attr("checked",true);
-                    $(value).prop("checked",true);
-                }else{
-                    $(value).attr("checked",false);
-                    $(value).prop("checked",false);
-                }
-            });
-        });
-        //清空全选
-        function clearSelectAll1(){
-            console.log("=====clearSelectAll1=====");
-            $("#selectAll1").attr("checked",false);
-            $("#selectAll1").prop("checked",false);
+            if($scope.vm.unstudyArr.length == $scope.vm.listData.length){
+                $scope.vm.selectAllCheck = true;
+            }
+            console.log($scope.vm.unstudyArr);
         }
+        /**
+         * 未学习清空全选 数组
+         */
+        function clearSelect(){
+            $scope.vm.selectAllCheck = false;
+            $scope.vm.unstudyArr = [];
+        }
+
+        /**
+         * 已学习全选
+         */
+        function selectAll1(){
+            if(!$scope.vm.selectAllCheck1){
+                $scope.vm.selectAllCheck1 = true;
+                $scope.vm.studyArr = [];
+                angular.forEach($scope.vm.listData1,function(item){
+                    $scope.vm.studyArr.push(item.recordId);
+                });
+            }else{
+                $scope.vm.selectAllCheck1 = false;
+                $scope.vm.studyArr = [];
+            }
+            console.log($scope.vm.studyArr);
+        }
+        /**
+         * 已学习单选
+         */
+        function selectSingle1(id){
+            if($scope.vm.studyArr.inArray(id)){
+                $scope.vm.studyArr.remove(id);
+                $scope.vm.selectAllCheck1 = false;
+            }else{
+                $scope.vm.studyArr.push(id);
+            }
+            if($scope.vm.studyArr.length == $scope.vm.listData1.length){
+                $scope.vm.selectAllCheck1 = true;
+            }
+            console.log($scope.vm.studyArr);
+        }
+
+        /**
+         * 已学习清空全选 数组
+         */
+        function clearSelect1(){
+            $scope.vm.selectAllCheck1 = false;
+            $scope.vm.studyArr = [];
+        }
+
     }
 ]);

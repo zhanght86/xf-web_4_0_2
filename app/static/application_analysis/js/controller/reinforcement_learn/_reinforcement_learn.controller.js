@@ -218,15 +218,15 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
         function searchByKnowledgeTitle(index){
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             $scope.vm.knowledgeList=null;
-          //if(nullCheck($("#inputValue").val())==true){
-            if(nullCheck($scope.vm.inputValue)==true){
+          if(nullCheck($("#inputValue").val())==true){
+          //if(nullCheck($scope.vm.inputValue)==true){
                 AppAnalysisServer.searchByKnowledgeTitle.save({
                     "applicationId": APPLICATION_ID,
-                    "index": (index-1)*$scope.vm.paginationConf2.pageSize,
-                    "pageSize": $scope.vm.paginationConf2.pageSize,
+                    "index": (index-1)*$scope.vm.paginationConf1.pageSize,
+                    "pageSize": $scope.vm.paginationConf1.pageSize,
                     "sceneIds":null,
-                    //"knowledgeTitle": $("#inputValue").val(),
-                    "knowledgeTitle": $scope.vm.inputValue,
+                    "knowledgeTitle": $("#inputValue").val(),
+                    //"knowledgeTitle": $scope.vm.inputValue,
                     "knowledgeContent":null,
                     "knowledgeUpdate":null,
                     "knowledgeExpDateEnd":null,
@@ -267,9 +267,10 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
                     ,function (data) {
                         if(data!=null){
                             searchReinforcement($scope.vm.paginationConf.currentPage);
+                            layer.msg('已忽略',{time:2000});
+                            clearSelect();
                         }
-                        layer.msg('已忽略',{time:2000});
-                        clearSelect();
+
                     },function(err){
                         $log.log(err);
                     }
@@ -300,7 +301,7 @@ angular.module('applAnalysisModule').controller('reinforcementLearnController', 
             getRecommend(requestId);
             $scope.vm.currQuestion="用户问题:"+content;
 
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','455px',function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','480px',function(){
                 assembleLearnData(requestId);
             },function () {
 

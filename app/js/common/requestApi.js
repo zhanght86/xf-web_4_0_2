@@ -42,7 +42,7 @@ var
             * login
            **/
           API_MATERIAL = "/api/ms",
-
+         // API_MATERIAL = "api/material"
 
           /**
             * 应用分析
