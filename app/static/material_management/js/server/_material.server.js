@@ -50,9 +50,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                         /********************************
                                 * 语音库
                                 ***********************************/
-    //获取列表
-    this.getVoiceList = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
-    //查询
+    //获取列表  查询
     this.searchVoice = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
     //updateVoice
     this.updateVoice = $resource(API_MATERIAL+'/voiceManage/updateVoiceName',{},{});

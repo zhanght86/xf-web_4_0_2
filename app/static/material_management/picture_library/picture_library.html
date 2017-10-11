@@ -34,19 +34,23 @@
                     <td width="13%">操作</td>
                 </tr>
                 <tr ng-repeat="item in vm.imageList.objs">
-                    <td><input type="checkbox"  ng-click="vm.singleAdd(item.pictureId,vm.pictureIds,vm.isSelectAll,vm.imageList.objs.length)"  ng-checked="vm.pictureIds.inArray(item.pictureId)"/></td>
+                    <!--<td><input type="checkbox"  ng-click="vm.singleAdd(item.id,vm.pictureIds,vm.isSelectAll,vm.imageList.objs.length)"  ng-checked="vm.pictureIds.inArray(item.id)"/></td>-->
+                    <td><input type="checkbox"  ng-click="vm.singleAdd(item.id)"  ng-checked="vm.pictureIds.inArray(item.id)"/></td>
+
                     <td>
                         <div >
-                            <img ng-src="/img/{{item.pictureUrl}}" />
+                            <!--<img ng-src="/img/{{item.pictureUrl}}" />-->
+                            <img ng-src="/api/material/picture/getImg?url={{item.url}}" />
+
                         </div>
                     </td>
-                    <td>{{item.pictureName}}</td>
-                    <td>{{item.pictureSize}}</td>
-                    <td>{{item.pictureCreateTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td>{{item.pictureUserName}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.size}} kb</td>
+                    <td>{{item.modifyTime |  date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.modifierId}}</td>
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>
-                        <a href="javascript:;" class="c_red" ng-click="vm.batchDeletePicture([item.pictureId])">删除</a>
+                        <a href="javascript:;" class="c_red" ng-click="vm.batchDeletePicture([item.id])">删除</a>
                     </td>
                 </tr>
 

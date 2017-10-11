@@ -7,12 +7,12 @@ angular.module('materialManagement').controller('speechLibraryController', [
     function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$window) {
         $state.go("materialManagement.speechLibrary");
         $scope.vm = {
-            getVoiceList : getVoiceList , //获取图片列表
+           // getVoiceList : getVoiceList , //获取图片列表
             voiceList : [] ,        //所有声音列表
             //removeVoice : removeVoice , //刪除
             paginationConf : {
-                pageSize: 4,//第页条目数
-                pagesLength: 10,//分页框数量
+                pageSize: 5,//第页条目数
+                pagesLength: 10//分页框数量
             } ,
             uploadSpeech :uploadSpeech,
             voiceTitle :"",
@@ -35,42 +35,16 @@ angular.module('materialManagement').controller('speechLibraryController', [
 
         };
         /**
-         * 获取语音列表
+         * 获取语音列表  查询
          */
-        getVoiceList(1) ;
-        function getVoiceList(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            MaterialServer.getVoiceList.save({
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize ,
-                "applicationId":APPLICATION_ID
-            },function(data){
-                layer.close(i);
-                if(data.status == 200){
-                    console.log(data.data);                    
-                    $scope.vm.voiceList = data.data ;
-                    $scope.vm.paginationConf.currentPage =index ;
-                    $scope.vm.paginationConf.totalItems =data.data.total ;
-                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                    console.log($scope.vm.paginationConf);
-                }else{
-                    $scope.vm.voiceList=[];
-                    $scope.vm.paginationConf.totalItems = 0;
-                }
-            },function(err){
-                layer.close(i);
-                console.log(err);
-            });
-        }
-        /**
-         * 查询
-         */
+        searchVoice(1) ;
+
         function searchVoice(index){
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.searchVoice.save({
                 "index":(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
-                "voiceName":$scope.vm.voiceName
+                "name":$scope.vm.voiceName
             },function(data){
                 layer.close(i);
                 if(data.status==200){
@@ -99,7 +73,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 }
                 timeout = $timeout(function () {
                     initBatchTest();
-                    getVoiceList(current);
+                    searchVoice(current);
                 }, 0)
 
             }
@@ -114,7 +88,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             });
         }
         /**
-         * 图片导出
+         * 语音导出
          */
         function exportExcel(){
             var urlParams =
@@ -131,8 +105,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
          * 修改名称
          */
         function changeName(callback){
-            $scope.vm.voiceName = callback.voiceName;
-            $scope.vm.voiceId = callback.voiceId;
+            $scope.vm.voiceName = callback.name;
+            $scope.vm.voiceId = callback.id;
             
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/change_name.html','400px',function(){
                 updateVoice();
@@ -142,8 +116,10 @@ angular.module('materialManagement').controller('speechLibraryController', [
         }
         function updateVoice(){
             MaterialServer.updateVoice.save({
-                voiceId : $scope.vm.voiceId,
-                voiceName : $scope.vm.voiceName
+                //voiceId : $scope.vm.voiceId,
+                //voiceName : $scope.vm.voiceName
+                id : $scope.vm.voiceId,
+                name: $scope.vm.voiceName
             },function(data){
                 if(data.status==200){
                     layer.msg('语音名称修改成功');
@@ -169,7 +145,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 $scope.vm.isSelectAll=true;
                 $scope.vm.voiceIds=[];
                 angular.forEach($scope.vm.voiceList.objs,function (val) {
-                    $scope.vm.voiceIds.push(val.voiceId);
+                    $scope.vm.voiceIds.push(val.id);
                 })
             }
             console.log($scope.vm.voiceIds);
@@ -209,12 +185,14 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     MaterialServer.batchDeleteVoice.save({
-                        "voiceIds": voiceIds
+                        //"voiceIds": voiceIds
+                        "ids": voiceIds
                     },function(data){
                         if(data.status == 200){
                             layer.msg("语音删除成功") ;
                             initBatchTest();
-                            getVoiceList(1)
+                            //searchVoice(1)
+                            $state.reload();
                         }else if(data.status == 500){
                             layer.msg("语音删除失败") ;
                         }
