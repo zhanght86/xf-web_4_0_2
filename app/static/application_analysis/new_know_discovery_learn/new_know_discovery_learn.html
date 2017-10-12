@@ -48,7 +48,7 @@
                             <table class="access_amount_table" id="user_session_statistic">
                                 <thead>
                                 <tr>
-                                    <th width="10%"><input type="checkbox" id="selectAll"></th>
+                                    <th width="10%"><input type="checkbox" id="selectAll" ng-click="vm.selectAll()" ng-checked="vm.selectAllCheck"></th>
                                     <th width="25%">用户提问</th>
                                     <th width="15%">来源渠道</th>
                                     <th width="25%">创建时间</th>
@@ -58,7 +58,9 @@
                                 <tbody>
 
                                 <tr role="row" class="odd" ng-repeat="item in vm.listData">
-                                    <td><input type="checkbox" name="sid" value="{{item.content}}"></td>
+                                    <td>
+                                        <input type="checkbox" name="sid" value="{{item.content}}" ng-checked="vm.unstudyArr.inArray(item.content)" ng-click="vm.selectSingle(item.content)">
+                                    </td>
                                     <td>{{item.content}}</td>
                                     <td>{{item.channelId | channelFilter}}</td>
                                     <td>{{item.requestTime | limitTo:19}}</td>
@@ -129,7 +131,7 @@
                             <table class="access_amount_table" id="user_session_statistic1">
                                 <thead>
                                 <tr>
-                                    <th width="10%"><input type="checkbox" id="selectAll1"></th>
+                                    <th width="10%"><input type="checkbox" id="selectAll1" ng-click="vm.selectAll1()" ng-checked="vm.selectAllCheck1"></th>
                                     <th width="25%">用户提问</th>
                                     <th width="15%">来源渠道</th>
                                     <th width="10%">学习类型</th>
@@ -141,7 +143,9 @@
                                 <tbody>
 
                                 <tr role="row" class="odd" ng-repeat="item in vm.listData1">
-                                    <td><input type="checkbox" name="sid1" value="{{item.recordId}}"></td>
+                                    <td>
+                                        <input type="checkbox" name="sid1" value="{{item.recordId}}"  ng-checked="vm.studyArr.inArray(item.recordId)" ng-click="vm.selectSingle1(item.recordId)">
+                                    </td>
                                     <td>{{item.question}}</td>
                                     <td>
                                         <span ng-if="vm.channelId1==null">

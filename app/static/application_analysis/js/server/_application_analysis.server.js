@@ -124,12 +124,8 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.assembleLearnData2 = $resource(API_ANALYSIS+'/knowledgeLearn/learnByContent',{},{});
     //通过 不通过
     this.review2 = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
-    //学习
-
-    //关联知识查看
-
     //上下文
-
+    this.content = $resource(API_ANALYSIS+'/userSession/searchContent',{},{});
 
 
 }]);
