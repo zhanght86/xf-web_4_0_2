@@ -78,7 +78,7 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         // 获取相关问
         this.queryRichTextRelatedQuestion = $resource(API_MS+"/richtextKnowledge/getKnowledgeTitle",{},{}) ;
         // 检验扩展问
-        this.queryRichTextExtension = $resource(API_MS+"/elementKnowledgeAdd/checkDistribute",{},{}) ;
+        this.queryRichTextExtension = $resource(API_MS+"/richtextKnowledge/checkExtensionQuestion",{},{}) ;
         // 保存
         this.storeRichTextKnow = $resource(API_MS+"/elementKnowledgeAdd/addElementKnowledge",{},{}) ;
         // 编辑

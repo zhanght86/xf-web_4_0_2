@@ -33,7 +33,6 @@
                                 <div class=" clearfix" >
                                     <div class="ipt-txt-box L" style="width: 395px;border: 1px solid #e1e1e1;margin-right: 10px;">
                                         <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
-                                            <!--<span>{{item.className.join("/")}}</span>-->
                                             <a title="{{item.className.join('/')}}">{{item.className.join("/")}}</a>
                                         </div>
                                     </div>
@@ -76,13 +75,12 @@
 
                                            </div>
                                         </div>
-                                        <!--<a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class=" mr-15" ><img src="../../../images/images/delete_img.png" alt=""></a>-->
                                         <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
                                         <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(vm.scanContent[$index],$index)"></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="item-line item_line" >
+                            <div class="item-line item_line">
                                 <div class="optionDiv">渠道：
                                     <span class="mr-10" ng-repeat="val in item.channelIdList track by $index">{{val | channel:$parent.$parent.MASTER.channelList}}</span>
                                 </div>
@@ -96,7 +94,7 @@
                         <div class="item-line">
                             <div class="value">
                                 <div class="ipt-txt-box">
-                                    <input class="addBth" ng-click="vm.knowledgeAdd()"  type="button" value="+ 新增"/>
+                                    <input class="addBth" ng-click="vm.knowledgeAdd('',(vm.scanContent.length)?(vm.scanContent.length):0)"  type="button" value="+ 新增"/>
                                     <i class="btn-empty"></i>
                                 </div>
                             </div>

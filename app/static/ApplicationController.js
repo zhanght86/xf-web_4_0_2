@@ -123,7 +123,6 @@ knowledge_static_web.controller('ApplicationController',
                     }, function(error) {
                         console.log(error)
                     });
-                //return dimensions ;
             };
 
              function queryChannelList(applicationId){
