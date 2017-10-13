@@ -7,7 +7,6 @@ angular.module('materialManagement').controller('teletextMessageController', [
     function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.teletextMessage");
         $scope.vm = {
-            applicationId:APPLICATION_ID,
             paginationConf : {
                 pageSize: 8,//第页条目数
                 pagesLength: 10//分页框数量
@@ -25,11 +24,12 @@ angular.module('materialManagement').controller('teletextMessageController', [
         function showImg(index) {
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.showImg.save({
-                applicationId:$scope.vm.applicationId,
-                index:(index - 1)*$scope.vm.paginationConf.pageSize,
-                pageSize:$scope.vm.paginationConf.pageSize,
-                graphicMessageTitle:$scope.vm.titAuthor
-                // graphicMessageAuthor:$scope.vm.titAuthor
+                applicationId : APPLICATION_ID,
+                index : (index - 1)*$scope.vm.paginationConf.pageSize,
+                pageSize : $scope.vm.paginationConf.pageSize,
+                title : $scope.vm.titAuthor,
+                author: $scope.vm.titAuthor
+
             },function(data){
                 layer.close(i);
                 if(data.status == 500){

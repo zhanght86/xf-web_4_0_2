@@ -10,12 +10,12 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                                   *聊天知识库*    API_MATERIAL = "/api/ms",
                             ********************************/
 //聊天知识库
-    //删除知识
-    this.delKnowledge = $resource(API_MATERIAL+"/chatKnowledge/deleteConceCptChatKnowledge", {}, {});
     //查询
     this.searchKnow = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
     //请求列表
-    this.getData = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
+    this.getData    = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
+    //删除知识
+    this.delKnowledge = $resource(API_MATERIAL+"/chatKnowledge/deleteConceCptChatKnowledge", {}, {});
     //导出
     this.exportChat = API_MATERIAL+'/chatKnowledge/exportExcel';
 
@@ -29,8 +29,8 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                                                              
 //faq 聊天新增
     //扩展问
-    this.addExtension = $resource(API_MATERIAL+'/chatKnowledge/checkFAQChatQuestion',{},{});
-    this.addContent = $resource(API_MATERIAL+'/chatKnowledge/checkChatKnowledgeContent',{},{});  //概念新增
+    this.addExtension = $resource(API_MATERIAL+'/chatKnowledge/checkChatQuestion',{},{});
+    this.addContent = $resource(API_MATERIAL+'/chatKnowledge/addChatKnowledge',{},{});  //概念新增
                                                 
 
 //概念聊天新增
@@ -64,6 +64,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
 //图文消息首页
     //查询
     this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});
+
     //删除
     this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
 //图文详情页

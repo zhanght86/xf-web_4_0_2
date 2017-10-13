@@ -8,7 +8,7 @@ angular.module('materialManagement').controller('faqChatController', [
         $state.go("materialManagement.faqChat");
         var paraData = $stateParams.scanDataList?angular.fromJson($stateParams.scanDataList):"" ;
         $scope.vm = {
-            userName :  paraData?paraData.chatKnowledgeModifier:$cookieStore.get("userName"),
+            userName :  paraData?paraData.chatKnowledgeModifier: USER_NAME,
             standardQuestion :  paraData?paraData.standardQuestion:null,   //标准问
             extendedQuestion : "",    //扩展问
             extendedQuestionArr : paraData?paraData.extendedQuestionArr:[],  //扩展问数组
@@ -25,7 +25,7 @@ angular.module('materialManagement').controller('faqChatController', [
             type : $stateParams.scanData?$stateParams.scanData.type:1
         };
 
-        //擴展問
+        //扩展问
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
                 layer.msg("扩展不能为空",{time:1000});
@@ -34,7 +34,7 @@ angular.module('materialManagement').controller('faqChatController', [
             }else{
 
                 MaterialServer.addExtension.save({
-                    "chatQuestionContent" : $scope.vm.extendedQuestion
+                    "content" : $scope.vm.extendedQuestion
                 },function(data){
                     console.log(data);
                     if(data.status == 10000){
@@ -43,9 +43,9 @@ angular.module('materialManagement').controller('faqChatController', [
                         obj.chatQuestionType = angular.copy($scope.vm.weight);
                         $scope.vm.extendedQuestionArr.push(obj);
                         $scope.vm.extendedQuestion = "";
-                        console.log($scope.vm.extendedQuestionArr)
+                        console.log($scope.vm.extendedQuestionArr);
                     }else{
-                        layer.msg("扩展问重复",{time:1000})
+                        layer.msg("扩展问重复",{time:1000});
                     }
                 },function(err){
                     console.log(err);
@@ -53,6 +53,11 @@ angular.module('materialManagement').controller('faqChatController', [
 
             }
         }
+        //刪除
+        function remove(item,arr){
+            arr.remove(item);
+        }
+        //新增
         function addContentDialog(item,index){
             if(item){
                 $scope.vm.contentVal = item.chatKnowledgeContent
@@ -78,7 +83,14 @@ angular.module('materialManagement').controller('faqChatController', [
             }else{
 
                 MaterialServer.addContent.save({
-                    "chatKnowledgeContent" : $scope.vm.contentVal
+                     // "chatKnowledgeContent" : $scope.vm.contentVal
+                     "modifierId" : USER_ID,
+                     "topic" : $scope.vm.standardQuestion,
+                     "chatKnowledgeQuestionList" : $scope.vm.extendedQuestion,      //     扩展问的组合[]
+                     "chatKnowledgeContentList" : $scope.vm.contentVal,           //     新增内容的组合[]
+                     "applicationId" : APPLICATION_ID,
+                     "origin" : 100
+
                 },function(data){
                     console.log(data);
                     if(data.status == 10000){
@@ -95,10 +107,7 @@ angular.module('materialManagement').controller('faqChatController', [
 
             }
         }
-       //刪除
-        function remove(item,arr){
-            arr.remove(item);
-        }
+
         //预览
         function scan(){
             if(check()){    // 方便测试  后期放开
@@ -139,7 +148,7 @@ angular.module('materialManagement').controller('faqChatController', [
                 }
             }
 
-        //    判断重复
+        //    判断重复(扩展问 及新增内容)
         function checkRepeat(val , arr ,prop){
             var result;
             if(arr.length==0){

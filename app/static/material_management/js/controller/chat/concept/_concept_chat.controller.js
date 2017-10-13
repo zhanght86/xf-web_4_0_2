@@ -26,7 +26,7 @@ angular.module('materialManagement').controller('conceptChatController', [
             type : paraOfData?paraOfData.type:1
         };
 
-        //擴展問
+        //扩展问
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
                 layer.msg("扩展不能为空");
@@ -86,6 +86,11 @@ angular.module('materialManagement').controller('conceptChatController', [
                 });
             }
         }
+        //刪除
+        function remove(item,arr){
+            arr.remove(item);
+        }
+        //新增
         function addContentDialog(item,index){
             if(item){
                 $scope.vm.contentVal = item.chatKnowledgeContent
@@ -129,29 +134,25 @@ angular.module('materialManagement').controller('conceptChatController', [
             }
 
         }
-        //刪除
-        function remove(item,arr){
-            arr.remove(item);
-        }
+
         //预览
         function scan(){
             if(check()){
-            var params = {
-                chatKnowledgeId : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
-                standardQuestion : $scope.vm.standardQuestion,
-                extendedQuestionArr : $scope.vm.extendedQuestionArr,
-                contentArr : $scope.vm.contentArr,
-                chatKnowledgeModifier : $scope.vm.userName,
-                //editUrl : "materialManagement.conceptChat",
-                chatKnowledgeSource : "101"
-            };
-            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
-        }
+                var params = {
+                    chatKnowledgeId : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
+                    standardQuestion : $scope.vm.standardQuestion,
+                    extendedQuestionArr : $scope.vm.extendedQuestionArr,
+                    contentArr : $scope.vm.contentArr,
+                    chatKnowledgeModifier : $scope.vm.userName,
+                    //editUrl : "materialManagement.conceptChat",
+                    chatKnowledgeSource : "101"
+                };
+                $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
+            }
         }
         //保存  0 无验证   1  需要验证
         function save(){
             if(check()){
-                
                 MaterialServer.addConceCptChatKnowledge.save({
                     "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
                     "applicationId": APPLICATION_ID,
@@ -171,7 +172,7 @@ angular.module('materialManagement').controller('conceptChatController', [
                 });
             }
         }
-        //    判断重复
+        //    判断重复扩展问 及新增内容
         function checkRepeat(val , arr ,prop){
             var result;
             if(arr.length==0){

@@ -66,7 +66,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             }
             console.log( $scope.vm.delArr);
         }
-
         /**
          * //全选按钮清空
          */
@@ -75,15 +74,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $scope.vm.selectAllCheck = false;
         }
 
-        //$.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
-        // function getDel(ev,id){
-        //     var  self =$(ev.target);
-        //     if(self.prop("checked")){
-        //         $scope.vm.delArr.push(id)
-        //     }else{
-        //         $scope.vm.delArr.remove(id)
-        //     }
-        // }
         /**
          * 删除
          */
@@ -109,6 +99,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 });
             }
         }
+        //高级查找 显示隐藏
         $scope.$watch("vm.searchHeighFlag",function(val){
             if(val){
                 $('.advanced_search').slideDown();
@@ -128,33 +119,30 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             console.log($scope.vm.chatQuestionContent);
 
             MaterialServer.searchKnow.save({
-                "chatKnowledgeTopic": $scope.vm.chatKnowledgeTopic,
-                "chatKnowledgeModifier": $scope.vm.chatKnowledgeModifier,
-                "modifyTimeType":  $scope.vm.modifyTimeType,
-                "chatQuestionContent": $scope.vm.chatQuestionContent,
+                "applicationId" : APPLICATION_ID,
+                "context" : $scope.vm.chatQuestionContent,
+                "startModifyTime" : $scope.vm.modifyTimeType,
+              //  "endModifyTime" :                                          //开始时间
+              //  "endModifyTime" :                                          //结束时间
+                "modifier" : $scope.vm.chatKnowledgeModifier,             //用户名
+                "modifyTimeType" : $scope.vm.modifyTimeType,             //时间类型
+                "topic" : $scope.vm.chatKnowledgeTopic ,                  //标题
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize":$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize
             },function(data){
                 layer.close(i);
                 if(data.data==10005){
                     $scope.vm.delArr = [] ;
                     $scope.vm.listData = data.data.objs;
                     $scope.vm.paginationConf.totalItems = 0 ;
-                    layer.msg("查询无此相关知识")
+                    layer.msg("查询无此相关知识");
                 }else{
                     $scope.vm.delArr = [] ;
                     $scope.vm.listData = data.data.objs;
-                    // $scope.vm.paginationConf = {
-                    //     currentPage: index,//当前页
-                    //     totalItems: data.data.total, //总条数
-                    //     pageSize: $scope.vm.pageSize,//第页条目数
-                    //     pagesLength: 8//分页框数量
-                    // };
                     $scope.vm.paginationConf.currentPage =index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                     console.log($scope.vm.paginationConf);
-
                     $scope.vm.title = null;
                 }
             },function(err){
@@ -198,7 +186,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 layer.close(i);
                 $scope.vm.delArr = [] ;
                 $scope.vm.listData = data.data.objs;
-
                 $scope.vm.paginationConf.currentPage =index ;
                 $scope.vm.paginationConf.totalItems =data.data.total ;
                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
@@ -219,6 +206,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }
                 timeout = $timeout(function () {
                     if($scope.vm.getType==1 ){
+                        initBatchTest();
                         search(current)
                     }else if($scope.vm.getType==0){
                         initBatchTest();
