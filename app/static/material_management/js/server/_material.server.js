@@ -28,14 +28,20 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.addConceCptChatKnowledge = $resource(API_MATERIAL+'/chatKnowledge/addConceCptChatKnowledge',{},{});   //概念保存；
                                                              
 //faq 聊天新增
-    //扩展问
+    //扩展问 （faq  概念）
     this.addExtension = $resource(API_MATERIAL+'/chatKnowledge/checkChatQuestion',{},{});
-    this.addContent = $resource(API_MATERIAL+'/chatKnowledge/addChatKnowledge',{},{});  //概念新增
+
+    //faq 概念新增保存
+    this.faqSave = $resource(API_MATERIAL+'/chatKnowledge/addChatKnowledge',{},{});
+
+    //新增内容
+   // this.addContent = $resource(API_MATERIAL+'/chatKnowledge/checkChatKnowledgeContent',{},{});  //概念新增
+
                                                 
 
 //概念聊天新增
     //扩展问
-    this.addExtension2 = $resource(API_MATERIAL+'/chatKnowledge/checkConceCptChatQuestion',{},{});
+   // this.addExtension2 = $resource(API_MATERIAL+'/chatKnowledge/checkChatQuestion',{},{});
                         /********************************
                                     * 图片库
                                 ***********************************/

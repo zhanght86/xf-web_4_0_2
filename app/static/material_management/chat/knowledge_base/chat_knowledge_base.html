@@ -67,18 +67,18 @@
                             <div class="mb-10">
                                 <!--<input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>-->
                                 <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-checked="vm.delArr.inArray(item.chatKnowledgeId)" ng-click="vm.selectSingle(item.chatKnowledgeId)"/>
-                                <a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.chatKnowledgeTopic}}</a>
+                                <a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.topic}}</a>
                             </div>
                             <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>
                             <div class="cl">
                                 <div class="L">
                                     <span class="mr-20">知识类型：
-                                        {{item.chatKnowledgeSource |typeFilter }}
+                                        {{item.origin |typeFilter }}
                                     </span>
-                                    <span>作者：{{item.chatKnowledgeModifier}}</span>
+                                    <span>作者：{{item.modifierId}}</span>
                                 </div>
                                 <div class="R">
-                                    <span>更新时间：{{item.chatKnowledgeModifyTime | date : 'yyyy-MM-dd HH:mm:ss' }}</span>
+                                    <span>更新时间：{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss' }}</span>
                                 </div>
                             </div>
                         </li>
