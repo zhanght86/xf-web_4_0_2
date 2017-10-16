@@ -21,22 +21,24 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                 switch(params.chatKnowledgeSource){
                     case "100" :
                         // api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
-                        api = "addFAQChatKnowledge" ;
+                        //api = "addFAQChatKnowledge" ;
+                        api = "saveChatKnowledge";
                         break ;
                     case  "101":
                         // api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
-                        api = "addConceCptChatKnowledge" ;
+                        //api = "addConceCptChatKnowledge" ;
+                        api = "saveChatKnowledge";
                         break ;
                 }                
                 
                 MaterialServer[api].save({
-                    "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
-                    "applicationId": APPLICATION_ID ,
-                    "userId"  : USER_ID ,
-                    //"chatKnowledgeModifier": params.chatKnowledgeModifier,
-                    "chatKnowledgeTopic": params.standardQuestion,
-                    "chatQuestionList" : params.extendedQuestionArr,
-                    "chatKnowledgeContentList" : params.contentArr
+                    "modifierId" : USER_ID,
+                    "topic" : $scope.vm.standardQuestion,
+                    "applicationId" : APPLICATION_ID,
+                    "chatKnowledgeContentList": $scope.vm.contentArr,
+                    "chatKnowledgeQuestionList": $scope.vm.extendedQuestionArr,
+                    "origin": params.chatKnowledgeSource,
+                    "id" : params.chatKnowledgeId?params.chatKnowledgeId:null
                 },function(data){
                     if(data.data==10004){
                         layer.msg("标准问重复") ;

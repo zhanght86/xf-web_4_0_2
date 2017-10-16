@@ -14,15 +14,17 @@
             <div class="row cl mb-20">
                 <label class="form-label col-xs-4 col-sm-2 text-r">概念扩展：</label>
                 <div class="formControls col-xs-8 col-sm-9" style="padding-left:0;">
-                    <span   ng-if="vm.scanData.extendedQuestionArr.length!=0" ng-repeat="item in vm.scanData.extendedQuestionArr"><span style="padding: 4px;
-                           border: 1px solid #e1e1e1;margin-right: 10px; background: #f1f1f1;">{{item.chatQuestionContent}}<i ng-if="$index!=0&&$index!=vm.scanData.extendedQuestionArr.length">,</i></span></span>
+                    <span   ng-if="vm.scanData.extendedQuestionArr.length!=0" ng-repeat="item in vm.scanData.extendedQuestionArr">
+                        <span style="padding: 4px;
+                           border: 1px solid #e1e1e1;margin-right: 10px; background: #f1f1f1;">{{item.content}}<i ng-if="$index!=0&&$index!=vm.scanData.extendedQuestionArr.length">,</i></span>
+                    </span>
                 </div>
             </div>
             <div class="row cl mb-15" ng-repeat="item in vm.scanData.contentArr" >
                 <label class="form-label col-xs-4 col-sm-2 text-r"><span ng-if="$index==0">知识内容：</span></label>
                 <div ng-if="vm.scanData.contentArr.length!=0" class="formControls " style="float: left;height: auto;min-height: 30px;
                            min-width: 350px" >
-                    <p class="title_p">{{item.chatKnowledgeContent}}</p>
+                    <p class="title_p">{{item.content}}</p>
                 </div>
             </div>
             <!--<div class="row cl mb-30">-->

@@ -29,12 +29,11 @@ angular.module('materialManagement').controller('faqChatController', [
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
                 layer.msg("扩展不能为空",{time:1000});
-            }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
+            }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"content")){
                 layer.msg("扩展问题重复，请重新输入",{time:1000});
             }else{
 
                 MaterialServer.addExtension.save({
-                   // "chatQuestionContent" : $scope.vm.extendedQuestion
                     content : $scope.vm.extendedQuestion
                 },{
                     content : $scope.vm.extendedQuestion
@@ -42,8 +41,8 @@ angular.module('materialManagement').controller('faqChatController', [
                     console.log(data);
                     if(data.status == 10000){
                         var obj = {};
-                        obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion);
-                        obj.chatQuestionType = angular.copy($scope.vm.weight);
+                        obj.content = angular.copy($scope.vm.extendedQuestion);
+                        obj.type = angular.copy($scope.vm.weight);
                         $scope.vm.extendedQuestionArr.push(obj);
                         $scope.vm.extendedQuestion = "";
                         console.log($scope.vm.extendedQuestionArr);
@@ -63,7 +62,7 @@ angular.module('materialManagement').controller('faqChatController', [
         //新增
         function addContentDialog(item,index){
             if(item){
-                $scope.vm.contentVal = item.chatKnowledgeContent
+                $scope.vm.contentVal = item.content
             }
 
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/material_management/chat/add_content_dialog.html","450px",function(){
@@ -85,7 +84,7 @@ angular.module('materialManagement').controller('faqChatController', [
             //     layer.msg("扩展问题重复，请重新输入");
             }else{
                 var obj = {};
-                obj.chatKnowledgeContent = angular.copy($scope.vm.contentVal);
+                obj.content = angular.copy($scope.vm.contentVal);
                 $scope.vm.contentArr.push(obj);
                 $scope.vm.contentVal = "";
                 // MaterialServer.addContent.save({
@@ -125,15 +124,7 @@ angular.module('materialManagement').controller('faqChatController', [
         //保存  0 无验证   1  需要验证
         function save(){
                 if(check()){
-                    MaterialServer.faqSave.save({
-                        // "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
-                        // "applicationId": APPLICATION_ID,
-                        // "chatKnowledgeModifier": $scope.vm.userName,
-                        // "userId":USER_ID,
-                        // "chatKnowledgeTopic": $scope.vm.standardQuestion,
-                        // "chatQuestionList" : $scope.vm.extendedQuestionArr,
-                        // "chatKnowledgeContentList" : $scope.vm.contentArr,
-                        // "knoweledgeId" : $scope.vm.knoweledgeId
+                    MaterialServer.faqSave.save({              
 
                         "modifierId":USER_ID,
                         "topic": $scope.vm.standardQuestion,
@@ -143,10 +134,18 @@ angular.module('materialManagement').controller('faqChatController', [
                         "origin":100
                     },function(data){
                         console.log(data);
-                        if(data.data==10004){
-                            layer.msg("标准问重复",{time:1000});
-                        }else{
+                        // if(data.data==10004){
+                        //     layer.msg("标准问重复",{time:1000});
+                        // }else{
+                        //     $state.go("materialManagement.chatKnowledgeBase");
+                        // }
+                        if(data.status==500){
+                            console.log("保存失败");
+                        }
+                        if(data.status==200){
+                            layer.msg("保存成功");
                             $state.go("materialManagement.chatKnowledgeBase");
+                                       
                         }
                     },function(err){
                         console.log(err);

@@ -30,7 +30,7 @@ angular.module('materialManagement').controller('conceptChatController', [
         function addExtension(){
             if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
                 layer.msg("扩展不能为空");
-            }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"chatQuestionContent")){
+            }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"content")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
                 
@@ -41,10 +41,10 @@ angular.module('materialManagement').controller('conceptChatController', [
                 },function(data){
                     if(data.status==10000){
                         var obj = {};
-                        obj.chatQuestionContent = data.data;
-                        obj.chatQuestionContent = angular.copy($scope.vm.extendedQuestion) ;
+                        obj.content = data.data;
+                        obj.content = angular.copy($scope.vm.extendedQuestion) ;
                         obj.tagList = data.data;
-                        obj.chatQuestionType = angular.copy($scope.vm.weight);
+                        obj.type = angular.copy($scope.vm.weight);
                         $scope.vm.extendedQuestionArr.push(obj);
                         $scope.vm.extendedQuestion = "";
                     }else if(data.status==10008){
@@ -81,11 +81,11 @@ angular.module('materialManagement').controller('conceptChatController', [
         function addContent(){
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
                 layer.msg("扩展不能为空");
-            }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"chatKnowledgeContent")){
+            }else if(checkRepeat($scope.vm.contentVal , $scope.vm.contentArr ,"content")){
                 layer.msg("扩展问题重复，请重新输入");
             }else{
                 var obj = {};
-                obj.chatKnowledgeContent = angular.copy($scope.vm.contentVal);
+                obj.content = angular.copy($scope.vm.contentVal);
                 $scope.vm.contentArr.push(obj);
                 $scope.vm.contentVal = "";
             }
@@ -124,12 +124,19 @@ angular.module('materialManagement').controller('conceptChatController', [
                     "chatKnowledgeContentList": $scope.vm.contentArr,
                     "chatKnowledgeQuestionList": $scope.vm.extendedQuestionArr,
                     "applicationId": APPLICATION_ID,
-                    "origin":100
+                    "origin":101
 
                 },function(data){
-                    if(data.data==10004){
-                        layer.msg("标准问重复");
-                    }else{
+                    // if(data.data==10004){
+                    //     layer.msg("标准问重复");
+                    // }else{
+                    //     $state.go("materialManagement.chatKnowledgeBase");
+                    // }
+                    if(data.status==500){
+                        console.log("保存失败");
+                    }
+                    if(data.status==200){
+                        layer.msg("保存成功");
                         $state.go("materialManagement.chatKnowledgeBase");
                     }
                 },function(err){
