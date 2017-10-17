@@ -13,25 +13,27 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             edit : edit , 
             editUrl : angular.fromJson($stateParams.scanData).chatKnowledgeSource=="101"?"materialManagement.conceptChat":"materialManagement.faqChat"
         };
+        /**
+        *保存
+        **/
         function save(){
             var params = $scope.vm.scanData ;
             console.log(params) ;
             //if(check(params)){
-                var api ;
-                switch(params.chatKnowledgeSource){
-                    case "100" :
-                        // api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
-                        //api = "addFAQChatKnowledge" ;
-                        api = "saveChatKnowledge";
-                        break ;
-                    case  "101":
-                        // api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
-                        //api = "addConceCptChatKnowledge" ;
-                        api = "saveChatKnowledge";
-                        break ;
-                }                
-                
-                MaterialServer[api].save({
+
+            //     var api ;
+            //     switch(params.chatKnowledgeSource){
+            //         case "100" :
+            //             // api = "/api/material/chatKnowledge/updateChatKnowledge";
+            //             //api = "addFAQChatKnowledge" ;
+            //             break ;
+            //         case  "101":
+            //             // api = "/api/material/chatKnowledge/updateChatKnowledge" ;
+            //             //api = "addConceCptChatKnowledge" ;
+            //             break ;
+            //     }
+                MaterialServer.saveChatKnowledge.save({
+                //MaterialServer[api].save({
                     "modifierId" : USER_ID,
                     "topic" : $scope.vm.standardQuestion,
                     "applicationId" : APPLICATION_ID,
@@ -51,6 +53,9 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                 });
             //}
         }
+        /**
+        * 编辑
+        **/
         function edit(){
             console.log(angular.fromJson($stateParams.scanData).type);
             $state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});

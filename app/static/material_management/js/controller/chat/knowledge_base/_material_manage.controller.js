@@ -249,7 +249,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 //chatKnowledgeModifier : data.chatKnowledgeModifier,
                 chatKnowledgeId : data.id,
                 chatKnowledgeSource:data.origin,   //类型 101  概念      100 faq
-                editUrl : data.origin==100?"materialManagement.faqChat":"materialManagement.conceptChat",
+                editUrl : data.origin==100?"materialManagement.faqChat":"materialManagement.conceptChat"
 
             };
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});

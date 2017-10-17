@@ -7,7 +7,7 @@
 angular.module("materialManagement").service("MaterialServer",["$resource",function($resource){
 
                 /******************************
-                                  *聊天知识库*    API_MATERIAL = "/api/ms",
+                                  *聊天知识库*    API_MATERIAL = "/api/material",
                             ********************************/
 //聊天知识库
     //查询
@@ -23,7 +23,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
 
 //聊天知识库预览
     this.saveChatKnowledge = $resource(API_MATERIAL+'/chatKnowledge/updateChatKnowledge',{},{});
-                                                             
+
 //faq 、概念 聊天新增
     //扩展问校验 （faq  概念）
     this.addExtension = $resource(API_MATERIAL+'/chatKnowledge/checkChatQuestion',{},{});

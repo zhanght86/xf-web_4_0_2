@@ -111,14 +111,6 @@ angular.module('materialManagement').controller('conceptChatController', [
         function save(){
             if(check()){
                 MaterialServer.faqSave.save({
-                    // "chatKnowledgeId" : $scope.vm.chatKnowledgeId?$scope.vm.chatKnowledgeId:null,
-                    // "applicationId": APPLICATION_ID,
-                    // "chatKnowledgeModifier": $scope.vm.userName,
-                    // "userId" : USER_ID ,
-                    // "chatKnowledgeTopic": $scope.vm.standardQuestion,
-                    // "chatQuestionList" : $scope.vm.extendedQuestionArr,
-                    // "chatKnowledgeContentList" : $scope.vm.contentArr
-
                     "modifierId":USER_ID,
                     "topic": $scope.vm.standardQuestion,
                     "chatKnowledgeContentList": $scope.vm.contentArr,
@@ -127,18 +119,12 @@ angular.module('materialManagement').controller('conceptChatController', [
                     "origin":101
 
                 },function(data){
-                    // if(data.data==10004){
-                    //     layer.msg("标准问重复");
-                    // }else{
-                    //     $state.go("materialManagement.chatKnowledgeBase");
-                    // }
-                    if(data.status==500){
-                        console.log("保存失败");
-                    }
-                    if(data.status==200){
-                        layer.msg("保存成功");
+                    if(data.data==10004){
+                        layer.msg("标准问题重复");
+                    }else{
                         $state.go("materialManagement.chatKnowledgeBase");
                     }
+                    
                 },function(err){
                     console.log(err);
                 });
@@ -164,12 +150,12 @@ angular.module('materialManagement').controller('conceptChatController', [
         function check(){
             if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
                 layer.msg("标准问不能为空");
-                return false
+                return false;
             }else if($scope.vm.contentArr.length==0){
                 layer.msg("知识内容不能为空");
-                return false
+                return false;
             }else{
-                return true
+                return true;
             }
         }
     }

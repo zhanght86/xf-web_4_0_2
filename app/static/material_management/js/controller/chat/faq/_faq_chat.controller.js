@@ -124,29 +124,22 @@ angular.module('materialManagement').controller('faqChatController', [
         //保存  0 无验证   1  需要验证
         function save(){
                 if(check()){
-                    MaterialServer.faqSave.save({              
-
+                    MaterialServer.faqSave.save({   
                         "modifierId":USER_ID,
                         "topic": $scope.vm.standardQuestion,
                         "chatKnowledgeContentList": $scope.vm.contentArr,
                         "chatKnowledgeQuestionList": $scope.vm.extendedQuestionArr,
                         "applicationId": APPLICATION_ID,
                         "origin":100
+                        
                     },function(data){
                         console.log(data);
-                        // if(data.data==10004){
-                        //     layer.msg("标准问重复",{time:1000});
-                        // }else{
-                        //     $state.go("materialManagement.chatKnowledgeBase");
-                        // }
-                        if(data.status==500){
-                            console.log("保存失败");
-                        }
-                        if(data.status==200){
-                            layer.msg("保存成功");
+                        if(data.data==10004){
+                            layer.msg("标准问题重复",{time:1000});
+                        }else{
                             $state.go("materialManagement.chatKnowledgeBase");
-                                       
                         }
+
                     },function(err){
                         console.log(err);
                     });
@@ -173,12 +166,12 @@ angular.module('materialManagement').controller('faqChatController', [
         function check(){
             if($scope.vm.standardQuestion==null || $scope.vm.standardQuestion.length==0){
                 layer.msg("标准问不能为空",{time:1000});
-                return false
+                return false;
             }else if($scope.vm.contentArr.length==0){
                 layer.msg("知识内容不能为空",{time:1000});
-                return false
+                return false;
             }else{
-                return true
+                return true;
             }
         }
 
