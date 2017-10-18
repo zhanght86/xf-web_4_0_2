@@ -11,7 +11,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             voiceList : [] ,        //所有声音列表
             //removeVoice : removeVoice , //刪除
             paginationConf : {
-                pageSize: 5,//第页条目数
+                pageSize: 8,//第页条目数
                 pagesLength: 10//分页框数量
             } ,
             uploadSpeech :uploadSpeech,

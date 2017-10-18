@@ -59,9 +59,9 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
 //图文消息首页
     //查询
     this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});
-
     //删除
     this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
+                                                                
 //图文详情页
     //getImgText
     this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findOneGraphicMessage',{},{});
