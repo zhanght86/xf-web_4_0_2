@@ -13,30 +13,34 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             edit : edit , 
             editUrl : angular.fromJson($stateParams.scanData).chatKnowledgeSource=="101"?"materialManagement.conceptChat":"materialManagement.faqChat"
         };
+        /**
+        *保存
+        **/
         function save(){
             var params = $scope.vm.scanData ;
             console.log(params) ;
             //if(check(params)){
-                var api ;
-                switch(params.chatKnowledgeSource){
-                    case "100" :
-                        // api = "/api/ms/chatKnowledge/addFAQChatKnowledge";
-                        api = "addFAQChatKnowledge" ;
-                        break ;
-                    case  "101":
-                        // api = "/api/ms/chatKnowledge/addConceCptChatKnowledge" ;
-                        api = "addConceCptChatKnowledge" ;
-                        break ;
-                }                
-                
-                MaterialServer[api].save({
-                    "chatKnowledgeId" : params.chatKnowledgeId?params.chatKnowledgeId:null,
-                    "applicationId": APPLICATION_ID ,
-                    "userId"  : USER_ID ,
-                    //"chatKnowledgeModifier": params.chatKnowledgeModifier,
-                    "chatKnowledgeTopic": params.standardQuestion,
-                    "chatQuestionList" : params.extendedQuestionArr,
-                    "chatKnowledgeContentList" : params.contentArr
+
+            //     var api ;
+            //     switch(params.chatKnowledgeSource){
+            //         case "100" :
+            //             // api = "/api/material/chatKnowledge/updateChatKnowledge";
+            //             //api = "addFAQChatKnowledge" ;
+            //             break ;
+            //         case  "101":
+            //             // api = "/api/material/chatKnowledge/updateChatKnowledge" ;
+            //             //api = "addConceCptChatKnowledge" ;
+            //             break ;
+            //     }
+                MaterialServer.saveChatKnowledge.save({
+                //MaterialServer[api].save({
+                    "modifierId" : USER_ID,
+                    "topic" : $scope.vm.standardQuestion,
+                    "applicationId" : APPLICATION_ID,
+                    "chatKnowledgeContentList": $scope.vm.contentArr,
+                    "chatKnowledgeQuestionList": $scope.vm.extendedQuestionArr,
+                    "origin": params.chatKnowledgeSource,
+                    "id" : params.chatKnowledgeId?params.chatKnowledgeId:null
                 },function(data){
                     if(data.data==10004){
                         layer.msg("标准问重复") ;
@@ -49,6 +53,9 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
                 });
             //}
         }
+        /**
+        * 编辑
+        **/
         function edit(){
             console.log(angular.fromJson($stateParams.scanData).type);
             $state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});

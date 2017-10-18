@@ -7,35 +7,30 @@
 angular.module("materialManagement").service("MaterialServer",["$resource",function($resource){
 
                 /******************************
-                                  *聊天知识库*    API_MATERIAL = "/api/ms",
+                                  *聊天知识库*    API_MATERIAL = "/api/material",
                             ********************************/
 //聊天知识库
-    //删除知识
-    this.delKnowledge = $resource(API_MATERIAL+"/chatKnowledge/deleteConceCptChatKnowledge", {}, {});
     //查询
     this.searchKnow = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
     //请求列表
-    this.getData = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
+    this.getData    = $resource(API_MATERIAL+'/chatKnowledge/queryChatKnowledge',{},{});
+    //删除知识
+    this.delKnowledge = $resource(API_MATERIAL+"/chatKnowledge/deleteChatKnowledge", {}, {});
     //导出
     this.exportChat = API_MATERIAL+'/chatKnowledge/exportExcel';
 
 
 
 //聊天知识库预览
-    //保存          
-                                                         
-    this.addFAQChatKnowledge = $resource(API_MATERIAL+'/chatKnowledge/addFAQChatKnowledge',{},{}); //faq 新增保存
-    this.addConceCptChatKnowledge = $resource(API_MATERIAL+'/chatKnowledge/addConceCptChatKnowledge',{},{});   //概念保存；
-                                                             
-//faq 聊天新增
-    //扩展问
-    this.addExtension = $resource(API_MATERIAL+'/chatKnowledge/checkFAQChatQuestion',{},{});
-    this.addContent = $resource(API_MATERIAL+'/chatKnowledge/checkChatKnowledgeContent',{},{});  //概念新增
-                                                
+    this.saveChatKnowledge = $resource(API_MATERIAL+'/chatKnowledge/updateChatKnowledge',{},{});
 
-//概念聊天新增
-    //扩展问
-    this.addExtension2 = $resource(API_MATERIAL+'/chatKnowledge/checkConceCptChatQuestion',{},{});
+//faq 、概念 聊天新增
+    //扩展问校验 （faq  概念）
+    this.addExtension = $resource(API_MATERIAL+'/chatKnowledge/checkChatQuestion',{},{});
+    //新增保存  （faq 概念）
+    this.faqSave = $resource(API_MATERIAL+'/chatKnowledge/addChatKnowledge',{},{});
+
+
                         /********************************
                                     * 图片库
                                 ***********************************/
@@ -50,9 +45,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                         /********************************
                                 * 语音库
                                 ***********************************/
-    //获取列表
-    this.getVoiceList = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
-    //查询
+    //获取列表  查询
     this.searchVoice = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
     //updateVoice
     this.updateVoice = $resource(API_MATERIAL+'/voiceManage/updateVoiceName',{},{});
@@ -68,6 +61,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});
     //删除
     this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
+                                                                
 //图文详情页
     //getImgText
     this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findOneGraphicMessage',{},{});

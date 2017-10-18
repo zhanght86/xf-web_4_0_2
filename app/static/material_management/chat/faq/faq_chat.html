@@ -30,10 +30,10 @@
                         <div class="row cl mb-10" ng-repeat="item in vm.extendedQuestionArr">
                             <label class="form-label col-xs-4 col-sm-2 text-r mileVs">扩展问题：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" ng-model="item.chatQuestionContent" readonly class="L input-text extended_query_txt"
+                                <input type="text" ng-model="item.content" readonly class="L input-text extended_query_txt"
                                        style="width:279px;" >
                                 <span class="sel bd L mr-10" style="margin-left:-1px;text-indent: 26px">
-                                    {{item.chatQuestionType | faqWeight}}
+                                    {{item.type | faqWeight}}
                                 </span>
                                 <a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
                                     <img src="../../images/images/delete_img.png" >
@@ -52,7 +52,7 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r"></label>
                         <div class="formControls col-xs-8 col-sm-9">
                             <div class="clearfix mb-10">
-                                <p class="L word_div bd mr-10" style="width:500px;height: auto;padding: 2px;text-indent: 4px;">{{item.chatKnowledgeContent}}</p>
+                                <p class="L word_div bd mr-10" style="width:500px;height: auto;padding:5px 2px;text-indent: 4px;">{{item.content}}</p>
                                 <div class="L word_div_r">
                                     <a href="javascript:;" class="delete_a L  mb-20 ml-10" style="margin-top: 5px;" ng-click="vm.remove(item,vm.contentArr)"></a>
                                     <a href="javascript:;" class="edit_a L mt-5 ml-10" ng-click="vm.addContentDialog(item,$index)"></a>

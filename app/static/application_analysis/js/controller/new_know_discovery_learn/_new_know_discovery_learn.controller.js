@@ -188,7 +188,7 @@ angular.module('applAnalysisModule').controller('newKnowledgeDiscoveryLearnContr
                     "index": (index-1)*$scope.vm.paginationConf2.pageSize,
                     "pageSize": $scope.vm.paginationConf2.pageSize,
                     "sceneIds":null,
-                    "knowledgeTitle": $("#inputValue").val(),
+                    "knowledgeTitle": $("#inputValue").val().trim(),
                     "knowledgeContent":null,
                     "knowledgeUpdate":null,
                     "knowledgeExpDateEnd":null,

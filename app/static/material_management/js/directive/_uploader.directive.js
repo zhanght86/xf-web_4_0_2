@@ -27,11 +27,10 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,"$sta
                 formData : {
                     "userId":USER_ID,
                     "applicationId":APPLICATION_ID,
-                    "userName":USER_NAME
+                    //"userName":USER_NAME
                 }  ,   // 上传参数
                 // 文件接收服务端。
-                //server: "/api/application/application/uploadHead",
-                server: "/api/ms/chatKnowledge/upload",
+                server: "/api/material/chatKnowledge/upload",
                 //accept: {
                 //    title: 'file',
                 //    extensions: 'xls,xlsx',
@@ -74,12 +73,18 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,"$sta
             });
             uploader.on('uploadSuccess', function (file,response) {
                    console.log(response) ;
-                if(response.status == 500){
-                     layer.msg("模板错误")
-                 }else if(response.status==10001){
-                    layer.msg("导入失败")
-                 }else {
-                    layer.msg("导入成功",{time : 2000});
+                // if(response.status == 500){
+                //      layer.msg("模板错误")
+                //  }else if(response.status==10001){
+                //     layer.msg("导入失败")
+                //  }else {
+                //     layer.msg("导入成功",{time : 2000});
+                //     $state.reload();
+                // }
+                if(response.status==500){
+                    console.log("导入失败");
+                }else if(response.status==200){
+                    layer.msg("导入成功",{time:2000});
                     $state.reload();
                 }
             });

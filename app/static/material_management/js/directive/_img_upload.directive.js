@@ -14,15 +14,19 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 auto: true, // 选完文件后，是否自动上传
                 // swf文件路径
                 swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
-                server: "/api/ms/picture/upload",
+                server :"/api/material/picture/upload",
                 formData : {
-                    "applicationId":APPLICATION_ID,
-                    "userName":USER_LOGIN_NAME
+                    //"applicationId":APPLICATION_ID,
+                    //"userName":USER_LOGIN_NAME
+                    "modifierId" : USER_ID,
+                    "origin" : 0,
+                    "inTrusteeship" : 0
+                    // "file" :
                 }  ,   // 上传参数
                 accept: {
-                   title: 'Images',
-                   extensions: 'jpg,,png',
-                   mimeTypes: 'image/*'
+                    title: 'Images',
+                    extensions: 'jpg,,png',
+                    mimeTypes: 'image/*'
 
                 },
                 pick: '#picker',
@@ -45,16 +49,6 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                 scope.vm.uploadParemeter.process = percentage * 100 + '%' ;
                 $(".progress .bar_span").css("width",percentage * 100 + '%');
                 console.log(percentage) ;
-                // var $li = $( '#'+file.id ),
-                //     $percent = $li.find('.progress span');
-                //
-                // // 避免重复创建
-                // if ( !$percent.length ) {
-                //     $percent = $('<div class="progress"><span></span></div>')
-                //         .appendTo( $li )
-                //         .find('span');
-                // }
-                // $percent.css( 'width', percentage * 100 + '%' );
 
             });
             uploader.on('error',function(type){
@@ -86,7 +80,8 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
             uploader.on('uploadSuccess', function (file,response) {
                 if(response.status == 500){
                     layer.msg("模板错误")
-                }else{
+                }
+                if(response.status == 200){
                     //layer.msg("上传成功");
                     //$state.reload() ;
                 }
@@ -94,10 +89,10 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
             });
             // 所有文件上传成功 之后 刷新数据列表
             uploader.on('uploadFinished', function (file) {
-                   layer.msg("上传成功");
-                   scope.isUpload = false;
-                   $state.reload();
-                   //console.log(response);
+                layer.msg("上传成功");
+                scope.isUpload = false;
+                $state.reload();
+                //console.log(response);
             });
 
         }

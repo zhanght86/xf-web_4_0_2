@@ -10,9 +10,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             getPicList : getPicList , //获取图片列表
             imageList : "" ,        //所有图片列表
             paginationConf : {
-                                pageSize: 4,//第页条目数
-                                pagesLength: 10,//分页框数量
-                             },
+                pageSize: 5,//第页条目数
+                pagesLength: 10//分页框数量
+            },
             changeName:changeName,
             pictureIds : [],
             pictureName:null,
@@ -28,16 +28,24 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 process : "0%"
             }
         };
-        getPicList(1) ;
+
+
+        //查询
+        function  napSearch(){
+            getPicList(1) ;
+        }
+        //
+        getPicList(1);
         function getPicList(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar:false,time:3000}) ;
-            MaterialServer.getList.save({
-                "applicationId" : APPLICATION_ID,
-                "pictureName" : $scope.vm.pictureName,
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            MaterialServer.getPicList.save({
+                // "applicationId" : APPLICATION_ID,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                "pageSize": $scope.vm.paginationConf.pageSize,
+                "name" : $scope.vm.pictureName,
             },function(data){
                 layer.close(i);
+                console.log(data);
                 if(data.status == 200){
                     initBatchTest() ;
                     $scope.vm.imageList = data.data ;
@@ -45,7 +53,9 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                     console.log($scope.vm.paginationConf)
-                }else{
+                }
+                if(data.status == 500){
+                    console.log('查询失败');
                     $scope.vm.imageList= [];
                     $scope.vm.paginationConf.totalItems=0;
                 }
@@ -55,46 +65,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             });
         }
 
-        function  napSearch(){
-            getPicList(1) ;
-        }
-        /**
-         * 全选
-         */
-        function selectAll(){
-            if($scope.vm.isSelectAll){
-                $scope.vm.isSelectAll = false ;
-                $scope.vm.pictureIds = [] ;
-            }else{
-                $scope.vm.isSelectAll = true ;
-                $scope.vm.pictureIds = [] ;
-                angular.forEach($scope.vm.imageList.objs,function(val){
-                    $scope.vm.pictureIds.push(val.pictureId)
-                });
-            }
-        }
-        /**
-         * 单选
-         */
-        function singleAdd(id,allId,isAll,len){
-            console.log(allId) ;
-            if(allId.inArray(id)){
-                allId.remove(id) ;
-                $scope.vm.isSelectAll = false ;
-            }else{
-                allId.push(id) ;
-                if(allId.length == len){
-                    $scope.vm.isSelectAll = true ;
-                }
-            }
-        }
-        /**
-         * 全选清空选择按钮；
-         */
-        function initBatchTest(){
-            $scope.vm.pictureIds = [] ;
-            $scope.vm.isSelectAll = false;
-        }
         /**
          * 删除图片
          */
@@ -104,9 +74,10 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }else{
                 layer.confirm('确认删除图片？', {
                     btn: ['确定','取消'] //按钮
-                }, function(){                                       
+                }, function(){
                     MaterialServer.deleteImg.save({
-                        "pictureIds": pictureIds
+                        //"pictureIds": pictureIds
+                        "ids" : pictureIds
                     },function(data){
                         if(data.status == 200){
                             layer.msg("图片删除成功") ;
@@ -118,8 +89,10 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     },function(err){
                         console.log(err);
                     });
-                    
-                }, function(error){ console.log(error)});
+
+                }, function(error){
+                    console.log(error);
+                });
             }
         }
         /**
@@ -127,13 +100,13 @@ angular.module('materialManagement').controller('pictureLibraryController', [
          */
         function exportExcel(){
             var urlParams =
-                "?applicationId="+APPLICATION_ID;
+               "?applicationId="+APPLICATION_ID;
             //var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
             //$window.open(url,"_blank") ;
-            
+
             var url= MaterialServer.exportImg+urlParams;
             downLoadFiles($(".picLib")[0],url);
-            
+
         }
 
         /**
@@ -154,8 +127,10 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         //
         function updateImg(){
             MaterialServer.updateImg.save({
-                "pictureName":$scope.vm.pictureName,
-                "pictureId":  $scope.vm.pictureId
+                //"pictureName":$scope.vm.pictureName,
+                //"pictureId":  $scope.vm.pictureId
+                "name":$scope.vm.pictureName,
+                "id":$scope.vm.pictureId
             },function(data){
                 if(data.status == 200){
                     layer.msg('图片名称修改成功');
@@ -172,14 +147,66 @@ angular.module('materialManagement').controller('pictureLibraryController', [
          * 修改名称
          */
         function changeName(item){
-            $scope.vm.pictureName=item.pictureName;
-            $scope.vm.pictureId=item.pictureId;
+            $scope.vm.pictureName=item.name;
+            $scope.vm.pictureId=item.id;
 
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
                 updateImg();
             },function(){
 
             });
+        }
+
+        /**
+         * 全选
+         */
+        function selectAll(){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false ;
+                $scope.vm.pictureIds = [] ;
+            }else{
+                $scope.vm.isSelectAll = true ;
+                $scope.vm.pictureIds = [] ;
+                angular.forEach($scope.vm.imageList.objs,function(val){
+                    $scope.vm.pictureIds.push(val.id)
+                });
+            }
+            //console.log($scope.vm.pictureIds);
+        }
+        /**
+         * 单选
+         */
+        // function singleAdd(id,allId,isAll,len){
+        //     console.log(allId) ;
+        //     if(allId.inArray(id)){
+        //         allId.remove(id) ;
+        //         $scope.vm.isSelectAll = false ;
+        //     }else{
+        //         allId.push(id) ;
+        //         if(allId.length == len){
+        //             $scope.vm.isSelectAll = true ;
+        //         }
+        //     }
+        // }
+        function singleAdd(id){
+            if($scope.vm.pictureIds.inArray(id)){
+                $scope.vm.pictureIds.remove(id);
+                $scope.vm.isSelectAll = false;
+            }else{
+                $scope.vm.pictureIds.push(id);
+
+            }
+            if($scope.vm.pictureIds.length==$scope.vm.imageList.objs.length){
+                $scope.vm.isSelectAll = true;
+            }
+            console.log( $scope.vm.pictureIds);
+        }
+        /**
+         * 全选清空选择按钮；
+         */
+        function initBatchTest(){
+            $scope.vm.pictureIds = [] ;
+            $scope.vm.isSelectAll = false;
         }
     }
 ]);
