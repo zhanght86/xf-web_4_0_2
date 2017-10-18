@@ -61,14 +61,10 @@ angular.module('homePage').controller('userManageController', [
             console.log( $scope.vm.deleteIds)
         }
         function selectSingle(ev,id){
-            var self = $(ev.target);
-            if(self.attr('checked')){
-                self.attr('checked',false);
+            if($scope.vm.deleteIds.inArray(id)){
                 $scope.vm.deleteIds.remove(id);
-                $(".selectAllBtn").attr("checked",false)
             }else{
-                $(".selectAllBtn").attr("checked",false)
-                $scope.vm.deleteIds.push(id)
+                $scope.vm.deleteIds.push(id);
             }
             console.log( $scope.vm.deleteIds)
         }
@@ -77,9 +73,10 @@ angular.module('homePage').controller('userManageController', [
         getData(1);
         //查询列表
         function getData(index){
+            $scope.vm.deleteIds = [];
             httpRequestPost("/api/user/listUser",{
                 index:(index -1)*$scope.vm.pageSize,
-                pageSize:$scope.vm.pageSize,
+                pageSize:$scope.vm.pageSize
             },function(data){
                 $scope.vm.listData = data.data.userManageList;
                 $scope.vm.userDataTotal = data.data.total;

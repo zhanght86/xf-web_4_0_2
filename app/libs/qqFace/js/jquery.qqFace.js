@@ -1,8 +1,11 @@
 // QQ表情插件
+//    wrapper 外层----   "html" : 文本类型 input textarea中
+//                       "val" : 其他元素中
 (function($){  
 	$.fn.qqFace = function(options){
 		var defaults = {
 			id : 'facebox',
+            wrapper : "block" ,
 			path : 'face/',
 			assign : 'content',
 			tip : 'em_'
@@ -12,12 +15,12 @@
 		var id = option.id;
 		var path = option.path;
 		var tip = option.tip;
-		
+		var wrapper = option.wrapper=="block"?"html":"val";
 		if(assign.length<=0){
 			console.log('缺少表情赋值对象。');
 			return false;
 		}
-		
+		// 表情选择下拉框
 		$(this).click(function(e){
 			var strFace, labFace;
 			if($('#'+id).length<=0){
@@ -25,7 +28,7 @@
 							  '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 				for(var i=1; i<=75; i++){
 					labFace = '['+tip+i+']';
-					strFace += '<td><img src="'+path+i+'.gif" onclick="$(\'#'+option.assign+'\').setCaret();$(\'#'+option.assign+'\').insertAtCaret(\'' + labFace + '\');" /></td>';
+					strFace += '<td><img src="'+path+i+'.gif" onclick="$(\'#'+option.assign+'\').setCaret();$(\'#'+option.assign+'\').insertAtCaret(\'' + labFace + '\''+','+'\''+i+'\''+');" /></td>';
 					if( i % 15 == 0 ) strFace += '</tr><tr>';
 				}
 				strFace += '</tr></table></div>';
@@ -54,10 +57,11 @@ unselectContents: function(){
 	else if(document.selection) 
 		document.selection.empty(); 
 	} 
-}); 
+});
+
 jQuery.fn.extend({ 
 	selectContents: function(){
-		console.log(1)
+		console.log(1) ;
 		$(this).each(function(i){ 
 			var node = this; 
 			var selection, range, doc, win; 
@@ -66,7 +70,7 @@ jQuery.fn.extend({
 				range.selectNode(node); 
 				if(i == 0){ 
 					selection.removeAllRanges(); 
-				} 
+				}
 				selection.addRange(range); 
 			} else if (document.body && typeof document.body.createTextRange != 'undefined' && (range = document.body.createTextRange())){ 
 				range.moveToElementText(node); 
@@ -76,32 +80,34 @@ jQuery.fn.extend({
 	}, 
 
 	setCaret: function(){ 
-		if(!$.browser.msie) return; 
+		if(!$.browser.msie) return;
 		var initSetCaret = function(){ 
-			var textObj = $(this).get(0); 
-			textObj.caretPos = document.selection.createRange().duplicate(); 
+			var textObj = $(this).get(0);
+            range = window.getSelection().getRangeAt(0);//找到焦点位置
+			textObj.caretPos = range;
 		}; 
 		$(this).click(initSetCaret).select(initSetCaret).keyup(initSetCaret); 
 	}, 
 
-	insertAtCaret: function(textFeildValue){ 
-		var textObj = $(this).get(0); 
-		if(document.all && textObj.createTextRange && textObj.caretPos){ 
+	insertAtCaret: function(textFeildValue,index){
+		var textObj = $(this).get(0);
+        console.log(textObj) ;
+		if(document.all && textObj.createTextRange && textObj.caretPos){
 			var caretPos=textObj.caretPos; 
 			caretPos.text = caretPos.text.charAt(caretPos.text.length-1) == '' ? 
 			textFeildValue+'' : textFeildValue; 
 		} else if(textObj.setSelectionRange){ 
 			var rangeStart=textObj.selectionStart; 
 			var rangeEnd=textObj.selectionEnd; 
-			var tempStr1=textObj.value.substring(0,rangeStart); 
-			var tempStr2=textObj.value.substring(rangeEnd); 
-			textObj.value=tempStr1+textFeildValue+tempStr2; 
-			textObj.focus(); 
+			var tempStr1=textObj.innerHTML.substring(0,rangeStart);
+			var tempStr2=textObj.innerHTML.substring(rangeEnd);
+			textObj.innerHTML=tempStr1+textFeildValue+tempStr2;
+			textObj.focus();
 			var len=textFeildValue.length; 
 			textObj.setSelectionRange(rangeStart+len,rangeStart+len); 
 			textObj.blur(); 
-		}else{ 
-			textObj.value+=textFeildValue; 
-		} 
-	} 
+		}else{
+			textObj.innerHTML+=textFeildValue;
+		}
+	}
 });

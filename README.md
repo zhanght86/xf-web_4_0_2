@@ -71,3 +71,5 @@ problem 维度---维度子集--update
 $log  代替 console.log()
 
 改写 相关问 为指令
+query ---- 获取列表
+get   ----获取单个信息

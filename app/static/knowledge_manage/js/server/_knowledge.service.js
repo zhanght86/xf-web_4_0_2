@@ -83,5 +83,13 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         this.storeRichTextKnow = $resource(API_MS+"/elementKnowledgeAdd/addElementKnowledge",{},{}) ;
         // 编辑
         this.updateRichTextKnow = $resource(API_MS+"/elementKnowledgeAdd/editElementKnowledge",{},{}) ;
+        // 根据id 获取图文封面图片 url ，title 方法     //pic
+        this.getMediaPicture = $resource(API_MS+"/picture/queryPictureUrl",{},{}) ;
+        // 根据id 获取图文封面图片 url ，title 方法     //voice
+        this.getMediaVoice = $resource(API_MS+"/voiceManage/queryVoiceUrl",{},{}) ;
+        // 根据id 获取图文封面图片 url ，title 方法     //pic
+        this.getMediaImgText= $resource(API_MS+"/graphicMessage/findOneGraphicMessage",{},{}) ;
+
+
 
 }]);
