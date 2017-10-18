@@ -309,7 +309,7 @@ function delCookie(name) {
                                          * @param value
                                          */
 function nullCheck(value){
-    if(value!=null && value!=undefined && $.trim(value)!=''){
+    if(value==null || value==undefined || $.trim(value)=='' || value=={} || value == []){
         return false;
     }
     //if(value==null){

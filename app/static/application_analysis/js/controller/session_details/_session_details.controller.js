@@ -206,10 +206,11 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
         function exportExcel(){
             var i = layer.msg('导出中...',{icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000});
             AppAnalysisServer.exportExcel.save({
-                "applicationId" : APPLICATION_ID,
+                "applicationId" : $scope.vm.applicationId,
                 "channelId": $scope.vm.channelId,
                 "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
+                "startTime" : $scope.vm.timeStart ,
                 "endTime": $scope.vm.timeEnd,
                 "orderForSessionNumber": $scope.vm.orderForSessionNumber,
                 "orderForSessionTime": $scope.vm.orderForSessionTime,

@@ -96,6 +96,7 @@ angular.module('myApplicationSettingModule').controller('nodeManageController', 
             findNodeInfo(nodeCode).$promise.then(function(data){  // !!!! 同步
                 console.log(data);
                 if($scope.vm.statusId==60002){
+                    initNodeInput() ;
                     layer.msg("当前节点正在使用中!");
                 }else{
                     $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/release/node_manage/addOredit_node.html","550px",function(){

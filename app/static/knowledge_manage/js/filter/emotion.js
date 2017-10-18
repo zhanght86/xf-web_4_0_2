@@ -8,7 +8,7 @@ angular.module('knowledge_static_web').filter('emotion', function () {
             //
             //str = str.replace(/\>/g,'&gt;');
 
-            str = str.replace(/\n/g,'<br/>');
+            //str = str.replace(/\n/g,'<br/>');
 
             str = str.replace(/\[em_([0-9]*)\]/g,'<img src="/libs/qqFace/arclist/$1.gif" border="0" />');
 
@@ -20,9 +20,6 @@ angular.module('knowledge_static_web').filter('emotion', function () {
         face = face.replace(regex, "[em_$1]");
         //console.log(face)
         return face;
-        //face = face.replace(/<img [^>]*src=['"][^'"]+(\d+).[gif,png][^>]*>/gi, "[em_$1]") ;
-        //console.log(face) ;
-        //return face;
     }
 }).filter('toHtml',["$sce",function ($sce) {
     return function (text) {

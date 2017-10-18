@@ -23,7 +23,7 @@ knowledge_static_web.controller('ApplicationController',
                     channelListIds :[],
                     dimensionList : "",
                     dimensionListIds : [] ,
-                //method for DownStream simple
+ /*>>>>>=========method for DownStream simple========<<<<<<<<*/
                     queryChannelList : queryChannelList ,  //获取渠道
                     queryDimensionList : queryDimensionList ,  //获取维度
                     slideToggle : slideToggle ,   //滑动控制
@@ -31,18 +31,11 @@ knowledge_static_web.controller('ApplicationController',
                     openNgDialog : openNgDialog ,  //打开弹框
                     setNgTimeOut : setNgTimeOut ,  //延时器
                     setNgInterval : setNgInterval ,//定时器
-                //method for Downstream
+/*>>>>=========method for Downstream complex========<<<<<<<<*/
                 //    getDimensions : getDimensions ,
                 //    getChannels : getChannels ,
 
                     searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
-                    searchAppointAutoTag : searchAppointAutoTag ,    //相关问搜索自动补全
-                    //isExtensionTagRepeat : isExtensionTagRepeat ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
-                    //removeExtensionHasTag : removeExtensionHasTag , //对删除的扩展问备份     营销 概念 列表 富文本知识新增
-                    //getFrameByClassId : getFrameByClassId  //通过类目id 获取业务框架
-                    //getExtensionByFrameId : getExtensionByFrameId //通过业务框架id 获取扩展问
-                    getMediaParmeter : getMediaParmeter ,  // 《《富文本知识新增》》 根据id 获取图文封面图片url ，title 方法
-
             /* bot 下拉树的公共方法 */
                    botTreeOperate : botTreeOperate ,
                    //isTitleHasExt : isTitleHasExt
@@ -123,7 +116,6 @@ knowledge_static_web.controller('ApplicationController',
                     }, function(error) {
                         console.log(error)
                     });
-                //return dimensions ;
             };
 
              function queryChannelList(applicationId){
@@ -176,53 +168,6 @@ knowledge_static_web.controller('ApplicationController',
                     }
                 });
             }
-            //相关问搜索自动补全
-            /**
-             * @params ｛self｝  $scope
-             * @params ｛url｝
-             * @params ｛el｝
-             * @params ｛self｝  responseList
-             *  defs :  {listener}{blur}{select}{remove}    监听输入 -  失去焦点隐藏 - 选择添加 - 删除所选项
-             * */
-            function searchAppointAutoTag(self,el,url,responseList,callback){
-                return {
-                    listener : listener ,
-                    blur : blur ,
-                    select : select ,
-                    remove : remove
-                } ;
-                function listener(){
-                    $(el).on("input",function(){
-                        var title = $(el).val() ;
-                        httpRequestPost(url,{"title":title },function(data){
-                            self.$apply(function(){
-                                self.vm[responseList] = data.data
-                            })
-                        },function(){}) ;
-                    }) ;
-                }
-               function blur(){
-                   $timeout(function(){
-                       self.$apply(function(){
-                           self.vm[responseList] = [] ;
-                       })
-                   },200)
-               }
-                function select(item,arr){
-                        if(arr.indexOf(item)==-1){
-                            arr.push(item)
-                        }else{
-                            layer.msg("相关问添加重复")
-                        }
-                        //self.appointRelative = "";  //清楚title
-                        //$scope.vm.appointRelativeList = [];  //清除 列表
-                }
-                function remove(item){
-                   self.vm.appointRelativeGroup.remove(item);
-                }
-            }
-
-
             /*bot*/
             function botTreeOperate(self,initUrl,getNodeUrl,selectCall,searchAutoUrl){
                 var tree = {
@@ -254,6 +199,7 @@ knowledge_static_web.controller('ApplicationController',
                                     var  html = '<ul class="menus">';
                                     for(var i=0;i<data.data.length;i++){
                                         var typeClass ;
+
                                         // 叶子节点 node
                                         if((data.data[i].categoryLeaf == 0)){
                                             typeClass = "bot-leaf"　;
@@ -322,59 +268,7 @@ knowledge_static_web.controller('ApplicationController',
 
                 //return tree ;
             }
-//*******************2017/8/25  BEGIN   根据id 获取图文封面图片url ，title 方法 *******************//
-            function getMediaParmeter(type,params,callBack){
-                var api ,parameter = {
-                    "applicationId": APPLICATION_ID
-                } ;
-                switch (type){
-                    case  "111" :  //pic
-                        api = "/api/ms/picture/queryPictureUrl" ;
-                        parameter.pictureUrl   = params ;
-                        break ;
-                    case  "112" :  //voice
-                        api = "/api/ms/voiceManage/queryVoiceUrl" ;
-                        parameter.voiceUrl= params ;
-                        break ;
-                    case  "114" :  //img-text
-                        api = "/api/ms/graphicMessage/findOneGraphicMessage" ;
-                        parameter.graphicMessageId  = params ;
-                        break;
-                }
-                httpRequestPost(api,parameter,function(response){
-                    if(response.status == 200){
-                        callBack(response.data) ;
-                        //self.vm.imgTextSelected.url = response.data.pictureUrl ;
-                    }else if(response.status == 500){
-                        //    获取失败
-                    }
-                },function(error){console.log(error)})
-            } ;
-            //function getImgParmeter(self,url,callBack){
-            //    httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
-            //        "graphicMessageId" : id ,
-            //        "applicationId": APPLICATION_ID
-            //    },function(response){
-            //        if(response.status == 200){
-            //            self.vm.imgTextSelected.url = response.data.pictureUrl ;
-            //        }else if(response.status == 500){
-            //            //    获取失败
-            //        }
-            //    },function(error){console.log(error)})
-            //}
-            //function getVoiceParmeter(self,url,callBack){
-            //    httpRequestPost("/api/ms/graphicMessage/findOneGraphicMessage",{
-            //        "graphicMessageId" : id ,
-            //        "applicationId": APPLICATION_ID
-            //    },function(response){
-            //        if(response.status == 200){
-            //            self.vm.imgTextSelected.url = response.data.pictureUrl ;
-            //        }else if(response.status == 500){
-            //            //    获取失败
-            //        }
-            //    },function(error){console.log(error)})
-            //}
-//*******************2017/8/25  END   根据id 获取图文封面图片url ，title 方法   *******************//
+
 
 /***********************************************************************************************************************************************************************/
 
