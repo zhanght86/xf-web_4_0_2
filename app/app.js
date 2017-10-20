@@ -153,7 +153,152 @@ knowledge_static_web
                     },
                 }
             })
-            //业务建模
+
+            //--------------------------------------------------------------------
+            //应用管理 application_manage
+            .state("setting", {
+                url: "/setting",
+                templateUrl: 'static/application_manage/main.html',
+                controller:"myApplicationSettingController"
+            })
+            .state("setting.robot", {
+                url: "/robot",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/robot_setup/robot_setup.html',
+                        controller: "robotSetupController"
+                    },
+                }
+            })
+            .state("setting.parameter", {
+                url: "/parameter",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/parameter_setup/parameter_setup.html',
+                        controller: "parameterSetupController"
+                    },
+                }
+            })
+            .state("setting.chatPageConfig", {
+                url: "/chatPageConfig",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/hot_knowledge_setup/hot_knowledge_setup.html',
+                        controller: "hotKnowledgeSetupController"
+                    },
+                }
+            })
+            .state("setting.sceneManage", {
+                url: "/sceneManage",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/scene_manage/scene_manage.html',
+                        controller: "sceneManageController"
+                    },
+                }
+            })
+            // 维度管理
+            .state("setting.dimension", {
+                url: "/dimension",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/dimension_manage/dimension_manage.html',
+                        controller: "dimensionManageController"
+                    },
+                }
+            })
+            // 渠道管理
+            .state("setting.channel", {
+                url: "/channel",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/channel_manage/channel_manage.html',
+                        controller: "channelManageController"
+                    },
+                }
+            })
+            // 关联管理  ---》》》营销显示
+            .state("setting.association", {
+                url: "/association",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/relate_manage/relate_manage.html',
+                        controller: "relateManageController"
+                    },
+                }
+            })
+            //应用信息
+            .state("setting.Infor", {
+                url: "/Infor",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/info/info.html',
+                        controller: "applicationInforController"
+                    },
+                }
+            })
+            //应用发布
+            .state("setting.releaseMan", {
+                url: "/releaseMan",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/release/release_manage/release_manage.html',
+                        controller: "releaseManageController"
+                    },
+                }
+            })
+            .state("setting.nodeMan", {
+                url: "/nodeMan",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/release/node_manage/node_manage.html',
+                        controller: "nodeManageController"
+                    },
+                }
+            })
+
+            //--------------------------------------------------------------------------
+            //业务建模 business_modeling
             .state("relationalCatalog", {
                 url: "/relationalCatalog",
                 templateUrl: 'static/application_manage/develop/relationalCatalog.html',
@@ -363,361 +508,9 @@ knowledge_static_web
                     },
                 }
             })
-            .state("setting", {
-                url: "/setting",
-                templateUrl: 'static/application_manage/main.html',
-                controller:"myApplicationSettingController"
-            })
-            .state("setting.robot", {
-                url: "/robot",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/robot_setup/robot_setup.html',
-                        controller: "robotSetupController"
-                    },
-                }
-            })
-            .state("setting.parameter", {
-                url: "/parameter",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/parameter_setup/parameter_setup.html',
-                        controller: "parameterSetupController"
-                    },
-                }
-            })
-            .state("setting.chatPageConfig", {
-                url: "/chatPageConfig",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/hot_knowledge_setup/hot_knowledge_setup.html',
-                        controller: "hotKnowledgeSetupController"
-                    },
-                }
-            })
-            .state("setting.sceneManage", {
-                url: "/sceneManage",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/scene_manage/scene_manage.html',
-                        controller: "sceneManageController"
-                    },
-                }
-            })
-            // 维度管理
-            .state("setting.dimension", {
-                url: "/dimension",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/dimension_manage/dimension_manage.html',
-                        controller: "dimensionManageController"
-                    },
-                }
-            })
-            // 渠道管理
-            .state("setting.channel", {
-                url: "/channel",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/channel_manage/channel_manage.html',
-                        controller: "channelManageController"
-                    },
-                }
-            })
-            // 关联管理  ---》》》营销显示
-            .state("setting.association", {
-                url: "/association",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/relate_manage/relate_manage.html',
-                        controller: "relateManageController"
-                    },
-                }
-            })
-            //应用信息
-            .state("setting.Infor", {
-                url: "/Infor",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/info/info.html',
-                        controller: "applicationInforController"
-                    },
-                }
-            })
-            //应用发布
-            .state("setting.releaseMan", {
-                url: "/releaseMan",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/release/release_manage/release_manage.html',
-                        controller: "releaseManageController"
-                    },
-                }
-            })
-            .state("setting.nodeMan", {
-                url: "/nodeMan",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/release/node_manage/node_manage.html',
-                        controller: "nodeManageController"
-                    },
-                }
-            })
 
-            //深度学习
-            .state("deepLearning", {
-                url: "/deepLearning",
-                templateUrl: 'static/deepLearning/deepLearning.html',
-            })
-            .state("deepLearning.dataAcquisition", {
-                url: "/dataAcquisition",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/deepLearning/dataAcquisition.html',
-                        controller: "dataAcquisitionController"
-                    }
-                }
-            })
-            .state("deepLearning.acquisitionDetails", {
-                url: "/acquisitionDetails/:crawlRecordId",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/deepLearning/acquisitionDetails.html',
-                        controller: "acquisitionDetailsController"
-                    }
-                }
-            })
-            .state("deepLearning.similarityCalculation", {
-                url: "/similarityCalculation",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/deepLearning/similarityCalculation.html',
-                        controller: "similarityCalculationController"
-                    }
-                }
-            })
-            .state("deepLearning.deepLearningCon", {
-                url: "/deepLearningCon",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/deepLearning/deepLearningCon.html',
-                        controller: "deepLearningConController"
-                    }
-                }
-            })
-            .state("deepLearning.deeplearnConfig", {
-                url: "/deeplearnConfig",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/deepLearning/deeplearnConfig.html',
-                        controller: "deeplearnConfigController"
-                    }
-                }
-            })
-
-            //materialManagement
-            .state("materialManagement", {
-                url: "/materialManagement/:userPermission",
-                templateUrl: 'static/material_management/main.html',
-                //controller: "adminController"
-            })
-
-            .state("materialManagement.chatKnowledgeBase", {
-                url: "/chatKnowledgeBase/:userPermission",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/chat/knowledge_base/chat_knowledge_base.html',
-                        controller: "chatKnowledgeBaseController"
-                    }
-                }
-            })
-            .state("materialManagement.chatKnowledgeBasePreview", {
-                url: "/chatKnowledgeBasePreview/:scanData/:id",
-                //cache:'true',
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/chat/knowledge_base_prew/chat_knowledge_base_preview.html',
-                        controller: "chatKnowledgeBasePreController"
-                    }
-                }
-            })
-            .state("materialManagement.faqChat", {
-                url: "/faqChat/:scanDataList",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/chat/faq/faq_chat.html',
-                        controller: "faqChatController"
-                    }
-                }
-            })
-            .state("materialManagement.conceptChat", {
-                url: "/conceptChat/:scanDataList",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/chat/concept/concept_chat.html',
-                        controller: "conceptChatController"
-                    }
-                }
-            })
-            //语音库
-            .state("materialManagement.speechLibrary", {
-                url: "/speechLibrary",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/speech_library/speech_library.html',
-                        controller: "speechLibraryController"
-                    }
-                }
-            })
-            //图片库
-            .state("materialManagement.pictureLibrary", {
-                url: "/pictureLibrary",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/picture_library/picture_library.html',
-                        controller: "pictureLibraryController"
-                    }
-                }
-            })
-            //新建图文消息
-            .state("materialManagement.teletextMessage", {
-                url: "/teletextMessage",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/teletext_message/teletext_message.html',
-                        controller: "teletextMessageController"
-                    }
-                }
-            })
-            .state("materialManagement.addtemes", {
-                url: "/addtemes/:imgTextId",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/teletext_message/add_tw_mes.html',
-                        controller: "addTwMesController"
-                    }
-                }
-            })
-            .state("materialManagement.graphicDetails", {
-                url: "/graphicDetails/:imgTextId",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/teletext_message/graphic_details.html',
-                        controller: "graphicDetailsController"
-                    }
-                }
-            })
-            //文档库
-            .state("materialManagement.documentLibrary", {
-                url: "/documentLibrary",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/material_management/document_library/document_library.html',
-                        controller: "documentLibraryController"
-                    }
-                }
-            })
-            //知识管理knowledgeManagement
+            //---------------------------------------------------------------------------
+            //知识管理knowledge_management
             .state("knowledgeManagement", {
                 url: "/knowledgeManagement",
                 templateUrl: 'static/knowledge_manage/main.html',
@@ -861,7 +654,21 @@ knowledge_static_web
                     }
                 }
             })
-            // //批量知识新增
+            //知識預覽
+            .state("knowledgeManagement.knowledgeScan", {
+                url: "/knowledgeScan/:knowledgeScan",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/knowledge_manage/public_html/knowledgeScan.html',
+                        controller: "knowledgeScanController"
+                    }
+                }
+            })
+            //批量知识新增
             .state("knowledgeManagement.knowBatchAdditions", {
                 url: "/knowBatchAdditions",
                 views: {
@@ -890,247 +697,7 @@ knowledge_static_web
                 }
             })
 
-            //知識預覽
-            .state("knowledgeManagement.knowledgeScan", {
-                url: "/knowledgeScan/:knowledgeScan",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/knowledge_manage/public_html/knowledgeScan.html',
-                        controller: "knowledgeScanController"
-                    }
-                }
-            })
-            //    -------------------------
-            //测试功能
-            .state("functionalTest", {
-                url: "/functionalTest",
-                templateUrl: 'static/functional_testing/main.html',
-                controller: "functionalTestController"
-
-            })
-            .state("functionalTest.questionTest", {
-                url: "/questionTest",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/functional_testing/question_test/question_test.html',
-                        controller: "questionTestController"
-                    }
-                }
-            })
-            .state("functionalTest.sessionTest", {
-                url: "/sessionTest",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/functional_testing/session_test/session_test.html',
-                        controller: "sessionTestController"
-                    }
-                }
-            })
-            .state("functionalTest.batchTest", {
-                url: "/batchTest",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/functional_testing/batch_test/batch_test/batch_test.html',
-                        controller: "batchTestController"
-                    }
-                }
-            })
-            .state("functionalTest.testResult", {
-                    url: "/testResult/:batchNumberId",
-                    views: {
-                        'header': {
-                            templateUrl: 'static/index/home_page/nav.html',
-                            controller: "homePageNavController"
-                        },
-                        'content': {
-                            templateUrl: 'static/functional_testing/batch_test/test_result/test_result.html',
-                            controller: "testResultController"
-                            }
-                        }
-            })
-            .state("functionalTest.viewDetails", {
-                url: "/viewDetails/:batchNumberId",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/functional_testing/batch_test/view_details/view_details.html',
-                        controller: "viewDetailsController"
-                    }
-                }
-            })
-            .state("functionalTest.participle", {
-                url: "/participle",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/functional_testing/participle/participle.html',
-                        controller: "participleController"
-                    }
-                }
-            })
-            .state("functionalTest.participleResult", {
-                url: "/participleResult",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/functional_testing/participle/participle_result.html',
-                        controller: "participleResultController"
-                    }
-                }
-            })
-            //-----------------------
-            //应用分析
-            .state("applAnalysis", {
-                url: "/applAnalysis",
-                templateUrl: 'static/application_analysis/main.html',
-                controller: "applAnalysisController"
-
-            })
-            .state("applAnalysis.sessionDetails", {
-                url: "/sessionDetails",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/session_details/session_details.html',
-                        controller: "sessionDetailsController"
-                    }
-                }
-            })
-            .state("applAnalysis.satisfactionDegree", {
-                url: "/satisfactionDegree",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/satisfaction_degree/satisfaction_degree.html',
-                        controller: "satisfactionDegreeController"
-                    }
-                }
-            })
-            //7.11-add
-            .state("applAnalysis.accessStatistics", {
-                url: "/accessStatistics",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/access_statistics/access_statistics.html',
-                        controller: "accessStatisticsController"
-                    }
-                }
-            })
-            .state("applAnalysis.knowledgeRanking", {
-                url: "/knowledgeRanking",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/knowledge_ranking/knowledge_ranking.html',
-                        controller: "knowledgeRankingController"
-                    }
-                }
-            })
-            .state("applAnalysis.resolutionStatistics", {
-                url: "/resolutionStatistics",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/resolution_statistics/resolution_statistics.html',
-                        controller: "resolutionStatisticsController"
-                    }
-                }
-            })
-            .state("applAnalysis.reinforcementLearn", {
-                url: "/reinforcementLearn",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/reinforcement_learn/reinforcement_learn.html',
-                        controller: "reinforcementLearnController"
-                    }
-                }
-            })
-            .state("applAnalysis.newKnowledgeDiscoveryLearn", {
-                url: "/newKnowledgeDiscoveryLearn",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/new_know_discovery_learn/new_know_discovery_learn.html',
-                        controller: "newKnowledgeDiscoveryLearnController"
-                    }
-                }
-            })
-            .state("applAnalysis.operationLog", {
-                url: "/operationLog",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/operation_log/operation_log.html',
-                        controller: "operationLogController"
-                    }
-                }
-            })
-            .state("applAnalysis.sessionLog", {
-                url: "/sessionLog",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_analysis/session_log/session_log.html',
-                        controller: "sessionLogController"
-                    }
-                }
-            })
-            //-----------------------
-            //知识接入
+            //  知识接入
             //任务分析
             .state("back", {
                 url: "/back",
@@ -1206,6 +773,450 @@ knowledge_static_web
                     }
                 }
             })
+
+            //-------------------------------------------------------------------------------------
+            //测试功能 function_testing
+            .state("functionalTest", {
+                url: "/functionalTest",
+                templateUrl: 'static/functional_testing/main.html',
+                controller: "functionalTestController"
+
+            })
+            //问法测试
+            .state("functionalTest.questionTest", {
+                url: "/questionTest",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functional_testing/question_test/question_test.html',
+                        controller: "questionTestController"
+                    }
+                }
+            })
+            //会话测试
+            .state("functionalTest.sessionTest", {
+                url: "/sessionTest",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functional_testing/session_test/session_test.html',
+                        controller: "sessionTestController"
+                    }
+                }
+            })
+            //批量测试
+            .state("functionalTest.batchTest", {
+                url: "/batchTest",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functional_testing/batch_test/batch_test/batch_test.html',
+                        controller: "batchTestController"
+                    }
+                }
+            })
+            .state("functionalTest.testResult", {
+                    url: "/testResult/:batchNumberId",
+                    views: {
+                        'header': {
+                            templateUrl: 'static/index/home_page/nav.html',
+                            controller: "homePageNavController"
+                        },
+                        'content': {
+                            templateUrl: 'static/functional_testing/batch_test/test_result/test_result.html',
+                            controller: "testResultController"
+                            }
+                        }
+            })
+            .state("functionalTest.viewDetails", {
+                url: "/viewDetails/:batchNumberId",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functional_testing/batch_test/view_details/view_details.html',
+                        controller: "viewDetailsController"
+                    }
+                }
+            })
+            .state("functionalTest.participle", {
+                url: "/participle",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functional_testing/participle/participle.html',
+                        controller: "participleController"
+                    }
+                }
+            })
+            .state("functionalTest.participleResult", {
+                url: "/participleResult",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/functional_testing/participle/participle_result.html',
+                        controller: "participleResultController"
+                    }
+                }
+            })
+            //--------------------------------------------------------------------------------------
+            //应用分析 application_analusis
+            .state("applAnalysis", {
+                url: "/applAnalysis",
+                templateUrl: 'static/application_analysis/main.html',
+                controller: "applAnalysisController"
+
+            })
+            .state("applAnalysis.accessStatistics", {
+                url: "/accessStatistics",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/access_statistics/access_statistics.html',
+                        controller: "accessStatisticsController"
+                    }
+                }
+            })
+            .state("applAnalysis.knowledgeRanking", {
+                url: "/knowledgeRanking",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/knowledge_ranking/knowledge_ranking.html',
+                        controller: "knowledgeRankingController"
+                    }
+                }
+            })
+            .state("applAnalysis.sessionDetails", {
+                url: "/sessionDetails",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/session_details/session_details.html',
+                        controller: "sessionDetailsController"
+                    }
+                }
+            })
+            .state("applAnalysis.satisfactionDegree", {
+                url: "/satisfactionDegree",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/satisfaction_degree/satisfaction_degree.html',
+                        controller: "satisfactionDegreeController"
+                    }
+                }
+            })
+            .state("applAnalysis.resolutionStatistics", {
+                url: "/resolutionStatistics",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/resolution_statistics/resolution_statistics.html',
+                        controller: "resolutionStatisticsController"
+                    }
+                }
+            })
+            .state("applAnalysis.reinforcementLearn", {
+                url: "/reinforcementLearn",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/reinforcement_learn/reinforcement_learn.html',
+                        controller: "reinforcementLearnController"
+                    }
+                }
+            })
+            .state("applAnalysis.newKnowledgeDiscoveryLearn", {
+                url: "/newKnowledgeDiscoveryLearn",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/new_know_discovery_learn/new_know_discovery_learn.html',
+                        controller: "newKnowledgeDiscoveryLearnController"
+                    }
+                }
+            })
+            .state("applAnalysis.operationLog", {
+                url: "/operationLog",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/operation_log/operation_log.html',
+                        controller: "operationLogController"
+                    }
+                }
+            })
+            .state("applAnalysis.sessionLog", {
+                url: "/sessionLog",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_analysis/session_log/session_log.html',
+                        controller: "sessionLogController"
+                    }
+                }
+            })
+            //--------------------------------------------------------------------------------
+            //素材管理 material_management
+            //聊天知识库
+            .state("materialManagement", {
+                url: "/materialManagement/:userPermission",
+                templateUrl: 'static/material_management/main.html',
+                //controller: "adminController"
+            })
+            .state("materialManagement.chatKnowledgeBase", {
+                url: "/chatKnowledgeBase/:userPermission",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/chat/knowledge_base/chat_knowledge_base.html',
+                        controller: "chatKnowledgeBaseController"
+                    }
+                }
+            })
+            .state("materialManagement.chatKnowledgeBasePreview", {
+                url: "/chatKnowledgeBasePreview/:scanData/:id",
+                //cache:'true',
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/chat/knowledge_base_prew/chat_knowledge_base_preview.html',
+                        controller: "chatKnowledgeBasePreController"
+                    }
+                }
+            })
+            .state("materialManagement.faqChat", {
+                url: "/faqChat/:scanDataList",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/chat/faq/faq_chat.html',
+                        controller: "faqChatController"
+                    }
+                }
+            })
+            .state("materialManagement.conceptChat", {
+                url: "/conceptChat/:scanDataList",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/chat/concept/concept_chat.html',
+                        controller: "conceptChatController"
+                    }
+                }
+            })
+            //语音库
+            .state("materialManagement.speechLibrary", {
+                url: "/speechLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/speech_library/speech_library.html',
+                        controller: "speechLibraryController"
+                    }
+                }
+            })
+            //图片库
+            .state("materialManagement.pictureLibrary", {
+                url: "/pictureLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/picture_library/picture_library.html',
+                        controller: "pictureLibraryController"
+                    }
+                }
+            })
+            //新建图文消息
+            .state("materialManagement.teletextMessage", {
+                url: "/teletextMessage",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/teletext_message/teletext_message.html',
+                        controller: "teletextMessageController"
+                    }
+                }
+            })
+            .state("materialManagement.addtemes", {
+                url: "/addtemes/:imgTextId",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/teletext_message/add_tw_mes.html',
+                        controller: "addTwMesController"
+                    }
+                }
+            })
+            .state("materialManagement.graphicDetails", {
+                url: "/graphicDetails/:imgTextId",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/teletext_message/graphic_details.html',
+                        controller: "graphicDetailsController"
+                    }
+                }
+            })
+            //文档库
+            .state("materialManagement.documentLibrary", {
+                url: "/documentLibrary",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/material_management/document_library/document_library.html',
+                        controller: "documentLibraryController"
+                    }
+                }
+            })
+
+            //--------------------------------------------------------------------
+            //深度学习 deep_learning
+            .state("deepLearning", {
+                url: "/deepLearning",
+                templateUrl: 'static/deepLearning/deepLearning.html',
+            })
+            .state("deepLearning.dataAcquisition", {
+                url: "/dataAcquisition",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/dataAcquisition.html',
+                        controller: "dataAcquisitionController"
+                    }
+                }
+            })
+            .state("deepLearning.acquisitionDetails", {
+                url: "/acquisitionDetails/:crawlRecordId",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/acquisitionDetails.html',
+                        controller: "acquisitionDetailsController"
+                    }
+                }
+            })
+            .state("deepLearning.similarityCalculation", {
+                url: "/similarityCalculation",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/similarityCalculation.html',
+                        controller: "similarityCalculationController"
+                    }
+                }
+            })
+            .state("deepLearning.deepLearningCon", {
+                url: "/deepLearningCon",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/deepLearningCon.html',
+                        controller: "deepLearningConController"
+                    }
+                }
+            })
+            .state("deepLearning.deeplearnConfig", {
+                url: "/deeplearnConfig",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/deepLearning/deeplearnConfig.html',
+                        controller: "deeplearnConfigController"
+                    }
+                }
+            })
+
 
     }]);
     knowledge_static_web.config(function ($httpProvider,$locationProvider) {
