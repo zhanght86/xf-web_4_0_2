@@ -87,7 +87,7 @@
                             </div>
                             <div class="item-line item_line" >
                                 <div class="optionDiv">维度:
-                                    <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:vm.dimensions}}</span>
+                                    <span style="margin: 0 4px;" ng-repeat="val in item.dimensionIdList track by $index">{{val | dimension:$parent.$parent.MASTER.dimensionList}}</span>
                                 </div>
                             </div>
                         </div>
