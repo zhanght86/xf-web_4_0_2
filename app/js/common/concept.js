@@ -480,6 +480,18 @@ function initUpload(url){
  * @param str
  * @returns {*}
  */
+
+function fillWhiteSpace(str){
+    if(nullCheck(str)==false){
+        return "";
+    }
+    return str.replace(/[ \r\n]/g,"_");
+}
+/**
+ * 下划线替换为空格
+ * @param str
+ * @returns {*}
+ */
 function underlineToWhiteSpace(str){
     if(nullCheck(str)==false){
         return "";

@@ -299,11 +299,7 @@ knowledge_static_web
 
             //--------------------------------------------------------------------------
             //业务建模 business_modeling
-            .state("relationalCatalog", {
-                url: "/relationalCatalog",
-                templateUrl: 'static/application_manage/develop/relationalCatalog.html',
-                controller:"relationalCatalogController"
-            })
+
             .state("relationalCatalog.manage", {
                 url: "/manage",
                 views: {
@@ -312,6 +308,11 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                 }
+            })
+            .state("relationalCatalog", {
+                url: "/relationalCatalog",
+                templateUrl: 'static/business_modeling/bot/relational_catalog.html',
+                controller:"relationalCatalogController"
             })
             .state("botApply.manage", {
                 url: "/manage",
@@ -324,7 +325,7 @@ knowledge_static_web
             })
             .state("botApply", {
                 url: "/botApply",
-                templateUrl: 'static/application_manage/develop/botApply.html',
+                templateUrl: 'static/business_modeling/bot/bot_apply.html',
                 controller:"botApplyController"
             })
             //业务建模---框架库
@@ -339,7 +340,7 @@ knowledge_static_web
             })
             .state("frameworkLibrary", {
                 url: "/frameworkLibrary",
-                templateUrl: 'static/businessModeling/frameworkLibrary.html',
+                templateUrl: 'static/business_modeling/frame_database/framework_library.html',
                 controller:"frameworkLibraryController"
             })
             //业务建模---框架库--faq框架新增
@@ -354,7 +355,7 @@ knowledge_static_web
             })
             .state("faqNewFrame", {
                 url: "/faqNewFrame",
-                templateUrl: 'static/businessModeling/faqNewFrame.html',
+                templateUrl: 'static/business_modeling/frame_database/faq_new_frame.html',
                 controller:"faqNewFrameController"
             })
             //业务建模---框架库--要素框架新增
@@ -369,14 +370,14 @@ knowledge_static_web
             })
             .state("factorNewFrame", {
                 url: "/factorNewFrame",
-                templateUrl: 'static/businessModeling/factorNewFrame.html',
+                templateUrl: 'static/business_modeling/frame_database/factor_new_frame.html',
                 controller:"factorNewFrameController"
             })
             //业务建模---概念管理
             .state("conceptManage", {
                 url: "/conceptManage",
-                templateUrl: 'static/businessModeling/conceptManage.html',
-                controller:"businessModelingController"
+                templateUrl: 'static/business_modeling/concept_library/main.html',
+                controller:"conceptLibraryController"
             })
             .state("conceptManage.synony", {
                 url: "/synony",
@@ -386,7 +387,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/synony/synonyConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/synony/synony_concept_manage.html',
                         controller: "synonyConceptManageController"
                     },
                 }
@@ -399,7 +400,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/aggregate/aggregateConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/aggregate/aggregate_concept_manage.html',
                         controller: "aggregateConceptManageController"
                     },
                 }
@@ -412,7 +413,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/business/businessConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/business/business_concept_manage.html',
                         controller: "businessConceptManageController"
                     },
                 }
@@ -425,7 +426,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/sensitive/sensitiveConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/sensitive/sensitive_concept_manage.html',
                         controller: "sensitiveConceptManageController"
                     },
                 }
@@ -438,7 +439,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/errorCorrection/errorCorrectionConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/error_correction/error_correction_manage.html',
                         controller: "errorCorrectionConceptManageController"
                     },
                 }
@@ -451,21 +452,8 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/disable/disableConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/disable/disable_concept_manage.html',
                         controller: "disableConceptManageController"
-                    },
-                }
-            })
-            .state("conceptManage.sentiment", {
-                url: "/sentiment",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/businessModeling/sentiment/sentimentConceptManage.html',
-                        controller: "sentimentConceptManageController"
                     },
                 }
             })
@@ -477,8 +465,21 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/intention/intentionConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/intention/intention_concept_manage.html',
                         controller: "intentionConceptManageController"
+                    },
+                }
+            })
+            .state("conceptManage.sentiment", {
+                url: "/sentiment",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/business_modeling/concept_library/sentiment/sentiment_concept_manage.html',
+                        controller: "sentimentConceptManageController"
                     },
                 }
             })
@@ -490,7 +491,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/bot/botConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/bot/bot_concept_manage.html',
                         controller: "botConceptManageController"
                     },
                 }
@@ -503,7 +504,7 @@ knowledge_static_web
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/businessModeling/semanticExpression/semanticExpressionConceptManage.html',
+                        templateUrl: 'static/business_modeling/concept_library/semantic_expression/semantic_expression_manage.html',
                         controller: "semanticExpressionConceptManageController"
                     },
                 }
