@@ -62,9 +62,12 @@ angular.module('businessModelingModule').controller('botApplyController', [
             winHeight:0
         };
 
-        var categoryApplicationId = $cookieStore.get("applicationId");
-        var categoryModifierId = $cookieStore.get("userId");
-        var categorySceneId = $cookieStore.get("sceneId");
+        // var categoryApplicationId = $cookieStore.get("applicationId");
+        // var categoryModifierId = $cookieStore.get("userId");
+        // var categorySceneId = $cookieStore.get("sceneId");
+        var categoryApplicationId = APPLICATION_ID;
+        var categoryModifierId = USER_ID;
+        var categorySceneId = SCENE_ID;
 
         autoHeightForBot();
 
@@ -78,7 +81,7 @@ angular.module('businessModelingModule').controller('botApplyController', [
         }
 
         var params = {
-            "categoryName":$("#category-autocomplete").val(),
+            "categoryName":$("#category-autocomplete").val().trim(),
             "categoryAttributeName":"node",
             "categorySceneId":categorySceneId
         };
@@ -685,13 +688,13 @@ angular.module('businessModelingModule').controller('botApplyController', [
                                 $("#describeErrorView").html($scope.vm.notContainHtmlLabel);
                                 return false;
                             }else{
-                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
+                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val().trim();
                             }
                         }
                         httpRequestPost("/api/ms/modeling/categorylibrary/add",{
                             "categoryPid": $scope.vm.botLibrarySelectValue,
                             "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
-                            "categoryName": $("#categoryLibraryNameAdd").val(),
+                            "categoryName": $("#categoryLibraryNameAdd").val().trim(),
                             "categoryTypeId": $("#categoryLibraryTypeIdAdd").val(),
                             "categoryModifierId": categoryModifierId,
                             "categoryDescribe": $scope.vm.categoryLibraryDescribe,
@@ -736,12 +739,12 @@ angular.module('businessModelingModule').controller('botApplyController', [
             if(type==1){
                 request.categoryId=$scope.vm.categoryLibraryId;
                 request.categoryPid=$scope.vm.categoryLibraryPid;
-                request.categoryAttributeName=$("#categoryLibraryName").val();
-                request.categoryName=$("#categoryLibraryName").val();
+                request.categoryAttributeName=$("#categoryLibraryName").val().trim();
+                request.categoryName=$("#categoryLibraryName").val().trim();
                 request.categorySceneId=categorySceneId;
             }else{
                 request.categoryPid=$scope.vm.botLibrarySelectValue;
-                request.categoryAttributeName=$("#categoryLibraryNameAdd").val();
+                request.categoryAttributeName=$("#categoryLibraryNameAdd").val().trim();
                 request.categoryName=$("#categoryLibraryNameAdd").val();
                 request.categorySceneId=categorySceneId;
             }
@@ -786,14 +789,14 @@ angular.module('businessModelingModule').controller('botApplyController', [
                                 $("#describeErrorView").html($scope.vm.notContainHtmlLabel);
                                 return false;
                             }else{
-                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val();
+                                $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val().trim();
                             }
                         }
                         httpRequestPost("/api/ms/modeling/categorylibrary/updatebycategoryid",{
                             "categoryId": $scope.vm.categoryLibraryId,
                             "categoryPid": $scope.vm.categoryLibraryPid,
                             "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
-                            "categoryName": $("#categoryLibraryName").val(),
+                            "categoryName": $("#categoryLibraryName").val().trim(),
                             "categoryTypeId": $("#categoryLibraryTypeId").val(),
                             "categoryModifierId": categoryModifierId,
                             "categoryDescribe": $scope.vm.categoryLibraryDescribe,

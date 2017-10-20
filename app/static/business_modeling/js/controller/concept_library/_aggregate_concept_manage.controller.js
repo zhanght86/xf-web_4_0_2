@@ -12,7 +12,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             illegal : 10003,
             failed : 10004,
             empty : 10005,
-            applicationId : $cookieStore.get("applicationId"),
+            // applicationId : $cookieStore.get("applicationId"),
+            applicationId : APPLICATION_ID,
             addCollective : addCollective,
             editCollective : editCollective,
             deleteCollective:deleteCollective,
@@ -29,7 +30,8 @@ angular.module('businessModelingModule').controller('aggregateConceptManageContr
             timeEnd : "",
             //新增
             key: "" ,
-            modifier: $cookieStore.get("userId"),
+            // modifier: $cookieStore.get("userId"),
+            modifier: USER_ID,
             term: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",

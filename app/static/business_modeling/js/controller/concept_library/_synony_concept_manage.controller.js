@@ -9,7 +9,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             illegal : 10003,
             failed : 10004,
             empty : 10005,
-            applicationId : $cookieStore.get("applicationId"),
+            // applicationId : $cookieStore.get("applicationId"),
+            applicationId : APPLICATION_ID,
             addSynonym : addSynonym,
             editSynonym : editSynonym,
             deleteSynonym:deleteSynonym,
@@ -27,7 +28,8 @@ angular.module('businessModelingModule').controller('synonyConceptManageControll
             //新增
             key: "" ,
             oldKey: "" ,
-            modifier: $cookieStore.get("userId"),
+            // modifier: $cookieStore.get("userId"),
+            modifier: USER_ID,
             term: "",
             weight: "33" ,   //默認權重
             dialogTitle : "",

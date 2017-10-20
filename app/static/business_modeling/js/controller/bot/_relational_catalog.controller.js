@@ -46,9 +46,12 @@ angular.module('businessModelingModule').controller('relationalCatalogController
             suggestionData:"",
             winHeight:0
         };
-        var categoryApplicationId = $cookieStore.get("applicationId");
-        var categoryModifierId = $cookieStore.get("userId");
-        var categorySceneId = $cookieStore.get("sceneId");
+        // var categoryApplicationId = $cookieStore.get("applicationId");
+        // var categoryModifierId = $cookieStore.get("userId");
+        // var categorySceneId = $cookieStore.get("sceneId");
+        var categoryApplicationId = APPLICATION_ID;
+        var categoryModifierId = USER_ID;
+        var categorySceneId = SCENE_ID;
 
         autoHeight();
 
@@ -61,7 +64,7 @@ angular.module('businessModelingModule').controller('relationalCatalogController
         }
 
         var params = {
-            "categoryName":$("#category-autocomplete").val(),
+            "categoryName":$("#category-autocomplete").val().trim(),
             "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
@@ -298,7 +301,7 @@ angular.module('businessModelingModule').controller('relationalCatalogController
                                 $("#categoryDescribeError").html($scope.vm.notContainHtmlLabel);
                                 return false;
                             }else{
-                                $scope.vm.categoryDescribe=$("#categoryDescribe").val();
+                                $scope.vm.categoryDescribe=$("#categoryDescribe").val().trim();
                             }
                         }
                         httpRequestPost("/api/ms/modeling/category/updatebycategoryid",{
@@ -307,7 +310,7 @@ angular.module('businessModelingModule').controller('relationalCatalogController
                             "applicationId": categoryApplicationId,
                             "categoryPid": $scope.vm.categoryPid,
                             "categoryAttributeName": $scope.vm.categoryAttributeName,
-                            "categoryName": $("#categoryName").val(),
+                            "categoryName": $("#categoryName").val().trim(),
                             "categoryTypeId": $("#categoryTypeId").val(),
                             "categoryModifierId": categoryModifierId,
                             "categoryDescribe": $scope.vm.categoryDescribe,
@@ -457,7 +460,7 @@ angular.module('businessModelingModule').controller('relationalCatalogController
                     $("#category-describe-error").html($scope.vm.notContainHtmlLabel);
                     return;
                 }else{
-                    $scope.vm.categoryDescribe=$("#category-describe").val();
+                    $scope.vm.categoryDescribe=$("#category-describe").val().trim();
                 }
             }
             httpRequestPost("/api/ms/modeling/category/add",{
@@ -465,7 +468,7 @@ angular.module('businessModelingModule').controller('relationalCatalogController
                 "applicationId": categoryApplicationId,
                 "categoryPid": $scope.vm.botSelectValue,
                 "categoryAttributeName": $scope.vm.categoryAttributeName,
-                "categoryName": $("#category-name").val(),
+                "categoryName": $("#category-name").val().trim(),
                 "categoryTypeId": $("#category-type").val(),
                 "categoryModifierId": categoryModifierId,
                 "categorySceneId": categorySceneId,
@@ -496,13 +499,13 @@ angular.module('businessModelingModule').controller('relationalCatalogController
                 request.categoryApplicationId=$scope.vm.categoryApplicationId;
                 request.categoryPid=$scope.vm.categoryPid;
                 request.categoryAttributeName=$scope.vm.categoryAttributeName;
-                request.categoryName=$("#categoryName").val();
+                request.categoryName=$("#categoryName").val().trim();
                 request.categorySceneId=categorySceneId;
             }else{
                 request.categoryApplicationId=categoryApplicationId;
                 request.categoryPid=$scope.vm.botSelectValue;
                 request.categoryAttributeName=$scope.vm.categoryAttributeName;
-                request.categoryName=$("#category-name").val();
+                request.categoryName=$("#category-name").val().trim();
                 request.categorySceneId=categorySceneId;
             }
             httpRequestPostAsync("/api/ms/modeling/category/repeatcheck",request,function(data){

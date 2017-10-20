@@ -75,8 +75,10 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         };
         $scope.categoryAttributeName;
 
-        var categoryApplicationId = $cookieStore.get("applicationId");
-        var categoryModifierId = $cookieStore.get("userId");
+        // var categoryApplicationId = $cookieStore.get("applicationId");
+        // var categoryModifierId = $cookieStore.get("userId");
+        var categoryApplicationId = APPLICATION_ID;
+        var categoryModifierId = USER_ID;
 
         autoHeightForFrame();
 
@@ -89,7 +91,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         }
 
         var params = {
-            "categoryName":$("#category-autocomplete").val(),
+            "categoryName":$("#category-autocomplete").val().trim(),
             "categoryAttributeName":"node",
             "categoryApplicationId":categoryApplicationId
         };
@@ -281,6 +283,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             loadFrameLibrary(1,0);
             $scope.$apply();
         });
+
         //节点样式转换
         function nodeStyleSwitch(attrType){
             if(attrType=="edge"){
@@ -605,7 +608,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
             if(nullCheck($("#keyWords").val())==true){
                 httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                     "frameCategoryId": $scope.vm.botSelectValue,
-                    "frameTitle": "%"+$("#keyWords").val()+"%",
+                    "frameTitle": "%"+$("#keyWords").val().trim()+"%",
                     "index":(current-1)*$scope.vm.pageSize,
                     "pageSize": $scope.vm.pageSize
                 },function(data){
@@ -652,7 +655,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
-                        $scope.vm.frameTitle=$("#frameTitle").val();
+                        $scope.vm.frameTitle=$("#frameTitle").val().trim();
                         if(lengthCheck($("#frameTitle").val(),0,50)==false){
                             $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                             return false;
@@ -680,7 +683,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
                 $timeout(function(){
                     $("#frameTitle").blur(function(){
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
-                        $scope.vm.frameTitle=$("#frameTitle").val();
+                        $scope.vm.frameTitle=$("#frameTitle").val().trim();
                         if(lengthCheck($("#frameTitle").val(),0,50)==false){
                             $("#frameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
                         }else if(isHtmlLabel($("#frameTitle").val())){
