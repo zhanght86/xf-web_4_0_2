@@ -1,0 +1,74 @@
+<div ui-view="header"></div>
+
+<div class="main warp">
+    <div class="libraryCnt clearfix">
+        <div class="libraryFt pd-20 mr-20" style="box-sizing: border-box;">
+            <div class="tac libSearch">
+                <div class="search-auto">
+                    <input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;height:30px;box-sizing:border-box;">
+                </div>
+            </div>
+            <div class="libraryPtoDiv">
+                <!--<img src="../../images/images/bank_16.png"/>-->
+                <!--<h3>银行领域</h3>-->
+            </div>
+            <div class="item-line mt-20" style="padding-left:60px;">
+                <div class="value menu_1Div" id="menu_1Div">
+                    <div class="ipt-txt-box">
+                        <div class="aside-navs aside-navs-v show"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="libraryRth aaa " style="box-sizing: border-box;">
+            <div class="tac mt10 mb-20" style="text-align: left">
+                <a class="btn btn-blue" href="javascript:;" ng-click="vm.addFrame()">新增框架</a>
+                <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.batchUpload()">批量导入框架</a>
+                <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.downloadTemplate()">下载模板</a>
+                <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.exportAll()">导出框架</a>
+                <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.batchDelete()">删除</a>
+            </div>
+            <div class="tac mt10 mb-20" style="margin-top: 8px; text-align: left">
+                <!--<span class="bold">框架名称:</span> -->
+                <input type="text" class="input_text" id="keyWords" placeholder="框架名称"/>
+                <input type="button" value="查找" ng-click="vm.searchByFrameTitle(1,0)" class="btn1 btn1_blue"/>
+            </div>
+            <table class="stop_word_tab" style="margin-top: 10px;">
+                <thead>
+                <tr>
+                    <th class="bold" width="10%"><input id="selectAll" type="checkbox"/></th>
+                    <th class="bold" width="30%">框架名称</th>
+                    <th class="bold" width="30%">框架类型</th>
+                    <th class="bold" width="30%">操作</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="item in vm.listData">
+                    <td><input type="checkbox" name="sid" value="{{item.frameId}}"></td>
+                    <td>{{item.frameTitle}}</td>
+                    <td>{{item.frameTypeId | frameTypeFilter}}</td>
+                    <td>
+                        <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editFrame(item)">修改</a> &nbsp;
+                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteFrame(item)">删除</a>
+                    </td>
+                </tr>
+            </table>
+            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+        </div>
+    </div>
+</div>
+<style>
+
+    .ngdialog{
+        z-index: 5!important;
+    }
+
+    .libraryRthCnt{position:relative; cursor: pointer;}
+    .delete_a{width:15px;height:17px;display:block;right:5px;top:5px;z-index:100;background: url(../images/icon-ljt.png) no-repeat;}
+    .delete_a:hover{background-image:url(../images/icon-ljt_on.png);}
+</style>
+
+
+
+
+

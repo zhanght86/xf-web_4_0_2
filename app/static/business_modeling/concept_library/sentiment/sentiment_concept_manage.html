@@ -1,0 +1,83 @@
+<div class="r-cont pd30 L" style="width: 100%;box-sizing:border-box;">
+    <div class="r-cont-hd">
+        <span>情感概念管理</span>
+    </div>
+    <div>
+        <div class="conceptSearch clearfix">
+            <div class=" L  mr-5">
+
+                <select id="searchType" ng-model="vm.searchType"  class="bd L" style="width:130px;height: 30px;border-right:0;">
+                    <option value="sentimentConceptKey" selected>词语</option>
+                    <option value="sentimentConceptClassify">情感分类</option>
+                    <option value="sentimentConceptStrength">强度</option>
+                    <option value="sentimentConceptPolar">极性</option>
+                    <option value="sentimentConceptModifier">修改人</option>
+                    <option value="sentimentConceptModifyTime">更新时间</option>
+                </select>
+                <div class="L " style="height:30px;">
+                    <input type="text" ng-if="vm.searchType=='sentimentConceptKey' || vm.searchType=='sentimentConceptStrength' || vm.searchType=='sentimentConceptPolar' || vm.searchType=='sentimentConceptModifier'" ng-model="vm.searchVal" class="input_text" style="height:30px;" ng-keypress="($event.which === 13)?vm.search():0"/>
+                    <div  ng-if="vm.searchType=='sentimentConceptModifyTime'">
+                        <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="background-color:#fff;width:170px;border:1px solid #e1e1e1;height: 30px;font-size: 15px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                        -
+                        <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="background-color:#fff;width:170px;border:1px solid #e1e1e1;height: 30px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                    </div>
+                    <div  ng-if="vm.searchType=='sentimentConceptClassify'" >
+                        <select class="input_text" id="sentimentConceptClassify" style="height: 30px;">
+                            <option value="490" selected>乐</option>
+                            <option value="491">好</option>
+                            <option value="492">怒</option>
+                            <option value="493">哀</option>
+                            <option value="494">惧</option>
+                            <option value="495">恶</option>
+                            <option value="496">惊</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="查找" ng-click="vm.searchSentimentConcept(1)"  class="btn1 btn1_blue L"/>
+            <div class=" conceptSearchRt">
+                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addSentiment()">概念新增</a>
+                <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.batchUpload()">概念导入</a>
+                <a class="btn btn-green2 mr10" href="javascript:;" ng-click="vm.exportAll()">概念导出</a>
+                <a class="btn btn-red mr10" href="javascript:;" ng-click="vm.batchDelete()">删除</a>
+            </div>
+        </div>
+        <table class="stop_word_tab">
+            <thead>
+                <tr>
+                    <th class="bold" width="5%"><input id="selectAll" type="checkbox"/></th>
+                    <th class="bold" width="10%">词语</th>
+                    <th class="bold" width="20%">情感分类</th>
+                    <th class="bold" width="10%">强度</th>
+                    <th class="bold" width="10%">极性</th>
+                    <th class="bold" width="15%">更新时间</th>
+                    <th class="bold" width="15%">修改人</th>
+                    <th class="bold" width="10%">操作</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in vm.listData">
+                <td><input type="checkbox" name="sid" value="{{item.sentimentConceptId}}"></td>
+                <td>{{item.sentimentConceptKey}}</td>
+                <td>{{item.sentimentConceptClassify | sentimentTypeFilter}}</td>
+                <td>{{item.sentimentConceptStrength}}</td>
+                <td>{{item.sentimentConceptPolar}}</td>
+                <td>{{item.sentimentConceptModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{item.sentimentConceptModifier}}</td>
+                <td>
+                    <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editSentiment(item)">修改</a> &nbsp;
+                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteSentiment(item.sentimentConceptId)">删除</a>
+                </td>
+            </tr>
+        </table>
+        <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+    </div>
+</div>
+<style>
+    .pagination {
+        margin: 0 !important;
+    }
+    .ngdialog{
+        z-index: 5!important;
+    }
+</style>
+<script></script>
