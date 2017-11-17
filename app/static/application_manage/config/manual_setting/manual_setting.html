@@ -1,4 +1,4 @@
-<div class="robotSetup r-cont pd30">
+<div class="robotSetup r-cont pd30 manual">
     <div class="r-cont-hd">
         <span>转人工设置</span>
     </div>
@@ -12,8 +12,8 @@
                     <input type="text" id="endTime" onchange="" ng-model="vm.timerSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly="">
                 </span>
                 <span class="L pt-5" >
-                    <a href="javascript:;" class="tool_tip"></a>
-                    <span class="pd-5 tooltip_span" >xcxzcxvxcvxcv。</span>
+                    <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave ="vm.hideTip($event)"></a>
+                    <span class="pd-5 tooltip_span" >人工客服有效期</span>
                 </span>
             </div>
         </div>
@@ -22,15 +22,15 @@
             <div class="clearfix mb30">
                 <label class="L mr30"><input type="checkbox" /> 人工命令</label>
                 <span class="L" >
-                    <a href="javascript:;" class="tool_tip"></a>
-                    <span class="pd-5 tooltip_span " >xcxzcxvxcvxcv。</span>
+                    <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave="vm.hideTip($event)"></a>
+                    <span class="pd-5 tooltip_span " >人工命令</span>
                 </span>
             </div>
             <div class="clearfix mb30">
                 <label class="L mr30"><input type="checkbox" /> 机器人未直接回答</label>
                 <span class="L" >
-                    <a href="javascript:;" class="tool_tip"></a>
-                    <span class="pd-5 tooltip_span" >xcxzcxvxcvxcv。</span>
+                    <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave="vm.hideTip($event)"></a>
+                    <span class="pd-5 tooltip_span" >机器人未直接回答</span>
                 </span>
             </div>
             <div class="clearfix mb20">
