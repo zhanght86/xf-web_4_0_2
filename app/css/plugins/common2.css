@@ -188,6 +188,7 @@ a {color:inherit}
 .pl50{padding-left:50px;}
 .pl70{padding-left:70px;}
 .pl100{padding-left:100px;}
+.pl130{padding-left:130px;}
 .pr5{padding-right:5px;}
 .pr10{padding-right:10px;}
 .pr15{padding-right:15px;}
@@ -196,9 +197,10 @@ a {color:inherit}
 .pr50{padding-right:50px;}
 .pr100{padding-right:100px;}
 
-
+.input_xs{width:100px;}
 .input_s{width:200px;}
 .input_m{width:250px;}
+input:hover,textarea:hover{border:1px solid #0b7cff;}
 /*page*/
 .page{text-align:center;overflow:hidden;padding:25px 0;background:#fff;}
 .page a,.page .page_span{padding:5px 10px;border:1px solid #eaeaea;margin-right:10px;background:#fff;border-radius:2px;cursor:pointer;font-size:12px;}

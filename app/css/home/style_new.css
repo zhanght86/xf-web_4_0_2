@@ -637,3 +637,16 @@
 .add-classical-avatar .classic_head_ul li.active {
     border-color: red;
 }
+/*转人工设置*/
+.setting_div{padding-left:110px;vertical-align: middle;min-height: 30px;}
+.setting_span{left:0;top:0;width:100px;text-align:right;display:inline-block;height:30px;line-height: 30px;}
+.tool_tip{width:25px;
+    height:22px;
+    display:inline-block;
+    vertical-align: middle;
+    background:url(../../images/tooltip.png) no-repeat;
+}
+.tool_tip.on{background:url(../../images/tooltip.png) no-repeat 0 -22px;}
+.tooltip_span{border-radius:2px;vertical-align: middle;border:1px solid #0b7cff;display:none;}
+
+

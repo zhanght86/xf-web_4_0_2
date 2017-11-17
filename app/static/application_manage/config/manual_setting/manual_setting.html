@@ -1,0 +1,45 @@
+<div class="robotSetup r-cont pd30">
+    <div class="r-cont-hd">
+        <span>转人工设置</span>
+    </div>
+    <div class="r-cont-bd oh mb20 mt30 " style="padding-left:85px;">
+        <div class="setting_div mb20 pr" style="padding-left:130px;">
+            <span class="setting_span pa" style="width:130px;">人工客服有效期：</span>
+            <div class="clearfix">
+                <span class="L mr10">
+                    <input type="text" id="startTime" onchange="" ng-model="vm.timerSearchStartTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid  " style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly="">
+                    -
+                    <input type="text" id="endTime" onchange="" ng-model="vm.timerSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly="">
+                </span>
+                <span class="L pt-5" >
+                    <a href="javascript:;" class="tool_tip"></a>
+                    <span class="pd-5 tooltip_span" >xcxzcxvxcvxcv。</span>
+                </span>
+            </div>
+        </div>
+        <div class="setting_div mb20 pr" style="padding-left:130px;">
+            <span class="setting_span pa" style="width:130px;">转人工条件：</span>
+            <div class="clearfix mb30">
+                <label class="L mr30"><input type="checkbox" /> 人工命令</label>
+                <span class="L" >
+                    <a href="javascript:;" class="tool_tip"></a>
+                    <span class="pd-5 tooltip_span " >xcxzcxvxcvxcv。</span>
+                </span>
+            </div>
+            <div class="clearfix mb30">
+                <label class="L mr30"><input type="checkbox" /> 机器人未直接回答</label>
+                <span class="L" >
+                    <a href="javascript:;" class="tool_tip"></a>
+                    <span class="pd-5 tooltip_span" >xcxzcxvxcvxcv。</span>
+                </span>
+            </div>
+            <div class="clearfix mb20">
+                未直接回答次数：
+                <input type="text" class="bd txt input_xs"/>
+            </div>
+        </div>
+        <div class=" pt30 pb30 pl130">
+            <button class="btn btn-primary">保存</button>
+        </div>
+    </div>
+</div>

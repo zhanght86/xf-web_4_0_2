@@ -187,6 +187,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.manual", {
+                url: "/manual",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/config/manual_setting/manual_setting.html',
+                        controller: "manualSettingController"
+                    },
+                }
+            })
             .state("setting.chatPageConfig", {
                 url: "/chatPageConfig",
                 views: {

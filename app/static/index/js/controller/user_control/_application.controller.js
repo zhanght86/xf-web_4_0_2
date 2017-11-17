@@ -46,7 +46,8 @@ angular.module('homePage').controller('adminContentController', [
         function myApplication(){
             //console.log(getCookie("userId"));
             httpRequestPost("/api/application/application/listApplicationByUserId",{
-                "userId":$cookieStore.get("userId")
+                //"userId":$cookieStore.get("userId")
+                "userId": USER_ID
             },function(data){
                 console.log(data);
                 $scope.vm.myApplication = data.data;
