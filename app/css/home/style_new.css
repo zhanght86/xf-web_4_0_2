@@ -649,4 +649,30 @@
 .manual .tool_tip.on{background:url(../../images/tooltip.png) no-repeat 0 -22px;}
 .manual .tooltip_span{border-radius:2px;vertical-align: middle;border:1px solid #0b7cff;display:none;}
 
+/*备份 还原*/
+/*.system_backup label, .label{height:20px;*/
+    /*display:inline-block;*/
+    /*padding-left:25px;*/
+    /*margin-right:30px;*/
+    /*background:url(../../images/checkbox.png) no-repeat;*/
+    /*cursor:pointer;*/
+/*}*/
+/*.system_backup label.on, .label.on{background-position:0 -20px;}*/
+.backup_restore .c-red{color:red;}
+
+.backup_restore .my-checkbox,.manual .my-checkbox{display:inline-block;}
+.backup_restore .my-checkbox label{
+    height:20px;
+    line-height:20px;
+    margin-left:30px;
+    background-image:url(../../images/my-checkbox-new.png);
+}
+.manual .my-checkbox label{
+    height:20px;
+    line-height:30px;
+    background-image:url(../../images/my-checkbox-new.png);
+}
+.backup_restore .my-checkbox label.my-checkbox-on,.manual .my-checkbox label.my-checkbox-on{
+    background-image:url(../../images/my-checkbox-on-new.png);
+}
 

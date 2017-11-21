@@ -282,6 +282,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.backup", {
+                url: "/backup",
+                views: {
+                    'header': {
+                        templateUrl: 'static/index/home_page/nav.html',
+                        controller: "homePageNavController"
+                    },
+                    'content': {
+                        templateUrl: 'static/application_manage/info/backup_restore.html',
+                        controller: "backupRestoreController"
+                    },
+                }
+            })
             //应用发布
             .state("setting.releaseMan", {
                 url: "/releaseMan",
