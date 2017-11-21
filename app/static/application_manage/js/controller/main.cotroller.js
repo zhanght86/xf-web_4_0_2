@@ -23,10 +23,10 @@ angular.module('myApplicationSettingModule').controller('myApplicationSettingCon
         }
         function isSlide2(event){
             var self=event.target;
-            if($(self).hasClass("slideActive")){
-                $(self).removeClass("slideActive").parent().next(".menu_1").stop().slideToggle();
+            if($(self).parent().hasClass("slideActive")){
+                $(self).parent().removeClass("slideActive").next(".menu_1").stop().slideToggle();
             }else{
-                $(self).addClass("slideActive").parent().next(".menu_1").stop().slideToggle();
+                $(self).parent().addClass("slideActive").next(".menu_1").stop().slideToggle();
             }
         }
         //获取应用的头像
