@@ -13,21 +13,16 @@ angular.module('materialManagement').controller('documentLibraryController', [
 
 
         //修改名称
-        function changeName(callback){
-            var dialog = ngDialog.openConfirm({
-                template: "/static/material_management/document_library/change_name.html",
-                width:"400px",
-                scope: $scope,
-                closeByNavigation: false,
-                overlay: true,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                preCloseCallback: function (e) {    //关闭回掉
+        function changeName(item){
+            //$scope.vm.pictureName=item.name;
+            //$scope.vm.pictureId=item.id;
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/document_library/change_name.html','400px',function(){
+                //updateImg();
+            },function(){
 
-                }
             });
         }
+
     }
 ]);
 
