@@ -96,11 +96,11 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }
         }
         /**
-         * 图片导出
+         * 图片导出  没有查询条件导出全部，有查询条件导出查询出的结果；
          */
         function exportExcel(){
             var urlParams =
-               "?applicationId="+APPLICATION_ID;
+               "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.pictureName;
             //var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
             //$window.open(url,"_blank") ;
 

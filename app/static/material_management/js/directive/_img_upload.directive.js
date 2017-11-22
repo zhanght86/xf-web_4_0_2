@@ -73,27 +73,31 @@ knowledge_static_web.directive("imgUpload", ["$parse","$state", function($parse,
                         break;
                 }
             });
-            uploader.on('uploadError', function (file,reason) {
+            uploader.on('uploadError', function (file,reason,response) {
+
                 console.log("上传失败") ;
                 layer.msg('请检查'+reason);
             });
             uploader.on('uploadSuccess', function (file,response) {
                 if(response.status == 500){
-                    layer.msg("模板错误")
+                    console.log("模板错误");
+                }
+                if(response.code == 10006 ){
+                    layer.msg("图片名称重复,请重新上传",{time: 1000});
                 }
                 if(response.status == 200){
-                    //layer.msg("上传成功");
-                    //$state.reload() ;
+                    layer.msg("上传成功");
+                    $state.reload() ;
                 }
                 //console.log(response)
             });
             // 所有文件上传成功 之后 刷新数据列表
-            uploader.on('uploadFinished', function (file) {
-                layer.msg("上传成功");
-                scope.isUpload = false;
-                $state.reload();
-                //console.log(response);
-            });
+            // uploader.on('uploadFinished', function (file) {
+            //     layer.msg("上传完成");
+            //     scope.isUpload = false;
+            //     $state.reload();
+            //     //console.log(response);
+            // });
 
         }
     }
