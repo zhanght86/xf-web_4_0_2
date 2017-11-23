@@ -1205,7 +1205,7 @@ angular.module('businessModelingModule').controller('frameworkLibraryController'
         function addElement(){
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/frame_database/factor_new_frame.html",
-                width:"800px",
+                width:"860px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
