@@ -100,7 +100,7 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     console.log(response);
                 });
                 //runtimeOrder : flash
-                scope.$watch("scope.vm.isUploadStart",function(val){
+                scope.$watch("vm.isUploadStart",function(val){
                     if(val && scope.vm.voiceTitle){
                         if(!scope.vm.voiceTitle){
                             layer.msg("请添加语音标题");
@@ -112,6 +112,7 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                                 // "voiceUserName":USER_LOGIN_NAME
 
                                 "name": scope.vm.voiceTitle,
+                                //"name":"aaa",
                                 "modifierId" : USER_ID,
                                // "applicationId": APPLICATION_ID
                             } ;
