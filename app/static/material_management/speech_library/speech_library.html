@@ -35,7 +35,7 @@
                 <tr ng-repeat="item in vm.voiceList.objs">
                     <td><input type="checkbox" ng-checked="vm.voiceIds.inArray(item.id)" ng-click="vm.selectSingle(item.id)"/></td>
                     <td>{{item.name}}</td>
-                    <td>{{item.size}}</td>
+                    <td>{{item.size}} kb</td>
                     <td>{{item.modifyTime | date : "yyyy-MM-dd HH:mm:ss"}}</td>
                     <td>{{item.modifierId}}</td>
                     <td>

@@ -19,11 +19,11 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     // swf文件路径
                     swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                     server: "/api/material/voiceManage/uploadVoice",
-                    // formData:{
-                    //     "name": scope.voiceTitle  ,
-                    //     "modifierId":USER_ID,
-                    //     "applicationId": APPLICATION_ID
-                    // },
+                    formData:{
+                        // "name": scope.vm.voiceTitle ,
+                        // "modifierId":USER_ID,
+                       // "applicationId": APPLICATION_ID
+                    },
 
                     pick: '#picker',
                     fileNumLimit : 1,                //文件个数
@@ -94,24 +94,26 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     if(response.status == 200){
                         ngDialog.closeAll();
                         layer.msg("上传成功");
+                        //alert(response.data);
                         $state.reload() ;
                     }
                     console.log(response);
                 });
                 //runtimeOrder : flash
-                scope.$watch("vm.isUploadStart",function(val){
+                scope.$watch("scope.vm.isUploadStart",function(val){
                     if(val && scope.vm.voiceTitle){
                         if(!scope.vm.voiceTitle){
-                            layer.msg("请添加语音标题")
+                            layer.msg("请添加语音标题");
+                            //alert('请添加语音标题');
                         }else{
                             uploader.options.formData = {
                                 // "voiceName" : scope.vm.voiceTitle,
                                 // "applicationId":APPLICATION_ID,
                                 // "voiceUserName":USER_LOGIN_NAME
 
-                                "name": scope.vm.voiceTitle  ,
-                                "modifierId":USER_ID,
-                                "applicationId": APPLICATION_ID
+                                "name": scope.vm.voiceTitle,
+                                "modifierId" : USER_ID,
+                               // "applicationId": APPLICATION_ID
                             } ;
                             uploader.upload() ;
                         }

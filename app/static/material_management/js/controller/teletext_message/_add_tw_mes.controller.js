@@ -59,7 +59,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                 // 'print', 'preview', 'searchreplace', 'help', 'drafts'
             ]]
             ,UEDITOR_HOME_URL: "/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/"
-            ,serverUrl : "/api/ms//picture/uploadGet"
+            ,serverUrl : "/api/material/picture/uploadGet"
             ,wordCount:false           //是否开启字数统计
             ,elementPathEnabled : false  //是否启用元素路径，默认是显示
             ,initialFrameWidth:800  //初始化编辑器宽度,默认1000

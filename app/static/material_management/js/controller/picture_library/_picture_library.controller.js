@@ -16,6 +16,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             changeName:changeName,
             pictureIds : [],
             pictureName:null,
+            editPictureName :null,
             napSearch:napSearch,
             exportExcel:exportExcel,
             batchDeletePicture:batchDeletePicture,
@@ -127,9 +128,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         //
         function updateImg(){
             MaterialServer.updateImg.save({
-                //"pictureName":$scope.vm.pictureName,
-                //"pictureId":  $scope.vm.pictureId
-                "name":$scope.vm.pictureName,
+                //"name":$scope.vm.pictureName,
+                "name": $scope.vm.editPictureName,
                 "id":$scope.vm.pictureId
             },function(data){
                 if(data.status == 200){
@@ -147,7 +147,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
          * 修改名称
          */
         function changeName(item){
-            $scope.vm.pictureName=item.name;
+            // $scope.vm.pictureName=item.name;
+            $scope.vm.editPictureName = item.name;
             $scope.vm.pictureId=item.id;
 
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){

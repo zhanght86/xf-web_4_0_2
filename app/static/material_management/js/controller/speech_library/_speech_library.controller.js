@@ -24,6 +24,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             voiceIds : [],
             batchDeleteVoice : batchDeleteVoice,   //批量删除
             voiceName :'',
+            editVoiceName : '',
             voiceId : '',
             searchVoice : searchVoice,
             selectSingle : selectSingle,
@@ -104,9 +105,10 @@ angular.module('materialManagement').controller('speechLibraryController', [
         /**
          * 修改名称
          */
-        function changeName(callback){
-            $scope.vm.voiceName = callback.name;
-            $scope.vm.voiceId = callback.id;
+        function changeName(item){
+            // $scope.vm.voiceName = item.name;
+            $scope.vm.editVoiceName = item.name;
+            $scope.vm.voiceId = item.id;
             
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/change_name.html','400px',function(){
                 updateVoice();
@@ -116,10 +118,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
         }
         function updateVoice(){
             MaterialServer.updateVoice.save({
-                //voiceId : $scope.vm.voiceId,
-                //voiceName : $scope.vm.voiceName
                 id : $scope.vm.voiceId,
-                name: $scope.vm.voiceName
+                // name: $scope.vm.voiceName
+                 name : $scope.vm.editVoiceName
             },function(data){
                 if(data.status==200){
                     layer.msg('语音名称修改成功');
