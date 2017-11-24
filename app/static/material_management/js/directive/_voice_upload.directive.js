@@ -20,7 +20,7 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                     server: "/api/material/voiceManage/uploadVoice",
                     formData:{
-                        // "name": scope.vm.voiceTitle ,
+                        // "voiceName": scope.vm.voiceTitle ,
                         // "modifierId":USER_ID,
                        // "applicationId": APPLICATION_ID
                     },
@@ -99,23 +99,22 @@ knowledge_static_web.directive("voiceUpload", ["$parse","$state","$timeout", "ng
                     }
                     console.log(response);
                 });
-                //runtimeOrder : flash
                 scope.$watch("vm.isUploadStart",function(val){
-                    if(val && scope.vm.voiceTitle){
+                    if(val){
                         if(!scope.vm.voiceTitle){
                             layer.msg("请添加语音标题");
-                            //alert('请添加语音标题');
+                        }else if(!uploader.getFiles().length){
+                            layer.msg("请选择文件");
                         }else{
                             uploader.options.formData = {
                                 // "voiceName" : scope.vm.voiceTitle,
                                 // "applicationId":APPLICATION_ID,
                                 // "voiceUserName":USER_LOGIN_NAME
-
-                                "name": scope.vm.voiceTitle,
-                                //"name":"aaa",
+                                "voiceName": scope.vm.voiceTitle,
                                 "modifierId" : USER_ID,
-                               // "applicationId": APPLICATION_ID
+
                             } ;
+                            console.log(uploader.options.formData);
                             uploader.upload() ;
                         }
                     }

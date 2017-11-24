@@ -43,7 +43,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     //图片导出
     this.exportImg =API_MATERIAL+'/picture/exportExcel' ;
                         /********************************
-                                * 语音库
+                                * 语音库    API_MATERIAL = "api/material"
                                 ***********************************/
     //获取列表  查询
     this.searchVoice = $resource(API_MATERIAL+'/voiceManage/queryVioce',{},{});
@@ -53,6 +53,10 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.batchDeleteVoice =$resource(API_MATERIAL+'/voiceManage/batchDeleteVoice',{},{});
     //语音导出
     this.exportVoice =API_MATERIAL+'/voiceManage/exportExcel' ;
+    //语音名称校验
+    this.checkVoice = $resource(API_MATERIAL+'/voiceManage/checkVoiceName',{},{}) ;
+
+    //api/material/voiceManage/checkVoiceName
                         /********************************
                                 * 图文消息
                                 ***********************************/

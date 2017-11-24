@@ -32,7 +32,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 queueNumber : 0,            //添加语音的数量，
                 uploadNumber : 0,           //上传的数量;
                 process :"0%"               //上传进度
-            }
+            },
+            checkVoiceName : checkVoiceName
 
         };
         /**
@@ -204,6 +205,29 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 });
             }
 
+        }
+
+        //校验名称重复
+        function checkVoiceName(){
+            if(!$scope.vm.voiceTitle){
+                layer.msg("请输入语音名称");
+            }else{
+                MaterialServer.checkVoice.save({
+                    "voiceName": $scope.vm.voiceTitle
+                },
+                    {
+                    "voiceName": $scope.vm.voiceTitle
+                },function(data){
+                    if(data.status == 500){
+                        $scope.vm.isUploadStart=false;
+                        layer.msg("语音名称重复,请重新输入") ;
+                    }else{
+                        $scope.vm.isUploadStart = true;
+                    }
+                },function(err){
+                    //$log.log(err);
+                });
+            }
         }
 
     }
