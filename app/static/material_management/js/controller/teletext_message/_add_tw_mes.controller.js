@@ -164,12 +164,6 @@ angular.module('materialManagement').controller('addTwMesController', [
                     $scope.vm.storeLimit = true ;
                     // 参数 url
                     var parameter = {
-                           // "applicationId": APPLICATION_ID ,
-                           //  "graphicMessageAuthor": author,
-                           //  "graphicMessageText": ueditorText ,
-                           //  "graphicMessageTextLink": link ,
-                           //  "graphicMessageTitle": title ,
-                           //  "pictureUrl": picUrl
                             "modifierId" : USER_ID,
                             "author": author,
                             "content": ueditorText ,
