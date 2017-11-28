@@ -24528,11 +24528,11 @@
                             link = json.url;
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
-                                loader.setAttribute('src', link);
+                                loader.setAttribute('src', 'api/material/picture/getImg?url='+link);
                                 //设置图片宽高
                                 //loader.setAttribute('width', "200px");
                                 //loader.setAttribute('height', "120px");
-                                loader.setAttribute('_src', link);
+                                loader.setAttribute('_src', 'api/material/picture/getImg?url='+link);
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');

@@ -31,3 +31,4 @@ node_modules/grunt-newer/.cache/
 /node_modules
 /node_modules
 /.idea
+.idea

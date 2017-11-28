@@ -65,7 +65,7 @@ angular.module('materialManagement').controller('addTwMesController', [
             ,elementPathEnabled : false  //是否启用元素路径，默认是显示
             ,initialFrameWidth:800  //初始化编辑器宽度,默认1000
             ,initialFrameHeight:300  //初始化编辑器高度,默认320
-            ,indentValue:'2em'      // 首行缩进
+            ,indentValue:'2em'      // imagePathFormat首行缩进
             ,zIndex : 9999     //编辑器层级的基数,默认是900
             ,enableAutoSave: false
             ,autoSyncData: false
@@ -74,6 +74,7 @@ angular.module('materialManagement').controller('addTwMesController', [
             //scaleEnabled
             //是否可以拉伸长高,默认true(当开启时，自动长高失效)
             //,scaleEnabled:false
+
         } ;
 
 
