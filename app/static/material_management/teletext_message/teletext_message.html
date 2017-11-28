@@ -21,14 +21,16 @@
             <div class="picture_div bd L" ng-repeat="item in vm.imageList.objs">
                 <dl class="picture_dl teletext_dl " >
                     <!--{{item}}-->
-                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.graphicMessageId})"><img ng-src="/img/{{item.pictureUrl}}"/></a></dt>
+                    <!--<dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/img/{{item.url}}"/></a></dt>-->
+                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/api/material/picture/getImgByPictureId?pictureId={{item.coverPicId}}"/></a></dt>
                     <dd class="cl">
-                        <p class="L titp">{{item.graphicMessageTitle}}</p>
-                        <span class="R time_span">{{item.graphicUpdateTime |date : 'yyyy-MM-dd '}}</span>
+                        <!--<p class="L titp">{{item.graphicMessageTitle}}</p>-->
+                        <p class="L titp">{{item.title}}</p>
+                        <span class="R time_span">{{item.modifyTime |date : 'yyyy-MM-dd '}}</span>
                     </dd>
                 </dl>
                 <div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">
-                    <a href="javascript:;" class="mr-10 c_blue ml-50" ui-sref="materialManagement.addtemes({imgTextId:item.graphicMessageId})">编辑</a>
+                    <a href="javascript:;" class="mr-10 c_blue ml-50" ui-sref="materialManagement.addtemes({imgTextId:item.id})">编辑</a>
                     <a href="javascript:;" class="c_red ml-50" ng-click="vm.removeImg(item,$index)">删除</a>
                 </div>
             </div>

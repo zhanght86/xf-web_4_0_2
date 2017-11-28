@@ -75,7 +75,7 @@ angular.module('materialManagement').controller('teletextMessageController', [
             }, function(){
                 MaterialServer.removeImg.save({
                     //graphicMessageIds : new Array(item.graphicMessageId)
-                    id : new Array(item.graphicMessageId)
+                    "ids" : new Array(item.id)
                 },function(data){
                     if(data.status == 200){
                         layer.msg("图文消息删除成功") ;

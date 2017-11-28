@@ -23,16 +23,19 @@ angular.module('materialManagement').controller('graphicDetailsController', [
         }
         function getImgText(graphicMessageId){            
             MaterialServer.getImgText.save({
-                "graphicMessageId" : graphicMessageId ,
-                "applicationId": APPLICATION_ID
+                "graphicMessageId" : graphicMessageId
+            },{
+                "graphicMessageId" : graphicMessageId
             },function(response){
                 if(response.status == 200){
-                    console.log(response);
-                    $scope.vm.title = response.data.graphicMessageTitle ;
-                    $scope.vm.author = response.data.graphicMessageAuthor ;
-                    $scope.vm.ueditorText = response.data.graphicMessageText ;
-                    $scope.vm.link = response.data.graphicMessageTextLink ;
-                    $scope.vm.graphicCreateTime = response.data.graphicCreateTime ;
+                    //console.log(response);
+                    $scope.vm.title = response.data.title ;
+                    $scope.vm.author = response.data.author ;
+                    $scope.vm.ueditorText = response.data.content ;
+                    $scope.vm.link = response.data.link ;
+                    $scope.vm.imgSelected = response.data.coverPicId ;
+                    $scope.vm.graphicCreateTime = response.data.modifyTime
+
                 }else if(response.status == 500){
                     //    获取失败
                 }

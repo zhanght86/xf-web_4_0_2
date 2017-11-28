@@ -62,19 +62,20 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                                 ***********************************/
 //图文消息首页
     //查询
-    this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});
+    this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});                          
+    
     //删除
     this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
                                                                 
 //图文详情页
     //getImgText
-    this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findOneGraphicMessage',{},{});
+    this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findGraphicMessageById',{},{});
                                                 
 //添加图文消息
-    //getIp
-    this.getIp = $resource(API_MATERIAL+'/picture/getIP',{},{});
     //获取本地图片
     this.getPicList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
+    //getIp
+    //this.getIp = $resource(API_MATERIAL+'/picture/getIP',{},{});
     //图文消息保存
     // 编辑
     this.editTwApi = $resource(API_MATERIAL+'/graphicMessage/update',{},{});

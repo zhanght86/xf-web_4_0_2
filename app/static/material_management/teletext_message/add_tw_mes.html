@@ -7,7 +7,7 @@
                 <div class="bd  pd-10"  style="background:#fff;">
                     <dl class="pr add_tw_dl" >
                         <dt>
-                            <img ng-if="vm.imgSelected" ng-src="/img/{{vm.imgSelected}}" />
+                            <img ng-if="vm.imgSelected" ng-src="/api/material/picture/getImgByPictureId?pictureId={{vm.imgSelected}}" />
                             <img ng-if="!vm.imgSelected" src="../../../images/u1134.png" />
                         </dt>
                         <dd class="pa">
@@ -53,7 +53,8 @@
                 </div>
                 <div class="mb10 upload_btndiv">
                     <!--<input type="checkbox" />-->
-                    <button class="butn" ng-click="vm.insertCoverImg(vm.ip+vm.imgSelected)">封面图片显示在正文中</button>
+                    <!--<button class="butn" ng-click="vm.insertCoverImg(vm.ip+vm.imgSelected)">封面图片显示在正文中</button>-->
+                    <button class="butn" ng-click="vm.insertCoverImg('/api/material/picture/getImgByPictureId?pictureId='+vm.imgSelected)">封面图片显示在正文中</button>
 
                 </div>
                 <div class="mb10 upload_btndiv">

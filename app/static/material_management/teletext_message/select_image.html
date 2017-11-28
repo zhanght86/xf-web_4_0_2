@@ -3,12 +3,13 @@
         <div>
             <p class="tc mb-10">请选择要上传的图片</p>
             <ul class="classic_head_ul clearfix">
-                <li ng-repeat="item in vm.imageList"  ng-class="vm.imgSelected.id==item.pictureId ? 'active' : ''"
+                <li ng-repeat="item in vm.imageList"  ng-class="vm.imgSelected.id==item.id ? 'active' : ''"
                     ng-click="vm.selectImage(item)">
                     <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
-                        <img title="{{item.pictureName}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/img/{{item.pictureUrl}}">
+                        <!--<img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/img/{{item.url}}">-->
+                        <img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/api/material/picture/getImg?url={{item.url}}">
                     </div>
-                    <p class="f14">{{item.pictureName}}</p>
+                    <p class="f14">{{item.name}}</p>
                 </li>
             </ul>
         </div>

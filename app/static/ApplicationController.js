@@ -2,7 +2,7 @@
  * Created by mileS on 2017/5/17.
  * describe : 总控制器，处理一些整体参数，提供下游调用方法
  * info  控制器嵌套
- */
+ */  
 knowledge_static_web.controller('ApplicationController',
     ['$scope', '$location', '$anchorScroll', 'AuthService', 'TipService','AUTH_EVENTS',"$timeout","ngDialog" ,"$interval" ,
         '$state','localStorageService','$stateParams','$sce','$window',"KnowDocService","knowledgeAddServer","$cookieStore",
