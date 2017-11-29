@@ -81,7 +81,8 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.editTwApi = $resource(API_MATERIAL+'/graphicMessage/update',{},{});
     //添加
     this.addTwApi = $resource(API_MATERIAL+'/graphicMessage/insert',{},{});
-
+    //图文名称校验
+    this.checkTitle = $resource(API_MATERIAL+'/graphicMessage/checkGraphicTitle',{},{});
 
 
 

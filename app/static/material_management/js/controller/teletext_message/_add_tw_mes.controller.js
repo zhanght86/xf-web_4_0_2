@@ -23,7 +23,6 @@ angular.module('materialManagement').controller('addTwMesController', [
             storeKnow : storeKnow ,  //保存知识
             ueditorText : "",    //编辑器内容
             insertCoverImg : insertCoverImg ,// 插入封面图片到编辑器
-            //saveLimit : false ,
             storeLimit :false
         };
 
@@ -32,7 +31,7 @@ angular.module('materialManagement').controller('addTwMesController', [
          */
         $scope.vm.config = {
             "autoHeight" : true ,
-             toolbars: [[
+            toolbars: [[
                 'fullscreen', 'source', '|', 'undo', 'redo', '|',
                 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor',
                 //'backcolor', 'insertorderedlist', 'insertunorderedlist',
@@ -76,8 +75,6 @@ angular.module('materialManagement').controller('addTwMesController', [
             //,scaleEnabled:false
 
         } ;
-
-
         // void function(){
         //     // httpRequestPost("/api/ms/picture/getIP",{},function(response){
         //     //     $scope.vm.ip = response.data
@@ -92,27 +89,27 @@ angular.module('materialManagement').controller('addTwMesController', [
         //
         // }() ;
         /**
-        *获取本地图片
-        */
+         *获取本地图片
+         */
         getPicList(1) ;
-       function getPicList(index){
-           MaterialServer.getPicList.save({
-               "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
-               "pageSize": $scope.vm.imgPaginationConf.pageSize ,
-               //"applicationId":APPLICATION_ID
-           },function(response){
-               if(response.status == 200){
-                   console.log(response);
-                   $scope.vm.imageList = response.data.objs ;
-                   $scope.vm.imgPaginationConf.currentPage =index ;
-                   $scope.vm.imgPaginationConf.totalItems =response.data.total ;
-               }else{
-                   $scope.vm.imageList="";
-                   $scope.vm.imgPaginationConf.totalItems=0;
-               }
-           },function(err){
-               console.log(err);
-           });
+        function getPicList(index){
+            MaterialServer.getPicList.save({
+                "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
+                "pageSize": $scope.vm.imgPaginationConf.pageSize ,
+                //"applicationId":APPLICATION_ID
+            },function(response){
+                if(response.status == 200){
+                    console.log(response);
+                    $scope.vm.imageList = response.data.objs ;
+                    $scope.vm.imgPaginationConf.currentPage =index ;
+                    $scope.vm.imgPaginationConf.totalItems =response.data.total ;
+                }else{
+                    $scope.vm.imageList="";
+                    $scope.vm.imgPaginationConf.totalItems=0;
+                }
+            },function(err){
+                console.log(err);
+            });
 
         }
 
@@ -151,47 +148,19 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("请先选择封面图片")
             }
         }
-            /*
-             applicationId	String	是	100	应用ID
-             graphicMessageAuthor	String	是	20	作者
-             graphicMessageText	String	是	20	图文内容
-             graphicMessageTextLink	String	是	20	原文连接
-             graphicMessageTitle	String	是	20	图文标题
-             pictureUrl	String	是	20	图片路劲
-           */
-        function storeKnow(title,author,ueditorText,link,coverPicId,graphicMessageId){
-            if(!$scope.vm.storeLimit){
-                if(canStore(title,author,ueditorText,coverPicId,graphicMessageId)){
-                    $scope.vm.storeLimit = true ;
-                    // 参数 url
-                    var parameter = {
-                            "modifierId" : USER_ID,
-                            "author": author,
-                            "content": ueditorText ,
-                            "link": link ,
-                            "title": title ,
-                            "coverPicId": coverPicId          // 图片id
-                        }  ,
-                        api;
-                    // 根据图文id 判断  url 跟 parameter
-                    graphicMessageId?
-                        void function(){
-                            parameter.id = graphicMessageId;
-                            //api="/api/ms/graphicMessage/update"}():
-                              api="editTwApi"}():
-                        //api="/api/ms/graphicMessage/insert";
-                          api="addTwApi";
-                    save(api,parameter);
-                }
-            }else{
-                layer.msg("知识保存中......")
-            }
-        }
+        /*
+         applicationId	String	是	100	应用ID
+         graphicMessageAuthor	String	是	20	作者
+         graphicMessageText	String	是	20	图文内容
+         graphicMessageTextLink	String	是	20	原文连接
+         graphicMessageTitle	String	是	20	图文标题
+         pictureUrl	String	是	20	图片路劲
+         */
 
         /**
          * 保存
          */
-        function save(api,parameter){           
+        function save(api,parameter){
             MaterialServer[api].save(parameter,function(response){
                 if(response.status == 200){
                     $state.go("materialManagement.teletextMessage");
@@ -205,12 +174,10 @@ angular.module('materialManagement').controller('addTwMesController', [
                 console.log(err);
             });
         }
-
         /**
          * 验证必填
          */
-        function canStore(title,author,ueditorText,coverPicId,callBack){
-            var result = false ;
+        function storeKnow(title,author,ueditorText,link,coverPicId,graphicMessageId){
             if(!title){
                 layer.msg("请填写图文标题后保存")
             }else if(!author){
@@ -222,9 +189,42 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("请选择图文封面后保存")
             }
             else{
-                result = true
+                MaterialServer.checkTitle.save({
+                        "title" : $scope.vm.title
+                    },{
+                        "title" : $scope.vm.title
+                    },function(response){
+                        if(response.code==10006){
+                            layer.msg("图文名称重复,请重新输入");
+                        }else{
+                            $scope.vm.storeLimit = true ;
+                            if($scope.vm.storeLimit){
+                                var parameter = {
+                                        "modifierId" : USER_ID,
+                                        "author": author,
+                                        "content": ueditorText ,
+                                        "link": link ,
+                                        "title": title ,
+                                        "coverPicId": coverPicId          // 图片id
+                                    }  ,
+                                    api;
+                                // 根据图文id 判断  url 跟 parameter
+                                graphicMessageId?
+                                    void function(){
+                                        parameter.id = graphicMessageId;
+                                        //api="/api/ms/graphicMessage/update"}():
+                                        api="editTwApi"}():
+                                    //api="/api/ms/graphicMessage/insert";
+                                    api="addTwApi";
+                                save(api,parameter);
+                            }else{
+                                layer.msg("知识保存中...");
+                            }
+                        }
+                    },function(){
+
+                    });
             }
-            return result ;
         }
 
 
@@ -241,8 +241,8 @@ angular.module('materialManagement').controller('addTwMesController', [
             getImgText($stateParams.imgTextId)
         }
         /*
-                     编辑
-        * */
+         编辑
+         * */
         function getImgText(graphicMessageId){
             MaterialServer.getImgText.save({
                 "graphicMessageId" : graphicMessageId
@@ -256,7 +256,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                     $scope.vm.link = response.data.link ;
                     $scope.vm.imgSelected = response.data.coverPicId ;
                 }else if(response.status == 500){
-                //    获取失败
+                    //    获取失败
                 }
             },function(error){
                 console.log(error);
