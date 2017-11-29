@@ -675,4 +675,10 @@
 .backup_restore .my-checkbox label.my-checkbox-on,.manual .my-checkbox label.my-checkbox-on{
     background-image:url(../../images/my-checkbox-on-new.png);
 }
+/*资源监控*/
+.flow_echart{ width: 1000px;
+             margin: 0 auto;
+             min-height: 300px;
+             margin-bottom: 40px;
+}
 

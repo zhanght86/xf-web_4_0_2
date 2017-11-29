@@ -1243,6 +1243,27 @@ knowledge_static_web
                     }
                 }
             })
+           //-------------------------------------------------------------------------------
+            //系统监控
+            //资源监控
+            .state("systemMonitoring", {
+                url: "/systemMonitoring",
+                templateUrl: 'static/system_monitoring/main.html',
+                //controller: "adminController"
+            })
+            .state("systemMonitoring.resource",{
+                url:"/resource",
+                views:{
+                    'header':{
+                        templateUrl:'static/index/home_page/nav.html',
+                        controller:"homePageNavController"
+                    },
+                    'content':{
+                        templateUrl:'static/system_monitoring/resource_monitoring/resource_monitoring.html',
+                        controller:"resourceMonitoringController"
+                    }
+                }
+            })
 
 
     }]);
