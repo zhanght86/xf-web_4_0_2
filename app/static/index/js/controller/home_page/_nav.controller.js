@@ -238,6 +238,8 @@ angular.module('homePage').controller('homePageNavController', [
                     return '自动导入更新';
                 case 'admin.manage':
                     return '应用切换';
+                case 'systemMonitoring.resource':
+                    return '资源监控';
                 default:
                     return 0;
             }

@@ -87,8 +87,11 @@ angular.module("myApplicationSettingModule").service("ApplicationServer",["$reso
         //保存自定义机器人头像
         this.updateRobotParameter = $resource(API_APPLICATION+"/application/saveRobotSetting", {}, {});
 
+//  转人工设置
+        //
+
                         /******************************
-                                        *应用配置*
+                                        *应用发布*
                                    ********************************/
 //发布管理
         //查看服务列表
