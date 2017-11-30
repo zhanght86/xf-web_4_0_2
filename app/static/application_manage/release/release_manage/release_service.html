@@ -25,31 +25,10 @@
                     <span class="framework_s text-r">发布渠道：</span>
                     <div >
                         <label class="mr-10" ng-repeat="channel in $parent.$parent.$parent.MASTER.channelList">
-                            <input type="checkbox" ng-checked="vm.channels.inArray(channel.channelCode)"
-                                   ng-click="vm.selectChannel(channel.channelCode)"/> {{channel.channelName}}
+                            <input type="radio" ng-model="vm.channels"/> {{channel.channelName}}
                         </label>
                     </div>
                 </div>
-
-
-                <div class="framework mb-10">
-                    <span class="framework_s text-r">发布维度：</span>
-                    <div >
-                        <!--<div  id="search_bar" style="min-width:500px;min-height:30px;">-->
-                        <!--{{vm.dimensions}}-->
-                        <!--<auto-complete  source="vm.dimensionAll" result="vm.dimensions"></auto-complete>-->
-                        <!--</div>-->
-                        <div auto-complete  source="vm.dimensionAll" result="vm.dimensionSelected"></div>
-                    </div>
-                </div>
-
-                <div class="framework mb-10">
-                    <span class="framework_s text-r">发布内容：</span>
-                    <div >
-                        <input class="addBth" type="button" value="选择分类" ng-click="vm.listCategory()"/>
-                    </div>
-                </div>
-
                 <div class="framework mb-10">
                     <span class="framework_s text-r">发布类型：</span>
                     <div >

@@ -21,27 +21,21 @@ knowledge_static_web.controller('ApplicationController',
                     applicationName : APPLICATION_NAME,
                     channelList : "",
                     channelListIds :[],
-                    dimensionList : "",
-                    dimensionListIds : [] ,
+
  /*>>>>>=========method for DownStream simple========<<<<<<<<*/
                     queryChannelList : queryChannelList ,  //获取渠道
-                    queryDimensionList : queryDimensionList ,  //获取维度
                     slideToggle : slideToggle ,   //滑动控制
                                                   // @params el callBack
                     openNgDialog : openNgDialog ,  //打开弹框
                     setNgTimeOut : setNgTimeOut ,  //延时器
                     setNgInterval : setNgInterval ,//定时器
 /*>>>>=========method for Downstream complex========<<<<<<<<*/
-                //    getDimensions : getDimensions ,
-                //    getChannels : getChannels ,
-
                     searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
             /* bot 下拉树的公共方法 */
                    botTreeOperate : botTreeOperate ,
                    //isTitleHasExt : isTitleHasExt
             } ;
             if(APPLICATION_ID){
-                queryDimensionList(APPLICATION_ID) ;
                 queryChannelList(APPLICATION_ID)
             }
             //滑动
@@ -102,22 +96,6 @@ knowledge_static_web.controller('ApplicationController',
                 }
             }
             //獲取纬度
-            function queryDimensionList(applicationId){
-                //var dimensions = [] ;
-                return knowledgeAddServer.getDimensions({ "applicationId" : applicationId},
-                    function(data) {
-                        if(data.data){
-                            $scope.MASTER.dimensionListIds = [] ;
-                            $scope.MASTER.dimensionList = data.data ;
-                            angular.forEach(data.data,function(item,index){
-                                $scope.MASTER.dimensionListIds.push(item.dimensionId)
-                            })
-                        }
-                    }, function(error) {
-                        console.log(error)
-                    });
-            };
-
              function queryChannelList(applicationId){
                 //var  channels = [] ;
                return knowledgeAddServer.getChannels({ "applicationId" : applicationId},

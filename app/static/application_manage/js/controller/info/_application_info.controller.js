@@ -19,11 +19,10 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 applicationLisence : "", //应用序列号
                 statusId : "", //应用状态
             } ,
-            sceneId : SCENE_ID, //场景id
             sceneInfo : {              //场景信息
                 knowledgeTypeNum : "", //知识类型数量
-                exchangeModeNum  :  "",//交互方式数量
-                businessFrameNum : "",//业务框架数量
+                exchangeModeNum  :  6,//交互方式数量
+                businessFrameNum : 6,//业务框架数量
             } ,
             allowSubmit : 1, //是否允许提交
 
@@ -184,11 +183,9 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 if ($scope.vm.allowSubmit){
                     ApplicationServer.updateApplicationName.save({
                         "applicationId": APPLICATION_ID,
-                        "sceneId" : SCENE_ID,
                         "applicationName" : $scope.vm.applicationNewName,
                         "applicationDescription" : $scope.vm.applicationInfo.applicationDescription,
                         "applicationLisence" : $scope.vm.applicationInfo.applicationLisence ,
-                        "userId" :USER_ID
                     },function(response){
                         if(response.status==200){
                             $cookieStore.put("applicationName",$scope.vm.applicationNewName) ;
