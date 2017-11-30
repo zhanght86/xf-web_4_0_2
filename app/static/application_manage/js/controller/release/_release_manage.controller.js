@@ -26,18 +26,13 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
 
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
-            dimensionSelected : [], //选中的维度列表
             nodeCode : "", //节点编号
             serviceName: "", //服务名称
             serviceStatus : 0, //服务状态
             serviceType : 10, //服务类型
             categoryData : "", //分类数据
             channelData : "", //渠道数据
-            dimensionData : "", //维度数据
             serviceTypeList : "", //类型数据
-
-            selectChannel : selectChannel, //选择渠道
-            listCategory : listCategory,  //弹出分类对话框
             botRoot : "",     //根节点
             newCategoryIds : [],  //选中的分类节点
 
@@ -101,22 +96,6 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
                     $scope.vm.serviceName=data.data.serviceName;//服务名称
                     $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
                     $scope.vm.serviceType=data.data.serviceType;//服务类型
-                    $scope.vm.dimensionSelected = [];  //重置维度
-                    angular.forEach($scope.$parent.$parent.MASTER.dimensionList,function(dimension){
-                        if(data.data.dimensions.inArray(dimension.dimensionId)){
-                            $scope.vm.dimensionSelected.push(dimension);
-                        }
-                    });
-                    ApplicationServer.queryParentNodeInfo.save({ // 获取此服务使用的节点
-                        "nodeCode" : data.data.nodeCode
-                    },function(data){
-                        if(data.status==200){
-                            $scope.vm.nodeList.using = data.data;
-                            $scope.vm.nodeCode = data.data.nodeCode;
-                        }else{
-                            layer.msg("查询节点信息失败");
-                        }
-                    },function(error){console.log(error)})
                 }else{
                     layer.msg("查询服务失败");
                 }
@@ -276,13 +255,10 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
             $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/release/release_manage/release_service.html","700px",function(){
                 var parameter = {
                     "applicationId": APPLICATION_ID,
-                    "categoryIds" : $scope.vm.categoryIds, //分类id列表
                     "channels" : $scope.vm.channels, //渠道id列表
-                    "dimensions" : $scope.vm.dimensionSelected.id, //维度id列表
                     "nodeCode" : $scope.vm.nodeCode, //节点编号
                     "serviceName": $scope.vm.serviceName, //服务名称
                     "serviceType" : $scope.vm.serviceType, //服务类型
-                    "userId" : USER_ID, //获取用户id
                     "userName" : USER_LOGIN_NAME //获取用户名称
                 } ;
                 if(!serviceId){
@@ -310,114 +286,12 @@ angular.module('myApplicationSettingModule').controller('releaseManageController
             })
         }
         //弹出分类对话框
-        function listCategory(){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/release/release_manage/add_classfy.html","",function(){
-                $scope.vm.categoryIds=$scope.vm.newCategoryIds;
-            },"","",2) ;
-            $timeout(function(){
-                relationBot()
-            },200)
-        }
         //重置弹框内容
         function initPublishServiceInput(){
-            $scope.vm.categoryIds=[]; //分类id列表
-            $scope.vm.newCategoryIds=[]; //选择的分类id
-            $scope.vm.channels=[]; //渠道id列表
+            $scope.vm.channels=""; //渠道id列表
             $scope.vm.nodeCode=""; //节点编号
             $scope.vm.serviceName=""; //服务名称
             $scope.vm.serviceType=""; //服务类型
-            $scope.vm.dimensionSelected=[];  //选中的维度
         }
-
-        // bot 类目树 方法
-        function relationBot(){
-            getBotRoot();
-            //点击 root 的下拉效果
-            function  knowledgeBot(ev){
-                var ele = ev.target;
-                $timeout(function(){
-                    $(ele).next().slideToggle();
-                },200)
-            }
-
-            //获取root 数据
-            function getBotRoot(){
-                httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                    "categoryApplicationId": APPLICATION_ID,
-                    "categoryPid": "root"
-                },function(data){
-                    //console.log(data);
-                    $scope.vm.botRoot = data.data;
-                    $scope.$apply()
-                },function(){
-                    layer.msg("获取BOT分类失败")
-                });
-            }
-            //点击更改bot ids
-            $(".aside-navs-cont").on("click",".botSelect",function(){
-                var self = angular.element(this);
-                var id = self.attr("data-option");
-                if(self.prop("checked")){
-                    $scope.vm.newCategoryIds.push(id);
-                    $scope.$apply();
-                    console.log($scope.vm.newCategoryIds);
-                }else{
-                    $scope.vm.newCategoryIds.remove(id);
-                    $scope.$apply();
-                    console.log($scope.vm.newCategoryIds);
-                }
-            });
-            //点击下一级 bot 下拉数据填充以及下拉效果
-            $(".aside-navs-cont").on("click",'.icon-jj',function(){
-                var id = $(this).attr("data-option");
-                console.log("点击的节点："+id);
-                var that = $(this);
-                if(!that.parent().parent().siblings().length){
-                    that.css("backgroundPosition","0% 100%");
-                    httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-                        "categoryApplicationId": APPLICATION_ID,
-                        "categoryPid": id
-                    },function(data){
-                        if(data.data){
-                            var  html = '<ul class="menus">';
-                            for(var i=0;i<data.data.length;i++){
-                                var checkbox="";
-                                if($scope.vm.categoryIds!=null){
-                                    //判断选中的分类是否为空
-                                    checkbox = $scope.vm.categoryIds.inArray(data.data[i].categoryId);
-                                }
-                                html+= '<li>' +
-                                    '<div class="slide-a">'+
-                                    ' <a class="ellipsis" href="javascript:;">'+
-                                    '<i class="icon-jj" data-option="'+data.data[i].categoryId+'"></i>'+
-                                    '<input type="checkbox" class="botSelect" ';
-                                if(checkbox){
-                                    html+=' checked ';
-                                }
-                                html+='data-option="'+data.data[i].categoryId+'"/>'+
-                                    '<span>'+data.data[i].categoryName+'</span>'+
-                                    '</a>' +
-                                    '</div>' +
-                                    '</li>'
-                            }
-                            html+="</ul>";
-                            $(html).appendTo((that.parent().parent().parent()));
-                            that.parent().parent().next().slideDown()
-                        }
-                    },function(err){
-                        alert(err)
-                    });
-                }else{
-                    if(that.css("backgroundPosition")=="0% 0%"){
-                        that.css("backgroundPosition","0% 100%");
-                        that.parent().parent().next().slideDown()
-                    }else{
-                        that.css("backgroundPosition","0% 0%");
-                        that.parent().parent().next().slideUp()
-                    }
-                }
-            });
-        }
-
     }
 ]);

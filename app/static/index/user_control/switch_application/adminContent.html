@@ -22,28 +22,26 @@
     <div class="application_box clearfix">
         <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication">
             <a ui-sref="setting.Infor" >
-                <img ng-if="application.sceneId==2" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../../../images/marketing.png" width="80" height="80"/>
-                <img ng-if="application.sceneId==1" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../../../images/cust_service.png" width="80" height="80"/>
-                <img ng-if="application.sceneId==3" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../../../images/images/u33.png" width="80" height="80"/>
+                <!--<img ng-if="application.sceneId==2" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../../../images/marketing.png" width="80" height="80"/>-->
+                <img ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../../../images/cust_service.png" width="80" height="80"/>
+                <!--<img ng-if="application.sceneId==3" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../../../images/images/u33.png" width="80" height="80"/>-->
             </a>
             <div class="p10 mb-10 bd_bot" >
-                <p title="{{application.applicationName}}" class="name" ng-if="application.applicationName.length>8">{{application.applicationName | limitCheckFilter}}</p>
-                <p class="name" ng-if="application.applicationName.length<=8">{{application.applicationName}}</p>
-                <p class="scene" ng-repeat="licence in vm.selectLicence"
-                   ng-if="application.sceneId==licence.sceneId">场景类型：<span>{{licence.sceneName}}</span></p>
+                <p title="{{application.name}}" class="name" >{{application.name | limitCheckFilter:8}}</p>
+                <!--<p class="name" ng-if="application.name.length<=8">{{application.name}}</p>-->
+                <p class="scene">场景类型：<span>客服型</span></p>
                     <p class="status">应用状态：
                         <span ng-if="application.statusId==40001" class="c-orange">未使用</span>
                         <span ng-if="application.statusId==40002" class="c-primary">使用中</span>
                         <span ng-if="application.statusId==40003" class="c-error">已停用</span>
                     </p>
             </div>
-            <p title="{{application.applicationDescription}}" class="describe" ng-if="application.applicationDescription.length>8">{{application.applicationDescription | limitCheckFilter}}</p>
-            <p class="describe" ng-if="application.applicationDescription.length<=8">&nbsp;{{application.applicationDescription}}</p>
+            <p title="{{application.description}}" class="describe">{{application.description | limitCheckFilter:8}}</p>
         </div>
     </div>
 </div>
 <style>
-    .application_box{background:#fff;padding:20px 0px 20px 20px; clear: both;}
+    .application_box{background:#fff;padding:20px 0 20px 20px; clear: both;}
     .application_box_list{padding:10px;box-sizing:border-box;width:273px;margin:0 20px 20px 0;height:220px;}
     .application_box_list p{min-height:21px;}
     .application_box_list .describe{

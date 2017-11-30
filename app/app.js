@@ -226,20 +226,6 @@ knowledge_static_web
                     },
                 }
             })
-            // 维度管理
-            .state("setting.dimension", {
-                url: "/dimension",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/dimension_manage/dimension_manage.html',
-                        controller: "dimensionManageController"
-                    },
-                }
-            })
             // 渠道管理
             .state("setting.channel", {
                 url: "/channel",
@@ -251,20 +237,6 @@ knowledge_static_web
                     'content': {
                         templateUrl: 'static/application_manage/config/channel_manage/channel_manage.html',
                         controller: "channelManageController"
-                    },
-                }
-            })
-            // 关联管理  ---》》》营销显示
-            .state("setting.association", {
-                url: "/association",
-                views: {
-                    'header': {
-                        templateUrl: 'static/index/home_page/nav.html',
-                        controller: "homePageNavController"
-                    },
-                    'content': {
-                        templateUrl: 'static/application_manage/config/relate_manage/relate_manage.html',
-                        controller: "relateManageController"
                     },
                 }
             })

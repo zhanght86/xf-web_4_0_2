@@ -7,7 +7,6 @@
     knowledgeAddServer.$injector = ["$resource"];
     function knowledgeAddServer($resource) {
         var services = {
-            getDimensions: getDimensions,
             getChannels : getChannels ,
             getFrame : getFrame    ,
             faqSave : faqSave,
@@ -44,21 +43,8 @@
             });
             return _resource.create(angular.toJson(params)).$promise.then(onSuccess, onError);
         }
-
-
-        function getDimensions(params, onSuccess, onError) {
-            var url = '/api/application/dimension/list';
-            var _resource = $resource(url, {}, {
-                create: {
-                    method: 'POST',
-                    cache: false  ,
-                    params: {}
-                }
-            });
-            return _resource.create(JSON.stringify(params)).$promise.then(onSuccess, onError);
-        }
         function getChannels(params, onSuccess, onError) {
-            var url = '/api/application/channel/listChannels';
+            var url = '/api/application/channel/get	';
             var _resource = $resource(url, {}, {
                 create: {
                     method: 'POST',
