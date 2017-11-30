@@ -7,9 +7,9 @@
             <span class="setting_span pa" style="width:130px;">人工客服有效期：</span>
             <div class="clearfix">
                 <span class="L mr10">
-                    <input type="text" id="startTime" onchange="" ng-model="vm.timerSearchStartTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly="">
+                    <input type="text" id="startTime" onchange="" ng-model="vm.workStartTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly="">
                     -
-                    <input type="text" id="endTime" onchange="" ng-model="vm.timerSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly="">
+                    <input type="text" id="endTime" onchange="" ng-model="vm.workEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly="">
                 </span>
                 <span class="L pt-5" >
                     <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave ="vm.hideTip($event)"></a>

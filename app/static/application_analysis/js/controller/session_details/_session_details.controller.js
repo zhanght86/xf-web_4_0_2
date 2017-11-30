@@ -18,7 +18,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             dimensions : [] ,
             channels : [] ,
             channelId  : null ,
-            dimensionId : null ,
+           // dimensionId : null ,
             timeType : 1,
             timeStart : null,
             timeEnd : null,
@@ -71,7 +71,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             AppAnalysisServer.getScanData.save({
                 "applicationId" :APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
-                "dimensionId": $scope.vm.dimensionId,
+               // "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
@@ -129,7 +129,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             AppAnalysisServer.sessionGetList.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
-                "dimensionId": $scope.vm.dimensionId,
+               // "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
@@ -208,7 +208,7 @@ angular.module('applAnalysisModule').controller('sessionDetailsController', [
             AppAnalysisServer.exportExcel.save({
                 "applicationId" : $scope.vm.applicationId,
                 "channelId": $scope.vm.channelId,
-                "dimensionId": $scope.vm.dimensionId,
+               // "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime" : $scope.vm.timeStart ,
                 "endTime": $scope.vm.timeEnd,

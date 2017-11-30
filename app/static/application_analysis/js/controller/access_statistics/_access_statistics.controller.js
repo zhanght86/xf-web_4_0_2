@@ -15,7 +15,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
      //访问时间
             timerData : "" ,        //查询的所有数据
             channelId : "" ,        //渠道
-            dimensionId : "",       //維度
+           // dimensionId : "",       //維度
             TimerSearchTimeType : 1 ,   //time类型
             timerSearchStartTime : "" , //开始时间
             timerSearchEndTime : "",    //结束时间
@@ -224,7 +224,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 "startTime":$scope.vm.timerSearchStartTime ,
                 "endTime":$scope.vm.timerSearchEndTime ,
                 "requestTimeType" : $scope.vm.TimerSearchTimeType ,
-                "dimensionId" : $scope.vm.dimensionId,
+               // "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
                 console.log(data);
@@ -253,7 +253,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 "startTime":$scope.vm.accessSearchStartTime ,
                 "endTime":$scope.vm.accessSearchEndTime ,
                 "requestTimeType" : $scope.vm.accessSearchTimeType ,
-                "dimensionId" : $scope.vm.dimensionId,
+               // "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
                 console.log(data);
@@ -335,7 +335,7 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
                 "startTime":$scope.vm.timerSearchStartTime ,
                 "endTime":$scope.vm.timerSearchEndTime ,
                 "requestTimeType" : $scope.vm.TimerSearchTimeType ,
-                "dimensionId" : $scope.vm.dimensionId,
+               // "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
                 layer.close(i);

@@ -16,9 +16,9 @@
                         <option  value="" >全部渠道</option>
                     </select>
 
-                    <select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">
-                        <option  value="" >全部维度</option>
-                    </select>
+                    <!--<select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
+                        <!--<option  value="" >全部维度</option>-->
+                    <!--</select>-->
                     <span class="L mr-5">
                         日期范围:
                         <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly="">

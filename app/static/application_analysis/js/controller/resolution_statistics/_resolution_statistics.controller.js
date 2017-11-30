@@ -11,7 +11,7 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
             dimensions : [] ,
             channels : [] ,
             channelId  : "" ,
-            dimensionId : "" ,
+           // dimensionId : "" ,
             timeType : 1,
             timeStart : "",
             timeEnd : "",
@@ -29,7 +29,7 @@ angular.module('applAnalysisModule').controller('resolutionStatisticsController'
             var i = layer.msg('资源加载中',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             var parameter = {
                 "channelId": $scope.vm.channelId,
-                "dimensionId": $scope.vm.dimensionId,
+               // "dimensionId": $scope.vm.dimensionId,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
                 "requestTimeType":$scope.vm.timeType,

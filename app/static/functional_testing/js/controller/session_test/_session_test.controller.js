@@ -11,9 +11,9 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             listService:[],
             channel:"",
             channelList : [] ,
-            listDimension:[],
+           // listDimension:[],
             listDimensionUpBack : "",
-            dimensionArray : [] ,
+           // dimensionArray : [] ,
             //==============================================方法
             getService:getService,
             serviceId : "" ,
@@ -63,7 +63,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
                    userId:USER_ID,
                    content:$scope.vm.testAsking,
                    channel:$scope.vm.channel,
-                   dimensionArray:$scope.vm.dimensionArray,
+                  // dimensionArray:$scope.vm.dimensionArray,
                    serviceId:$scope.vm.serviceId
                    //serviceId:22
                },function(data){
@@ -94,7 +94,7 @@ angular.module('functionalTestModule').controller('sessionTestController', [
             $scope.vm.channel= $scope.$parent.$parent.MASTER.channelList[0].channelCode ;
             ////$scope.vm.listDimension =  angular.copy($scope.vm.listDimensionUpBack) ;
             //$scope.vm.dimensionArray =  {"id":[],"name":[]};
-            console.log($scope.vm.listDimension);
+            //console.log($scope.vm.listDimension);
         }
 
         /*****************

@@ -207,26 +207,7 @@ angular.module('functionalTestModule').controller('batchTestController', [
                         return name = item.channelName  ;
                     }
                 }) ;
-                // httpRequestPost("/api/application/batchTest/getChannelAndUserName", {
-                //     batchNumberId:  id,
-                //     //userId: $scope.vm.userId,
-                //     userId : USER_ID,
-                //     //channel:$scope.vm.channel,
-                //     channelName : name,
-                //     channel:channelId,
-                //     applicationId:APPLICATION_ID,
-                //     serviceId:$scope.vm.serviceId,
-                // }, function (data) {
-                //     if(data.status == 20002){
-                //         layer.msg(data.data,{time:1000});
-                //     }
-                //     if(data.status == 10018){
-                //         searchFile($scope.vm.paginationConf.currentPage);
-                //         startTest(id,name,channelId);
-                //     }
-                // }, function () {
-                //     console.log('请求失败');
-                // },"","",60000);
+
                 FunctionServer.start.save({
                     batchNumberId:  id,
                     userId : USER_ID,
@@ -251,15 +232,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
 
         function stopTest(id){
-            // httpRequestPost("/api/application/batchTest/startTest", {
-            //     batchNumberId: id,
-            //     batchStatusId : 21007
-            // }, function (data) {
-            //     console.log(data);
-            //     if(data.status=10000){
-            //         searchFile($scope.vm.paginationConf.currentPage) ;
-            //     }
-            // });
             FunctionServer.stopTest.save({
                 batchNumberId: id,
                 batchStatusId : 21007
@@ -274,23 +246,6 @@ angular.module('functionalTestModule').controller('batchTestController', [
         }
 
         function startTest(id,name,channelId){
-            // httpRequestPost("/api/application/batchTest/startTest", {
-            //     batchNumberId: id,
-            //     //userId: $scope.vm.userId,
-            //     userId : USER_ID,
-            //     channelName : name ,
-            //     channel:channelId,
-            //     applicationId:APPLICATION_ID,
-            //     serviceId:$scope.vm.serviceId,
-            //     //serviceId:22
-            // }, function (data) {
-            //     console.log(data);
-            //     if(data.status=10000){
-            //         searchFile($scope.vm.paginationConf.currentPage) ;
-            //     }
-            // }, function () {
-            //     //layer.msg("请求失败");
-            // },"","",3600000);
             FunctionServer.startTest.save({
                 batchNumberId: id,
                 //userId: $scope.vm.userId,
