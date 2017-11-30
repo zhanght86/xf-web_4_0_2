@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cedb38da-b0e8-4c96-9ba3-552255efd25f" name="默认的" comment="图文对接">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/ApplicationController.js" afterPath="$PROJECT_DIR$/app/static/ApplicationController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_add_tw_mes.controller.js" afterPath="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_add_tw_mes.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_graphic_details.controller.js" afterPath="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_graphic_details.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_teletext_message.controller.js" afterPath="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_teletext_message.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/js/directive/_teletext_upload.directive.js" afterPath="$PROJECT_DIR$/app/static/material_management/js/directive/_teletext_upload.directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js" afterPath="$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/teletext_message/add_tw_mes.html" afterPath="$PROJECT_DIR$/app/static/material_management/teletext_message/add_tw_mes.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/teletext_message/select_image.html" afterPath="$PROJECT_DIR$/app/static/material_management/teletext_message/select_image.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/material_management/teletext_message/teletext_message.html" afterPath="$PROJECT_DIR$/app/static/material_management/teletext_message/teletext_message.html" />
+    <list default="true" id="cedb38da-b0e8-4c96-9ba3-552255efd25f" name="默认的" comment="图文添加标题校验">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="xf-web_4_0_2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,80 +25,72 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="_material.server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js">
+      <file leaf-file-name="access_statistics.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/application_analysis/access_statistics/access_statistics.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="75" column="76" selection-start-line="75" selection-start-column="76" selection-end-line="75" selection-end-column="76" />
+            <state relative-caret-position="311">
+              <caret line="58" column="99" selection-start-line="58" selection-start-column="88" selection-end-line="58" selection-end-column="99" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="teletext_message.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/teletext_message.html">
+      <file leaf-file-name="knowledge_ranking.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/application_analysis/knowledge_ranking/knowledge_ranking.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="33" column="97" selection-start-line="33" selection-start-column="91" selection-end-line="33" selection-end-column="97" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="300">
+              <caret line="18" column="95" selection-start-line="18" selection-start-column="84" selection-end-line="18" selection-end-column="95" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_teletext_message.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_teletext_message.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="91" column="9" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
-              <folding>
-                <element signature="e#2381#2656#0" expanded="false" />
-                <element signature="e#2742#3484#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add_tw_mes.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/add_tw_mes.html">
+      <file leaf-file-name="session_details.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/application_analysis/session_details/session_details.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
-              <caret line="9" column="132" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="132" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
+              <caret line="18" column="95" selection-start-line="18" selection-start-column="84" selection-end-line="18" selection-end-column="95" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_add_tw_mes.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_add_tw_mes.controller.js">
+      <file leaf-file-name="satisfaction_degree.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/application_analysis/satisfaction_degree/satisfaction_degree.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="261" column="70" selection-start-line="257" selection-start-column="20" selection-end-line="261" selection-end-column="70" />
-              <folding>
-                <element signature="e#4318#5108#0" expanded="false" />
-                <element signature="e#5251#5510#0" expanded="false" />
-                <element signature="e#5593#5745#0" expanded="false" />
-                <element signature="e#5779#5905#0" expanded="false" />
-                <element signature="e#5955#6242#0" expanded="false" />
-                <element signature="e#6644#8183#0" expanded="false" />
-                <element signature="e#6885#7593#0" expanded="false" />
-                <element signature="e#8880#9327#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="175">
+              <caret line="13" column="95" selection-start-line="13" selection-start-column="84" selection-end-line="13" selection-end-column="95" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="select_image.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/select_image.html">
+      <file leaf-file-name="resolution_statistics.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/application_analysis/resolution_statistics/resolution_statistics.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="275">
-              <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
-              <folding>
-                <element signature="n#style#0;n#img#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
+              <caret line="11" column="87" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="87" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_session_test.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/controller/session_test/_session_test.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="164">
+              <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_function_test.server.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/server/_function_test.server.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="19" column="98" selection-start-line="19" selection-start-column="98" selection-end-line="19" selection-end-column="98" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -129,33 +113,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/css/home/admin.css" />
-        <option value="$PROJECT_DIR$/app/static/material_management/js/controller/document_library/_document_library.controller.js" />
-        <option value="$PROJECT_DIR$/app/static/material_management/js/directive/_img_upload.directive.js" />
-        <option value="$PROJECT_DIR$/app/static/business_modeling/js/controller/frame_database/_framework_library.controller.js" />
-        <option value="$PROJECT_DIR$/app/static/material_management/picture_library/picture_library.html" />
-        <option value="$PROJECT_DIR$/app/static/material_management/speech_library/speech_library.html" />
-        <option value="$PROJECT_DIR$/app/static/material_management/speech_library/change_name.html" />
-        <option value="$PROJECT_DIR$/app/static/material_management/picture_library/change_name.html" />
-        <option value="$PROJECT_DIR$/app/static/material_management/js/controller/picture_library/_picture_library.controller.js" />
-        <option value="$PROJECT_DIR$/app/static/material_management/js/directive/_voice_upload.directive.js" />
         <option value="$PROJECT_DIR$/app/static/material_management/speech_library/speech_library_dialog.html" />
         <option value="$PROJECT_DIR$/app/static/material_management/js/controller/speech_library/_speech_library.controller.js" />
         <option value="$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/changeName.html" />
         <option value="$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/processKnow-fb.html" />
         <option value="$PROJECT_DIR$/app/static/knowledgeManagement/js/controller/processKnow.controller.js" />
         <option value="$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/processKnow.html" />
-        <option value="$PROJECT_DIR$/app/css/home/style_new.css" />
         <option value="$PROJECT_DIR$/app/static/material_management/teletext_message/select_image.html" />
         <option value="$PROJECT_DIR$/app/static/ApplicationController.js" />
         <option value="$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/test_result/_test_result.controller.js" />
         <option value="$PROJECT_DIR$/app/static/material_management/js/directive/_teletext_upload.directive.js" />
-        <option value="$PROJECT_DIR$/app/static/material_management/teletext_message/add_tw_mes.html" />
         <option value="$PROJECT_DIR$/app/static/material_management/teletext_message/teletext_message.html" />
         <option value="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_teletext_message.controller.js" />
-        <option value="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_add_tw_mes.controller.js" />
-        <option value="$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js" />
         <option value="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_graphic_details.controller.js" />
+        <option value="$PROJECT_DIR$/app/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.config.js" />
+        <option value="$PROJECT_DIR$/app/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/jsp/config.json" />
+        <option value="$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js" />
+        <option value="$PROJECT_DIR$/app/static/material_management/js/directive/_check_service_name.direvtive.js" />
+        <option value="$PROJECT_DIR$/app/static/application_manage/js/directive/_check_service_name.direvtive.js" />
+        <option value="$PROJECT_DIR$/app/static/material_management/teletext_message/add_tw_mes.html" />
+        <option value="$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_add_tw_mes.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/index/home_page/nav.html" />
+        <option value="$PROJECT_DIR$/app/static/system_monitoring/js/module/_system_monitoring.module.js" />
+        <option value="$PROJECT_DIR$/app/static/system_monitoring/js/server/_system.server.js" />
+        <option value="$PROJECT_DIR$/app/static/system_monitoring/resource_monitoring/system_monitoring.html" />
+        <option value="$PROJECT_DIR$/app/app.js" />
+        <option value="$PROJECT_DIR$/app/static/system_monitoring/js/controller/resource_monitoring/_resource_monitoring.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/system_monitoring/resource_monitoring/resource_monitoring.html" />
+        <option value="$PROJECT_DIR$/app/static/index/js/controller/home_page/_nav.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_manage/js/server/_application_server.js" />
+        <option value="$PROJECT_DIR$/app/static/functional_testing/session_test/session_test.html" />
+        <option value="$PROJECT_DIR$/app/static/functional_testing/js/controller/session_test/_session_test.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/batch_test/_batch_test.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_manage/js/controller/config/_manual_setting.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_manage/config/manual_setting/manual_setting.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/access_statistics/access_statistics.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/access_statistics/_access_statistics.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/knowledge_ranking/knowledge_ranking.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/knowledge_ranking/_knowledge_ranking.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/session_details/session_details.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/session_details/_session_details.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/satisfaction_degree/satisfaction_degree.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/satisfaction_degree/_satisfaction_degree.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/resolution_statistics/resolution_statistics.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/resolution_statistics/_resolution_statistics.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/session_log/_session_log.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/reinforcement_learn/_reinforcement_learn.controller.js" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/js/controller/new_know_discovery_learn/_new_know_discovery_learn.controller.js" />
+        <option value="$PROJECT_DIR$/app/css/home/style_new.css" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/new_know_discovery_learn/new_know_discovery_learn.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/reinforcement_learn/reinforcement_learn.html" />
+        <option value="$PROJECT_DIR$/app/static/application_analysis/session_log/session_log.html" />
       </list>
     </option>
   </component>
@@ -202,7 +210,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -271,7 +278,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
+              <option name="myItemId" value="functional_testing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -293,33 +300,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teletext_message" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xf-web_4_0_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xf-web_4_0_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
+              <option name="myItemId" value="functional_testing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -349,7 +330,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
+              <option name="myItemId" value="functional_testing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -375,71 +356,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directive" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xf-web_4_0_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xf-web_4_0_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teletext_message" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xf-web_4_0_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xf-web_4_0_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
+              <option name="myItemId" value="functional_testing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -469,7 +386,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="material_management" />
+              <option name="myItemId" value="functional_testing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -481,13 +398,14 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="picture_library" />
+              <option name="myItemId" value="session_test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -495,9 +413,11 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="D:\Program Files\nodejs\node.exe" />
+    <property name="SearchEverywhereHistoryKey" value="style&#9;FILE&#9;file://D:/git/xiaofu-4.0.2/xf-web_4_0_2/app/css/home/style_new.css&#10;common2&#9;FILE&#9;file://D:/git/xiaofu-4.0.2/xf-web_4_0_2/app/css/plugins/common2.css" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\git\xiaofu-4.0.2\xf-web_4_0_2\app\static\material_management\js\directive" />
       <recent name="D:\git\xiaofu-4.0.2\xf-web_4_0_2\app\static\knowledgeManagement\processKnow" />
     </key>
   </component>
@@ -881,15 +801,26 @@
       <workItem from="1511745520315" duration="25000" />
       <workItem from="1511745600393" duration="25000" />
       <workItem from="1511745663411" duration="24468000" />
-      <workItem from="1511830944723" duration="14555000" />
+      <workItem from="1511830944723" duration="25924000" />
+      <workItem from="1511918394510" duration="8534000" />
+      <workItem from="1511937985365" duration="9538000" />
+      <workItem from="1512005088569" duration="11182000" />
     </task>
+    <task id="LOCAL-00001" summary="图文对接">
+      <created>1511854116741</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1511854116741</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99006000" />
+    <option name="totallyTimeSpent" value="139629000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -897,13 +828,12 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="消息" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03242321" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.037542664" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.006837607" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="控制板" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.045385778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.08717949" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14599092" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06484642" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="设计师" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -917,8 +847,37 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="消息" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03242321" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.05982906" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="设计师" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="消息" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.03242321" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.037542664" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="控制板" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08245083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -936,7 +895,8 @@
     <MESSAGE value="要素弹窗宽度修改" />
     <MESSAGE value="图片，语音修改名称" />
     <MESSAGE value="图文对接" />
-    <option name="LAST_COMMIT_MESSAGE" value="图文对接" />
+    <MESSAGE value="图文添加标题校验" />
+    <option name="LAST_COMMIT_MESSAGE" value="图文添加标题校验" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -950,228 +910,489 @@
           <line>207</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/test_result/_test_result.controller.js</url>
+          <line>197</line>
+          <properties />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="4" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/picture_library/picture_library.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/picture_library/_picture_library.controller.js" />
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/app/static/system_monitoring/resource_monitoring/resource_monitoring.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        <state relative-caret-position="500">
+          <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/home/admin.css">
+    <entry file="file://$PROJECT_DIR$/app/static/system_monitoring/js/module/_system_monitoring.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="150">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/index/home_page/nav.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/document_library/_document_library.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/chat/knowledge_base/_material_manage.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/business_modeling/js/controller/frame_database/_faq_new_frame.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/business_modeling/js/controller/frame_database/_factor_new_frame.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/business_modeling/js/controller/frame_database/_framework_library.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/xf.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/picture_library/change_name.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/speech_library/change_name.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/index/js/controller/home_page/_nav.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/application_manage/release/release_manage/release_manage.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/controller/release/_release_manage.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/application_manage/release/release_manage/release_service.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/directive/_check_service_name.direvtive.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/speech_library/speech_library.html" />
-    <entry file="file://$PROJECT_DIR$/app/js/common/config.js">
+    <entry file="file://$PROJECT_DIR$/app/static/index/js/controller/home_page/_nav.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="375">
+          <caret line="240" column="49" selection-start-line="240" selection-start-column="49" selection-end-line="240" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/speech_library/speech_library_dialog.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/speech_library/_speech_library.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/select_node.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/myApplication/applicationInfor/applicationInforDialog2.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/myApplication/applicationInfor/applicationInforDialog.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/businessModeling/aggregate/aggregateConceptManageDialog.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/businessModeling/aggregate/aggregateConceptManageDialog2.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/businessModeling/js/controller/aggregateConceptManage_controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/processKnow-fb.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/changeName.html" />
-    <entry file="file://$PROJECT_DIR$/app/static/knowledgeManagement/js/controller/processKnow.controller.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/knowledgeManagement/processKnow/processKnow.html" />
-    <entry file="file://$PROJECT_DIR$/app/css/home/style_new.css">
+    <entry file="file://$PROJECT_DIR$/app/static/index/home_page/nav.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="667" column="59" selection-start-line="667" selection-start-column="59" selection-end-line="667" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/common/requestApi.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-475">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/picture_library/picture_library.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="42" column="90" selection-start-line="42" selection-start-column="90" selection-end-line="42" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/ApplicationController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/test_result/_test_result.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="178" column="28" selection-start-line="178" selection-start-column="28" selection-end-line="178" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/directive/_voice_upload.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1814">
-          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/directive/_img_upload.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="17" column="24" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/picture_library/_picture_library.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="49" column="39" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
+        <state relative-caret-position="279">
+          <caret line="307" column="45" selection-start-line="307" selection-start-column="45" selection-end-line="307" selection-end-column="45" />
           <folding>
-            <element signature="e#2669#3607#0" expanded="false" />
-            <element signature="e#3705#4049#0" expanded="false" />
-            <element signature="e#4189#4466#0" expanded="false" />
-            <element signature="e#5153#5522#0" expanded="false" />
-            <element signature="e#5590#6051#0" expanded="false" />
-            <element signature="e#6541#6965#0" expanded="false" />
-            <element signature="e#7043#7137#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/directive/_teletext_upload.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
-          <folding>
-            <marker date="1511775932803" expanded="true" signature="253:264" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/add_tw_mes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="132" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="132" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#li#4;n#ul#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#li#5;n#ul#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#li#6;n#ul#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#ul#0;n#li#7;n#ul#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="1135" column="24" selection-start-line="1135" selection-start-column="24" selection-end-line="1135" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/teletext_message.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="33" column="97" selection-start-line="33" selection-start-column="91" selection-end-line="33" selection-end-column="97" />
+        <state relative-caret-position="327">
+          <caret line="1253" column="45" selection-start-line="1253" selection-start-column="20" selection-end-line="1253" selection-end-column="45" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#42858#43395#0" expanded="false" />
+            <element signature="e#43463#44053#0" expanded="false" />
+            <element signature="e#44104#44597#0" expanded="false" />
+            <element signature="e#44652#45161#0" expanded="false" />
+            <element signature="e#45236#45739#0" expanded="false" />
+            <element signature="e#45815#46322#0" expanded="false" />
+            <element signature="e#46402#46913#0" expanded="false" />
+            <element signature="e#46965#47467#0" expanded="false" />
+            <element signature="e#47525#48044#0" expanded="false" />
+            <element signature="e#48121#48632#0" expanded="false" />
+            <element signature="e#48962#49448#0" expanded="false" />
+            <element signature="e#49504#50014#0" expanded="false" />
+            <element signature="e#50073#50577#0" expanded="false" />
+            <element signature="e#50630#51116#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/server/_material.server.js">
+    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/directive/_check_service_name.direvtive.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="75" column="76" selection-start-line="75" selection-start-column="76" selection-end-line="75" selection-end-column="76" />
+        <state relative-caret-position="372">
+          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/directive/_verify_application_name.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-53">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/directive/_verify_node.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/js/directive/auto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-600">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/js/directive/emotion.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-853">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/js/directive/gateway_menu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17142">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/js/directive/logininput.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-617">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/chat/knowledge_base_prew/_material_manage_pre.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_teletext_message.controller.js">
+    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/chat/knowledge_base/_material_manage.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="91" column="9" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
-          <folding>
-            <element signature="e#2381#2656#0" expanded="false" />
-            <element signature="e#2742#3484#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_add_tw_mes.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="261" column="70" selection-start-line="257" selection-start-column="20" selection-end-line="261" selection-end-column="70" />
-          <folding>
-            <element signature="e#4318#5108#0" expanded="false" />
-            <element signature="e#5251#5510#0" expanded="false" />
-            <element signature="e#5593#5745#0" expanded="false" />
-            <element signature="e#5779#5905#0" expanded="false" />
-            <element signature="e#5955#6242#0" expanded="false" />
-            <element signature="e#6644#8183#0" expanded="false" />
-            <element signature="e#6885#7593#0" expanded="false" />
-            <element signature="e#8880#9327#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/teletext_message/_graphic_details.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+        <state relative-caret-position="-6053">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/graphic_details.html">
+    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/chat/faq/_faq_chat.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        <state relative-caret-position="-3317">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/material_management/js/controller/chat/concept/_concept_chat.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="128" column="37" selection-start-line="128" selection-start-column="37" selection-end-line="128" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/public_html/knowledge_increase.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/material_management/teletext_message/select_image.html">
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/single_add/factor/factor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/knowledge_manage/single_add/faq/faq.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/server/_application_server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="89" column="9" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/view_details/_view_details.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-799">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#1333#2352#0" expanded="false" />
+            <element signature="e#2423#3573#0" expanded="false" />
+            <element signature="e#3638#5046#0" expanded="false" />
+            <element signature="e#5116#6591#0" expanded="false" />
+            <element signature="e#6667#7412#0" expanded="false" />
+            <element signature="e#7481#8859#0" expanded="false" />
+            <element signature="e#8931#9725#0" expanded="false" />
+            <element signature="e#9825#10100#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/test_result/_test_result.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="339" column="0" selection-start-line="339" selection-start-column="0" selection-end-line="339" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#1993#3296#0" expanded="false" />
+            <element signature="e#3471#3790#0" expanded="false" />
+            <element signature="e#3894#4152#0" expanded="false" />
+            <element signature="e#4266#5431#0" expanded="false" />
+            <element signature="e#5543#7539#0" expanded="false" />
+            <element signature="e#7647#9305#0" expanded="false" />
+            <element signature="e#9412#10259#0" expanded="false" />
+            <element signature="e#10362#10833#0" expanded="false" />
+            <element signature="e#10940#11360#0" expanded="false" />
+            <element signature="e#11464#12493#0" expanded="false" />
+            <element signature="e#12598#12974#0" expanded="false" />
+            <element signature="e#13109#13607#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_manage/js/controller/config/_manual_setting.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="9" column="23" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_manage/config/manual_setting/manual_setting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/controller/batch_test/batch_test/_batch_test.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+          <folding>
+            <element signature="e#2246#2317#0" expanded="false" />
+            <element signature="e#4256#4572#0" expanded="false" />
+            <element signature="e#4711#4745#0" expanded="false" />
+            <element signature="e#7193#8513#0" expanded="false" />
+            <element signature="e#7338#7387#0" expanded="false" />
+            <element signature="e#8954#9587#0" expanded="false" />
+            <element signature="e#9690#10113#0" expanded="false" />
+            <element signature="e#10220#10682#0" expanded="false" />
+            <element signature="e#10794#10890#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/session_test/session_test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="56" column="102" selection-start-line="56" selection-start-column="88" selection-end-line="56" selection-end-column="102" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/access_statistics/_access_statistics.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="18" column="48" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/knowledge_ranking/_knowledge_ranking.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/session_details/session_details_dialog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/satisfaction_degree/_satisfaction_degree.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="176" column="24" selection-start-line="176" selection-start-column="24" selection-end-line="176" selection-end-column="24" />
+          <folding>
+            <element signature="e#1250#1537#0" expanded="false" />
+            <element signature="e#1565#1793#0" expanded="false" />
+            <element signature="e#1823#2050#0" expanded="false" />
+            <element signature="e#2125#3670#0" expanded="false" />
+            <element signature="e#3821#4092#0" expanded="false" />
+            <element signature="e#4176#6494#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/session_details/_session_details.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/session_log/_session_log.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="68" column="55" selection-start-line="68" selection-start-column="55" selection-end-line="68" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/resolution_statistics/_resolution_statistics.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="35" column="50" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/reinforcement_learn/associate_learn.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-150">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/new_know_discovery_learn/associate_learn_check.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/new_know_discovery_learn/content.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-300">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/new_know_discovery_learn/_new_know_discovery_learn.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="224" column="37" selection-start-line="224" selection-start-column="37" selection-end-line="224" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/js/controller/reinforcement_learn/_reinforcement_learn.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="27" column="25" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/css/plugins/common2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4030">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding>
+            <marker date="1511746289179" expanded="true" signature="831:855" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/css/home/style_new.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/new_know_discovery_learn/new_know_discovery_learn.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1500">
+          <caret line="12" column="121" selection-start-line="12" selection-start-column="121" selection-end-line="12" selection-end-column="121" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/reinforcement_learn/reinforcement_learn.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="77" column="120" selection-start-line="77" selection-start-column="120" selection-end-line="77" selection-end-column="120" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/access_statistics/access_statistics.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="58" column="99" selection-start-line="58" selection-start-column="88" selection-end-line="58" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/knowledge_ranking/knowledge_ranking.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="18" column="95" selection-start-line="18" selection-start-column="84" selection-end-line="18" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/session_details/session_details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="18" column="95" selection-start-line="18" selection-start-column="84" selection-end-line="18" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/satisfaction_degree/satisfaction_degree.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="13" column="95" selection-start-line="13" selection-start-column="84" selection-end-line="13" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/session_log/session_log.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="7" column="114" selection-start-line="7" selection-start-column="114" selection-end-line="7" selection-end-column="114" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/application_analysis/resolution_statistics/resolution_statistics.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
-          <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <caret line="11" column="87" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/server/_function_test.server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="19" column="98" selection-start-line="19" selection-start-column="98" selection-end-line="19" selection-end-column="98" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/functional_testing/js/controller/session_test/_session_test.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
