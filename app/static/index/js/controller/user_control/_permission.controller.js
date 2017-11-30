@@ -170,11 +170,11 @@ angular.module('homePage').controller('userManageController', [
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
-            if($scope.vm.prop.length == 0){
-                layer.msg("请至少选择一个应用!")
-                $scope.vm.allowSubmit=0;
-                return 0;
-            }
+            // if($scope.vm.prop.length == 0){
+            //     layer.msg("请至少选择一个应用!")
+            //     $scope.vm.allowSubmit=0;
+            //     return 0;
+            // }
             return 1;
         }
 

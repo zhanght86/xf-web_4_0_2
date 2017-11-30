@@ -200,6 +200,19 @@ knowledge_static_web
                     },
                 }
             })
+            .state("setting.authorization",{
+                url:"/authorization",
+                views:{
+                    'header':{
+                        templateUrl:'static/index/home_page/nav.html',
+                        controller:"homePageNavController"
+                    },
+                    'content':{
+                        templateUrl:'static/application_manage/config/authorization_management/authorization_management.html',
+                        controller:"authorizationManagementController"
+                    }
+                }
+            })
             .state("setting.chatPageConfig", {
                 url: "/chatPageConfig",
                 views: {

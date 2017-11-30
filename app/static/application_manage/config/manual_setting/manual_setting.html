@@ -20,7 +20,7 @@
         <div class="setting_div mb20 pr" style="padding-left:130px;">
             <span class="setting_span pa" style="width:130px;line-height:20px;">转人工条件：</span>
             <div class="clearfix mb30">
-                <label class="L mr30"><input type="checkbox" /> 人工命令</label>
+                <label class="L mr30"><input type="checkbox" ng-model="vm.commandOn"/> 人工命令</label>
                 <!--<div class="L mr30"><div checkbox-backup class="L"></div><span class="L">人工命令</span></div>-->
                 <span class="L" >
                     <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave="vm.hideTip($event)"></a>
@@ -28,7 +28,7 @@
                 </span>
             </div>
             <div class="clearfix mb30">
-                <label class="L mr30"><input type="checkbox" /> 机器人未直接回答</label>
+                <label class="L mr30"><input type="checkbox"  ng-model="vm.noAnswerOn"/> 机器人未直接回答</label>
                 <!--<div class="L mr30"><div checkbox-backup class="L"></div><span class="L">机器人未直接回答</span></div>-->
                 <span class="L" >
                     <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave="vm.hideTip($event)"></a>
@@ -37,7 +37,7 @@
             </div>
             <div class="clearfix mb20">
                 未直接回答次数：
-                <input type="text" class="bd txt input_xs" ng-model="vm.answerNumber"/>
+                <input type="text" class="bd txt input_xs" ng-model="vm.noAnswerNumber"/>
             </div>
         </div>
         <div class=" pt30 pb30 pl130">
