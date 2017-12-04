@@ -1,3 +1,4 @@
+<div ui-view="header"></div>
 <div class="warp "  style="margin-top:20px;">
     <div class="pd-30" style="background:#fff;">
        <h3 class="mb-10 f16">资源监控</h3>
@@ -10,10 +11,10 @@
                     <td width="25%">服务状态</td>
                 </tr>
                 <tr>
-                    <td>192.168.191.137</td>
-                    <td>737.78</td>
-                    <td>737.78</td>
-                    <td>项目上线</td>
+                    <td>{{vm.linuxIp}}</td>
+                    <td>{{vm.memory}}</td>
+                    <td>{{vm.cpu}}</td>
+                    <td>{{vm.responseStatus}}</td>
                 </tr>
             </table>
         </div>
@@ -21,14 +22,14 @@
             <ul>
                 <li>
                     <p class="tc mb-10">使用内存-1天</p>
-                    <div class="flow_echart">
-                        <img src="../../../images/1.png" />
+                    <div class="flow_echart" id="main">
+                        <!--<img src="../../../images/1.png" />-->
                     </div>
                 </li>
                 <li>
                     <p class="tc mb-10">CPU占用率-1天</p>
-                    <div class="flow_echart">
-                        <img src="../../../images/2.png" />
+                    <div class="flow_echart" id="mainCpu">
+                        <!--<img src="../../../images/2.png" />-->
                     </div>
                 </li>
             </ul>

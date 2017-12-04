@@ -7,9 +7,9 @@
 angular.module("systemMonitoring").service("SystemServer",["$resource",function($resource){
 
                 /******************************
-                                  *资源监控*
+                                  *资源监控*   API_ANALYSIS = "/api/analysis" ;
                             ********************************/
-
+   this.getData = $resource(API_ANALYSIS+'/monitoringServer/monitoring',{},{});
     
 
 

@@ -38,7 +38,9 @@ var knowledge_static_web = angular.module('knowledge_static_web', [
     //应用分析
     'applAnalysisModule',
     //深度学习
-    'deepLearning'
+    'deepLearning',
+    //系统监控
+    'systemMonitoring'
 ]);
 
 /**
