@@ -7,7 +7,7 @@
         </div>
         <ul class="nav">
             <li>
-                <a ui-sref="homePage.define" ng-if="vm.sceneId">首页</a>
+                <a ui-sref="homePage.define">首页</a>
             </li>
             <li>
                 <a ng-click="vm.logApplication()">应用管理</a>
@@ -39,24 +39,12 @@
                 <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
                     <li>
-                        <a  ng-if="vm.sceneId==1" ui-sref="knowledgeManagement.custOverview">
+                        <a ui-sref="knowledgeManagement.custOverview">
                             <i class="icon-nav icon-nav__icon-nav_zszl"></i>
                             <span>知识总览</span>
                         </a>
-                        <!--营销型-->
-                        <a  ng-if="vm.sceneId==2" ui-sref="knowledgeManagement.markOverview">
-                            <i class="icon-nav icon-nav__icon-nav_zszl"></i>
-                            <span>知识总览</span>
-                        </a>
-                        <!--营销型-->
                     </li>
-                    <li ng-if="vm.sceneId==2">
-                        <a ui-sref="knowledgeManagement.conceptAdd">
-                            <i class="icon-nav icon-nav__icon-nav_zszl"></i>
-                            <span>营销知识新增</span>
-                        </a>
-                    </li>
-                    <li ng-if="vm.sceneId==1">
+                    <li>
                         <ul class="menu_1 menu_2 " style="min-height: 40%;">
                             <li>
                                 <a ui-sref="knowledgeManagement.faqAdd">
@@ -337,7 +325,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="mail-conver" ng-if="vm.sceneId==2 || vm.sceneId==1" style="margin-left:0;">
+            <div class="mail-conver" style="margin-left:0;">
                 <!--<a ui-sref="knowledgeManagement.historyView" class="mail">-->
                     <!--&lt;!&ndash;<em>2</em>&ndash;&gt;-->
                 <!--</a>-->

@@ -1,9 +1,11 @@
 /**
- * Created by mileS on 2017/3/21.
+ * @Author : MILES .
+ * @Create : 2017/3/21.
+ * @Module :  用户权限界面
  */
 angular.module('homePage').controller('userManageController', [
-    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore) {
+    '$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","ApplicationServer",
+    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore,ApplicationServer) {
         $scope.vm = {
             simpleOperateTitle : "" ,
             listData : "",   // table 数据
@@ -20,7 +22,7 @@ angular.module('homePage').controller('userManageController', [
             verifyRelease:verifyRelease,
             //添加用户所需要数据
             userName : "",
-            userLonginName :  "",
+            userLoginName :  "",
             userPassword :  "",
             userPassWord : "", //用户所输入确认密码
             userPhoneNumber  :  "",

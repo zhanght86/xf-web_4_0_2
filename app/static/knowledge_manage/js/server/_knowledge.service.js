@@ -90,6 +90,4 @@ angular.module("knowledgeManagementModule").service("KnowledgeService",["$resour
         // 根据id 获取图文封面图片 url ，title 方法     //pic
         this.getMediaImgText= $resource(API_MS+"/graphicMessage/findOneGraphicMessage",{},{}) ;
 
-
-
 }]);

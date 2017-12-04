@@ -20,9 +20,9 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 statusId : "", //应用状态
             } ,
             sceneInfo : {              //场景信息
-                knowledgeTypeNum : "", //知识类型数量
-                exchangeModeNum  :  6,//交互方式数量
-                businessFrameNum : 6,//业务框架数量
+                knowledgeTypeNum : 6, //知识类型数量
+                exchangeModeNum  : 2,//交互方式数量
+                businessFrameNum :0,//业务框架数量(默认)
             } ,
             allowSubmit : 1, //是否允许提交
 
@@ -160,19 +160,15 @@ angular.module('myApplicationSettingModule').controller('applicationInforControl
                 }
             },function(error){$log.log(error)})
         }
-        //查看场景信息
+        //查看业务框架数量
         function findSceneInfo(){
-            ApplicationServer.viewsceneInfo.save({
+            ApplicationServer.viewFrameNumber.save({
                 "applicationId": APPLICATION_ID
             },function(response){
                 if(response.status==200){
-                    $scope.vm.sceneInfo = {
-                        knowledgeTypeNum : response.data.knowledgeTypeNum, //知识类型数量
-                        exchangeModeNum  :  response.data.exchangeModeNum,//交互方式数量
-                        businessFrameNum : response.data.businessFrameNum,//业务框架数量
-                    }
+                    $scope.vm.sceneInfo.businessFrameNum = response.data.businessFrameNum
                 }else{
-                    layer.msg("查询失败");
+                    console.log("业务框架数量查询失败");
                 }
             },function(error){$log.log(error)})
         }
