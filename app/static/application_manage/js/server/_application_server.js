@@ -88,8 +88,12 @@ angular.module("myApplicationSettingModule").service("ApplicationServer",["$reso
         this.updateRobotParameter = $resource(API_APPLICATION+"/application/saveRobotSetting", {}, {});
 
 //  转人工设置
-        //
+        //获取列表
+        this.manualGetData = $resource(API_APPLICATION+"/artificial/get/setting/"+APPLICATION_ID, {}, {});
+        //修改
+        this.manualSaveData = $resource(API_APPLICATION+"/artificial/update", {}, {});
 
+       
                         /******************************
                                         *应用发布*
                                    ********************************/

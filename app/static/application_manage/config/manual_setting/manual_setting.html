@@ -7,9 +7,9 @@
             <span class="setting_span pa" style="width:130px;">人工客服有效期：</span>
             <div class="clearfix">
                 <span class="L mr10">
-                    <input type="text" id="startTime" onchange="" ng-model="vm.workStartTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly="">
+                    <input type="text" id="startTime" onchange="" ng-model="vm.workStartTime" onclick="WdatePicker({dateFmt:'HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}',onpicked:function(){}})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="HH:mm:ss" readonly="readonly">
                     -
-                    <input type="text" id="endTime" onchange="" ng-model="vm.workEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly="">
+                    <input type="text" id="endTime" onchange="" ng-model="vm.workEndTime" onclick="WdatePicker({dateFmt:'HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}',onpicked:function(){}})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="HH:mm:ss" readonly="readonly">
                 </span>
                 <span class="L pt-5" >
                     <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave ="vm.hideTip($event)"></a>
@@ -20,7 +20,8 @@
         <div class="setting_div mb20 pr" style="padding-left:130px;">
             <span class="setting_span pa" style="width:130px;line-height:20px;">转人工条件：</span>
             <div class="clearfix mb30">
-                <label class="L mr30"><input type="checkbox" ng-model="vm.commandOn"/> 人工命令</label>
+                <label class="L mr30"><input type="checkbox" ng-model="vm.commandOn" ng-checked="vm.commandOn"/> 人工命令</label>
+
                 <!--<div class="L mr30"><div checkbox-backup class="L"></div><span class="L">人工命令</span></div>-->
                 <span class="L" >
                     <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave="vm.hideTip($event)"></a>
@@ -28,7 +29,7 @@
                 </span>
             </div>
             <div class="clearfix mb30">
-                <label class="L mr30"><input type="checkbox"  ng-model="vm.noAnswerOn"/> 机器人未直接回答</label>
+                <label class="L mr30"><input type="checkbox"  ng-model="vm.noAnswerOn" ng-checked="vm.noAnswerOn"/> 机器人未直接回答</label>
                 <!--<div class="L mr30"><div checkbox-backup class="L"></div><span class="L">机器人未直接回答</span></div>-->
                 <span class="L" >
                     <a href="javascript:;" class="tool_tip" ng-mouseenter="vm.showTip($event)" ng-mouseleave="vm.hideTip($event)"></a>
@@ -37,7 +38,7 @@
             </div>
             <div class="clearfix mb20">
                 未直接回答次数：
-                <input type="text" class="bd txt input_xs" ng-model="vm.noAnswerNumber"/>
+                <input type="number" class="bd txt input_xs" ng-model="vm.noAnswerNumber" ng-keyup="vm.clearNum(item,'attr')" ng-disabled="!vm.noAnswerOn"/>
             </div>
         </div>
         <div class=" pt30 pb30 pl130">
