@@ -75,6 +75,7 @@ angular.module("myApplicationSettingModule").service("ApplicationServer",["$reso
         //修改
         this.manualSaveData = $resource(API_APPLICATION+"/artificial/update", {}, {});
 
+
        
                         /******************************
                                         *应用发布*
