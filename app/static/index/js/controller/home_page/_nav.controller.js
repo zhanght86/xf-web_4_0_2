@@ -31,11 +31,11 @@ angular.module('homePage').controller('homePageNavController', [
         //    $state.go("login")
         //}
         function logApplication(){
-            if($scope.vm.sceneId){
-                $state.go("setting.Infor")
-            }else{
-                return false
-            }
+            // if($scope.vm.sceneId){
+                $state.go("setting.Infor");
+            // }else{
+            //     return false
+            // }
         }
         function loginout(){
             $cookieStore.remove('applicationId');

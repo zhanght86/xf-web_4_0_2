@@ -3,22 +3,17 @@
  * @Create : 2017/8/31.
  * @Module :  应用管理服务
  */
-//"use strict";
+// //"use strict";
+// module.exports = applicationModule =>{
+//         applicationModule.service("ApplicationServer",["$resource",$resource=>{
+//
+//         }])
+// };
 angular.module("myApplicationSettingModule").service("ApplicationServer",["$resource",function($resource){
 
                 /******************************
                                   *应用配置*
                             ********************************/
-//   关联知识设置
-        //获取列表
-        this.getServersList = $resource(API_APPLICATION+"/relation/listServiceRelation", {}, {});
-        //获取其他关联知识列表
-        this.getOtherServersList = $resource(API_APPLICATION+"/relation/listOtherApplicationService", {}, {});
-        //添加关联
-        this.addRelate = $resource(API_APPLICATION+"/relation/relatedService", {}, {});
-        //取消关联
-        this.cancelRelate = $resource(API_APPLICATION+"/relation/cancelRelatedService", {}, {});
-
 //   渠道管理
         //请求渠道列表
         this.queryChannelList = $resource(API_APPLICATION+"/channel/listChannelByPage", {}, {});
@@ -32,19 +27,6 @@ angular.module("myApplicationSettingModule").service("ApplicationServer",["$reso
         this.removeBlacklist = $resource(API_APPLICATION+"/channel/batchDelBlackList", {}, {});
         //改变渠道状态
         this.changeChannelStatus = $resource(API_APPLICATION+"/channel/changeStatus", {}, {});
-
-//   维度管理
-        //获取维度列表 + 通过名称查询维度
-        this.queryDimensionList = $resource(API_APPLICATION+"/dimension/listDimension", {}, {});
-        //添加维度
-        this.addDimension = $resource(API_APPLICATION+"/dimension/addDimension", {}, {});
-        //编辑维度
-        this.editDimension = $resource(API_APPLICATION+"/dimension/updateDimensionById", {}, {});
-        //删除维度
-        this.removeDimension = $resource(API_APPLICATION+"/dimension/deleteById", {}, {});
-        //删除子集维度
-        this.removeChildDimension = $resource(API_APPLICATION+"/dimension/deleteChildDimensionById", {}, {});
-
 //   场景管理
         //获取知识类型
         this.queryKnowTypeList = $resource(API_APPLICATION+"/scene/listKnowledgeTypeByApplicationId", {}, {});
@@ -161,11 +143,35 @@ angular.module("myApplicationSettingModule").service("ApplicationServer",["$reso
         this.stopAllService = $resource(API_APPLICATION+"/service/stopAllService", {}, {});
         //查看应用信息
         this.viewApplicationInfo = $resource(API_APPLICATION+"/application/findApplication", {}, {});
-        //查看场景信息
-        this.viewsceneInfo = $resource(API_APPLICATION+"/application/findSceneInfo", {}, {});
+        //查看场景业务框架数量
+        this.viewFrameNumber = $resource(API_APPLICATION+"/application/get/frame", {}, {});
         //修改应用名称
         this.updateApplicationName = $resource(API_APPLICATION+"/application/updateApplication", {}, {});
         //删除当前应用（当前所有服务）
         this.removeApplication = $resource(API_APPLICATION+"/service/deleteAllServices", {}, {});
+
+        /******************************
+                         *应用部分 登录后续部分*
+                  ********************************/
+        //添加应用
+        this.addApplication = $resource(API_APPLICATION+"/application/add", {}, {});
+        //编辑应用
+        this.updateApplication = $resource(API_APPLICATION+"/application/update", {}, {});
+        //应用名称与授权证书校验
+        this.checkApplicationName = $resource(API_APPLICATION+"/application/name/check", {}, {});
+        //查询单个应用
+        this.getApplication = $resource(API_APPLICATION+"/application/get/{id}", {}, {});
+        //查询所有应用
+        this.queryAllApplication = $resource(API_APPLICATION+"/application/get", {}, {});
+        //查询用户关联应用列表
+        this.queryApplicationByUserId = $resource(API_APPLICATION+"/application/get/user", {}, {});
+        // //根据应用id(从cookie获取)列表获取应用名称列表
+        // this.qeuryAllApplicationName = $resource(API_APPLICATION+"/get/applicationids", {}, {});
+        //根据应用id(从cookie获取)列表获取应用名称列表
+        this.queryAllApplicationName = $resource(API_APPLICATION+"/get/applicationids", {}, {});
+        //根据应用id(从cookie获取)列表获取应用名称列表
+        this.queryAllApplicationName = $resource(API_APPLICATION+"/get/applicationids", {}, {});
+        //根据应用id(从cookie获取)列表获取应用名称列表
+        this.queryAllApplicationName = $resource(API_APPLICATION+"/get/applicationids", {}, {});
 
 }])
