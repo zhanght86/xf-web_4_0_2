@@ -676,7 +676,7 @@
     background-image:url(../../images/my-checkbox-on-new.png);
 }
 /*资源监控*/
-.flow_echart{ width: 1000px;
+.flow_echart{ width: 100%;
              margin: 0 auto;
              min-height: 300px;
              margin-bottom: 40px;

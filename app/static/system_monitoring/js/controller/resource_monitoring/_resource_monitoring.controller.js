@@ -4,19 +4,20 @@
  */
 
 angular.module('systemMonitoring').controller('resourceMonitoringController', [
-    '$scope',"$state","SystemServer","$log", "$cookieStore","$timeout","$window","$location",
-    function ($scope,$state,SystemServer,$log,$cookieStore,$timeout,$window,$location) {
+    '$scope',"$state","SystemServer","$log", "$cookieStore","$interval","$window","$location",
+    function ($scope,$state,SystemServer,$log,$cookieStore,$interval,$window,$location) {
         //$state.go("systemMonitoring.resource");
         $scope.vm = {
             applicationId : APPLICATION_ID,
-            serviceMemory:[],                     //服务没存
+            serviceMemory:[],                     //服务内存
             cpuOccupancy :[],                     //cpu占有率
             xAxis:[],
             linuxIp:"",                           //IP地址
             memory :"",                           //内存占用
             cpu:"",                               //cpu占用
             responseStatus:"",                     //服务状态
-            getData : getData
+            getData : getData,
+            refreshPage : refreshPage              //刷新
 
         };
 
@@ -34,23 +35,45 @@ angular.module('systemMonitoring').controller('resourceMonitoringController', [
                 console.log(response);
                 if(response.status==200){
                     $scope.vm.linuxIp=response.data.linuxIp;
+                    var result = response.data.data;
+                    var len=result.length;
+                    for(var i=0;i<len;i++){
+                        $scope.vm.serviceMemory.push(result[i].memory);
+                        $scope.vm.cpuOccupancy.push(result[i].cpu);
+                        $scope.vm.xAxis.push(result[i].date);
+                    }
+                    $scope.vm.cpu = result[len-1].cpu;
+                    $scope.vm.memory = result[len-1].memory;
+                    $scope.vm.responseStatus = result[len-1].responseStatus;
+
+                    serviceMemory.setOption(setTimerChartOption($scope.vm.xAxis,$scope.vm.serviceMemory,'使用内存','#E87C25','{value}MB'));
+                    cpuOccupancy.setOption(setTimerChartOption($scope.vm.xAxis,$scope.vm.cpuOccupancy,'CPU占用率','#26C0C0','{value}%'));
 
                 }
-
 
             },function(err){
                 console.log(err);
             });
         }
+        /**
+        *** 刷新
+        **/
+        function refreshPage(){
+            $window.location.reload();
+        }
+        var timer=$interval($scope.vm.refreshPage,60000);
 
-        //图形请求列表
+
+        /**
+        ******图形请求列表
+         **/
         function setTimerChartOption(xData,yData,dataName,color,formatter){
             return {
                 tooltip: {
                     trigger: 'axis',
                 },
                 toolbox: {
-                    show : true,
+                    show : false,
                     feature : {
                         mark : {show: true},
                         dataView : {show: true, readOnly: false},
@@ -94,9 +117,9 @@ angular.module('systemMonitoring').controller('resourceMonitoringController', [
                         },
                         axisLabel : { /*坐标轴值得样式*/
                             show:true,
-                            interval: 'auto',    // {number}
+                            interval: 0,    // {number}     //设置为0，可以显示全x轴数据
                             rotate: 0,
-                            margin: 8,
+                            margin: 4,
                             formatter: '{value}',
                             textStyle: {
                                 color: '#444444',
@@ -131,7 +154,7 @@ angular.module('systemMonitoring').controller('resourceMonitoringController', [
                         },
                         axisLabel : {
                             show:true,
-                            interval: 'auto',    // {number}
+                            interval: 'auto',    // {number}  //设置为0，可以显示全x轴数据
                             rotate: 0,
                             margin: 8,
                             formatter: formatter,
