@@ -14,9 +14,10 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 pagesLength: 10//分页框数量
             },
             changeName:changeName,
+            pictureId :'',
             pictureIds : [],
-            pictureName:null,
-            editPictureName :null,
+            pictureName:'',
+            editPictureName :'',
             napSearch:napSearch,
             exportExcel:exportExcel,
             batchDeletePicture:batchDeletePicture,
@@ -39,11 +40,11 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         getPicList(1);
         function getPicList(index){
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            MaterialServer.getPicList.save({
-                // "applicationId" : APPLICATION_ID,
+            MaterialServer.getList.get({
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
                 "name" : $scope.vm.pictureName,
+
             },function(data){
                 layer.close(i);
                 console.log(data);
@@ -77,12 +78,12 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     MaterialServer.deleteImg.save({
-                        //"pictureIds": pictureIds
-                        "ids" : pictureIds
+                        "pictureIds": pictureIds
+                    },{
+                        "pictureIds": pictureIds
                     },function(data){
                         if(data.status == 200){
                             layer.msg("图片删除成功") ;
-                            //getPicList(1) ;
                             $state.reload();
                         }else if(data.status == 500){
                             layer.msg("图片删除失败") ;
@@ -130,7 +131,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             MaterialServer.updateImg.save({
                 //"name":$scope.vm.pictureName,
                 "name": $scope.vm.editPictureName,
-                "id":$scope.vm.pictureId
+                "id":$scope.vm.pictureId,
+                "modifierId":USER_ID
             },function(data){
                 if(data.status == 200){
                     layer.msg('图片名称修改成功');
@@ -176,19 +178,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         }
         /**
          * 单选
-         */
-        // function singleAdd(id,allId,isAll,len){
-        //     console.log(allId) ;
-        //     if(allId.inArray(id)){
-        //         allId.remove(id) ;
-        //         $scope.vm.isSelectAll = false ;
-        //     }else{
-        //         allId.push(id) ;
-        //         if(allId.length == len){
-        //             $scope.vm.isSelectAll = true ;
-        //         }
-        //     }
-        // }
+         */        
         function singleAdd(id){
             if($scope.vm.pictureIds.inArray(id)){
                 $scope.vm.pictureIds.remove(id);

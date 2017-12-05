@@ -35,13 +35,13 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                                     * 图片库
                                 ***********************************/
     //获取列表
-    this.getList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
+    this.getList = $resource(API_MATERIAL+'/picture/query',{},{});
     //删除图片
-    this.deleteImg = $resource(API_MATERIAL+'/picture/batchDeletePicture',{},{});
+    this.deleteImg = $resource(API_MATERIAL+'/picture/batch/delete',{},{});
     //updateImg
-    this.updateImg = $resource(API_MATERIAL+'/picture/updatePicture',{},{});
+    this.updateImg = $resource(API_MATERIAL+'/picture/update',{},{});
     //图片导出
-    this.exportImg =API_MATERIAL+'/picture/exportExcel' ;
+    this.exportImg =API_MATERIAL+'/picture/export' ;
                         /********************************
                                 * 语音库    API_MATERIAL = "api/material"
                                 ***********************************/
@@ -62,7 +62,7 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
                                 ***********************************/
 //图文消息首页
     //查询
-    this.showImg = $resource(API_MATERIAL+'/graphicMessage/queryGraphicMessage',{},{});                          
+    this.showImg = $resource(API_MATERIAL+'/graphic/message/query',{},{});
     
     //删除
     this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});

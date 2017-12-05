@@ -23,7 +23,7 @@ angular.module('materialManagement').controller('teletextMessageController', [
          */
         function showImg(index) {
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            MaterialServer.showImg.save({
+            MaterialServer.showImg.get({
                 // applicationId : APPLICATION_ID,
                 // index : (index - 1)*$scope.vm.paginationConf.pageSize,
                 // pageSize : $scope.vm.paginationConf.pageSize,

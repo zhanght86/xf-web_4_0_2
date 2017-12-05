@@ -39,8 +39,9 @@
 
                     <td>
                         <div >
-                            <!--<img ng-src="/img/{{item.pictureUrl}}" />-->
-                            <img ng-src="/api/material/picture/getImg?url={{item.url}}" />
+                            <!--<img ng-src="/img/{{item.url}}" />-->
+                            <!--<img ng-src="/api/material/picture/getImg?url={{item.url}}" />-->
+                            <img ng-src="/api/material/picture/get/img/id?pictureId={{item.id}}" />
 
                         </div>
                     </td>

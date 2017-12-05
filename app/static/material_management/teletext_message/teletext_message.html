@@ -22,7 +22,7 @@
                 <dl class="picture_dl teletext_dl " >
                     <!--{{item}}-->
                     <!--<dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/img/{{item.url}}"/></a></dt>-->
-                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/api/material/picture/getImgByPictureId?pictureId={{item.coverPicId}}"/></a></dt>
+                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="api/material/picture/get/img/id?pictureId={{item.coverPicId}}"/></a></dt>
                     <dd class="cl">
                         <!--<p class="L titp">{{item.graphicMessageTitle}}</p>-->
                         <p class="L titp">{{item.title}}</p>
