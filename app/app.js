@@ -1251,6 +1251,19 @@ knowledge_static_web
                     }
                 }
             })
+            .state("systemMonitoring.service",{
+                url:"/service",
+                views:{
+                    'header':{
+                        templateUrl:'static/index/home_page/nav.html',
+                        controller:"homePageNavController"
+                    },
+                    'content':{
+                        templateUrl:'static/system_monitoring/service_monitoring/service_monitoring.html',
+                        controller:"serviceMonitoringController"
+                    }
+                }
+            })
 
 
     }]);

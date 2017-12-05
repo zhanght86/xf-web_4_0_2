@@ -43,7 +43,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
 
         function searchVoice(index){
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            MaterialServer.searchVoice.save({
+            MaterialServer.searchVoice.get({
                 "index":(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
                 "name":$scope.vm.voiceName
@@ -94,7 +94,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
          */
         function exportExcel(){
             var urlParams =
-                "?applicationId="+APPLICATION_ID;
+                "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.voiceName;
             // var url = "/api/ms/voiceManage/exportExcel"+urlParams  ;//请求的url
            // $window.open(url,"_blank") ;
 
@@ -187,7 +187,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     MaterialServer.batchDeleteVoice.save({
-                        //"voiceIds": voiceIds
+                        "ids": voiceIds
+                    },
+                    {
                         "ids": voiceIds
                     },function(data){
                         if(data.status == 200){
@@ -212,12 +214,14 @@ angular.module('materialManagement').controller('speechLibraryController', [
             if(!$scope.vm.voiceTitle){
                 layer.msg("请输入语音名称");
             }else{
-                MaterialServer.checkVoice.save({
-                    "voiceName": $scope.vm.voiceTitle
+                MaterialServer.checkVoice.get({
+                    "name": $scope.vm.voiceTitle
                 },
-                    {
-                    "voiceName": $scope.vm.voiceTitle
-                },function(data){
+                //     {
+                //     "voiceName": $scope.vm.voiceTitle
+                // },
+                //
+                function(data){
                     if(data.status == 500){
                         $scope.vm.isUploadStart=false;
                         layer.msg("语音名称重复,请重新输入") ;
