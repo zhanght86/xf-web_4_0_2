@@ -55,9 +55,11 @@ angular.module('myApplicationSettingModule').controller('manualSettingController
         *** 获取数据
         **/
         function getData(){
+            var i = layer.msg('资源加载中..',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:1000});
             ApplicationServer.manualGetData.save({
                // applicationId : APPLICATION_ID
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status==10000){
                     $scope.vm.workStartTime =format(data.data[0].workStartTime);
@@ -69,6 +71,7 @@ angular.module('myApplicationSettingModule').controller('manualSettingController
                 }
 
             },function(err){
+                layer.close(i);
                 console.log(err);
             });
             if($scope.vm.noAnswerOn ==0){

@@ -42,6 +42,8 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.updateImg = $resource(API_MATERIAL+'/picture/update',{},{});
     //图片导出
     this.exportImg =API_MATERIAL+'/picture/export' ;
+    //修改名称校验
+    this.checkName = $resource(API_MATERIAL+'/picture/check/name',{},{});
                         /********************************
                                 * 语音库    API_MATERIAL = "api/material"
                                 ***********************************/

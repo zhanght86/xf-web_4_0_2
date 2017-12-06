@@ -28,7 +28,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 queueNumber : 0 ,
                 uploadNumber : 0 ,
                 process : "0%"
-            }
+            },
+            checkName : checkName
         };
 
 
@@ -39,7 +40,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         //
         getPicList(1);
         function getPicList(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:5000}) ;
             MaterialServer.getList.get({
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
@@ -127,6 +128,44 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }
         },true);
         //
+
+        /**
+         * 修改名称
+         */
+        function changeName(item){
+            // $scope.vm.pictureName=item.name;
+            $scope.vm.editPictureName = item.name;
+            $scope.vm.pictureId=item.id;
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
+                //updateImg();
+
+            },function(){
+
+            });
+        }
+        /**
+        ***名称校验
+        **/
+        function checkName(){
+            if(!$scope.vm.editPictureName){
+                layer.msg("请输入图片名称");
+            }else{
+                MaterialServer.checkName.get({
+                    "name": $scope.vm.editPictureName
+                },function(data){
+                    if(data.code==10006){
+                        layer.msg("图片名称重复,请重新输入");
+                    }else{
+                        ngDialog.close();
+                        updateImg();
+                    }
+                },function(err){
+                    console.log(err);
+                });
+            }
+
+        }
         function updateImg(){
             MaterialServer.updateImg.save({
                 //"name":$scope.vm.pictureName,
@@ -143,20 +182,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 }
             },function(err){
                 console.log(err);
-            });
-        }
-        /**
-         * 修改名称
-         */
-        function changeName(item){
-            // $scope.vm.pictureName=item.name;
-            $scope.vm.editPictureName = item.name;
-            $scope.vm.pictureId=item.id;
-
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
-                updateImg();
-            },function(){
-
             });
         }
 
