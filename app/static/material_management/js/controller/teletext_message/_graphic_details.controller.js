@@ -22,7 +22,7 @@ angular.module('materialManagement').controller('graphicDetailsController', [
             $state.go("materialManagement.teletextMessage")
         }
         function getImgText(graphicMessageId){            
-            MaterialServer.getImgText.save({
+            MaterialServer.getImgText.get({
                 "graphicMessageId" : graphicMessageId
             },{
                 "graphicMessageId" : graphicMessageId

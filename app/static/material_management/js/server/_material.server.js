@@ -67,24 +67,24 @@ angular.module("materialManagement").service("MaterialServer",["$resource",funct
     this.showImg = $resource(API_MATERIAL+'/graphic/message/query',{},{});
     
     //删除
-    this.removeImg = $resource(API_MATERIAL+'/graphicMessage/deleteGraphicMessage',{},{});
+    this.removeImg = $resource(API_MATERIAL+'/graphic/message/batch/delete',{},{});
                                                                 
 //图文详情页
     //getImgText
-    this.getImgText = $resource(API_MATERIAL+'/graphicMessage/findGraphicMessageById',{},{});
+    this.getImgText = $resource(API_MATERIAL+'/graphic/message/find/graphic/by/id',{},{});
                                                 
 //添加图文消息
     //获取本地图片
-    this.getPicList = $resource(API_MATERIAL+'/picture/queryPicture',{},{});
+    this.getPicList = $resource(API_MATERIAL+'/picture/query',{},{});
     //getIp
     //this.getIp = $resource(API_MATERIAL+'/picture/getIP',{},{});
     //图文消息保存
     // 编辑
-    this.editTwApi = $resource(API_MATERIAL+'/graphicMessage/update',{},{});
+    this.editTwApi = $resource(API_MATERIAL+'/graphic/message/update',{},{});
     //添加
-    this.addTwApi = $resource(API_MATERIAL+'/graphicMessage/insert',{},{});
+    this.addTwApi = $resource(API_MATERIAL+'/graphic/message/insert',{},{});
     //图文名称校验
-    this.checkTitle = $resource(API_MATERIAL+'/graphicMessage/checkGraphicTitle',{},{});
+    this.checkTitle = $resource(API_MATERIAL+'/graphic/message/check/title',{},{});
 
 
 

@@ -7,6 +7,7 @@ angular.module('materialManagement').controller('addTwMesController', [
     function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
         $scope.vm = {
+            pictureName :'',
             ip : "" , // 图片 ip路径
             graphicMessageId :"" , //图文知识id 编辑使用
             title : '',                     //标题
@@ -59,7 +60,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                 // 'print', 'preview', 'searchreplace', 'help', 'drafts'
             ]]
             ,UEDITOR_HOME_URL: "/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/"
-            ,serverUrl : "/api/material/picture/uploadGet"
+            ,serverUrl : "/api/material/picture/upload/get"
             ,wordCount:false           //是否开启字数统计
             ,elementPathEnabled : false  //是否启用元素路径，默认是显示
             ,initialFrameWidth:800  //初始化编辑器宽度,默认1000
@@ -93,10 +94,10 @@ angular.module('materialManagement').controller('addTwMesController', [
          */
         getPicList(1) ;
         function getPicList(index){
-            MaterialServer.getPicList.save({
+            MaterialServer.getPicList.get({
                 "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
                 "pageSize": $scope.vm.imgPaginationConf.pageSize ,
-                //"applicationId":APPLICATION_ID
+                "name" : $scope.vm.pictureName,
             },function(response){
                 if(response.status == 200){
                     console.log(response);
@@ -189,7 +190,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("请选择图文封面后保存")
             }
             else{
-                MaterialServer.checkTitle.save({
+                MaterialServer.checkTitle.get({
                         "title" : $scope.vm.title
                     },{
                         "title" : $scope.vm.title
@@ -244,7 +245,7 @@ angular.module('materialManagement').controller('addTwMesController', [
          编辑
          * */
         function getImgText(graphicMessageId){
-            MaterialServer.getImgText.save({
+            MaterialServer.getImgText.get({
                 "graphicMessageId" : graphicMessageId
             },{
                 "graphicMessageId" : graphicMessageId

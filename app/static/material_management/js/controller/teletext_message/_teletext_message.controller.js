@@ -24,11 +24,6 @@ angular.module('materialManagement').controller('teletextMessageController', [
         function showImg(index) {
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.showImg.get({
-                // applicationId : APPLICATION_ID,
-                // index : (index - 1)*$scope.vm.paginationConf.pageSize,
-                // pageSize : $scope.vm.paginationConf.pageSize,
-                // title : $scope.vm.titAuthor,
-                // author: $scope.vm.titAuthor
                 title : $scope.vm.titAuthor,
                 author : $scope.vm.titAuthor,
                 index : (index - 1)*$scope.vm.paginationConf.pageSize,
@@ -73,8 +68,10 @@ angular.module('materialManagement').controller('teletextMessageController', [
             layer.confirm('确认删除该图文消息？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
+               // alert(1);
                 MaterialServer.removeImg.save({
-                    //graphicMessageIds : new Array(item.graphicMessageId)
+                    "ids" : new Array(item.id)
+                },{
                     "ids" : new Array(item.id)
                 },function(data){
                     if(data.status == 200){
