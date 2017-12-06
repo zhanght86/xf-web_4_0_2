@@ -10,7 +10,11 @@ angular.module("systemMonitoring").service("SystemServer",["$resource",function(
                                   *资源监控*   API_ANALYSIS = "/api/analysis" ;
                             ********************************/
    this.getData = $resource(API_ANALYSIS+'/monitoringServer/monitoring',{},{});
-    
+
+                /******************************
+                            *服务监控*   API_ANALYSIS = "/api/analysis" ;
+                 ********************************/
+    this.getServiceDate = $resource(API_ANALYSIS+'/serviceMonitoring/monitoring',{},{});
 
 
 

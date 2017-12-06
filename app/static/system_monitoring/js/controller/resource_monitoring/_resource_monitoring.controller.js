@@ -29,9 +29,11 @@ angular.module('systemMonitoring').controller('resourceMonitoringController', [
         *** 获取
         **/
         function getData(){
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:1000});
             SystemServer.getData.save({
 
             },function(response){
+                layer.close(i);
                 console.log(response);
                 if(response.status==200){
                     $scope.vm.linuxIp=response.data.linuxIp;
@@ -52,6 +54,7 @@ angular.module('systemMonitoring').controller('resourceMonitoringController', [
                 }
 
             },function(err){
+                layer.close(i);
                 console.log(err);
             });
         }
