@@ -1,0 +1,56 @@
+<div class="main warp">
+    <div class="libraryCnt">
+        <div class="libraryFt pd-20 mr-20">
+            <div class="tac libSearch">
+                <div class="search-auto">
+                    <input id="category-autocomplete" class="bd ipt-txt" type="text" style="width: 280px;height:30px;box-sizing:border-box;">
+                </div>
+            </div>
+            <div class="libraryPtoDiv">
+                <!--<img src="../../images/images/bank_16.png" width="55" height="55">-->
+                <!--<h3>银行领域</h3>-->
+            </div>
+            <div class="item-line pl-30 mt-20">
+                <div class="value menu_1Div" id="menu_1Div">
+                    <div class="ipt-txt-box">
+                        <div class="aside-navs aside-navs-v show"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="libraryRth" style="width:720px;">
+            <div class="tac mt10" style="margin: 0; text-align: left">
+                <a class="btn btn-blue" ui-sref="botApply.manage">类目库套用</a>
+                <a class="btn btn-green ml15" href="javascript:;" ng-click="vm.batchUpload()">批量导入类目树</a>
+                <a class="btn btn-green2 ml15" href="javascript:;" ng-click="vm.exportAll()">导出类目库</a>
+            </div>
+            <div class="HierarchyCnt">
+                <p id="createMethod" class="mb-20 f16">新建</p>
+                <div>
+                    <span>类型: </span>
+                    <select id="category-type" class="bd">
+                        <option value=163>默认</option>
+                        <option value=161>流程</option>
+                        <option value=160>划分</option>
+                        <option value=162>属性</option>
+                    </select>
+                </div>
+                <div>
+                    <span>名称: </span>
+                    <input class="input_text" id="category-name" type="text"/>
+                    <p id="category-name-error" class="c-error pd-5" style="margin-left: 98px;"></p>
+                </div>
+                <div style="margin-top: 12px;">
+                    <span style="vertical-align: top;">描述: </span>
+                    <textarea class="input_text" id="category-describe" style="width: 420px;height: 78px;"></textarea>
+                    <p id="category-describe-error" class="c-error pd-5" style="margin-left: 98px;"></p>
+                </div>
+                <div class="tac mt10" style="text-align: left;padding-left: 105px;margin-top: 60px;">
+                    <a id="add" class="btn btn-blue" href="javascript:;" ng-click="vm.addBot()">保存</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

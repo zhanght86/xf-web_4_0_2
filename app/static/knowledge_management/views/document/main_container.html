@@ -1,0 +1,121 @@
+<!-- 主界面 -->
+<div class="know_manage wrap mb50" >
+    <div class="know_man_tit clearfix mb20">
+        <p class="current">文档加工</p>
+    </div>
+    <div class="bd doc_import">
+        <div class="doc_import_tit clearfix">
+            <a href="javascript:;" class="cur_p">任务分析</a>
+            <a ui-sref="back.template">模板配置</a>
+        </div>
+        <div class="proce_result p20">
+            <div class="proce_result_top clearfix mb15">
+                <a href="javascript:;" class="L know_import f16 c_blue" gateway-menu="file" >从文件导入知识</a>
+                <div class="R app_search mr20">
+                    <input type="text" class="input-text txt L" placeholder="文档名称" ng-model="paginationConf.searchName"/>
+                    <input type="button" class="btn L" value="检索" style="font-size:14px;padding:0" ng-click="vm.queryKnowDocList()"/>
+                </div>
+            </div>
+            <div class="proce_result_bot">
+                <table class="app_manage_tab">
+                    <tbody>
+                    <tr class="bold tr1">
+                        <td width="10%">序号</td>
+                        <td width="20%">文档名称</td>
+                        <td width="10%">上传人</td>
+                        <td width="10%">上传时间</td>
+                        <td width="10%">重复知识</td>
+                        <td width="10%">加工知识量</td>
+                        <td width="10%">操作</td>
+                    </tr>
+                    <tr ng-repeat="knowDoc in vm.knowDocs">
+                        <td>{{$index+1}}</td>
+                        <td class="c_blue cp" ng-if="knowDoc.documentationStatus == 9" ui-sref="back.doc_results_view({knowDocId:knowDoc.documentationId,knowDocCreateTime: knowDoc.documentationCreateTime,
+                    knowDocUserName: knowDoc.documentationCreater})" ng-bind="knowDoc.documentationName"></td>
+                        <td  ng-if="knowDoc.documentationStatus == 0 ||knowDoc.documentationStatus == 1||knowDoc.documentationStatus == 2 ||knowDoc.documentationStatus ==3" ng-bind="knowDoc.documentationName"></td>
+                        <td  ng-if="knowDoc.documentationStatus == undefine"></td>
+                        <td>{{knowDoc.documentationCreater}}</td>
+                        <td>{{knowDoc.documentationCreateTime|date:'yyyy-MM-dd'}}</td>
+                        <td ng-if="knowDoc.knowledgeRepetition == null">0</td>
+                        <td ng-if="knowDoc.knowledgeRepetition != null">{{knowDoc.knowledgeRepetition}}</td>
+                        <td ng-if="knowDoc.knowledgeSum == null">0</td>
+                        <td ng-if="knowDoc.knowledgeSum != null">{{knowDoc.knowledgeSum}}</td>
+                        <td><a href="javascript:;" ng-click="vm.deleteKnowDoc(knowDoc.documentationId)" class="c_red" ng-confirm="确认删除?">删除</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination ng-if="paginationConf.totalItems && paginationConf.totalItems>0" conf="paginationConf"></pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<!--遮罩层-->
+<span class="popup_span " style="display:none"></span>
+
+<div class="popup import_knowledge_popup import_from_txt" style="visibility:hidden; height: 450px; margin: -225px 0 0 -329px;">
+    <a href="javascript:;" class="close_btn f20" close-menu=""> × </a><!--添加文档弹窗-->
+    <h3 class="popup_h3 bold">从文件导入知识</h3>
+    <div class="popup_div">
+        <div class="db" style="">
+            <div class="mb10 clearfix">
+                <span class="L know_span">选择模板:</span>
+                <ol class="L" style="margin-top:6px">
+                    <li class="clearfix">
+                        <div  id="modelSelect" style="position:relative;width:167px;" class="L dn show">
+                            <input  placeholder="请选择解析模板" template-input type='text' class='template_inpt bd'/>
+                            <!--<a href="" class="refresh" ></a>-->
+                        </div>
+                        <div style="top: 96px;left: 130px;" template-con class='template_con dn'>
+                            <!--<span class="R">模板名称 : <input  type='text' class='template_search' ng-model="TemSearchPOJO.name"/></span>-->
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>模板名称</th>
+                                    <th>上传人</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="template in  vm.templates" on-render-finish="">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{template.templateName}}</td>
+                                    <td>{{template.templateCreater}}</td>
+                                    <td ng-show="false">{{template.templateId}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <pagination ng-if="temPaginationConf.totalItems && temPaginationConf.totalItems>0" conf="temPaginationConf"></pagination>
+                        </div>
+                    </li>
+
+                </ol>
+                <a type="button" style="display: none" id="modelAdd" class=" know_add_icon" ui-sref="back.createTemplate({isGo:true})"  target="_blank">创建模板</a>
+            </div>
+            <div class="mb10 clearfix" style="margin-top:16px">
+                <span class="L know_span">要加工的文档:</span>
+                <div class="L" style="width:484px">
+                    <div class="upload bd mb20" >
+
+                        <div id="filelist">
+                            <div class="file_title" style="padding: 5px;">
+                                <span class="name">文件名</span>
+                                <b class="progress">状态</b>
+                                <span class="size" style="right:113px">大小</span>
+                            </div>
+                            <div id="file_container" class="file_wrapper"></div>
+                            <div style="padding:10px">
+                                <input type="button" value="选择文件" class="upload_btn" id="pickfiles" plupload=""/>
+                                <!--<input type="button" value="上传文件" class="upload_btn" id="uploadfiles"/>-->
+                            </div>
+                        </div>
+                        <pre id="console" style="display: none;"></pre>
+                    </div>
+                    <div class="tc">
+                        <input type="button" id="uploadfiles" value="确定" class="btn1 btn_green  mr20"/>
+                        <input type="button" id="reset" value="重置" class="btn1 btn_green"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

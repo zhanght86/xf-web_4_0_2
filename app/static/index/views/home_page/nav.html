@@ -1,0 +1,355 @@
+
+<div class="homePageNav">
+    <div class="header clearfix">
+        <div class="logo">
+            <a ui-sref="HP.define"><strong>小富机器人控制台</strong><em class="edition">V4.0</em></a>
+            <!--<a ui-sref="homePage.define"><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>-->
+        </div>
+        <ul class="nav">
+            <li>
+                <a ui-sref="HP.define">首页</a>
+            </li>
+            <li>
+                <a ng-click="vm.logApplication()">应用管理</a>
+            </li>
+            <li >
+                <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="BM.bot">
+                            <i class="icon-nav icon-nav__icon-nav_jmzy"></i>
+                            <span>BOT</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="BM.frame">
+                            <i class="icon-nav icon-nav__icon-nav_lmgl"></i>
+                            <span>框架库</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="BM.concept">
+                            <i class="icon-nav icon-nav__icon-nav_gngl"></i>
+                            <span>概念库</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li >
+                <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="KM.overview">
+                            <i class="icon-nav icon-nav__icon-nav_zszl"></i>
+                            <span>知识总览</span>
+                        </a>
+                    </li>
+                    <li>
+                        <ul class="menu_1 menu_2 " style="min-height: 40%;">
+                            <li>
+                                <a ui-sref="KM.faq">
+                                    <span>FAQ知识新增</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="KM.concept">
+                                    <span>概念知识新增</span>
+                                </a>
+                            </li>
+                            <li>
+                          
+                                <a ui-sref="KM.list">
+                                    <span>列表知识新增</span>
+                                </a>
+                            </li>
+                            <li>
+                             
+                                <a ui-sref="KM.factor">
+                                    <span>要素知识新增</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="KM.richText">
+                                    <span>富文本知识</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="KM.dialogue">
+                                    <span>对话知识</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <a href="javascript:;">
+                            <i class="icon-nav icon-nav__icon-nav_zsjg"></i>
+                            <span>知识单条新增</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="KM.batch">
+                            <i class="icon-nav icon-nav__icon-zsplxz"></i>
+                            <span>知识批量新增</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="KM.document">
+                            <i class="icon-nav icon-nav__icon-wdjgxz"></i>
+                            <span>文档加工新增</span>
+                        </a>
+                    </li>
+                    <!--<li>-->
+                        <!--<a ui-sref="setting.releaseMan">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_zsfb"></i>-->
+                            <!--<span>知识发布</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_zssh"></i>-->
+                            <!--<span>知识审核</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a ui-sref="KM.history">
+                            <i class="icon-nav icon-nav__icon-nav_lsck"></i>
+                            <span>历史查看</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li >
+                <a href="javascript:;">测试功能<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="functionalTest.questionTest">
+                            <i class="icon-nav icon-nav__icon-nav_wfcs"></i>
+                            <span>问法测试</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="functionalTest.sessionTest">
+                            <i class="icon-nav icon-nav__icon-nav_ltcs"></i>
+                            <span>会话测试</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="functionalTest.batchTest">
+                            <i class="icon-nav icon-nav__icon-nav_plcs"></i>
+                            <span>批量测试</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="functionalTest.participle">
+                            <i class="icon-nav icon-nav_fcyy"></i>
+                            <span>分词应用</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li >
+                <a href="javascript:;">应用分析<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="applAnalysis.accessStatistics">
+                            <i class="icon-nav icon-nav__icon-nav_fwtj"></i>
+                            <span>访问统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="applAnalysis.knowledgeRanking">
+                            <i class="icon-nav icon-nav__icon-nav_zsdpm"></i>
+                            <span>知识点排名统计</span>
+                        </a>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_wpp"></i>-->
+                            <!--<span>未匹配问题统计</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_fltj"></i>-->
+                            <!--<span>分类统计</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a ui-sref="applAnalysis.sessionDetails">
+                            <i class="icon-nav icon-nav__icon-nav_hhmx"></i>
+                            <span>会话明细统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="applAnalysis.satisfactionDegree">
+                            <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
+                            <span>会话满意度统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="applAnalysis.resolutionStatistics">
+                            <i class="icon-nav icon-nav__icon-nav_fltj"></i>
+                            <span>问答解决率统计</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a ui-sref="applAnalysis.reinforcementLearn" style="border-top: 1px dashed #afafb8;">
+                            <i class="icon-nav icon-nav_zqxx" ></i>
+                            <span>智能学习</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="applAnalysis.newKnowledgeDiscoveryLearn">
+                            <i class="icon-nav icon-nav_xzzfx" ></i>
+                            <span>未匹配问题聚类</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a ui-sref="applAnalysis.operationLog" style="border-top: 1px dashed #afafb8;">
+                            <i class="icon-nav icon-nav_czrz" ></i>
+                            <span>操作日志</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="applAnalysis.sessionLog">
+                            <i class="icon-nav icon-nav_hhrz" ></i>
+                            <span>会话日志</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li >
+                <a href="javascript:;">素材管理<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="materialManagement.chatKnowledgeBase">
+                            <i class="icon-nav icon-nav__icon-nav_ltzsk"></i>
+                            <span>聊天知识库</span>
+                        </a>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_hxck"></i>-->
+                            <!--<span>寒暄词库</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a ui-sref="materialManagement.pictureLibrary">
+                            <i class="icon-nav icon-nav__icon-nav_tpk"></i>
+                            <span>图片库</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="materialManagement.teletextMessage">
+                            <i class="icon-nav icon-nav__icon-nav_twfxk"></i>
+                            <span>图文消息库</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="materialManagement.speechLibrary">
+                            <i class="icon-nav icon-nav__icon-nav_wdk"></i>
+                            <span>语音库</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="materialManagement.documentLibrary">
+                            <i class="icon-nav icon-nav__icon-nav_wdk"></i>
+                            <span>文档库</span>
+                        </a>
+                    </li>
+                    <!--<li >-->
+                        <!--<a ui-sref="deepLearning.dataAcquisition" style="border-top: 1px dashed #afafb8">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_sjcj"></i>-->
+                            <!--<span>自动导入更新</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                </ul>
+            </li>
+            <li >
+                <a href="javascript:;">深度学习<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="deepLearning.deeplearnConfig">
+                            <i class="icon-nav icon-nav__icon-nav_mxgj"></i>
+                            <span>模型构建</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="deepLearning.deepLearningCon">
+                            <i class="icon-nav icon-nav__icon-nav_mxxl"></i>
+                            <span>模型训练</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="deepLearning.similarityCalculation">
+                            <i class="icon-nav icon-nav__icon-nav_mxcs"></i>
+                            <span>模型测试</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a ui-sref="deepLearning.dataAcquisition" style="border-top: 1px dashed #afafb8">
+                            <i class="icon-nav icon-nav__icon-nav_sjcj"></i>
+                            <span>自动导入更新</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li >
+                <a href="javascript:;">系统监控<i class="nav-more nav-more__nav-more"></i></a>
+                <ul class="menu_1">
+                    <li>
+                        <a ui-sref="systemMonitoring.resource">
+                            <i class="icon-nav icon-nav__icon-nav_mxgj"></i>
+                            <span>资源监控</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="systemMonitoring.service">
+                            <i class="icon-nav icon-nav__icon-nav_mxgj"></i>
+                            <span>服务监控</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="header-r">
+            <div class="user-admin mr-20">
+                <a class="user-name" href="javascript:;"><i></i><span>{{vm.userName}}</span></a>
+                <div class="ua-menu_1-box">
+                    <ul class="ua-menu_1">
+                        <li>
+                            <a ui-sref="HP.permission">
+                                <i class="icon-header-r icon-header-r__h-r1"></i>
+                                <span>权限管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="HP.management">
+                                <i class="icon-header-r icon-header-r__h-r2"></i>
+                                <span>切换应用</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <i class="icon-header-r icon-header-r__h-r3"></i>
+                                <span ng-click="vm.loginout()">退出登录</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mail-conver" style="margin-left:0;">
+                <!--<a ui-sref="KM.historyView" class="mail">-->
+                    <!--&lt;!&ndash;<em>2</em>&ndash;&gt;-->
+                <!--</a>-->
+                <a  class="conver" ng-click="vm.queryServiceList()"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="crumbs-nav bgwhite mt20  warp" ng-show="checkShowCrumbs()">
+    <span class="cn-lable">你曾经路过此地：</span>
+
+    <span class="cn-value" ng-repeat="crumb in crumbs track by $index">
+        <a class="cn-a" ui-sref="{{crumb.url}}" ng-bind="crumb.name"></a>
+        <i class="close" ng-hide="checkShowClose(crumb.url)" ng-click="closeCrumb($index)" >x</i>
+    </span>
+</div>

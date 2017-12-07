@@ -1,0 +1,34 @@
+<div class=""  >
+    <h3 class="f16 mb-20 tc">添加黑名单</h3>
+    <form  method="post" class="form form-horizontal" >
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-2">标识：</label>
+            <div class="formControls col-xs-9 col-sm-9">
+                <input ng-model="vmo.blackListIdentify" type="text"  class="input-text" placeholder="124.42.103.131"/>
+            </div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-2">渠道：</label>
+            <div class="formControls col-xs-9 col-sm-9">
+                <select class="input-text" value="x.channelName" ng-init="vmo.channelId = vmo.channelList[0].channelCode"
+                        ng-model="vmo.channelId"
+                        ng-options="x.channelCode as x.channelName for x in vmo.channelList">
+                </select>
+            </div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3 col-sm-2">备注：</label>
+            <div class="formControls col-xs-9 col-sm-9">
+                <textarea class="textarea" ng-model="vmo.blackListRemark"></textarea>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input type="submit" class="btn1 btn1_blue mr-15 ml-10"
+                       ng-click="vmo.addBlackListCheck()" value="确认"/>
+                <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+            </div>
+        </div>
+    </form>
+</div>

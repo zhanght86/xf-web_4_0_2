@@ -1,0 +1,308 @@
+.resetH70{
+  height: 70px;
+}
+.ng-red{
+  color: red !important;
+}
+.ng-blue{
+  color: blue!important;
+}
+.mileVs{
+  visibility: hidden;
+}
+.bgE3{
+  background: #e3e3e3!important;
+}
+.bg50:hover{
+  background: #505767!important;
+  color: #fff!important;
+}
+.borderN{
+  outline: 0;
+  border: 0;
+}
+
+//叶子节点
+.bot-leaf{
+  display : none ;
+}
+.bot-noBg{
+  background-image:none!important;
+}
+//中间节点
+.bot-edge{
+  display: inline-block;
+  position: relative;
+  top: -1px;
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  background-position: left top;
+  background-repeat: no-repeat;
+}
+
+/*
+      160 划分
+      161 流程
+      162 属性
+      163 默认
+*/
+.bot-divide{
+  background-image: url(../../images/pic-navs-lc.png);
+}
+.bot-process{
+  background-image: url(../../images/pic-navs-sx.png);
+}
+.bot-attr{
+  background-image: url(../../images/pic-navs-dy.png);
+}
+.bot-default{
+  background-image: url(../../images/pic-navs-lc.png);
+}
+
+//@Bred{
+//  color: red
+//
+//}
+.textIndent10{
+  text-indent: 10px;
+}
+@width100:100px;
+.type1 .icon-ngJj{
+  //position: relative;
+  //top: -1px;
+  //margin-right: 5px;
+  //width: 15px;
+  //height: 15px;
+  //display: inline-block;
+  //vertical-align: middle; background-position: left top;
+  //background-repeat: no-repeat;
+  //background-image:url(../../images/pic-navs-lc.png);
+}
+
+.type2 .icon-ngJj{
+  position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; display: inline-block; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png)
+}
+/*************************      uploader  **************************************/
+.upWrapper{
+  width:400px
+}
+.miles-progress{
+  width: 256px;
+  height: 26px;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #e1e1e1;
+  border-radius: 100px;
+  z-index: 9999;
+  .miles-progressBar{
+    height: 100%;
+    background: url("../../images/ng/progress.png") repeat ;
+  }
+}
+
+
+
+/*************************      uploader  **************************************/
+/*************************      autocomplete  **************************************/
+.miles-autoBar{
+  width: 421px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  .miles-container{
+    width: 100%;
+    border: 1px solid #ccc;
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 20px;
+    padding: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    overflow: hidden;
+    .miles-autoInput{
+      background: transparent;
+      border: 0;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      color: #000;
+      float: left;
+      font-size: 16px;
+      height: 20px;
+      line-height: 20px;
+      margin: 0px 0;
+      outline: 0;
+      padding: 0;
+      vertical-align: middle;
+      width: 120px;
+      position:relative;
+    }
+    .miles-resultItem{
+      line-height: 18px;
+      background: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      float: left;
+      margin: 2px 4px;
+      padding: 0px 6px;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      border-radius: 6px;
+      .miles-remove{
+        font-size: 11px;
+        margin-right: 2px;
+      }
+    };
+  }
+  .miles-dropDown{
+    background: #e3e3e3;
+    border: 1px solid #ccc;
+    margin: 2px 0 0 0;
+    max-height: 300px;
+    min-width: 140px;
+    overflow-x: visible;
+    overflow-y: auto;
+    padding: 0;
+    position: absolute;
+    z-index: 10;
+    .miles-item{
+      line-height: 18px;
+      background: #f9f9f9;
+      color: #333;
+      border-bottom: 1px solid #d8d8d8;
+      font-size: 13px;
+      list-style: none;
+      margin: 0;
+      padding: 4px;
+      cursor: pointer;
+    };
+    .miles-item:hover{
+      background: #00519d;
+      color: #fff;
+    }
+  }
+}
+
+/*.miles-autoBar .miles-container .miles-placeholder{*/
+/*color: #777;*/
+/*float: left;*/
+/*font-size: 16px;*/
+/*line-height: 20px;*/
+/*margin: 10px 0 0 0;*/
+/*}*/
+
+
+/*************************      autocomplete  **************************************/
+// 客服知識總覽
+.custOver{
+  .cust_searchModel{
+    width: 280px;    font-size: 14px;
+    height: 31px;
+    line-height: 1.42857;
+    padding: 4px;
+    border: 1px solid #e3e3e3;
+  }
+  .cust_searchTip{
+    position: absolute;width: 19px;
+    height: 19px;
+    display: block;
+    right: 10px;
+    top: 50%;
+    margin-top: -10px;
+    cursor: pointer;
+    background: url(../../images/images/icon-search_03.png) no-repeat right center;
+  }
+}
+.sideBotFullPath{
+  border-bottom: 1px solid #dadada;
+  .fullpath{
+    border-top: 1px solid #dadada;
+    margin-top: -1px;
+    line-height: 48px;
+    display: block;
+    position: relative;
+    font-size: 14px;
+    color: #666;
+    padding-left: 20px;
+  }
+}
+.botPathactiveMouse{
+  background: #505760;
+  color: #fff;
+}
+.botPathactiveClick{
+  background: #505760;
+  color: #fff!important;
+}
+//营销知识总览
+.markOver{
+  .cust_searchModel{
+    width: 280px;    font-size: 14px;
+    height: 31px;
+    line-height: 1.42857;
+    padding: 4px;
+    border: 1px solid #e3e3e3;
+  }
+  .cust_searchTip{
+    position: absolute;width: 19px;
+    height: 19px;
+    display: block;
+    right: 10px;
+    top: 50%;
+    margin-top: -10px;
+    cursor: pointer;
+    background: url(../../images/images/icon-search_03.png) no-repeat right center;
+  }
+}
+//******************************* 2017/7/14 BEGIN ***************************//
+//FOR  营销知识新增
+//变量区域
+@fontSize : 10px ;
+@lineBlock : inline-block ;
+@prect : 1.0 ;
+
+.borderNone{
+  border : none;
+};
+.miles-textArea-container{
+  width: percentage(@prect);
+  height: @fontSize*20;
+  border: 1px solid #e1e1e1;
+  padding:@fontSize/2;
+  .miles-textArea{
+    border : none ;
+    height: @fontSize*15;
+    width: percentage(@prect);
+  }
+}
+.emotion{
+  width: @fontSize*4;
+  height: @fontSize*2;
+  background: url(../../images/emotion.gif) no-repeat @fontSize/5 @fontSize/5;
+  padding-left: @fontSize*2.4;
+  cursor: pointer;
+  //display: @lineBlock;
+  //width: @fontSize+8;
+  //height: @fontSize+8 ;
+  //background: url(../../images/emotion.gif);
+  //filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/emotion.gif',sizingMethod='scale')
+}
+
+
+//******************************* 2017/7/14 END ***************************//
+.cur-point{
+  cursor: pointer;
+}
+.cur-disable{
+  cursor: not-allowed;
+}

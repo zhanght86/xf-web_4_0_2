@@ -1,0 +1,28 @@
+<div class="login-cont">
+    <div class="login-box">
+        <div class="hd">
+            <img class="log-logo" src="../../images/images/log-logo.png"/>
+            <span>小富机器人控制平台</span>
+            <em>V4.0</em>
+        </div>
+        <div class="bd" style="border: 0;">
+            <h3 class="title">登 &nbsp;录</h3>
+            <div class="from-box">
+                <div class="item">
+                    <input class="login-ipt-box textIndent10" ng-model="vm.userName" autofocus ng-keydown="vm.keyLogin($event)" type="text" placeholder="用户名"/>
+                </div>
+
+                <div class="item">
+                    <input class="login-ipt-box textIndent10"  type="password" ng-keydown="vm.keyLogin($event)" ng-model="vm.password" placeholder="密码" />
+                </div>
+                <!--<div class="item">-->
+                    <!--<input class="login-ipt-box textIndent10" style="width: 216px;" ng-keydown="vm.keyLogin($event)" ng-model="vm.randomNumberValue" type="text" placeholder="验证码" />-->
+                    <!--<span class="yzm"  ng-click="vm.randomNumberChange()">{{vm.randomNumber}}</span>-->
+                <!--</div>-->
+                <div class="tac">
+                    <span  class="login-btn"   ng-click="vm.login()">登录</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

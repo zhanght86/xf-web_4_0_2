@@ -1,0 +1,56 @@
+<div class="wrap deelLearing " style="margin-top:10px;" xmlns="http://www.w3.org/1999/html">
+    <div class="pd-20 bg_white" >
+        <p class="f22 bold mb-20">Train & Watch</p>
+    </div>
+    <div class="pd-30 clearfix" style="background:#fff;">
+        <div class="L mr-30 " style="width:300px;">
+            <div class="mb-10 pd-20 bd"style=" position: relative;">
+                <span class="bg_white p5 f-15 bold" style="position: absolute;top:-17px;">Model Training</span>
+                <div class="framework mb-30 mt-20">
+                    <span class="framework_s mt-5">Model Name</span>
+                    <!--{{vm.listName}}-->
+                    <!--ng-options="color.name for color in colors" -->
+                    <!--ng-option="item.name for item in vm.listName"-->
+                    <select class="bd" ng-model="vm.name" style="height: 31px;width: 123px;">
+                        <!--<select class="bd" ng-model="vm.name">-->
+                        <option  ng-repeat="item in vm.listName" value="{{item.name}}">{{item.name}}</option>
+                        <!--<option>测试12</option>-->
+                    </select>
+                </div>
+                <div class="framework mb-30">
+                    <span class="framework_s mt-5">Samples per Epoch</span>
+                    <input type="text" class="input-text bd"  placeholder="1024" ng-model="vm.samples"/>
+                </div>
+                <div class="framework mb-30">
+                    <span class="framework_s  mt-5">Epoches</span>
+                    <input type="text" class="input-text bd" placeholder="10" ng-model="vm.epoches"/>
+                </div>
+                <div class="framework mb-30">
+                    <span class="framework_s  mt-5">Checkpoint Interval</span>
+                    <input type="text" class="input-text bd" placeholder="10" ng-model="vm.checkpoint"/>
+                </div>
+
+            </div>
+        </div>
+        <div class="L mt70" style="width:130px;">
+            <input type="button" id="train" ng-disabled="{{vm.isDisabled}}" class="mb-30 btn1 btn1_blue w100" ng-click="vm.train()" value="Train"/>
+            <input type="button" id="trainTerminal" class="mb-30 btn1 btn1_blue w100" ng-click="vm.trainTerminal()" value="Terminate"/>
+            <!--<button class=" btn1 btn1_blue w100" onclick="trainProcess()">Process</button>-->
+        </div>
+        <div class="L" style="width:680px;">
+            <div class="mb-10 pd-20 bd"style=" position: relative; ">
+                <span class="bg_white p5 f-15 bold" style="position: absolute;top:-17px;">Model Training</span>
+                <div class="framework mt-10">
+                    <span class="framework_s ml-5">Process</span>
+                    <div class="bar_div " w="0"></div>
+                    <div style="position:relative;" id="scale"></div>
+                </div>
+                <div class="framework mt-30">
+                    <span class="framework_s ml-5">ElapsedTime</span>
+                    <div class="fb use_time"></div>
+                </div>
+                <div class="echart_div"  id="access_echart_div2" style="width:640px;height:400px;padding:0"></div>
+            </div>
+        </div>
+    </div>
+</div>

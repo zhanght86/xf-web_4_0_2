@@ -1,0 +1,36 @@
+<div class="wrap dataAcquisition" style="margin-top:10px;">
+    <div class="pd-30" style="background:#fff;">
+        <p class="f16 bold mb-20">Model Design</p>
+        <div class="mb-20">
+            <span class="mr-10">
+                                               Name:
+                <input type="text" ng-model="vm.name" class="input-text" style="width:185px;" placeholder="Name" >
+             </span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.search()" value="Search" />
+            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.create()" value="Create" />
+        </div>
+        <div class="tab_div">
+            <table class="tab">
+                <tr>
+                    <td width="20%" style="font-weight:bold;">Name</td>
+                    <td width="40%" style="font-weight:bold;">Create Time</td>
+                    <td width="20%" style="font-weight:bold;">Operation</td>
+                </tr>
+                <tbody ng-repeat="item in vm.listData">
+	                <tr>
+	                    <td>{{item.name}}</td>
+	                    <td>{{item.savetime}}</td>
+	                    <td>
+	                    	<a href="javascript:;" class="mr-10 c-blue" ng-click="vm.editOrView(item, 0)">View</a>
+	                        <a href="javascript:;" class="mr-10 c-orange" ng-click="vm.editOrView(item, 1)">Edit</a>
+	                        <a href="javascript:;"  class="mr-10 c-red" ng-click="vm.del(item.name)">Delete</a>
+	                    </td>
+	                </tr>
+                </tbody>
+            </table>
+             
+            <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+        </div>
+    </div>
+</div>

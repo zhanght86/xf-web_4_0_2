@@ -1,0 +1,43 @@
+<div class="pd-10 knowPopup"  style="width: 100%;" >
+    <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
+    <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
+        <form action="" name="form" novalidate>
+            <textarea name="title" ng-model="vm.newTitle" required></textarea>
+        </form>
+       <div know-content-configuration="{{vm.apiQueryRelatedQuestion}}" template-type="true">
+       </div>
+        <div class="tc mb-10">
+            <input  value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="vm.increaseCheck()" >
+            <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>
+        </div>
+    </div>
+</div>
+
+<!--<style>-->
+    <!--#search_bar{-->
+        <!--width: 421px;-->
+    <!--}-->
+    <!--.addPopup {-->
+        <!--height: 500px-->
+    <!--}-->
+    <!--.ngdialog.ngdialog-theme-default .ngdialog-content {-->
+        <!--width: 650px;-->
+    <!--}-->
+    <!--.addPopupCnt{-->
+        <!--margin-left: 22px;-->
+    <!--}-->
+<!--</style>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+

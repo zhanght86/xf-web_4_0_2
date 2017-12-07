@@ -1,0 +1,38 @@
+/**
+ * @Author : MILES .
+ * @Create : 2017/12/5.
+ * @Module :  应用管理模块 ， 加载依赖
+ */
+module.exports = angular => {
+    const applicationManagementModule = angular.module('applicationManagementModule', []);
+    //--------------------------------------------------
+    //          controller
+    //--------------------------------------------------
+    // 应用信息
+    require('../controllers/info/_application_info.controller')(applicationManagementModule);           // 应用信息
+    require('../controllers/info/_backup_restore.controller')(applicationManagementModule);             // 备份还原
+    // 应用配置
+    require('../controllers/configuration/_authorization_management.controller')(applicationManagementModule); // 授权管理
+    require('../controllers/configuration/_channel_manage.controller')(applicationManagementModule);           // 渠道管理
+    require('../controllers/configuration/_hot_knowledge_setup.controller')(applicationManagementModule);      // 热点知识设置
+    require('../controllers/configuration/_manual_setting.controller')(applicationManagementModule);           // 授权管理
+    require('../controllers/configuration/_parameter_setup.controller')(applicationManagementModule);          // 授权管理
+    require('../controllers/configuration/_robot_setup.controller')(applicationManagementModule);              // 授权管理
+    require('../controllers/configuration/_scene_manage.controller')(applicationManagementModule);             // 授权管理
+    // 应用发布
+    require('../controllers/release/_node_manage.controller')(applicationManagementModule);             // 节点管理
+    require('../controllers/release/_release_manage.controller')(applicationManagementModule);          // 发布管理
+    //--------------------------------------------------
+    //          server
+    //--------------------------------------------------
+    require('../server/_application.server')(applicationManagementModule);
+    //--------------------------------------------------
+    //         directive
+    //--------------------------------------------------
+    require('../directive/_check_service_name.direvtive')(applicationManagementModule);                 //  验证服务名称
+    require('../directive/_verify_application_name.directive')(applicationManagementModule);            // 验证应用名称
+    require('../directive/_verify_node.directive')(applicationManagementModule);                        // 验证节点名称
+} ;
+
+
+

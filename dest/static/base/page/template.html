@@ -1,0 +1,10 @@
+<div class="paging">
+    <div class="fr">
+        <ul class="fl">
+            <li ng-class="{disabled: conf.currentPage == 1}"><a class="prev" href="javascript:void(0);" ng-click="prevPage()"></a></li>
+            <li style="cursor:pointer" ng-repeat="item in pageList track by $index"><a ng-class="{active: item == conf.currentPage}" ng-click="changeCurrentPage(item)">{{item}}</a></li>
+            <li><a class="next" href="javascript:void(0);" ng-click="nextPage()"></a></li>
+        </ul>
+        <span class="paging-tj fl">共<span ng-bind="conf.numberOfPages"></span>页，跳至<input class="paging-page" type="text" ng-keypress="jumpToPage($event)" ng-model="jumpPageNum" ng-keyup="checkInput($event)"/>页</span>
+    </div>
+</div>

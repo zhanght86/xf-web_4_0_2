@@ -1,0 +1,29 @@
+<div class="warp " style="margin:20px auto;">
+    <h3 class="f16 mb-20">文档结果查看</h3>
+    <button class="btn1 btn_delete mb-10" ng-click="vm.knowIgnoreAllConfirm()">全部忽略</button>
+    <button class="btn1 mb-10" ng-click="vm.knowAddAll()">全部添加</button>
+    <div style="background:#fff;" ng-model="docDetail">
+        <ul class="doc_listul bd" style="border-bottom:0;">
+            <li ng-repeat="knowDoc in  knowItems" on-render-finish="" style="border-bottom:1px solid #eee;padding:20px 30px;margin-botton:10px;">
+                <p class="mb-10"><a href="javascript:;" class="c-primary f16"><b>知识标题：</b>{{knowDoc.knowledgeTitle}}</a></p>
+                <div class="mb-10 pr" style="padding-left:80px;">
+                    <b class="pa" style="left:0;top:0;">知识内容：</b>
+                    <div style="width:100%;height:30px;overflow: hidden; text-overflow:ellipsis; white-space:nowrap;">
+                        <a href="javascript:;" title="{{ knowDoc.knowledgeContent }}">{{knowDoc.knowledgeContent}}</a>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="L">
+                        <span class="mr-20"><span>作者：</span>{{knowDocUserName}}</span>
+                        <span class="mr-20"><span>加工时间：</span>{{knowDocCreateTime|date:'yyyy-MM-dd'}}</span>
+                    </div>
+                    <div class="R">
+                        <button class="btn1 btn_delete mr-20" ng-click="vm.knowIgnoreConfirm(knowDoc.knowledgeId)">忽略该条知识</button>
+                        <button class="btn1 btn1_blue" ng-click="vm.addKnowClass(knowDoc.knowledgeId, knowDoc.knowledgeTitle, knowDoc.knowledgeContent)">添加该条知识</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <pagination ng-if="paginationConf.totalItems && paginationConf.totalItems>0" conf="paginationConf"></pagination>
+    </div>
+</div>

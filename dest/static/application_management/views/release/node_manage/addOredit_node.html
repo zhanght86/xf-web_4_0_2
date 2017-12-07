@@ -1,0 +1,87 @@
+<div class="pd-20" >
+    <div class="framework mb-10">
+        <span class="framework_s">访问地址：</span>
+        <form name="myNode" class="css-form" novalidate>
+        <div>
+            <input type="text"  class="input-text"  placeholder="请输入IP"
+                   ng-model="vm.nodeAccessIp" name="accessIp" check-ip="accessIp"/>
+        </div>
+        <div class="c-red " style="display:block;"
+             ng-show="myNode.accessIp.$error.unique">{{vm.errorTip}}</div>
+        </form>
+    </div>
+    <div class="framework mb-10" ng-if="vm.statusId!=60002">
+        <span class="framework_s">状态：</span>
+        <div>
+            <label class="mr-10" ng-repeat="statusItem in vm.statusData" ng-init="vm.statusId=vm.statusData[0].statusId">
+                <input type="radio" name="status" ng-checked="vm.statusId==statusItem.statusId"
+                       ng-click="vm.statusId=statusItem.statusId"/> {{statusItem.statusName}}
+            </label>
+
+        </div>
+    </div>
+    <div class="framework mb-10">
+        <span class="framework_s">节点类型：</span>
+        <div class="node_div">
+            <label class="mr-10" ng-repeat="typeItem in vm.typeData" ng-init="vm.nodeType=vm.typeData[0].statusId">
+                <input type="radio" name="style" ng-checked="vm.nodeType==typeItem.statusId"
+                       ng-click="vm.nodeType=typeItem.statusId"/> {{typeItem.statusName}}
+            </label>
+        </div>
+    </div>
+    <div class="mb-20 node_style_div">
+        <div ng-if="vm.nodeType==200">
+            <div class="framework mb-10">
+                <span class="framework_s">节点ID：</span>
+                <form name="myNodeId" class="css-form" novalidate>
+                <div>
+                    <input type="number"  class="input-text mr-10"
+                           ng-model="vm.nodeId" name="nodeId" check-node="nodeId"
+                           placeholder="请输入节点Id" style="width:180px;"/>
+                </div>
+                <div class="c-red " style="display:block;"
+                     ng-show="myNodeId.nodeId.$error.unique">{{vm.errorNodeIdTip}}</div>
+                </form>
+            </div>
+        </div>
+        <div class="node_style_div2" ng-if="vm.nodeType==201">
+            <div class="mb-10">
+                <span class="mr-10">节点ID:</span>
+                <input type="number" ng-model="vm.subNodeId" placeholder="请输入节点Id" class="input-text bd mr-10" style="width:140px;"/>
+                <span class="mr-10">节点IP:</span>
+                <input type="text" ng-model="vm.subNodeAccessIp" placeholder="请输入节点访问地址" class="input-text bd mr-10" style="width:140px;"/>
+                <a href="javascript:;" ng-click="vm.addSubNode(vm.subNodeId,vm.subNodeAccessIp);"><img src="../../images/images/add_img.png " /></a>
+            </div>
+            <div class="mb-10" ng-repeat="node in vm.nodes track by $index">
+                <span class="mr-10">节点ID:</span>
+                <input type="number" value="{{node.nodeId}}" class="input-text bd mr-10" style="width:140px;" readonly/>
+                <span class="mr-10">节点IP:</span>
+                <input type="text" value="{{node.nodeAccessIp}}" class="input-text bd mr-10" style="width:140px;" readonly/>
+                <a href="javascript:;" ng-click="vm.nodes.remove(node);vm.removeOldSubNode(node)"><img src="../../images/images/delete_img.png " /></a>
+            </div>
+        </div>
+    </div>
+    <div class="text-c">
+        <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="确认"/>
+        <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+    </div>
+</div>
+<style>
+    .ngdialog.ngdialog-theme-default .ngdialog-content {
+        width: 550px;
+    }
+</style>
+<script>
+    $('.node_div label').click(function(){
+        alert(1);
+        $('.node_style_div').children('div').eq($(this).index()).css('display','block').siblings().css('display','none');
+    });
+
+    function addNode(){
+        var str='<div class="mb-10"><span class="mr-10">节点ID:</span> <input type="text" placeholder="2002" class="input-text bd mr-10" style="width:140px;"/> <span class="mr-10">节点IP:</span> <input type="text" placeholder="64.28.56.129" class="input-text bd mr-10" style="width:140px;"/> <a href="javascript:;" onclick="deleteNode(this)"><img src="../../images/images/delete_img.png " /></a></div>'
+        $('.node_style_div2').append(str);
+    }
+    function deleteNode(obj){
+        $(obj).parent().remove();
+    }
+</script>

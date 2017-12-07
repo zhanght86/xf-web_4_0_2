@@ -1,0 +1,43 @@
+<div class="pd-20" >
+    <div class="mb-10">
+        <p>{{vm.currQuestion}}</p>
+    </div>
+    <div class="text-c mb-10">
+        <input type="text" id="inputValue" ng-model="inputValue" style="width: 316px;" ng-keydown="vm.keyLogin($event)" class="input-text txt_corre" />
+        <input type="button" value="查找" ng-click="vm.searchByKnowledgeTitle(1)" class="btn1"/>
+    </div>
+    <div>
+        <table class="access_amount_table">
+            <thead>
+                <tr>
+                    <th width="20%"></th>
+                    <th width="80%" class="text-c">知识标题</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr role="row" class="odd" ng-repeat="item in vm.knowledgeList">
+                    <td ng-if="$index==0"><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}" checked="checked"></td>
+                    <td ng-if="$index!=0"><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}"></td>
+                    <td>{{item.knowledgeTitle}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination ng-if="vm.paginationConf2.totalItems && vm.paginationConf2.totalItems>0" conf="vm.paginationConf2"></pagination>
+    <div class="framework mb-10 pt-10">
+        <span class="framework_s text-r"></span>
+        <div class="">
+            <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
+            <input type="button" class="btn1 btn_green" ng-click="closeThisDialog(0)" value="返回"/>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+
+
+
+
+
+

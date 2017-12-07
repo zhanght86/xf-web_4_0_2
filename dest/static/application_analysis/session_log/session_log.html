@@ -1,0 +1,72 @@
+<div ui-view="header"></div>
+
+<div class="wrap session_log">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+
+            <div class="con_box mb25 p30 mt10" style="min-height:500px;">
+                <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 200px;">
+                    <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
+                        <option value="0">全部时间</option>
+                        <option value="1">今日</option>
+                        <option value="2">昨日</option>
+                        <option value="3">过去7天</option>
+                        <option value="4">过去30天</option>
+                    </select>
+                    <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
+                        <option value="">全部渠道</option>
+                    </select>
+                    <!--<select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
+                        <!--<option value="">全部维度</option>-->
+                    <!--</select>-->
+                    <span>
+                        日期范围:
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                            -
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                    </span>
+                    <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找" />
+                </div>
+                <div class="cl mb-10">
+                    <b class="l f-14">用户会话日志</b>
+                    <p class="r f-12 c-999" style="display: none;">共有数据<span id="total">{{vm.listData.total}}</span>条</p>
+                </div>
+                <div>
+                    <table class="access_amount_table" id="user_session_statistic">
+                        <thead>
+                        <tr>
+                            <th width="35%">用户名</th>
+                            <th width="25%" id="sessionCountOrder">会话数量<span sort ng-click="vm.orderForSessionNumber=vm.orderForSessionNumber?0:1"></span> </th>
+                            <th width="25%" id="sessionTimeOrder">会话时间 <span sort ng-click="vm.orderForSessionTime=vm.orderForSessionTime?0:1"></span></th>
+                            <th width="15%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr role="row" class="odd" ng-repeat="item in vm.listData.objs">
+                            <td>{{item.userId}}</td>
+                            <td>{{item.sessionNumber}}</td>
+                            <td>{{item.sessionTime | limitTo:19}}</td>
+                            <td><a href="javascript:;" class="c-green" ng-click="vm.scan(item.userId)">查看</a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="text-r pt-10">
+                        <button class="btn1 btn_green" ng-click="vm.exportExcel()">导出表格</button>
+                    </div>
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+
+
+
+
+
+

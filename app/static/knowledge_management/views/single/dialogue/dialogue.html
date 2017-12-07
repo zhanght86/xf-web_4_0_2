@@ -1,0 +1,167 @@
+<div class="wrap process_know">
+    <div class="content_wrap page-container" style="padding:0;">
+        <div class="wrap mb30">
+            <div class="content_box mb25 mt10 pr">
+                <div class="mb-20">
+                    <h3 class="f22 mb15" ng-bind="!vm.knowledgeId?'流程型知识新增':'流程型知识编辑'"></h3>
+                </div>
+                <div class="pr">
+                    <div class="pl50">
+                        <button class="btn1 btn1_blue mb30" id="addNode" ng-click="vm.newIndex = vm.flowKnowledgeContentList.length;vm.resetParams()" is-arrow-show="1">新增节点</button>
+                        <button class="btn1 btn1_blue mb30"  ng-click="vm.addNewKnow()" ng-disabled="!vm.flowKnowledgeContentList.length">保存</button>
+                        <div>
+                            <div class="pl20 clearfix">
+                                <div class="clearfix " id="node_box_wrap" style="min-height: 444px;padding-bottom:100px;">
+
+                                    <div class=" node_box_wrap pt50"  ng-repeat="item in vm.flowKnowledgeContentList track by $index" ng-class="{'first':$first,'last':$last}" >
+                                        <div class="node_box pr" >
+                                            <img src="../../../images/node_icon3.jpg" class="node_img" ng-hide="$first&&$last"/>
+                                            <h3 class="f18 bold mb10 cp" ng-bind="item.nodeName" ng-click="vm.editNode(item,$index)" is-arrow-show="1"></h3>
+                                            <p class="f14 mb30 c-666" ng-bind="item.triggerValueOfTitle"></p>
+                                            <p class="c-999" ng-bind="item.triggerKnowledgeOfTitle"></p>
+                                            <div class="node_box_div clearfix" is-operation-show="0">
+                                                <a href="javascript:;" class="node_right pa pd-5"></a>
+                                                <ul class="node_box_ul p15 clearfix pa">
+                                                    <li ng-click="vm.newNode($index)">在上方新建节点</li>
+                                                    <li ng-click="vm.newNode($index+1)">在下方新建节点</li>
+                                                    <li ng-click="vm.moveUp($index)" ng-if="!$first">向上移动</li>
+                                                    <li ng-click="vm.moveDown($index)" ng-if="!$last">向下移动</li>
+                                                    <!--<li ng-click="vm.flowKnowledgeContentList.splice($index,1);vm.bindingNodeChange(0,$index)" class="c-red">删除</li>-->
+                                                    <li ng-click="vm.deleteNode($index,1,0)" class="c-red">删除</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left:75px;" ng-if="item.actionType==0 || (item.actionType==2&&item.contentSubsequentList[0].nodeNo!=null) || item.actionType==1">
+                                            <!--<div class="node_top"></div>-->
+                                            <ol class="node_ol clearfix">
+                                                <li class="f14 c_blue last" ng-if="item.actionType==0" ng-bind="'等待用户输入'" style="max-width: 320px"></li>
+                                                <li class="f14 c_blue" ng-class="$last?'last':''" ng-if="item.actionType==2&&action.nodeNo!=null"  ng-repeat="action in item.contentSubsequentList track by $index" style="max-width: 320px">
+                                                    跳转到节点:{{action.nodeNo | showNodeName:vm.flowKnowledgeContentList}}
+                                                </li>
+                                                <li class="f14 c_blue" ng-class="$last?'last':''" ng-if="item.actionType==1" title="{{action.answer}}"  ng-repeat="action in item.contentSubsequentList track by $index" ng-bind="'命中答案-'+action.answer" style="max-width: 320px;">
+                                                    命中答案-{{action.answer}}跳转到:{{action.nodeNo | showNodeName:vm.flowKnowledgeContentList}}
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--右侧-->
+                <div class="right_popup pa">
+                    <a href="javascript:;" class="arrow pa act" name="editList" is-arrow-show="2"></a>
+                    <div class="right_popup_div clearfix " >
+                        <a href="javascript:;" class="clase_a pa" is-arrow-show="0" ng-click="vm.resetParams()">×</a>
+                        <div style="width:100%;height:100%;border-bottom: 1px solid #e5e9ec;padding: 100px 10px 0 50px;" >
+                            <div class="mb-50 framework" style="padding-left:80px;">
+                                <span class="framework_s">节点名称 :</span>
+                                <input type="text" class="txt txt_l bd" ng-model="vm.nodeName"  style="width: 260px;" placeholder="请输入节点名称"/>
+                            </div>
+                            <div>
+                                <div class="mb-50 framework" style="padding-left:80px;">
+                                    <span class="framework_s">触发条件 :</span>
+                                    <input type="text" class="txt txt_l bd_bot"  id="knowTitle" ng-show="vm.triggerCondition==0||vm.triggerCondition==3" ng-focus="vm.triggerCondition=3" ng-blur="vm.inputBlur()" placeholder="请输入BOT或知识标题" style="width:260px"/>
+                                    <div class="bd p20 trigger_condition" ng-show="vm.triggerCondition==3" >
+                                        <p class="mb10">请选择</p>
+                                        <ul>
+                                            <li class="" ng-click="vm.triggerCondition=1">BOT  可以添加多个意图类</li>
+                                            <li class="" ng-click="vm.triggerCondition = 2;vm.triggerKnowledge=''">知识 只能添加一条知识</li>
+                                        </ul>
+                                    </div>
+                                    <!--显示bot-->
+                                    <div class="value Div clearfix" ng-show="vm.triggerCondition==1">
+                                        <div class="ipt-txt-box L mr-10">
+                                            <input class="ipt-txt bd botTagAuto strikeBotTagAuto" disabled ng-model="vm.strikeValue.name"   type="text"  style="width: 260px;height:32px;padding-right:28px;box-sizing: border-box;"/>
+                                            <i class="btn-menu_1" ng-click="master.slideToggle('.strikeRootClassfy')" style="right:1px;top:2px;width:23px;height:28px;"></i>
+                                            <div class="rootClassfy aside-navs aside-navs2 strikeRootClassfy" style="overflow: hidden; display: none;">
+                                                <ul class="menus show">
+                                                    <!--//test-->
+                                                    <li ng-repeat="item in vm.botRoot">
+                                                        <div class="slide-a">
+                                                            <a class="ellipsis" href="javascript:;">
+                                                                <i class="icon-jj" data-option="{{item.categoryId}}"></i>
+                                                                <span>{{item.categoryName}}</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="L mr10">
+                                            触发次数：
+                                            <input type="number" strike-num="100" ng-model="vm.strikeNumber" class="bd pl-10 ng-pristine ng-valid ng-valid-number" style="height:32px;width:100px;">
+                                        </div>
+                                        <a href="javascript:;" ng-click="vm.triggerCondition=0;vm.strikeValue='';vm.triggerKnowTitle=''" class="mr-15 mt-5" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                                    </div>
+
+                                    <!--显示知识标题-->
+                                    <div ng-show="vm.triggerCondition==2">
+                                        <input type="text" class="txt bd trigger_know_title_key"  ng-blur="vm.removeAutoList()" ng-model="vm.triggerKnowTitle.name" placeholder="请输入标题" style="width:260px;"/>
+                                        <a href="javascript:;" ng-click="vm.triggerCondition=0;" class="mr-15 mt-5" ><img src="../../../images/images/delete_img.png" alt=""></a>
+                                        <!-- 联想输入 -->
+                                        <ul class="association_ul p10 bd pa" ng-if="vm.triggerCondition==2 && vm.recommendKnow.length">
+                                            <li ng-repeat="recommend in vm.recommendKnow track by $index" ng-bind="recommend.knowledgeTitle" ng-click="vm.selectKnowTitle(recommend,'triggerKnowTitle')"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-50 framework" style="padding-left:80px;">
+                                <span class="framework_s">机器人回复 :</span>
+                                <input type="text" ng-disabled="vm.triggerCondition==2" ng-blur="vm.removeAutoList()" class="txt txt_l bd_bot robot_key_words"  style="width: 260px" ng-model="vm.triggerKnowledge.name" placeholder="请输入知识标题" />
+                                <!--  联想输入 查询结果 -->
+                                <ul class="association_ul p10 bd pa" ng-if="vm.triggerCondition!=2 && vm.recommendKnow.length">
+                                    <li ng-repeat="recommend in vm.recommendKnow track by $index" ng-bind="recommend.knowledgeTitle" ng-click="vm.selectKnowTitle(recommend,'triggerKnowledge')"></li>
+                                </ul>
+                            </div>
+                            <div class="mb-50 framework" style="padding-left:80px;">
+                                <span class="framework_s">后续动作 :</span>
+                                <select class="bd" ng-model="vm.actionType">
+                                    <option value="0" style="cursor: pointer;">等待用户输入</option>
+                                    <option value="2">跳转到其他流程</option>
+                                    <option value="1" ng-disabled="!vm.isFactorKnow" ng-class="!vm.isFactorKnow?'bg_e3':''">根据答案进行跳转</option>
+                                </select>
+                                <div class="pt20">
+                                    <div class="mb10" ng-show="vm.actionType==0"></div>
+                                    <div class="mb10" ng-show="vm.actionType==2">
+                                        跳转到：
+                                        <span ng-if="vm.knowJump[0].nodeNo!=null">
+                                        <a href="javascript:;" style="width: auto;" class="appoint cp" ng-if="vm.knowJump[0].nodeNo!=null">
+                                            节点:{{vm.knowJump[0].nodeNo | showNodeName:vm.flowKnowledgeContentList}}
+
+                                        </a>
+                                         <img src="../../../images/images/delete_img.png" alt="" ng-click="vm.knowJump[0].nodeNo=null">
+                                    </span >
+
+                                        <a href="javascript:;" style="width: auto;padding:5px 10px;display:inline-block;line-height:23px;" class="appoint cp" ng-if="vm.knowJump[0].nodeNo==null"  ng-click="vm.openSelectNodeDialog(1,'',vm.knowJump[0].nodeNo)">
+                                            指定节点
+                                        </a>
+                                    </div>
+                                    <div ng-show="vm.actionType==1">
+                                        <div ng-if="vm.factorContent.length" ng-repeat="content in vm.factorContent track by $index"  class="mb10">
+                                            答案{{$index+1}} <span class="answer_span" ng-bind="content.answer"></span>
+                                            跳转到：
+                                            <span ng-if="content.nodeNo!=null">
+                                            <a href="javascript:;" class="appoint" style="width: auto;" >
+                                                指定节点：{{content.nodeNo | showNodeName:vm.flowKnowledgeContentList}}
+                                            </a>
+                                            <img src="../../../images/images/delete_img.png" alt=""  ng-click="vm.factorContent[$index].nodeNo=null">
+                                        </span>
+                                            <a href="javascript:;" class="appoint" style="width: auto;padding:5px 10px;display:inline-block;line-height:23px;" ng-if="content.nodeNo==null" ng-click="vm.openSelectNodeDialog(2,$index,content.nodeNo)" >
+                                                指定
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn1 btn1_blue mb30"  ng-click="vm.storeNewProcess(vm.isEditIndex)">保存节点</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

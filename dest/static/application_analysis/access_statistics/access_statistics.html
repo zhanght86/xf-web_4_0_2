@@ -1,0 +1,175 @@
+<div ui-view="header"></div>
+
+<div class="wrap">
+    <div class="con_box mb25 p30 mt-10">
+        <div class="clearfix mb-20">
+            <div class="L" style="width:49%;margin-right: 2%;">
+                <table class="analy_table">
+                    <tr class="tr1">
+                        <td></td>
+                        <td>访客访问次数</td>
+                        <td>有效访问次数</td>
+                    </tr>
+                    <tr ng-repeat="item in vm.dataTopLeft track by $index">
+                        <td>{{item.name}}</td>
+                        <td ng-repeat="val in item.data track by $index" >{{val}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="visitor_div R bd p20" >
+                <div class="visitor_div1 mb-10 clearfix">
+                    <span class="dib L" style="width:50%;">
+                        今日有效访客总数
+                        <strong class="mr-30" ng-bind="vm.dataTopRigth.today[0]"></strong>
+                    </span>
+                    <span class="dib L" style="width:50%;">
+                        今日有效会话总数
+                        <strong ng-bind="vm.dataTopRigth.today[1]"></strong>
+                    </span>
+                </div>
+                <div class="visitor_div1 clearfix">
+                    <span class="dib L" style="width:50%;">
+                        历史访客总数
+                        <strong class="mr-30" ng-bind="vm.dataTopRigth.history[0]"></strong>
+                    </span>
+                    <span class="dib L" style="width:50%;">
+                        历史会话总数
+                        <strong ng-bind="vm.dataTopRigth.history[1]"></strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix cus_ser_scene">
+            <div class="tab_tit">
+                <span ng-class="vm.contentType==0?'cur':''"  ng-click="vm.contentType=0">访问数据时间统计  </span>
+                <span ng-class="vm.contentType==1?'cur':''" ng-click="vm.contentType=1">访问数据渠道统计 </span>
+            </div>
+            <div class="tab_con pt30 pb30">
+                <div ng-show="vm.contentType==0" class="StatisticsByTime">
+                    <div class="data_time_statis_top " style="width:910px;">
+                        <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.TimerSearchTimeType">
+                            <option value="1" >今日</option>
+                            <option value="2">昨日</option>
+                            <option value="3">过去7天</option>
+                        </select>
+                        <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
+                            <option  value="" >全部渠道</option>
+                        </select>
+                        <!--纬度-->
+                        <!--<select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
+                            <!--<option  value="" >全部维度</option>-->
+                        <!--</select>-->
+                        <span>
+                        日期范围:
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timerSearchStartTime"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly>
+                                        -
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timerSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly>
+                        </span>
+                        <input type="button" class="btn1 btn1_blue" value="查找" ng-click="vm.queryAccessDataByTime()"/>
+                    </div>
+                    <div class="data_time_statis_bot" >
+                        <div class="text-r pt-10">
+                            <button class="btn1 btn_green" ng-click="vm.exportByTime()">导出表格</button>
+                        </div>
+                        <div class="echart_div" id="access_echart_div" ng-show="vm.isTimerChartShow"  style="width:700px;height:400px">
+                            <!--<img src="../../../images/u28570.png" alt="">-->
+                        </div>
+                        <div ng-show="vm.isTimerChartShow">
+                            <div style="width:100%;height:250px;overflow:auto;">
+                                <table class="access_amount_table" >
+                                <thead>
+                                <tr>
+                                    <th ><div style="min-width:100px;">时间</div></th>
+                                    <th  ng-repeat="time in vm.timerData['时间']" ><div ng-bind="time" style="min-width:100px;"></div></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="(key,value) in vm.timerData" ng-if="key!='时间'">
+                                    <td ng-bind="key"></td>
+                                    <td ng-repeat="data in value">
+                                        <!--{{data}}-->
+                                        <!--<p ng-if="data.users">{{data.users}}</p>-->
+                                        <p ng-if="data.users>=0">{{data.users}}</p>
+                                        <p ng-if="data.times>=0">{{data.times}}</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="vm.contentType==1"  class="StatisticsByChannel">
+                    <div class="data_time_statis_top " style="width:605px;">
+                        <select class="sel bd L mr-5" id="request_time_typeId" ng-model="vm.accessSearchTimeType">
+                            <option value="1">今日</option>
+                            <option value="2">昨日</option>
+                            <option value="3">过去7天</option>
+                        </select>
+                        <span>
+                            日期范围:
+                            <input type="text" id="startTime2" onchange=""  ng-model="vm.accessSearchStartTime"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime2\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择开始日期" readonly>
+                                        -
+                            <input type="text" id="endTime2"   onchange="" ng-model="vm.accessSearchEndTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime2\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly>
+                        </span>
+                        <input type="button" class="btn1 btn1_blue" value="查找" ng-click="vm.queryAccessDataByType()"/>
+                    </div>
+                    <div class="data_time_statis_bot" >
+                        <div class="text-r pt-10">
+                            <button class="R btn1 btn_green" ng-click="vm.exportByChannel()">导出表格</button>
+
+                            <!--<a href="javascript:;" class=" c-primary" >导出图表</a>-->
+                        </div>
+                        <div class="echart_div" id="access_echart_div2" style="width:700px;height:400px">
+                            <!--<img src="../../../images/u28879.png" alt="">-->
+                        </div>
+                        <div>
+                            <table class="access_amount_table ">
+                                <thead >
+                                <tr>
+                                    <th width="20%">统计项</th>
+                                    <th width="20%">总会话数</th>
+                                    <th width="20%">总访客数</th>
+                                    <th width="20%">有效会话数</th>
+                                    <th width="20%">有效访客数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--<td ng-if="data130[0]._value == null">0</td>-->
+                                <tr>
+                                    <td>微信</td>
+                                    <td ng-bind="data130[0]._value?data130[0]._value:0"></td>
+                                    <td ng-bind="data130[1]._value?data130[1]._value:0"></td>
+                                    <td ng-bind="data130[2]._value?data130[2]._value:0"></td>
+                                    <td ng-bind="data130[3]._value?data130[3]._value:0"></td>
+                                </tr>
+                                <tr>
+                                    <td>web</td>
+                                    <td ng-bind="data131[0]._value?data131[0]._value:0"></td>
+                                    <td ng-bind="data131[1]._value?data131[1]._value:0"></td>
+                                    <td ng-bind="data131[2]._value?data131[2]._value:0"></td>
+                                    <td ng-bind="data131[3]._value?data131[3]._value:0"></td>
+                                </tr>
+                                <tr>
+                                    <td>app</td>
+                                    <td ng-bind="data132[0]._value?data132[0]._value:0"></td>
+                                    <td ng-bind="data132[1]._value?data132[1]._value:0"></td>
+                                    <td ng-bind="data132[2]._value?data132[2]._value:0"></td>
+                                    <td ng-bind="data132[3]._value?data132[3]._value:0"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

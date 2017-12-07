@@ -1,0 +1,61 @@
+<div class="r-cont pd30">
+    <div class="r-cont-hd">
+        <span>热点知识设置</span>
+    </div>
+    <div class="r-cont-bd oh ">
+        <div class="con_box  mb25">
+            <div class="pr con_box_serl bd mr10" style="margin:0 auto 20px;">
+                <input type="text" class="txt L" placeholder="" ng-model="vm.hotQuestionTitle" style="width:257px;">
+                <!--<input type="button" class="btn1" value="查找" >-->
+                <button class="btn1" type="button"  ng-click="vm.queryHotKnowledgeList()">查找</button>
+            </div>
+            <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
+                <div class="cl mb-20">
+                    	<span class="L">
+                            <button class="L btn1 btn_delete mr-10" ng-click="vm.removeHotKnowledge()">批量删除</button>
+                        	<button class="L btn1 btn1_blue mr-10" ng-click="vm.addHotHotKnow()">添加</button>
+                            <button class="btn1 btn_green" ng-click="vm.setFlag=!vm.setFlag"><span style="color:#fff;" ng-if="vm.setFlag">手动设置</span><span style="color:#fff;" ng-if="!vm.setFlag">自动设置</span></button>
+                        </span>
+                        <span class="R">
+                            <!--<span>共有数据：<b >3</b> 条</span>-->
+                             <span class="c-999 pl-10">共有数据：<b >{{vm.hotPaginationConf.totalItems}}</b> 条</span>
+                        </span>
+                </div>
+                <div>
+                    <table class="stop_word_tab" >
+                        <thead>
+                        <tr>
+                            <th class="bold" width="5%"><input class="selectAllBtn" type="checkbox" ng-click="vm.selectAllHotKnow()" ng-checked="vm.isAllHotKnowSelected"/></th>
+                            <th class="bold" width="15%">热点知识</th>
+                            <th class="bold" width="12%">排序</th>
+                            <th class="bold" width="18%">最终问及时间</th>
+                            <th class="bold" width="17%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in vm.hotKnowList">
+                            <!--{{vm.hotKnowList}}-->
+                            <!--<td><input type="checkbox" ng-checked="vm.isAllHotKnowSelected" ng-click="vm.selectSingle($event,item.hotQuestionId)"/></td>-->
+                            <td><input type="checkbox" ng-checked="vm.hotKnowDelIds.inArray(item.hotQuestionId)" ng-click="vm.selectSingleHotKnow(item.hotQuestionId)"/></td>
+                            <td>{{item.hotQuestionTitle}}</td>
+                            <td>{{item.hotQuestionOrder}}</td>
+                            <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                                <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary mr-10" ng-class="{true:'cur-point',false:'cur-disable'}[vm.setFlag]"  ng-click="vm.toTop(item)"  ng-if="item.hotQuestionOrder!=1" value="置顶">
+                                <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary mr-10"  ng-click="vm.move(item)" ng-class="{true:'cur-point',false:'cur-disable'}[vm.setFlag]" ng-if="item.hotQuestionOrder!=1" value="上移">
+                                <input type="button" ng-disabled="!vm.setFlag"  style="display: inline-block;background:#fff" class="c-primary"  ng-click="vm.down(item)" ng-class="{true:'cur-point',false:'cur-disable'}[vm.setFlag]"  ng-if="item.hotQuestionOrder!=vm.vm.hotPaginationConf.totalItems || item.hotQuestionOrder == 1" value="下移">
+                                <!--<input class="c-primary mr-10" href="javascript:;" ng-click="vm.move(item)"  ng-if="item.hotQuestionOrder!=1">上移</a>-->
+                                <!--<a  class="c-primary" href="javascript:;" ng-click="vm.down(item)"  ng-if="item.hotQuestionOrder!=vm.vm.hotPaginationConf.totalItems || item.hotQuestionOrder == 1">下移</a>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination ng-if="vm.hotPaginationConf.totalItems && vm.hotPaginationConf.totalItems>0" conf="vm.hotPaginationConf"></pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>

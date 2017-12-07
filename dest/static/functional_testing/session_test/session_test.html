@@ -1,0 +1,98 @@
+<div ui-view="header"></div>
+<div class="wrap  session" >
+    <div class="chat_test_wrap clearfix" style="background:#fff;">
+        <div class="L chat_test_l" >
+            <div class=" bd chat_test_ltop p10" id="chat_recommend">
+                <div class="mb-10" style="border-bottom:1px dashed #bdbdbd;" id="ask">
+                    <p class="c-primary "><span class="bold mr-5">测试问法：</span><span ng-model="vm.question">{{vm.question}}</span></p>
+
+                    <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.questionSegmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.questionSegmentation.length-1)">，</i></span></p>
+
+                    <p><span class="mr-5">标签：</span><span ng-repeat="v in vm.result.questionTagSet track by $index">{{v}}<i ng-if="$index!=(vm.result.questionTagSet.length-1)">，</i></span></p>
+                </div>
+                <div  id="answer">
+                    <p class="c-primary "><span class="bold mr-5">标准知识：</span><span >{{vm.result.answerElement.matchExtendAsk}}</span></p>
+
+                    <p><span class="mr-5">分词：</span><span ng-repeat="i in vm.result.answerElement.segmentation track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.segmentation.length-1)">，</i></span></p>
+
+                    <p><span class="mr-5">标签：</span><span ng-repeat="i in vm.result.answerElement.tags track by $index">{{i}}<i ng-if="$index!=(vm.result.answerElement.tags.length-1)">，</i></span></p>
+
+                    <p><span class="mr-5">相似度：</span><span >{{vm.result.similarity}}</span></p>
+
+                    <p><span class="mr-5">答案：</span><span ng-repeat="i in vm.result.answer track by $index">{{i}}<i ng-if="$index!=(vm.result.answer.length-1)">，</i></span></p>
+                </div>
+                <!--推荐问-->
+                <div  id="recommendElements" ng-if="vm.result.recommendAnswerElementList.length>0" style="border-top:1px dashed #bdbdbd;padding-top:5px;margin-top:5px;">
+                    <p class="mr-5"><span style="color: blue" class="bold mr-5">向您推荐其他问题</span></p>
+                <div ng-repeat="i in vm.result.recommendAnswerElementList track by $index">
+                    <p class="c-primary" ><span >{{$index+1}} . {{i.knowledge_title}}</span></p>
+
+                    <p><span class="mr-5">分词：</span><span >{{i.segmentation.join(',')}}</span></p>
+
+                    <p><span class="mr-5">标签：</span><span >{{i.tags.join(',')}}</span></p>
+                    <!--<p><span class="mr-5">标签：</span><span >{{i.tags}}<i ng-if="$index!=(i.tags.length-1)">，</i></span></p>-->
+                    <p><span class="mr-5">相似度：</span><span >{{i.similarity}}</span></p>
+                    <!--<p><span class="mr-5">分词：</span><span >{{i.segmentation}}<i ng-if="$index!=(i.segmentation.length-1)">，</i></span></p>-->
+
+                </div>
+                </div>
+            </div>
+            <div class="bd chat_test_lbot pd-10" >
+                <textarea class="chat_text_txta f-14 mb-5" ng-model="vm.testAsking"  placeholder="请输入测试问题" style="border:1px solid #eee;"></textarea>
+                <div class=" mb-10 cl" style="min-height:25px;">
+                    <span class="L">
+                        <span class="">选择服务：</span>
+                        <select class="bd mr-30" style="height:30px;min-width: 50px" ng-model="vm.serviceId"  ng-options="service.serviceId as service.serviceName for service in vm.listService">
+                            <option value="" ng-if="vm.listService.length==0">应用下服务为空</option>
+                        </select>
+                    </span>
+                    <span class="L mr-10">
+                        <span class="">渠道：</span>
+                        <label class="mr-10" ng-init="vm.channel=$parent.$parent.MASTER.channelList[0].channelCode" ng-repeat="channel in $parent.$parent.MASTER.channelList track by $index">
+                            <input type="radio"  name="channel" ng-model="vm.channel" ng-value="channel.channelCode"/> {{channel.channelName}}
+                        </label>
+                    </span>
+                    <!--<span class="L">维度：</span>-->
+                    <!--<div class="L">-->
+                        <!--<div auto-complete=""  source="vm.listDimension" result="vm.dimensionArray" style="width:140px;"></div>-->
+                    <!--</div>-->
+                </div>
+                <div class="text-r mt-10">
+                    <button class="btn1 btn1_blue mr-10" ng-click="vm.test()">测试</button>
+                    <button class="btn1 btn_gray" ng-click="vm.reset()">重置</button>
+                </div>
+            </div>
+        </div>
+        <div class="R bd chat_test_r p20" >
+            <p>问答流程:</p>
+            <div class="flow_chart_wrap" >
+                <ul>
+                    <li class="clearfix mb-10" ng-repeat="v in vm.result.flowInfo track by $index">
+                        <div class=" L" style="width:100px;height:100px;">
+                            <p class="flow_name c-success">{{v.stepName}}</p>
+                            <div class="tc" ng-if="$index!=vm.result.flowInfo.length-1" style="font-size:30px;color:green;margin-top:10px;">↓</div>
+                        </div>
+                        <span class="flow_span L ml-10 mr-10">-</span>
+                        <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">{{v.stepInfo}}</div>-->
+                        <!--<div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">{{v.stepInfo.substring(0,(v.stepInfo.length-1))}}</div>-->
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)!=','">
+                            <div ng-repeat="i in v.stepInfo.split('\n') track by $index">{{i}}</div>
+                        </div>
+                        <div class="flow_con L" ng-if="v.stepInfo.charAt(v.stepInfo.length-1)==','">
+                            <div ng-repeat="i in v.stepInfo.split('\n') track by $index">{{i.substring(0,(i.length-1))}}</div>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
