@@ -5,7 +5,7 @@
  */
 module.exports = angular => {
     const applicationManagementModule = angular.module('applicationManagementModule', []);
-    require('../controllers/main.cotroller')(applicationManagementModule);  // 控制器
+    require('../controllers/_main.cotroller')(applicationManagementModule);  // 控制器
     require('../../index/controllers/home_page/_nav.controller')(applicationManagementModule);  // 导航
     //--------------------------------------------------
     //          directive

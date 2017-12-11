@@ -28,7 +28,7 @@
             preCloseCallback: false,
             overlay: true,
             cache: true,
-            // ×Ô¶¨Òå¿í¶È
+            // ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
             width : "450px"
         };
 
@@ -213,7 +213,7 @@
                                 });
                                 $dialog.data('$ngDialogControllerController', controllerInstance);
                             }
-                            //Ìí¼Ó width ÊôÐÔ
+                            //ï¿½ï¿½ï¿½ width ï¿½ï¿½ï¿½ï¿½
                             if (options.width) {
                                 $dialog.find(".ngdialog-content").css("width",options.width);
                             }
@@ -274,7 +274,7 @@
                             if (options.closeByEscape) {
                                 $body.bind('keydown', privateMethods.onDocumentKeydown);
                             }
-                            // ÐÞ¸Ä µØÖ·±ä»¯ ¹Ø±Õµ¯¿ò
+                            // ï¿½Þ¸ï¿½ ï¿½ï¿½Ö·ï¿½ä»¯ ï¿½Ø±Õµï¿½ï¿½ï¿½
                             if (!options.closeByNavigation) {
                                 $rootScope.$on('$locationChangeSuccess', function () {
                                     privateMethods.closeDialog($dialog);

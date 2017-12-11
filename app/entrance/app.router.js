@@ -128,7 +128,7 @@ module.exports = (angular) => {
                 },
                 "content": {
                     template: require("../static/index/views/user_control/switch_application/content.html"),
-                    controller: "homePageContentController"
+                    controller: "ApplicationController"
                 }
             }
         },
@@ -1021,6 +1021,77 @@ module.exports = (angular) => {
 //--------------------------------------------------
 //          ##系统监控##
 //--------------------------------------------------
-
-    ];
-};
+        {
+            name: "SM",
+            url: "/SM",
+            data: {
+                roles: []
+            },
+            title : "系统监控" ,
+            templateProvider:
+                ["$q", function ($q) {
+                    let deferred = $q.defer();
+                    require.ensure([], function () {
+                        let template = require("../static/system_monitoring/main.html");
+                        deferred.resolve(template);
+                    });
+                    return deferred.promise;
+                }],
+            controller: "SystemMonitoringController",
+            // controllerAs : "SystemMonitoringCtr" ,
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let systemMonitoringModule = require("../static/system_monitoring/module/_system_monitoring.module")(angular);   //动态加载Module
+                        $ocLazyLoad.load({
+                            name: "systemMonitoringModule"                                           //name就是你module的名称
+                        });
+                        defer.resolve(systemMonitoringModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+        // 资源监控
+        {
+            name: "SM.resource",
+            url: "/resource",
+            data: {
+                roles: []
+            },
+            parent : "SM",
+            title : "资源监控" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                // "content": {
+                //     template: require("../static/knowledge_management/views/history/history.html"),
+                //     controller: "HistoryViewController"
+                // }
+            }
+        },
+        // 服务监控
+        {
+            name: "SM.service",
+            url: "/service",
+            data: {
+                roles: []
+            },
+            parent : "SM",
+            title : "服务监控" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                // "content": {
+                //     template: require("../static/knowledge_management/views/history/history.html"),
+                //     controller: "HistoryViewController"
+                // }
+            }
+        },
+    ];};

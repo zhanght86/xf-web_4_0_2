@@ -29,16 +29,16 @@
         </ul>
         <ul class="msgR-table-1 msgR-table-2 L">
             <li class="msgR-table-head">发布信息</li>
-            <li ng-repeat="item in vm.serviceData">
+            <li ng-repeat="item in vm.serviceData track by $index">
                 <span class="Nrelease" ng-if="item.serviceStatus==30001">未发布</span>
                 <span class="Nrelease" ng-if="item.serviceStatus==30002">已发布</span>
-                <span class="release" ng-if="item.serviceStatus==30003">已下线</span>
-                &nbsp; {{item.serviceName}}
-                <p ng-if="item.serviceStatus==30001"><a class="release" ng-click="vm.publishService(item.serviceId)">发布</a>
+                <span class="release"  ng-if="item.serviceStatus==30003">已下线</span>
+                &nbsp; {{item.name}}
+                <p ng-if="item.serviceStatus==30001"><a class="release" ng-click="vm.publishService(item.id)">发布</a>
                 </p>
-                <p ng-if="item.serviceStatus==30002"><a class="Offline" ng-click="vm.stopService(item.serviceId)">下线</a>&nbsp; | &nbsp;<a class="restart" ng-click="vm.restartService(item.serviceId)">重启</a>
+                <p ng-if="item.serviceStatus==30002"><a class="Offline" ng-click="vm.stopService(item.id)">下线</a>&nbsp; | &nbsp;<a class="restart" ng-click="vm.restartService(item.id)">重启</a>
                 </p>
-                <p ng-if="item.serviceStatus==30003"><a class="release" ng-click="vm.startService(item.serviceId)">上线</a>
+                <p ng-if="item.serviceStatus==30003"><a class="release" ng-click="vm.startService(item.id)">上线</a>
                 </p>
             </li>
         </ul>

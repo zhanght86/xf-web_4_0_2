@@ -50,7 +50,7 @@
 /******/ 			}
 /******/ 		};
 /******/ 	}
-
+/******/
 /******/ 	
 /******/ 	
 /******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7e2142d154a82f662a5c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4d9822bcd7c5af47f584"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -260,7 +260,7 @@
 /******/ 			hotSetStatus("prepare");
 /******/ 			hotCallback = callback;
 /******/ 			hotUpdate = {};
-/******/ 			var chunkId = 9;
+/******/ 			var chunkId = 11;
 /******/ 			{ // eslint-disable-line no-lone-blocks
 /******/ 				/*globals chunkId */
 /******/ 				hotEnsureUpdateChunk(chunkId);
@@ -531,17 +531,17 @@
 /******/ 		hotSetStatus("idle");
 /******/ 		callback(null, outdatedModules);
 /******/ 	}
-
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
@@ -551,30 +551,30 @@
 /******/ 			parents: hotCurrentParents,
 /******/ 			children: []
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return hotCreateRequire(0)(0);
 /******/ })
@@ -584,13 +584,13 @@
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(134);
-	module.exports = __webpack_require__(135);
+	__webpack_require__(140);
+	module.exports = __webpack_require__(141);
 
 
 /***/ }),
 
-/***/ 134:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -598,17 +598,17 @@
 	 * @license es5-shim Copyright 2009-2015 by contributors, MIT License
 	 * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
 	 */
-
+	
 	// vim: ts=4 sts=4 sw=4 expandtab
-
+	
 	// Add semicolon to prevent IIFE from being passed as argument to concatenated code.
 	;
-
+	
 	// UMD (Universal Module Definition)
 	// see https://github.com/umdjs/umd/blob/master/templates/returnExports.js
 	(function (root, factory) {
 	    'use strict';
-
+	
 	    /* global define, exports, module */
 	    if (true) {
 	        // AMD. Register as an anonymous module.
@@ -631,7 +631,7 @@
 	     * ES5 Spec: http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
 	     * Required reading: http://javascriptweblog.wordpress.com/2011/12/05/extending-javascript-natives/
 	     */
-
+	
 	    // Shortcut to an often accessed properties, in order to avoid multiple
 	    // dereference that costs universally. This also holds a reference to known-good
 	    // functions.
@@ -655,19 +655,19 @@
 	    var apply = FunctionPrototype.apply;
 	    var max = Math.max;
 	    var min = Math.min;
-
+	
 	    // Having a toString local variable name breaks in Opera so use to_string.
 	    var to_string = ObjectPrototype.toString;
-
+	
 	    /* global Symbol */
 	    /* eslint-disable one-var-declaration-per-line, no-redeclare, max-statements-per-line */
 	    var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
 	    var isCallable; /* inlined from https://npmjs.com/is-callable */ var fnToStr = Function.prototype.toString, constructorRegex = /^\s*class /, isES6ClassFn = function isES6ClassFn(value) { try { var fnStr = fnToStr.call(value); var singleStripped = fnStr.replace(/\/\/.*\n/g, ''); var multiStripped = singleStripped.replace(/\/\*[.\s\S]*\*\//g, ''); var spaceStripped = multiStripped.replace(/\n/mg, ' ').replace(/ {2}/g, ' '); return constructorRegex.test(spaceStripped); } catch (e) { return false; /* not a function */ } }, tryFunctionObject = function tryFunctionObject(value) { try { if (isES6ClassFn(value)) { return false; } fnToStr.call(value); return true; } catch (e) { return false; } }, fnClass = '[object Function]', genClass = '[object GeneratorFunction]', isCallable = function isCallable(value) { if (!value) { return false; } if (typeof value !== 'function' && typeof value !== 'object') { return false; } if (hasToStringTag) { return tryFunctionObject(value); } if (isES6ClassFn(value)) { return false; } var strClass = to_string.call(value); return strClass === fnClass || strClass === genClass; };
-
+	
 	    var isRegex; /* inlined from https://npmjs.com/is-regex */ var regexExec = RegExp.prototype.exec, tryRegexExec = function tryRegexExec(value) { try { regexExec.call(value); return true; } catch (e) { return false; } }, regexClass = '[object RegExp]'; isRegex = function isRegex(value) { if (typeof value !== 'object') { return false; } return hasToStringTag ? tryRegexExec(value) : to_string.call(value) === regexClass; };
 	    var isString; /* inlined from https://npmjs.com/is-string */ var strValue = String.prototype.valueOf, tryStringObject = function tryStringObject(value) { try { strValue.call(value); return true; } catch (e) { return false; } }, stringClass = '[object String]'; isString = function isString(value) { if (typeof value === 'string') { return true; } if (typeof value !== 'object') { return false; } return hasToStringTag ? tryStringObject(value) : to_string.call(value) === stringClass; };
 	    /* eslint-enable one-var-declaration-per-line, no-redeclare, max-statements-per-line */
-
+	
 	    /* inlined from http://npmjs.com/define-properties */
 	    var supportsDescriptors = $Object.defineProperty && (function () {
 	        try {
@@ -713,22 +713,22 @@
 	            }
 	        };
 	    }(ObjectPrototype.hasOwnProperty));
-
+	
 	    //
 	    // Util
 	    // ======
 	    //
-
+	
 	    /* replaceable with https://npmjs.com/package/es-abstract /helpers/isPrimitive */
 	    var isPrimitive = function isPrimitive(input) {
 	        var type = typeof input;
 	        return input === null || (type !== 'object' && type !== 'function');
 	    };
-
+	
 	    var isActualNaN = $Number.isNaN || function isActualNaN(x) {
 	        return x !== x;
 	    };
-
+	
 	    var ES = {
 	        // ES5 9.4
 	        // http://es5.github.com/#x9.4
@@ -743,7 +743,7 @@
 	            }
 	            return n;
 	        },
-
+	
 	        /* replaceable with https://npmjs.com/package/es-abstract ES5.ToPrimitive */
 	        ToPrimitive: function ToPrimitive(input) {
 	            var val, valueOf, toStr;
@@ -766,7 +766,7 @@
 	            }
 	            throw new TypeError();
 	        },
-
+	
 	        // ES5 9.9
 	        // http://es5.github.com/#x9.9
 	        /* replaceable with https://npmjs.com/package/es-abstract ES5.ToObject */
@@ -776,23 +776,23 @@
 	            }
 	            return $Object(o);
 	        },
-
+	
 	        /* replaceable with https://npmjs.com/package/es-abstract ES5.ToUint32 */
 	        ToUint32: function ToUint32(x) {
 	            return x >>> 0;
 	        }
 	    };
-
+	
 	    //
 	    // Function
 	    // ========
 	    //
-
+	
 	    // ES-5 15.3.4.5
 	    // http://es5.github.com/#x15.3.4.5
-
+	
 	    var Empty = function Empty() {};
-
+	
 	    defineProperties(FunctionPrototype, {
 	        bind: function bind(that) { // .length is 1
 	            // 1. Let Target be the this value.
@@ -816,7 +816,7 @@
 	            //   15.3.4.5.3.
 	            var bound;
 	            var binder = function () {
-
+	
 	                if (this instanceof bound) {
 	                    // 15.3.4.5.2 [[Construct]]
 	                    // When the [[Construct]] internal method of a function object,
@@ -833,7 +833,7 @@
 	                    //   values as the list ExtraArgs in the same order.
 	                    // 5. Return the result of calling the [[Construct]] internal
 	                    //   method of target providing args as the arguments.
-
+	
 	                    var result = apply.call(
 	                        target,
 	                        this,
@@ -843,7 +843,7 @@
 	                        return result;
 	                    }
 	                    return this;
-
+	
 	                } else {
 	                    // 15.3.4.5.1 [[Call]]
 	                    // When the [[Call]] internal method of a function object, F,
@@ -862,33 +862,33 @@
 	                    // 5. Return the result of calling the [[Call]] internal method
 	                    //   of target providing boundThis as the this value and
 	                    //   providing args as the arguments.
-
+	
 	                    // equiv: target.call(this, ...boundArgs, ...args)
 	                    return apply.call(
 	                        target,
 	                        that,
 	                        array_concat.call(args, array_slice.call(arguments))
 	                    );
-
+	
 	                }
-
+	
 	            };
-
+	
 	            // 15. If the [[Class]] internal property of Target is "Function", then
 	            //     a. Let L be the length property of Target minus the length of A.
 	            //     b. Set the length own property of F to either 0 or L, whichever is
 	            //       larger.
 	            // 16. Else set the length own property of F to 0.
-
+	
 	            var boundLength = max(0, target.length - args.length);
-
+	
 	            // 17. Set the attributes of the length own property of F to the values
 	            //   specified in 15.3.5.1.
 	            var boundArgs = [];
 	            for (var i = 0; i < boundLength; i++) {
 	                array_push.call(boundArgs, '$' + i);
 	            }
-
+	
 	            // XXX Build a dynamic function with desired amount of arguments is the only
 	            // way to set the length property of a function.
 	            // In environments where Content Security Policies enabled (Chrome extensions,
@@ -896,17 +896,17 @@
 	            // However in all of these environments Function.prototype.bind exists
 	            // and so this code will never be executed.
 	            bound = $Function('binder', 'return function (' + array_join.call(boundArgs, ',') + '){ return binder.apply(this, arguments); }')(binder);
-
+	
 	            if (target.prototype) {
 	                Empty.prototype = target.prototype;
 	                bound.prototype = new Empty();
 	                // Clean up dangling references.
 	                Empty.prototype = null;
 	            }
-
+	
 	            // TODO
 	            // 18. Set the [[Extensible]] internal property of F to true.
-
+	
 	            // TODO
 	            // 19. Let thrower be the [[ThrowTypeError]] function Object (13.2.3).
 	            // 20. Call the [[DefineOwnProperty]] internal method of F with
@@ -917,18 +917,18 @@
 	            //   arguments "arguments", PropertyDescriptor {[[Get]]: thrower,
 	            //   [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false},
 	            //   and false.
-
+	
 	            // TODO
 	            // NOTE Function objects created using Function.prototype.bind do not
 	            // have a prototype property or the [[Code]], [[FormalParameters]], and
 	            // [[Scope]] internal properties.
 	            // XXX can't delete prototype in pure-js.
-
+	
 	            // 22. Return F.
 	            return bound;
 	        }
 	    });
-
+	
 	    // _Please note: Shortcuts are defined after `Function.prototype.bind` as we
 	    // use it in defining shortcuts.
 	    var owns = call.bind(ObjectPrototype.hasOwnProperty);
@@ -941,16 +941,16 @@
 	    var pushCall = call.bind(array_push);
 	    var isEnum = call.bind(ObjectPrototype.propertyIsEnumerable);
 	    var arraySort = call.bind(ArrayPrototype.sort);
-
+	
 	    //
 	    // Array
 	    // =====
 	    //
-
+	
 	    var isArray = $Array.isArray || function isArray(obj) {
 	        return toStr(obj) === '[object Array]';
 	    };
-
+	
 	    // ES5 15.4.4.12
 	    // http://es5.github.com/#x15.4.4.13
 	    // Return len+argCount.
@@ -963,12 +963,12 @@
 	            return this.length;
 	        }
 	    }, hasUnshiftReturnValueBug);
-
+	
 	    // ES5 15.4.3.2
 	    // http://es5.github.com/#x15.4.3.2
 	    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/isArray
 	    defineProperties($Array, { isArray: isArray });
-
+	
 	    // The IsCallable() check in the Array functions
 	    // has been replaced with a strict check on the
 	    // internal class of the object to trap cases where
@@ -980,16 +980,16 @@
 	    // general case for the shim to match the more
 	    // strict and common behavior of rejecting regular
 	    // expressions.
-
+	
 	    // ES5 15.4.4.18
 	    // http://es5.github.com/#x15.4.4.18
 	    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/forEach
-
+	
 	    // Check failure of by-index access of string characters (IE < 9)
 	    // and failure of `0 in boxedString` (Rhino)
 	    var boxedString = $Object('a');
 	    var splitString = boxedString[0] !== 'a' || !(0 in boxedString);
-
+	
 	    var properlyBoxesContext = function properlyBoxed(method) {
 	        // Check node 0.6.21 bug where third parameter is not boxed
 	        var properlyBoxesNonStrict = true;
@@ -1002,10 +1002,10 @@
 	                        properlyBoxesNonStrict = false;
 	                    }
 	                });
-
+	
 	                method.call([1], function () {
 	                    'use strict';
-
+	
 	                    properlyBoxesStrict = typeof this === 'string';
 	                }, 'x');
 	            } catch (e) {
@@ -1014,7 +1014,7 @@
 	        }
 	        return !!method && !threwException && properlyBoxesNonStrict && properlyBoxesStrict;
 	    };
-
+	
 	    defineProperties(ArrayPrototype, {
 	        forEach: function forEach(callbackfn/*, thisArg*/) {
 	            var object = ES.ToObject(this);
@@ -1025,12 +1025,12 @@
 	            if (arguments.length > 1) {
 	                T = arguments[1];
 	            }
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.forEach callback must be a function');
 	            }
-
+	
 	            while (++i < length) {
 	                if (i in self) {
 	                    // Invoke the callback function with call, passing arguments:
@@ -1044,7 +1044,7 @@
 	            }
 	        }
 	    }, !properlyBoxesContext(ArrayPrototype.forEach));
-
+	
 	    // ES5 15.4.4.19
 	    // http://es5.github.com/#x15.4.4.19
 	    // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/map
@@ -1058,12 +1058,12 @@
 	            if (arguments.length > 1) {
 	                T = arguments[1];
 	            }
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.map callback must be a function');
 	            }
-
+	
 	            for (var i = 0; i < length; i++) {
 	                if (i in self) {
 	                    if (typeof T === 'undefined') {
@@ -1076,7 +1076,7 @@
 	            return result;
 	        }
 	    }, !properlyBoxesContext(ArrayPrototype.map));
-
+	
 	    // ES5 15.4.4.20
 	    // http://es5.github.com/#x15.4.4.20
 	    // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/filter
@@ -1091,12 +1091,12 @@
 	            if (arguments.length > 1) {
 	                T = arguments[1];
 	            }
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.filter callback must be a function');
 	            }
-
+	
 	            for (var i = 0; i < length; i++) {
 	                if (i in self) {
 	                    value = self[i];
@@ -1108,7 +1108,7 @@
 	            return result;
 	        }
 	    }, !properlyBoxesContext(ArrayPrototype.filter));
-
+	
 	    // ES5 15.4.4.16
 	    // http://es5.github.com/#x15.4.4.16
 	    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
@@ -1121,12 +1121,12 @@
 	            if (arguments.length > 1) {
 	                T = arguments[1];
 	            }
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.every callback must be a function');
 	            }
-
+	
 	            for (var i = 0; i < length; i++) {
 	                if (i in self && !(typeof T === 'undefined' ? callbackfn(self[i], i, object) : callbackfn.call(T, self[i], i, object))) {
 	                    return false;
@@ -1135,7 +1135,7 @@
 	            return true;
 	        }
 	    }, !properlyBoxesContext(ArrayPrototype.every));
-
+	
 	    // ES5 15.4.4.17
 	    // http://es5.github.com/#x15.4.4.17
 	    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
@@ -1148,12 +1148,12 @@
 	            if (arguments.length > 1) {
 	                T = arguments[1];
 	            }
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.some callback must be a function');
 	            }
-
+	
 	            for (var i = 0; i < length; i++) {
 	                if (i in self && (typeof T === 'undefined' ? callbackfn(self[i], i, object) : callbackfn.call(T, self[i], i, object))) {
 	                    return true;
@@ -1162,7 +1162,7 @@
 	            return false;
 	        }
 	    }, !properlyBoxesContext(ArrayPrototype.some));
-
+	
 	    // ES5 15.4.4.21
 	    // http://es5.github.com/#x15.4.4.21
 	    // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduce
@@ -1177,17 +1177,17 @@
 	            var object = ES.ToObject(this);
 	            var self = splitString && isString(this) ? strSplit(this, '') : object;
 	            var length = ES.ToUint32(self.length);
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.reduce callback must be a function');
 	            }
-
+	
 	            // no value to return if no initial value and an empty array
 	            if (length === 0 && arguments.length === 1) {
 	                throw new TypeError('reduce of empty array with no initial value');
 	            }
-
+	
 	            var i = 0;
 	            var result;
 	            if (arguments.length >= 2) {
@@ -1198,24 +1198,24 @@
 	                        result = self[i++];
 	                        break;
 	                    }
-
+	
 	                    // if array contains no values, no initial value to return
 	                    if (++i >= length) {
 	                        throw new TypeError('reduce of empty array with no initial value');
 	                    }
 	                } while (true);
 	            }
-
+	
 	            for (; i < length; i++) {
 	                if (i in self) {
 	                    result = callbackfn(result, self[i], i, object);
 	                }
 	            }
-
+	
 	            return result;
 	        }
 	    }, !reduceCoercesToObject);
-
+	
 	    // ES5 15.4.4.22
 	    // http://es5.github.com/#x15.4.4.22
 	    // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduceRight
@@ -1230,17 +1230,17 @@
 	            var object = ES.ToObject(this);
 	            var self = splitString && isString(this) ? strSplit(this, '') : object;
 	            var length = ES.ToUint32(self.length);
-
+	
 	            // If no callback function or if callback is not a callable function
 	            if (!isCallable(callbackfn)) {
 	                throw new TypeError('Array.prototype.reduceRight callback must be a function');
 	            }
-
+	
 	            // no value to return if no initial value, empty array
 	            if (length === 0 && arguments.length === 1) {
 	                throw new TypeError('reduceRight of empty array with no initial value');
 	            }
-
+	
 	            var result;
 	            var i = length - 1;
 	            if (arguments.length >= 2) {
@@ -1251,28 +1251,28 @@
 	                        result = self[i--];
 	                        break;
 	                    }
-
+	
 	                    // if array contains no values, no initial value to return
 	                    if (--i < 0) {
 	                        throw new TypeError('reduceRight of empty array with no initial value');
 	                    }
 	                } while (true);
 	            }
-
+	
 	            if (i < 0) {
 	                return result;
 	            }
-
+	
 	            do {
 	                if (i in self) {
 	                    result = callbackfn(result, self[i], i, object);
 	                }
 	            } while (i--);
-
+	
 	            return result;
 	        }
 	    }, !reduceRightCoercesToObject);
-
+	
 	    // ES5 15.4.4.14
 	    // http://es5.github.com/#x15.4.4.14
 	    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
@@ -1281,16 +1281,16 @@
 	        indexOf: function indexOf(searchElement/*, fromIndex */) {
 	            var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
 	            var length = ES.ToUint32(self.length);
-
+	
 	            if (length === 0) {
 	                return -1;
 	            }
-
+	
 	            var i = 0;
 	            if (arguments.length > 1) {
 	                i = ES.ToInteger(arguments[1]);
 	            }
-
+	
 	            // handle negative indices
 	            i = i >= 0 ? i : max(0, length + i);
 	            for (; i < length; i++) {
@@ -1301,7 +1301,7 @@
 	            return -1;
 	        }
 	    }, hasFirefox2IndexOfBug);
-
+	
 	    // ES5 15.4.4.15
 	    // http://es5.github.com/#x15.4.4.15
 	    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/lastIndexOf
@@ -1310,7 +1310,7 @@
 	        lastIndexOf: function lastIndexOf(searchElement/*, fromIndex */) {
 	            var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
 	            var length = ES.ToUint32(self.length);
-
+	
 	            if (length === 0) {
 	                return -1;
 	            }
@@ -1328,7 +1328,7 @@
 	            return -1;
 	        }
 	    }, hasFirefox2LastIndexOfBug);
-
+	
 	    // ES5 15.4.4.12
 	    // http://es5.github.com/#x15.4.4.12
 	    var spliceNoopReturnsEmptyArray = (function () {
@@ -1346,7 +1346,7 @@
 	            }
 	        }
 	    }, !spliceNoopReturnsEmptyArray);
-
+	
 	    var spliceWorksWithEmptyObject = (function () {
 	        var obj = {};
 	        ArrayPrototype.splice.call(obj, 0, 0, 1);
@@ -1398,7 +1398,7 @@
 	            var relativeStart = ES.ToInteger(start);
 	            var actualStart = relativeStart < 0 ? max((len + relativeStart), 0) : min(relativeStart, len);
 	            var actualDeleteCount = min(max(ES.ToInteger(deleteCount), 0), len - actualStart);
-
+	
 	            var k = 0;
 	            var from;
 	            while (k < actualDeleteCount) {
@@ -1408,7 +1408,7 @@
 	                }
 	                k += 1;
 	            }
-
+	
 	            var items = arraySlice(arguments, 2);
 	            var itemCount = items.length;
 	            var to;
@@ -1450,11 +1450,11 @@
 	                k += 1;
 	            }
 	            O.length = len - actualDeleteCount + itemCount;
-
+	
 	            return A;
 	        }
 	    }, !spliceWorksWithLargeSparseArrays || !spliceWorksWithSmallSparseArrays);
-
+	
 	    var originalJoin = ArrayPrototype.join;
 	    var hasStringJoinBug;
 	    try {
@@ -1470,7 +1470,7 @@
 	            }
 	        }, hasStringJoinBug);
 	    }
-
+	
 	    var hasJoinUndefinedBug = [1, 2].join(undefined) !== '1,2';
 	    if (hasJoinUndefinedBug) {
 	        defineProperties(ArrayPrototype, {
@@ -1480,7 +1480,7 @@
 	            }
 	        }, hasJoinUndefinedBug);
 	    }
-
+	
 	    var pushShim = function push(item) {
 	        var O = ES.ToObject(this);
 	        var n = ES.ToUint32(O.length);
@@ -1492,7 +1492,7 @@
 	        O.length = n + i;
 	        return n + i;
 	    };
-
+	
 	    var pushIsNotGeneric = (function () {
 	        var obj = {};
 	        var result = Array.prototype.push.call(obj, undefined);
@@ -1506,7 +1506,7 @@
 	            return pushShim.apply(this, arguments);
 	        }
 	    }, pushIsNotGeneric);
-
+	
 	    // This fixes a very weird bug in Opera 10.6 when pushing `undefined
 	    var pushUndefinedIsWeird = (function () {
 	        var arr = [];
@@ -1514,7 +1514,7 @@
 	        return result !== 1 || arr.length !== 1 || typeof arr[0] !== 'undefined' || !owns(arr, 0);
 	    }());
 	    defineProperties(ArrayPrototype, { push: pushShim }, pushUndefinedIsWeird);
-
+	
 	    // ES5 15.2.3.14
 	    // http://es5.github.io/#x15.4.4.10
 	    // Fix boxed string bug
@@ -1524,7 +1524,7 @@
 	            return arraySliceApply(arr, arguments);
 	        }
 	    }, splitString);
-
+	
 	    var sortIgnoresNonFunctions = (function () {
 	        try {
 	            [1, 2].sort(null);
@@ -1560,15 +1560,15 @@
 	            return arraySort(this, compareFn);
 	        }
 	    }, sortIgnoresNonFunctions || !sortIgnoresUndefined || !sortThrowsOnRegex);
-
+	
 	    //
 	    // Object
 	    // ======
 	    //
-
+	
 	    // ES5 15.2.3.14
 	    // http://es5.github.com/#x15.2.3.14
-
+	
 	    // http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
 	    var hasDontEnumBug = !isEnum({ 'toString': null }, 'toString');
 	    var hasProtoEnumBug = isEnum(function () {}, 'prototype');
@@ -1625,7 +1625,7 @@
 	        'constructor'
 	    ];
 	    var dontEnumsLength = dontEnums.length;
-
+	
 	    // taken directly from https://github.com/ljharb/is-arguments/blob/master/index.js
 	    // can be replaced with require('is-arguments') if we ever use a build process instead
 	    var isStandardArguments = function isArguments(value) {
@@ -1640,18 +1640,18 @@
 	            isCallable(value.callee);
 	    };
 	    var isArguments = isStandardArguments(arguments) ? isStandardArguments : isLegacyArguments;
-
+	
 	    defineProperties($Object, {
 	        keys: function keys(object) {
 	            var isFn = isCallable(object);
 	            var isArgs = isArguments(object);
 	            var isObject = object !== null && typeof object === 'object';
 	            var isStr = isObject && isString(object);
-
+	
 	            if (!isObject && !isFn && !isArgs) {
 	                throw new TypeError('Object.keys called on a non-object');
 	            }
-
+	
 	            var theKeys = [];
 	            var skipProto = hasProtoEnumBug && isFn;
 	            if ((isStr && hasStringEnumBug) || isArgs) {
@@ -1659,7 +1659,7 @@
 	                    pushCall(theKeys, $String(i));
 	                }
 	            }
-
+	
 	            if (!isArgs) {
 	                for (var name in object) {
 	                    if (!(skipProto && name === 'prototype') && owns(object, name)) {
@@ -1667,7 +1667,7 @@
 	                    }
 	                }
 	            }
-
+	
 	            if (hasDontEnumBug) {
 	                var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
 	                for (var j = 0; j < dontEnumsLength; j++) {
@@ -1680,7 +1680,7 @@
 	            return theKeys;
 	        }
 	    });
-
+	
 	    var keysWorksWithArguments = $Object.keys && (function () {
 	        // Safari 5.0 bug
 	        return $Object.keys(arguments).length === 2;
@@ -1699,12 +1699,12 @@
 	            }
 	        }
 	    }, !keysWorksWithArguments || keysHasArgumentsLengthBug);
-
+	
 	    //
 	    // Date
 	    // ====
 	    //
-
+	
 	    var hasNegativeMonthYearBug = new Date(-3509827329600292).getUTCMonth() !== 0;
 	    var aNegativeTestDate = new Date(-1509842289600292);
 	    var aPositiveTestDate = new Date(1449662400000);
@@ -1719,7 +1719,7 @@
 	        hasToDateStringFormatBug = aNegativeTestDate.toDateString() !== 'Mon Jan 01 -45875';
 	        hasToStringFormatBug = !(/^Wed Dec 09 2015 \d\d:\d\d:\d\d GMT[-\+]\d\d\d\d(?: |$)/).test(aPositiveTestDate.toString());
 	    }
-
+	
 	    var originalGetFullYear = call.bind(Date.prototype.getFullYear);
 	    var originalGetMonth = call.bind(Date.prototype.getMonth);
 	    var originalGetDate = call.bind(Date.prototype.getDate);
@@ -1736,7 +1736,7 @@
 	    var daysInMonth = function daysInMonth(month, year) {
 	        return originalGetDate(new Date(year, month, 0));
 	    };
-
+	
 	    defineProperties(Date.prototype, {
 	        getFullYear: function getFullYear() {
 	            if (!this || !(this instanceof Date)) {
@@ -1813,7 +1813,7 @@
 	            return date;
 	        }
 	    }, hasNegativeMonthYearBug);
-
+	
 	    defineProperties(Date.prototype, {
 	        toUTCString: function toUTCString() {
 	            if (!this || !(this instanceof Date)) {
@@ -1835,7 +1835,7 @@
 	                (second < 10 ? '0' + second : second) + ' GMT';
 	        }
 	    }, hasNegativeMonthYearBug || hasToUTCStringFormatBug);
-
+	
 	    // Opera 12 has `,`
 	    defineProperties(Date.prototype, {
 	        toDateString: function toDateString() {
@@ -1852,7 +1852,7 @@
 	                year;
 	        }
 	    }, hasNegativeMonthYearBug || hasToDateStringFormatBug);
-
+	
 	    // can't use defineProperties here because of toString enumeration issue in IE <= 8
 	    if (hasNegativeMonthYearBug || hasToStringFormatBug) {
 	        Date.prototype.toString = function toString() {
@@ -1888,7 +1888,7 @@
 	            });
 	        }
 	    }
-
+	
 	    // ES5 15.9.5.43
 	    // http://es5.github.com/#x15.9.5.43
 	    // This function returns a String value represent the instance in time
@@ -1900,30 +1900,30 @@
 	    var negativeYearString = '-000001';
 	    var hasNegativeDateBug = Date.prototype.toISOString && new Date(negativeDate).toISOString().indexOf(negativeYearString) === -1;
 	    var hasSafari51DateBug = Date.prototype.toISOString && new Date(-1).toISOString() !== '1969-12-31T23:59:59.999Z';
-
+	
 	    var getTime = call.bind(Date.prototype.getTime);
-
+	
 	    defineProperties(Date.prototype, {
 	        toISOString: function toISOString() {
 	            if (!isFinite(this) || !isFinite(getTime(this))) {
 	                // Adope Photoshop requires the second check.
 	                throw new RangeError('Date.prototype.toISOString called on non-finite value.');
 	            }
-
+	
 	            var year = originalGetUTCFullYear(this);
-
+	
 	            var month = originalGetUTCMonth(this);
 	            // see https://github.com/es-shims/es5-shim/issues/111
 	            year += Math.floor(month / 12);
 	            month = (month % 12 + 12) % 12;
-
+	
 	            // the date time string format is specified in 15.9.1.15.
 	            var result = [month + 1, originalGetUTCDate(this), originalGetUTCHours(this), originalGetUTCMinutes(this), originalGetUTCSeconds(this)];
 	            year = (
 	                (year < 0 ? '-' : (year > 9999 ? '+' : '')) +
 	                strSlice('00000' + Math.abs(year), (0 <= year && year <= 9999) ? -4 : -6)
 	            );
-
+	
 	            for (var i = 0; i < result.length; ++i) {
 	                // pad months, days, hours, minutes, and seconds to have two digits.
 	                result[i] = strSlice('00' + result[i], -2);
@@ -1936,7 +1936,7 @@
 	            );
 	        }
 	    }, hasNegativeDateBug || hasSafari51DateBug);
-
+	
 	    // ES5 15.9.5.44
 	    // http://es5.github.com/#x15.9.5.44
 	    // This function provides a String representation of a Date object for use by
@@ -1957,7 +1957,7 @@
 	        Date.prototype.toJSON = function toJSON(key) {
 	            // When the toJSON method is called with argument key, the following
 	            // steps are taken:
-
+	
 	            // 1.  Let O be the result of calling ToObject, giving it the this
 	            // value as its argument.
 	            // 2. Let tv be ES.ToPrimitive(O, hint Number).
@@ -1977,9 +1977,9 @@
 	            // 6. Return the result of calling the [[Call]] internal method of
 	            //  toISO with O as the this value and an empty argument list.
 	            return toISO.call(O);
-
+	
 	            // NOTE 1 The argument is ignored.
-
+	
 	            // NOTE 2 The toJSON function is intentionally generic; it does not
 	            // require that its this value be a Date object. Therefore, it can be
 	            // transferred to other kinds of objects for use as a method. However,
@@ -1988,7 +1988,7 @@
 	            // stringification.
 	        };
 	    }
-
+	
 	    // ES5 15.9.4.2
 	    // http://es5.github.com/#x15.9.4.2
 	    // based on work shared by Daniel Friesen (dantman)
@@ -2043,7 +2043,7 @@
 	                }
 	                return date;
 	            };
-
+	
 	            // 15.9.1.15 Date Time String Format.
 	            var isoDateExpression = new RegExp('^' +
 	                '(\\d{4}|[+-]\\d{6})' + // four-digit year capture or sign +
@@ -2066,9 +2066,9 @@
 	                    ')' +
 	                ')?)?)?)?' +
 	            '$');
-
+	
 	            var months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
-
+	
 	            var dayFromMonth = function dayFromMonth(year, month) {
 	                var t = month > 1 ? 1 : 0;
 	                return (
@@ -2079,7 +2079,7 @@
 	                    365 * (year - 1970)
 	                );
 	            };
-
+	
 	            var toUTC = function toUTC(t) {
 	                var s = 0;
 	                var ms = t;
@@ -2092,14 +2092,14 @@
 	                }
 	                return $Number(new NativeDate(1970, 0, 1, 0, 0, s, ms));
 	            };
-
+	
 	            // Copy any custom methods a 3rd party library may have added
 	            for (var key in NativeDate) {
 	                if (owns(NativeDate, key)) {
 	                    DateShim[key] = NativeDate[key];
 	                }
 	            }
-
+	
 	            // Copy "native" methods explicitly; they may be non-enumerable
 	            defineProperties(DateShim, {
 	                now: NativeDate.now,
@@ -2109,7 +2109,7 @@
 	            defineProperties(DateShim.prototype, {
 	                constructor: DateShim
 	            }, true);
-
+	
 	            // Upgrade Date.parse to handle simplified ISO 8601 strings
 	            var parseShim = function parse(string) {
 	                var match = isoDateExpression.exec(string);
@@ -2162,12 +2162,12 @@
 	                return NativeDate.parse.apply(this, arguments);
 	            };
 	            defineProperties(DateShim, { parse: parseShim });
-
+	
 	            return DateShim;
 	        }(Date));
 	        /* global Date: false */
 	    }
-
+	
 	    // ES5 15.9.4.4
 	    // http://es5.github.com/#x15.9.4.4
 	    if (!Date.now) {
@@ -2175,12 +2175,12 @@
 	            return new Date().getTime();
 	        };
 	    }
-
+	
 	    //
 	    // Number
 	    // ======
 	    //
-
+	
 	    // ES5.1 15.7.4.5
 	    // http://es5.github.com/#x15.7.4.5
 	    var hasToFixedBugs = NumberPrototype.toFixed && (
@@ -2189,7 +2189,7 @@
 	      (1.255).toFixed(2) !== '1.25' ||
 	      (1000000000000000128).toFixed(0) !== '1000000000000000128'
 	    );
-
+	
 	    var toFixedHelpers = {
 	        base: 1e7,
 	        size: 6,
@@ -2244,38 +2244,38 @@
 	            return n;
 	        }
 	    };
-
+	
 	    var toFixedShim = function toFixed(fractionDigits) {
 	        var f, x, s, m, e, z, j, k;
-
+	
 	        // Test for NaN and round fractionDigits down
 	        f = $Number(fractionDigits);
 	        f = isActualNaN(f) ? 0 : Math.floor(f);
-
+	
 	        if (f < 0 || f > 20) {
 	            throw new RangeError('Number.toFixed called with invalid number of decimals');
 	        }
-
+	
 	        x = $Number(this);
-
+	
 	        if (isActualNaN(x)) {
 	            return 'NaN';
 	        }
-
+	
 	        // If it is too big or small, return the string value of the number
 	        if (x <= -1e21 || x >= 1e21) {
 	            return $String(x);
 	        }
-
+	
 	        s = '';
-
+	
 	        if (x < 0) {
 	            s = '-';
 	            x = -x;
 	        }
-
+	
 	        m = '0';
-
+	
 	        if (x > 1e-21) {
 	            // 1e-21 < x < 1e21
 	            // -70 < log2(x) < 70
@@ -2283,26 +2283,26 @@
 	            z = (e < 0 ? x * toFixedHelpers.pow(2, -e, 1) : x / toFixedHelpers.pow(2, e, 1));
 	            z *= 0x10000000000000; // Math.pow(2, 52);
 	            e = 52 - e;
-
+	
 	            // -18 < e < 122
 	            // x = z / 2 ^ e
 	            if (e > 0) {
 	                toFixedHelpers.multiply(0, z);
 	                j = f;
-
+	
 	                while (j >= 7) {
 	                    toFixedHelpers.multiply(1e7, 0);
 	                    j -= 7;
 	                }
-
+	
 	                toFixedHelpers.multiply(toFixedHelpers.pow(10, j, 1), 0);
 	                j = e - 1;
-
+	
 	                while (j >= 23) {
 	                    toFixedHelpers.divide(1 << 23);
 	                    j -= 23;
 	                }
-
+	
 	                toFixedHelpers.divide(1 << j);
 	                toFixedHelpers.multiply(1, 1);
 	                toFixedHelpers.divide(2);
@@ -2313,10 +2313,10 @@
 	                m = toFixedHelpers.numToString() + strSlice('0.00000000000000000000', 2, 2 + f);
 	            }
 	        }
-
+	
 	        if (f > 0) {
 	            k = m.length;
-
+	
 	            if (k <= f) {
 	                m = s + strSlice('0.0000000000000000000', 0, f - k + 2) + m;
 	            } else {
@@ -2325,11 +2325,11 @@
 	        } else {
 	            m = s + m;
 	        }
-
+	
 	        return m;
 	    };
 	    defineProperties(NumberPrototype, { toFixed: toFixedShim }, hasToFixedBugs);
-
+	
 	    var hasToPrecisionUndefinedBug = (function () {
 	        try {
 	            return 1.0.toPrecision(undefined) === '1';
@@ -2343,15 +2343,15 @@
 	            return typeof precision === 'undefined' ? originalToPrecision.call(this) : originalToPrecision.call(this, precision);
 	        }
 	    }, hasToPrecisionUndefinedBug);
-
+	
 	    //
 	    // String
 	    // ======
 	    //
-
+	
 	    // ES5 15.5.4.14
 	    // http://es5.github.com/#x15.5.4.14
-
+	
 	    // [bugfix, IE lt 9, firefox 4, Konqueror, Opera, obscure browsers]
 	    // Many browsers do not split properly with regular expressions or they
 	    // do not perform the split correctly under obscure conditions.
@@ -2363,7 +2363,7 @@
 	    //       [undefined, "t", undefined, "e", ...]
 	    //    ''.split(/.?/) should be [], not [""]
 	    //    '.'.split(/()()/) should be ["."], not ["", "", "."]
-
+	
 	    if (
 	        'ab'.split(/(?:ab)*/).length !== 2 ||
 	        '.'.split(/(.?)(.?)/).length !== 4 ||
@@ -2375,18 +2375,18 @@
 	        (function () {
 	            var compliantExecNpcg = typeof (/()??/).exec('')[1] === 'undefined'; // NPCG: nonparticipating capturing group
 	            var maxSafe32BitInt = Math.pow(2, 32) - 1;
-
+	
 	            StringPrototype.split = function (separator, limit) {
 	                var string = String(this);
 	                if (typeof separator === 'undefined' && limit === 0) {
 	                    return [];
 	                }
-
+	
 	                // If `separator` is not a regex, use native split
 	                if (!isRegex(separator)) {
 	                    return strSplit(this, separator, limit);
 	                }
-
+	
 	                var output = [];
 	                var flags = (separator.ignoreCase ? 'i' : '') +
 	                            (separator.multiline ? 'm' : '') +
@@ -2451,7 +2451,7 @@
 	                return output.length > splitLimit ? arraySlice(output, 0, splitLimit) : output;
 	            };
 	        }());
-
+	
 	    // [bugfix, chrome]
 	    // If separator is undefined, then the result array contains just one String,
 	    // which is the this value (converted to a String). If limit is not undefined,
@@ -2466,7 +2466,7 @@
 	            return strSplit(this, separator, limit);
 	        };
 	    }
-
+	
 	    var str_replace = StringPrototype.replace;
 	    var replaceReportsGroupsCorrectly = (function () {
 	        var groups = [];
@@ -2475,7 +2475,7 @@
 	        });
 	        return groups.length === 1 && typeof groups[0] === 'undefined';
 	    }());
-
+	
 	    if (!replaceReportsGroupsCorrectly) {
 	        StringPrototype.replace = function replace(searchValue, replaceValue) {
 	            var isFn = isCallable(replaceValue);
@@ -2496,7 +2496,7 @@
 	            }
 	        };
 	    }
-
+	
 	    // ECMA-262, 3rd B.2.3
 	    // Not an ECMAScript standard, although ECMAScript 3rd Edition has a
 	    // non-normative section suggesting uniform semantics and it should be
@@ -2513,7 +2513,7 @@
 	            return string_substr.call(this, normalizedStart, length);
 	        }
 	    }, hasNegativeSubstrBug);
-
+	
 	    // ES5 15.5.4.20
 	    // whitespace from: http://es5.github.io/#x15.5.4.20
 	    var ws = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
@@ -2535,7 +2535,7 @@
 	        }
 	    }, hasTrimWhitespaceBug);
 	    var trim = call.bind(String.prototype.trim);
-
+	
 	    var hasLastIndexBug = StringPrototype.lastIndexOf && 'abcあい'.lastIndexOf('あい', 2) !== -1;
 	    defineProperties(StringPrototype, {
 	        lastIndexOf: function lastIndexOf(searchString) {
@@ -2559,14 +2559,14 @@
 	            return -1;
 	        }
 	    }, hasLastIndexBug);
-
+	
 	    var originalLastIndexOf = StringPrototype.lastIndexOf;
 	    defineProperties(StringPrototype, {
 	        lastIndexOf: function lastIndexOf(searchString) {
 	            return originalLastIndexOf.apply(this, arguments);
 	        }
 	    }, StringPrototype.lastIndexOf.length !== 1);
-
+	
 	    // ES-5 15.1.2.2
 	    /* eslint-disable radix */
 	    if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
@@ -2581,7 +2581,7 @@
 	            };
 	        }(parseInt));
 	    }
-
+	
 	    // https://es5.github.io/#x15.1.2.3
 	    if (1 / parseFloat('-0') !== -Infinity) {
 	        /* global parseFloat: true */
@@ -2593,7 +2593,7 @@
 	            };
 	        }(parseFloat));
 	    }
-
+	
 	    if (String(new RangeError('test')) !== 'RangeError: test') {
 	        var errorToStringShim = function toString() {
 	            if (typeof this === 'undefined' || this === null) {
@@ -2622,7 +2622,7 @@
 	        // can't use defineProperties here because of toString enumeration issue in IE <= 8
 	        Error.prototype.toString = errorToStringShim;
 	    }
-
+	
 	    if (supportsDescriptors) {
 	        var ensureNonEnumerable = function (obj, prop) {
 	            if (isEnum(obj, prop)) {
@@ -2639,7 +2639,7 @@
 	        }
 	        ensureNonEnumerable(Error.prototype, 'name');
 	    }
-
+	
 	    if (String(/a/mig) !== '/a/gim') {
 	        var regexToString = function toString() {
 	            var str = '/' + this.source + '/';
@@ -2662,7 +2662,7 @@
 
 /***/ }),
 
-/***/ 135:
+/***/ 141:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2670,17 +2670,17 @@
 	 * @license es5-shim Copyright 2009-2015 by contributors, MIT License
 	 * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
 	 */
-
+	
 	// vim: ts=4 sts=4 sw=4 expandtab
-
+	
 	// Add semicolon to prevent IIFE from being passed as argument to concatenated code.
 	;
-
+	
 	// UMD (Universal Module Definition)
 	// see https://github.com/umdjs/umd/blob/master/templates/returnExports.js
 	(function (root, factory) {
 	    'use strict';
-
+	
 	    /* global define, exports, module */
 	    if (true) {
 	        // AMD. Register as an anonymous module.
@@ -2695,13 +2695,13 @@
 	        root.returnExports = factory();
 	    }
 	}(this, function () {
-
+	
 	    var call = Function.call;
 	    var prototypeOfObject = Object.prototype;
 	    var owns = call.bind(prototypeOfObject.hasOwnProperty);
 	    var isEnumerable = call.bind(prototypeOfObject.propertyIsEnumerable);
 	    var toStr = call.bind(prototypeOfObject.toString);
-
+	
 	    // If JS engine supports accessors creating shortcuts.
 	    var defineGetter;
 	    var defineSetter;
@@ -2716,11 +2716,11 @@
 	        lookupSetter = call.bind(prototypeOfObject.__lookupSetter__);
 	        /* eslint-enable no-underscore-dangle */
 	    }
-
+	
 	    var isPrimitive = function isPrimitive(o) {
 	        return o == null || (typeof o !== 'object' && typeof o !== 'function');
 	    };
-
+	
 	    // ES5 15.2.3.2
 	    // http://es5.github.com/#x15.2.3.2
 	    if (!Object.getPrototypeOf) {
@@ -2750,10 +2750,10 @@
 	            }
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.3
 	    // http://es5.github.com/#x15.2.3.3
-
+	
 	    var doesGetOwnPropertyDescriptorWork = function doesGetOwnPropertyDescriptorWork(object) {
 	        try {
 	            object.sentinel = 0;
@@ -2762,7 +2762,7 @@
 	            return false;
 	        }
 	    };
-
+	
 	    // check whether getOwnPropertyDescriptor works if it's given. Otherwise, shim partially.
 	    if (Object.defineProperty) {
 	        var getOwnPropertyDescriptorWorksOnObject = doesGetOwnPropertyDescriptorWork({});
@@ -2772,16 +2772,16 @@
 	            var getOwnPropertyDescriptorFallback = Object.getOwnPropertyDescriptor;
 	        }
 	    }
-
+	
 	    if (!Object.getOwnPropertyDescriptor || getOwnPropertyDescriptorFallback) {
 	        var ERR_NON_OBJECT = 'Object.getOwnPropertyDescriptor called on a non-object: ';
-
+	
 	        /* eslint-disable no-proto */
 	        Object.getOwnPropertyDescriptor = function getOwnPropertyDescriptor(object, property) {
 	            if (isPrimitive(object)) {
 	                throw new TypeError(ERR_NON_OBJECT + object);
 	            }
-
+	
 	            // make a valiant attempt to use the real getOwnPropertyDescriptor
 	            // for I8's DOM elements.
 	            if (getOwnPropertyDescriptorFallback) {
@@ -2791,21 +2791,21 @@
 	                    // try the shim if the real one doesn't work
 	                }
 	            }
-
+	
 	            var descriptor;
-
+	
 	            // If object does not owns property return undefined immediately.
 	            if (!owns(object, property)) {
 	                return descriptor;
 	            }
-
+	
 	            // If object has a property then it's for sure `configurable`, and
 	            // probably `enumerable`. Detect enumerability though.
 	            descriptor = {
 	                enumerable: isEnumerable(object, property),
 	                configurable: true
 	            };
-
+	
 	            // If JS engine supports accessor properties then property may be a
 	            // getter or setter.
 	            if (supportsAccessors) {
@@ -2822,15 +2822,15 @@
 	                if (notPrototypeOfObject) {
 	                    object.__proto__ = prototypeOfObject;
 	                }
-
+	
 	                var getter = lookupGetter(object, property);
 	                var setter = lookupSetter(object, property);
-
+	
 	                if (notPrototypeOfObject) {
 	                    // Once we have getter and setter we can put values back.
 	                    object.__proto__ = prototype;
 	                }
-
+	
 	                if (getter || setter) {
 	                    if (getter) {
 	                        descriptor.get = getter;
@@ -2843,7 +2843,7 @@
 	                    return descriptor;
 	                }
 	            }
-
+	
 	            // If we got this far we know that object has an own property that is
 	            // not an accessor so we set it as a value and return descriptor.
 	            descriptor.value = object[property];
@@ -2852,7 +2852,7 @@
 	        };
 	        /* eslint-enable no-proto */
 	    }
-
+	
 	    // ES5 15.2.3.4
 	    // http://es5.github.com/#x15.2.3.4
 	    if (!Object.getOwnPropertyNames) {
@@ -2860,18 +2860,18 @@
 	            return Object.keys(object);
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.5
 	    // http://es5.github.com/#x15.2.3.5
 	    if (!Object.create) {
-
+	
 	        // Contributed by Brandon Benvie, October, 2012
 	        var createEmpty;
 	        var supportsProto = !({ __proto__: null } instanceof Object);
 	                            // the following produces false positives
 	                            // in Opera Mini => not a reliable check
 	                            // Object.prototype.__proto__ === null
-
+	
 	        // Check for document.domain and active x support
 	        // No need to use active x approach when document.domain is not set
 	        // see https://github.com/es-shims/es5-shim/issues/150
@@ -2882,33 +2882,33 @@
 	            if (!document.domain) {
 	                return false;
 	            }
-
+	
 	            try {
 	                return !!new ActiveXObject('htmlfile');
 	            } catch (exception) {
 	                return false;
 	            }
 	        };
-
+	
 	        // This supports IE8 when document.domain is used
 	        // see https://github.com/es-shims/es5-shim/issues/150
 	        // variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
 	        var getEmptyViaActiveX = function getEmptyViaActiveX() {
 	            var empty;
 	            var xDoc;
-
+	
 	            xDoc = new ActiveXObject('htmlfile');
-
+	
 	            var script = 'script';
 	            xDoc.write('<' + script + '></' + script + '>');
 	            xDoc.close();
-
+	
 	            empty = xDoc.parentWindow.Object.prototype;
 	            xDoc = null;
-
+	
 	            return empty;
 	        };
-
+	
 	        // The original implementation using an iframe
 	        // before the activex approach was added
 	        // see https://github.com/es-shims/es5-shim/issues/150
@@ -2916,20 +2916,20 @@
 	            var iframe = document.createElement('iframe');
 	            var parent = document.body || document.documentElement;
 	            var empty;
-
+	
 	            iframe.style.display = 'none';
 	            parent.appendChild(iframe);
 	            /* eslint-disable no-script-url */
 	            iframe.src = 'javascript:';
 	            /* eslint-enable no-script-url */
-
+	
 	            empty = iframe.contentWindow.Object.prototype;
 	            parent.removeChild(iframe);
 	            iframe = null;
-
+	
 	            return empty;
 	        };
-
+	
 	        /* global document */
 	        if (supportsProto || typeof document === 'undefined') {
 	            createEmpty = function () {
@@ -2945,7 +2945,7 @@
 	                // Determine which approach to use
 	                // see https://github.com/es-shims/es5-shim/issues/150
 	                var empty = shouldUseActiveX() ? getEmptyViaActiveX() : getEmptyViaIFrame();
-
+	
 	                delete empty.constructor;
 	                delete empty.hasOwnProperty;
 	                delete empty.propertyIsEnumerable;
@@ -2953,7 +2953,7 @@
 	                delete empty.toLocaleString;
 	                delete empty.toString;
 	                delete empty.valueOf;
-
+	
 	                var Empty = function Empty() {};
 	                Empty.prototype = empty;
 	                // short-circuit future calls
@@ -2963,12 +2963,12 @@
 	                return new Empty();
 	            };
 	        }
-
+	
 	        Object.create = function create(prototype, properties) {
-
+	
 	            var object;
 	            var Type = function Type() {}; // An empty constructor.
-
+	
 	            if (prototype === null) {
 	                object = createEmpty();
 	            } else {
@@ -2990,18 +2990,18 @@
 	                object.__proto__ = prototype;
 	                /* eslint-enable no-proto */
 	            }
-
+	
 	            if (properties !== void 0) {
 	                Object.defineProperties(object, properties);
 	            }
-
+	
 	            return object;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.6
 	    // http://es5.github.com/#x15.2.3.6
-
+	
 	    // Patch for WebKit and IE8 standard mode
 	    // Designed by hax <hax.github.com>
 	    // related issue: https://github.com/es-shims/es5-shim/issues#issue/5
@@ -3010,7 +3010,7 @@
 	    //     http://msdn.microsoft.com/en-us/library/dd229916.aspx
 	    // WebKit Bugs:
 	    //     https://bugs.webkit.org/show_bug.cgi?id=36423
-
+	
 	    var doesDefinePropertyWork = function doesDefinePropertyWork(object) {
 	        try {
 	            Object.defineProperty(object, 'sentinel', {});
@@ -3019,7 +3019,7 @@
 	            return false;
 	        }
 	    };
-
+	
 	    // check whether defineProperty works if it's given. Otherwise,
 	    // shim partially.
 	    if (Object.defineProperty) {
@@ -3031,12 +3031,12 @@
 	                definePropertiesFallback = Object.defineProperties;
 	        }
 	    }
-
+	
 	    if (!Object.defineProperty || definePropertyFallback) {
 	        var ERR_NON_OBJECT_DESCRIPTOR = 'Property description must be an object: ';
 	        var ERR_NON_OBJECT_TARGET = 'Object.defineProperty called on non-object: ';
 	        var ERR_ACCESSORS_NOT_SUPPORTED = 'getters & setters can not be defined on this javascript engine';
-
+	
 	        Object.defineProperty = function defineProperty(object, property, descriptor) {
 	            if (isPrimitive(object)) {
 	                throw new TypeError(ERR_NON_OBJECT_TARGET + object);
@@ -3053,7 +3053,7 @@
 	                    // try the shim if the real one doesn't work
 	                }
 	            }
-
+	
 	            // If it's a data property.
 	            if ('value' in descriptor) {
 	                // fail silently if 'writable', 'enumerable', or 'configurable'
@@ -3069,7 +3069,7 @@
 	                        'This implementation of Object.defineProperty does not support configurable, enumerable, or writable.'
 	                    );
 	                */
-
+	
 	                if (supportsAccessors && (lookupGetter(object, property) || lookupSetter(object, property))) {
 	                    // As accessors are supported only on engines implementing
 	                    // `__proto__` we can safely override `__proto__` while defining
@@ -3105,7 +3105,7 @@
 	            return object;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.7
 	    // http://es5.github.com/#x15.2.3.7
 	    if (!Object.defineProperties || definePropertiesFallback) {
@@ -3118,7 +3118,7 @@
 	                    // try the shim if the real one doesn't work
 	                }
 	            }
-
+	
 	            Object.keys(properties).forEach(function (property) {
 	                if (property !== '__proto__') {
 	                    Object.defineProperty(object, property, properties[property]);
@@ -3127,7 +3127,7 @@
 	            return object;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.8
 	    // http://es5.github.com/#x15.2.3.8
 	    if (!Object.seal) {
@@ -3141,7 +3141,7 @@
 	            return object;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.9
 	    // http://es5.github.com/#x15.2.3.9
 	    if (!Object.freeze) {
@@ -3155,7 +3155,7 @@
 	            return object;
 	        };
 	    }
-
+	
 	    // detect a Rhino bug and patch it
 	    try {
 	        Object.freeze(function () {});
@@ -3170,7 +3170,7 @@
 	            };
 	        }(Object.freeze));
 	    }
-
+	
 	    // ES5 15.2.3.10
 	    // http://es5.github.com/#x15.2.3.10
 	    if (!Object.preventExtensions) {
@@ -3184,7 +3184,7 @@
 	            return object;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.11
 	    // http://es5.github.com/#x15.2.3.11
 	    if (!Object.isSealed) {
@@ -3195,7 +3195,7 @@
 	            return false;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.12
 	    // http://es5.github.com/#x15.2.3.12
 	    if (!Object.isFrozen) {
@@ -3206,7 +3206,7 @@
 	            return false;
 	        };
 	    }
-
+	
 	    // ES5 15.2.3.13
 	    // http://es5.github.com/#x15.2.3.13
 	    if (!Object.isExtensible) {
@@ -3226,10 +3226,11 @@
 	            return returnValue;
 	        };
 	    }
-
+	
 	}));
 
 
 /***/ })
 
 /******/ });
+//# sourceMappingURL=polyfill.js.map

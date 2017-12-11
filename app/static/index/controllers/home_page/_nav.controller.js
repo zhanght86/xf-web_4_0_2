@@ -115,7 +115,7 @@ module.exports = homePageModule =>{
                     window.open('http://'+url+'/index.html');
                 }
                 $scope.checkShowCrumbs=function(){
-                    if(!$scope.url.toString().indexOf("/homePage/define") > 0 || !$scope.url.toString().indexOf("/admin/manage") > 0 || !$scope.url.toString().indexOf("/admin/userManage") > 0){
+                    if(!$scope.url.toString().indexOf("/HP/define") > 0 || !$scope.url.toString().indexOf("/HP/permission") > 0 || !$scope.url.toString().indexOf("/HP/management") > 0){
                         return false;
                     }
                     else{

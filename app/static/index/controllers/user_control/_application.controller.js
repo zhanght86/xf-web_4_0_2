@@ -5,99 +5,81 @@
  */
 module.exports = homePageModule =>{
     homePageModule.controller('ApplicationController',
-    ['$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore","$rootScope",
-    function ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore,$rootScope) {
+    ['$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore","$rootScope","HomePageServer",
+    ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore,$rootScope,HomePageServer) =>{
         $scope.vm = {
             userName : USER_NAME,
-            userPermission : $stateParams.userPermission,
+            userRole : $stateParams.userPermission,
             addApplicationWindow : addApplicationWindow,
             myApplication : "",
-            selectLicence : "",
             newApplicationName : "",
-            newScene : "",
             newLicence : "",
             newDescribe : "",
-            selectScene : selectScene
+            selectApplication : selectApplication
         };
-        function selectScene(id,applicationId){
-            $cookieStore.put("sceneId",id);
-            $cookieStore.put("applicationId",applicationId);
-            $.getScript('/js/common/config.js');
-            $scope.MASTER.queryChannelList(applicationId) ;
-            $scope.MASTER.queryDimensionList(applicationId) ;
-        }
-        getUserInfo();
-        myApplication();
-        selectLicence();
         //获取用户信息
-        function getUserInfo(){
-            httpRequestPost("/api/user/findRoleIdByUserId",{
-                "userId":USER_ID
-            },function(data){
-                //if(data.status==200){
-                    console.log(data);
-                    $scope.vm.userPermission = data.data.roleList;
-                $scope.$apply();
-                //}
-            },function(err){
+            HomePageServer.getUserRoleList.save({
+                "id" : getCookie("userId")
+            },function(response){
+                if(response.status==200){
+                    $scope.vm.userRole = response.data.roleList;
+                }
+            },function(error){
+                console.log(error)
+            }) ;
+        //获取所有应用
+            HomePageServer.qeuryApplicationAtUser.save({
+            },function(response){
+                if(response.status == 200 ){
+                    $scope.vm.myApplication = response.data;
+                }else{
+
+                }
+                console.log(response);
+            },function(error){
+                console.log(error)
             });
+        function selectApplication(application){
+            setCookie("applicationName",application.name);
+            setCookie("applicationId",application.id);
+            setCookie("description",application.description);
+            $.getScript('assets/js/common/config.js');
+            $scope.MASTER.queryChannelList(application.id) ;
         }
-        //获取当前 应用场景
-        function myApplication(){
-            //console.log(getCookie("userId"));
-            httpRequestPost("/api/application/application/listApplicationByUserId",{
-                //"userId":$cookieStore.get("userId")
-                "userId": USER_ID
-            },function(data){
-                console.log(data);
-                $scope.vm.myApplication = data.data;
-                $scope.$apply();
-            },function(err){
-                //console.log(err)
-            });
-
-        }
-
-        //var timeout = $timeout(function () {
-        //     $scope.vm.selectLicence = ["d","a","b"]
-        //},3000);
-        //获取 scene
-       function selectLicence(){
-           httpRequestPost("/api/application/scene/listAllScene",{
-            },function(data){
-                $scope.vm.selectLicence = data.data;
-                $scope.vm.newScene=data.data[0].sceneId;
-                console.log(data.data);
-                $scope.$apply();
-                return data.data
-            },function(err){
-                console.log(err)
-         });
-       }
-
         //打开添加窗口
         function addApplicationWindow() {
-            var dialog = ngDialog.openConfirm({
-                template:"/static/index/user_control/switch_application/add_application.html",
-                scope:$scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        if(applicationValidate()==false){
-                            return false;
-                        }
-                        addApplication();
-                    }else{
-                        $scope.vm.newApplicationName="";
-                        $scope.vm.newLicence="";
-                        $scope.vm.newDescribe="";
-                    }
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,"static/index/views/user_control/switch_application/add_application.html","650px",function(){
+                if(applicationValidate()==false){
+                    return false;
                 }
-
+                addApplication();
+            },function(){
+                $scope.vm.newApplicationName="";
+                $scope.vm.newLicence="";
+                $scope.vm.newDescribe="";
+            },function(){
             });
+            // var dialog = ngDialog.openConfirm({
+            //     template:"/static/index/user_control/switch_application/add_application.html",
+            //     scope:$scope,
+            //     closeByDocument:false,
+            //     closeByEscape: true,
+            //     showClose : true,
+            //     backdrop : 'static',
+            //     preCloseCallback:function(e){    //关闭回掉
+            //         if(e === 1){
+            //             if(applicationValidate()==false){
+            //                 return false;
+            //             }
+            //             addApplication();
+            //         }else{
+            //             $scope.vm.newApplicationName="";
+            //             $scope.vm.newLicence="";
+            //             $scope.vm.newDescribe="";
+            //         }
+            //     }
+            //
+            // });
         }
         function applicationValidate(){
             if(lengthCheck($scope.vm.newApplicationName,0,50)==false){
@@ -112,23 +94,21 @@ module.exports = homePageModule =>{
         }
         //添加
         function addApplication(){
-            //console.log(getCookie("userId"),$scope.vm.newApplicationName,$scope.vm.newScene,$scope.vm.newLicence,$scope.vm.newDescribe);
-            httpRequestPost("/api/application/application/addApplication",{
-                "userId":$cookieStore.get("userId"),
-                "applicationName": $scope.vm.newApplicationName,
-                "sceneId": $scope.vm.newScene,
-                "applicationLisence": $scope.vm.newLicence,
-                "applicationDescription": $scope.vm.newDescribe
+            HomePageServer.addApplication.save({
+                // "accessToken" : "",
+                // "sceneId" : "" ,
+                "name": $scope.vm.newApplicationName,
+                "license": $scope.vm.newLicence,
+                "description": $scope.vm.newDescribe
             },function(data){
                 if(data.status==200){
                     $state.reload();
                 }else{
                     layer.msg(data.data);
                 }
-                console.log(data)
             },function(err){
                 console.log(err)
-            });
+            })
         }
     }])
 };

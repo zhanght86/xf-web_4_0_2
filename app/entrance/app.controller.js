@@ -18,7 +18,9 @@ module.exports = ngModule =>
             //$rootScope.
             $scope.MASTER = {
                 //const for Downstream
-                headImage : $cookieStore.get("robotHead") ,
+                robotName : getCookie("robotName") , //机器人名字
+                avatarUrl : getCookie("avatarUrl") , // 头像 url
+                avatarId :  getCookie("avatarId") ,  // 头像id
                 applicationName : APPLICATION_NAME,
                 channelList : "",
                 channelListIds :[],

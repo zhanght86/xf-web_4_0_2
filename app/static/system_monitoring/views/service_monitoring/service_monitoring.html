@@ -1,0 +1,25 @@
+<div ui-view="header"></div>
+<div class="warp "  style="margin-top:20px;">
+    <div class="pd-30" style="background:#fff;">
+       <h3 class="mb-20 f16">服务监控</h3>
+        <div class="mb-20">
+            <table class="access_amount_table ">
+                <tr style="background:#ebebeb;">
+                    <td width="25%" class="bold">服务名称</td>
+                    <td width="50%" class="bold">IP地址</td>
+                    <td width="25%" class="bold">服务状态</td>
+                </tr>
+                <tr ng-repeat="item in vm.result">
+                    <td>{{item.instance[0].app}}</td>
+                    <td>
+                        <span ng-repeat="x in item.instance">{{x.instanceId}} <b ng-if="$index!=item.instance.length-1">,</b> </span>
+                    </td>
+                    <td ng-if="item.instance[0].status=='UP'" class="c_green">项目正常</td>
+                    <td ng-if="item.instance[0].status!='UP'" class="c-red">项目异常</td>
+
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

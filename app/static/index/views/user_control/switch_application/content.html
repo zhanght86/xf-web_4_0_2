@@ -8,7 +8,7 @@
             <div>
                 <!--<span>所属部门：云创中心</span>-->
                 <span>用户权限：
-                    <span ng-repeat="permission in vm.userPermission" >{{permission}} </span>
+                    <span ng-repeat="role in vm.userRole" >{{role}} </span>
                 </span>
             </div>
         </div>
@@ -21,9 +21,9 @@
     </div>
     <div class="application_box clearfix">
         <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication">
-            <a ui-sref="setting.Infor" >
+            <a ui-sref="AM.info">
                 <!--<img ng-if="application.sceneId==2" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../../../images/marketing.png" width="80" height="80"/>-->
-                <img ng-click="vm.selectScene(application.sceneId,application.id)" src="../../../../images/cust_service.png" width="80" height="80"/>
+                <img ng-click="vm.selectApplication(application)" src="../../../../images/cust_service.png" width="80" height="80"/>
                 <!--<img ng-if="application.sceneId==3" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../../../images/images/u33.png" width="80" height="80"/>-->
             </a>
             <div class="p10 mb-10 bd_bot" >
@@ -31,9 +31,9 @@
                 <!--<p class="name" ng-if="application.name.length<=8">{{application.name}}</p>-->
                 <p class="scene">场景类型：<span>客服型</span></p>
                     <p class="status">应用状态：
-                        <span ng-if="application.statusId==40001" class="c-orange">未使用</span>
-                        <span ng-if="application.statusId==40002" class="c-primary">使用中</span>
-                        <span ng-if="application.statusId==40003" class="c-error">已停用</span>
+                        <span ng-if="application.status==40001" class="c-orange">未使用</span>
+                        <span ng-if="application.status==40002" class="c-primary">使用中</span>
+                        <span ng-if="application.status==40003" class="c-error">已停用</span>
                     </p>
             </div>
             <p title="{{application.description}}" class="describe">{{application.description | limitCheckFilter:8}}</p>

@@ -10,7 +10,7 @@ class LoginServer {
          ********************************/
 //   渠道管理
         //请求渠道列表
-        this.login = $resource(API_USER+"/userLogin", {}, {});
+        this.login = $resource(API_USER+"/user/login", {}, {});
     }
 }
 LoginServer.$inject = ['$resource'];
