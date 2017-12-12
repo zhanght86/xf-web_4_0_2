@@ -49,9 +49,9 @@ class ApplicationServer {
 
 //   参数设置
         //查看应用参数
-        this.queryParameter = $resource(API_APPLICATION+"/application/findApplicationSetting", {}, {});
+        this.queryParameter = $resource(API_APPLICATION+"/config/get/param", {}, {});
         //更新应用参数
-        this.updateParameter = $resource(API_APPLICATION+"/application/saveApplicationSetting", {}, {});
+        this.updateParameter = $resource(API_APPLICATION+"/config/update/param", {}, {});
 
 //   机器人设置
         //查看机器人参数

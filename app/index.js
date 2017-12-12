@@ -75,12 +75,12 @@ xf_web
         // $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
         //    地址时间戳显示
         // /* 根据url的变化加载内容 */
-        // $httpProvider.interceptors.push([
-        //     '$injector',
-        //     function ($injector) {
-        //         return $injector.get('AuthInterceptor');
-        //     }
-        // ]);
+        $httpProvider.interceptors.push([
+            '$injector',
+            function ($injector) {
+                return $injector.get('AuthInterceptor');
+            }
+        ]);
 
         //--------------------------------------------------
         //            配置localStorageServiceProvider

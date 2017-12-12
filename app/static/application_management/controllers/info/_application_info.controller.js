@@ -38,6 +38,7 @@ module.exports = applicationManagementModule =>{
             deleteApplication: deleteApplication, //删除应用
             stopAllServices : stopAllServices //下线应用的所有服务
         };
+
         //查看业务框架数量
         ApplicationServer.viewFrameNumber.save({
             "id": APPLICATION_ID
