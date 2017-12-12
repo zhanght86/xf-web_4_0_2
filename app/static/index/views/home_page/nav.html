@@ -337,10 +337,8 @@
                 </div>
             </div>
             <div class="mail-conver" style="margin-left:0;">
-                <!--<a ui-sref="KM.historyView" class="mail">-->
-                    <!--&lt;!&ndash;<em>2</em>&ndash;&gt;-->
-                <!--</a>-->
                 <a  class="conver" ng-click="vm.queryServiceList()"></a>
+                <a class="record" ui-sref="HP.uploadRecord"></a>
             </div>
         </div>
     </div>
@@ -353,3 +351,9 @@
         <i class="close" ng-hide="checkShowClose(crumb.url)" ng-click="closeCrumb($index)" >x</i>
     </span>
 </div>
+
+<style>
+    .record{
+        background: url(../../assets/images/record-icon.png) no-repeat center red;
+    }
+</style>

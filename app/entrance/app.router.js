@@ -152,6 +152,26 @@ module.exports = (angular) => {
                 }
             }
         },
+        // 上传记录
+        {
+            name: "HP.uploadRecord",
+            url: "/uploadRecord",
+            data: {
+                roles: []
+            },
+            parent : "HP",
+            title : "上传记录" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/index/views/upload_record/upload_record.html"),
+                    controller: "uploadRecordController"
+                }
+            }
+        },
 //--------------------------------------------------
 //          ##应用管理MP##
 //--------------------------------------------------
