@@ -2,9 +2,10 @@
  * Created by Administrator on 2016/6/3.
  * 控制器 
  */
-angular.module('applAnalysisModule').controller('operationLogController', [
-    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
-    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) {
+module.exports=applAnalysisModule => {applAnalysisModule.
+    controller('operationLogController', 
+        ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
+     ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) => {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             listData : "",          //数据列表
@@ -65,4 +66,4 @@ angular.module('applAnalysisModule').controller('operationLogController', [
 
 
     }
-]);
+])};

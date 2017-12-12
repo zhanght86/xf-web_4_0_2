@@ -2,9 +2,11 @@
  * Created by Administrator on 2016/6/3.
  * 控制器
  */
-angular.module('applAnalysisModule').controller('knowledgeRankingController', [
-    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$window",
-    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window) {
+module.exports=applAnalysisModule => {
+    applAnalysisModule
+    .controller('knowledgeRankingController', 
+        ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$window",
+         ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window)=>{
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
            // applicationId :APPLICATION_ID,
@@ -242,4 +244,4 @@ angular.module('applAnalysisModule').controller('knowledgeRankingController', [
         }
 
     }
-]);
+])};

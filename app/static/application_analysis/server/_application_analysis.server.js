@@ -4,7 +4,8 @@
  * @Module : 素材管理
  */
 //"use strict";
-angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",function($resource){
+class AppAnalysisServer {
+        constructor($resource) {
 
                 /******************************
                                   *访问统计*    API_ANALYSIS = "/api/analysis" ;
@@ -128,4 +129,9 @@ angular.module("applAnalysisModule").service("AppAnalysisServer",["$resource",fu
     this.content = $resource(API_ANALYSIS+'/userSession/searchContent',{},{});
 
 
-}]);
+}};
+ AppAnalysisServer.$inject = ['$resource'];
+module.exports = applAnalysisModule =>{
+        applAnalysisModule.
+        service("AppAnalysisServer",AppAnalysisServer)
+} ;

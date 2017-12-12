@@ -2,9 +2,11 @@
  * Created by Administrator on 2016/6/3.
  * 控制器  访问统计
  */
-angular.module('applAnalysisModule').controller('accessStatisticsController', [
-    '$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$interval" ,
-    function ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$interval) {
+module.exports=applAnalysisModule => {
+    applAnalysisModule.
+    controller('accessStatisticsController',
+     ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$interval" ,
+     ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$interval) => {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             applicationId :$cookieStore.get("applicationId"),
@@ -594,4 +596,4 @@ angular.module('applAnalysisModule').controller('accessStatisticsController', [
 
 
     }
-]);
+])};
