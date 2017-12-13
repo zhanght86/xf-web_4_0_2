@@ -61,9 +61,9 @@ require('./components/length_limit/length_limit')(xf_web);
  */
 xf_web
 .config(["$stateProvider", "$urlRouterProvider", "$httpProvider", "localStorageServiceProvider","$routeProvider","$locationProvider",
-    "$provide", "$compileProvider", "$controllerProvider", "$filterProvider", "$ocLazyLoadProvider", "constantMethod", "$rootScopeProvider",
+    "$provide", "$compileProvider", "$controllerProvider", "$filterProvider", "$ocLazyLoadProvider", "constantMethod", "$rootScopeProvider","$cookiesProvider" ,
     function ($stateProvider, $urlRouterProvider, $httpProvider, localStorageServiceProvider,$routeProvider,$locationProvider,
-              $provide, $compileProvider, $controllerProvider, $filterProvider, $ocLazyLoadProvider, constantMethod, $rootScopeProvider) {
+              $provide, $compileProvider, $controllerProvider, $filterProvider, $ocLazyLoadProvider, constantMethod, $rootScopeProvider,$cookiesProvider) {
         $rootScopeProvider.digestTtl(15);
         //--------------------------------------------------
         //            配置ajax请求
@@ -81,7 +81,13 @@ xf_web
                 return $injector.get('AuthInterceptor');
             }
         ]);
-
+        //--------------------------------------------------
+        //            配置 cookie
+        //--------------------------------------------------
+        // $cookiesProvider.defaults = {
+        //     path: "/",
+        //     secure: true
+        // };
         //--------------------------------------------------
         //            配置localStorageServiceProvider
         //--------------------------------------------------

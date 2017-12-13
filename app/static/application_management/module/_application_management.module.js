@@ -11,6 +11,7 @@ module.exports = angular => {
     //          directive
     //--------------------------------------------------
     require('../../../components/switch_turn/_switch_turn.directive')(applicationManagementModule);  // 开关
+    require('../../../components/page/page')(applicationManagementModule);  // 分页
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------

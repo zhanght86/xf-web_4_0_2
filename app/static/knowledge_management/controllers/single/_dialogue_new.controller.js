@@ -1,7 +1,7 @@
 /**
  * @Author : MILES .
  * @Create : 2017/12/6.
- * @Module :对话知识新增
+ * @Module :多伦对话知识新增
  */
 module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule.controller('DialogueNewController', [

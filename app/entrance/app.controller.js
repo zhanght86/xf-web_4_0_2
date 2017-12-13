@@ -31,6 +31,7 @@ module.exports = ngModule =>
                 openNgDialog : openNgDialog ,  //打开弹框
                 setNgTimeOut : setNgTimeOut ,  //延时器
                 setNgInterval : setNgInterval ,//定时器
+                initPageTimer : initPageTimer , // 分页监听变化
                 /*>>>>=========method for Downstream complex========<<<<<<<<*/
                 searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
                 /* bot 下拉树的公共方法 */
@@ -55,6 +56,18 @@ module.exports = ngModule =>
             function setNgInterval(callBack,time){
                 $interval(callBack,time)
             }
+            function initPageTimer(scope,timerName,target,call,...timeout){
+                scope.$watch(target, function(current){
+                    if(current){
+                        if (timerName) {
+                            $timeout.cancel(timerName)
+                        }
+                        timerName = $timeout(function () {
+                            call(current);
+                        }, timeout?timeout:100)
+                    }
+                },true);
+            }
             /**
              * 打开弹框
              * @params ｛self｝  $scope
@@ -76,6 +89,7 @@ module.exports = ngModule =>
                         template: tempUrl,
                         width:width?width:"450px",
                         scope: self,
+                        plain: true ,
                         closeByDocument: false,
                         closeByEscape: true,
                         showClose: true,
@@ -247,7 +261,6 @@ module.exports = ngModule =>
 
                 //return tree ;
             }
-
 
 /***********************************************************************************************************************************************************************/
             $scope.currentUser = null;
