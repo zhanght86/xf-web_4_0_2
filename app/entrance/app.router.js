@@ -128,7 +128,7 @@ module.exports = (angular) => {
                 },
                 "content": {
                     template: require("../static/index/views/user_control/switch_application/content.html"),
-                    controller: "homePageContentController"
+                    controller: "ApplicationController"
                 }
             }
         },
@@ -149,6 +149,26 @@ module.exports = (angular) => {
                 "content": {
                     template: require("../static/index/views/user_control/permission_management/permission.html"),
                     controller: "PermissionController"
+                }
+            }
+        },
+        // 上传记录
+        {
+            name: "HP.uploadRecord",
+            url: "/uploadRecord",
+            data: {
+                roles: []
+            },
+            parent : "HP",
+            title : "上传记录" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/index/views/upload_record/upload_record.html"),
+                    controller: "uploadRecordController"
                 }
             }
         },
@@ -1076,6 +1096,228 @@ module.exports = (angular) => {
 //          ##应用分析##
 //--------------------------------------------------
 
+     {
+            name: "ANM",
+            url: "/ANM",
+            data: {
+                roles: []
+            },
+            title : "访问统计" ,
+            templateProvider:
+                ["$q", function ($q) {
+                    let deferred = $q.defer();
+                    require.ensure([], function () {
+                        let template = require("../static/application_analysis/main.html");
+                        deferred.resolve(template);
+                    });
+                    return deferred.promise;
+                }],
+            controller: "applAnalysisController",
+            // controllerAs : "SystemMonitoringCtr" ,
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let applAnalysisModule = require("../static/application_analysis/module/_appl_analysis.module")(angular);   //动态加载Module
+                        $ocLazyLoad.load({
+                            name: "applAnalysisModule"                                           //name就是你module的名称
+                        });
+                        defer.resolve(applAnalysisModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+         // 访问统计
+        {
+            name: "ANM.accessStatistics",
+            url: "/accessStatistics",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "访问统计" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/access_statistics/access_statistics.html"),
+                    controller: "accessStatisticsController"
+                }
+            }
+        },
+
+         // 知识点排名统计
+        {
+            name: "ANM.knowledgeRanking",
+            url: "/knowledgeRanking",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "知识点排名统计" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/knowledge_ranking/knowledge_ranking.html"),
+                    controller: "knowledgeRankingController"
+                }
+            }
+        },
+         // 会话明细统计
+        {
+            name: "ANM.sessionDetails",
+            url: "/sessionDetails",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "会话明细统计" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/session_details/session_details.html"),
+                    controller: "sessionDetailsController"
+                }
+            }
+        },
+         // 会话满意度统计
+        {
+            name: "ANM.satisfactionDegree",
+            url: "/satisfactionDegree",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "会话满意度统计" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/satisfaction_degree/satisfaction_degree.html"),
+                    controller: "satisfactionDegreeController"
+                }
+            }
+        },
+
+         // 问答解决率统计
+        {
+            name: "ANM.resolutionStatistics",
+            url: "/resolutionStatistics",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "问答解决率统计" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/resolution_statistics/resolution_statistics.html"),
+                    controller: "resolutionStatisticsController"
+                }
+            }
+        },
+
+         // 智能学习
+        {
+            name: "ANM.reinforcementLearn",
+            url: "/reinforcementLearn",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "智能学习" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/reinforcement_learn/reinforcement_learn.html"),
+                    controller: "reinforcementLearnController"
+                }
+            }
+        },
+
+          // 为匹配问题聚类
+        {
+            name: "ANM.newKnowledgeDiscoveryLearn",
+            url: "/newKnowledgeDiscoveryLearn",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "为匹配问题聚类" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/new_know_discovery_learn/new_know_discovery_learn.html"),
+                    controller: "newKnowledgeDiscoveryLearnController"
+                }
+            }
+        },
+
+          // 操作日志
+        {
+            name: "ANM.operationLog",
+            url: "/operationLog",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "操作日志" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/operation_log/operation_log.html"),
+                    controller: "operationLogController"
+                }
+            }
+        },
+
+         // 会话日志
+        {
+            name: "ANM.sessionLog",
+            url: "/sessionLog",
+            data: {
+                roles: []
+            },
+            parent : "ANM",
+            title : "会话日志" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/application_analysis/views/session_log/session_log.html"),
+                    controller: "sessionLogController"
+                }
+            }
+        },
+
+        
+
 //--------------------------------------------------
 //          ##素材管理##
 //--------------------------------------------------
@@ -1087,6 +1329,77 @@ module.exports = (angular) => {
 //--------------------------------------------------
 //          ##系统监控##
 //--------------------------------------------------
-
-    ];
-};
+        {
+            name: "SM",
+            url: "/SM",
+            data: {
+                roles: []
+            },
+            title : "系统监控" ,
+            templateProvider:
+                ["$q", function ($q) {
+                    let deferred = $q.defer();
+                    require.ensure([], function () {
+                        let template = require("../static/system_monitoring/main.html");
+                        deferred.resolve(template);
+                    });
+                    return deferred.promise;
+                }],
+            controller: "SystemMonitoringController",
+            // controllerAs : "SystemMonitoringCtr" ,
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let systemMonitoringModule = require("../static/system_monitoring/module/_system_monitoring.module")(angular);   //动态加载Module
+                        $ocLazyLoad.load({
+                            name: "systemMonitoringModule"                                           //name就是你module的名称
+                        });
+                        defer.resolve(systemMonitoringModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+        // 资源监控
+        {
+            name: "SM.resource",
+            url: "/resource",
+            data: {
+                roles: []
+            },
+            parent : "SM",
+            title : "资源监控" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                // "content": {
+                //     template: require("../static/knowledge_management/views/history/history.html"),
+                //     controller: "HistoryViewController"
+                // }
+            }
+        },
+        // 服务监控
+        {
+            name: "SM.service",
+            url: "/service",
+            data: {
+                roles: []
+            },
+            parent : "SM",
+            title : "服务监控" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                // "content": {
+                //     template: require("../static/knowledge_management/views/history/history.html"),
+                //     controller: "HistoryViewController"
+                // }
+            }
+        },
+    ];};

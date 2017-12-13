@@ -44,9 +44,23 @@ module.exports = applicationManagementModule =>{
         //查看机器人参数
         function queryParameter(){
             ApplicationServer.queryParameter.save({
-                "applicationId": APPLICATION_ID
-            },function(data){
-                if(data.data===10005){
+            },function(response){
+                if(response.status == 200){
+                    $scope.vm.settingCommentOn = response.data.commentOn;   //评价开关
+                    $scope.vm.settingGreetingOn = response.data.greetingOn;//寒暄开关
+
+                    $scope.vm.settingRelateNumber = response.data.relateNumber;//关联问题数量
+
+                    $scope.vm.settingRecommendNumber = response.data.recommendNumber;//推荐问题数量
+                    $scope.vm.settingUpperLimit = response.data.tagUpperLimit ;//上限阈值
+                    $scope.vm.settingLowerLimit = response.data.tagLowerLimit;//下限阈值
+                    $scope.vm.settingGreetingThreshold = response.data.greetingUpperLimit;//寒暄阈值
+
+                    $scope.vm.settingDataTimeoutLimit = response.data.settingDataTimeoutLimit;//获取数据时间
+                    $scope.vm.settingId = response.data.id;//应用参数id
+                    $scope.vm.settingTurnRoundOn = response.data.settingTurnRoundOn;//话轮识别开关
+
+                }else{
                     $scope.vm.settingCommentOn = 1;   //评价开关
                     $scope.vm.settingDataTimeoutLimit = "";//获取数据时间
                     $scope.vm.settingGreetingOn = 1;//寒暄开关
@@ -57,17 +71,6 @@ module.exports = applicationManagementModule =>{
                     $scope.vm.settingRelateNumber = "";//关联问题数量
                     $scope.vm.settingTurnRoundOn = 1;//话轮识别开关
                     $scope.vm.settingUpperLimit = "";//上限阈值
-                }else{
-                    $scope.vm.settingCommentOn = data.data.settingCommentOn;   //评价开关
-                    $scope.vm.settingDataTimeoutLimit = data.data.settingDataTimeoutLimit;//获取数据时间
-                    $scope.vm.settingGreetingOn = data.data.settingGreetingOn;//寒暄开关
-                    $scope.vm.settingGreetingThreshold = data.data.settingGreetingThreshold;//寒暄阈值
-                    $scope.vm.settingId = data.data.settingId;//应用参数id
-                    $scope.vm.settingLowerLimit = data.data.settingLowerLimit;//下限阈值
-                    $scope.vm.settingRecommendNumber = data.data.settingRecommendNumber;//推荐问题数量
-                    $scope.vm.settingRelateNumber = data.data.settingRelateNumber;//关联问题数量
-                    $scope.vm.settingTurnRoundOn = data.data.settingTurnRoundOn;//话轮识别开关
-                    $scope.vm.settingUpperLimit = data.data.settingUpperLimit ;//上限阈值
                 }
             },function(error){console.log(error)})
         }
@@ -75,18 +78,17 @@ module.exports = applicationManagementModule =>{
         //编辑应用参数
         function updateParameter(){
             ApplicationServer.updateParameter.save({
-                "applicationId": APPLICATION_ID,
-                "settingCommentOn": $scope.vm.settingCommentOn,
+                "id": $scope.vm.settingId,
+                "commentOn": $scope.vm.settingCommentOn,
+                "greetingOn": $scope.vm.settingGreetingOn,
+                "relateNumber": $scope.vm.settingRelateNumber,
+                "recommendNumber": $scope.vm.settingRecommendNumber,
+                "tagUpperLimit": $scope.vm.settingUpperLimit,
+                "tagLowerLimit": $scope.vm.settingLowerLimit,
+                "greetingUpperLimit": $scope.vm.settingGreetingThreshold,
+
                 "settingDataTimeoutLimit": $scope.vm.settingDataTimeoutLimit,
-                "settingGreetingOn": $scope.vm.settingGreetingOn,
-                "settingGreetingThreshold": $scope.vm.settingGreetingThreshold,
-                "settingId": $scope.vm.settingId,
-                "settingLowerLimit": $scope.vm.settingLowerLimit,
-                "settingRecommendNumber": $scope.vm.settingRecommendNumber,
-                "settingRelateNumber": $scope.vm.settingRelateNumber,
                 "settingTurnRoundOn": $scope.vm.settingTurnRoundOn,
-                "settingUpdateId": USER_ID,
-                "settingUpperLimit": $scope.vm.settingUpperLimit
             },function(data){
                 if(data.status===200){
                     layer.msg("保存成功");

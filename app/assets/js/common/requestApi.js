@@ -9,7 +9,7 @@ var
             *
            **/
 
-          API_USER = "/api/user",
+          API_USER = "/api/authority",
           /**
             * 应用管理
             * APPLICATION

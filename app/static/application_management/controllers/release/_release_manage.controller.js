@@ -42,19 +42,21 @@ module.exports = applicationManagementModule =>{
 
             verifyRelease : verifyRelease //发布服务校验
         };
-
         queryServiceTypeList();//获取发布类型数据
         queryServiceList(1);    // 获取服务列表
         //请求服务列表
         function queryServiceList(index){
             ApplicationServer.queryServiceList.save({
-                "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(response){
-                $scope.vm.serviceList = response.data;
-                $scope.vm.paginationConf.totalItems = response.total ;
-                $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize ;
+                if(response.status == 200){
+                    $scope.vm.serviceList = response.data;
+                    $scope.vm.paginationConf.totalItems = response.total ;
+                    $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize ;
+                }else{
+
+                }
             },function(error){console.log(error)})
         }
         //获取发布类型数据
@@ -128,10 +130,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index) {
                 ApplicationServer.releaseService.save({
-                    "serviceId": serviceId,
-                    "applicationId": APPLICATION_ID,
-                    "userId": USER_ID, //获取用户id
-                    "userName": USER_LOGIN_NAME //获取用户名称
+                    "id": serviceId,
                 }, function (data) {
                     if (data.status == 200) {
                         layer.msg("发布服务成功");
@@ -151,7 +150,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index){
                 ApplicationServer.startService.save({
-                    "serviceId": serviceId
+                    "id": serviceId
                 },function(data){
                     if(data.status==200){
                         layer.msg("上线服务成功");
@@ -169,7 +168,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index){
                ApplicationServer.downService.save({
-                   "serviceId": serviceId
+                   "id": serviceId
                },function(response){
                    if(response.status==200){
                        layer.msg("下线服务成功");
@@ -187,7 +186,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index){
                 ApplicationServer.restartService.save({
-                    "serviceId": serviceId
+                    "id": serviceId
                 },function(response){
                     if(response.status==200){
                         layer.msg("重启服务成功");
@@ -205,10 +204,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(){
                 ApplicationServer.removeService.save({
-                    "serviceId": serviceId,
-                    "applicationId": APPLICATION_ID,
-                    "userId" : USER_ID, //获取用户id
-                    "userName" : USER_LOGIN_NAME //获取用户名称
+                    "id": serviceId,
                 },function(data){
                     if(data.status==200){
                         layer.msg("删除服务成功");
@@ -219,7 +215,6 @@ module.exports = applicationManagementModule =>{
                 },function(error){console.log(error)})
             });
         }
-
         //获取可用节点数据
         function queryAvailableNodeList(){
             ApplicationServer.queryAvailableNodeList.save({
@@ -244,6 +239,19 @@ module.exports = applicationManagementModule =>{
             }
         }
         //编辑服务
+        // conosole.oog
+        var dialog1 = ngDialog.openConfirm({
+            templateUrl: require("../../views/release/release_manage/release_service.html"),
+            // width:width?width:"450px",
+            plain: true ,
+            scope: $scope,
+            // closeByDocument: false,
+            // closeByEscape: true,
+            // showClose: true,
+            // backdrop: 'static',
+            preCloseCallback: function (e) {    //关闭回掉
+            }
+        });
         function addOrEditService(serviceId){
             if(!serviceId){   // 新增
                 $scope.vm.dialogTitle="发布新服务";
@@ -254,7 +262,7 @@ module.exports = applicationManagementModule =>{
                  findServiceByServiceId(serviceId);
             }
             queryAvailableNodeList() ;
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/release/release_manage/release_service.html","700px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,"static/application_management/views/release/release_manage/release_service.html","700px",function(){
                 var parameter = {
                     "applicationId": APPLICATION_ID,
                     "channels" : $scope.vm.channels, //渠道id列表

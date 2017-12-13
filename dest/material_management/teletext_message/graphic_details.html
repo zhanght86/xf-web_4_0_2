@@ -1,0 +1,24 @@
+<div  style="max-width:1200px;margin:20px auto 0;">
+    <div class="pd-30" style="background:#fff;">
+       <a style="cursor: pointer" ui-sref="materialManagement.teletextMessage" class="btn1 btn1_blue"> << 返回 </a>
+        <h3 class="f16 mb-20 tc "><b>{{vm.title}}</b></h3>
+        <P  class="tr mb-10">{{vm.graphicCreateTime | date : 'yyyy-MM-dd '}}  {{vm.author}}</P>
+        <div>
+            <!--<div class="tc mb-10 graphicDetails_div">-->
+                <!--<img ng-src="img/{{vm.imgSelected}}" style="max-width:100%;"/>-->
+            <!--</div>-->
+            <div class="imgTextDetail tc mb-10 graphicDetails_div"  ng-bind-html="vm.ueditorText | toHtml"></div>
+        </div>
+        <div ng-if="vm.link">
+          <a ng-href="{{vm.link}}" target="_blank">阅读原文 </a>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<script>
+
+
+
+</script>

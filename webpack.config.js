@@ -1,5 +1,5 @@
 /**
- * Created by liaoyf on 2016/10/25 0025.
+ * Created by miles on 2017/11/25.
  */
 var webpack = require('webpack');
 var path = require('path');
@@ -20,6 +20,7 @@ module.exports = {
             './app/index.js'
         ]
     },
+    devtool : "source-map" ,
     output: {
         path: path.join(__dirname, 'dest'),
         filename: '[name].js',
@@ -134,7 +135,7 @@ module.exports = {
         //         },
         //         {
         //             from: path.resolve(__dirname,'app/static'),
-        //             to: path.resolve(__dirname,'dest'),
+        //             to: path.resolve(__dirname,'dest/static'),
         //             toType : "dir" ,
         //             ignore:['.js']
         //         }

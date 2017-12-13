@@ -18,7 +18,8 @@ module.exports = ngModule => {
                     serie: true,
                     files: []
                 }
-            ]
+            ] ,
+            "NG_DIALOG" : ngDialog
         })
         /**
          * 由于整个应用都会和路由打交道，所以这里把$state和$stateParams这两个对象放到$rootScope上，方便其它地方引用和注入。
@@ -104,3 +105,19 @@ module.exports = ngModule => {
                 return defer.promise;
             }]
     });
+    let ngDialog = function(){
+
+        // constant: invokeLater('ngDialog')
+        //
+        // function invokeLater(provider, method, insertMethod, queue) {
+        //     if (!queue) queue = invokeQueue;
+        //     // 还是利用柯里化将多个参数的函数转换为少数参数的函数
+        //     return function() {
+        //         // arguments才是我们在声明constant时实际传入的参数
+        //         queue[insertMethod || 'push']([provider, method, arguments]);
+        //         return moduleInstance;
+        //     };
+        // }
+        // invokeQueue['unshift'](['$provide', 'constant', arguments]);
+        // return moduleInstance;
+    }

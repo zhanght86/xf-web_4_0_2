@@ -50,6 +50,8 @@ require('./entrance/app.config')(xf_web);
 // require('./entrance/app.router')(xf_web);
 // 加载service
 require('./entrance/app.service')(xf_web);
+// 加载filter
+require('./components/length_limit/length_limit')(xf_web);
 /**
  * 配置路由。
  * 注意这里采用的是ui-router这个路由，而不是ng原生的路由，为了实现路由的多层嵌套
@@ -114,7 +116,7 @@ xf_web
             $stateProvider.state(state);
         });
         $urlRouterProvider.otherwise(function($injector, $location){
-            $location.path('/HP/define');
+            $location.path('/login');
         });
     }]);
 

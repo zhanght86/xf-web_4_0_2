@@ -9,8 +9,10 @@ module.exports = loginModule => {
         $scope.vm = {
             userName: '',
             password: '',
-            randomNumber: randomNumber(4),
-            randomNumberValue: "",
+            // randomNumber: randomNumber(4),
+            // randomNumberValue: "",
+            randomNumber: 0,
+            randomNumberValue:0,
             randomNumberChange : randomNumberChange,
             login: login,
             keyLogin : keyLogin
@@ -44,24 +46,25 @@ module.exports = loginModule => {
                 setRandomNumber();
             }else{
                 LoginServer.login.save({
-                    "userLoginName":$scope.vm.userName,
-                    "userPassword":$scope.vm.password
-                },function(data){
-                    if(data.status==10006){
+                    "account":$scope.vm.userName,
+                    "pwd": hex_md5($scope.vm.password)
+                },function(response){
+                    if(response.status==200){
                         // cookie  userId userName
-                        $cookieStore.put("userId" , data.data.userId);
-                        $cookieStore.put("userName" , data.data.userName);
+                        // $cookieStore.put("userId" , response.data.userId);
+                        // $cookieStore.put("userName" , response.data.account);
+                        // $cookieStore.put("accessToken" , response.data.accessToken);
+                        setCookie("userId" , response.data.userId);
+                        setCookie("userName" , response.data.account);
+                        setCookie("accessToken" , response.data.accessToken);
                         $state.go("HP.management");
-                    }else if(data.status==10007){
+                    }else{
                         setRandomNumber();
-                        layer.msg("用户名或密码错误");
-                    }else if(data.status == 10002){
-                        setRandomNumber();
-                        layer.msg("该用户已停用!");
+                        // layer.msg("用户名或密码错误");
                     }
-                },function(err){
+                },function(error){
                     setRandomNumber();
-                    layer.msg("登陆失败");
+                   console.log(error)
                 });
             }
         }

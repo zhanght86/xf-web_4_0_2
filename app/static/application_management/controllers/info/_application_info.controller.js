@@ -29,28 +29,35 @@ module.exports = applicationManagementModule =>{
             allowSubmit : 1, //是否允许提交
 
             findApplicationInfo : findApplicationInfo, //查找应用信息
-            findSceneInfo : findSceneInfo, //查看场景信息
             listServiceData : listServiceData, //查看服务列表信息
             publishService : publishService,  //发布服务
             startService : startService, //上线服务
             stopService : stopService, //下线服务
             restartService : restartService, //重启服务
-
             editName : editName,    //编辑应用
             deleteApplication: deleteApplication, //删除应用
             stopAllServices : stopAllServices //下线应用的所有服务
         };
+
+        //查看业务框架数量
+        ApplicationServer.viewFrameNumber.save({
+            "id": APPLICATION_ID
+        },function(response){
+            if(response.status==200){
+                $scope.vm.sceneInfo.businessFrameNum = response.data.businessFrameNum
+            }else{
+                console.log("业务框架数量查询失败");
+            }
+        },function(error){console.log(error)}) ;
         findApplicationInfo(); //查看应用的基本信息
-        findSceneInfo(); //查看场景信息
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
         listServiceData(1);
-        //请求服务列表
+        //获取服务列表
         function listServiceData(index){
             ApplicationServer.queryServiceList.save({
-                "applicationId": APPLICATION_ID,
                 "index" : (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize
             },function(response){
@@ -74,10 +81,7 @@ module.exports = applicationManagementModule =>{
         //发布服务
         function publishService(serviceId){
             ApplicationServer.releaseService.save({
-                "serviceId": serviceId,
-                "applicationId": APPLICATION_ID,
-                "userId" :USER_ID, //获取用户id
-                "userName" : USER_LOGIN_NAME //获取用户名称
+                "id": serviceId,
             },function(response){
                 if(response.status==200){
                     layer.msg("发布服务成功");
@@ -85,7 +89,7 @@ module.exports = applicationManagementModule =>{
                 }else{
                     layer.msg("发布服务失败");
                 }
-            },function(error){$log.log(error)})
+            },function(error){console.log(error)})
         }
         //上线服务
         function startService(serviceId){
@@ -95,7 +99,7 @@ module.exports = applicationManagementModule =>{
             },function(index){
                 layer.close(index);
                 ApplicationServer.startService.save({
-                    "serviceId": serviceId
+                    "id": serviceId
                 },function(response){
                     if(response.status==200){
                         layer.msg("上线服务成功");
@@ -103,7 +107,7 @@ module.exports = applicationManagementModule =>{
                     }else{
                         layer.msg("上线服务失败");
                     }
-                },function(error){$log.log(error) })
+                },function(error){console.log(error) })
         })};
         //下线服务
         function stopService(serviceId){
@@ -112,7 +116,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index){
                ApplicationServer.downService.save({
-                   "serviceId": serviceId
+                   "id": serviceId
                },function(response){
                    if(response.status==200){
                        layer.msg("下线服务成功");
@@ -120,7 +124,7 @@ module.exports = applicationManagementModule =>{
                    }else{
                        layer.msg("下线服务失败");
                    }
-               },function(error){$log.log(error)})
+               },function(error){console.log(error)})
 
             });
         }
@@ -131,7 +135,7 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index){
                 ApplicationServer.restartService.save({
-                    "serviceId": serviceId
+                    "id": serviceId
                 },function(response){
                     if(response.status==200){
                         layer.msg("重启服务成功");
@@ -139,45 +143,32 @@ module.exports = applicationManagementModule =>{
                     }else{
                         layer.msg("重启服务失败");
                     }
-                },function(error){$log.log(error) })
+                },function(error){console.log(error) })
             });
         }
         //查看应用信息
-        function findApplicationInfo(applicationId){
-           ApplicationServer.viewApplicationInfo.save({
-                "applicationId": APPLICATION_ID
+        function findApplicationInfo(){
+           ApplicationServer.viewApplicationInfo.get({
+                "id": APPLICATION_ID
             },function(response){
                 if(response.status==200){
                     $scope.vm.applicationInfo = {
-                        applicationName :response.data.applicationName, //应用名称
-                        applicationDescription : response.data.applicationDescription, //应用描述
-                        applicationCreateTime :response.data.applicationCreateTime,//创建时间
-                        applicationLisence : response.data.applicationLisence, //应用序列号
-                        statusId : response.data.statusId, //应用状态
+                        applicationName :response.data.name, //应用名称
+                        applicationDescription : response.data.description, //应用描述
+                        applicationCreateTime :response.data.createTime,//创建时间
+                        applicationLisence : response.data.license, //应用序列号
+                        statusId : response.data.status, //应用状态
                     } ;
-                    $cookieStore.put("applicationName",response.data.applicationName) ;
-                    APPLICATION_NAME = response.data.applicationName ;
                 }else{
-                    layer.msg("查询失败");
-                }
-            },function(error){$log.log(error)})
-        }
-        //查看业务框架数量
-        function findSceneInfo(){
-            ApplicationServer.viewFrameNumber.save({
-                "applicationId": APPLICATION_ID
-            },function(response){
-                if(response.status==200){
-                    $scope.vm.sceneInfo.businessFrameNum = response.data.businessFrameNum
-                }else{
-                    console.log("业务框架数量查询失败");
+                    $state.reload() ;
+                    // layer.msg("查询失败");
                 }
             },function(error){$log.log(error)})
         }
         //编辑应用的名称
         function editName(){
             $scope.vm.applicationNewName = APPLICATION_NAME ; //待编辑的新应用名称
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/info/edit_application_name.html","",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,"static/application_management/views/info/edit_application_name.html","",function(){
                 if ($scope.vm.allowSubmit){
                     ApplicationServer.updateApplicationName.save({
                         "applicationId": APPLICATION_ID,
@@ -204,7 +195,6 @@ module.exports = applicationManagementModule =>{
                 shade:false
             },function(index){
                 ApplicationServer.stopAllService.save({
-                    "applicationId": APPLICATION_ID
                 },function(data){
                     if(data.status==200){
                         layer.msg("下线所有服务成功");
@@ -213,7 +203,7 @@ module.exports = applicationManagementModule =>{
                     }else{
                         layer.msg("下线所有服务失败");
                     }
-                },function(){$log.log(error)})
+                },function(){console.log(error)})
             });
         }
         //删除应用
@@ -222,18 +212,15 @@ module.exports = applicationManagementModule =>{
                 btn:['确认','取消'],
                 shade:false
             },function(index){
-                ApplicationServer.removeApplication.save({
-                    "applicationId": APPLICATION_ID,
-                    "userId" :USER_ID, //获取用户id
-                    "userName" : USER_LOGIN_NAME //获取用户名称
+                ApplicationServer.removeApplicationServer.save({
                 },function(response){
                     if(response.status==200){
                         layer.msg("删除成功");
-                        $state.go("admin.manage");
+                        // $state.go("admin.manage");
                     }else{
                         layer.msg("删除失败");
                     }
-                },function(error){$log.log(error)})
+                },function(error){console.log(error)})
             });
         }
     }

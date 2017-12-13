@@ -5,8 +5,8 @@
  */
 module.exports = homePageModule =>{
     homePageModule.controller('PermissionController',
-    ['$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore",
-    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore) {
+    ['$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","HomePageServer",
+    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore,HomePageServer) {
         $scope.vm = {
             simpleOperateTitle : "" ,
             listData : "",   // table 数据
@@ -18,7 +18,7 @@ module.exports = homePageModule =>{
             editUser : editUser,
             deleteUser:deleteUser,
             search:search,
-            stop:stop,
+            changeStatus:changeStatus,
             userId:$cookieStore.get("userId"),
             verifyRelease:verifyRelease,
             //添加用户所需要数据
@@ -74,22 +74,20 @@ module.exports = homePageModule =>{
         //查询列表
         function getData(index){
             $scope.vm.deleteIds = [];
-            httpRequestPost("/api/user/listUser",{
+            HomePageServer.queryUserList.save({
                 index:(index -1)*$scope.vm.pageSize,
                 pageSize:$scope.vm.pageSize
-            },function(data){
-                $scope.vm.listData = data.data.userManageList;
-                $scope.vm.userDataTotal = data.data.total;
+            },function(response){
+                $scope.vm.listData = response.data.userManageList;
+                $scope.vm.userDataTotal = response.data.total;
                 $scope.vm.paginationConf = {
                     currentPage: index,//当前页
-                    totalItems: data.data.total, //总条数
+                    totalItems: response.data.total, //总条数
                     pageSize: $scope.vm.pageSize,//第页条目数
                     pagesLength: 8,//分页框数量
                 };
-                $scope.$apply()
-            },function(){
-                //layer.msg("请求失败")
-                console.log("请求失败");
+            },function(error){
+                console.log(error);
             })
         }
         var timeout ;
@@ -191,30 +189,32 @@ module.exports = homePageModule =>{
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         if($scope.vm.allowSubmit) {
-                            httpRequestPost("/api/user/addUser", {
-                                userId: $scope.vm.userId,
-                                userName: $scope.vm.userName,
-                                userLoginName: $scope.vm.userLoginName,
-                                userPassword: $scope.vm.userPassword,
-                                userPhoneNumber: $scope.vm.userPhoneNumber,
-                                userEmail: $scope.vm.userEmail,
-                                roleId: $scope.vm.roleId,
-                                applicationIds: $scope.vm.prop,
-                                remark: $scope.vm.remark,
-                            }, function (data) {
-                                //刷新页面
-                                $state.reload();
-                                if (data.status == 10009) {
-                                    layer.msg("该登录名已经存在，请重新添加!")
-                                } else if (data.status == 10008) {
-                                    layer.msg("用户添加成功!");
-                                } else {
-                                    //layer.msg("用户添加失败!");
-                                    console.log("用户添加失败!");
+                            HomePageServer.addUser.save({
+                                "accessToken" : "" ,
+                                "account": $scope.vm.userName,
+                                "pwd": $scope.vm.userPassword,
+                                "phone": $scope.vm.userPhoneNumber,
+                                "email": $scope.vm.userEmail,
+                                "roleId": $scope.vm.roleId,
+                                "applicationIds": $scope.vm.prop,
+                            }, function (response) {
+                                if(response.status == 200){
+                                    getData(1)
+                                }else{
+
                                 }
-                            }, function () {
-                                //layer.msg("请求失败")
-                                console.log("请求失败");
+                                // //刷新页面
+                                // $state.reload();
+                                // if (data.status == 10009) {
+                                //     layer.msg("该登录名已经存在，请重新添加!")
+                                // } else if (data.status == 10008) {
+                                //     layer.msg("用户添加成功!");
+                                // } else {
+                                //     //layer.msg("用户添加失败!");
+                                //     console.log("用户添加失败!");
+                                // }
+                            }, function (error) {
+                                console.log(error);
                             })
                         }
                         //保存的同时清空数据
@@ -266,6 +266,7 @@ module.exports = homePageModule =>{
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
                         if($scope.vm.allowSubmit) {
+
                             httpRequestPost("/api/user/updateUserById", {
                                 userId: data.userId,
                                 userName: $scope.vm.userName,
@@ -410,66 +411,40 @@ module.exports = homePageModule =>{
         }
 
         //改变用户状态
-        function stop(userId,statusId) {
-            if(statusId == 10002){
+        function changeStatus(userId,statusId) {
+            let status = 1;
+            if(statusId == 0){
                 $scope.vm.simpleOperateTitle = "确认要启用该用户吗？" ;
-                var dialog = ngDialog.openConfirm({
-                    template:"/static/base/public_html/simple_operate.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {
-                        if (e === 1) {
-                            httpRequestPost("/api/user/updateStatus", {
-                                userId: userId,
-                                statusId: statusId
-                            }, function (data) {
-                                $state.reload();
-                                if (data.status == 10012) {
-                                    layer.msg("用户状态修改成功!");
-                                } else {
-                                    //layer.msg("用户状态修改失败!");
-                                    console.log("用户状态修改失败!");
-                                }
-                            }, function () {
-                                //layer.msg("请求失败")
-                                console.log("请求失败");
-                            })
-                        }
-                    }
-                });
             }else {
+                status = 0 ;
                 $scope.vm.simpleOperateTitle = "确认要停用该用户吗？" ;
-                var dialog = ngDialog.openConfirm({
-                    template:"/static/base/public_html/simple_operate.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {
-                        if (e === 1) {
-                            httpRequestPost("/api/user/updateStatus", {
-                                userId: userId,
-                                statusId: statusId
-                            }, function (data) {
-                                $state.reload();
-                                if (data.status == 10012) {
-                                    layer.msg("用户状态修改成功!");
-                                } else {
-                                    //layer.msg("用户状态修改失败!");
-                                    console.log("用户状态修改失败!");
-                                }
-                            }, function () {
-                                //layer.msg("请求失败")
-                                console.log("请求失败");
-                            })
-                        }
-                    }
-                });
             }
+            var dialog = ngDialog.openConfirm({
+                template:"/static/base/public_html/simple_operate.html",
+                scope: $scope,
+                closeByDocument: false,
+                closeByEscape: true,
+                showClose: true,
+                backdrop: 'static',
+                preCloseCallback: function (e) {
+                    if (e === 1) {
+                        HomePageServer.updateUserStatus.save({
+                            "accessToken" : "",
+                            "userId": userId,
+                            "status": status
+                        }, function (response) {
+                            if(response.status == 200){
+                                getData(1) ;
+                                layer.msg("用户状态修改成功!");
+                            }else{
+
+                            }
+                        }, function (error) {
+                            console.log(error);
+                        })
+                    }
+                }
+            });
         }
 
         getApplication();

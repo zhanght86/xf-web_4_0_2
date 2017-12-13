@@ -43,25 +43,25 @@ class ApplicationServer {
         //上移知识
         this.hotKnowledgeUp = $resource(API_APPLICATION+"/scene/findMultiInteractiveSetting", {}, {});
         //下移知识
-        this.hotKnowledgeDown = $resource(API_APPLICATION+"//hotQuestion/moveDown", {}, {});
+        this.hotKnowledgeDown = $resource(API_APPLICATION+"/hotQuestion/moveDown", {}, {});
         //置顶知识
         this.hotKnowledgeStick = $resource(API_APPLICATION+"/hotQuestion/moveUp", {}, {});
 
 //   参数设置
         //查看应用参数
-        this.queryParameter = $resource(API_APPLICATION+"/application/findApplicationSetting", {}, {});
+        this.queryParameter = $resource(API_APPLICATION+"/config/get/param", {}, {});
         //更新应用参数
-        this.updateParameter = $resource(API_APPLICATION+"/application/saveApplicationSetting", {}, {});
+        this.updateParameter = $resource(API_APPLICATION+"/config/update/param", {}, {});
 
 //   机器人设置
         //查看机器人参数
-        this.queryRobotParameter = $resource(API_APPLICATION+"/application/findRobotSetting", {}, {});
+        this.queryRobotParameter = $resource(API_APPLICATION+"/config/get/robot/:id", {}, {});
         //更新机器人参数
-        this.updateRobotParameter = $resource(API_APPLICATION+"/application/saveRobotSetting", {}, {});
-        //保存经典机器人头像
-        this.storeClassicalAvatar = $resource(API_APPLICATION+"/application/saveClassicHead", {}, {});
-        //保存自定义机器人头像
-        this.updateRobotParameter = $resource(API_APPLICATION+"/application/saveRobotSetting", {}, {});
+        this.updateRobotParameter = $resource(API_APPLICATION+"/config/update/robot", {}, {});
+        // //保存经典机器人头像
+        // this.storeClassicalAvatar = $resource(API_APPLICATION+"/application/saveClassicHead", {}, {});
+        // //保存自定义机器人头像
+        // this.updateRobotParameter = $resource(API_APPLICATION+"/application/saveRobotSetting", {}, {});
 
 //  转人工设置
         //获取列表
@@ -76,7 +76,7 @@ class ApplicationServer {
                                    ********************************/
 //发布管理
         //查看服务列表
-        this.queryServiceList = $resource(API_APPLICATION+"/service/listServiceByPage", {}, {});
+        this.queryServiceList = $resource(API_APPLICATION+"/service/get", {}, {});
         //获取服务类型
         this.queryServiceTypeList = $resource(API_APPLICATION+"/service/listServiceType", {}, {});
         //获取可用节点
@@ -90,17 +90,17 @@ class ApplicationServer {
         //新增服务
         this.addService = $resource(API_APPLICATION+"/service/addAndPublishService", {}, {});
         //发布服务
-        this.releaseService = $resource(API_APPLICATION+"/service/publishService", {}, {});
+        this.releaseService = $resource(API_APPLICATION+"/service/publish", {}, {});
         //更新服务
         this.updateService = $resource(API_APPLICATION+"/service/editService", {}, {});
         //删除服务
         this.removeService = $resource(API_APPLICATION+"/service/deleteService", {}, {});
         //上线服务
-        this.startService = $resource(API_APPLICATION+"/service/startService", {}, {});
+        this.startService = $resource(API_APPLICATION+"/service/start", {}, {});
         //下线服务
         this.downService = $resource(API_APPLICATION+"/service/stopService", {}, {});
         //重启服务
-        this.restartService = $resource(API_APPLICATION+"/service/restartService", {}, {});
+        this.restartService = $resource(API_APPLICATION+"/service/restart", {}, {});
 //节点管理
         //查看节点列表
         this.queryNodeList = $resource(API_APPLICATION+"/node/listNodeByPage", {}, {});
@@ -124,26 +124,26 @@ class ApplicationServer {
 //应用信息
         //校验应用名称
         this.verifyApplicationName = $resource(API_APPLICATION+"/application/checkName", {}, {});
-        ////发布服务
-        //this.releaseService = $resource(API_APPLICATION+"/service/publishService", {}, {});
-        //查看服务列表
-        //this.queryServiceList = $resource(API_APPLICATION+"/service/listServiceByPage", {}, {});
-        //上线服务
-        //this.startService = $resource(API_APPLICATION+"/service/startService", {}, {});
-        ////下线服务
-        //this.downService = $resource(API_APPLICATION+"/service/stopService", {}, {});
-        ////重启服务
-        //this.restartService = $resource(API_APPLICATION+"/service/restartService", {}, {});
+        // //发布服务
+        // this.releaseService = $resource(API_APPLICATION+"/service/publish", {}, {});
+        // //查看服务列表
+        // //this.queryServiceList = $resource(API_APPLICATION+"/service/get", {}, {});
+        // //上线服务
+        // this.startService = $resource(API_APPLICATION+"/service/start", {}, {});
+        // //下线服务
+        // this.downService = $resource(API_APPLICATION+"/service/stop", {}, {});
+        // //重启服务
+        // this.restartService = $resource(API_APPLICATION+"/service/restart", {}, {});
         //下线所有服务
-        this.stopAllService = $resource(API_APPLICATION+"/service/stopAllService", {}, {});
+        this.stopAllService = $resource(API_APPLICATION+"/service/stop/all", {}, {});
         //查看应用信息
-        this.viewApplicationInfo = $resource(API_APPLICATION+"/application/findApplication", {}, {});
+        this.viewApplicationInfo = $resource(API_APPLICATION+"/application/get/:id", {}, {});
         //查看场景业务框架数量
         this.viewFrameNumber = $resource(API_APPLICATION+"/application/get/frame", {}, {});
         //修改应用名称
         this.updateApplicationName = $resource(API_APPLICATION+"/application/updateApplication", {}, {});
         //删除当前应用（当前所有服务）
-        this.removeApplication = $resource(API_APPLICATION+"/service/deleteAllServices", {}, {});
+        this.removeApplicationServer = $resource(API_APPLICATION+"/service/delete/all", {}, {});
 
         /******************************
                          *应用部分 登录后续部分*
