@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('SynonymConceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",
-    ($scope,localStorageService, $state,ngDialog,$timeout) =>{
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$state" ,"ngDialog","$timeout",
+    ($scope,localStorageService,BusinessModelingServer,$state,ngDialog,$timeout) =>{
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -65,7 +65,7 @@ module.exports = applicationManagementModule =>{
         }
         //请求列表
         function loadSynonymConceptTable(current){
-            httpRequestPost("/api/ms/modeling/concept/synonym/listByAttribute",{
+            BusinessModelingServer.synonymListByAttribute({
                 "synonymConceptApplicationId": $scope.vm.applicationId,
                 "index" :(current-1)*$scope.vm.pageSize,
                 "pageSize": $scope.vm.pageSize

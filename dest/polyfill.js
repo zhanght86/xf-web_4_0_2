@@ -65,7 +65,11 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
+<<<<<<< .mine
 /******/ 	var hotCurrentHash = "0727eb797cf37c21bda9"; // eslint-disable-line no-unused-vars
+=======
+/******/ 	var hotCurrentHash = "e2ccb405fccda32a90d6"; // eslint-disable-line no-unused-vars
+>>>>>>> .theirs
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -584,13 +588,22 @@
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< .mine
 	__webpack_require__(134);
 	module.exports = __webpack_require__(135);
+=======
+	__webpack_require__(166);
+	module.exports = __webpack_require__(167);
+>>>>>>> .theirs
 
 
 /***/ }),
 
+<<<<<<< .mine
 /***/ 134:
+=======
+/***/ 166:
+>>>>>>> .theirs
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2662,7 +2675,11 @@
 
 /***/ }),
 
+<<<<<<< .mine
 /***/ 135:
+=======
+/***/ 167:
+>>>>>>> .theirs
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

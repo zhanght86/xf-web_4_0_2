@@ -3,66 +3,71 @@
 <div class="wrap session_log">
     <div class="content_wrap page-container" style="padding:0;">
         <div class="wrap mb30">
-
             <div class="con_box mb25 p30 mt10" style="min-height:500px;">
-                <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto;padding-left: 200px;">
+                <div class="data_time_statis_top pt-10 mb10" style="width:auto ;margin: 10px auto;padding-left: 200px;">
                     <span>
                         操作人：
-                        <input type="text" class="input-text"  style="width:180px;">
+                        <input type="text" class="input-text"  style="width:180px;" ng-model="vm.modifierName">
                     </span>
                     <span>
                         日期范围:
                             <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
                             -
-                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
                     </span>
                     <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找" />
-                </div>
-                <div class="cl mb-10">
-                   <!--  <b class="l f-14">用户会话日志</b> -->
-                    <p class="r f-12 c-999" style="display: none;">共有数据<span id="total">{{vm.listData.total}}</span>条</p>
                 </div>
                 <div>
                     <table class="access_amount_table" id="user_session_statistic">
                         <thead>
                         <tr>
-                            <th width="15%">上传文件</th>
-                            <th width="10%">类型</th>
-                            <th width="10%">状态</th>
-                            <th width="10%">操作人</th>
-                            <th width="10%">上传条数总计</th>
-                            <th width="10%">上传条数成功</th>
-                            <th width="10%">上传条数失败</th>
-                            <th width="10%">上传时间</th>
+                            <th width="12%">上传文件</th>
+                            <th width="17%">类型</th>
+                            <th width="9%">状态</th>
+                            <th width="9%">操作人</th>
+                            <th width="9%">上传条数总计</th>
+                            <th width="9%">上传条数成功</th>
+                            <th width="9%">上传条数失败</th>
+                            <th width="15%">上传时间</th>
                             <th width="10%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        <tr role="row" class="odd" ng-repeat="item in vm.listData.objs">
-                            <td>{{item.userId}}</td>
-                            <td>{{item.sessionNumber}}</td>
-                            <td>{{item.sessionTime | limitTo:19}}</td>
-                            <td>{{item.userId}}</td>
-                            <td>{{item.sessionNumber}}</td>
-                            <td>{{item.sessionTime | limitTo:19}}</td>
-                            <td>{{item.userId}}</td>
-                            <td>{{item.sessionNumber}}</td>
-                            <td><a href="javascript:;" class="c-green" ng-click="vm.scan(item.userId)">下载</a></td>
+                        <tr role="row" class="odd" ng-repeat="item in vm.uploadList">
+                            <td>{{item.uploadName}}</td>
+                            <td ng-if="item.uploadType=='170'">FAQA知识批量上传</td>
+                            <td ng-if="item.uploadType=='171'">要素知识批量上传</td>
+                            <td ng-if="item.uploadType=='172'">概念知识批量上传</td>
+                            <td ng-if="item.uploadType=='173'">聊天知识库批量上传</td>
+                            <td ng-if="item.uploadType=='174'">类目库批量上传</td>
+                            <td ng-if="item.uploadType=='175'">框架库批量上传</td>
+                            <td ng-if="item.uploadType=='176'">同义词词库批量上传</td>
+                            <td ng-if="item.uploadType=='177'">集合词词库批量上传</td>
+                            <td ng-if="item.uploadType=='178'">业务词词库批量上传</td>
+                            <td ng-if="item.uploadType=='179'">敏感词词库批量上传</td>
+                            <td ng-if="item.uploadType=='180'">停用词词库批量上传</td>
+                            <td ng-if="item.uploadType=='181'">强制分词词库批量上传</td>
+                            <td ng-if="item.uploadType=='182'">BOT词库批量上传</td>
+                            <td ng-if="item.uploadStatus=='190'">上传中</td>
+                            <td ng-if="item.uploadStatus=='191'">上传完毕</td>
+                            <td>{{item.userName}}</td>
+                            <td>{{item.uploadSum}}</td>
+                            <td>{{item.uploadSuccess}}</td>
+                            <td>{{item.uploadError}}</td>
+                            <td>{{item.uploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td ><a ng-if="item.uploadStatus=='191'" href="javascript:;" class="c-green" ng-click="vm.scan(item.userId)">下载</a></td>
                         </tr>
-
                         </tbody>
                     </table>
-                   
-                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                     <p class="r f-12 c-999">本页共<span class="num">5</span>条，总共<span id="total">{{vm.total}}</span>条</p>
+                    <pagination  conf="vm.paginationConf"></pagination>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<style>
 
-</style>
 
 
 
