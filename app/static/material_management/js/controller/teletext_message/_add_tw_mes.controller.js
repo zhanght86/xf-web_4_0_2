@@ -7,7 +7,8 @@ angular.module('materialManagement').controller('addTwMesController', [
     function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout) {
         $state.go("materialManagement.addtemes");
         $scope.vm = {
-            ip : "" , // 图片 ip路径
+            pictureName :'',
+           // ip : "" , // 图片 ip路径
             graphicMessageId :"" , //图文知识id 编辑使用
             title : '',                     //标题
             author :'',                     //作者
@@ -23,7 +24,9 @@ angular.module('materialManagement').controller('addTwMesController', [
             storeKnow : storeKnow ,  //保存知识
             ueditorText : "",    //编辑器内容
             insertCoverImg : insertCoverImg ,// 插入封面图片到编辑器
-            storeLimit :false
+            storeLimit :false,
+            checkUrl : checkUrl  ,               //校验网址
+            editTitle : ''
         };
 
         /**
@@ -59,7 +62,7 @@ angular.module('materialManagement').controller('addTwMesController', [
                 // 'print', 'preview', 'searchreplace', 'help', 'drafts'
             ]]
             ,UEDITOR_HOME_URL: "/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/"
-            ,serverUrl : "/api/material/picture/uploadGet"
+            ,serverUrl : "/api/material/picture/upload/get"
             ,wordCount:false           //是否开启字数统计
             ,elementPathEnabled : false  //是否启用元素路径，默认是显示
             ,initialFrameWidth:800  //初始化编辑器宽度,默认1000
@@ -93,10 +96,10 @@ angular.module('materialManagement').controller('addTwMesController', [
          */
         getPicList(1) ;
         function getPicList(index){
-            MaterialServer.getPicList.save({
+            MaterialServer.getPicList.get({
                 "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
                 "pageSize": $scope.vm.imgPaginationConf.pageSize ,
-                //"applicationId":APPLICATION_ID
+                "name" : $scope.vm.pictureName,
             },function(response){
                 if(response.status == 200){
                     console.log(response);
@@ -157,26 +160,20 @@ angular.module('materialManagement').controller('addTwMesController', [
          pictureUrl	String	是	20	图片路劲
          */
 
-        /**
-         * 保存
-         */
-        function save(api,parameter){
-            MaterialServer[api].save(parameter,function(response){
-                if(response.status == 200){
-                    $state.go("materialManagement.teletextMessage");
-                    //    保存成功
-                }else if(response.status == 500){
-                    $scope.vm.storeLimit = false ;
-                    //    保存失敗
-                }
-            },function(err){
-                $scope.vm.storeLimit = false;
-                console.log(err);
-            });
+
+        //校验网址
+        function checkUrl(){
+            var url=$scope.vm.link;
+            var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+            if(!reg.test(url)){
+                alert("请输入以http://或者 https://开头的正确网址！");
+                //return false;
+            }
         }
         /**
          * 验证必填
          */
+
         function storeKnow(title,author,ueditorText,link,coverPicId,graphicMessageId){
             if(!title){
                 layer.msg("请填写图文标题后保存")
@@ -184,12 +181,65 @@ angular.module('materialManagement').controller('addTwMesController', [
                 layer.msg("请填写图文作者后保存")
             }else if(!ueditorText){
                 layer.msg("请填写图文内容后保存")
-            }
-            else if(!coverPicId){
+            }else if(!coverPicId){
                 layer.msg("请选择图文封面后保存")
+            }else if($scope.vm.editTitle ){                 // 判断是编辑还是添加,有$scope.vm.editTitle为编辑
+                if(title==$scope.vm.editTitle){
+                    //alert("名称未修改,不用校验标题");
+                    $scope.vm.storeLimit = true ;
+                    if($scope.vm.storeLimit){
+                        var parameter = {
+                                "modifierId" : USER_ID,
+                                "author": author,
+                                "content": ueditorText ,
+                                "link": link ,
+                                "title": title ,
+                                "coverPicId": coverPicId    ,
+                                "id" : graphicMessageId               //图文id
+                            }  ,
+                            api;
+                        api="editTwApi";
+                        save(api,parameter);
+                    }else{
+                        layer.msg("知识保存中...");
+                    }
+                }else{
+                    //alert("名称改了，需要校验标题");
+                    //编辑校验
+                    MaterialServer.checkTitle.get({
+                        "title" : $scope.vm.title
+                    },{
+                        "title" : $scope.vm.title
+                    },function(response){
+                        if(response.code==10006){
+                            layer.msg("图文名称重复,请重新输入");
+                        }else{
+                            $scope.vm.storeLimit = true ;
+                            if($scope.vm.storeLimit){
+                                var parameter = {
+                                        "modifierId" : USER_ID,
+                                        "author": author,
+                                        "content": ueditorText ,
+                                        "link": link ,
+                                        "title": title ,
+                                        "coverPicId": coverPicId    ,      // 图片id
+                                        "id" : graphicMessageId
+                                    }  ,
+                                    api;
+                                    api="editTwApi";
+                                save(api,parameter);
+                            }else{
+                                layer.msg("知识保存中...");
+                            }
+                        }
+                    },function(){
+
+                    });
+                }
             }
             else{
-                MaterialServer.checkTitle.save({
+                //新增保存
+                MaterialServer.checkTitle.get({
                         "title" : $scope.vm.title
                     },{
                         "title" : $scope.vm.title
@@ -208,13 +258,6 @@ angular.module('materialManagement').controller('addTwMesController', [
                                         "coverPicId": coverPicId          // 图片id
                                     }  ,
                                     api;
-                                // 根据图文id 判断  url 跟 parameter
-                                graphicMessageId?
-                                    void function(){
-                                        parameter.id = graphicMessageId;
-                                        //api="/api/ms/graphicMessage/update"}():
-                                        api="editTwApi"}():
-                                    //api="/api/ms/graphicMessage/insert";
                                     api="addTwApi";
                                 save(api,parameter);
                             }else{
@@ -226,7 +269,23 @@ angular.module('materialManagement').controller('addTwMesController', [
                     });
             }
         }
-
+        /**
+         * 保存
+         */
+        function save(api,parameter){
+            MaterialServer[api].save(parameter,function(response){
+                if(response.status == 200){
+                    $state.go("materialManagement.teletextMessage");
+                    //    保存成功
+                }else if(response.status == 500){
+                    $scope.vm.storeLimit = false ;
+                    //    保存失敗
+                }
+            },function(err){
+                $scope.vm.storeLimit = false;
+                console.log(err);
+            });
+        }
 
         /**
          *  检测时候都符合
@@ -236,7 +295,7 @@ angular.module('materialManagement').controller('addTwMesController', [
         /**
          *获取编辑图文知识
          */
-        if($stateParams.imgTextId){
+        if($stateParams.imgTextId ){
             $scope.vm.graphicMessageId = $stateParams.imgTextId ;
             getImgText($stateParams.imgTextId)
         }
@@ -244,7 +303,7 @@ angular.module('materialManagement').controller('addTwMesController', [
          编辑
          * */
         function getImgText(graphicMessageId){
-            MaterialServer.getImgText.save({
+            MaterialServer.getImgText.get({
                 "graphicMessageId" : graphicMessageId
             },{
                 "graphicMessageId" : graphicMessageId
@@ -255,6 +314,9 @@ angular.module('materialManagement').controller('addTwMesController', [
                     $scope.vm.ueditorText = response.data.content ;
                     $scope.vm.link = response.data.link ;
                     $scope.vm.imgSelected = response.data.coverPicId ;
+
+                    $scope.vm.editTitle = response.data.title ;
+
                 }else if(response.status == 500){
                     //    获取失败
                 }

@@ -14,9 +14,10 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 pagesLength: 10//分页框数量
             },
             changeName:changeName,
+            pictureId :'',
             pictureIds : [],
-            pictureName:null,
-            editPictureName :null,
+            pictureName:'',
+            editPictureName :'',
             napSearch:napSearch,
             exportExcel:exportExcel,
             batchDeletePicture:batchDeletePicture,
@@ -27,7 +28,8 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 queueNumber : 0 ,
                 uploadNumber : 0 ,
                 process : "0%"
-            }
+            },
+            checkName : checkName
         };
 
 
@@ -38,12 +40,12 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         //
         getPicList(1);
         function getPicList(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            MaterialServer.getPicList.save({
-                // "applicationId" : APPLICATION_ID,
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:5000}) ;
+            MaterialServer.getList.get({
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
                 "name" : $scope.vm.pictureName,
+
             },function(data){
                 layer.close(i);
                 console.log(data);
@@ -77,12 +79,12 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     MaterialServer.deleteImg.save({
-                        //"pictureIds": pictureIds
-                        "ids" : pictureIds
+                        "pictureIds": pictureIds
+                    },{
+                        "pictureIds": pictureIds
                     },function(data){
                         if(data.status == 200){
                             layer.msg("图片删除成功") ;
-                            //getPicList(1) ;
                             $state.reload();
                         }else if(data.status == 500){
                             layer.msg("图片删除失败") ;
@@ -126,11 +128,50 @@ angular.module('materialManagement').controller('pictureLibraryController', [
             }
         },true);
         //
+
+        /**
+         * 修改名称
+         */
+        function changeName(item){
+            // $scope.vm.pictureName=item.name;
+            $scope.vm.editPictureName = item.name;
+            $scope.vm.pictureId=item.id;
+
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
+                //updateImg();
+
+            },function(){
+
+            });
+        }
+        /**
+        ***名称校验
+        **/
+        function checkName(){
+            if(!$scope.vm.editPictureName){
+                layer.msg("请输入图片名称");
+            }else{
+                MaterialServer.checkName.get({
+                    "name": $scope.vm.editPictureName
+                },function(data){
+                    if(data.code==10006){
+                        layer.msg("图片名称重复,请重新输入");
+                    }else{
+                        ngDialog.close();
+                        updateImg();
+                    }
+                },function(err){
+                    console.log(err);
+                });
+            }
+
+        }
         function updateImg(){
             MaterialServer.updateImg.save({
                 //"name":$scope.vm.pictureName,
                 "name": $scope.vm.editPictureName,
-                "id":$scope.vm.pictureId
+                "id":$scope.vm.pictureId,
+                "modifierId":USER_ID
             },function(data){
                 if(data.status == 200){
                     layer.msg('图片名称修改成功');
@@ -141,20 +182,6 @@ angular.module('materialManagement').controller('pictureLibraryController', [
                 }
             },function(err){
                 console.log(err);
-            });
-        }
-        /**
-         * 修改名称
-         */
-        function changeName(item){
-            // $scope.vm.pictureName=item.name;
-            $scope.vm.editPictureName = item.name;
-            $scope.vm.pictureId=item.id;
-
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/picture_library/change_name.html','400px',function(){
-                updateImg();
-            },function(){
-
             });
         }
 
@@ -176,19 +203,7 @@ angular.module('materialManagement').controller('pictureLibraryController', [
         }
         /**
          * 单选
-         */
-        // function singleAdd(id,allId,isAll,len){
-        //     console.log(allId) ;
-        //     if(allId.inArray(id)){
-        //         allId.remove(id) ;
-        //         $scope.vm.isSelectAll = false ;
-        //     }else{
-        //         allId.push(id) ;
-        //         if(allId.length == len){
-        //             $scope.vm.isSelectAll = true ;
-        //         }
-        //     }
-        // }
+         */        
         function singleAdd(id){
             if($scope.vm.pictureIds.inArray(id)){
                 $scope.vm.pictureIds.remove(id);

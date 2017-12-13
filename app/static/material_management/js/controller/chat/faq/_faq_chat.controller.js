@@ -34,9 +34,11 @@ angular.module('materialManagement').controller('faqChatController', [
             }else{
 
                 MaterialServer.addExtension.save({
-                    content : $scope.vm.extendedQuestion
+                    //"applicationId":APPLICATION_ID,
+                    "content" : $scope.vm.extendedQuestion
                 },{
-                    content : $scope.vm.extendedQuestion
+                    //"applicationId":APPLICATION_ID,
+                    "content" : $scope.vm.extendedQuestion
                 },function(data){
                     console.log(data);
                     if(data.status == 10000){
@@ -124,12 +126,12 @@ angular.module('materialManagement').controller('faqChatController', [
         //保存  0 无验证   1  需要验证
         function save(){
                 if(check()){
-                    MaterialServer.faqSave.save({   
-                        "modifierId":USER_ID,
-                        "topic": $scope.vm.standardQuestion,
+                    MaterialServer.faqSave.save({
+                        "applicationId": APPLICATION_ID,
                         "chatKnowledgeContentList": $scope.vm.contentArr,
                         "chatKnowledgeQuestionList": $scope.vm.extendedQuestionArr,
-                        "applicationId": APPLICATION_ID,
+                        "modifierId":USER_ID,
+                        "topic": $scope.vm.standardQuestion,
                         "origin":100
                         
                     },function(data){

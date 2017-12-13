@@ -1,65 +1,57 @@
-<div class="warp" style="margin-top:20px;">
-    <div class="p20" style="background:#fff;">
+<div class="warp docWrap" style="margin-top:20px;" >
+    <div class="p30" style="background:#fff;">
+        <h3 class="f22 c-666 mb20">文档库</h3>
         <!--//图片上传时显示进度条-->
-        <div class="pic_bar mt-10 ">
-            <p class="tc mb-10">10%</p>
+        <div class="pic_bar mt-10 " ng-show="vm.uploadParemeter.queueNumber">
+            <p class="tc mb-10">{{vm.uploadParemeter.process}}</p>
             <div class="progress mb-20">
                 <span class="bar_span"></span>
             </div>
         </div>
         <div class="clearfix mb-20" >
             <span class="L">
-                <button class="L btn1 btn1_blue mr-10" >上传文档</button>
+                <!--<button class="L btn1 btn1_blue mr-10" >上传文档</button>-->
+                <button doc-upload class="btn1" style="padding:0"></button>
                 <span >目前支持最多10个文件上传，格式为：word、excel、ppt、pdf。单个大小为10M以内</span>
             </span>
             <div class="R dib">
                 <span class="L mr-10">
-                    <input type="text" class="L input-text"  placeholder="请输入查询文档的名称" style="width:200px;"/>
-                    <input type="button" value="" class="L tw_btn " />
+                    <input type="text" class="L input-text" ng-model="vm.docName" placeholder="请输入查询文档的名称" style="width:200px;"/>
+                    <input type="button" value="" class="L tw_btn " ng-click="vm.searchDoc(1)"/>
                 </span>
-                <button class="L btn1 btn1_blue mr-10">导出</button>
-                <button class="L btn1 btn_delete">批量删除</button>
+                <button class="L btn1 btn1_blue mr-10" ng-click="vm.exportDoc()">导出</button>
+                <button class="L btn1 btn_delete" ng-click="vm.batchDeleteDoc(vm.docIds)">批量删除</button>
             </div>
         </div>
         <div class="pic_box_wrap clearfix">
             <table class="pic_tab">
                 <tr class="tr1">
-                    <td width="5%"><input type="checkbox" /> </td>
+                    <td width="5%"><input type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/> </td>
                     <td width="30%">文档名称</td>
                     <td width="15%">文件大小</td>
                     <td width="18%">添加时间</td>
                     <td width="16%">添加人</td>
                     <td width="16%">操作</td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" /></td>
-                    <td>小富测试文档.docx</td>
-                    <td>140.3kb</td>
-                    <td>2017-08-15</td>
-                    <td>zhangzheng</td>
+                <tr ng-repeat="item in vm.docList.objs">
+                    <td><input type="checkbox" ng-checked="vm.docIds.inArray(item.id)" ng-click="vm.selectSingle(item.id)"/></td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.size/1024 | number:1}} MB</td>
+                    <td>{{item.modifyTime| date:"yyyy-MM-dd HH:mm:ss" }}</td>
+                    <td>{{item.modifierId}}</td>
                     <td>
-                        <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>
-                        <a href="javascript:;" class="c_red">删除</a>
+                        <!--<a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>-->
+                        <a href="javascript:;" class="c_red" ng-click="vm.batchDeleteDoc([item.id])">删除</a>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" /></td>
-                    <td>小富测试文档.docx</td>
-                    <td>140.3kb</td>
-                    <td>2017-08-15</td>
-                    <td>zhangzheng</td>
-                    <td>
-                        <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>
-                        <a href="javascript:;" class="c_red">删除</a>
-                    </td>
-                </tr>
+
             </table>
 
         </div>
 
         <div class="cl">
             <div class="L pd-20">
-                <span >本页<b>0</b>条，共有<b>0</b>条</span>
+                <span >本页<b>{{vm.docList.objs.length}}</b>条，共有<b>{{vm.docList.total}}</b>条</span>
             </div>
             <div class="R">
                 <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>

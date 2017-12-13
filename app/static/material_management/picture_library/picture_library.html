@@ -1,5 +1,6 @@
 <div class="warp  picLib "  style="margin-top:20px;">
-    <div class="p20" style="background:#fff;">
+    <div class="p30" style="background:#fff;">
+        <h3 class="f22 c-666 mb20">图片库</h3>
         <!--//图片上传时显示进度条-->
         <div class="pic_bar mt-10 " ng-show="vm.uploadParemeter.queueNumber">
             <p class="tc mb-10">{{vm.uploadParemeter.process}}</p>
@@ -39,8 +40,9 @@
 
                     <td>
                         <div >
-                            <!--<img ng-src="/img/{{item.pictureUrl}}" />-->
-                            <img ng-src="/api/material/picture/getImg?url={{item.url}}" />
+                            <!--<img ng-src="/img/{{item.url}}" />-->
+                            <!--<img ng-src="/api/material/picture/getImg?url={{item.url}}" />-->
+                            <img ng-src="/api/material/picture/get/img/id?pictureId={{item.id}}" />
 
                         </div>
                     </td>

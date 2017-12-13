@@ -410,6 +410,72 @@ module.exports = (angular) => {
                 }
             }
         },
+//---------------------------------------------------
+//        ## 系统监控##
+//---------------------------------------------------
+        {
+            name: "SM",
+            url: "/SM",
+            data: {
+                roles: []
+            },
+            title : "业务建模容器加载依赖" ,
+            template : require("../static/system_monitoring/main.html"),
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let systemMonitoringModule = require("../static/system_monitoring/module/_system_monitoring.module")(angular);
+                        $ocLazyLoad.load({
+                            name: "systemMonitoringModule"
+                        });
+                        defer.resolve(systemMonitoringModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+        // 资源监控
+        {
+            name: "SM.resource",
+            url: "/resource",
+            data: {
+                roles: []
+            },
+            parent : "SM",
+            title : "resource" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/system_monitoring/views/resource_monitoring/resource_monitoring.html"),
+                    controller: "ResourceMonitoringController"
+                }
+            }
+        },
+        // 服务监控
+        {
+            name: "SM.service",
+            url: "/service",
+            data: {
+                roles: []
+            },
+            parent : "SM",
+            title : "service" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/system_monitoring/views/service_monitoring/service_monitoring.html"),
+                    controller: "ServiceMonitoringController"
+                }
+            }
+        },
 //--------------------------------------------------
 //          ##业务建模BM##
 //--------------------------------------------------

@@ -9,11 +9,12 @@
                 <div class="csso-cz-box clearfix  mb-10">
                     <div class="L ">
                         <div class="L pr chat_add_div ">
-                            <p class="bd mr-10 chat_add_p" >FAQ型聊天新增</p>
-                            <ul class="bd pa chat_add_ul" >
-                                <li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>
-                                <li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>
-                            </ul>
+                            <!--<p class="bd mr-10 chat_add_p" >FAQ型聊天新增</p>-->
+                            <!--<ul class="bd pa chat_add_ul" >-->
+                                <!--<li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>-->
+                                <!--<li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>-->
+                            <!--</ul>-->
+                            <button class="btn1 btn1_blue mr10" ui-sref="materialManagement.knowAdd">新增知识</button>
                         </div>
                         <div class="L ">
                             <div uploader-base ></div>
@@ -54,7 +55,7 @@
                             </div>
                         </div>
                         <button class="btn1 L btn_green  mr-10 f14"  ng-click="vm.exportExcel()">导出</button>
-                        <a href="/api/ms/chatKnowledge/download?fileName=chatKnowledgeTemplate.xls" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>
+                        <a href="/api/material/chat/knowledge/download?fileName=chatKnowledgeTemplate.xls" target="_blank" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>
                         <button class="btn1 R btn_delete f14" ng-click="vm.delKnowledge()">批量刪除</button>
                     </div>
                 </div>
@@ -63,7 +64,7 @@
                         <input type="checkbox" ng-click="vm.selectAll()"  ng-checked="vm.selectAllCheck"/> 全选
                     </div>
                     <ul class="csso-lsit">
-                        <li ng-if="vm.listData" ng-repeat="item in vm.listData">
+                        <li ng-if="vm.listData" ng-repeat="item in vm.listData.objs">
                             <div class="mb-10">
                                 <!--<input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>-->
                                 <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-checked="vm.delArr.inArray(item.id)" ng-click="vm.selectSingle(item.id)"/>
@@ -72,8 +73,8 @@
                             <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>
                             <div class="cl">
                                 <div class="L">
-                                    <span class="mr-20">知识类型：
-                                        {{item.origin |typeFilter }}
+                                    <span class="mr-20">知识类型：聊天新增
+                                        <!--{{item.origin |typeFilter }}-->
                                     </span>
                                     <span>作者：{{item.modifierId}}</span>
                                 </div>
@@ -83,7 +84,15 @@
                             </div>
                         </li>
                     </ul>
-                    <pagination ng-if="vm.paginationConf.totalItems && (vm.paginationConf.totalItems>0)" conf="vm.paginationConf"></pagination>
+                    <div class="cl">
+                        <div class="L pt-20 pb-20">
+                            <span >本页<b>{{vm.listData.objs.length}}</b>条，共有<b>{{vm.listData.total}}</b>条</span>
+                        </div>
+                        <div class="R">
+                            <pagination ng-if="vm.paginationConf.totalItems && (vm.paginationConf.totalItems>0)" conf="vm.paginationConf"></pagination>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -95,22 +104,22 @@
     .advanced_search {width:400px;background:#fff;}
 </style>
 <script>
-    $('.chat_add_p').click(function(){
-        if($(this).next().is(':hidden')){
-            $(this).next().show();
-        }else{
-            $(this).next().hide();
-        }
-        return false;
-    });
+//    $('.chat_add_p').click(function(){
+//        if($(this).next().is(':hidden')){
+//            $(this).next().show();
+//        }else{
+//            $(this).next().hide();
+//        }
+//        return false;
+//    });
 
-    $('.bgwhite').click(function(){
-        $('.chat_add_ul').hide();
-    });
-
-    $('.chat_add_ul li a').click(function(){
-        var str=$(this).html();
-        $('.chat_add_p').html(str);
-        $(this).parent().parent().hide();
-    });
+//    $('.bgwhite').click(function(){
+//        $('.chat_add_ul').hide();
+//    });
+//
+//    $('.chat_add_ul li a').click(function(){
+//        var str=$(this).html();
+//        $('.chat_add_p').html(str);
+//        $(this).parent().parent().hide();
+//    });
 </script>

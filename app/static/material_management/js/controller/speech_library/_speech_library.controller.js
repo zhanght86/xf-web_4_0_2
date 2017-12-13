@@ -33,7 +33,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 uploadNumber : 0,           //上传的数量;
                 process :"0%"               //上传进度
             },
-            checkVoiceName : checkVoiceName
+            checkVoiceName : checkVoiceName,
+            checkVoiceName2 : checkVoiceName2
 
         };
         /**
@@ -42,8 +43,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
         searchVoice(1) ;
 
         function searchVoice(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            MaterialServer.searchVoice.save({
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:5000}) ;
+            MaterialServer.searchVoice.get({
                 "index":(index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize,
                 "name":$scope.vm.voiceName
@@ -94,7 +95,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
          */
         function exportExcel(){
             var urlParams =
-                "?applicationId="+APPLICATION_ID;
+                "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.voiceName;
             // var url = "/api/ms/voiceManage/exportExcel"+urlParams  ;//请求的url
            // $window.open(url,"_blank") ;
 
@@ -112,7 +113,8 @@ angular.module('materialManagement').controller('speechLibraryController', [
             $scope.vm.voiceId = item.id;
             
             $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/change_name.html','400px',function(){
-                updateVoice();
+                //updateVoice();
+                //checkVoiceName2();
             },function(){
 
             });
@@ -187,7 +189,9 @@ angular.module('materialManagement').controller('speechLibraryController', [
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     MaterialServer.batchDeleteVoice.save({
-                        //"voiceIds": voiceIds
+                        "ids": voiceIds
+                    },
+                    {
                         "ids": voiceIds
                     },function(data){
                         if(data.status == 200){
@@ -207,18 +211,16 @@ angular.module('materialManagement').controller('speechLibraryController', [
 
         }
 
-        //校验名称重复
+        //校验名称重复 上传
         function checkVoiceName(){
             if(!$scope.vm.voiceTitle){
                 layer.msg("请输入语音名称");
             }else{
-                MaterialServer.checkVoice.save({
-                    "voiceName": $scope.vm.voiceTitle
+                MaterialServer.checkVoice.get({
+                    "name": $scope.vm.voiceTitle
                 },
-                    {
-                    "voiceName": $scope.vm.voiceTitle
-                },function(data){
-                    if(data.status == 500){
+                function(data){
+                    if(data.code == 10006){
                         $scope.vm.isUploadStart=false;
                         layer.msg("语音名称重复,请重新输入") ;
                     }else{
@@ -227,6 +229,27 @@ angular.module('materialManagement').controller('speechLibraryController', [
                 },function(err){
                     //$log.log(err);
                 });
+            }
+        }
+        //校验名称重复 修改
+        function checkVoiceName2(){
+            //alert(1);
+            if(!$scope.vm.editVoiceName){
+                layer.msg("请输入语音名称");
+            }else{
+                MaterialServer.checkVoice.get({
+                        "name": $scope.vm.editVoiceName
+                    },
+                    function(data){
+                        if(data.code == 10006){
+                            layer.msg("语音名称重复,请重新输入") ;
+                        }else{
+                            ngDialog.close();
+                            updateVoice();
+                        }
+                    },function(err){
+                        //$log.log(err);
+                    });
             }
         }
 

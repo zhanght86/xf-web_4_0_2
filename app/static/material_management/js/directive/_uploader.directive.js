@@ -30,7 +30,7 @@ knowledge_static_web.directive("uploaderBase", ["$parse",  "$cookieStore" ,"$sta
                     //"userName":USER_NAME
                 }  ,   // 上传参数
                 // 文件接收服务端。
-                server: "/api/material/chatKnowledge/upload",
+                server: "/api/material/chat/knowledge/upload",
                 //accept: {
                 //    title: 'file',
                 //    extensions: 'xls,xlsx',

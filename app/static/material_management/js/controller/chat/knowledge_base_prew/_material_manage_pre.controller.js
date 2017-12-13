@@ -34,13 +34,14 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             //     }
                 MaterialServer.saveChatKnowledge.save({
                 //MaterialServer[api].save({
-                    "modifierId" : USER_ID,
-                    "topic" : $scope.vm.standardQuestion,
                     "applicationId" : APPLICATION_ID,
+                    "id" : params.chatKnowledgeId?params.chatKnowledgeId:null,
                     "chatKnowledgeContentList": $scope.vm.contentArr,
                     "chatKnowledgeQuestionList": $scope.vm.extendedQuestionArr,
-                    "origin": params.chatKnowledgeSource,
-                    "id" : params.chatKnowledgeId?params.chatKnowledgeId:null
+                    "modifierId" : USER_ID,
+                    "topic" : $scope.vm.standardQuestion,
+                    "origin": params.chatKnowledgeSource
+
                 },function(data){
                     if(data.data==10004){
                         layer.msg("标准问重复") ;
@@ -60,20 +61,6 @@ angular.module('materialManagement').controller('chatKnowledgeBasePreController'
             console.log(angular.fromJson($stateParams.scanData).type);
             $state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});
         }
-        //验证 所有数据是否合格
-        //function check(params){
-        //    if(params.standardQuestion==null || params.standardQuestion.length==0){
-        //        layer.msg("标准问不能为空,请返回填写");
-        //        return false
-        //    }else if(params.extendedQuestionArr.length==0){
-        //        layer.msg("扩展问不能为空,请返回填写");
-        //        return false;
-        //    }else if(params.contentArr.length==0){
-        //        layer.msg("知识内容不能为空,请返回填写");
-        //        return false
-        //    }else{
-        //        return true
-        //    }
-        //}
+
     }
 ]);

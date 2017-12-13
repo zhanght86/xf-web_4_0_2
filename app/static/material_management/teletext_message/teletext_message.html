@@ -3,7 +3,8 @@
         <!--<input type="text" class="input-text" ng-model="vm.titAuthor" placeholder="请输入标题/作者" style="width:300px;"/>-->
         <!--<input type="button" value="查找" class="btn1 btn1_blue" ng-click="vm.showImg(1)"/>-->
     <!--</div>-->
-    <div class="p20" style="background:#fff;">
+    <div class="p30" style="background:#fff;">
+        <h3 class="f22 c-666 mb20">图文消息</h3>
         <div class="clearfix mb-20" style="padding-left: 12px;padding-right:12px;">
             <span class="L">
                 <button  class="btn1 btn1_blue" ui-sref="materialManagement.addtemes">新建图文</button>
@@ -22,7 +23,7 @@
                 <dl class="picture_dl teletext_dl " >
                     <!--{{item}}-->
                     <!--<dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/img/{{item.url}}"/></a></dt>-->
-                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/api/material/picture/getImgByPictureId?pictureId={{item.coverPicId}}"/></a></dt>
+                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="api/material/picture/get/img/id?pictureId={{item.coverPicId}}"/></a></dt>
                     <dd class="cl">
                         <!--<p class="L titp">{{item.graphicMessageTitle}}</p>-->
                         <p class="L titp">{{item.title}}</p>

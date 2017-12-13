@@ -1,5 +1,6 @@
 <div class="warp speechLib " style="margin-top:20px;">
-    <div class="p20" style="background:#fff;">
+    <div class="p30" style="background:#fff;">
+        <h3 class="f22 c-666 mb20">语音库</h3>
         <!--//图片上传时显示进度条-->
         <div class="pic_bar mt-10 " ng-show="vm.uploadParemeter.queueNumber">
             <p class="tc mb-10">{{vm.uploadParemeter.process}}</p>
@@ -41,7 +42,7 @@
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>
                         <a href="javascript:;" class="c_red mr-10" ng-click="vm.batchDeleteVoice([item.id])">删除</a>
-                        <a href="/api/material/voiceManage/download?fileName={{item.url}}" target="_blank">下载</a>
+                        <a href="/api/material/voice/download?fileName={{item.url}}" target="_blank">下载</a>
                     </td>
                 </tr>
                 <!--<tr>-->

@@ -18,7 +18,7 @@ knowledge_static_web.directive("teletextUpload", ["$parse","$state", function($p
                 formData:{
                     "modifierId":USER_ID,
                     "origin" : 0,
-                    "inTrusteeship" : 0
+                    "inTrusteeship" : 1
                 },
                 //accept: {
                 //    title: 'Images',

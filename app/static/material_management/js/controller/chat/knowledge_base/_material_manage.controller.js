@@ -33,8 +33,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             "modifyTimeType": 0,
             "chatKnowledgeTopic": "",
             "chatQuestionContent": "",
-            selectTimeType : selectTimeType
+            selectTimeType : selectTimeType,
+
         };
+        setCookie('applicationId',"450014113901314048");
         /**
          * 全选
          */
@@ -42,7 +44,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
                 $scope.vm.delArr = [];
-                angular.forEach($scope.vm.listData,function(item){
+                angular.forEach($scope.vm.listData.objs,function(item){
                     $scope.vm.delArr.push(item.id);
                 });
             }else{
@@ -61,7 +63,7 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 $scope.vm.delArr.push(id);
 
             }
-            if($scope.vm.delArr.length==$scope.vm.listData.length){
+            if($scope.vm.delArr.length==$scope.vm.listData.objs.length){
                 $scope.vm.selectAllCheck = true;
             }
             console.log( $scope.vm.delArr);
@@ -87,6 +89,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }, function(){
                     var i = layer.msg('知识删除中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
                     MaterialServer.delKnowledge.save({
+                        "applicationId":APPLICATION_ID,
+                        "ids":$scope.vm.delArr
+                    },{
+                        "applicationId":APPLICATION_ID,
                         "ids":$scope.vm.delArr
                     },function(response){
                         layer.close(i);
@@ -118,14 +124,14 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         /**
          * 查询
          */
+        search(1);
         function search(index){
             var i = layer.msg('查询中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            $scope.vm.getType = 1;
+            //$scope.vm.getType = 1;
             $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
-
             MaterialServer.searchKnow.save({
-                "applicationId" : APPLICATION_ID,
+                "applicationId":APPLICATION_ID,
                 "context" : $scope.vm.chatQuestionContent,                //知识内容
                 "modifier" : $scope.vm.chatKnowledgeModifier,             //用户名
                 "modifyTimeType" : $scope.vm.modifyTimeType,             //时间类型
@@ -135,23 +141,10 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
 
             },function(data){
                 layer.close(i);
-                // if(data.data==10005){
-                //     $scope.vm.delArr = [] ;
-                //     $scope.vm.listData = data.data.objs;
-                //     $scope.vm.paginationConf.totalItems = 0 ;
-                //     layer.msg("查询无此相关知识");
-                // }else{
-                //     $scope.vm.delArr = [] ;
-                //     $scope.vm.listData = data.data.objs;
-                //     $scope.vm.paginationConf.currentPage =index ;
-                //     $scope.vm.paginationConf.totalItems =data.data.total ;
-                //     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                //     console.log($scope.vm.paginationConf);
-                //     $scope.vm.title = null;
-                // }
                 if(data.status==200){
-                    $scope.vm.delArr = [] ;
-                    $scope.vm.listData = data.data.objs;
+                    console.log(data);
+                    //$scope.vm.delArr = [] ;
+                    $scope.vm.listData = data.data;
                     $scope.vm.paginationConf.currentPage =index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
@@ -170,6 +163,23 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         }
 
         /**
+         *分页 查询
+         */
+        var timeout ;
+        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
+            if(current && old != undefined){
+                if (timeout) {
+                    $timeout.cancel(timeout)
+                }
+                timeout = $timeout(function () {
+                    initBatchTest();
+                    search(current);
+
+                }, 0)
+            }
+        });
+
+        /**
          * 知识导出
          */
         function exportExcel(){
@@ -184,57 +194,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
         }
-         getData(1) ;
-
-        /**
-         * 请求列表
-         */
-        function getData(index){
-            var i = layer.msg('资源加载中...',{icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            $scope.vm.getType = 0 ;
-            MaterialServer.getData.save({
-                "applicationId": APPLICATION_ID,
-                "index" :(index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
-            },function(data){
-                layer.close(i);
-                if(data.status==200){
-                    $scope.vm.delArr = [] ;
-                    $scope.vm.listData = data.data.objs;
-                    $scope.vm.paginationConf.currentPage =index ;
-                    $scope.vm.paginationConf.totalItems =data.data.total ;
-                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                    console.log($scope.vm.paginationConf);
-                }
-                if(data.status==500){
-                    console.log("查询失败");
-                }
-
-            },function(err){
-                layer.close(i);
-                console.log(err);
-            });
-        }
-        /**
-        *分页 查询
-        */
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    if($scope.vm.getType==1 ){
-                        initBatchTest();
-                        search(current)
-                    }else if($scope.vm.getType==0){
-                        initBatchTest();
-                        getData(current);
-                    }
-                }, 0)
-            }
-        });
 
         /**
          *点击标题预览内容
