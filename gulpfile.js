@@ -207,7 +207,7 @@ gulp.task('watch-module', function() {
         gulp.src(watchPath)
             .pipe(webpack(require('webpack.config')))
             .pipe(gulp.dest(releaseRelativePath + projectName))
-            .pipe(upload(opt, function(err, data){})
+            .pipe(upload(opt, function(err, data){}))
     })
 });
 
