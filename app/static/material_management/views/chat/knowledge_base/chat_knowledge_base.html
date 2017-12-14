@@ -14,7 +14,7 @@
                                 <!--<li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>-->
                                 <!--<li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>-->
                             <!--</ul>-->
-                            <button class="btn1 btn1_blue mr10" ui-sref="materialManagement.knowAdd">新增知识</button>
+                            <button class="btn1 btn1_blue mr10" ui-sref="MM.chatAdd">新增知识</button>
                         </div>
                         <div class="L ">
                             <div uploader-base ></div>
@@ -85,9 +85,9 @@
                         </li>
                     </ul>
                     <div class="cl">
-                        <div class="L pt-20 pb-20">
-                            <span >本页<b>{{vm.listData.objs.length}}</b>条，共有<b>{{vm.listData.total}}</b>条</span>
-                        </div>
+                        <!--<div class="L pt-20 pb-20">-->
+                            <!--<span >本页<b>{{vm.listData.objs.length}}</b>条，共有<b>{{vm.listData.total}}</b>条</span>-->
+                        <!--</div>-->
                         <div class="R">
                             <pagination ng-if="vm.paginationConf.totalItems && (vm.paginationConf.totalItems>0)" conf="vm.paginationConf"></pagination>
                         </div>

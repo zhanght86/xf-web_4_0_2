@@ -4,13 +4,12 @@
  */
 module.exports=materialModule => {
     materialModule
-    .controller('knowAddController', [
+    .controller('KnowAddController', [
     '$scope',"$state","MaterialServer","ngDialog", "$cookieStore","$stateParams",
     ($scope,$state,MaterialServer,ngDialog,$cookieStore,$stateParams)=> {
         $state.go("materialManagement.knowAdd");
 
         $scope.vm = {
-
             standardQuestion :  '',   //标准问
             extendedQuestion : "",         //扩展问
             extendedQuestionArr : [],     //扩展问数组
@@ -24,17 +23,20 @@ module.exports=materialModule => {
             save : save ,
             checkTitle : checkTitle ,          //标题
             titleCheck:false,
+            titleQuestion:false,
+            titleContent:false,
+            addLine : addLine,                   //添加一行
 
         };
 
         //添加扩展问
         function addExtension(e){
-            var keyCode = window.event?e.keyCode:e.which;
+            addLine();
+            var  srcObj = e.srcElement ? e.srcElement : e.target;
+            var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
                 if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
                     layer.msg("扩展不能为空",{time:1000});
-                }else if(checkRepeat($scope.vm.extendedQuestion , $scope.vm.extendedQuestionArr ,"content")){
-                    layer.msg("扩展问题重复，请重新输入",{time:1000});
                 }else{
                     MaterialServer.addExtension.get({
                         "applicationId":APPLICATION_ID,
@@ -49,10 +51,12 @@ module.exports=materialModule => {
                             obj.content = angular.copy($scope.vm.extendedQuestion);
                             //obj.type = angular.copy($scope.vm.weight);
                             $scope.vm.extendedQuestionArr.push(obj);
-                            //$scope.vm.extendedQuestion = "";
                             console.log($scope.vm.extendedQuestionArr);
+                            $scope.vm.titleQuestion=true;
                         }else if(data.status == 500){
                             layer.msg("扩展问重复",{time:1000});
+                            $scope.vm.titleQuestion=false;
+                            srcObj.focus();
                         }
                     },function(err){
                         console.log(err);
@@ -61,6 +65,11 @@ module.exports=materialModule => {
                 }
             }
 
+        }
+        //表格添加一行
+        function addLine(){
+            var str='<tr><td><input type="text" class="txt" ng-model="vm.extendedQuestion" ng-keyup="vm.addExtension($event)" style="width:100%;"/></td></tr>';
+            $(".material_table").append(str);
         }
         //刪除
         function remove(item,arr){
@@ -81,7 +90,7 @@ module.exports=materialModule => {
                 }else if(data.status==200){
                     //console.log();
                     layer.msg("保存成功");
-                    $state.go("materialManagement.chatKnowledgeBase");
+                    $state.go("MM.chat");
                 }
             },function(err){
                 console.log(err);
@@ -118,21 +127,21 @@ module.exports=materialModule => {
             }
         }
         //判断重复(扩展问 及新增内容)
-        function checkRepeat(val , arr ,prop){
-            var result;
-            if(arr.length==0){
-                result = 0;
-            }else{
-                angular.forEach(arr,function(item){
-                    if(item[prop]==val){
-                        result = 1
-                    }else{
-                        result = 0
-                    }
-                })
-            }
-            return result
-        }
+        // function checkRepeat(val , arr ,prop){
+        //     var result;
+        //     if(arr.length==0){
+        //         result = 0;
+        //     }else{
+        //         angular.forEach(arr,function(item){
+        //             if(item[prop]==val){
+        //                 result = 1
+        //             }else{
+        //                 result = 0
+        //             }
+        //         })
+        //     }
+        //     return result
+        // }
 
     }
 ])};

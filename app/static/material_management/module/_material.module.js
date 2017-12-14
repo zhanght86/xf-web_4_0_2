@@ -7,8 +7,10 @@ module.exports = angular =>{
     const materialModule = angular.module("materialModule",[]);
     require('../controllers/_main.controller')(materialModule);  // 控制器
     require('../../index/controllers/home_page/_nav.controller')(materialModule);  // 导航
-
-    //require('../../index/controllers/home_page/_nav.controller')(materialModule);  // 导航
+    //--------------------------------------------------
+    //         directive
+    //--------------------------------------------------
+    require('../../../components/page/page')(materialModule);  // 分页
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------

@@ -1308,6 +1308,26 @@ module.exports = (angular) => {
                 }
             }
         },
+        // 聊天知识库-新增
+        {
+            name: "MM.chatAdd",
+            url: "/chatAdd",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "聊天知识库" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/chat/know_add/know_add.html"),
+                    controller: "KnowAddController"
+                }
+            }
+        },
         // 图片库
         {
             name: "MM.pic",
