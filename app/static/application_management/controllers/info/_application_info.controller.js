@@ -186,6 +186,7 @@ module.exports = applicationManagementModule =>{
                         }else{
                             layer.msg("修改失败");
                         }
+
                     },function(error){$log.log(error)})
                 }
             }) ;
