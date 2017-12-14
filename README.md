@@ -11,4 +11,4 @@ cnpm install
  ng-dialog
  jquery@1.9.1
  --save
-开发环境 全局安装 npm install -g concurrently
+开发环境 全局安装 npm install -g concurrently 使用脚本多任务
