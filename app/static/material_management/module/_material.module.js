@@ -8,7 +8,7 @@ module.exports = angular =>{
     require('../controllers/_main.controller')(materialModule);  // 控制器
     require('../../index/controllers/home_page/_nav.controller')(materialModule);  // 导航
 
-    require('../../index/controllers/home_page/_nav.controller')(materialModule);  // 导航
+    //require('../../index/controllers/home_page/_nav.controller')(materialModule);  // 导航
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------

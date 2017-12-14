@@ -1,0 +1,28 @@
+<div class="pd-10 selectImage">
+    <form class="form form-horizontal" >
+        <div>
+            <p class="tc mb-10">请选择要上传的图片</p>
+            <ul class="classic_head_ul clearfix">
+                <li ng-repeat="item in vm.imageList"  ng-class="vm.imgSelected.id==item.id ? 'active' : ''"
+                    ng-click="vm.selectImage(item)">
+                    <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
+                        <!--<img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/img/{{item.url}}">-->
+                        <img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="api/material/picture/get/img?url={{item.url}}">
+                    </div>
+                    <p class="f14">{{item.name}}</p>
+                </li>
+            </ul>
+        </div>
+        <pagination ng-if="(vm.imgPaginationConf.totalItems) && (vm.imgPaginationConf.totalItems>0)" conf="vm.imgPaginationConf"></pagination>
+        <div class="text-c">
+            <button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>
+            <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>
+        </div>
+    </form>
+</div>
+<style>
+    .ipt-txt-box .ipt-txt{
+        border:1px solid gray
+    }
+
+</style>
