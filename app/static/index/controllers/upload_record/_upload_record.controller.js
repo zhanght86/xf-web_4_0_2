@@ -11,7 +11,6 @@ module.exports=homePageModule => {homePageModule
 	                pageSize: 5,        //每页条目数量
 	                pagesLength: 10,    //分页块数量
 	          } ,//分页条件
-              total:"",             //分页总条数   
               modifierName:"",      //操作名称
               startTime:"",         //开始时间
               endTime:"",           //结束时间
@@ -38,10 +37,10 @@ module.exports=homePageModule => {homePageModule
                 if(data.status==200){
                   if(data.data==null){
                      $scope.vm.uploadList="";
-                    $scope.vm.total="";
+                    $scope.vm.paginationConf.totalItems="";
                   }else{
                     $scope.vm.uploadList=data.data.objs;
-                    $scope.vm.total=data.data.total;
+                    $scope.vm.paginationConf.totalItems=data.data.total;
                   }
                     
                 }

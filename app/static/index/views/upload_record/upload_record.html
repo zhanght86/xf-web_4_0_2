@@ -60,8 +60,7 @@
                         </tr>
                         </tbody>
                     </table>
-                     <p class="r f-12 c-999">本页共<span class="num">5</span>条，总共<span id="total">{{vm.total}}</span>条</p>
-                    <pagination  conf="vm.paginationConf"></pagination>
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"  conf="vm.paginationConf"></pagination>
                 </div>
             </div>
         </div>
