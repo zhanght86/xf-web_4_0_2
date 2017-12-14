@@ -107,13 +107,13 @@ module.exports = {
             filename: 'index.html',
             template: './app/index.html'
         }),
+        // new ExtractTextPlugin("[name].css") ,
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             $:"jquery",
             jQuery:"jquery",
             "window.jQuery":"jquery"
         }) ,
-
         // 复制静态资源
         // new CopyWebpackPlugin(
         //     [

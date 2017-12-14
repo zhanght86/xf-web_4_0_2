@@ -1,1 +1,1 @@
-cnpm install&&gulp concatcss && webpack
+cnpm install&&npm install -g concurrently && gulp && webpack

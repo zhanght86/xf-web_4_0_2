@@ -25,10 +25,12 @@ var gulp = require('gulp'),
     smushit = require('gulp-smushit'), // 图片压缩  yahoo  效率高
     imagemin = require('gulp-imagemin'),//图片压缩  效率低
     pngcrush = require('imagemin-pngcrush'),
-    webpackConfig = require('./webpack.config.js'),  // webpack
     notify = require('gulp-notify'),//提示信息
-    shell = require("gulp-shell")   ;
-
+    shell = require("gulp-shell")   , //启动 shell
+    proxy = require('http-proxy-middleware'), //反向代理
+    gulp_webpack = require("gulp-webpack")  ; // gulp 分发任务给 webpack
+    webpack = require("webpack") ,
+    webpackConfig = require('./webpack.config.js');  // webpack
 //mac chrome: "Google chrome",
 var browser = os.platform() === 'linux' ? 'Google chrome' : (
     os.platform() === 'darwin' ? 'Google chrome' : (
@@ -61,16 +63,6 @@ gulp
     .task('copy:imagestemp', function (done) {
         gulp.src(['app/assets/images/**/*']).pipe(gulp.dest('dest/images')).on('end', done);
     })
-// 合并 css 文件
-// gulp.task('css', function() {
-//     return gulp.src('src/css/*.css')
-//         .pipe(concat('main.css'))
-//         .pipe(gulp.dest('dest/css'))
-//         .pipe(rename({ suffix: '.min' }))
-//         .pipe(minifycss())
-//         .pipe(gulp.dest('dest/css'))
-//         .pipe(notify({ message: 'css task ok' }));
-// });
 
 .task('concatcss', function() {
         gulp.src([
@@ -170,27 +162,57 @@ gulp
             .pipe(clean())
             .on('end', done);
     })
-
-    .task('watch', function (done) {
-        gulp.watch(['./app/**/*'],
-            ['lessmin', 'build-js', 'fileinclude'])
-            .on('end', done);
-    });
-
-var myDevConfig = Object.create(webpackConfig);
-var devCompiler = webpack(myDevConfig);
-
-//引用webpack对js进行操作
-gulp.task("build-js", ['fileinclude'], function(callback) {
-    devCompiler.run(function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack:build-js", err);
-        gutil.log("[webpack:build-js]", stats.toString({
-            colors: true
-        }));
-        callback();
+gulp.task('watch-module', function(done) {
+    watchPath = {
+        img : "./app/assets/images/**/*",
+        css : "./app/assets/css/**/*",
+        js : "./app/assets/js/**/*",
+        libs : "./app/assets/libs/**/*",
+        appjs : [
+            "./app/entrance/*/js" ,
+            "./app/static/**/*.js"
+        ]
+    } ;
+    gulp.watch(watchPath.img,["copy:images"] ).on('end', done);
+    gulp.watch(watchPath.css,["fileinclude:css","concatcss"]).on('end', done);
+    gulp.watch(watchPath.js,["fileinclude:js"] ).on('end', done);
+    gulp.watch(watchPath.libs,["fileinclude:libs"] ).on('end', done);
+    // gulp.watch(watchPath.appjs,["copy:images"] ).on('end', done)
+});
+//使用connect启动一个Web服务器
+//使用'http-proxy-middleware'作为反向代理
+var host = {
+    root : ['./dest'] ,
+    port : 8001 ,
+    proxy : [
+        proxy('/api/authority',  {
+            target: 'http://192.168.181.166:7005',
+            changeOrigin:true
+        }),
+        proxy('/api/application/', {
+            target: 'http://192.168.181.166:7006',
+            changeOrigin:true
+        }),
+        proxy('/api/ms/', {
+            target: 'http://192.168.181.166:7002',
+            changeOrigin:true
+        }),
+        proxy('/api/analysis/', {
+            target: 'http://192.168.181.166:7007',
+            changeOrigin:true
+        })
+    ]
+};
+gulp.task('server', function() {
+    connect.server({
+        root: host.root,
+        port: host.port,
+        livereload: true,
+        middleware: function(connect, opt) {
+            return host.proxy
+        }
     });
 });
-
 //发布
 gulp.task('release', ['imgmin', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 //超高效发布
@@ -198,16 +220,3 @@ gulp.task('release-efficient', ['smushit', 'fileinclude', 'md5:css', 'md5:js', '
 //开发
 // gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'lessmin', 'build-js', 'watch', 'open']);
 gulp.task('default', [ 'copy:images','copy:imagestemp','fileinclude:html','fileinclude:css','fileinclude:js','fileinclude:libs','concatcss']);
-
-gulp.task('watch-module', function() {
-    var watchPath = [
-        './app/**/*',
-    ];
-    gulp.watch(watchPath, function(event){
-        gulp.src(watchPath)
-            .pipe(webpack(require('webpack.config')))
-            .pipe(gulp.dest(releaseRelativePath + projectName))
-            .pipe(upload(opt, function(err, data){}))
-    })
-});
-

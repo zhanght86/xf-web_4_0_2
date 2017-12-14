@@ -41,7 +41,6 @@ module.exports = module =>{
                         if(scope.conf.currentPage < 1){
                             scope.conf.currentPage = 1;
                         }
-
                         //页数上限限制
                         if(scope.conf.numberOfPages > 0 && scope.conf.currentPage > scope.conf.numberOfPages){
                             scope.conf.currentPage = scope.conf.numberOfPages;
@@ -105,6 +104,7 @@ module.exports = module =>{
                         }else if(scope.conf.methodFn){
                             scope.conf.methodFn(scope.conf);
                         }
+                        getCurrentPageNumber()
                     }
 
                     //上一页
@@ -133,6 +133,19 @@ module.exports = module =>{
                             }
                         }
                     }
+                    // 获取当前页 数据长度
+                    var getCurrentPageNumber = function (){
+                        if(scope.conf.numberOfPages <=1 ){
+                            scope.conf.currentPageNumber = scope.conf.numberOfPages
+                        }else{
+                            if(scope.conf.currentPage != scope.conf.numberOfPages){
+                                scope.conf.currentPageNumber = scope.conf.pageSize
+                            }else{
+                                scope.conf.currentPageNumber = (scope.conf.totalItems-scope.conf.numberOfPages* scope.conf.pageSize)
+                            }
+                        }
+                    }
+
                     scope.$watch(function(){
                         return scope.conf.numberOfPages  +' '+scope.conf.currentPage +' '+scope.conf.pageSize;
                     },getPagination);
