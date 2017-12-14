@@ -684,3 +684,5 @@
 /*授权管理*/
 .tr_even { background: #f9fafc;}
 
+.material_table td{text-align:left;height:30px;}
+

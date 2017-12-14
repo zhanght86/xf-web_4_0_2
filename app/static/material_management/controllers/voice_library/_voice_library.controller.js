@@ -83,14 +83,22 @@ module.exports=materialModule => {
 
             }
         },true);
+        //上传语音
         function uploadSpeech(callback){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/voice/voice_library/voice_library_dialog.html','900px',function(){
-
-            },function(){
-
+            let upload_html = require("../../views/voice_library/voice_library_dialog.html") ;
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,upload_html,"600px",function(){
+                checkVoiceName();
             },function(){
                 $scope.vm.isUploadStart = false ;
-            });
+            })
+
+            // $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/voice/voice_library/voice_library_dialog.html','900px',function(){
+            //
+            // },function(){
+            //
+            // },function(){
+            //     $scope.vm.isUploadStart = false ;
+            // });
         }
         /**
          * 语音导出
@@ -113,13 +121,20 @@ module.exports=materialModule => {
             // $scope.vm.voiceName = item.name;
             $scope.vm.editVoiceName = item.name;
             $scope.vm.voiceId = item.id;
-            
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/views/voice_library/change_name.html','400px',function(){
-                //updateVoice();
-                //checkVoiceName2();
-            },function(){
 
-            });
+            let change_html = require("../../views/voice_library/change_name.html") ;
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,change_html,"400px",function(){
+
+            },"",function(){
+
+            })
+            
+            // $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/views/voice_library/change_name.html','400px',function(){
+            //     //updateVoice();
+            //     //checkVoiceName2();
+            // },function(){
+            //
+            // });
         }
         function updateVoice(){
             MaterialServer.updateVoice.save({

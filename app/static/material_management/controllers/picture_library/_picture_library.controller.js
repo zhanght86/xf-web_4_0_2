@@ -137,12 +137,19 @@ module.exports=materialModule => {
             $scope.vm.editPictureName = item.name;
             $scope.vm.pictureId=item.id;
 
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/views/picture_library/change_name.html','400px',function(){
-                //updateImg();
+            let change_html = require("../../views/picture_library/change_name.html") ;
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,change_html,"400px",function(){
 
-            },function(){
+            },"",function(){
 
-            });
+            })
+
+            // $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/views/picture_library/change_name.html','400px',function(){
+            //     //updateImg();
+            //
+            // },function(){
+            //
+            // });
         }
         /**
         ***名称校验
