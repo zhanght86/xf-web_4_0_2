@@ -76,11 +76,11 @@ gulp
                 './app/assets/css/home/addContent.css',
                 './app/assets/css/home/chat.css',
         ])    //- 需要处理的css文件，放到一个字符串数组里
-            .pipe(autoprefixer({
-                browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
-                cascade: true,          //是否美化属性值 默认：true 像这样：
-                remove:true //是否去掉不必要的前缀 默认：true
-            }))
+            // .pipe(autoprefixer({
+            //     browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
+            //     cascade: true,          //是否美化属性值 默认：true 像这样：
+            //     remove:true //是否去掉不必要的前缀 默认：true
+            // }))
             .pipe(concat('xf.css'))
             .pipe(gulp.dest('dest/assets/css'))
             .pipe(rename({ suffix: '.min' }))
@@ -95,11 +95,11 @@ gulp
         './app/assets/css/common.css',
         './app/assets/css/home/back/back_style.css',
     ])    //- 需要处理的css文件，放到一个字符串数组里
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
-            cascade: true,          //是否美化属性值 默认：true 像这样：
-            remove:true //是否去掉不必要的前缀 默认：true
-        }))
+        // .pipe(autoprefixer({
+        //     browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
+        //     cascade: true,          //是否美化属性值 默认：true 像这样：
+        //     remove:true //是否去掉不必要的前缀 默认：true
+        // }))
         .pipe(concat('xf-base.css'))
         .pipe(gulp.dest('dest/assets/css'))
         .pipe(rename({ suffix: '.min' }))
