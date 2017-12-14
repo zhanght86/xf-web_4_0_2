@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "webpack": "webpack --progress --colors --watch",
-    "gulp": "webpack --progress --colors --watch",
+    "gulp": "gulp watch-module",
     "server": "gulp server",
     "start":"concurrently \"npm run server\" \"npm run webpack\" \"npm run gulp\""
   },
