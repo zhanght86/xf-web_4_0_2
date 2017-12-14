@@ -28,6 +28,13 @@ class HomePageServer {
     // 添加用户
         this.updateUserStatus = $resource(API_USER+"/user/add",{},{}) ;
 
+     /******************************
+                        *上传记录*
+                ********************************/   
+
+    //上传记录
+    this.uploadRecord=$resource(API_ANALYSIS+"/upload/record/find/list", {}, {});           
+       
     }
 }
 HomePageServer.$inject = ['$resource'];

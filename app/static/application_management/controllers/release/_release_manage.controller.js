@@ -240,19 +240,20 @@ module.exports = applicationManagementModule =>{
         }
         //编辑服务
         // conosole.oog
-        var dialog1 = ngDialog.openConfirm({
-            templateUrl: require("../../views/release/release_manage/release_service.html"),
-            // width:width?width:"450px",
-            plain: true ,
-            scope: $scope,
-            // closeByDocument: false,
-            // closeByEscape: true,
-            // showClose: true,
-            // backdrop: 'static',
-            preCloseCallback: function (e) {    //关闭回掉
-            }
-        });
+        // var dialog1 = ngDialog.openConfirm({
+        //     templateUrl: require("../../views/release/release_manage/release_service.html"),
+        //     // width:width?width:"450px",
+        //     plain: true ,
+        //     scope: $scope,
+        //     // closeByDocument: false,
+        //     // closeByEscape: true,
+        //     // showClose: true,
+        //     // backdrop: 'static',
+        //     preCloseCallback: function (e) {    //关闭回掉
+        //     }
+        // });
         function addOrEditService(serviceId){
+            let server_html = require("../../views/release/release_manage/release_service.html") ;
             if(!serviceId){   // 新增
                 $scope.vm.dialogTitle="发布新服务";
                 $scope.vm.serviceId = "" ;
@@ -262,7 +263,7 @@ module.exports = applicationManagementModule =>{
                  findServiceByServiceId(serviceId);
             }
             queryAvailableNodeList() ;
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"static/application_management/views/release/release_manage/release_service.html","700px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,server_html,"700px",function(){
                 var parameter = {
                     "applicationId": APPLICATION_ID,
                     "channels" : $scope.vm.channels, //渠道id列表

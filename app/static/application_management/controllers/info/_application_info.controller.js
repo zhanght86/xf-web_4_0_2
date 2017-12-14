@@ -13,6 +13,8 @@ module.exports = applicationManagementModule =>{
             paginationConf : {
                 pageSize: 5,//第页条目数
                 pagesLength: 10,//分页框数量
+                totalItems  : 100 ,
+                numberOfPages : 10
             },
             applicationInfo : {
                 applicationName :APPLICATION_NAME, //应用名称
@@ -49,12 +51,12 @@ module.exports = applicationManagementModule =>{
                 console.log("业务框架数量查询失败");
             }
         },function(error){console.log(error)}) ;
-        findApplicationInfo(); //查看应用的基本信息
+        // findApplicationInfo(); //查看应用的基本信息
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        listServiceData(1);
+        // listServiceData(1);
         //获取服务列表
         function listServiceData(index){
             ApplicationServer.queryServiceList.save({

@@ -5,6 +5,13 @@
  */
 class BusinessModelingServer {
     constructor($resource) {
+    	 /******************************
+                        *同义词概念管理*
+                ********************************/   
+
+    //上传记录
+    this.synonymListByAttribute=$resource(API_MS+"/modeling/concept/synonym/listByAttribute", {}, {});           
+       
     }
 }
 BusinessModelingServer.$inject = ['$resource'];

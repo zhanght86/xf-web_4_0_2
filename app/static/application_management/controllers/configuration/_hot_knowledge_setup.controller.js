@@ -116,17 +116,16 @@ module.exports = applicationManagementModule =>{
             ApplicationServer.queryHotKnowledgeList.save({
                     index:(index - 1)*$scope.vm.hotPaginationConf.pageSize,
                     pageSize:$scope.vm.hotPaginationConf.pageSize,
-                    applicationId:APPLICATION_ID ,
-                    hotQuestionTitle : $scope.vm.hotQuestionTitle
+                    keyWords : $scope.vm.hotQuestionTitle
                 },
                 function(response){
-                    if( response.status == 10005 ){
-                        layer.msg("查询记录为空") ;
-                        $scope.vm.hotPaginationConf.totalItems = 0 ;
-                    }else{
+                    if( response.status == 200 ){
                         $scope.vm.hotKnowList = response.data.hotQuestionList;
                         $scope.vm.hotPaginationConf.totalItems = response.data.total ;
                         $scope.vm.hotPaginationConf.numberOfPages = response.data.total/$scope.vm.hotPaginationConf.pageSize ;
+                    }else{
+                        layer.msg("查询记录为空") ;
+                        $scope.vm.hotPaginationConf.totalItems = 0 ;
                     }
                     initHotKnowSelected() ;
                 },function(error){console.log(error)})
@@ -151,37 +150,40 @@ module.exports = applicationManagementModule =>{
                 }
             },function(error){console.log(error)})
         }
-        var timeout ;
-        $scope.$watch('vm.hotPaginationConf.currentPage', function(current){
-            if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    queryHotKnowledgeList(current);
-                }, 100)
-            }
-        },true);
-        var timeout2 ;
-        $scope.$watch('vm.knowPaginationConf.currentPage', function(current){
-            if(current){
-                if (timeout2) {
-                    $timeout.cancel(timeout2)
-                }
-                timeout2 = $timeout(function () {
-                    queryKnowledgeList(current);
-                }, 100)
-            }
-        },true);
+        // 分页
+        let timeout ,timeout2;
+        $scope.$parent.$parent.MASTER.initPageTimer($scope,timeout,"vm.hotPaginationConf.currentPage",queryHotKnowledgeList) ;
+        $scope.$parent.$parent.MASTER.initPageTimer($scope,timeout2,"vm.knowPaginationConf.currentPage",queryKnowledgeList) ;
+        // $scope.$watch('vm.hotPaginationConf.currentPage', function(current){
+        //     if(current){
+        //         if (timeout) {
+        //             $timeout.cancel(timeout)
+        //         }
+        //         timeout = $timeout(function () {
+        //             queryHotKnowledgeList(current);
+        //         }, 100)
+        //     }
+        // },true);
+        // var timeout2 ;
+        // $scope.$watch('vm.knowPaginationConf.currentPage', function(current){
+        //     if(current){
+        //         if (timeout2) {
+        //             $timeout.cancel(timeout2)
+        //         }
+        //         timeout2 = $timeout(function () {
+        //             queryKnowledgeList(current);
+        //         }, 100)
+        //     }
+        // },true);
         //hotQuestionTitle
         //删除知识
         function removeHotKnowledge(){
             if($scope.vm.hotKnowDelIds == 0){
                 layer.msg("请选择要删除的知识！");
             }else{
-                $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/base/public_html/simple_operate.html","300px",function(){
+                let delHtml = require("../../../../share/simple_operate.html") ;
+                $scope.$parent.$parent.MASTER.openNgDialog($scope,delHtml,"300px",function(){
                     ApplicationServer.removeHotKnowledge.save({
-                        applicationId :  APPLICATION_ID,
                         ids :  $scope.vm.hotKnowDelIds
                     },function(data){
                         //$state.reload();

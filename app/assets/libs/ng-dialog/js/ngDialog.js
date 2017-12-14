@@ -55,6 +55,8 @@
                     onDocumentKeydown: function (event) {
                         if (event.keyCode === 27) {
                             publicMethods.close('$escape');
+                        }else if (event.keyCode === 13) {
+                            return ;
                         }
                     },
 

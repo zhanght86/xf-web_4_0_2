@@ -31,14 +31,14 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel',
-                query: {
-                    presets: ["es2015"]
-                },
-                plugins: [
-                    "transform-es3-property-literals",
-                    "transform-es3-member-expression-literals",
-                    "transform-es2015-modules-simple-commonjs"
-                ],
+                // query: {
+                //     presets: ["es2015"]
+                // },
+                // plugins: [
+                //     "transform-es3-property-literals",
+                //     "transform-es3-member-expression-literals",
+                //     "transform-es2015-modules-simple-commonjs"
+                // ],
                 exclude: /node_modules/
             },
 
@@ -92,27 +92,15 @@ module.exports = {
             'node_modules'
         ]
     },
-    // resolve: {
-    //     extensions: ['.js', '.json','.html'],
-    //     alias: {
-    //         'loginPath': resolve('../static/login')
-    //     }
-    // },
-    // resolve: {
-    //     extensions: ['.js']
-    //     modules: [
-    //         path.resolve(__dirname, 'node_modules')
-    //     ]
-    // },
+    resolve: {
+        //配置别名，在项目中可缩减引用路径
+        alias: {
+            jquery: "jquery",
+        }
+    },
     externals: {
         'jquery':'window.jQuery'
     },
-    //本地服务器
-    // devServer: {
-    //     hot: true,
-    //     inline: true,
-    //     contentBase: '/dest/'
-    // },
     plugins: [
         new HtmlWebpackPlugin({
             title: '主页面',
@@ -153,7 +141,7 @@ module.exports = {
         //     mangle: {
         //         except: ['$q', '$ocLazyLoad']
         //     },
-        //     sourceMap: false
+        //     sourceMap: true
         // })
     ]
 };

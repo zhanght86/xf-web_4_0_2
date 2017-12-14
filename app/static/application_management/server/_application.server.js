@@ -33,7 +33,7 @@ class ApplicationServer {
 
 //   热点知识设置
         //获取热点知识列表 + 查询       删除 /hotQuestion/getHotQuestionList
-        this.queryHotKnowledgeList = $resource(API_APPLICATION+"/hotQuestion/getHotQuestionList", {}, {});
+        this.queryHotKnowledgeList = $resource(API_APPLICATION+"/hotQuestion/get/by/knowledge/name", {}, {});
         //获取知识列表 + 查询                                                                                                      //**********OTHER >>>> API_MS
         this.queryKnowledgeList = $resource(API_MS+"/knowledgeManage/overView/findKnowledgeByApplicationId", {}, {});
         //添加热点知识
