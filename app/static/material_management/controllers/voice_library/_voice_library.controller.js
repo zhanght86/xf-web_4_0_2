@@ -1,11 +1,13 @@
 /**
  * Created by mileS on 2017/6/3.
  * 控制器
- */ 
-angular.module('materialManagement').controller('speechLibraryController', [
+ */
+module.exports=materialModule => {
+    materialModule
+    .controller('VoiceLibraryController', [
     '$scope',"$state","ngDialog","$log", "MaterialServer","$cookieStore","$stateParams","$timeout","$window",
-    function ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$window) {
-        $state.go("materialManagement.speechLibrary");
+    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$window)=> {
+        $state.go("MM.voice");
         $scope.vm = {
            // getVoiceList : getVoiceList , //获取图片列表
             voiceList : [] ,        //所有声音列表
@@ -82,7 +84,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             }
         },true);
         function uploadSpeech(callback){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/speech_library_dialog.html','900px',function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/voice/voice_library/voice_library_dialog.html','900px',function(){
 
             },function(){
 
@@ -112,7 +114,7 @@ angular.module('materialManagement').controller('speechLibraryController', [
             $scope.vm.editVoiceName = item.name;
             $scope.vm.voiceId = item.id;
             
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/speech_library/change_name.html','400px',function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/views/voice_library/change_name.html','400px',function(){
                 //updateVoice();
                 //checkVoiceName2();
             },function(){
@@ -254,5 +256,5 @@ angular.module('materialManagement').controller('speechLibraryController', [
         }
 
     }
-]);
+    ])};
 

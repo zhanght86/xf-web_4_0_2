@@ -976,7 +976,7 @@
                         controller: "homePageNavController"
                     },
                     'content': {
-                        templateUrl: 'static/material_management/speech_library/speech_library.html',
+                        templateUrl: 'static/material_management/speech_library/voice_library.html',
                         controller: "speechLibraryController"
                     }
                 }

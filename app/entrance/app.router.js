@@ -1256,7 +1256,178 @@ module.exports = (angular) => {
 //--------------------------------------------------
 //          ##素材管理##
 //--------------------------------------------------
-
+        {
+            name: "MM",
+            url: "/MM",
+            data: {
+                roles: []
+            },
+            title : "素材管理" ,
+            templateProvider:
+                ["$q", function ($q) {
+                    let deferred = $q.defer();
+                    require.ensure([], function () {
+                        let template = require("../static/material_management/main.html");
+                        deferred.resolve(template);
+                    });
+                    return deferred.promise;
+                }],
+            controller: "MaterialController",
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let materialModule = require("../static/material_management/module/_material.module.js")(angular);   //动态加载Module
+                        $ocLazyLoad.load({
+                            name: "materialModule"                                           //name就是你module的名称
+                        });
+                        defer.resolve(materialModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+        // 聊天知识库
+        {
+            name: "MM.chat",
+            url: "/chat",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "聊天知识库" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/chat/knowledge_base/chat_knowledge_base.html"),
+                    controller: "KnowledgeBaseController"
+                }
+            }
+        },
+        // 图片库
+        {
+            name: "MM.pic",
+            url: "/pic",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "图片库" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/picture_library/picture_library.html"),
+                    controller: "PictureLibraryController"
+                }
+            }
+        },
+        // 语音库
+        {
+            name: "MM.voice",
+            url: "/voice",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "语音库" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/voice_library/voice_library.html"),
+                    controller: "VoiceLibraryController"
+                }
+            }
+        },
+        // 文档库库
+        {
+            name: "MM.doc",
+            url: "/doc",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "文档库" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/document_library/document_library.html"),
+                    controller: "DocumentLibraryController"
+                }
+            }
+        },
+        // 图文消息库
+        {
+            name: "MM.teletext",
+            url: "/teletext",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "图文消息" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/teletext_message/teletext_message.html"),
+                    controller: "TeletextMessageController"
+                }
+            }
+        },
+        // 添加图文消息
+        {
+            name: "MM.addTw",
+            url: "/addTw",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "添加图文消息" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/teletext_message/add_tw_mes.html"),
+                    controller: "AddTwMesController"
+                }
+            }
+        },
+        // 图文消息详情
+        {
+            name: "MM.detail",
+            url: "/detail",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "图文消息详情" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/teletext_message/graphic_details.html"),
+                    controller: "GraphicDetailsController"
+                }
+            }
+        },
 //--------------------------------------------------
 //          ##深度学习##
 //--------------------------------------------------

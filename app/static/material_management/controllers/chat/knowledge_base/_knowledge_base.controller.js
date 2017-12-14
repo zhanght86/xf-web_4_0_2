@@ -3,10 +3,12 @@
  * 控制器
  */
 
-angular.module('materialManagement').controller('chatKnowledgeBaseController', [
+module.exports=materialModule => {
+    materialModule
+    .controller('KnowledgeBaseController', [
     '$scope',"$state","MaterialServer","$log", "$cookieStore","$timeout","$window","$location",
-    function ($scope,$state,MaterialServer,$log,$cookieStore,$timeout,$window,$location) {
-        $state.go("materialManagement.chatKnowledgeBase");
+    ($scope,$state,MaterialServer,$log,$cookieStore,$timeout,$window,$location)=> {
+        $state.go("MM.chat");
         $scope.vm = {
             title : "" ,           //知识标题
             search : search,  //查询
@@ -75,7 +77,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $scope.vm.delArr = [] ;
             $scope.vm.selectAllCheck = false;
         }
-
         /**
          * 删除
          */
@@ -161,7 +162,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             });
 
         }
-
         /**
          *分页 查询
          */
@@ -178,7 +178,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
                 }, 0)
             }
         });
-
         /**
          * 知识导出
          */
@@ -194,7 +193,6 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
         }
-
         /**
          *点击标题预览内容
          */
@@ -214,4 +212,4 @@ angular.module('materialManagement').controller('chatKnowledgeBaseController', [
             $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
         }
     }
-]);
+])};
