@@ -5,9 +5,7 @@
  */
 var gulp = require('gulp'),
     os = require('os'),
-    gutil = require('gulp-util'),
     concat = require('gulp-concat'),  // 合并
-    gulpOpen = require('gulp-open'),
     uglify = require('gulp-uglify'),
     minifycss = require('gulp-minify-css'),//压缩css文件
     autoprefixer = require("gulp-autoprefixer"), // //给 CSS 增加前缀。解决某些CSS属性不是标准属性，有各种浏览器前缀的情况
@@ -15,8 +13,8 @@ var gulp = require('gulp'),
     md5 = require('gulp-md5-plus'),
     rev = require("gulp-rev") ,     //- 对文件名加MD5后缀
     revCollector = require('gulp-rev-collector'),             //- 路径替换
-    fileinclude = require('gulp-file-include'),
-    clean = require('gulp-clean'),
+    fileinclude = require('gulp-file-include'),//文件复制
+    clean = require('gulp-clean'),  // 文件删除
     spriter = require('gulp-css-spriter'),
     base64 = require('gulp-css-base64'),
     webpack = require('webpack'),
@@ -29,7 +27,9 @@ var gulp = require('gulp'),
     proxy = require('http-proxy-middleware'), //反向代理
     gulp_webpack = require("gulp-webpack")  ; // gulp 分发任务给 webpack
     webpack = require("webpack") ,
-    webpackConfig = require('./webpack.config.js');  // webpack
+    webpackConfig = require('./webpack.config.js'),  // webpack
+    livereload = require("gulp-livereload") ,
+    fs = require("fs") ;  //读取文件内容
 //mac chrome: "Google chrome",
 var browser = os.platform() === 'linux' ? 'Google chrome' : (
     os.platform() === 'darwin' ? 'Google chrome' : (
@@ -75,11 +75,11 @@ gulp
                 './app/assets/css/home/addContent.css',
                 './app/assets/css/home/chat.css',
         ])    //- 需要处理的css文件，放到一个字符串数组里
-            .pipe(autoprefixer({
-                browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
-                cascade: true,          //是否美化属性值 默认：true 像这样：
-                remove:true //是否去掉不必要的前缀 默认：true
-            }))
+            // .pipe(autoprefixer({
+            //     browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
+            //     cascade: true,          //是否美化属性值 默认：true 像这样：
+            //     remove:true //是否去掉不必要的前缀 默认：true
+            // }))
             .pipe(concat('xf.css'))
             .pipe(gulp.dest('dest/assets/css'))
             .pipe(rename({ suffix: '.min' }))
@@ -94,11 +94,11 @@ gulp
         './app/assets/css/common.css',
         './app/assets/css/home/back/back_style.css',
     ])    //- 需要处理的css文件，放到一个字符串数组里
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
-            cascade: true,          //是否美化属性值 默认：true 像这样：
-            remove:true //是否去掉不必要的前缀 默认：true
-        }))
+        // .pipe(autoprefixer({
+        //     browsers: ['last 2 versions','Safari >0', 'Explorer >0', 'Edge >0', 'Opera >0', 'Firefox >=20'],//last 2 versions- 主流浏览器的最新两个版本
+        //     cascade: true,          //是否美化属性值 默认：true 像这样：
+        //     remove:true //是否去掉不必要的前缀 默认：true
+        // }))
         .pipe(concat('xf-base.css'))
         .pipe(gulp.dest('dest/assets/css'))
         .pipe(rename({ suffix: '.min' }))
@@ -121,6 +121,7 @@ gulp
             basepath: '@file'
         }))
         .pipe(gulp.dest('dest/static'))
+        .pipe(livereload())
         .on('end', done);
     })
     .task('fileinclude:css', function (done) {
@@ -132,6 +133,7 @@ gulp
             basepath: '@file'
         }))
         .pipe(gulp.dest('dest/assets/css/plugins'))
+        .pipe(livereload())
         .on('end', done);
     })
     .task('fileinclude:js', function (done) {
@@ -143,6 +145,7 @@ gulp
             basepath: '@file'
         }))
         .pipe(gulp.dest('dest/assets/js'))
+        .pipe(livereload())
         .on('end', done);
     })
     .task('fileinclude:libs', function (done) {
@@ -154,6 +157,7 @@ gulp
             basepath: '@file'
         }))
         .pipe(gulp.dest('dest/assets/libs'))
+        .pipe(livereload())
         .on('end', done);
     })
     .task('clean', function (done) {
@@ -180,35 +184,24 @@ gulp.task('watch-module', function(done) {
 });
 //使用connect启动一个Web服务器
 //使用'http-proxy-middleware'作为反向代理
-var host = {
-    root : ['./dest'] ,
-    port : 8001 ,
-    proxy : [
-        proxy('/api/authority',  {
-            target: 'http://192.168.181.166:7005',
-            changeOrigin:true
-        }),
-        proxy('/api/application/', {
-            target: 'http://192.168.181.166:7006',
-            changeOrigin:true
-        }),
-        proxy('/api/ms/', {
-            target: 'http://192.168.181.166:7002',
-            changeOrigin:true
-        }),
-        proxy('/api/analysis/', {
-            target: 'http://192.168.181.166:7007',
-            changeOrigin:true
-        })
-    ]
-};
+var host = JSON.parse(fs.readFileSync("./server.config.json")) ;
 gulp.task('server', function() {
     connect.server({
         root: host.root,
         port: host.port,
         livereload: true,
         middleware: function(connect, opt) {
-            return host.proxy
+            // return host.proxy
+            var proxyList = [] ;
+            for(var i = 0 ; i<host.proxy.length;i++){
+                proxyList.push(
+                    proxy(host.proxy[i].tar, {
+                    target: host.proxy[i].target,
+                    changeOrigin:true
+                })
+                )
+            }
+            return proxyList
         }
     });
 });

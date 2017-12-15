@@ -132,19 +132,20 @@ module.exports = module =>{
                                 scope.conf.currentPage = scope.jumpPageNum;
                             }
                         }
-                    }
+                    };
                     // 获取当前页 数据长度
                     var getCurrentPageNumber = function (){
                         if(scope.conf.numberOfPages <=1 ){
-                            scope.conf.currentPageNumber = scope.conf.numberOfPages
+                            scope.conf.currentPageNumber = scope.conf.totalItems
                         }else{
                             if(scope.conf.currentPage != scope.conf.numberOfPages){
                                 scope.conf.currentPageNumber = scope.conf.pageSize
                             }else{
-                                scope.conf.currentPageNumber = (scope.conf.totalItems-scope.conf.numberOfPages* scope.conf.pageSize)
+                                scope.conf.currentPageNumber = (scope.conf.totalItems-scope.conf.numberOfPages*scope.conf.pageSize)
                             }
                         }
-                    }
+                        console.log(scope.conf.currentPageNumber)
+                    } ;
 
                     scope.$watch(function(){
                         return scope.conf.numberOfPages  +' '+scope.conf.currentPage +' '+scope.conf.pageSize;

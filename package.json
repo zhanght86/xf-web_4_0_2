@@ -7,7 +7,7 @@
     "webpack": "webpack --progress --colors --watch",
     "gulp": "gulp watch-module",
     "server": "gulp server",
-    "start":"concurrently \"npm run server\" \"npm run webpack\" \"npm run gulp\""
+    "start": "concurrently \"npm run server\" \"npm run webpack\" \"npm run gulp\""
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,7 @@
     "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
+    "fs": "^0.0.1-security",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean": "0.3.1",
@@ -34,6 +35,7 @@
     "gulp-imagemin": "^4.0.0",
     "gulp-jshint": "^2.0.4",
     "gulp-less": "3.0.3",
+    "gulp-livereload": "^3.8.1",
     "gulp-md5-plus": "0.1.8",
     "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.0.0",
