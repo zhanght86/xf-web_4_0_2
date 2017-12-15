@@ -31,10 +31,11 @@ module.exports=materialModule => {
 
         //添加扩展问
         function addExtension(e){
-            addLine();
+
             var  srcObj = e.srcElement ? e.srcElement : e.target;
             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){
+                //addLine();
                 if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
                     layer.msg("扩展不能为空",{time:1000});
                 }else{
@@ -66,11 +67,11 @@ module.exports=materialModule => {
             }
 
         }
-        //表格添加一行
-        function addLine(){
-            var str='<tr><td><input type="text" class="txt" ng-model="vm.extendedQuestion" ng-keyup="vm.addExtension($event)" style="width:100%;"/></td></tr>';
-            $(".material_table").append(str);
-        }
+        // //表格添加一行
+        // function addLine(){
+        //     var str='<tr><td><input type="text" class="txt" enternextline ng-model="vm.extendedQuestion" ng-keyup="vm.addExtension($event)" style="width:100%;"/></td></tr>';
+        //     $(".material_table").append(str);
+        // }
         //刪除
         function remove(item,arr){
             arr.remove(item);

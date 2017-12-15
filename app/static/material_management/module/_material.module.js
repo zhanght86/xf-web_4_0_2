@@ -39,9 +39,18 @@ module.exports = angular =>{
     //--------------------------------------------------
     require('../directives/_doc_upload.directive')(materialModule);                //文档
     require('../directives/_img_upload.directive')(materialModule);                //图片
+    require('../directives/_voice_upload.directive')(materialModule);               //语音
     require('../directives/_teletext_upload.directive')(materialModule);            //图文
     require('../directives/_uploader.directive')(materialModule);                   //聊天知识库
-    require('../directives/_voice_upload.directive')(materialModule);               //语音
+   // require('../directives/_searchinput.directive')(materialModule);
+   // require('../directives/_enternextline.directive')(materialModule);
+
+  // 富文本编辑器
+   // require('../../../assets/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.config')(materialModule);
+    require('../../../assets/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.all')(materialModule);
+    require('../../../assets/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.all')(materialModule);
+
+    /*<script type="text/javascript" src="bower_components/angular-ueditor/dist/angular-ueditor.js"></script>*/
 
 
 

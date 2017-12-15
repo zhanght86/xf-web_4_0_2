@@ -199,7 +199,12 @@ var host = {
         proxy('/api/analysis/', {
             target: 'http://192.168.181.166:7007',
             changeOrigin:true
-        })
+        }),
+        proxy('/api/material/', {
+            target: 'http://192.168.181.166:7008 ',
+            changeOrigin:true
+        }),
+
     ]
 };
 gulp.task('server', function() {
