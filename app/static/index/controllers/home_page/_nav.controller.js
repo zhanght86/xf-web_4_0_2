@@ -223,15 +223,15 @@ module.exports = homePageModule =>{
                             return '操作日志';
                         case 'applAnalysis.sessionLog':
                             return '会话日志';
-                        case 'materialManagement.chatKnowledgeBase':
+                        case 'MM.chat':
                             return '聊天知识库';
-                        case 'materialManagement.pictureLibrary':
+                        case 'MM.pic':
                             return '图片库';
-                        case 'materialManagement.speechLibrary':
+                        case 'MM.voice':
                             return '语音库';
-                        case 'materialManagement.documentLibrary':
+                        case 'MM.doc':
                             return '文档库';
-                        case 'materialManagement.teletextMessage':
+                        case 'MM.teletext':
                             return '图文消息库';
                         case 'deepLearning.deeplearnConfig':
                             return '模型构建';
@@ -243,6 +243,14 @@ module.exports = homePageModule =>{
                             return '自动导入更新';
                         case 'admin.manage':
                             return '应用切换';
+                        case 'SisM.operationLog':
+                            return '操作日志';
+                        case 'SisM.resource':
+                            return '资源监控';
+                        case 'SisM.service':
+                            return '服务监控';
+                        case 'HC.problem':
+                            return '常见问题';
                         default:
                             return 0;
                     }

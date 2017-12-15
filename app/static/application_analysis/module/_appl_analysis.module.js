@@ -33,7 +33,7 @@
     
     require('../controllers/new_know_discovery_learn/_new_know_discovery_learn.controller')(applAnalysisModule);       // 为匹配问题统计
 
-    require('../controllers/operation_log/_operation_log.controller')(applAnalysisModule);       // 操作日志
+
    
     require('../controllers/session_log/_session_log.controller')(applAnalysisModule);       // 会话日志
 
