@@ -20,7 +20,7 @@ class BusinessModelingServer {
         //检查类目名称
         this.classifyNameCheck=$resource(API_MS+"/classify/name/check", {}, {});
         //获取类目的全路径
-        this.classifyGetFullname=$resource(API_MS+"/classify/get/fullname", {}, {});
+        this.classifyGetFullname=$resource(API_MS+"/classify/get/fullname/:userId", {userId:'id'}, {});
         //根据类目名称获取信息
         this.classifyGetPath=$resource(API_MS+"/classify/get/path", {}, {});  
 
