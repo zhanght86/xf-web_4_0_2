@@ -6,6 +6,11 @@
 //"use strict";
 class SystemServer {
     constructor($resource) {
+                        /******************************
+                            *操作日志*   API_ANALYSIS = "/api/analysis" ;
+                         ********************************/
+        //表格列表
+        this.getData = $resource(API_ANALYSIS+'/operationLog/searchOperationLog',{},{});
                     /******************************
                         *资源监控*   API_ANALYSIS = "/api/analysis" ;
                      ********************************/

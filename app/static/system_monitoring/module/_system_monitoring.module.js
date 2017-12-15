@@ -14,6 +14,8 @@ module.exports = angular =>{
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------
+    // 操作日志
+    require('../controllers/operation_log/_operation_log.controller')(systemMonitoringModule);
     // 资源监控
     require('../controllers/resource_monitoring/_resource_monitoring.controller')(systemMonitoringModule);
     // 服务监控
@@ -28,6 +30,10 @@ module.exports = angular =>{
     //--------------------------------------------------
     //         directive
     //--------------------------------------------------
+    //--------------------------------------------------
+    //         filters
+    //--------------------------------------------------
+    require('../filters/_operate.filter')(systemMonitoringModule);
 
 
 }

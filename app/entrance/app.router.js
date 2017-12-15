@@ -1240,26 +1240,6 @@ module.exports = (angular) => {
             }
         },
 
-          // 操作日志
-        {
-            name: "ANM.operationLog",
-            url: "/operationLog",
-            data: {
-                roles: []
-            },
-            parent : "ANM",
-            title : "操作日志" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/application_analysis/views/operation_log/operation_log.html"),
-                    controller: "operationLogController"
-                }
-            }
-        },
 
          // 会话日志
         {
@@ -1519,6 +1499,26 @@ module.exports = (angular) => {
                 }]
             }
         },
+        // 操作日志
+        {
+            name: "SisM.operationLog",
+            url: "/operationLog",
+            data: {
+                roles: []
+            },
+            parent : "SisM",
+            title : "操作日志" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/system_monitoring/views/operation_log/operation_log.html"),
+                    controller: "OperationLogController"
+                }
+            }
+        },
         // 资源监控
         {
             name: "SisM.resource",
@@ -1559,4 +1559,62 @@ module.exports = (angular) => {
                 }
             }
         },
+//--------------------------------------------------
+//          ##帮助中心##
+//--------------------------------------------------
+        {
+            name: "HC",
+            url: "/HC",
+            data: {
+                roles: []
+            },
+            title : "帮助中心" ,
+            templateProvider:
+                ["$q", function ($q) {
+                    let deferred = $q.defer();
+                    require.ensure([], function () {
+                        let template = require("../static/help_center/main.html");
+                        deferred.resolve(template);
+                    });
+                    return deferred.promise;
+                }],
+            controller: "HelpCenterController",
+
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let helpCenterModule = require("../static/help_center/module/_help_center.module")(angular);   //动态加载Module
+                        $ocLazyLoad.load({
+                            name: "helpCenterModule"                                           //name就是你module的名称
+                        });
+                        defer.resolve(helpCenterModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+        // 常见问题
+        {
+            name: "HC.problem",
+            url: "/problem",
+            data: {
+                roles: []
+            },
+            parent : "HC",
+            title : "常见问题" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/help_center/views/common_problem/common_problem.html"),
+                    controller: "CommonProblemController"
+                }
+            }
+        },
+
+
     ];};
