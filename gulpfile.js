@@ -85,7 +85,7 @@ gulp
             .pipe(rename({ suffix: '.min' }))
             .pipe(minifycss())
             // .pipe(rev())
-            .pipe(gulp.dest('dest/assets/css'))
+            .pipe(gulp.dest('dest/assets/css')) ;
             // .pipe(rev.manifest())
             // .pipe(gulp.dest('./rev'));
 
@@ -195,7 +195,7 @@ gulp.task('server', function() {
             var proxyList = [] ;
             for(var i = 0 ; i<host.proxy.length;i++){
                 proxyList.push(
-                    proxy(host.proxy[i].tar, {
+                    proxy(host.proxy[i].location, {
                     target: host.proxy[i].target,
                     changeOrigin:true
                 })
