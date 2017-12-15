@@ -7,7 +7,7 @@
         <h3 class="f22 c-666 mb20">图文消息</h3>
         <div class="clearfix mb-20" style="padding-left: 12px;padding-right:12px;">
             <span class="L">
-                <button  class="btn1 btn1_blue" ui-sref="materialManagement.addtemes">新建图文</button>
+                <button  class="btn1 btn1_blue" ui-sref="MM.addTw">新建图文</button>
             </span>
             <div class="R dib">
                 <span class="L">
@@ -23,7 +23,7 @@
                 <dl class="picture_dl teletext_dl " >
                     <!--{{item}}-->
                     <!--<dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="/img/{{item.url}}"/></a></dt>-->
-                    <dt ><a ui-sref="materialManagement.graphicDetails({imgTextId:item.id})"><img ng-src="api/material/picture/get/img/id?pictureId={{item.coverPicId}}"/></a></dt>
+                    <dt ><a ui-sref="MM.detail({imgTextId:item.id})"><img ng-src="api/material/picture/get/img/id?pictureId={{item.coverPicId}}"/></a></dt>
                     <dd class="cl">
                         <!--<p class="L titp">{{item.graphicMessageTitle}}</p>-->
                         <p class="L titp">{{item.title}}</p>
@@ -31,7 +31,7 @@
                     </dd>
                 </dl>
                 <div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">
-                    <a href="javascript:;" class="mr-10 c_blue ml-50" ui-sref="materialManagement.addtemes({imgTextId:item.id})">编辑</a>
+                    <a href="javascript:;" class="mr-10 c_blue ml-50" ui-sref="MM.addTw({imgTextId:item.id})">编辑</a>
                     <a href="javascript:;" class="c_red ml-50" ng-click="vm.removeImg(item,$index)">删除</a>
                 </div>
             </div>

@@ -3,10 +3,12 @@
  * 控制器
  */
 
-angular.module('systemMonitoring').controller('serviceMonitoringController', [
-    '$scope',"$state","SystemServer","$log", "$cookieStore","$interval","$window","$location",
-    function ($scope,$state,SystemServer,$log,$cookieStore,$interval,$window,$location) {
-        //$state.go("systemMonitoring.resource");
+module.exports = systemMonitoringModule =>{
+    systemMonitoringModule
+    .controller('ServiceMonitoringController', [
+    '$scope',"$state","SystemServer", "$cookieStore","$interval","$window","$location",
+    ($scope,$state,SystemServer,$cookieStore,$interval,$window,$location)=> {
+        //$state.go("SisM.service");
         $scope.vm = {
             getServiceDate : getServiceDate,
             name : '',
@@ -45,9 +47,5 @@ angular.module('systemMonitoring').controller('serviceMonitoringController', [
         var timer = $interval($scope.vm.refresh,3000);
 
 
-
-       
-
-
     }
-]);
+    ])};

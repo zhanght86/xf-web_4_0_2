@@ -3,12 +3,12 @@
  * 控制器
  */
 
-module.exports= systemMonitoringModule=>{
+module.exports = systemMonitoringModule =>{
     systemMonitoringModule
-    .controller('resourceMonitoringController', [
-    '$scope',"$state","SystemServer","$log", "$cookieStore","$interval","$window","$location",
-    ($scope,$state,SystemServer,$log,$cookieStore,$interval,$window,$location)=> {
-        //$state.go("systemMonitoring.resource");
+    .controller('ResourceMonitoringController', [
+    '$scope',"$state","SystemServer", "$cookieStore","$interval","$window","$location",
+    ($scope,$state,SystemServer,$cookieStore,$interval,$window,$location)=> {
+        //$state.go("SisM.resource");
         $scope.vm = {
             applicationId : APPLICATION_ID,
             serviceMemory:[],                     //服务内存
@@ -67,8 +67,6 @@ module.exports= systemMonitoringModule=>{
             $window.location.reload();
         }
         var timer=$interval($scope.vm.refreshPage,60000);
-
-
         /**
         ******图形请求列表
          **/

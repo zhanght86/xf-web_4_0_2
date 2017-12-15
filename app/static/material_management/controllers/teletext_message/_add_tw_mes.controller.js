@@ -142,7 +142,15 @@ module.exports=materialModule => {
             ngDialog.close(ngDialog.latestID);
         }
         function selectLocalImg(){
-            $scope.MASTER.openNgDialog($scope,"/static/material_management/views/teletext_message/select_image.html","")
+            //$scope.MASTER.openNgDialog($scope,"/static/material_management/views/teletext_message/select_image.html","")
+
+            let select_html = require("../../views/teletext_message/select_image.html") ;
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,select_html,"400px",function(){
+
+            },"",function(){
+
+            })
+
         }
         //封面
         function insertCoverImg(url){
@@ -277,7 +285,7 @@ module.exports=materialModule => {
         function save(api,parameter){
             MaterialServer[api].save(parameter,function(response){
                 if(response.status == 200){
-                    $state.go("materialManagement.teletextMessage");
+                    $state.go("MM.teletext");
                     //    保存成功
                 }else if(response.status == 500){
                     $scope.vm.storeLimit = false ;

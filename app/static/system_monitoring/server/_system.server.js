@@ -18,8 +18,8 @@ class SystemServer {
     }
 }
 SystemServer.$inject = ['$resource'];
-module.exports = systemModelingModule =>{
-    systemModelingModule.
+module.exports = systemMonitoringModule =>{
+    systemMonitoringModule.
     service("SystemServer",SystemServer)
 } ;
 

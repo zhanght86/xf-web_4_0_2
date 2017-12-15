@@ -20,23 +20,15 @@
                                 <table class="access_amount_table material_table">
                                     <tr>
                                         <td>
-                                            <input type="text" class="txt" ng-model="vm.extendedQuestion" ng-keyup="vm.addExtension($event)" style="width:100%;"/>
+                                            <input type="text" class="txt" enternextline ng-model="vm.extendedQuestion" ng-keyup="vm.addExtension($event)" style="width:100%;"/>
                                             <!--<a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">-->
                                                 <!--<img src="../../images/images/delete_img.png" >-->
                                             <!--</a>-->
                                         </td>
                                     </tr>
-                                    <!--<tr ng-repeat="item in vm.extendedQuestionArr">-->
-                                        <!--<td>-->
-                                            <!--<input type="text" class="txt"  ng-model="item.content"  style="width:100%;"/>-->
-                                            <!--&lt;!&ndash;<a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<img src="../../images/images/delete_img.png" >&ndash;&gt;-->
-                                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <tr>
+                                    <tr ng-show="vm.titleQuestion==true">
                                         <td>
-                                            <input type="text" class="txt"  ng-model="item.content"  style="width:100%;"/>
+                                            <input type="text" class="txt" enternextline ng-model="item.content" ng-keyup="vm.addExtension($event)"  style="width:100%;"/>
                                         </td>
                                     </tr>
                                 </table>

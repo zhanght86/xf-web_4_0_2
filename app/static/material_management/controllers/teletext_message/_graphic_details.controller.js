@@ -21,7 +21,7 @@ module.exports=materialModule => {
             $scope.vm.graphicMessageId = $stateParams.imgTextId ;
             getImgText($stateParams.imgTextId)
         }else{
-            $state.go("materialManagement.teletextMessage")
+            $state.go("MM.teletext")
         }
         function getImgText(graphicMessageId){            
             MaterialServer.getImgText.get({
