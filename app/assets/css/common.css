@@ -43,3 +43,4 @@ html,body{font-family: "\5FAE\8F6F\96C5\9ED1"; min-width: 1250px;}
 .qr-btn{background-color: #03a3ff; color: #fff; border: 1px solid transparent;}
 .qx-btn{background-color: #fcfcfc; color: #666; border: 1px solid #e5e5e5;}
 .qr-btn.min-btn,.qx-btn.min-btn{height: 30px; line-height: 30px; padding:  0 10px;}
+ .tw_btn { width: 50px; height: 31px; background: url(../../images/tw_search_png.png) #529ff6 no-repeat center center; margin-left: -1px; cursor: pointer;vertical-align: bottom;}

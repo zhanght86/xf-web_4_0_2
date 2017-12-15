@@ -33,7 +33,11 @@ class HomePageServer {
                 ********************************/   
 
     //上传记录
-    this.uploadRecord=$resource(API_ANALYSIS+"/upload/record/find/list", {}, {});           
+    this.uploadRecord=$resource(API_ANALYSIS+"/upload/record/find/list", {}, {}); 
+  
+    //文件下载
+    this.recordDownload=$resource(API_MATERIAL+"/document/get/document/id", {}, {});
+
        
     }
 }
