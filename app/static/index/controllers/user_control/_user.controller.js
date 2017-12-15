@@ -1,25 +1,25 @@
 /**
  * @Author : MILES .
  * @Create : 2017/12/5.
- * @Module :  权限管理
+ * @Module : 用户管理
  */
 module.exports = homePageModule =>{
-    homePageModule.controller('PermissionController',
-    ['$scope',"localStorageService","$state","$timeout","$stateParams","ngDialog","$cookieStore","HomePageServer",
-    function ($scope,localStorageService, $state,$timeout,$stateParams,ngDialog,$cookieStore,HomePageServer) {
+    homePageModule.controller('UserController',
+    ['$scope',"localStorageService","$state","$timeout","$stateParams","HomePageServer",
+    function ($scope,localStorageService, $state,$timeout,$stateParams,HomePageServer) {
         $scope.vm = {
             simpleOperateTitle : "" ,
-            listData : "",   // table 数据
-            getData : getData,
-            paginationConf : "", //分页条件
-            userDataTotal:"",   //用户总数
-            pageSize : 5,
+            userList : "",   // table 数据
+            queryUserList : queryUserList,
+            paginationConf : {     //分页条件
+                pageSize : 5 ,
+                pagesLength : 8
+            }  ,
             addUser : addUser,
             editUser : editUser,
             deleteUser:deleteUser,
-            search:search,
             changeStatus:changeStatus,
-            userId:$cookieStore.get("userId"),
+            userId:"",
             verifyRelease:verifyRelease,
             //添加用户所需要数据
             userName : "",
@@ -70,22 +70,20 @@ module.exports = homePageModule =>{
             }
             console.log( $scope.vm.deleteIds)
         }
-        getData(1);
-        //查询列表
-        function getData(index){
-            $scope.vm.deleteIds = [];
+        queryUserList(1);
+        //查询用户列表
+        function queryUserList(index,userName){
+            $scope.vm.deleteIds = [];   // 清楚选中用户
             HomePageServer.queryUserList.save({
-                index:(index -1)*$scope.vm.pageSize,
-                pageSize:$scope.vm.pageSize
+                "account" : userName?userName:"" ,
+                "index":(index -1)*$scope.vm.pageSize,
+                "pageSize":$scope.vm.pageSize
             },function(response){
-                $scope.vm.listData = response.data.userManageList;
-                $scope.vm.userDataTotal = response.data.total;
-                $scope.vm.paginationConf = {
-                    currentPage: index,//当前页
-                    totalItems: response.data.total, //总条数
-                    pageSize: $scope.vm.pageSize,//第页条目数
-                    pagesLength: 8,//分页框数量
-                };
+                if(response.status == 200 ){
+                    $scope.vm.userList = response.data;
+                    $scope.vm.paginationConf.totalItems = response.total ;
+                    $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize;
+                }
             },function(error){
                 console.log(error);
             })
@@ -97,11 +95,7 @@ module.exports = homePageModule =>{
                     $timeout.cancel(timeout)
                 }
                 timeout = $timeout(function () {
-                    if($scope.vm.searchName){
-                        search(current);
-                    }else{
-                        getData(current);
-                    }
+                    queryUserList(current,$scope.vm.searchName);
                 }, 0)
             }
         },true);
@@ -199,7 +193,7 @@ module.exports = homePageModule =>{
                                 "applicationIds": $scope.vm.prop,
                             }, function (response) {
                                 if(response.status == 200){
-                                    getData(1)
+                                    queryUserList(1)
                                 }else{
 
                                 }
@@ -307,37 +301,6 @@ module.exports = homePageModule =>{
                 }
             });
         }
-        //查询用户
-        function search(index){
-            if($scope.vm.searchName == '' || $scope.vm.searchName == null){
-                getData(1);
-            }else {
-                httpRequestPost("/api/user/queryUserByUserName", {
-                    userName: $scope.vm.searchName,
-                    index:(index -1)*$scope.vm.pageSize,
-                    pageSize:$scope.vm.pageSize,
-                }, function (data) {
-                    if (data.status == 10016) {
-                        $scope.vm.listData = "";
-                        $scope.vm.userDataTotal = 0;
-                        $scope.$apply()
-                        layer.msg("没有查询到记录!")
-                    }
-                    $scope.vm.listData = data.data.userManageList;
-                    $scope.vm.userDataTotal = data.data.total;
-                    $scope.vm.paginationConf = {
-                        currentPage: index,//当前页
-                        totalItems: data.data.total, //总条数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8,//分页框数量
-                    };
-                    $scope.$apply()
-                }, function () {
-                    //layer.msg("请求失败")
-                    console.log("请求失败");
-                })
-            }
-        }
 
         //删除用户
         function deleteUser(userId){
@@ -369,17 +332,6 @@ module.exports = homePageModule =>{
                 }
             });
         }
-
-        //批量删除用户
-        //function deleteUsers(){
-        //    httpRequestPost("/api/user/deleteUserByIds",{
-        //        ids :  $scope.vm.deleteIds
-        //    },function(data){
-        //        $state.reload();
-        //    },function(){
-        //        layer.msg("请求失败")
-        //    })
-        //}
 
         //批量删除用户
         function deleteUsers(){
@@ -434,7 +386,7 @@ module.exports = homePageModule =>{
                             "status": status
                         }, function (response) {
                             if(response.status == 200){
-                                getData(1) ;
+                                queryUserList(1) ;
                                 layer.msg("用户状态修改成功!");
                             }else{
 

@@ -12,7 +12,8 @@ module.exports = angular => {
     require('../controllers/home_page/_nav.controller')(homePageModule);  // 导航
     require('../controllers/home_page/_content.controller')(homePageModule);  // 主
     require('../controllers/user_control/_application.controller')(homePageModule);  // 应用管理
-    require('../controllers/user_control/_permission.controller')(homePageModule);  // 权限管理
+    require('../controllers/user_control/_user.controller')(homePageModule);  // 用户管理
+    require('../controllers/user_control/_role.controller')(homePageModule);  // 角色管理
      require('../controllers/upload_record/_upload_record.controller')(homePageModule);  // 上传记录
 };
 

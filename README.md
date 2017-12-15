@@ -1,6 +1,7 @@
 ## 关于babel转换在IE8下的问题
 类似`import React from 'react'`均改成用`require`去引用，然后export的时候用`export {}`而不要用`export default`
 ## 依赖项
+烤炉到
 cnpm install
  angular@1.2.29
  angular-resource@1.2.32
