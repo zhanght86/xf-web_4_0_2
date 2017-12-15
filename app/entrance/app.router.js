@@ -148,7 +148,38 @@ module.exports = (angular) => {
                 },
                 "content": {
                     template: require("../static/index/views/user_control/permission_management/permission.html"),
-                    controller: "PermissionController"
+                }
+            }
+        },
+        //角色管理
+        {
+            name: "HP.permission.role",
+            url: "/permission/role",
+            data: {
+                roles: []
+            },
+            parent : "HP.permission",
+            title : "角色管理" ,
+            views: {
+                "content@HP.permission": {
+                    template: require("../static/index/views/user_control/permission_management/role.html"),
+                    controller: "RoleController"
+                }
+            }
+        },
+        //用户管理
+        {
+            name: "HP.permission.user",
+            url: "/permission/user",
+            data: {
+                roles: []
+            },
+            parent : "HP.permission",
+            title : "用户管理" ,
+            views: {
+                "content@HP.permission": {
+                    template: require("../static/index/views/user_control/permission_management/user.html"),
+                    controller: "UserController"
                 }
             }
         },

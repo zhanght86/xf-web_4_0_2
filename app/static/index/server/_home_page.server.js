@@ -20,13 +20,18 @@ class HomePageServer {
         /******************************
                         *权限*
                 ********************************/
-
+        // 用户
     // 获取用户列表
-        this.queryUserList = $resource(API_USER+"/user/get",{},{}) ;
+        this.queryUserList = $resource(API_USER+"/user/get/user/by/name	",{},{}) ;
     // 添加用户
         this.addUser = $resource(API_USER+"/user/add",{},{}) ;
-    // 添加用户
-        this.updateUserStatus = $resource(API_USER+"/user/add",{},{}) ;
+    // 更新用户
+        this.updateUser = $resource(API_USER+"/user/update",{},{}) ;
+    // 更新用户状态
+        this.updateUserStatus = $resource(API_MS+"/application/update/status	",{},{}) ;
+    // 删除用户
+        this.deleteUser = $resource(API_USER+"/user/delete/user/by/ids",{},{}) ;
+        // 角色
 
      /******************************
                         *上传记录*
