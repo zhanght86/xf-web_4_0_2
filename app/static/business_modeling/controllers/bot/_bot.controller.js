@@ -466,17 +466,23 @@ module.exports = businessModelingModule =>{
                     $scope.vm.categoryDescribe=$("#category-describe").val().trim();
                 }
             }
-            httpRequestPost("/api/ms/modeling/category/add",{
-                "categoryApplicationId": categoryApplicationId,
-                "applicationId": categoryApplicationId,
-                "categoryPid": $scope.vm.botSelectValue,
-                "categoryAttributeName": $scope.vm.categoryAttributeName,
-                "categoryName": $("#category-name").val().trim(),
-                "categoryTypeId": $("#category-type").val(),
-                "categoryModifierId": categoryModifierId,
-                "categorySceneId": categorySceneId,
-                "categoryDescribe": $scope.vm.categoryDescribe,
-                "categoryLeaf": 0
+            httpRequestPost("/api/ms/classify/add",{
+            	"userId":USER_ID,
+            	"applicationId":APPLICATION_ID,
+            	"name":$scope.vm.categoryAttributeName,
+            	"pid": $scope.vm.botSelectValue,
+            	"type":160,
+            	"leaf":0
+                //"categoryApplicationId": categoryApplicationId,
+                //"applicationId": categoryApplicationId,
+                //"categoryPid": $scope.vm.botSelectValue,
+                //"categoryAttributeName": $scope.vm.categoryAttributeName,
+                //"categoryName": $("#category-name").val().trim(),
+                //"categoryTypeId": $("#category-type").val(),
+                //"categoryModifierId": categoryModifierId,
+                //"categorySceneId": categorySceneId,
+                //"categoryDescribe": $scope.vm.categoryDescribe,
+                //"categoryLeaf": 0
             },function(data){
                 if(responseView(data)==true){
                     //重新加载
@@ -511,7 +517,7 @@ module.exports = businessModelingModule =>{
                 request.categoryName=$("#category-name").val().trim();
                 request.categorySceneId=categorySceneId;
             }
-            httpRequestPostAsync("/api/ms/modeling/category/repeatcheck",request,function(data){
+            httpRequestPostAsync("/api/ms/classify/name/check",request,function(data){
                 if(responseWithoutView(data)==false){
                     if(data){
                         $(selector).html(data.info);

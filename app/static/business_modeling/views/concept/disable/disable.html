@@ -4,7 +4,7 @@
     </div>
     <div>
         <div class="conceptSearch clearfix">
-            <div class=" L mr-5">
+            <!-- <div class=" L mr-5">
 
                 <select id="searchType" ng-model="vm.searchType" class="bd L" style="width:110px;height: 30px;border-right:0;">
                     <option value="stopConceptKey" selected>停用概念类名</option>
@@ -20,14 +20,15 @@
                         <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="background-color:#fff;width:170px;border:1px solid #e1e1e1;height: 30px;font-size: 15px;color: #333!important;" placeholder="请选择结束日期" readonly>
                     </div>
                 </div>
-            </div>
-            <input type="button" value="查找" ng-click="vm.searchStopConcept(1)"  class="btn1 btn1_blue L"/>
+            </div> -->
+                <a class="btn btn-blue mr5" id="addCase" ng-click="vm.addStop()">新增概念</a>
+                <a class="btn btn-blue mr5" href="javascript:;" ng-click="vm.batchUpload()">批量新增</a>
             <div class=" conceptSearchRt">
-                <a class="btn btn-blue mr10" id="addCase" ng-click="vm.addStop()">概念新增</a>
-                <a class="btn btn-blue mr10" href="javascript:;" ng-click="vm.batchUpload()">概念导入</a>
+                 <input type="text" class="input-text L"  placeholder="请输入查询概念类或者概念的名称"  style="width:220px;">
+                 <input type="button"  ng-click="vm.searchStopConcept(1)" class=" mr5 btn1 tw_btn "/>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
-                <a class="btn btn-green2 mr10" href="javascript:;" ng-click="vm.exportAll()">概念导出</a>
-                <a class="btn btn-red mr10" href="javascript:;" ng-click="vm.batchDelete()">删除</a>
+                <a class="btn btn-green2 mr5" href="javascript:;" ng-click="vm.exportAll()">导出</a>
+                <a class="btn btn-red mr5" href="javascript:;" ng-click="vm.batchDelete()">批量删除</a>
             </div>
         </div>
         <table class="stop_word_tab">
