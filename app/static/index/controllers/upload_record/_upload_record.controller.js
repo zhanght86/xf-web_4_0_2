@@ -29,7 +29,6 @@ module.exports=homePageModule => {homePageModule
            }else{
               let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
               HomePageServer.uploadRecord.save({
-                  "applicationId" : "450006827728371712",
                   "modifierName":$scope.vm.modifierName,
                   "startTime": $scope.vm.startTime,
                   "endTime": $scope.vm.endTime,
