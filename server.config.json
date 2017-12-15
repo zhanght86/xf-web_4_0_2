@@ -1,0 +1,26 @@
+{
+      "root" : "/dest" ,
+      "port" : 8001 ,
+      "proxy" : [
+          {
+            "location":"/api/authority",
+             "target": "http://192.168.181.166:7005",
+             "changeOrigin":true
+         },
+        {
+          "location":"/api/application",
+          "target": "http://192.168.181.166:7006",
+          "changeOrigin":true
+        },
+        {
+          "location":"/api/ms",
+          "target": "http://192.168.181.166:7002",
+          "changeOrigin":true
+        },
+        {
+          "location":"/api/analysis",
+          "target": "http://192.168.181.166:7007",
+          "changeOrigin":true
+        }
+      ]
+}

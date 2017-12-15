@@ -11,11 +11,11 @@
                     </span>
                     <span>
                         日期范围:
-                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.startTime"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
                             -
                             <input type="text" id="endTime"   onchange="" ng-model="vm.endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
                     </span>
-                    <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找" />
+                    <input type="button" class="btn1 tw_btn" ng-click="vm.getList(1)" />
                 </div>
                 <div>
                     <table class="access_amount_table" id="user_session_statistic">
@@ -35,7 +35,8 @@
                         <tbody>
 
                         <tr role="row" class="odd" ng-repeat="item in vm.uploadList">
-                            <td>{{item.uploadName}}</td>
+                        <td ng-if="item.uploadName.length<=20" style="color: #50A0F0;" title={{item.uploadName}}>{{item.uploadName}}</td>
+                            <td ng-if="item.uploadName.length>20" style="color: #50A0F0;" title={{item.uploadName}}>{{item.uploadName.substring(0,20)+'...'}}</td>
                             <td ng-if="item.uploadType=='170'">FAQA知识批量上传</td>
                             <td ng-if="item.uploadType=='171'">要素知识批量上传</td>
                             <td ng-if="item.uploadType=='172'">概念知识批量上传</td>
@@ -56,7 +57,7 @@
                             <td>{{item.uploadSuccess}}</td>
                             <td>{{item.uploadError}}</td>
                             <td>{{item.uploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td ><a ng-if="item.uploadStatus=='191'" href="javascript:;" class="c-green" ng-click="vm.scan(item.userId)">下载</a></td>
+                            <td ><a ng-if="item.uploadStatus=='191'&&item.uploadError!=0" class="c-green" href="/api/material/document/get/document/id?id={{item.docId}}" target="_blank"">下载</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -66,6 +67,7 @@
         </div>
     </div>
 </div>
+
 
 
 
