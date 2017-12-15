@@ -187,7 +187,7 @@ gulp.task('watch-module', function(done) {
 var host = JSON.parse(fs.readFileSync("./server.config.json")) ;
 gulp.task('server', function() {
     connect.server({
-        root: host.root,
+        root:  host.root,
         port: host.port,
         livereload: true,
         middleware: function(connect, opt) {
