@@ -13,7 +13,7 @@ module.exports=systemMonitoringModule => {
             getData :  getData ,    //获取数据
             startTime : "" ,         //开始时间
             endTime : "" ,          //结束时间
-            operationLogAuthor : "", //作者
+            //operationLogAuthor : "", //作者
             paginationConf : {      //分页条件
                 pageSize: 8,        //每页条目数量
                 pagesLength: 10,    //分页块数量
@@ -25,15 +25,16 @@ module.exports=systemMonitoringModule => {
          **/
         function getData(index){
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            SystemServer.getData.save({
+            SystemServer.getOpeData.save({
                 "startTime": $scope.vm.startTime,
                 "endTime": $scope.vm.endTime,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
-                "operationLogAuthor" : $scope.vm.operationLogAuthor
+                //"operationLogAuthor" : $scope.vm.operationLogAuthor
             },function(data){
                 layer.close(i);
                 if(data.status == 200){
+                    console.log(data);
                     $scope.vm.listData = data.data ;
                     $scope.vm.paginationConf.currentPage = index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
