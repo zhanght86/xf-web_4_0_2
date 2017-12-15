@@ -184,40 +184,10 @@ gulp.task('watch-module', function(done) {
 });
 //使用connect启动一个Web服务器
 //使用'http-proxy-middleware'作为反向代理
-<<<<<<< HEAD
-var host = {
-    root : ['./dest'] ,
-    port : 8001 ,
-    proxy : [
-        proxy('/api/authority',  {
-            target: 'http://192.168.181.166:7005',
-            changeOrigin:true
-        }),
-        proxy('/api/application/', {
-            target: 'http://192.168.181.166:7006',
-            changeOrigin:true
-        }),
-        proxy('/api/ms/', {
-            target: 'http://192.168.181.166:7002',
-            changeOrigin:true
-        }),
-        proxy('/api/analysis/', {
-            target: 'http://192.168.181.166:7007',
-            changeOrigin:true
-        }),
-        proxy('/api/material/', {
-            target: 'http://192.168.181.166:7008 ',
-            changeOrigin:true
-        }),
-
-    ]
-};
-=======
 var host = JSON.parse(fs.readFileSync("./server.config.json")) ;
->>>>>>> 877f44ab5db89c329848872202c1b7a16f0d72ec
 gulp.task('server', function() {
     connect.server({
-        root: host.root,
+        root:  host.root,
         port: host.port,
         livereload: true,
         middleware: function(connect, opt) {
