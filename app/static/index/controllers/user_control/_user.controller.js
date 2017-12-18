@@ -5,10 +5,9 @@
  */
 module.exports = homePageModule =>{
     homePageModule.controller('UserController',
-    ['$scope',"localStorageService","$state","$timeout","$stateParams","HomePageServer",
-    function ($scope,localStorageService, $state,$timeout,$stateParams,HomePageServer) {
+    ['$scope',"localStorageService","$state","$timeout","$stateParams","HomePageServer","ngDialog",
+    function ($scope,localStorageService, $state,$timeout,$stateParams,HomePageServer,ngDialog) {
         $scope.vm = {
-            simpleOperateTitle : "" ,
             userList : "",   // table 数据
             queryUserList : queryUserList,
             paginationConf : {     //分页条件
@@ -16,7 +15,6 @@ module.exports = homePageModule =>{
                 pagesLength : 8
             }  ,
             addUser : addUser,
-            editUser : editUser,
             deleteUser:deleteUser,
             changeStatus:changeStatus,
             userId:"",
@@ -46,10 +44,11 @@ module.exports = homePageModule =>{
             selectSingle : selectSingle,
             deleteIds : [],
             selectAllCheck : false,
-            deleteUsers : deleteUsers
         };
+        // 定义弹框
+        let verifyHtml = require("../../../../share/dialog_simple_operate.html") ;
+        let userHtml = require("../../views/user_control/permission_management/dialog_user.html") ;
         function selectAll(ev){
-            //var self = $(ev.target);
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
                 $scope.vm.deleteIds = [];
@@ -76,8 +75,8 @@ module.exports = homePageModule =>{
             $scope.vm.deleteIds = [];   // 清楚选中用户
             HomePageServer.queryUserList.save({
                 "account" : userName?userName:"" ,
-                "index":(index -1)*$scope.vm.pageSize,
-                "pageSize":$scope.vm.pageSize
+                "index":(index -1)*$scope.vm.paginationConf.pageSize,
+                "pageSize":$scope.vm.paginationConf.pageSize
             },function(response){
                 if(response.status == 200 ){
                     $scope.vm.userList = response.data;
@@ -99,22 +98,21 @@ module.exports = homePageModule =>{
                 }, 0)
             }
         },true);
-
         //添加用户校验
-        function verifyRelease(){
+        function verifyRelease(close){
             if($scope.vm.userName == null || $scope.vm.userName == ""){
-                layer.msg("姓名不能为空!")
+                layer.msg("姓名不能为空!") ;
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             var name = /^[A-Za-z\u4e00-\u9fa5]+$/;
             if(!name.test($scope.vm.userName)){
-                layer.msg("姓名只可以输入汉字或字母的组合!")
+                layer.msg("姓名只可以输入汉字或字母的组合!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.userName.length > 20){
-                layer.msg("姓名的长度不能超过20个字符!")
+                layer.msg("姓名的长度不能超过20个字符!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -125,7 +123,7 @@ module.exports = homePageModule =>{
             }
             var reg = /^[0-9a-zA-Z_]{4,20}$/;
             if(!reg.test($scope.vm.userLoginName)){
-                layer.msg("登录名只可以是数字、字母、下划线组合，4-20个字符!",{time:1000})
+                layer.msg("登录名只可以是数字、字母、下划线组合，4-20个字符!",{time:1000});
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -137,17 +135,17 @@ module.exports = homePageModule =>{
             }
             var password = /^[0-9a-zA-Z]+$/;
             if(!password.test($scope.vm.userPassword)){
-                layer.msg("密码只可以是数字和字母组合!")
+                layer.msg("密码只可以是数字和字母组合!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.userPassword.length>20){
-                layer.msg("密码长度不能超过20个字符!")
+                layer.msg("密码长度不能超过20个字符!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
             if($scope.vm.userPhoneNumber == null || $scope.vm.userPhoneNumber == ""){
-                layer.msg("手机号不能为空!")
+                layer.msg("手机号不能为空!");
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
@@ -163,242 +161,97 @@ module.exports = homePageModule =>{
                 return 0;
             }
             if($scope.vm.prop.length == 0){
-                layer.msg("请至少选择一个应用!")
+                layer.msg("请至少选择一个应用!") ;
                 $scope.vm.allowSubmit=0;
                 return 0;
             }
-            return 1;
+            close(1) ;
+            // return 1;
         }
-
-        //添加用户
-        function addUser(){
-            var dialog = ngDialog.openConfirm({
-                template:"/static/index/user_control/permission_manage/userManageDialog.html",
-                width : "680px" ,
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        if($scope.vm.allowSubmit) {
-                            HomePageServer.addUser.save({
-                                "accessToken" : "" ,
-                                "account": $scope.vm.userName,
-                                "pwd": $scope.vm.userPassword,
-                                "phone": $scope.vm.userPhoneNumber,
-                                "email": $scope.vm.userEmail,
-                                "roleId": $scope.vm.roleId,
-                                "applicationIds": $scope.vm.prop,
-                            }, function (response) {
-                                if(response.status == 200){
-                                    queryUserList(1)
-                                }else{
-
-                                }
-                                // //刷新页面
-                                // $state.reload();
-                                // if (data.status == 10009) {
-                                //     layer.msg("该登录名已经存在，请重新添加!")
-                                // } else if (data.status == 10008) {
-                                //     layer.msg("用户添加成功!");
-                                // } else {
-                                //     //layer.msg("用户添加失败!");
-                                //     console.log("用户添加失败!");
-                                // }
-                            }, function (error) {
-                                console.log(error);
-                            })
+        //添加编辑用户
+        function addUser(data){
+            let callback,
+                param = {
+                    "account": $scope.vm.userName,
+                    "pwd": $scope.vm.userPassword,
+                    "phone": $scope.vm.userPhoneNumber,
+                    "email": $scope.vm.userEmail,
+                    "roleId": $scope.vm.roleId,
+                    "applicationIds": $scope.vm.prop
+                 };
+            if(data){  // 编辑
+                useData() ;
+                param.id = data.id ;
+                callback = function(){
+                    HomePageServer.addUser.save(param, function (response) {
+                        if (data.status == 200) {
+                            layer.msg("用户修改成功!");
+                        } else {
+                            // console.log("用户修改失败!");
                         }
-                        //保存的同时清空数据
-                        $scope.vm.userName = "";
-                        $scope.vm.userLoginName = "";
-                        $scope.vm.userPassword = "";
-                        $scope.vm.userPassWord = "";
-                        $scope.vm.userPhoneNumber = "";
-                        $scope.vm.userEmail = "";
-                        $scope.vm.prop = [];
-                        $scope.vm.remark = "";
-                    }else{
-                        //取消的同时清空数据
-                        $scope.vm.userName = "";
-                        $scope.vm.userLoginName = "";
-                        $scope.vm.userPassword = "";
-                        $scope.vm.userPassWord = "";
-                        $scope.vm.userPhoneNumber = "";
-                        $scope.vm.userEmail = "";
-                        $scope.vm.prop = [];
-                        $scope.vm.remark = "";
-                    }
+                    }, function (error) {
+                        console.log(error);
+                    })
                 }
-            });
-        }
-        //编辑用户
-        function editUser(data){
-            $scope.vm.userId = data.userId;
-            $scope.vm.userName = data.userName;
-            $scope.vm.userLoginName = data.userLoginName;
-            $scope.vm.userPassword = data.userPassword;
-            $scope.vm.userPassWord = data.userPassword;
-            $scope.vm.userPhoneNumber = data.userPhoneNumber;
-            $scope.vm.userEmail = data.userEmail;
-            $scope.vm.remark = data.remark;
-            $scope.vm.roleId = data.roleId;
-            $scope.vm.prop = data.applicationName;
-            $scope.vm.applicationIds = data.applicationIds;
-            console.log(data.applicationIds);
-            //$scope.$apply()
-            var dialog = ngDialog.openConfirm({
-                template:"/static/index/user_control/permission_manage/userManageDialog2.html",
-                width : "680px" ,
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        if($scope.vm.allowSubmit) {
-
-                            httpRequestPost("/api/user/updateUserById", {
-                                userId: data.userId,
-                                userName: $scope.vm.userName,
-                                userLoginName: $scope.vm.userLoginName,
-                                userPassword: $scope.vm.userPassword,
-                                userPhoneNumber: $scope.vm.userPhoneNumber,
-                                userEmail: $scope.vm.userEmail,
-                                roleId: $scope.vm.roleId,
-                                applicationIds: $scope.vm.applicationIds,
-                                remark: $scope.vm.remark
-                            }, function (data) {
-                                //刷新页面
-                                $state.reload();
-                                if (data.status == 10012) {
-                                    layer.msg("用户修改成功!");
-                                }else if(data.status = 10009){
-                                    layer.msg("登录名重复!");
-                                } else {
-                                    //layer.msg("用户修改失败!");
-                                    console.log("用户修改失败!");
-                                }
-                            }, function () {
-                                //layer.msg("请求失败");
-                                console.log("请求失败");
-                            })
+            }else{    // 新增
+                initDate();
+                callback = function(){
+                    HomePageServer.addUser.save(param, function (response) {
+                        if(response.status == 200){
+                            queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.searchName);
+                        }else{
                         }
-                    }else{
-                        //取消的同时清空数据
-                        $scope.vm.userName = "";
-                        $scope.vm.userLoginName = "";
-                        $scope.vm.userPassword = "";
-                        $scope.vm.userPassWord = "";
-                        $scope.vm.userPhoneNumber = "";
-                        $scope.vm.userEmail = "";
-                        $scope.vm.prop = [];
-                        $scope.vm.remark = "";
-                    }
+                    }, function (error) {
+                        console.log(error);
+                    })
                 }
-            });
+            }
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,userHtml,"680px",function(){
+                callback() ;
+            })
         }
-
         //删除用户
-        function deleteUser(userId){
-            $scope.vm.simpleOperateTitle = "确认要删除吗" ;
-            var dialog = ngDialog.openConfirm({
-                template:"/static/base/public_html/simple_operate.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e === 1){
-                        httpRequestPost("/api/user/deleteUser",{
-                            userId:userId,
-                        },function(data){
-                            if(data.status == 10010){
-                                layer.msg("用户删除成功!");
-                            }else{
-                                //layer.msg("用户删除失败!");
-                                console.log("用户删除失败!");
-                            }
-                            $state.reload()
-                        },function(){
-                            //layer.msg("请求失败")
-                            console.log("请求失败");
-                        })
-                    }
-                }
-            });
-        }
-
-        //批量删除用户
-        function deleteUsers(){
-            if($scope.vm.deleteIds == 0){
+        function deleteUser(userIds){
+            if(nullCheck($scope.vm.deleteIds) == 0 && !userId){
                 layer.msg("请您选择要删除的用户！");
                 return;
-            }
+            } ;
             $scope.vm.simpleOperateTitle = "确认要删除吗" ;
-            var dialog = ngDialog.openConfirm({
-                template:"/static/base/public_html/simple_operate.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback : function(e){
-                    if(e === 1) {
-                        httpRequestPost("/api/user/deleteUserByIds", {
-                            ids: $scope.vm.deleteIds
-                        }, function (data) {
-                            $state.reload();
-                        }, function () {
-                            //layer.msg("请求失败")
-                            console.log("请求失败");
-                        })
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,verifyHtml,"",function(){
+                HomePageServer.deleteUser.save({},function () {
+                    ids:userIds?userId:$scope.vm.deleteIds
+                },function (response) {
+                    if(response.status == 200){
+                        layer.msg("用户删除成功!");
+                    }else{
                     }
-                }
-            });
+                },function (error) {console.log(error)})
+            }) ;
         }
-
         //改变用户状态
-        function changeStatus(userId,statusId) {
-            let status = 1;
-            if(statusId == 0){
+        function changeStatus(userId,status = 1) {
+            if(status == 0){
                 $scope.vm.simpleOperateTitle = "确认要启用该用户吗？" ;
             }else {
                 status = 0 ;
                 $scope.vm.simpleOperateTitle = "确认要停用该用户吗？" ;
             }
-            var dialog = ngDialog.openConfirm({
-                template:"/static/base/public_html/simple_operate.html",
-                scope: $scope,
-                closeByDocument: false,
-                closeByEscape: true,
-                showClose: true,
-                backdrop: 'static',
-                preCloseCallback: function (e) {
-                    if (e === 1) {
-                        HomePageServer.updateUserStatus.save({
-                            "accessToken" : "",
-                            "userId": userId,
-                            "status": status
-                        }, function (response) {
-                            if(response.status == 200){
-                                queryUserList(1) ;
-                                layer.msg("用户状态修改成功!");
-                            }else{
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,verifyHtml,"",function(){
+                HomePageServer.updateUserStatus.save({
+                    "id": userId,
+                    "status": status
+                }, function (response) {
+                    if(response.status == 200){
+                        queryUserList(1) ;
+                        layer.msg("用户状态修改成功!");
+                    }else{
 
-                            }
-                        }, function (error) {
-                            console.log(error);
-                        })
                     }
-                }
+                }, function (error) {
+                    console.log(error);
+                })
             });
         }
-
         getApplication();
         //得到应用列表
         function getApplication(){
@@ -410,7 +263,30 @@ module.exports = homePageModule =>{
                 console.log("请求失败");
             })
         }
-
+        function useData(){
+            $scope.vm.userId = data.userId;
+            $scope.vm.userName = data.userName;
+            $scope.vm.userLoginName = data.userLoginName;
+            $scope.vm.userPassword = data.userPassword;
+            $scope.vm.userPhoneNumber = data.userPhoneNumber;
+            $scope.vm.userEmail = data.userEmail;
+            $scope.vm.remark = data.remark;
+            $scope.vm.roleId = data.roleId;
+            $scope.vm.prop = data.applicationName;
+            $scope.vm.applicationIds = data.applicationIds;
+        }
+        // 弹框数据初始化
+        function initDate(){
+            //取消的同时清空数据
+            $scope.vm.userName = "";
+            $scope.vm.userLoginName = "";
+            $scope.vm.userPassword = "";
+            $scope.vm.userPassWord = "";
+            $scope.vm.userPhoneNumber = "";
+            $scope.vm.userEmail = "";
+            $scope.vm.prop = [];
+            $scope.vm.remark = "";
+        }
         //得到角色列表
         getRole();
         function getRole(){
@@ -453,6 +329,6 @@ module.exports = homePageModule =>{
                 return true
             }
         }
-    }
-])
+
+}])
 };
