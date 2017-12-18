@@ -4,7 +4,8 @@
 'use strict';
 
 module.exports = angular =>{
-    const materialModule = angular.module("materialModule",[]);
+    require("../../../assets/libs/angular-ueditor/dist/angular-ueditor") ;
+    const materialModule = angular.module("materialModule",["ng.ueditor"]);
     require('../controllers/_main.controller')(materialModule);  // 控制器
     require('../../index/controllers/home_page/_nav.controller')(materialModule);  // 导航
     //--------------------------------------------------

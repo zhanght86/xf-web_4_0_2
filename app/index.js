@@ -36,9 +36,6 @@ function loadBasicModules() {
     // 路由
     require('angular-route');
     ngDepModules.push('ngRoute');
-    
-    require("./assets/libs/angular-ueditor/dist/angular-ueditor") ;
-    ngDepModules.push("ng.ueditor");
 }
 loadBasicModules()  ;
 // define one angular module
