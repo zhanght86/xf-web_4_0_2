@@ -68,6 +68,7 @@
     "es5-shim": "^4.5.9",
     "jquery": "1.9.1",
     "ng-dialog": "1.4.0",
-    "oclazyload": "1.0.1"
+    "oclazyload": "1.0.1",
+    "ueditor": "^1.2.3"
   }
 }

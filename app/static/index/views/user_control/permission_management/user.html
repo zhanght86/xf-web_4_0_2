@@ -45,12 +45,12 @@
                         <td>{{user.lastModifiedDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td><span ng-repeat="application in user.applicationName[0].data">{{application.name}}<i ng-if="$index!=user.applicationName[0].data.length-1">,</i></span></td>
                         <td>
-                            <span class="btn1 btn_green2" ng-if="user.status==10001">已启用</span>
-                            <span class="btn1 btn_red" ng-if="user.status==10002">未启用</span>
+                            <span class="btn1 btn_green2" ng-if="user.status==1">已启用</span>
+                            <span class="btn1 btn_red" ng-if="user.status==0">未启用</span>
                         </td>
                         <td>
-                            <span ng-if="user.status==10001"><a href="javascript:;" title="停用" class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)">停用</a></span>
-                            <span ng-if="user.status==10002"><a href="javascript:;" title="启用" class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)">启用</a></span>
+                            <span ng-if="user.status==1"><a href="javascript:;" title="停用" class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)">停用</a></span>
+                            <span ng-if="user.status==0"><a href="javascript:;" title="启用" class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)">启用</a></span>
                             <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser(user)">编辑</a>
                             <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser(user.id)">删除</a>
                         </td>

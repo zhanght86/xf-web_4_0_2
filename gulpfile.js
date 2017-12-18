@@ -59,6 +59,9 @@ gulp
     .task('copy:images', function (done) {
          gulp.src(['app/assets/images/**/*']).pipe(gulp.dest('dest/assets/images')).on('end', done);
     })
+    .task('copy:libsimages', function (done) {
+        gulp.src(['app/assets/libs/ueditor1_4_3_3-utf8-jsp/utf8-jsp/themes/default/images/*']).pipe(gulp.dest('dest/assets/libs/ueditor1_4_3_3-utf8-jsp/utf8-jsp/themes/default/images')).on('end', done);
+    })
     .task('copy:imagestemp', function (done) {
         gulp.src(['app/assets/images/**/*']).pipe(gulp.dest('dest/images')).on('end', done);
     })
@@ -179,7 +182,7 @@ gulp.task('watch-module', function(done) {
     gulp.watch(watchPath.img,["copy:images"] ).on('end', done);
     gulp.watch(watchPath.css,["fileinclude:css","concatcss"]).on('end', done);
     gulp.watch(watchPath.js,["fileinclude:js"] ).on('end', done);
-    gulp.watch(watchPath.libs,["fileinclude:libs"] ).on('end', done);
+    gulp.watch(watchPath.libs,["fileinclude:libs","copy:libsimages"] ).on('end', done);
     // gulp.watch(watchPath.appjs,["copy:images"] ).on('end', done)
 });
 //使用connect启动一个Web服务器
@@ -211,4 +214,4 @@ gulp.task('release', ['imgmin', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 gulp.task('release-efficient', ['smushit', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 //开发
 // gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'lessmin', 'build-js', 'watch', 'open']);
-gulp.task('default', [ 'copy:images','copy:imagestemp','fileinclude:html','fileinclude:css','fileinclude:js','fileinclude:libs','concatcss']);
+gulp.task('default', [ 'copy:images','copy:imagestemp','fileinclude:html','fileinclude:css','fileinclude:js','fileinclude:libs','copy:libsimages','concatcss']);
