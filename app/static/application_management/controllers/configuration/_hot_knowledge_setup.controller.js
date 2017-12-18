@@ -181,7 +181,7 @@ module.exports = applicationManagementModule =>{
             if($scope.vm.hotKnowDelIds == 0){
                 layer.msg("请选择要删除的知识！");
             }else{
-                let delHtml = require("../../../../share/simple_operate.html") ;
+                let delHtml = require("../../../../share/dialog_simple_operate.html") ;
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,delHtml,"300px",function(){
                     ApplicationServer.removeHotKnowledge.save({
                         ids :  $scope.vm.hotKnowDelIds

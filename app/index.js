@@ -37,7 +37,7 @@ function loadBasicModules() {
     require('angular-route');
     ngDepModules.push('ngRoute');
     
-    require("angular-ueditor/dist/angular-ueditor") ;
+    require("./assets/libs/angular-ueditor/dist/angular-ueditor") ;
     ngDepModules.push("ng.ueditor");
 }
 loadBasicModules()  ;
