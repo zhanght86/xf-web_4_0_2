@@ -46,10 +46,7 @@ module.exports = angular =>{
    // require('../directives/_enternextline.directive')(materialModule);
 
   // 富文本编辑器
-   // require('../../../assets/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.config')(materialModule);
-    //require('../../../assets/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.all')(materialModule);
-    //require('../../../assets/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/ueditor.all')(materialModule);
-    /*<script type="text/javascript" src="bower_components/angular-ueditor/dist/angular-ueditor.js"></script>*/
+    
 
 
 
