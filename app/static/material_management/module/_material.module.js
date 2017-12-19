@@ -49,8 +49,5 @@ module.exports = angular =>{
   // 富文本编辑器
     
 
-
-
-
 }
 

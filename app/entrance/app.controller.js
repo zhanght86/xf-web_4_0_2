@@ -37,6 +37,7 @@ module.exports = ngModule =>
                 /* bot 下拉树的公共方法 */
                 botTreeOperate : botTreeOperate ,
                 //isTitleHasExt : isTitleHasExt
+                selectAll : selectAll
             } ;
             if(APPLICATION_ID){
                 queryChannelList(APPLICATION_ID)
@@ -257,11 +258,13 @@ module.exports = ngModule =>
                 $timeout(function(){
                     tree.getChildNode() ;
                     tree.selectNode() ;
-                },200)
+                },200) ;
 
                 //return tree ;
             }
-
+            function selectAll(arr,...key) {
+                return arr.map(key => typeof key)
+            }
 /***********************************************************************************************************************************************************************/
             $scope.currentUser = null;
             $scope.currentPage = 1;

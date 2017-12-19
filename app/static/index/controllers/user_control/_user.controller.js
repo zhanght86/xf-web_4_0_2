@@ -9,12 +9,14 @@ module.exports = homePageModule =>{
     function ($scope,localStorageService, $state,$timeout,$stateParams,HomePageServer,ngDialog) {
         $scope.vm = {
             userList : "",   // table 数据
+            userListIds : [] , // 用户所有的 id
             queryUserList : queryUserList,
             paginationConf : {     //分页条件
                 pageSize : 5 ,
-                pagesLength : 8
+                pagesLength : 8,
             }  ,
             addUser : addUser,
+            deleteIds : [],
             deleteUser:deleteUser,
             changeStatus:changeStatus,
             userId:"",
@@ -33,21 +35,16 @@ module.exports = homePageModule =>{
             //查询当前所有应用
             listApplication : "",
             //查询当前所有角色
-            listRole:"",
+            roleList:"",
             roleId :"",
             prop :[],
             applicationIds:[],
-            savaProp : savaProp,
-            saveProp : saveProp ,
-            filter : filter,
             selectAll : selectAll,
-            selectSingle : selectSingle,
-            deleteIds : [],
             selectAllCheck : false,
         };
         // 定义弹框
         let verifyHtml = require("../../../../share/dialog_simple_operate.html") ;
-        let userHtml = require("../../views/user_control/permission_management/dialog_user.html") ;
+        let userHtml = require("../../views/permission_management/dialog_user.html") ;
         function selectAll(ev){
             if(!$scope.vm.selectAllCheck){
                 $scope.vm.selectAllCheck = true;
@@ -61,16 +58,23 @@ module.exports = homePageModule =>{
             }
             console.log( $scope.vm.deleteIds)
         }
-        function selectSingle(ev,id){
-            if($scope.vm.deleteIds.inArray(id)){
-                $scope.vm.deleteIds.remove(id);
-            }else{
-                $scope.vm.deleteIds.push(id);
-            }
-            console.log( $scope.vm.deleteIds)
+        // function selectSingle(ev,id){
+        //     if($scope.vm.deleteIds.inArray(id)){
+        //         $scope.vm.deleteIds.remove(id);
+        //     }else{
+        //         $scope.vm.deleteIds.push(id);
+        //     }
+        //     console.log( $scope.vm.deleteIds)
+        // }
+        function selectAll(arr,keyword) {
+            return arr.map(item => {item.keyword})
         }
+        console.log(selectAll([{a:1},{a:2}],"a"));
         queryUserList(1);
         //查询用户列表
+        $scope.vm.paginationConf.pageChangeCall = function(current){
+            queryUserList(current,$scope.vm.searchName)
+        } ;
         function queryUserList(index,userName){
             $scope.vm.deleteIds = [];   // 清楚选中用户
             HomePageServer.queryUserList.save({
@@ -79,25 +83,30 @@ module.exports = homePageModule =>{
                 "pageSize":$scope.vm.paginationConf.pageSize
             },function(response){
                 if(response.status == 200 ){
+                    $scope.vm.userIds = [] ;
                     $scope.vm.userList = response.data;
                     $scope.vm.paginationConf.totalItems = response.total ;
                     $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize;
+                    angular.forEach(response.data,function(user,index){
+                        $scope.vm.userListIds.push(user.id)
+                    })
                 }
             },function(error){
                 console.log(error);
             })
         }
         var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    queryUserList(current,$scope.vm.searchName);
-                }, 0)
-            }
-        },true);
+        $scope.vm.paginationConf.name = timeout ;
+        // $scope.$watch('vm.paginationConf.currentPage;vm.paginationConf.pageSize', function(current,old){
+        //     if(current && old){
+        //         if (timeout) {
+        //             $timeout.cancel(timeout)
+        //         }
+        //         timeout = $timeout(function () {
+        //             queryUserList(current,$scope.vm.searchName);
+        //         }, 0)
+        //     }
+        // },true);
         //添加用户校验
         function verifyRelease(close){
             if($scope.vm.userName == null || $scope.vm.userName == ""){
@@ -168,7 +177,7 @@ module.exports = homePageModule =>{
             close(1) ;
             // return 1;
         }
-        //添加编辑用户
+        // 添加/编辑用户
         function addUser(data){
             let callback,
                 param = {
@@ -180,7 +189,8 @@ module.exports = homePageModule =>{
                     "applicationIds": $scope.vm.prop
                  };
             if(data){  // 编辑
-                useData() ;
+                useData() ; // 初始化列表数据
+                $scope.vm.roleId = data.roleId ;// 初始化roleId
                 param.id = data.id ;
                 callback = function(){
                     HomePageServer.addUser.save(param, function (response) {
@@ -194,7 +204,8 @@ module.exports = homePageModule =>{
                     })
                 }
             }else{    // 新增
-                initDate();
+                initDate(); // 初始化列表数据
+                $scope.vm.roleId = $scope.vm.roleList[0].id ;  // 初始化roleId
                 callback = function(){
                     HomePageServer.addUser.save(param, function (response) {
                         if(response.status == 200){
@@ -212,14 +223,14 @@ module.exports = homePageModule =>{
         }
         //删除用户
         function deleteUser(userIds){
-            if(nullCheck($scope.vm.deleteIds) == 0 && !userId){
+            if(!nullCheck(userIds)){
                 layer.msg("请您选择要删除的用户！");
                 return;
-            } ;
+            }
             $scope.vm.simpleOperateTitle = "确认要删除吗" ;
             $scope.$parent.$parent.MASTER.openNgDialog($scope,verifyHtml,"",function(){
-                HomePageServer.deleteUser.save({},function () {
-                    ids:userIds?userId:$scope.vm.deleteIds
+                HomePageServer.deleteUser.save({
+                    ids:userIds
                 },function (response) {
                     if(response.status == 200){
                         layer.msg("用户删除成功!");
@@ -252,17 +263,6 @@ module.exports = homePageModule =>{
                 })
             });
         }
-        getApplication();
-        //得到应用列表
-        function getApplication(){
-            httpRequestPost("/api/application/application/listAllApplication",{
-            },function(data){
-                $scope.vm.listApplication = data.data
-            },function(){
-                //layer.msg("请求失败")
-                console.log("请求失败");
-            })
-        }
         function useData(){
             $scope.vm.userId = data.userId;
             $scope.vm.userName = data.userName;
@@ -287,47 +287,26 @@ module.exports = homePageModule =>{
             $scope.vm.prop = [];
             $scope.vm.remark = "";
         }
-        //得到角色列表
-        getRole();
-        function getRole(){
-            httpRequestPost("/api/user/queryRoleList",{
-            },function(data){
-                $scope.vm.listRole = data.data
-            },function(){
-                //layer.msg("请求失败")
-                console.log("请求失败");
-            })
-        }
-
-        function savaProp(ev,id){
-            console.log(id)
-            if($(ev.target).prop("checked")){
-                $scope.vm.prop.push(id)
-            }else{
-                $scope.vm.prop.remove(id)
-            }
-        }
-
-        function saveProp(ev,id){
-            if($(ev.target).prop("checked")){
-                $scope.vm.applicationIds.push(id)
-            }else{
-                $scope.vm.applicationIds.remove(id)
-            }
-        }
-
-        function filter(val,arr) {
-            var len = arr.length;
-            for (var i = 0; i < arr.length; i++) {
-                if (val != arr[i]) {
-                    len -= 1
+        queryAllApplication();
+        //得到应用列表
+        function queryAllApplication(){
+            HomePageServer.queryAllApplication.save({},function (response) {
+                if(response.status == 200 ){
+                    $scope.vm.listApplication = response.data
                 }
-            }
-            if(len == 0){
-                return false
-            }else{
-                return true
-            }
+            },function(error){console.log(error)}) ;
+        }
+        //得到角色列表
+        queryRoleList();
+        function queryRoleList(index){
+            HomePageServer.queryRoleList.save({
+                "index":(index -1)*$scope.vm.paginationConf.pageSize,
+                "pageSize":$scope.vm.paginationConf.pageSize
+            },function (response) {
+                if(response.status == 200) {
+                    $scope.vm.roleList = response.data.filter(item=> {item.name != '超级管理员'});
+                }
+            })
         }
 
 }])

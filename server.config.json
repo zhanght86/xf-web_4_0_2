@@ -1,14 +1,14 @@
 {
       "root" : "./dest" ,
-      "port" : 8001 ,
+      "port" : 80 ,
       "proxy" : [
           {
-            "location":"\/api\/authority",
+            "location":"/api/authority",
              "target": "http://192.168.181.166:7005",
              "changeOrigin":true
          },
         {
-          "location":"\/api\/application",
+          "location":"/api/application",
           "target": "http://192.168.181.166:7006",
           "changeOrigin":true
         },
