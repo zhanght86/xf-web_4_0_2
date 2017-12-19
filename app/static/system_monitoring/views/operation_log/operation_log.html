@@ -24,19 +24,22 @@
                     <td width="20%">操作内容</td>
                     <td width="15%">操作时间</td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr ng-repeat="item in vm.listData.objs">
+                    <td>{{item.name}}</td>
+                    <td>{{item.applicationName}}</td>
+                    <td>{{item.moduleType|moduleType}}</td>
+                    <td>{{item.type|operateState}}</td>
+                    <!--<td ng-show="item.type.indexOf(',')!=-1" ng-bind="item.type.indexOf(',')==-1?item.type:item.type.substring(0,(item.type.indexOf(',')))">-->
+                        <!--<a href="javascript:;" class="c_blue"  >{{item.content|contentShow}}</a>-->
+                    <!--</td>-->
+                    <!--<td  >-->
+                        <!--<a href="javascript:;" class="c_blue"  ng-if="item.type.indexOf(',')!=-1">{{item.type.substring(0,(item.type.indexOf(',')))}}</a>-->
+                    <!--</td>-->
+                    <!--<td ng-if="item.type.indexOf(',')==-1">{{item.content}}</td>-->
+                    <td>{{item.content|contentShow}}</td>
+                    <td>{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>
-                <!--<tr ng-repeat="item in vm.listData.objs">-->
-                    <!--<td>{{item.time | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
-                    <!--<td>{{item.operationLogAuthor}}</td>-->
-                    <!--<td>{{item.type | operateState:item.operationLogTitle }}</td>-->
-                <!--</tr>-->
+
             </table>
             <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
 

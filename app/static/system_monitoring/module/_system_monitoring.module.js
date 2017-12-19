@@ -34,6 +34,7 @@ module.exports = angular =>{
     //         filters
     //--------------------------------------------------
     require('../filters/_operate.filter')(systemMonitoringModule);
+    require('../filters/_content.filter')(systemMonitoringModule);
 
 
 }
