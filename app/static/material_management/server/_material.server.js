@@ -27,11 +27,14 @@ class MaterialServer {
     this.checkKnowTitle = $resource(API_MATERIAL+'/chat/knowledge/check/topic',{},{});
     //扩展问校验
     this.addExtension = $resource(API_MATERIAL+'/chat/knowledge/check/question',{},{});
+    //知识内容校验
+    this.addContentArr = $resource(API_MATERIAL+'/chat/knowledge/check/content',{},{});
 
-
-
-//  编辑保存
+    //编辑保存
     this.saveChatKnowledge = $resource(API_MATERIAL+'/chat/knowledge/update',{},{});
+     //根据id查询
+     this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/chat/knowledge',{},{});
+
 
 
 

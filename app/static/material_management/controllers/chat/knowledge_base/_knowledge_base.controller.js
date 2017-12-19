@@ -200,16 +200,17 @@ module.exports=materialModule => {
             console.log(data);
             var params = {
                 standardQuestion : data.topic,
-                extendedQuestionArr :data.chatQuestionList,
+                extendedQuestionArr :data.chatKnowledgeQuestionList,
                 contentArr : data.chatKnowledgeContentList,
                 applicationId: APPLICATION_ID,
                 //chatKnowledgeModifier : data.chatKnowledgeModifier,
                 chatKnowledgeId : data.id,
-                chatKnowledgeSource:data.origin,   //类型 101  概念      100 faq
-                editUrl : data.origin==100?"materialManagement.faqChat":"materialManagement.conceptChat"
+                //chatKnowledgeSource:data.origin,   //类型 101  概念      100 faq
+                //editUrl : data.origin==100?"materialManagement.faqChat":"materialManagement.conceptChat"
 
             };
-            $state.go("materialManagement.chatKnowledgeBasePreview",{scanData:angular.toJson(params)});
+            $state.go("MM.chatAdd",{scanData:angular.toJson(params)});
+            //$state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});
         }
     }
 ])};

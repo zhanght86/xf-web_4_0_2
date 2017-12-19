@@ -9,11 +9,6 @@
                 <div class="csso-cz-box clearfix  mb-10">
                     <div class="L ">
                         <div class="L pr chat_add_div ">
-                            <!--<p class="bd mr-10 chat_add_p" >FAQ型聊天新增</p>-->
-                            <!--<ul class="bd pa chat_add_ul" >-->
-                                <!--<li><a ui-sref="materialManagement.faqChat">FAQ型聊天新增</a></li>-->
-                                <!--<li><a ui-sref="materialManagement.conceptChat">概念型聊天新增</a></li>-->
-                            <!--</ul>-->
                             <button class="btn1 btn1_blue mr10" ui-sref="MM.chatAdd">新增知识</button>
                         </div>
                         <div class="L ">
@@ -68,7 +63,7 @@
                             <div class="mb-10">
                                 <!--<input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>-->
                                 <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-checked="vm.delArr.inArray(item.id)" ng-click="vm.selectSingle(item.id)"/>
-                                <a  class="c-primary f-16" ng-click="vm.seeDtails(item)">聊天主题：{{item.topic}}</a>
+                                <a  class="c-primary f-16" ui-sref="MM.chatAdd({knowTextId:item.id})">聊天主题：{{item.topic}}</a>
                             </div>
                             <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>
                             <div class="cl">
