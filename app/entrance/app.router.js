@@ -1302,7 +1302,7 @@ module.exports = (angular) => {
         // 聊天知识库
         {
             name: "MM.chat",
-            url: "/chat",
+            url: "/chat/:userPermission",
             data: {
                 roles: []
             },
@@ -1422,7 +1422,7 @@ module.exports = (angular) => {
         // 添加图文消息
         {
             name: "MM.addTw",
-            url: "/addTw",
+            url: "/addTw/::imgTextId",
             data: {
                 roles: []
             },
@@ -1442,7 +1442,7 @@ module.exports = (angular) => {
         // 图文消息详情
         {
             name: "MM.detail",
-            url: "/detail",
+            url: "/detail/:imgTextId",
             data: {
                 roles: []
             },
