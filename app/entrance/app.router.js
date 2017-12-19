@@ -127,7 +127,7 @@ module.exports = (angular) => {
                     controller: "NavController"
                 },
                 "content": {
-                    template: require("../static/index/views/user_control/switch_application/content.html"),
+                    template: require("../static/index/views/switch_application/content.html"),
                     controller: "ApplicationController"
                 }
             }
@@ -147,14 +147,14 @@ module.exports = (angular) => {
                     controller: "NavController"
                 },
                 "content": {
-                    template: require("../static/index/views/user_control/permission_management/permission.html"),
+                    template: require("../static/index/views/permission_management/permission.html"),
                 }
             }
         },
         //角色管理
         {
             name: "HP.permission.role",
-            url: "/permission/role",
+            url: "/role",
             data: {
                 roles: []
             },
@@ -162,7 +162,7 @@ module.exports = (angular) => {
             title : "角色管理" ,
             views: {
                 "content@HP.permission": {
-                    template: require("../static/index/views/user_control/permission_management/role.html"),
+                    template: require("../static/index/views/permission_management/role.html"),
                     controller: "RoleController"
                 }
             }
@@ -170,7 +170,7 @@ module.exports = (angular) => {
         //用户管理
         {
             name: "HP.permission.user",
-            url: "/permission/user",
+            url: "/user",
             data: {
                 roles: []
             },
@@ -178,7 +178,7 @@ module.exports = (angular) => {
             title : "用户管理" ,
             views: {
                 "content@HP.permission": {
-                    template: require("../static/index/views/user_control/permission_management/user.html"),
+                    template: require("../static/index/views/permission_management/user.html"),
                     controller: "UserController"
                 }
             }

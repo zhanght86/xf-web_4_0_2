@@ -8,7 +8,7 @@
             <div class="mb-10 cl">
             	<span class="L">
                 	<button  class="btn1 btn1_blue" ng-click="vm.addUser()"> 添加用户</button>
-                    <button  class="btn1 btn_delete" ng-click="vm.deleteUsers()"> 批量删除</button>
+                    <button  class="btn1 btn_delete" ng-click="vm.deleteUser($scope.vm.deleteIds)"> 批量删除</button>
                 </span>
             </div>
             <div class="cl">
@@ -20,15 +20,15 @@
             <div class="mt-20">
                 <table class="stop_word_tab" id="user_table">
                     <thead>
-                    <tr>
-                        <th class="bold" width="3%"><input class="selectAllBtn" type="checkbox" ng-click="vm.selectAll($event)" ng-checked="vm.selectAllCheck || (vm.deleteIds.length == vm.listData.length)"/></th>
+                    <tr>{{vm.deleteIds}}{{vm.userListIds}}
+                        <th class="bold" width="3%"><input class="selectAllBtn" type="checkbox" ng-click="vm.deleteIds==vm.userListIds?vm.deleteIds=[]:vm.deleteIds=vm.userListIds" ng-checked="vm.deleteIds==vm.userListIds"/></th>
                         <th class="bold" width="8%">姓名</th>
                         <th class="bold" width="8%">登录名</th>
                         <th class="bold" width="11%">手机</th>
                         <th class="bold" width="13%">邮箱</th>
                         <th class="bold" width="8%">角色</th>
                         <th class="bold" width="15%">更新时间</th>
-                        <th class="bold" width="10%">应用范围</th>
+                        <!--<th class="bold" width="10%">应用范围</th>-->
                         <th class="bold" width="9%">状态</th>
                         <th class="bold" width="15%">操作</th>
                     </tr>
@@ -36,14 +36,14 @@
                     <tbody>
                     <tr ng-repeat="user in vm.userList track by $index">
                         <!--<td>    {{item}}</td>-->
-                        <td><input type="checkbox" ng-checked="vm.selectAllCheck || vm.deleteIds.inArray(id)" ng-click="vm.selectSingle($event,user.userId)"/></td>
+                        <td><input type="checkbox" ng-checked="vm.selectAllCheck || vm.deleteIds.inArray(id)" ng-click="vm.deleteIds.inArray(user.id)?vm.deleteIds.remove(user.id):vm.deleteIds.push(user.id)"/></td>
                         <td>{{user.name}}</td>
                         <td>{{user.account}}</td>
                         <td>{{user.phone}}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.roleName}}</td>
                         <td>{{user.lastModifiedDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td><span ng-repeat="application in user.applicationName[0].data">{{application.name}}<i ng-if="$index!=user.applicationName[0].data.length-1">,</i></span></td>
+                        <!--<td><span ng-repeat="application in user.applicationName[0].data">{{application.name}}<i ng-if="$index!=user.applicationName[0].data.length-1">,</i></span></td>-->
                         <td>
                             <span class="btn1 btn_green2" ng-if="user.status==1">已启用</span>
                             <span class="btn1 btn_red" ng-if="user.status==0">未启用</span>
@@ -52,7 +52,7 @@
                             <span ng-if="user.status==1"><a href="javascript:;" title="停用" class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)">停用</a></span>
                             <span ng-if="user.status==0"><a href="javascript:;" title="启用" class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)">启用</a></span>
                             <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.editUser(user)">编辑</a>
-                            <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser(user.id)">删除</a>
+                            <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteUser([user.id])">删除</a>
                         </td>
                     </tr>
                     </tbody>

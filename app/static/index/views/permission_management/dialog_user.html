@@ -68,26 +68,19 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">角色：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" id="role_id" ng-model="vm.roleId"  ng-init="vm.roleId=vm.listRole[0].roleId" ng-options="role.roleId as role.roleName for role in vm.listRole">
-                    <!--<option ng-repeat="item in vm.listRole" ng-selected="$index==0"  ng-value="item.roleId">{{item.roleName}}</option>-->
+                <select class="input-text" id="role_id" ng-model="vm.roleId" ng-options="role.id as role.name for role in vm.roleList">
                 </select>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">所属应用：</label>
-            <!--{{vm.prop}}-->
             <div class="formControls col-xs-9 col-sm-9" style="max-height:200px;overflow-y: auto;">
-                <label  ng-repeat="item in vm.listApplication" ng-class="$index==0?mr-10:''" style="width:47%;display:inline-block;margin-right: 2%;">
-                    <input  type="checkbox" ng-click="vm.savaProp($event,item.applicationId)"/>{{item.applicationName}}
+                <label  ng-repeat="item in vm.listApplication" ng-class="$first?mr-10:''" style="width:47%;display:inline-block;margin-right: 2%;">
+                    <input  type="checkbox" ng-checked="vm.applicationIds.inArray(item.id)" ng-click="vm.applicationIds.inArray(item.id)?vm.applicationIds.remove(item.id):vm.applicationIds.push(item.id)"/>
+                    {{item.name}}
                 </label>
             </div>
         </div>
-        <!--<div class="mb-10 cl">-->
-            <!--<label class="form-label col-xs-3 col-sm-2">备注：</label>-->
-            <!--<div class="formControls col-xs-9 col-sm-9">-->
-                <!--<textarea class="textarea bd" ng-model="vm.remark"></textarea>-->
-            <!--</div>-->
-        <!--</div>-->
         <div class="tc">
             <button  class="btn btn-primary radius mr-10" type="button" ng-click="vm.verifyRelease()?closeThisDialog(1):''">保存</button>
             <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>

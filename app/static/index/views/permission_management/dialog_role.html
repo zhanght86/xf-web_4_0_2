@@ -1,0 +1,38 @@
+<div class="pt-10 pb-10 permission_role_dialog" style="overflow: hidden">
+    <form action="" method="post" name="myForm" class="form form-horizontal col-xs-6" novalidate>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3">角色名称：</label>
+            <div class="formControls col-xs-7">
+                <input name="userName" type="text" placeholder="显示在登录后的用户名称" ng-model="vm.roleName" class="input-text" id="username" required>
+                <!--<span style="color:red" ng-show="myForm.userName.$dirty && myForm.userName.$invalid">-->
+                    <!--<span ng-show="myForm.userName.$error.required">姓名不能为空!</span>-->
+                <!--</span>-->
+            </div>
+        </div>
+        <div class="mb-10 cl">
+            <label class="form-label col-xs-3">角色描述：</label>
+
+            <div class="formControls col-xs-7">
+                <input name="userLoginName" type="text" placeholder="对角色权限进行描述" ng-model="vm.roleDescription" class="input-text" id="name" required>
+                <!--<span style="color:red" ng-show="myForm.userLoginName.$dirty && myForm.userLoginName.$invalid">-->
+                    <!--<span ng-show="myForm.userLoginName.$error.required">登录名不能为空!</span>-->
+                <!--</span>-->
+            </div>
+        </div>
+        <div class="mb-10 cl">
+
+        </div>
+        <div class="tc">
+            <button  class="btn btn-primary radius mr-10" type="button" ng-click="vm.verifyRelease()?closeThisDialog(1):''">保存</button>
+            <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
+        </div>
+    </form>
+    <div class="permission_tree ztree col-xs-6">
+        <div z-tree id="treeDemo"></div>
+    </div>
+
+</div>
+
+
+
+

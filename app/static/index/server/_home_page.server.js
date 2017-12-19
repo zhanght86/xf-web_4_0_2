@@ -32,14 +32,23 @@ class HomePageServer {
     // 删除用户
         this.deleteUser = $resource(API_USER+"/user/delete/user/by/ids",{},{}) ;
         // 角色
+    // 查询所有角色
+    this.queryRoleList = $resource(API_USER+"/role/get",{},{}) ;
+    // 查询所有角色
+    this.deleteRole = $resource(API_USER+"/role/delete/:id",{id:'@id'},{}) ;
+
+    //查询所有应用
+    this.queryAllApplication = $resource(API_APPLICATION+"/application/get", {}, {});
+
+    // 查询所有权限
+    this.queryPermissionList = $resource(API_USER+"/role/get/group",{},{}) ;
 
      /******************************
                         *上传记录*
                 ********************************/   
 
     //上传记录
-    this.uploadRecord=$resource(API_ANALYSIS+"/upload/record/find/list", {}, {}); 
-  
+    this.uploadRecord=$resource(API_ANALYSIS+"/upload/record/find/list", {}, {});
     //文件下载
     this.recordDownload=$resource(API_MATERIAL+"/document/get/document/id", {}, {});
 

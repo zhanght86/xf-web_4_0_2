@@ -151,17 +151,13 @@ gulp
         .pipe(livereload())
         .on('end', done);
     })
-    .task('fileinclude:libs', function (done) {
+    .task('copy:libs', function (done) {
         gulp.src([
             './app/assets/libs/**/*'
         ])
-        .pipe(fileinclude({
-            prefix: '@@',
-            basepath: '@file'
-        }))
-        .pipe(gulp.dest('dest/assets/libs'))
-        .pipe(livereload())
-        .on('end', done);
+            .pipe(gulp.dest('dest/assets/libs'))
+            .pipe(livereload())
+            .on('end', done);
     })
     .task('clean', function (done) {
         gulp.src(['./dest'])
@@ -182,7 +178,7 @@ gulp.task('watch-module', function(done) {
     gulp.watch(watchPath.img,["copy:images"] ).on('end', done);
     gulp.watch(watchPath.css,["fileinclude:css","concatcss"]).on('end', done);
     gulp.watch(watchPath.js,["fileinclude:js"] ).on('end', done);
-    gulp.watch(watchPath.libs,["fileinclude:libs","copy:libsimages"] ).on('end', done);
+    gulp.watch(watchPath.libs,["copy:libs"] ).on('end', done);
     // gulp.watch(watchPath.appjs,["copy:images"] ).on('end', done)
 });
 //使用connect启动一个Web服务器
@@ -214,4 +210,4 @@ gulp.task('release', ['imgmin', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 gulp.task('release-efficient', ['smushit', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 //开发
 // gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'lessmin', 'build-js', 'watch', 'open']);
-gulp.task('default', [ 'copy:images','copy:imagestemp','fileinclude:html','fileinclude:css','fileinclude:js','fileinclude:libs','copy:libsimages','concatcss']);
+gulp.task('default', [ 'copy:images','copy:imagestemp','fileinclude:html','fileinclude:css','fileinclude:js','copy:libs','concatcss']);
