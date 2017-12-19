@@ -67,7 +67,7 @@ module.exports = homePageModule =>{
         //     console.log( $scope.vm.deleteIds)
         // }
         function selectAll(arr,keyword) {
-            return arr.map(item => {item.keyword})
+            return arr.map(item => {item[keyword]})
         }
         console.log(selectAll([{a:1},{a:2}],"a"));
         queryUserList(1);
