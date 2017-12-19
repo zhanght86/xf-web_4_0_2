@@ -1422,7 +1422,7 @@ module.exports = (angular) => {
         // 添加图文消息
         {
             name: "MM.addTw",
-            url: "/addTw/::imgTextId",
+            url: "/addTw/:imgTextId",
             data: {
                 roles: []
             },
