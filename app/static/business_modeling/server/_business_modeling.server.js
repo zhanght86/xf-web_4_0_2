@@ -29,9 +29,19 @@ class BusinessModelingServer {
                         *同义词概念管理*
                 ********************************/   
 
-    //上传记录
-    this.synonymListByAttribute=$resource(API_MS+"/modeling/concept/synonym/listByAttribute", {}, {});           
-       
+    //列表展示
+    this.conceptGetParam=$resource(API_MS+"/concept/collective/get/param", {}, {});  
+    //概念新增
+    this.conceptAdd=$resource(API_MS+"/concept/collective/add", {}, {})  
+    //概念修改
+    this.conceptUpdate=$resource(API_MS+"/concept/collective/update", {}, {}) 
+    //概念删除
+    this.conceptDelete=$resource(API_MS+"/concept/collective/delete", {}, {})
+    //概念批量删除
+    this.conceptAllDelete=$resource(API_MS+"/concept/collective/batch/delete", {}, {})
+    //判断重复
+    this.conceptRepeat=$resource(API_MS+"/concept/collective/repeat", {}, {})
+
     }
 }
 BusinessModelingServer.$inject = ['$resource'];

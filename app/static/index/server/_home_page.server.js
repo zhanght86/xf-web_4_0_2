@@ -25,6 +25,8 @@ class HomePageServer {
         this.queryUserList = $resource(API_USER+"/user/get/user/by/name	",{},{}) ;
     // 添加用户
         this.addUser = $resource(API_USER+"/user/add",{},{}) ;
+    // 校验用户名
+        this.checkUserName = $resource(API_USER+"/user/check",{},{}) ;
     // 更新用户
         this.updateUser = $resource(API_USER+"/user/update",{},{}) ;
     // 更新用户状态

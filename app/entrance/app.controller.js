@@ -262,9 +262,32 @@ module.exports = ngModule =>
 
                 //return tree ;
             }
-            function selectAll(arr,...key) {
-                return arr.map(key => typeof key)
-            }
+           //  权限 数组
+           function selectAll(arr,type,...listKey) {
+               let newArr = [] ;
+               let lenKey = listKey.length ;
+               if(!lenKey){
+                   newArr = arr.map(item=>(item))
+
+               }else{
+                   if(type == 0 && lenKey==1){
+                       newArr = arr.map(function(item,index){
+                           return item[listKey[0]] ;
+                       })
+                   }else if (type != 0 && lenKey>1){
+                       newArr = arr.map(function(item){
+                           let result = {} ;
+                           listKey.forEach(function (key) {
+                               result[key] = item[key]
+                           }) ;
+                           return result ;
+                       })
+                   }else{
+                       console.log("输入条件不合法")
+                   }
+               }
+               return newArr ;
+           }
 /***********************************************************************************************************************************************************************/
             $scope.currentUser = null;
             $scope.currentPage = 1;

@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
    .controller('AggregateConceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout",
-    ($scope,localStorageService, $state,ngDialog,$timeout)=> {
+    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$http",
+    ($scope,localStorageService, $state,ngDialog,$timeout,$http)=> {
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -64,14 +64,10 @@ module.exports = applicationManagementModule =>{
         }
         //请求列表
         function loadCollectiveConceptTable(current){
-            httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",{
-                "collectiveConceptApplicationId": $scope.vm.applicationId,
-                "index" :(current-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize
-            },function(data){
+             $http.get("/api/ms/concept/collective/get/application/"+APPLICATION_ID+"").success(function(data,status,headers,congfig){
+                console.log(data)
                 loadCollectiveConcept(current,data);
-            },function(){
-               // layer.msg("请求失败")
+            },function(err){
                 console.log('请求失败');
             })
         }
@@ -85,7 +81,6 @@ module.exports = applicationManagementModule =>{
                 pageSize: $scope.vm.pageSize,//第页条目数
                 pagesLength: 8,//分页框数量
             };
-            $scope.$apply();
         }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -217,7 +212,7 @@ module.exports = applicationManagementModule =>{
         //添加 窗口
         function addCollective(){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/concept_library/aggregate/aggregate_concept_manage_dialog.html",
+                template:"/static/business_modeling/views/concept/aggregate/aggregate_dialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -229,9 +224,8 @@ module.exports = applicationManagementModule =>{
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/ms/modeling/concept/collective/repeatCheck",{
-                            "collectiveConceptApplicationId": $scope.vm.applicationId,
-                            "collectiveConceptKey": $scope.vm.key
+                        httpRequestPost("/api/ms/concept/collective/repeat",{
+                            "topic": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.confirm("您添加的概念类已经在，是否前往编辑？",{
@@ -292,7 +286,7 @@ module.exports = applicationManagementModule =>{
         //編輯彈框   添加公用
         function addCollectiveConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/concept_library/aggregate/aggregate_concept_manage_dialog2.html",
+                template:"/static/business_modeling/views/concept/aggregate/aggregate_dialog2.html",
                 scope: $scope,
                 Returns : {a:1},
                 closeByDocument:false,
@@ -410,18 +404,18 @@ module.exports = applicationManagementModule =>{
         //单条新增
         function singleAddCollectiveConcept(){
             assembleCollectiveConceptTerm();
-            httpRequestPost("/api/ms/modeling/concept/collective/add",{
-                "collectiveConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "collectiveConceptKey":  $scope.vm.key,
-                "collectiveConceptModifier": $scope.vm.modifier,
-                "collectiveConceptTerm": $scope.vm.term,
-                "collectiveConceptWeight": $scope.vm.weight
+            httpRequestPost("/api/ms/concept/collective/add",{
+                "topic":  $scope.vm.key,
+                "termList":[1,2,3],
+                "weight": $scope.vm.weight
             },function(data){
-                if(responseView(data)==true){
-                    loadCollectiveConceptTable($scope.vm.paginationConf.currentPage);
+                if(data.status==200){
+                    layer.msg(data.info)
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                }else if(data.status==500){
+                    layer.msg(data.info)
                 }
-            });
+            })
         }
         //单条刪除
         function singleDelCollectiveConcept(id){

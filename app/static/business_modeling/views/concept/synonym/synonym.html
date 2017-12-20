@@ -30,11 +30,11 @@
                     </div>
                 </div> -->
             </div>
-             <a class="btn btn-blue mr5" id="addCase" ng-click="vm.addSynonym()">新增概念</a>
+             <a class="btn btn-blue mr5" id="addCase" ng-click="vm.addConcept()">新增概念</a>
              <a class="btn btn-blue mr5" href="javascript:;" ng-click="vm.batchUpload()">批量新增</a>
                 <div class=" conceptSearchRt">
-                <input type="text" class="input-text L"  placeholder="请输入查询概念类或者概念的名称"  style="width:220px;">
-                <input type="button"  ng-click="vm.searchSynonymConcept(1)" class=" mr5 btn1 tw_btn "/>
+                <input type="text" class="input-text L" ng-model="vm.topic"  placeholder="请输入查询概念类或者概念的名称"  style="width:220px;">
+                <input type="button"  ng-click="vm.loadSynonymConceptTable(1)" class=" mr5 btn1 tw_btn "/>
                 <!--<a class="btn btn-green mr10" href="javascript:;">继续概念库</a>-->
                 <a class="btn btn-green2 mr5" href="javascript:;" ng-click="vm.exportAll()">导出</a>
                 <a class="btn btn-red mr5" href="javascript:;" ng-click="vm.batchDelete()">批量删除</a>
@@ -43,7 +43,7 @@
         <table class="stop_word_tab">
             <thead>
                 <tr>
-                    <th class="bold" width="5%"><input id="selectAll" type="checkbox"/></th>
+                    <th class="bold" width="5%"><input id="selectAll" type="checkbox" ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/></th>
                     <th class="bold" width="10%">概念类名</th>
                     <th class="bold" width="10%">概念权重</th>
                     <th class="bold" width="35%">同义概念</th>
@@ -53,17 +53,17 @@
                 </tr>
             </thead>
             <tr ng-repeat="item in vm.listData">
-                <td><input type="checkbox" name="sid" synonymkey="{{item.topic}}" value="{{item.id}}"></td>
+                <td><input type="checkbox" name="sid" synonymkey="{{item.topic}}" ng-checked="vm.ids.inArray(item.id)" ng-click="vm.selectSingle(item.id)" value="{{item.id}}"></td>
                 <td>{{item.topic}}</td>
                 <td>{{item.weight | weightFilter}}</td>
                 <td>
-                    <span ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.synonymConceptTerm.split('；')"><i ng-if="$index!=0 && i " style="color: #333;">, </i>{{i}} </span>
+                    <span  ng-class="($index%2==1)?'ng-blue':'ng-red'" ng-repeat = "i in item.term.split(';')"><i ng-if="$index!=0 && i " style="color: #333;">, </i>{{i}}</span>
                 </td>
                 <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td>{{item.modifierId}}</td>
                 <td>
                     <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editSynonym(item)">修改</a> &nbsp;
-                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteSynonym(item.id)">删除</a>
+                    <a href="javascript:;" class="delConcept" ng-click="vm.deleteSingle(item.id)">删除</a>
                 </td>
             </tr>
         </table>
