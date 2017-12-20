@@ -4,48 +4,54 @@
             <label class="form-label col-xs-3 col-sm-2">姓名：</label>
 
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="userName" type="text" placeholder="显示在登录后的用户名称" ng-model="vm.userName" class="input-text" id="username" required>
+                <input name="userName" type="text" placeholder="显示在登录后的用户名称"
+                       ng-model="vm.userName" class="input-text" id="username" ng-pattern="/[A-Za-z\u4e00-\u9fa5]{0,20}/" required>
                  <span style="color:red" ng-show="myForm.userName.$dirty && myForm.userName.$invalid">
-                    <span ng-show="myForm.userName.$error.required">姓名不能为空!</span>
+                    <small ng-show="myForm.userName.$error.pattern">姓名必须为20以内位的汉字或字母的组合!</small>
+                    <small ng-show="myForm.userName.$error.required">姓名不能为空!</small>
                 </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">登录名：</label>
-
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="userLoginName" type="text" placeholder=" 在登录页使用的登录名" ng-model="vm.userLoginName" class="input-text" id="name" required>
+                <input name="userLoginName" type="text" placeholder=" 在登录页使用的登录名"
+                       ng-model="vm.userLoginName" ng-pattern="/^[0-9a-zA-Z_]{4,20}$/" class="input-text" id="name" required>
                 <span style="color:red" ng-show="myForm.userLoginName.$dirty && myForm.userLoginName.$invalid">
-                    <span ng-show="myForm.userLoginName.$error.required">登录名不能为空!</span>
+                    <small ng-show="myForm.userLoginName.$error.required">登录名不能为空!</small>
+                    <small ng-show="myForm.userLoginName.$error.pattern">登录名只可以是数字、字母、下划线组合，4-20个字符!</small>
                 </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">密码：</label>
-
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="userPassword" type="password" ng-model="vm.userPassword" class="input-text"  required/>
+                <input name="userPassword" type="password" ng-model="vm.userPassword"  ng-pattern="/^[0-9a-zA-Z]+$/" class="input-text"  required/>
                 <span style="color:red" ng-show="myForm.userPassword.$dirty && myForm.userPassword.$invalid">
-                    <span ng-show="myForm.userPassword.$error.required">密码不能为空!</span>
+                    <small ng-show="myForm.userPassword.$error.required">密码不能为空!</small>
+                    <small ng-show="myForm.userPassword.$error.pattern">密码只可以是数字和字母组合!</small>
                 </span>
             </div>
         </div>
+
+
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">确认密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="userPassWord" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
-                 <span style="color:red" ng-show="(!myForm.userPassWord.$invalid)  ||  myForm.userPassWord.$dirty">
-                    <span ng-show="vm.userPassWord!=vm.userPassword">密码不一致!</span>
+                <input name="userConfirmPassword" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
+                 <span style="color:red" ng-show="myForm.userConfirmPassword.$valid ||  myForm.userConfirmPassword.$dirty">
+                    <small ng-show="vm.userPassWord!=vm.userPassword">密码不一致!</small>
                 </span>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">手机：</label>
-
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="phoneNumber" type="text" placeholder="123456356578" ng-model="vm.userPhoneNumber" class="input-text" id="phone_number" required />
+                <input name="phoneNumber" type="text" placeholder="123456356578"
+                       ng-model="vm.userPhoneNumber" ng-pattern="/^((\+86)|(86))?((13)|(15)|(17)|(18)|(19))\d{9}$/" class="input-text" id="phone_number" required />
                   <span style="color:red" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
-                    <span ng-show="myForm.phoneNumber.$error.required">请输入手机号!</span>
+                    <small ng-show="myForm.phoneNumber.$error.required">请输入手机号!</small>
+                    <small ng-show="myForm.phoneNumber.$error.pattern">手机号只可以为1开头的11位数字!!</small>
                 </span>
             </div>
         </div>
@@ -59,7 +65,6 @@
                   <span style="color:red" ng-show="myForm.userEmail.$dirty && myForm.userEmail.$invalid">
                     <span ng-show="myForm.userEmail.$error.required">请输入邮箱!</span>
                 </span>
-
                  <span style="color:red" ng-show="myForm.userEmail.$dirty && myForm.userEmail.$invalid">
                     <span ng-show="myForm.userEmail.$error.pattern">请输入正确的邮箱格式!</span>
                 </span>
@@ -82,7 +87,7 @@
             </div>
         </div>
         <div class="tc">
-            <button  class="btn btn-primary radius mr-10" type="button" ng-click="vm.verifyRelease()?closeThisDialog(1):''">保存</button>
+            <button  class="btn btn-primary radius mr-10" type="button" ng-click="myForm.$valid ? vm.verifyRelease(vm.userId,vm.userLoginName,closeThisDialog):''">保存</button>
             <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
         </div>
     </form>
