@@ -32,33 +32,35 @@ module.exports=materialModule => {
 
         };
 
-        //添加扩展问
+        //添加扩展问 (先在前台校验重复，再校验后台与数据库的是否重复---点完保存后数据才能添加到数据库)
         function addExtension(){
-                if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
-                    layer.msg("扩展不能为空",{time:1000});
-                }else{
-                    MaterialServer.addExtension.get({
-                        "applicationId":APPLICATION_ID,
-                        "questionContent" : $scope.vm.extendedQuestion
-                    },{
-                        "applicationId":APPLICATION_ID,
-                        "questionContent" : $scope.vm.extendedQuestion
-                    },function(data){
-                        console.log(data);
-                        if(data.status == 200){
-                            var obj = {};
-                            obj.content = angular.copy($scope.vm.extendedQuestion);
-                            $scope.vm.extendedQuestionArr.push(obj);
-                            $scope.vm.extendedQuestion='';
-                            console.log($scope.vm.extendedQuestionArr);
-                        }else if(data.status == 500){
-                            layer.msg("扩展问重复",{time:1000});
+            if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
+                layer.msg("扩展不能为空",{time:1000});
+            }else if(checkRepeat($scope.vm.extendedQuestion,$scope.vm.extendedQuestionArr,"content")){
+                layer.msg("扩展问题重复，请重新输入",{time:1000});
+            }else{
+                //console.log($scope.vm.extendedQuestionArr);   //[]
+                MaterialServer.addExtension.get({
+                    "applicationId" : APPLICATION_ID,
+                    "questionContent" : $scope.vm.extendedQuestion
+                },function(data){
+                    console.log(data);
+                    if(data.status == 200){
+                        var obj = {};
+                        obj.content = angular.copy($scope.vm.extendedQuestion);
+                        obj.type = 60;
+                        $scope.vm.extendedQuestionArr.push(obj);
+                        $scope.vm.extendedQuestion='';
+                        console.log($scope.vm.extendedQuestionArr);
+                    }else if(data.status == 500){
+                        layer.msg("扩展问重复",{time:1000});
 
-                        }
-                    },function(err){
-                        console.log(err);
-                    });
-                }
+                    }
+                },function(err){
+                    console.log(err);
+                });
+
+            }
 
         }
         //刪除
@@ -69,6 +71,8 @@ module.exports=materialModule => {
         function addContent(){
             if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
                 layer.msg("知识内容不能为空",{time:1000});
+            }else if(checkRepeat($scope.vm.contentVal,$scope.vm.contentArr,"content")){
+                layer.msg("知识内容重复，请重新输入",{time:1000});
             }else{
                 MaterialServer.addContentArr.get({
                     "applicationId":APPLICATION_ID,
@@ -88,7 +92,6 @@ module.exports=materialModule => {
                     console.log(err);
                 });
             }
-
         }
         //刪除知识内容
         function removeCon(item,arr){
@@ -96,7 +99,7 @@ module.exports=materialModule => {
         }
         //保存
         function save(){
-           // if(check()){
+            if(check()){
                 if($scope.vm.editStandardQuestion){
                     //编辑
                     //alert("更新知识");
@@ -107,7 +110,8 @@ module.exports=materialModule => {
                         "chatKnowledgeContentList":$scope.vm.contentArr,
                         "modifierId":USER_ID,
                         "origin":0,
-                        "topic":$scope.vm.standardQuestion
+                        "topic":$scope.vm.standardQuestion,
+
                     },function(data){
                         if(data.status==500){
                             layer.msg("保存失败");
@@ -128,7 +132,8 @@ module.exports=materialModule => {
                         "chatKnowledgeContentList":$scope.vm.contentArr,
                         "modifierId":USER_ID,
                         "origin":0,
-                        "topic":$scope.vm.standardQuestion
+                        "topic":$scope.vm.standardQuestion,
+
                     },function(data){
                         if(data.status==500){
                             layer.msg("保存失败");
@@ -141,29 +146,32 @@ module.exports=materialModule => {
                         console.log(err);
                     });
                 }
-
-            //}
+            }
         }
 
         /**
          ** 校验标题是否重复
          **/
         function checkTit(){
-            MaterialServer.checkKnowTitle.get({
-                "applicationId":APPLICATION_ID,
-                "topic":$scope.vm.standardQuestion
-            },function(data){
-                if(data.status==500){
-                    layer.msg("聊天主题重复,请重新输入");
-                    $("#standardQuestion").focus();
-                    //$scope.vm.titleCheck=false;
-                }
-                if(data.status==200){
-                    //$scope.vm.titleCheck=true;
-                }
-            },function(err){
-                console.log(err);
-            });
+            if($scope.vm.standardQuestion.length==0){
+                layer.msg("请输入标准问法！");
+            }else{
+                MaterialServer.checkKnowTitle.get({
+                    "applicationId":APPLICATION_ID,
+                    "topic":$scope.vm.standardQuestion
+                },function(data){
+                    if(data.status==500){
+                        layer.msg("标准问法重复,请重新输入");
+                        $("#standardQuestion").focus();
+                        //$scope.vm.titleCheck=false;
+                    }
+                    if(data.status==200){
+                        //$scope.vm.titleCheck=true;
+                    }
+                },function(err){
+                    console.log(err);
+                });
+            }
         }
         //判断是新增还是编辑，如果是编辑，判断标题有没有改动；
         function checkTitle(){
@@ -179,7 +187,6 @@ module.exports=materialModule => {
                 //新增
                 checkTit();
             }
-
         }
         //检验数据是否合格
         function check(){
@@ -193,7 +200,22 @@ module.exports=materialModule => {
                 return true;
             }
         }
-
+        //判断重复（扩展问及新增内容）
+        function checkRepeat(val,arr,prop){
+            var result;
+            if(arr.length==0){
+                result=0;
+            }else{
+                angular.forEach(arr,function(item){
+                    if(item[prop]==val){
+                        result=1;
+                    }else{
+                        result=0;
+                    }
+                });
+            }
+            return result;
+        }
         //获取编辑知识ID
         if($stateParams.knowTextId){
             $scope.vm.graphicMessageId = $stateParams.knowTextId;
@@ -210,6 +232,10 @@ module.exports=materialModule => {
                     $scope.vm.contentArr = data.data.chatKnowledgeContentList;
 
                     $scope.vm.editStandardQuestion = data.data.topic;
+                    if(!data.data.chatQuestionList){
+                        //alert("chatQuestionList为空");
+                        $scope.vm.extendedQuestionArr=[];      //聊天新增不加扩展问，编辑时会报错
+                    }
                 }
             },function(err){
                 console.log(err);
