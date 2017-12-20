@@ -6,10 +6,10 @@
 module.exports = businessModelingModule =>{
     businessModelingModule
     .controller('BotController',[
-    '$scope','localStorageService','BusinessModelingServer','$timeout', '$state','$stateParams','ngDialog','$cookieStore','$interval',
-    ($scope,localStorageService,BusinessModelingServer,$timeout,$state,$stateParams,ngDialog,$cookieStore,$interval)=> {
+    '$scope','localStorageService','BusinessModelingServer','$timeout', '$state','$stateParams','ngDialog','$cookieStore','$interval','$http',
+    ($scope,localStorageService,BusinessModelingServer,$timeout,$state,$stateParams,ngDialog,$cookieStore,$interval,$http)=> {
         $scope.vm = {
-            success : 10000,
+            success : 200,
             illegal : 10003,
             failed : 10004,
             empty : 10005,
@@ -23,8 +23,8 @@ module.exports = businessModelingModule =>{
             editBot:editBot,
             deleteBot:deleteBot,
             categoryId: "",
-            categoryTypeId: 163,
-            botSelectType:163,
+            categoryTypeId: 160,
+            botSelectType:160,
             categorySceneId: 0,
             categoryAttributeName: "edge",
             categoryName: "",
@@ -47,34 +47,24 @@ module.exports = businessModelingModule =>{
             categoryDescribe:"",
             suggestionValue:"",
             suggestionData:"",
+            categoryRootPid:"",
             winHeight:0
         };
 
-    BusinessModelingServer.classifyGetFullname.get({
-    	id:"452935014326206464"
-    },function(data){
-    	console.log(data)
-    })
+        //搜索
+      
 
-    //  BusinessModelingServer.classifyNameCheck.get({
-    // 	id:"452935014326206464",
-    // 	name:"123",
-    // 	pid:"root",
-    // 	applicationId:APPLICATION_ID,
-    // },function(data){
-    // 	console.log(data)
-    // })
+         BusinessModelingServer.classifyGetPath.get({
+         	name:"测试"
+         },function(data){
+            console.log(data)
+         })
 
 
-        // var categoryApplicationId = $cookieStore.get("applicationId");
-        // var categoryModifierId = $cookieStore.get("userId");
-        // var categorySceneId = $cookieStore.get("sceneId");
         var categoryApplicationId = APPLICATION_ID;
         var categoryModifierId = USER_ID;
         var categorySceneId = SCENE_ID;
-
         autoHeight();
-
         function autoHeight(){
             var $win = $(window);
             var winHeight = $win.height()*0.75;
@@ -84,16 +74,14 @@ module.exports = businessModelingModule =>{
         }
 
         var params = {
-            "categoryName":$("#category-autocomplete").val().trim(),
-            "categoryAttributeName":"node",
-            "categoryApplicationId":categoryApplicationId
+            "name":$("#category-autocomplete").val().trim(),
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/ms/modeling/category/searchbycategoryname",
-            type:'POST',
+            serviceUrl: "/api/ms/classify/get/path",
+            type:'GET',
             params:params,
-            paramName:'categoryName',
+            paramName:'name',
             dataType:'json',
             transformResult:function(data){
                 var result = new Object();
@@ -101,8 +89,8 @@ module.exports = businessModelingModule =>{
                 if(data.data){
                     for(var i=0;i<data.data.length;i++){
                         array[i]={
-                            data:data.data[i].categoryId,
-                            value:data.data[i].categoryName
+                            data:data.data[i].id,
+                            value:data.data[i].name
                         }
                     }
                 }
@@ -129,6 +117,7 @@ module.exports = businessModelingModule =>{
         },2000);
         //搜寻节点
         function searchNode(suggestion){
+        	console.log(suggestion)
             var currentNodeId = suggestion.data;
             var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
             if($(firstNode).css("backgroundPosition")=="0% 0%"){
@@ -231,31 +220,22 @@ module.exports = businessModelingModule =>{
             });
             return flag;
         }
+
         //加载业务树
         initBot();
-
         //获取root 数据
         function initBot(){
             $(".aside-navs").empty();
-            BusinessModelingServer.classifyGetPath.save({
-            	 "applicationId": APPLICATION_ID,
-                 "name": "root"
-            },function(data){
-
-              console.log(name)
-            // })
-            // httpRequestPost("/api/ms/modeling/category/listbycategorypid",{
-            //     "categoryApplicationId": categoryApplicationId,
-            //     "categoryPid": "root"
-            // },function(data){
+            $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
+              console.log(data)
                 var html =  '<ul class="menus show">';
                 for(var i=0;data.data != null && i<data.data.length;i++){
-                    html+= '<li data-option="'+data.data[i].categoryPid+'">' +
+                    html+= '<li data-option="'+data.data[i].id+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
-                        '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'" title="'+data.data[i].categoryName+'">'+subStringWithTail(data.data[i].categoryName,10,"...")+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
+                        '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -277,6 +257,8 @@ module.exports = businessModelingModule =>{
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
             $scope.vm.categoryAttributeName = $(this).attr("node-option");
+            $scope.vm.categoryId=$(this).attr("id-option");
+            $scope.vm.categoryPid=$(this).attr("pid-option")
             if($scope.vm.categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryAttributeName=="edge"){
@@ -286,6 +268,7 @@ module.exports = businessModelingModule =>{
             disableAttributeType();
             $scope.$apply();
         });
+
         //更新新建方法
         function updateCreateMethod(knowledgeBotVal,categoryAttributeName){
             if(categoryAttributeName=="node"){
@@ -296,12 +279,31 @@ module.exports = businessModelingModule =>{
         }
         $(".aside-navs").on("click",".edit",function(){
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
-            botInfoToCategoryAttribute();
-            editBot();
+             console.log($(this).parent().attr("bot-type"))
+             $scope.vm.categoryName=$(this).parent().attr("bot-name");
+             $scope.vm.categoryTypeId=$(this).parent().attr("bot-type");
+             $scope.vm.categoryDescribe=$(this).parent().attr("bot-depict")
+           botInfoToCategoryAttribute();
+            editBot($(this).parent().attr("bot-pid"),$(this).parent().attr("bot-id"));
         });
-        function editBot(){
+
+
+        function editBot(pid,id){
+        	var pid=pid;
+        	var id=id;
+        	alert(pid)
+            if(pid==""){
+            	var editpid="root";
+            	var relation="edge";
+            }else if (pid=="root"){
+                var editpid= id;
+            	var relation="node"
+            }else{
+            	var editpid= pid;
+            	var relation="node"
+            }
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/bot/edit_category.html",
+                template:"/static/business_modeling/views/bot/edit_category.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -313,9 +315,7 @@ module.exports = businessModelingModule =>{
                             $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
                             return false;
                         }
-                        if(repeatCheck("#editErrorView",1)==false){
-                            return false;
-                        }
+                       
                         if(isHtmlLabel($("#categoryName").val())){
                             $("#editErrorView").html($scope.vm.notContainHtmlLabel);
                             return false;
@@ -331,25 +331,26 @@ module.exports = businessModelingModule =>{
                                 $scope.vm.categoryDescribe=$("#categoryDescribe").val().trim();
                             }
                         }
-                        httpRequestPost("/api/ms/modeling/category/updatebycategoryid",{
-                            "categoryId": $scope.vm.categoryId,
-                            "categoryApplicationId": $scope.vm.categoryApplicationId,
-                            "applicationId": categoryApplicationId,
-                            "categoryPid": $scope.vm.categoryPid,
-                            "categoryAttributeName": $scope.vm.categoryAttributeName,
-                            "categoryName": $("#categoryName").val().trim(),
-                            "categoryTypeId": $("#categoryTypeId").val(),
-                            "categoryModifierId": categoryModifierId,
-                            "categoryDescribe": $scope.vm.categoryDescribe,
-                            "categorySceneId": categorySceneId,
-                            "categoryLeaf": $scope.vm.categoryLeaf
+                        BusinessModelingServer.classifyUpdate.save({
+                            "id": id,
+                            "pid": editpid,
+                            "name": $("#categoryName").val().trim(),
+                            "type": $("#categoryTypeId").val(),
+                            "depict": $scope.vm.categoryDescribe,
+                            "leaf": 0,
+                            "relation":"edge",
                         },function(data){
-                            if(responseView(data)==true){
-                                //重新加载
-                                reloadBot(data,2);
-                            }
-                        },function(err){
-                        });
+                             if(data.status==200){
+                             	layer.msg(data.info)
+                               //重新加载
+                                reloadBot(data,0);
+                             }else if(data.status==500){
+                                layer.msg(data.info)
+                             }
+                                
+                            
+                        })
+                      
                     }else{
                     }
                     //还原类目属性类型
@@ -357,42 +358,20 @@ module.exports = businessModelingModule =>{
                     $scope.vm.categoryAttributeName="edge";
                 }
             });
-            if(dialog){
-                $timeout(function () {
-                    $("#categoryName").blur(function(){
-                        if(lengthCheck($("#categoryName").val(),0,50)==false){
-                            $("#editErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
-                        }else{
-                            $("#editErrorView").html('');
-                            repeatCheck("#editErrorView",1);
-                        }
-                    });
-                    $.each($("#categoryTypeId").find("option"),function(index,value){
-                        if($scope.vm.categoryAttributeName=="edge"){
-                            $(value).attr("disabled",null);
-                            $(value).attr("style","");
-                        }else{
-                            if(($(value).val()==$scope.vm.categoryTypeId)>0){
-                                $("#categoryTypeId").val($scope.vm.categoryTypeId);
-                                $(value).attr("disabled",null);
-                                $(value).attr("style","");
-                            }else{
-                                $(value).attr("disabled","disabled");
-                                $(value).attr("style","background-color: lightgrey");
-                            }
-                        }
-                    });
-                }, 100);
-            }
+           
         }
         $(".aside-navs").on("click",".delete",function(){
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
             botInfoToCategoryAttribute();
-            deleteBot();
+            deleteBot($(this).parent().attr("bot-id"));
         });
-        function deleteBot(){
+
+        //节点删除
+        function deleteBot(categoryId){
+        	var categoryId=categoryId;
+        	alert(categoryId)
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/bot/delete_category.html",
+                template:"/static/business_modeling/views/bot/delete_category.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -400,18 +379,16 @@ module.exports = businessModelingModule =>{
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        httpRequestPost("/api/ms/modeling/category/deletebycategoryid",{
-                            "categoryId": $scope.vm.categoryId,
-                            "categoryApplicationId": $scope.vm.categoryApplicationId,
-                            "categoryPid": $scope.vm.categoryPid,
-                            "categoryLeaf": $scope.vm.categoryLeaf
-                        },function(data){
-                            if(responseView(data)==true){
-                                //重新加载
-                                reloadBot(data,1);
-                            }
-                        },function(err){
-                        });
+                    $http.post("api/ms/classify/delete/"+categoryId+"").success(function(data){
+                    	console.log(data)
+                    	if(data.status==200){
+                    		layer.msg(data.info)
+                    		reloadBot(data,1);
+                    	}else if(data.status==500){
+                    		layer.msg(data.info)
+                    	}
+                    })
+                      
                     }else{
                     }
                     //还原类目属性类型
@@ -429,23 +406,20 @@ module.exports = businessModelingModule =>{
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                BusinessModelingServer.classifyGetPath.save({
-            	 "applicationId": APPLICATION_ID,
-                 "name": "root"
-                },function(data){
+               $http.get('api/ms/classify/get/children/'+""+id+"").success(function(data,status,headers,congfig){
                 	console.log(data)
                     if(data.data){
                         var html = '<ul class="menus">';
                         for(var i=0;i<data.data.length;i++){
-                            html+= '<li data-option="'+data.data[i].categoryPid+'">' +
-                                '<div class="slide-a">'+
-                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
-                                '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'" title="'+data.data[i].categoryName+'">'+subStringWithTail(data.data[i].categoryName,10,"...")+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
-                                '</a>' +
-                                '</div>' +
-                                '</li>';
+                             html+= '<li data-option="'+data.data[i].id+'">' +
+                        '<div class="slide-a">'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
+                        '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                        '</a>' +
+                        '</div>' +
+                        '</li>';
                         }
                         html+="</ul>";
                         $(html).appendTo((that.parent().parent().parent()));
@@ -480,55 +454,45 @@ module.exports = businessModelingModule =>{
             // if(repeatCheck("#category-name-error",0)==false){
             //     return;
             // }
-            // if(nullCheck($("#category-describe").val())==true){
-            //     if(lengthCheck($("#category-describe").val(),0,2000)==false){
-            //         $("#category-describe-error").html($scope.vm.categoryDescribeBeyondLimit);
-            //         return;
-            //     }else if(isHtmlLabel($("#category-describe").val())){
-            //         $("#category-describe-error").html($scope.vm.notContainHtmlLabel);
-            //         return;
-            //     }else{
-            //         $scope.vm.categoryDescribe=$("#category-describe").val().trim();
-            //     }
-            // }
-            // httpRequestPost("/api/ms/modeling/category/add",{
-            //     "categoryApplicationId": categoryApplicationId,
-            //     "applicationId": categoryApplicationId,
-            //     "categoryPid": $scope.vm.botSelectValue,
-            //     "categoryAttributeName": $scope.vm.categoryAttributeName,
-            //     "categoryName": $("#category-name").val().trim(),
-            //     "categoryTypeId": $("#category-type").val(),
-            //     "categoryModifierId": categoryModifierId,
-            //     "categorySceneId": categorySceneId,
-            //     "categoryDescribe": $scope.vm.categoryDescribe,
-            //     "categoryLeaf": 0
-            // },function(data){
-            //     if(responseView(data)==true){
-            //         //重新加载
-            //         $("#category-name").val('');
-            //         reloadBot(data,0);
-            //     }
-            //     $("#category-describe").val('')
-            // },function(err){
-            // });
-
+            if(nullCheck($("#category-describe").val())==true){
+                if(lengthCheck($("#category-describe").val(),0,2000)==false){
+                    $("#category-describe-error").html($scope.vm.categoryDescribeBeyondLimit);
+                    return;
+                }else if(isHtmlLabel($("#category-describe").val())){
+                    $("#category-describe-error").html($scope.vm.notContainHtmlLabel);
+                    return;
+                }else{
+                    $scope.vm.categoryDescribe=$("#category-describe").val().trim();
+                }
+            }
+            alert($scope.vm.categoryPid)
+            if($scope.vm.categoryPid==""){
+            	var pid="root";
+            	var relation="edge";
+            }else if($scope.vm.categoryPid=="root"){
+                var pid= $scope.vm.categoryId;
+            	var relation="node"
+            }else{
+            	var pid= $scope.vm.categoryId;
+            	var relation="node"
+            }
+            
 	          BusinessModelingServer.classifyAdd.save({
-	                  "userId":USER_ID,
-	                  "applicationId":APPLICATION_ID,
 	                  "leaf": 0,
 					  "name":$("#category-name").val().trim(),
-					  "pid": $scope.vm.botSelectValue,
-					  "relation": "edge",
+					  "pid":pid,
+					  "relation": relation,
 					  "type": $("#category-type").val(),
+					  "depict":$("#category-describe").val(),
 	            },function(data){
 	            	 console.log(data)
 	            	 if(data.status==200){
-						 if(responseView(data)==true){
-		                    //重新加载
-		                    $("#category-name").val('');
+						  $("#category-name").val('');
 		                    reloadBot(data,0);
-		                }
-		                $("#category-describe").val('')
+		                  $("#category-describe").val('');
+		                  $scope.vm.categoryRootPid=data.data;
+	            	 }else if(data.status==500){
+	            	 	  layer.msg(data.info)
 	            	 }
 	            	
                 },function(err){
@@ -546,41 +510,27 @@ module.exports = businessModelingModule =>{
         function repeatCheck(selector,type){
             var flag = false;
             var request = new Object();
+            alert(type)
+            console.log($scope.vm.categoryId)
             if(type==1){
                 request.id=$scope.vm.categoryId;
-                request.applicationId=$scope.vm.categoryApplicationId;
-                request.pid=$scope.vm.categoryPid;
-                //request.categoryAttributeName=$scope.vm.categoryAttributeName;
-                request.name=$("#categoryName").val().trim();
-               // request.categorySceneId=categorySceneId;
-            }else{
-                request.applicationId=categoryApplicationId;
+                request.applicationId=APPLICATION_ID;
                 request.pid=$scope.vm.botSelectValue;
-               // request.categoryAttributeName=$scope.vm.categoryAttributeName;
+                request.name=$("#categoryName").val().trim();
+            }else{
+                //request.applicationId=APPLICATION_ID;
+                request.pid=$scope.vm.categoryId;
+                //request.id=$scope.vm.categoryId;
                 request.name=$("#category-name").val().trim();
-               // request.categorySceneId=categorySceneId;
             }
-            // httpRequestPostAsync("/api/ms/modeling/category/repeatcheck",request,function(data){
-            //     if(responseWithoutView(data)==false){
-            //         if(data){
-            //             $(selector).html(data.info);
-            //         }
-            //     }else{
-            //         flag = true;
-            //     }
-            // },function(err){
-            // });
            BusinessModelingServer.classifyNameCheck.get(request,function(data){
                if(responseWithoutView(data)==false){
-            //         if(data){
-            //             $(selector).html(data.info);
-            //         }
-            //     }else{
-            //         flag = true;
-            //     }
-            // },function(err){
-            // });
-               }
+                if(data.status==500){
+                	layer.msg(data.info)
+                }
+	            }else{
+	               	flag=true;
+	            }
            })
             return flag;
         }
@@ -615,8 +565,8 @@ module.exports = businessModelingModule =>{
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'" title="'+data.data[0].categoryName+'">'+subStringWithTail(data.data[0].categoryName,10,"...")+'</span>'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].id+'" title="'+data.data[0].categoryName+'">'+subStringWithTail(data.data[0].categoryName,10,"...")+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -630,8 +580,8 @@ module.exports = businessModelingModule =>{
                             var html = '<li data-option="'+data.data[0].categoryPid+'">' +
                                 '<div class="slide-a">'+
                                 ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'" title="'+data.data[0].categoryName+'">'+subStringWithTail(data.data[0].categoryName,10,"...")+'</span>'+
+                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].id+'" title="'+data.data[0].categoryName+'">'+subStringWithTail(data.data[0].categoryName,10,"...")+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[0])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -689,16 +639,14 @@ module.exports = businessModelingModule =>{
             }
             return false;
         }
-        //属性填充
         function botInfoToCategoryAttribute(){
+        	console.log($scope.vm.botInfo)
             if($scope.vm.botInfo){
                 var category = JSON.parse($scope.vm.botInfo);
                 $scope.vm.botSelectValue=category.categoryId;
                 $scope.vm.categoryId=category.categoryId;
                 $scope.vm.categoryTypeId=category.categoryTypeId;
-                categorySceneId=category.categorySceneId;
                 $scope.vm.categoryName=category.categoryName;
-                $scope.vm.categoryAttributeName=category.categoryAttributeName;
                 $scope.vm.categoryPid=category.categoryPid;
                 $scope.vm.categoryApplicationId=category.categoryApplicationId;
                 if(nullCheck(category.categoryDescribe)==true){
@@ -707,24 +655,26 @@ module.exports = businessModelingModule =>{
                 $scope.vm.categoryLeaf=category.categoryLeaf;
             }
         }
+
         //禁用指定属性类型
         function disableAttributeType(){
-            $.each($("#category-type").find("option"),function(index,value){
-                if($scope.vm.categoryAttributeName=="node"){
-                    $(value).attr("disabled",null);
-                    $(value).attr("style","");
-                }else{
-                    if(($(value).val()==$scope.vm.botSelectType)>0){
-                        $("#category-type").val($scope.vm.botSelectType);
-                        $(value).attr("disabled",null);
-                        $(value).attr("style","");
-                    }else{
-                        $(value).attr("disabled","disabled");
-                        $(value).attr("style","background-color: lightgrey");
-                    }
-                }
-            });
+           //  $.each($("#category-type").find("option"),function(index,value){
+           //      if($scope.vm.categoryAttributeName=="node"){
+           //          $(value).attr("disabled",null);
+           //          $(value).attr("style","");
+           //      }else{
+           //          if(($(value).val()==$scope.vm.botSelectType)>0){
+           //              $("#category-type").val($scope.vm.botSelectType);
+           //              $(value).attr("disabled",null);
+           //              $(value).attr("style","");
+           //          }else{
+           //              $(value).attr("disabled","disabled");
+           //              $(value).attr("style","background-color: lightgrey");
+           //          }
+           //      }
+           // });
         }
+
         //清除已选颜色
         function clearColor(){
             $.each($(".aside-navs").find("span"),function(index,value){
@@ -754,6 +704,7 @@ module.exports = businessModelingModule =>{
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
+
         }
         //节点样式转换
         function nodeStyleSwitch(attrType){
@@ -778,12 +729,45 @@ module.exports = businessModelingModule =>{
                // repeatCheck("#category-name-error",0);
             }
         });
+
+		/**
+		 * Category对象转换为JSON字符串
+		 * @param obj
+		 * @returns {*}
+		 */
+		function toCategoryString(obj){
+		    if(obj==null || obj==undefined){
+		        return "";
+		    }
+		    var str='{';
+		    str+='"categoryId":"'+obj.id+'",';
+		    str+='"categoryTypeId":'+obj.type+',';
+		    str+='"categoryName":"'+obj.name+'",';
+		    str+='"categoryModifierId":"'+obj.modifierId+'",';
+		    str+='"categoryModifyTime":'+obj.modifyTime+',';
+		    str+='"categoryPid":"'+obj.pid+'",';
+		    str+='"categoryApplicationId":"'+obj.applicationId+'",';
+		    str+='"categoryLeaf":'+obj.leaf+',';
+		    if(obj.describe==null){
+		        str+='"categoryDescribe":null';
+		    }else{
+		        str+='"categoryDescribe":"'+fillWhiteSpace(obj.categoryDescribe)+'"';
+		    }
+		    str+='}';
+		    return str;
+		}
+
+     
+
+
+     //导出导入
+
         function downloadTemplate(){
             downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","business_ontology_tree_template.xlsx");
         }
         function exportAll(){
-            httpRequestPost("/api/ms/modeling/category/export",{
-                "categoryApplicationId":categoryApplicationId
+            httpRequestPost("/api/ms/classify/export",{
+                "applicationId":categoryApplicationId
             },function(data){
                 if(responseView(data)==true){
                     if(data.exportFileNameList.length>0){

@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('SynonymConceptController', [
-    '$scope', 'localStorageService' ,'BusinessModelingServer',"$state" ,"ngDialog","$timeout",
-    ($scope,localStorageService,BusinessModelingServer,$state,ngDialog,$timeout) =>{
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout",
+    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout) =>{
         $scope.vm = {
             success : 10000,
             illegal : 10003,
@@ -63,15 +63,13 @@ module.exports = applicationManagementModule =>{
                 pagesLength: 8
             };
         }
-        //请求列表
+        //请求列表  success(function(data,status,headers,congfig){
         function loadSynonymConceptTable(current){
-            BusinessModelingServer.synonymListByAttribute({
-                "synonymConceptApplicationId": $scope.vm.applicationId,
-                "index" :(current-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize
-            },function(data){
+             $http.get("/api/ms/concept/collective/get/application/"+APPLICATION_ID+"").success(function(data,status,headers,congfig){
+          
+                console.log(data)
                 loadSynonymConcept(current,data);
-            },function(){
+            },function(err){
                 //layer.msg("请求失败")
                 console.log('请求失败');
             })
@@ -85,7 +83,7 @@ module.exports = applicationManagementModule =>{
                 pageSize: $scope.vm.pageSize,//第页条目数
                 pagesLength: 8,//分页框数量
             };
-            $scope.$apply();
+            //$scope.$apply();
         }
         var timeout ;
         $scope.$watch('vm.paginationConf.currentPage', function(current){
@@ -156,10 +154,10 @@ module.exports = applicationManagementModule =>{
         }
         function editSynonym(item){
             $scope.vm.dialogTitle="编辑同义概念";
-            $scope.vm.key = item.synonymConceptKey;
-            $scope.vm.oldKey = item.synonymConceptKey;
-            $scope.vm.term =  item.synonymConceptTerm;
-            $scope.vm.weight =  item.synonymConceptWeight;
+            $scope.vm.topic = item.topic;
+            $scope.vm.id = item.id;
+            $scope.vm.termList =   ["test","test2"];
+            $scope.vm.weight =  item.weight;
             addSynonymConceptDialog(singleEditSynonymConcept,item);
         }
         function searchSynonymConcept(current){
@@ -222,7 +220,7 @@ module.exports = applicationManagementModule =>{
         //添加 窗口
         function addSynonym(){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/concept_library/synony/synony_concept_manage_dialog.html",
+                template:"/static/business_modeling/views/concept/synonym/synonym_dialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -234,9 +232,9 @@ module.exports = applicationManagementModule =>{
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/ms/modeling/concept/synonym/repeatCheck",{
+                        httpRequestPost("/api/ms/concept/collective/repeat",{
                             "synonymConceptApplicationId": $scope.vm.applicationId,
-                            "synonymConceptKey": $scope.vm.key
+                            "topic": $scope.vm.key
                         },function(data){          //类名重複
                             if(data.status===10002){
                                 layer.confirm("您添加的概念类已经在，是否前往编辑？",{
@@ -244,7 +242,7 @@ module.exports = applicationManagementModule =>{
                                     shade:false
                                 },function(index){
                                     layer.close(index);
-                                    httpRequestPost("/api/ms/modeling/concept/synonym/listByAttribute",{
+                                    httpRequestPost("/api/ms/concept/collective/add",{
                                         "synonymConceptApplicationId": $scope.vm.applicationId,
                                         "synonymConceptKey":$scope.vm.key,
                                         "index":0,
@@ -253,9 +251,9 @@ module.exports = applicationManagementModule =>{
                                         $scope.vm.dialogTitle="编辑同义概念";
                                         console.log(data);
                                         addSynonymConceptDialog(singleEditSynonymConcept,data.data[0]);
-                                        $scope.vm.key = data.data[0].synonymConceptKey;
-                                        $scope.vm.term =  data.data[0].synonymConceptTerm;
-                                        $scope.vm.weight =  data.data[0].synonymConceptWeight;
+                                        $scope.vm.topic = data.data[0].topic;
+                                        $scope.vm.termList =  data.data[0].termList;
+                                        $scope.vm.weight =  data.data[0].weight;
                                     },function(){
                                         console.log("cancel");
                                     });
@@ -298,7 +296,7 @@ module.exports = applicationManagementModule =>{
         //編輯彈框   添加公用
         function addSynonymConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/concept_library/synony/synony_concept_manage_dialog2.html",
+                template:"/static/business_modeling/views/concept/synonym/synonym_dialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -361,7 +359,7 @@ module.exports = applicationManagementModule =>{
         //   刪除 彈框
         function deleteSynonym(id){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/concept_library/delete.html",
+                template:"/static/business_modeling/views/concept/delete.html",
                 scope: $scope,
                 width: '260px',
                 closeByDocument:false,
@@ -398,15 +396,11 @@ module.exports = applicationManagementModule =>{
         //編輯事件
         function singleEditSynonymConcept(item){
             assembleSynonymConceptTerm();
-            httpRequestPost("/api/ms/modeling/concept/synonym/update",{
-                "synonymConceptId":item.synonymConceptId,
-                "synonymConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "synonymConceptKey":  $scope.vm.key,
-                "synonymConceptOldKey":  $scope.vm.oldKey,
-                "synonymConceptModifier": $scope.vm.modifier,
-                "synonymConceptTerm": $scope.vm.term,
-                "synonymConceptWeight": $scope.vm.weight
+            httpRequestPost("/api/ms/concept/collective/update",{
+                "id":item.id,
+                "topic":  $scope.vm.topic,
+                "weight":  $scope.vm.weight,
+                "termList": $scope.vm.termList,
             },function(data){
                 if(responseView(data)==true){
                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
@@ -416,13 +410,10 @@ module.exports = applicationManagementModule =>{
         //单条新增
         function singleAddSynonymConcept(){
             assembleSynonymConceptTerm();
-            httpRequestPost("/api/ms/modeling/concept/synonym/add",{
-                "synonymConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "synonymConceptKey":  $scope.vm.key,
-                "synonymConceptModifier": $scope.vm.modifier,
-                "synonymConceptTerm": $scope.vm.term,
-                "synonymConceptWeight": $scope.vm.weight
+            httpRequestPost("/api/ms/concept/collective/add",{
+                "topic":  $scope.vm.key,
+                "termList": ["test","测试1"],
+                "weight": $scope.vm.weight
             },function(data){
                 if(responseView(data)==true){
                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
@@ -431,8 +422,8 @@ module.exports = applicationManagementModule =>{
         }
         //单条刪除
         function singleDelSynonymConcept(id){
-            httpRequestPost("/api/ms/modeling/concept/synonym/delete",{
-                "synonymConceptId":id
+            httpRequestPost("/api/ms/concept/collective/delete/"+id+"",{
+                
             },function(data){
                 if(responseView(data)==true){
                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
