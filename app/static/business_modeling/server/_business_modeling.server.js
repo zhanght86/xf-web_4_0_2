@@ -18,7 +18,7 @@ class BusinessModelingServer {
         //查询下级类目
         this.classifyGetChildren=$resource(API_MS+"/classify/get/children", {}, {});
         //检查类目名称
-        this.classifyNameCheck=$resource(API_MS+"/classify/name/check", {}, {});
+        this.classifyNameCheck=$resource(API_MS+"/classify/check/name", {}, {});
         //获取类目的全路径
         this.classifyGetFullname=$resource(API_MS+"/classify/get/fullname/:userId", {userId:'id'}, {});
         //根据类目名称获取信息
