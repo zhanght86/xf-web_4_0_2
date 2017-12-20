@@ -1322,7 +1322,7 @@ module.exports = (angular) => {
         // 聊天知识库-新增
         {
             name: "MM.chatAdd",
-            url: "/chatAdd",
+            url: "/chatAdd/:knowTextId",
             data: {
                 roles: []
             },
@@ -1339,6 +1339,7 @@ module.exports = (angular) => {
                 }
             }
         },
+       
         // 图片库
         {
             name: "MM.pic",
