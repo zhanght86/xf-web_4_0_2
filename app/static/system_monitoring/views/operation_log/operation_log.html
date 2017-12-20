@@ -29,14 +29,16 @@
                     <td>{{item.applicationName}}</td>
                     <td>{{item.moduleType|moduleType}}</td>
                     <td>{{item.type|operateState}}</td>
-                    <!--<td ng-show="item.type.indexOf(',')!=-1" ng-bind="item.type.indexOf(',')==-1?item.type:item.type.substring(0,(item.type.indexOf(',')))">-->
-                        <!--<a href="javascript:;" class="c_blue"  >{{item.content|contentShow}}</a>-->
+
+                    <!--<td>-->
+                        <!--<a href="javascript:;" class="c_blue" ui-sref="MM.chatAdd({knowTextId: item.content.substring(item.content.indexOf(',')+1 })" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>-->
+                        <!--<span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>-->
                     <!--</td>-->
-                    <!--<td  >-->
-                        <!--<a href="javascript:;" class="c_blue"  ng-if="item.type.indexOf(',')!=-1">{{item.type.substring(0,(item.type.indexOf(',')))}}</a>-->
-                    <!--</td>-->
-                    <!--<td ng-if="item.type.indexOf(',')==-1">{{item.content}}</td>-->
-                    <td>{{item.content|contentShow}}</td>
+                    <td>
+                        <a href="javascript:;" class="c_blue" ng-click="vm.pageJump(item)" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>
+                        <span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>
+                    </td>
+
                     <td>{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>
 

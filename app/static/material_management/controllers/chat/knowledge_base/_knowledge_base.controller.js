@@ -92,9 +92,8 @@ module.exports=materialModule => {
                     MaterialServer.delKnowledge.save({
                         "applicationId":APPLICATION_ID,
                         "ids":$scope.vm.delArr
-                    },{
-                        "applicationId":APPLICATION_ID,
-                        "ids":$scope.vm.delArr
+                    },{                                      //可为空
+
                     },function(response){
                         layer.close(i);
                         if(response.status==200){
