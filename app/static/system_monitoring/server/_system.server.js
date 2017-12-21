@@ -20,6 +20,9 @@ class SystemServer {
                         *服务监控*   API_ANALYSIS = "/api/analysis" ;
                      ********************************/
         this.getServiceDate = $resource(API_ANALYSIS+'/serviceMonitoring/monitoring',{},{});
+        
+        //根据id查询
+        this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/chat/knowledge',{},{});
     }
 }
 SystemServer.$inject = ['$resource'];

@@ -38,7 +38,7 @@ module.exports=materialModule => {
             selectTimeType : selectTimeType,
 
         };
-        setCookie('applicationId',"450014113901314048");
+        //setCookie('applicationId',"450014113901314048");
         /**
          * 全选
          */

@@ -63,7 +63,7 @@
                             <div class="mb-10">
                                 <!--<input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-click="vm.getDel($event,item.chatKnowledgeId)"/>-->
                                 <input type="checkbox" style="vertical-align: middle;margin:0px 5px 3px 0;" ng-checked="vm.delArr.inArray(item.id)" ng-click="vm.selectSingle(item.id)"/>
-                                <a  class="c-primary f-16" ui-sref="MM.chatAdd({knowTextId:item.id})">聊天主题：{{item.topic}}</a>
+                                <a  class="c-primary f-16" ui-sref="MM.chatEdit({knowTextId:item.id})">聊天主题：{{item.topic}}</a>
                             </div>
                             <div class="f-14 mb-10">聊天问法个数：{{item.chatQuestionList.length}}</div>
                             <div class="cl">

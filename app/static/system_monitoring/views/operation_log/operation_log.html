@@ -29,16 +29,10 @@
                     <td>{{item.applicationName}}</td>
                     <td>{{item.moduleType|moduleType}}</td>
                     <td>{{item.type|operateState}}</td>
-
-                    <!--<td>-->
-                        <!--<a href="javascript:;" class="c_blue" ui-sref="MM.chatAdd({knowTextId: item.content.substring(item.content.indexOf(',')+1 })" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>-->
-                        <!--<span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>-->
-                    <!--</td>-->
                     <td>
-                        <a href="javascript:;" class="c_blue" ng-click="vm.pageJump(item)" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>
+                        <a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>
                         <span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>
                     </td>
-
                     <td>{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>
 

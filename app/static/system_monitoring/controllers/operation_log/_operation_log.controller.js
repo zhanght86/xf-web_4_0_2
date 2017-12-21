@@ -6,7 +6,7 @@ module.exports=systemMonitoringModule => {
     systemMonitoringModule
     .controller('OperationLogController',
         ['$scope',"localStorageService","$state","$log","SystemServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
-     ($scope,localStorageService,$state,$log,SystemServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) => {
+     ($scope,localStorageService,$state,$log,SystemServer,$timeout,$stateParams,ngDialog,$cookieStore,$filter) => {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             listData : "",          //数据列表
@@ -74,9 +74,23 @@ module.exports=systemMonitoringModule => {
             if(item.type==123){
                 alert("删除操作，页面不跳转");
             }else{
-                alert("页面跳");
+                //alert("页面跳转");
                 if(item.moduleType==1021){
-                    $state.go("MM.chatAdd",{knowTextId: (item.content.substring(item.content.indexOf(',')+1))});
+                    var mmId = item.content.substring(item.content.indexOf(',')+1);
+                    SystemServer.searchById.get({
+                        "id": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("MM.chatEdit",{knowTextId:mmId});
+                        }
+                        if(data.status==500){
+                           // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
                 }else if(item.moduleType==1004){
                     $state.go();
                 }else if(item.moduleType==1005){
@@ -90,6 +104,7 @@ module.exports=systemMonitoringModule => {
                 }
             }
         }
+
 
 
 
