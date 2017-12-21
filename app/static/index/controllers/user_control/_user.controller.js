@@ -13,6 +13,7 @@ module.exports = homePageModule =>{
             queryUserList : queryUserList,
             paginationConf : {     //分页条件
                 pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
                 search : queryUserList,
                 location : true
             }  ,
@@ -30,8 +31,6 @@ module.exports = homePageModule =>{
             userPassWord : "", //用户所输入确认密码
             userPhoneNumber  :  "",
             userEmail :"",
-            remark:"",
-            allowSubmit : 1, //是否允许提交
             //查询所需数据
             searchName:"",
             //查询当前所有应用
@@ -39,19 +38,23 @@ module.exports = homePageModule =>{
             //查询当前所有角色
             roleList:"",
             roleId :"",
-            prop :[],
             applicationIds:[],
         };
         // 定义弹框
         let verifyHtml = require("../../../../share/dialog_simple_operate.html") ;
         let userHtml = require("../../views/permission_management/dialog_user.html") ;
         //查询用户列表
-        queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
-        function queryUserList(index,pageSize,userName){
+        queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function queryUserList(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+                // $location.search().currentPage = 1 ;
+            }
             $scope.vm.deleteIds    = [];   // 清楚选中用户
             $scope.vm.userListIds  = [];   // 清楚用户id列表
             HomePageServer.queryUserList.save({
-                "account" : $scope.vm.userName?$scope.vm.userName:"" ,
+                "account" : $scope.vm.searchName?$scope.vm.searchName:"" ,
                 "index":(index -1)*pageSize,
                 "pageSize":pageSize
             },function(response){
@@ -68,19 +71,6 @@ module.exports = homePageModule =>{
                 console.log(error);
             })
         }
-        // var timeout ;
-        // $scope.$watch('vm.paginationConf', function(current,old){
-        //     if((current.currentPage != old.currentPage) || (current.pageSize != old.pageSize )){
-        //         $location.search({"currentPage":current.currentPage,"pageSize":current.pageSize}) ;
-        //         if (timeout) {
-        //             $timeout.cancel(timeout)
-        //         }
-        //         timeout = $timeout(function () {
-        //             queryUserList(current.currentPage,current.pageSize,$scope.vm.searchName);
-        //         }, 0)
-        //     }
-        // },true);
-
 
         // // 修改密码
         function changePassword(){
@@ -101,28 +91,18 @@ module.exports = homePageModule =>{
                         layer.msg(response.data)
                     }
                 },function (error) {console.log(error)}) ;
-                // HomePageServer.addUser.save({
-                //
-                // },function (response) {
-                //     if(response.status == 200){
-                //         close(1) ;
-                //     }else{
-                //         layer.msg(response.data)
-                //     }
-                // },function (error) {console.log(error)})
-
             }
         }
         // 添加/编辑用户
         function addUser(data){
             let callback, param ;
             if(data){  // 编辑
-                useData() ; // 初始化列表数据
+                useData(data) ; // 初始化列表数据
                 callback = function(parameter){
-                    HomePageServer.addUser.save(parameter, function (response) {
-                        if (data.status == 200) {
+                    HomePageServer.updateUser.save(parameter, function (response) {
+                        if (response.status == 200) {
                             layer.msg("用户修改成功!");
-                            queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.searchName);
+                            queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         } else {
                             layer.msg(response.data)
                         }
@@ -133,7 +113,7 @@ module.exports = homePageModule =>{
                 callback = function(parameter){
                     HomePageServer.addUser.save(parameter, function (response) {
                         if(response.status == 200){
-                            queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.searchName);
+                            queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else{
                             layer.msg(response.data)
                         }
@@ -144,13 +124,16 @@ module.exports = homePageModule =>{
                 param = {
                     "name"          : $scope.vm.userName ,
                     "account"       : $scope.vm.userLoginName,
-                    "pwd"           : $scope.vm.userPassword,
                     "phone"         : $scope.vm.userPhoneNumber,
                     "email"         : $scope.vm.userEmail,
                     "roleId"        : $scope.vm.roleId,
                     "applicationIds": $scope.vm.applicationIds
                 } ;
-                if($scope.vm.userId){param.id = $scope.vm.userId }
+                if($scope.vm.userId){
+                    param.id = $scope.vm.userId
+                }else{
+                    param.pwd = $scope.vm.userPassword
+                }
                 callback(param) ;
             })
         }
@@ -167,7 +150,14 @@ module.exports = homePageModule =>{
                 },function (response) {
                     if(response.status == 200){
                         layer.msg("用户删除成功!");
+                        if($scope.vm.userList.length==1){
+                            $scope.vm.paginationConf.currentPage -= 1 ;
+                            console.log($scope.vm.paginationConf.currentPage )
+                        }else{
+                            queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
+                        }
                     }else{
+                        layer.msg(response.data)
                     }
                 },function (error) {console.log(error)})
             }) ;
@@ -177,16 +167,15 @@ module.exports = homePageModule =>{
             if(status == 0){
                 $scope.vm.simpleOperateTitle = "确认要启用该用户吗？" ;
             }else {
-                status = 0 ;
                 $scope.vm.simpleOperateTitle = "确认要停用该用户吗？" ;
             }
             $scope.$parent.$parent.MASTER.openNgDialog($scope,verifyHtml,"",function(){
                 HomePageServer.updateUserStatus.save({
                     "id": userId,
-                    "status": status
+                    "status": status?0:1
                 }, function (response) {
                     if(response.status == 200){
-                        queryUserList(1) ;
+                        queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         layer.msg("用户状态修改成功!");
                     }else{
 
@@ -197,14 +186,14 @@ module.exports = homePageModule =>{
             });
         }
         function useData(data){
-            $scope.vm.userId = data.userId;
-            $scope.vm.userName = data.userName;
-            $scope.vm.userLoginName = data.userLoginName;
-            $scope.vm.userPassword = data.userPassword;
-            $scope.vm.userPhoneNumber = data.userPhoneNumber;
-            $scope.vm.userEmail = data.userEmail;
+            $scope.vm.userId = data.id;
+            $scope.vm.userName = data.name;
+            $scope.vm.userLoginName = data.account;
+            $scope.vm.userPassword = null;
+            $scope.vm.userPhoneNumber = data.phone;
+            $scope.vm.userEmail = data.email;
             $scope.vm.roleId = data.roleId;
-            $scope.vm.applicationIds = data.applicationIds;
+            $scope.vm.applicationIds = data.applicationIdList;
         }
         // 弹框数据初始化
         function initDate(){
@@ -213,11 +202,8 @@ module.exports = homePageModule =>{
             $scope.vm.userName = "";
             $scope.vm.userLoginName = "";
             $scope.vm.userPassword = "";
-            $scope.vm.userPassWord = "";
             $scope.vm.userPhoneNumber = "";
             $scope.vm.userEmail = "";
-            $scope.vm.prop = [];
-            $scope.vm.remark = "";
             $scope.vm.roleId = $scope.vm.roleList[0].id ;  // 初始化roleId
         }
         queryAllApplication();
@@ -230,8 +216,7 @@ module.exports = homePageModule =>{
             },function(error){console.log(error)}) ;
         }
         //得到角色列表
-        queryRoleList();
-        function queryRoleList(index){
+        (function queryRoleList(index){
             HomePageServer.queryRoleList.save({
                 "index":(index -1)*$scope.vm.paginationConf.pageSize,
                 "pageSize":$scope.vm.paginationConf.pageSize
@@ -240,7 +225,7 @@ module.exports = homePageModule =>{
                     $scope.vm.roleList = response.data.filter(item => (item.name != '超级管理员'));
                 }
             })
-        }
+        })()
 
 }])
 };

@@ -8,7 +8,7 @@ module.exports = homePageModule =>{
     ['$scope',"$state","$timeout","$stateParams","ngDialog","$cookieStore","$rootScope","HomePageServer",
     ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore,$rootScope,HomePageServer) =>{
         $scope.vm = {
-            userName : USER_NAME,
+            userName :getCookie("userName"),
             userRole : $stateParams.userPermission,
             addApplicationWindow : addApplicationWindow,
             myApplication : "",

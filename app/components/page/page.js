@@ -11,8 +11,8 @@
 * -totalItems       //数据总数
 * -pagesLength      //显示分页块数量
 * -location         //是否在地址栏使用
-* -sizeName         //url 地址栏对应的 参数名称 默认 pageSize
-* -currentName      //url 地址栏对应的 参数名称 默认 currentPage
+* -sizeName         //url 地址栏对应的 参数名称 默认 pageSize   (多分页情况)
+* -currentName      //url 地址栏对应的 参数名称 默认 currentPage(多分页情况)
 * +search           //翻页数据更新方法
 * */
 
@@ -33,6 +33,7 @@ module.exports = module =>{
                     scope.conf.pageSize = $location.search()[sizeName] || scope.conf.pageSize || 5  ;
                     scope.conf.currentPage = $location.search()[currentName] || scope.conf.currentPage || 1  ;
                     scope.conf.pagesLength =  scope.conf.pagesLength || 8  ;
+                    console.log(scope.conf)
                     //改变当前页
                     scope.changeCurrentPage = function(item){
                         if(item == '...'){
@@ -171,9 +172,6 @@ module.exports = module =>{
                     scope.$watch('conf', function(current,old){
                         if((current.currentPage != old.currentPage) || (current.pageSize != old.pageSize )){
                             if(scope.conf.location){
-                                // var locationUrl = {} ;
-                                // locationUrl[currentName] = current.currentPage ;
-                                // locationUrl[sizeName] = current.pageSize ;
                                 $location.search(currentName,current.currentPage ) ;
                                 $location.search(sizeName,current.pageSize);
                             } ;

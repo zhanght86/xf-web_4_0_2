@@ -23,7 +23,7 @@
                 </span>
             </div>
         </div>
-        <div class="mb-10 cl">
+        <div class="mb-10 cl" ng-if="!vm.userId">
             <label class="form-label col-xs-3 col-sm-2">密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
                 <input name="userPassword" type="password" ng-model="vm.userPassword"  ng-pattern="/^[0-9a-zA-Z]+$/" class="input-text"  required/>
@@ -33,9 +33,7 @@
                 </span>
             </div>
         </div>
-
-
-        <div class="mb-10 cl">
+        <div class="mb-10 cl" ng-if="!vm.userId">
             <label class="form-label col-xs-3 col-sm-2">确认密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
                 <input name="userConfirmPassword" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
@@ -57,11 +55,9 @@
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">邮箱：</label>
-
             <div class="formControls col-xs-9 col-sm-9">
                 <input name="userEmail" type="text" placeholder="123456@163.com" ng-model="vm.userEmail" class="input-text" id="email"
                         ng-pattern="/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/" required />
-
                   <span style="color:red" ng-show="myForm.userEmail.$dirty && myForm.userEmail.$invalid">
                     <span ng-show="myForm.userEmail.$error.required">请输入邮箱!</span>
                 </span>
