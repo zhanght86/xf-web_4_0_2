@@ -17,7 +17,9 @@ module.exports=systemMonitoringModule => {
             paginationConf : {      //分页条件
                 pageSize: 8,        //每页条目数量
                 pagesLength: 10,    //分页块数量
-            }
+            },
+            pageJump : pageJump
+
         };
         getData(1) ;
         /**
@@ -65,6 +67,30 @@ module.exports=systemMonitoringModule => {
 
             }
         },true);
+        /**
+         **页面跳转
+         **/
+        function pageJump(item){
+            if(item.type==123){
+                alert("删除操作，页面不跳转");
+            }else{
+                alert("页面跳");
+                if(item.moduleType==1021){
+                    $state.go("MM.chatAdd",{knowTextId: (item.content.substring(item.content.indexOf(',')+1))});
+                }else if(item.moduleType==1004){
+                    $state.go();
+                }else if(item.moduleType==1005){
+                    $state.go();
+                }else if(item.moduleType==1006){
+                    $state.go();
+                }else if(item.moduleType==1007){
+                    $state.go();
+                }else if(item.moduleType==1008){
+                    $state.go();
+                }
+            }
+        }
+
 
 
     }

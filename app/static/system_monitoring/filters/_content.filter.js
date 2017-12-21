@@ -9,8 +9,7 @@ module.exports = module=>{
             var i;
             i=text.indexOf(",");
             if(i!=-1){
-                //return  eval('<a href="javascript:;" class="c_blue">'+text.substring(0,i)+'</a>');
-                return  text.substring(0,i)+'id';
+                return  text.substring(0,i);
             }else{
                 return  text;
             }
