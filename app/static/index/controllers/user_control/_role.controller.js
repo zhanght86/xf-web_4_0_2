@@ -31,7 +31,7 @@ module.exports = homePageModule =>{
                 }
             })
         }
-        addRole();
+        // addRole();
         function addRole(){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,roleHtml,"900px",function(){
             })

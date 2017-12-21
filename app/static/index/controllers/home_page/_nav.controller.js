@@ -16,7 +16,7 @@ module.exports = homePageModule =>{
                         sceneId : SCENE_ID,
                         loginout : loginout,
                         // userName : USER_NAME,
-                        userName : "miles",
+                        userName : getCookie("userName"),
                         logApplication : logApplication,
                         jump: jump,
                         openServiceConfirm : openServiceConfirm,

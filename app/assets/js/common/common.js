@@ -276,7 +276,8 @@ function delCookie(name) {
  * @param value
  */
 function nullCheck(value){
-    if(value==null || value==undefined || $.trim(value)=='' || value=={} || value == [] || value.replace(/[ \r\n]/g,"") == ""){
+    // if(value==null || value==undefined || $.trim(value)=='' || value=={} || value == [] || value.replace(/[ \r\n]/g,"") == ""){
+    if(value==null || value==undefined || $.trim(value)=='' || value=={} || value == [] ){
         return false;
     }
     return true;

@@ -10,12 +10,15 @@ module.exports = applicationManagementModule =>{
     ($scope,localStorageService,ApplicationServer , $state, ngDialog,$cookieStore,$rootScope,$timeout,$log) =>{
         $scope.vm = {
             serviceData : "",   // 发布服务列表数据
-            paginationConf : {
-                pageSize: 5,//第页条目数
-                pagesLength: 10,//分页框数量
-                totalItems  : 100 ,
-                numberOfPages : 10
-            },
+            paginationConf : {     //分页条件
+                search : listServiceData,
+            }  ,
+            // paginationConf : {
+            //     pageSize: 5,//第页条目数
+            //     pagesLength: 10,//分页框数量
+            //     totalItems  : 100 ,
+            //     numberOfPages : 10
+            // },
             applicationInfo : {
                 applicationName :APPLICATION_NAME, //应用名称
                 applicationDescription : "", //应用描述

@@ -51,9 +51,6 @@ module.exports = loginModule => {
                 },function(response){
                     if(response.status==200){
                         // cookie  userId userName
-                        // $cookieStore.put("userId" , response.data.userId);
-                        // $cookieStore.put("userName" , response.data.account);
-                        // $cookieStore.put("accessToken" , response.data.accessToken);
                         setCookie("userId" , response.data.userId);
                         setCookie("userName" , response.data.account);
                         setCookie("accessToken" , response.data.accessToken);

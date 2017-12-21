@@ -2,7 +2,7 @@
     <div class="p20" style="background:#fff;">
         <div class="text-c mb-20">
             <input type="text" placeholder="用户姓名" ng-model="vm.searchName" style="width:250px" class="input-text">
-            <button class="btn1 btn1_blue" type="button"  ng-click="vm.queryUserList(1,vm.searchName)">搜用户</button>
+            <button class="btn1 btn1_blue" type="button"  ng-click="vm.queryUserList(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)">搜用户</button>
         </div>
         <div class="bd p20" style="background:#fcfdfd;">
             <div class="mb-10 cl">
@@ -50,7 +50,7 @@
                         <td>
                             <a href="javascript:;" class="mr-10 c-orange" ng-click="vm.changePassword(user.id)">修改密码</a>
                             <span><a href="javascript:;"  class="mr-10 c-primary" ng-click="vm.changeStatus(user.id,user.status)" ng-bind="user.status==1?'停用':'启用'"></a></span>
-                            <a href="javascript:;"  class="mr-10 c-orange" ng-click="vm.addUser()(user)">编辑</a>
+                            <a href="javascript:;"  class="mr-10 c-orange" ng-click="vm.addUser(user)">编辑</a>
                             <a href="javascript:;"  class="mr-10 c-red" ng-click="vm.deleteUser([user.id])">删除</a>
                         </td>
                     </tr>

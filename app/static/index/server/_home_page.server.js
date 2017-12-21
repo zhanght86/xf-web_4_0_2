@@ -30,7 +30,7 @@ class HomePageServer {
     // 更新用户
         this.updateUser = $resource(API_USER+"/user/update",{},{}) ;
     // 更新用户状态
-        this.updateUserStatus = $resource(API_MS+"/application/update/status	",{},{}) ;
+        this.updateUserStatus = $resource(API_USER+"/user/update/status",{},{}) ;
     // 删除用户
         this.deleteUser = $resource(API_USER+"/user/delete/user/by/ids",{},{}) ;
         // 角色
