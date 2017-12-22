@@ -125,7 +125,24 @@ class BusinessModelingServer {
     //概念批量删除
     this.forceConceptAllDelete=$resource(API_MS+"/concept/forceSegment/batch/delete", {}, {});
     //判断重复
-    this.forceConceptRepeat=$resource(API_MS+"/concept/forceSegment/repeat", {}, {});     
+    this.forceConceptRepeat=$resource(API_MS+"/concept/forceSegment/repeat", {}, {});   
+
+/******************************
+                        *bot概念管理*
+                ********************************/   
+
+    //列表展示
+    this.botConceptGetParam=$resource(API_MS+"/concept/bot/get/param", {}, {});
+    //概念新增
+    this.botConceptAdd=$resource(API_MS+"/concept/bot/add", {}, {});  
+    //概念修改
+    this.botConceptUpdate=$resource(API_MS+"/concept/bot/update", {}, {});
+    //概念删除
+    this.botConceptDelete=$resource(API_MS+"/concept/bot/delete", {}, {});
+    //概念批量删除
+    this.botConceptAllDelete=$resource(API_MS+"/concept/bot/batch/delete", {}, {});
+    //判断重复
+    this.botConceptRepeat=$resource(API_MS+"/concept/bot/repeat", {}, {});     
 
     }
 }

@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('EnforcementConceptController', [
-    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout",
-    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout) =>{
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout","$location",
+    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout,$location) =>{
         $scope.vm = {
             listData : "",   // table 数据
             topic:"",
@@ -20,11 +20,12 @@ module.exports = applicationManagementModule =>{
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
-             paginationConf : {           //分页条件
-                    pageSize: 5,        //每页条目数量
-                    pagesLength: 10,    //分页块数量
-                    totalItems:""
-              } ,
+            paginationConf : {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : loadSynonymConceptTable,
+                location : true
+            },
             listData : "",   // table 数据  
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
@@ -40,8 +41,13 @@ module.exports = applicationManagementModule =>{
         };
 
         //查询/请求列表 
-        loadSynonymConceptTable(1)
-        function loadSynonymConceptTable(index){
+        loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function loadSynonymConceptTable(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+                // $location.search().currentPage = 1 ;
+            }
             let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             BusinessModelingServer.forceConceptGetParam.save({
                 "topic":$scope.vm.topic,
@@ -51,7 +57,8 @@ module.exports = applicationManagementModule =>{
                 layer.close(i);
                if(data.status==200){
                  $scope.vm.listData = data.data.data;
-                 $scope.vm.paginationConf.totalItems=data.data.total;
+                  $scope.vm.paginationConf.totalItems = data.data.total;
+                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
                }else{
                   layer.close(i);
                }
@@ -59,22 +66,7 @@ module.exports = applicationManagementModule =>{
                  layer.close(i);
             })
         }
-       
-        /**
-         * 分页变化加载数据
-         **/
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage',(current,old)=>{
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(()=>{
-                    loadSynonymConceptTable(current);
-                }, 100)
-
-            }
-        },true);
+      
 
     //概念单条新增
         function singleAdd(){
@@ -86,7 +78,7 @@ module.exports = applicationManagementModule =>{
             },(data)=>{
                  if(data.status==200){
                     layer.msg(data.info)
-                     loadSynonymConceptTable(1)
+                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                 }else if(data.status==500){
                     layer.msg(data.info)
                 }
@@ -96,7 +88,7 @@ module.exports = applicationManagementModule =>{
         function editSingle(item){
             console.log(item)
             console.log(item.term.split(";"))
-            $scope.vm.dialogTitle="编辑同义概念";
+            $scope.vm.dialogTitle="编辑强制概念";
             $scope.vm.key = item.topic;
             $scope.vm.id = item.id;
             $scope.vm.term =  item.term.split(";");
@@ -116,7 +108,7 @@ module.exports = applicationManagementModule =>{
         },(data)=>{
            if(data.status==200){
                 layer.msg(data.info);
-                loadSynonymConceptTable(1);
+                 loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                 $scope.vm.key = "";
                 $scope.vm.oldKey = "";
                 $scope.vm.term = "";
@@ -165,7 +157,7 @@ module.exports = applicationManagementModule =>{
                                         "index": 0,
                                         "pageSize": 1,
                                     },(data)=>{
-                                        $scope.vm.dialogTitle="编辑停用概念";
+                                        $scope.vm.dialogTitle="编辑强制概念";
                                         $scope.vm.key = data.data.data[0].topic;
                                         $scope.vm.term =  data.data.data[0].term.split(";");
                                         //$scope.vm.weight =  data.data.data[0].weight;
@@ -178,7 +170,7 @@ module.exports = applicationManagementModule =>{
                                 });
                             }else{
                                 //类名无冲突
-                                $scope.vm.dialogTitle="增加停用概念";
+                                $scope.vm.dialogTitle="增加强制概念";
                                 addSynonymConceptDialog(singleAdd);
                             }
                         },()=>{
@@ -286,7 +278,7 @@ module.exports = applicationManagementModule =>{
                     },function(data){
                         if(data.status==200){
                              layer.msg("删除成功",{time:2000})
-                             loadSynonymConceptTable(1);
+                              loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }
                     });
                  }
@@ -304,7 +296,7 @@ module.exports = applicationManagementModule =>{
             },(data)=>{
                if(data.status==200){
                     console.log(data)
-                     loadSynonymConceptTable(1);
+                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     layer.msg("删除成功");
                     initBatchTest();
                }
@@ -322,7 +314,7 @@ module.exports = applicationManagementModule =>{
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     //refresh
-                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
+                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                 }
             });
             if(dialog){
