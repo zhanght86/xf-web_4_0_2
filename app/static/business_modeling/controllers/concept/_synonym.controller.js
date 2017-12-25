@@ -1,13 +1,13 @@
 /**
  * @Author : MILES .
  * @Create : 2017/12/7.
- * @Module : 同一概念管理
+ * @Module : 同义词概念管理
  */
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('SynonymConceptController', [
-    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout",
-    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout) =>{
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout","$location",
+    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout,$location) =>{
         $scope.vm = {
             listData : "",   // table 数据
             topic:"",
@@ -20,11 +20,12 @@ module.exports = applicationManagementModule =>{
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
-             paginationConf : {           //分页条件
-                    pageSize: 5,        //每页条目数量
-                    pagesLength: 10,    //分页块数量
-                    totalItems:""
-              } ,
+             paginationConf : {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : loadSynonymConceptTable,
+                location : true
+            },  
             listData : "",   // table 数据  
             keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
             termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
@@ -40,48 +41,44 @@ module.exports = applicationManagementModule =>{
         };
 
         //查询/请求列表 
-        loadSynonymConceptTable(1)
-        function loadSynonymConceptTable(index){
-            BusinessModelingServer.conceptGetParam.save({
+        loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
+        function loadSynonymConceptTable(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+                // $location.search().currentPage = 1 ;
+            }
+            let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+            BusinessModelingServer.synConceptGetParam.save({
                 "topic":$scope.vm.topic,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
-            },function(data){
-               console.log(data)
+            },(data)=>{
+                layer.close(i);
                if(data.status==200){
                  $scope.vm.listData = data.data.data;
-                 $scope.vm.paginationConf.totalItems=data.data.total;
+                 $scope.vm.paginationConf.totalItems = data.data.total;
+                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+               }else{
+                  layer.close(i);
                }
+            },(err)=>{
+                 layer.close(i);
             })
         }
        
-        /**
-         * 分页变化加载数据
-         **/
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage',(current,old)=>{
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(()=>{
-                    loadSynonymConceptTable(current);
-                }, 100)
-
-            }
-        },true);
 
     //概念单条新增
         function singleAdd(){
             assembleSynonymConceptTerm();
-            BusinessModelingServer.conceptAdd.save({
+            BusinessModelingServer.synConceptAdd.save({
                 "topic":  $scope.vm.key,
                 "termList":$scope.vm.term,
                 "weight": $scope.vm.weight
             },(data)=>{
                  if(data.status==200){
                     layer.msg(data.info)
-                     loadSynonymConceptTable(1)
+                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
                 }else if(data.status==500){
                     layer.msg(data.info)
                 }
@@ -89,6 +86,7 @@ module.exports = applicationManagementModule =>{
         }
     //概念编辑       
         function editSingle(item){
+            console.log(item)
             console.log(item.term.split(";"))
             $scope.vm.dialogTitle="编辑同义概念";
             $scope.vm.key = item.topic;
@@ -100,7 +98,9 @@ module.exports = applicationManagementModule =>{
       //編輯事件
     function singleEditSynonymConcept(item){
         assembleSynonymConceptTerm();
-        BusinessModelingServer.conceptUpdate.save({
+        console.log(item)
+        console.log($scope.vm.item)
+        BusinessModelingServer.synConceptUpdate.save({
             "id":item.id,
             "topic":  $scope.vm.key,
             "weight":  $scope.vm.weight,
@@ -108,15 +108,27 @@ module.exports = applicationManagementModule =>{
         },(data)=>{
            if(data.status==200){
                 layer.msg(data.info);
-                loadSynonymConceptTable(1);
+                loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
+                $scope.vm.key = "";
+                $scope.vm.oldKey = "";
+                $scope.vm.term = "";
+                $scope.vm.weight = 33;
             }else{
                 layer.msg(data.info)
+                $scope.vm.key = "";
+                $scope.vm.oldKey = "";
+                $scope.vm.term = "";
+                $scope.vm.weight = 33;
             }
         })
     }
        
         //添加窗口
         function addConcept(){
+                $scope.vm.key = "";
+                $scope.vm.oldKey = "";
+                $scope.vm.term = "";
+                $scope.vm.weight = 33;
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/concept/synonym/synonym_dialog.html",
                 scope: $scope,
@@ -130,27 +142,27 @@ module.exports = applicationManagementModule =>{
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        BusinessModelingServer.conceptRepeat.save({
-                            topic:$scope.vm.key
+                        BusinessModelingServer.synConceptRepeat.get({
+                            "value":$scope.vm.key
                         },(data)=>{
                             //类名重複
-                            if(data.status===200){
+                            if(data.status==200&&data.data==true){
                                 layer.confirm("您添加的概念类已经在，是否前往编辑？",{
                                     btn:['前往','取消'],
                                     shade:false
                                 },(index)=>{
                                     layer.close(index);
-                                    BusinessModelingServer.conceptGetParam.save({
+                                    BusinessModelingServer.synConceptGetParam.save({
                                         "topic":$scope.vm.topic,
                                         "index": 0,
                                         "pageSize": 1,
                                     },(data)=>{
                                         $scope.vm.dialogTitle="编辑同义概念";
-                                        console.log(data);
-                                        addSynonymConceptDialog(singleEditSynonymConcept,data.data[0]);
-                                        $scope.vm.topic = data.data[0].key;
-                                        $scope.vm.termList =  data.data[0].termList;
-                                        $scope.vm.weight =  data.data[0].weight;
+                                        $scope.vm.key = data.data.data[0].topic;
+                                        $scope.vm.term =  data.data.data[0].term.split(";");
+                                        $scope.vm.weight =  data.data.data[0].weight;
+                                        $scope.vm.id =  data.data.data[0].id; 
+                                        addSynonymConceptDialog(singleEditSynonymConcept,data.data.data[0]);
                                         console.log("cancel");
                                     });
                                 },()=>{
@@ -159,8 +171,6 @@ module.exports = applicationManagementModule =>{
                             }else{
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加同义概念";
-                                $scope.vm.term="";
-                                $scope.vm.weight="33" ;   //默認權重
                                 addSynonymConceptDialog(singleAdd);
                             }
                         },()=>{
@@ -264,10 +274,11 @@ module.exports = applicationManagementModule =>{
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                    httpRequestPost("/api/ms/concept/collective/delete/"+id+"",{
+                    httpRequestPost("/api/ms/concept/synonym/delete/"+id+"",{
                     },function(data){
                         if(data.status==200){
-                             loadSynonymConceptTable(1);
+                             layer.msg("删除成功",{time:2000})
+                             loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
                         }
                     });
                  }
@@ -280,13 +291,14 @@ module.exports = applicationManagementModule =>{
                layer.msg("请选择要删除的概念",{time:2000})
                return false
             }
-            BusinessModelingServer.conceptAllDelete.save({
+            BusinessModelingServer.synConceptAllDelete.save({
                  "conceptIds":$scope.vm.ids
             },(data)=>{
                if(data.status==200){
                     console.log(data)
-                     loadSynonymConceptTable(1)
-                    layer.msg("删除成功")
+                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
+                    layer.msg("删除成功");
+                    initBatchTest();
                }
             })
         }
@@ -358,7 +370,6 @@ module.exports = applicationManagementModule =>{
                 });
             }else{
                 var terms = term
-               // var terms=["test;","测试1;"].split($scope.vm.termSpliter);
                 console.log(terms);
                 console.log()
                 $("#term").tagEditor({

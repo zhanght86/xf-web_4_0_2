@@ -26,7 +26,7 @@ module.exports = angular => {
     // 框架库
     require('../controllers/concept/_aggregate.controller')(businessModelingModule);            // 同义
     require('../controllers/concept/_synonym.controller')(businessModelingModule);               // 集合
-    require('../controllers/concept/_bot.controller')(businessModelingModule);                  // 业务
+    require('../controllers/concept/_business.controller')(businessModelingModule);                  // 业务
     require('../controllers/concept/_sensitive.controller')(businessModelingModule);            // 敏感
     require('../controllers/concept/_disable.controller')(businessModelingModule);              // 停用
     require('../controllers/concept/_enforcement.controller')(businessModelingModule);          // 强制分词
