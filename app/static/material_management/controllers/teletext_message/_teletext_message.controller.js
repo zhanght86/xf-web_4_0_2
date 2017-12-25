@@ -5,13 +5,15 @@
 module.exports=materialModule => {
     materialModule
     .controller('TeletextMessageController', [
-    '$scope',"$state","ngDialog", "$log","MaterialServer","$cookieStore","$stateParams","$timeout",
-    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout)=> {
+    '$scope',"$state","ngDialog", "$log","MaterialServer","$cookieStore","$stateParams","$timeout","$location",
+    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$location)=> {
         $state.go("MM.teletext");
         $scope.vm = {
             paginationConf : {
-                pageSize: 8,//第页条目数
-                pagesLength: 10//分页框数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:8,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: showImg ,
+                location:true
             },
             titAuthor:'',
             imageList : [] ,        //所有图片列表
@@ -19,17 +21,21 @@ module.exports=materialModule => {
             removeImg : removeImg,
         };
 
-        showImg(1);
+        showImg($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
         /**
          * 查询
          */
-        function showImg(index) {
+        function showImg(index,pageSize,reset) {
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             MaterialServer.showImg.get({
                 title : $scope.vm.titAuthor,
                 author : $scope.vm.titAuthor,
-                index : (index - 1)*$scope.vm.paginationConf.pageSize,
-                pageSize : $scope.vm.paginationConf.pageSize
+                index : (index - 1)*pageSize,
+                pageSize : pageSize
 
             },function(data){
                 layer.close(i);
@@ -51,18 +57,7 @@ module.exports=materialModule => {
             });
         }
 
-        //分页定时器
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout);
-                }
-                timeout = $timeout(function () {
-                    showImg(current);
-                }, 0);
-            }
-        },true);
+
         /**
          * 删除图片
          */

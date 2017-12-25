@@ -5,22 +5,24 @@
 module.exports=materialModule => {
     materialModule
     .controller('PictureLibraryController', [
-    '$scope',"$state","ngDialog","MaterialServer", "$cookieStore","$stateParams","$timeout","$window",
-    ($scope,$state,ngDialog,MaterialServer,$cookieStore,$stateParams,$timeout, $window)=> {
+    '$scope',"$state","ngDialog","MaterialServer", "$cookieStore","$stateParams","$location","$timeout","$window",
+    ($scope,$state,ngDialog,MaterialServer,$cookieStore,$stateParams,$location,$timeout,$window)=> {
         $state.go("MM.pic");
         $scope.vm = {
             getPicList : getPicList , //获取图片列表
             imageList : "" ,        //所有图片列表
             paginationConf : {
-                pageSize: 5,//第页条目数
-                pagesLength: 10//分页框数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: getPicList ,
+                location:true
             },
             changeName:changeName,
             pictureId :'',
             pictureIds : [],
             pictureName:'',
             editPictureName :'',
-            napSearch:napSearch,
+            //napSearch:napSearch,
             exportExcel:exportExcel,
             batchDeletePicture:batchDeletePicture,
             isSelectAll  : false ,  // 全选 删除
@@ -34,16 +36,20 @@ module.exports=materialModule => {
             checkName : checkName
         };
         //查询
-        function  napSearch(){
-            getPicList(1) ;
-        }
+        // function  napSearch(){
+        //     getPicList(1) ;
+        // }
         //
-        getPicList(1);
-        function getPicList(index){
+        getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function getPicList(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:5000}) ;
             MaterialServer.getList.get({
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize,
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize,
                 "name" : $scope.vm.pictureName,
 
             },function(data){
@@ -111,23 +117,6 @@ module.exports=materialModule => {
             downLoadFiles($(".picLib")[0],url);
 
         }
-
-        /**
-         * 图片分页
-         */
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    getPicList(current);
-                }, 0)
-
-            }
-        },true);
-        //
 
         /**
          * 修改名称
