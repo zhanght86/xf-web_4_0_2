@@ -38,9 +38,23 @@ module.exports=materialModule => {
             "chatKnowledgeTopic": "",
             "chatQuestionContent": "",
             selectTimeType : selectTimeType,
+            batchAddition : batchAddition,                    //批量新增
+            isUploadStart : false,
 
         };
         //setCookie('applicationId',"450014113901314048");
+        /**
+         **批量新增
+         **/
+        function batchAddition(){
+            let batchAdd = require("../../../views/chat/knowledge_base/chat_knowledge_dialog.html");
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,batchAdd,"600px",function(){
+               $scope.vm.isUploadStart = true ;
+            },function(){
+                $scope.vm.isUploadStart = false ;
+            })
+        }
+
         /**
          * 全选
          */
@@ -137,7 +151,7 @@ module.exports=materialModule => {
             $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
             MaterialServer.searchKnow.save({
-                "applicationId":APPLICATION_ID,
+                //"applicationId":APPLICATION_ID,
                 "context" : $scope.vm.chatQuestionContent,                //知识内容
                 "modifier" : $scope.vm.chatKnowledgeModifier,             //用户名
                 "modifyTimeType" : $scope.vm.modifyTimeType,             //时间类型

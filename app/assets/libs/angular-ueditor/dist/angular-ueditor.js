@@ -55,7 +55,7 @@ http://inhu.net
                     ctrl.$setViewValue(_self.editor.getContent());
                     if (!_updateByRender) {
                       if (!$S.$$phase) {
-                        $S.$apply();
+                        //$S.$apply();
                       }
                     }
                     _updateByRender = false;

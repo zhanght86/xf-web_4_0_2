@@ -13,13 +13,12 @@
                         </div>
                         <div class="L ">
                             <div uploader-base ></div>
+                            <!--<button class="btn1 btn_green" ng-click="vm.batchAddition()">批量新增</button>-->
                         </div>
                     </div>
                     <div class="R">
                         <div class="L mr-10 pr">
                             <div class="clearfix">
-                                <!--<input class="input_text L mr-10" ng-model="vm.chatKnowledgeTopic" type="text" placeholder="请输入知识标题" >-->
-                                <!--<button class="btn1 btn1_blue L mr-10 f14" ng-click="vm.search(1)" >查找</button>-->
                                 <span class="L mr-10">
                                     <input type="text" class="L input-text"  placeholder="请输入知识标题"  ng-model="vm.chatKnowledgeTopic"   style="width:200px;"/>
                                     <input type="button" value=""  ng-click="vm.search(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)" class="L tw_btn " />
@@ -50,7 +49,7 @@
                             </div>
                         </div>
                         <button class="btn1 L btn_green  mr-10 f14"  ng-click="vm.exportExcel()">导出</button>
-                        <a href="/api/material/chat/knowledge/download?fileName=chatKnowledgeTemplate.xls" target="_blank" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>
+                        <!--<a href="/api/material/chat/knowledge/download?fileName=chatKnowledgeTemplate.xls" target="_blank" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>-->
                         <button class="btn1 R btn_delete f14" ng-click="vm.delKnowledge()">批量刪除</button>
                     </div>
                 </div>
