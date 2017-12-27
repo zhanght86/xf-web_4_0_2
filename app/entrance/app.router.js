@@ -203,6 +203,278 @@ module.exports = (angular) => {
                 }
             }
         },
+
+//-------------------------------------------------
+        //##系统工具
+//--------------------------------------------
+        {
+            name: "ST",
+            url: "/ST",
+            data: {
+                roles: []
+            },
+            title : "系统工具",
+            templateProvider:
+                ["$q", function ($q) {
+                    let deferred = $q.defer();
+                    require.ensure([], function () {
+                        let template = require("../static/functional_testing/main.html");
+                        deferred.resolve(template);
+                    });
+                    return deferred.promise;
+                }],
+            controller : "SystemToolsController" ,
+            resolve:
+            {
+                loadDep: ["$q", "$ocLazyLoad", ($q, $ocLazyLoad)=> {
+                    let defer = $q.defer();
+                    require.ensure([], ()=> {
+                        let functionalTestModule = require("../static/functional_testing/module/_functional_test.module")(angular);
+                        $ocLazyLoad.load({
+                            name: "functionalTestModule"
+                        });
+                        defer.resolve(functionalTestModule);
+                    });
+                    return defer.promise;
+                }]
+            }
+        },
+        //----------测试工具----------
+        {
+            name: "ST.test",
+            url: "/test",
+            data: {
+                roles: []
+            },
+            parent : "ST",
+            title : "测试工具" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/test_tools/main.html"),
+                    //controller: "TestToolsController"
+                }
+            }
+        },
+        {
+            name: "ST.test.question",
+            url: "/question",
+            data: {
+                roles: []
+            },
+            parent : "ST.test",
+            title : "问法测试" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/test_tools/question_test/question_test.html"),
+                    controller: "QuestionTestController"
+                }
+            }
+        },
+        {
+            name: "ST.test.session",
+            url: "/session",
+            data: {
+                roles: []
+            },
+            parent : "ST.test",
+            title : "聊天测试" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/test_tools/session_test/session_test.html"),
+                    controller: "SessionTestController"
+                }
+            }
+        },
+        {
+            name: "ST.test.batch",
+            url: "/batch",
+            data: {
+                roles: []
+            },
+            parent : "ST.test",
+            title : "批量测试" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/test_tools/batch_test/batch_test/batch_test.html"),
+                    controller: "BatchTestController"
+                }
+            }
+        },
+        {
+            name: "ST.test.result",
+            url: "/result",
+            data: {
+                roles: []
+            },
+            parent : "ST.test",
+            title : "测试结果" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/test_tools/batch_test/test_result/test_result.html"),
+                    controller: "TestResultController"
+                }
+            }
+        },
+        {
+            name: "ST.test.details",
+            url: "/details",
+            data: {
+                roles: []
+            },
+            parent : "ST.test",
+            title : "测试详情" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/test_tools/batch_test/view_details/view_details.html"),
+                    controller: "ViewDetailsController"
+                }
+            }
+        },
+
+        //----------分词工具------------
+        {
+            name: "ST.participle",
+            url: "/participle",
+            data: {
+                roles: []
+            },
+            parent : "ST",
+            title : "分词工具" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/participle_tool/participle.html"),
+                    controller: "ParticipleController"
+                }
+            }
+        },
+        {
+            name: "ST.participleResult",
+            url: "/participleResult",
+            data: {
+                roles: []
+            },
+            parent : "ST",
+            title : "分词工具" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/participle_tool/participle_result.html"),
+                    controller: "ParticipleResultController"
+                }
+            }
+        },
+
+
+        //----------智能学习-------------
+        {
+            name: "ST.study",
+            url: "/study",
+            data: {
+                roles: []
+            },
+            parent : "ST",
+            title : "知识学习" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/division_knowledge/main.html"),
+                    //controller: "TestToolsController"
+                }
+            }
+        },
+        {
+            name: "ST.study.correction",
+            url: "/correction",
+            data: {
+                roles: []
+            },
+            parent : "ST.study",
+            title : "知识学习" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/division_knowledge/correction_learning/correction_learning.html"),
+                    controller: "CorrectionLearnController"
+                }
+            }
+        },
+        {
+            name: "ST.study.reinforcement",
+            url: "/reinforcement",
+            data: {
+                roles: []
+            },
+            parent : "ST.study",
+            title : "知识学习" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/division_knowledge/reinforcement_learn/reinforcement_learn.html"),
+                    controller: "ReinforcementLearnController"
+                }
+            }
+        },
+        {
+            name: "ST.study.newKnow",
+            url: "/newKnow",
+            data: {
+                roles: []
+            },
+            parent : "ST.study",
+            title : "知识学习" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/functional_testing/views/division_knowledge/new_know_discovery_learn/new_know_discovery_learn.html"),
+                    controller: "NewKnowDiscoveryLearnController"
+                }
+            }
+        },
+
+
 //--------------------------------------------------
 //          ##应用管理MP##
 //--------------------------------------------------
