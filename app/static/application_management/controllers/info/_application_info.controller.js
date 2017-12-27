@@ -6,25 +6,22 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('ApplicationInfoController',
-    ['$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog","$cookieStore","$rootScope","$timeout","$log",
-    ($scope,localStorageService,ApplicationServer , $state, ngDialog,$cookieStore,$rootScope,$timeout,$log) =>{
+    ['$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog","$cookieStore","$rootScope","$timeout",
+    ($scope,localStorageService,ApplicationServer , $state, ngDialog,$cookieStore,$rootScope,$timeout) =>{
         $scope.vm = {
             serviceData : "",   // 发布服务列表数据
             paginationConf : {     //分页条件
                 search : listServiceData,
+                location : false ,
+                pageSize : 5
             }  ,
-            // paginationConf : {
-            //     pageSize: 5,//第页条目数
-            //     pagesLength: 10,//分页框数量
-            //     totalItems  : 100 ,
-            //     numberOfPages : 10
-            // },
             applicationInfo : {
-                applicationName :APPLICATION_NAME, //应用名称
-                applicationDescription : "", //应用描述
-                applicationCreateTime : "",//创建时间
-                applicationLisence : "", //应用序列号
-                statusId : "", //应用状态
+                name        :APPLICATION_NAME, //应用名称
+                newName     :"" ,
+                description : "", //应用描述
+                createTime  : "",//创建时间
+                license     : "", //应用序列号
+                statusId    : "", //应用状态
             } ,
             sceneInfo : {              //场景信息
                 knowledgeTypeNum : 6, //知识类型数量
@@ -32,9 +29,7 @@ module.exports = applicationManagementModule =>{
                 businessFrameNum :0,//业务框架数量(默认)
             } ,
             allowSubmit : 1, //是否允许提交
-
-            findApplicationInfo : findApplicationInfo, //查找应用信息
-            listServiceData : listServiceData, //查看服务列表信息
+            // listServiceData : listServiceData, //查看服务列表信息
             publishService : publishService,  //发布服务
             startService : startService, //上线服务
             stopService : stopService, //下线服务
@@ -43,7 +38,8 @@ module.exports = applicationManagementModule =>{
             deleteApplication: deleteApplication, //删除应用
             stopAllServices : stopAllServices //下线应用的所有服务
         };
-
+        //编辑应用的名称
+        let changeName = require("../../views/info/dialog_edit_application_name.html") ;
         //查看业务框架数量
         ApplicationServer.viewFrameNumber.save({
             "id": APPLICATION_ID
@@ -54,12 +50,8 @@ module.exports = applicationManagementModule =>{
                 console.log("业务框架数量查询失败");
             }
         },function(error){console.log(error)}) ;
-        // findApplicationInfo(); //查看应用的基本信息
-        /**
-         * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
-         */
-        // listServiceData(1);
+        findApplicationInfo(); //查看应用的基本信息
+        listServiceData(1);
         //获取服务列表
         function listServiceData(index){
             ApplicationServer.queryServiceList.save({
@@ -69,20 +61,8 @@ module.exports = applicationManagementModule =>{
                 $scope.vm.serviceData = response.data;
                 $scope.vm.paginationConf.totalItems = response.total ;
                 $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize ;
-            },function(error){$log.log(error)})
+            },function(error){console.log(error)})
         }
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    listServiceData(current);
-                }, 100)
-
-            }
-        },true);
         //发布服务
         function publishService(serviceId){
             ApplicationServer.releaseService.save({
@@ -92,7 +72,7 @@ module.exports = applicationManagementModule =>{
                     layer.msg("发布服务成功");
                     listServiceData(1);
                 }else{
-                    layer.msg("发布服务失败");
+                    layer.msg(response.data);
                 }
             },function(error){console.log(error)})
         }
@@ -113,7 +93,7 @@ module.exports = applicationManagementModule =>{
                         layer.msg("上线服务失败");
                     }
                 },function(error){console.log(error) })
-        })};
+        })}
         //下线服务
         function stopService(serviceId){
             layer.confirm("确认下线？",{
@@ -158,40 +138,34 @@ module.exports = applicationManagementModule =>{
             },function(response){
                 if(response.status==200){
                     $scope.vm.applicationInfo = {
-                        applicationName :response.data.name, //应用名称
-                        applicationDescription : response.data.description, //应用描述
-                        applicationCreateTime :response.data.createTime,//创建时间
-                        applicationLisence : response.data.license, //应用序列号
+                        name :response.data.name, //应用名称
+                        description : response.data.description, //应用描述
+                        createTime :response.data.createTime,//创建时间
+                        license : response.data.license, //应用序列号
                         statusId : response.data.status, //应用状态
                     } ;
                 }else{
-                    $state.reload() ;
-                    // layer.msg("查询失败");
+                    // $state.reload() ;
                 }
-            },function(error){$log.log(error)})
+            },function(error){console.log(error)})
         }
         //编辑应用的名称
         function editName(){
-            $scope.vm.applicationNewName = APPLICATION_NAME ; //待编辑的新应用名称
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"static/application_management/views/info/edit_application_name.html","",function(){
-                if ($scope.vm.allowSubmit){
+            $scope.vm.applicationInfo.newName = APPLICATION_NAME ; //待编辑的新应用名称
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,changeName,"",function(){
                     ApplicationServer.updateApplicationName.save({
-                        "applicationId": APPLICATION_ID,
-                        "applicationName" : $scope.vm.applicationNewName,
-                        "applicationDescription" : $scope.vm.applicationInfo.applicationDescription,
-                        "applicationLisence" : $scope.vm.applicationInfo.applicationLisence ,
+                        "id": APPLICATION_ID,
+                        "name" : $scope.vm.applicationInfo.newName,
+                        "description" : $scope.vm.applicationInfo.description,
+                        "license" : $scope.vm.applicationInfo.license ,
                     },function(response){
                         if(response.status==200){
-                            $cookieStore.put("applicationName",$scope.vm.applicationNewName) ;
-                            APPLICATION_NAME = $scope.vm.applicationNewName ;
+                            $cookieStore.put("applicationName",$scope.vm.applicationInfo.newName) ;
+                            APPLICATION_NAME = $scope.vm.applicationInfo.newName ;
                             findApplicationInfo();
-                            layer.msg("信息修改成功")
-                        }else{
-                            layer.msg("修改失败");
-                        }
-
-                    },function(error){$log.log(error)})
-                }
+                        } ;
+                        layer.msg(response.data)
+                    },function(error){console.log(error)})
             }) ;
         }
         //下线应用的所有服务

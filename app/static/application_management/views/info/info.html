@@ -2,17 +2,16 @@
     <div class="r-cont-hd">
         <span>应用信息</span>
     </div>
-    <p class="msgR-name">{{vm.applicationInfo.applicationName}}
-                <span ng-click="vm.editName()"></span>
-        <i></i>修改名称
-
+    <p class="msgR-name">
+        {{vm.applicationInfo.name}}
+        <span ng-click="vm.editName()"><i></i>修改名称</span>
     </p>
     <ul class="msgR-state">
         <li ng-if="vm.applicationInfo.statusId==40001">应用状态：未使用</li>
         <li ng-if="vm.applicationInfo.statusId==40002">应用状态：使用中</li>
         <li ng-if="vm.applicationInfo.statusId==40003">应用状态：已停用</li>
         <li>场景类型：<span ng-bind="'客服型'"></span></li>
-        <li>创建时间：{{vm.applicationInfo.applicationCreateTime | date : 'yyyy-MM-dd'}}</li>
+        <li>创建时间：{{vm.applicationInfo.createTime | date : 'yyyy-MM-dd'}}</li>
     </ul>
     <div class="jqrsz-btn-box" style="padding: 30px 0;margin-bottom:0; ">
         <a class="btn btn-blue mr10" ng-click="vm.stopAllServices()" >下线所有服务</a>
@@ -30,15 +29,15 @@
         <ul class="msgR-table-1 msgR-table-2 L">
             <li class="msgR-table-head">发布信息</li>
             <li ng-repeat="item in vm.serviceData track by $index">
-                <span class="Nrelease" ng-if="item.serviceStatus==30001">未发布</span>
-                <span class="Nrelease" ng-if="item.serviceStatus==30002">已发布</span>
-                <span class="release"  ng-if="item.serviceStatus==30003">已下线</span>
+                <span class="Nrelease" ng-if="item.status==30001">未发布</span>
+                <span class="Nrelease" ng-if="item.status==30002">已发布</span>
+                <span class="release"  ng-if="item.status==30003">已下线</span>
                 &nbsp; {{item.name}}
-                <p ng-if="item.serviceStatus==30001"><a class="release" ng-click="vm.publishService(item.id)">发布</a>
+                <p ng-if="item.status==30001"><a class="release" ng-click="vm.publishService(item.id)">发布</a>
                 </p>
-                <p ng-if="item.serviceStatus==30002"><a class="Offline" ng-click="vm.stopService(item.id)">下线</a>&nbsp; | &nbsp;<a class="restart" ng-click="vm.restartService(item.id)">重启</a>
+                <p ng-if="item.status==30002"><a class="Offline" ng-click="vm.stopService(item.id)">下线</a>&nbsp; | &nbsp;<a class="restart" ng-click="vm.restartService(item.id)">重启</a>
                 </p>
-                <p ng-if="item.serviceStatus==30003"><a class="release" ng-click="vm.startService(item.id)">上线</a>
+                <p ng-if="item.status==30003"><a class="release" ng-click="vm.startService(item.id)">上线</a>
                 </p>
             </li>
         </ul>

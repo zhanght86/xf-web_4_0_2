@@ -5,28 +5,35 @@
  */
 module.exports = applicationManagementModule =>{
     applicationManagementModule
-    .directive('checkName', function(ApplicationServer,$log){
+    .directive('checkName', function(ApplicationServer,$timeout){
         return {
             require: 'ngModel',
-            link: function(scope, ele, attrs, c){
-                scope.$watch(attrs.ngModel, function(n){
-                    if(!n) return;
-                    ApplicationServer.verifyApplicationName.save({
-                        applicationId: APPLICATION_ID,
-                        applicationName: scope.vm.applicationNewName
-                    },function(response){
-                        if(response.data){
-                            c.$setValidity('unique', true);
-                            scope.vm.allowSubmit=1;
-                        }else{
-                            c.$setValidity('unique', false);
-                            scope.vm.allowSubmit=0;
+            link: function(scope, $ele, $attrs, $ctrl){
+                let timer ;
+                scope.$watch($attrs.ngModel, function(current,old){
+                    if(timer){
+                        $timeout.cancel(timer) ;
+                        timer = "" ;
+                    }
+                    timer = $timeout(function () {
+                        if(!scope.vm.applicationInfo.newName) {
+                            return;
                         }
-                    },function(error){
-                        c.$setValidity('unique', false);
-                        scope.vm.allowSubmit=0;
-                        $log.log(error)
-                    }) ;
+                        ApplicationServer.verifyApplicationName.save({
+                            "license": scope.vm.applicationInfo.license,
+                            "name": scope.vm.applicationInfo.newName
+                        },function(response){
+                            if(response.status==200){
+                                $ctrl.$setValidity('unique', true);
+                            }else{
+                                $ctrl.$setValidity('unique', false);
+                            }
+                        },function(error){
+                            $ctrl.$setValidity('unique', false);
+                        }) ;
+                        timer = "" ;
+                    },300) ;
+
                 });
             }
         }

@@ -36,6 +36,9 @@ function loadBasicModules() {
     // 路由
     require('angular-route');
     ngDepModules.push('ngRoute');
+
+    // require('./assets/libs/compile/unminified/ng-img-crop');
+    // ngDepModules.push('ngImgCrop');
 }
 loadBasicModules()  ;
 // define one angular module

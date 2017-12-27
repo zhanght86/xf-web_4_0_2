@@ -9,20 +9,19 @@ module.exports = applicationManagementModule =>{
     '$scope', 'localStorageService' ,"ApplicationServer","$state" ,"ngDialog",'$http', "$cookieStore",
     ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$http,$cookieStore)=>{
         $scope.vm = {
-            settingCommentOn : 1,   //评价开关
-            settingDataTimeoutLimit : "",//获取数据时间
-            settingGreetingOn : 1,//寒暄开关
-            settingGreetingThreshold : "",//寒暄阈值
-            settingId : "",//应用参数id
-            settingLowerLimit : "",//下限阈值
-            settingRecommendNumber : "",//推荐问题数量
-            settingRelateNumber : "",//关联问题数量
-            settingTurnRoundOn : 1,//话轮识别开关
-            settingUpperLimit : "",//上限阈值
-            updateParameter : updateParameter,  //更新应用参数
-            queryParameter : queryParameter, //查询应用参数
-            turnOn : turnOn,//开关函数
-            parameterLimit : parameterLimit
+            id                 : "", //应用参数id
+            commentOn          : 1,   //评价开关
+            greetingOn         : 1,//寒暄开关
+            recommendNumber    : "",//推荐问题数量
+            greetingUpperLimit : "",//寒暄阈值
+            tagUpperLimit      : "",	//	上限阈值
+            tagLowerLimit      : "",	//下限阈值
+            upperLimit         : ""	,//深度学习上限阈值
+            lowerLimit         : "",	//深度学习下限阈值
+            updateParameter    : updateParameter,  //更新应用参数
+            queryParameter     : queryParameter, //查询应用参数
+            turnOn             : turnOn,//开关函数
+            parameterLimit     : parameterLimit
         };
         function parameterLimit(type,val){
             // type 0   lt1
@@ -43,34 +42,20 @@ module.exports = applicationManagementModule =>{
         queryParameter();
         //查看机器人参数
         function queryParameter(){
-            ApplicationServer.queryParameter.save({
+            ApplicationServer.queryParameter.get({
+                id : APPLICATION_ID
             },function(response){
                 if(response.status == 200){
-                    $scope.vm.settingCommentOn = response.data.commentOn;   //评价开关
-                    $scope.vm.settingGreetingOn = response.data.greetingOn;//寒暄开关
-
-                    $scope.vm.settingRelateNumber = response.data.relateNumber;//关联问题数量
-
-                    $scope.vm.settingRecommendNumber = response.data.recommendNumber;//推荐问题数量
-                    $scope.vm.settingUpperLimit = response.data.tagUpperLimit ;//上限阈值
-                    $scope.vm.settingLowerLimit = response.data.tagLowerLimit;//下限阈值
-                    $scope.vm.settingGreetingThreshold = response.data.greetingUpperLimit;//寒暄阈值
-
-                    $scope.vm.settingDataTimeoutLimit = response.data.settingDataTimeoutLimit;//获取数据时间
-                    $scope.vm.settingId = response.data.id;//应用参数id
-                    $scope.vm.settingTurnRoundOn = response.data.settingTurnRoundOn;//话轮识别开关
-
+                    $scope.vm.id = response.data.id;//应用参数id
+                    $scope.vm.commentOn = response.data.commentOn;   //评价开关
+                    $scope.vm.greetingOn = response.data.greetingOn;//寒暄开关
+                    $scope.vm.recommendNumber = response.data.recommendNumber;//推荐问题数量
+                    $scope.vm.greetingUpperLimit = response.data.greetingUpperLimit;//寒暄阈值
+                    $scope.vm.tagUpperLimit = response.data.tagUpperLimit ;//上限阈值
+                    $scope.vm.tagLowerLimit = response.data.tagLowerLimit;//下限阈值
+                    $scope.vm.upperLimit = response.data.upperLimit ;//上限阈值
+                    $scope.vm.lowerLimit = response.data.lowerLimit;//下限阈值
                 }else{
-                    $scope.vm.settingCommentOn = 1;   //评价开关
-                    $scope.vm.settingDataTimeoutLimit = "";//获取数据时间
-                    $scope.vm.settingGreetingOn = 1;//寒暄开关
-                    $scope.vm.settingGreetingThreshold = "";//寒暄阈值
-                    $scope.vm.settingId = "";//应用参数id
-                    $scope.vm.settingLowerLimit = "";//下限阈值
-                    $scope.vm.settingRecommendNumber = "";//推荐问题数量
-                    $scope.vm.settingRelateNumber = "";//关联问题数量
-                    $scope.vm.settingTurnRoundOn = 1;//话轮识别开关
-                    $scope.vm.settingUpperLimit = "";//上限阈值
                 }
             },function(error){console.log(error)})
         }
@@ -78,17 +63,15 @@ module.exports = applicationManagementModule =>{
         //编辑应用参数
         function updateParameter(){
             ApplicationServer.updateParameter.save({
-                "id": $scope.vm.settingId,
-                "commentOn": $scope.vm.settingCommentOn,
-                "greetingOn": $scope.vm.settingGreetingOn,
-                "relateNumber": $scope.vm.settingRelateNumber,
-                "recommendNumber": $scope.vm.settingRecommendNumber,
-                "tagUpperLimit": $scope.vm.settingUpperLimit,
-                "tagLowerLimit": $scope.vm.settingLowerLimit,
-                "greetingUpperLimit": $scope.vm.settingGreetingThreshold,
-
-                "settingDataTimeoutLimit": $scope.vm.settingDataTimeoutLimit,
-                "settingTurnRoundOn": $scope.vm.settingTurnRoundOn,
+                "id": $scope.vm.id,
+                "commentOn": $scope.vm.commentOn,
+                "greetingOn": $scope.vm.greetingOn,
+                "recommendNumber": $scope.vm.recommendNumber,
+                "greetingUpperLimit" :  $scope.vm.greetingUpperLimit,//寒暄阈值
+                "tagUpperLimit": $scope.vm.tagUpperLimit,
+                "tagLowerLimit": $scope.vm.tagLowerLimit,
+                "upperLimit": $scope.vm.upperLimit,
+                "lowerLimit": $scope.vm.lowerLimit
             },function(data){
                 if(data.status===200){
                     layer.msg("保存成功");

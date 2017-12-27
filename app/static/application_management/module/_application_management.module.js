@@ -10,8 +10,13 @@ module.exports = angular => {
     //--------------------------------------------------
     //          directive
     //--------------------------------------------------
-    require('../../../components/switch_turn/_switch_turn.directive')(applicationManagementModule);  // 开关
-    require('../../../components/page/page')(applicationManagementModule);  // 分页
+    require('../../../components/switch_turn/_switch_turn.directive')(applicationManagementModule);      // 开关
+    require('../../../components/page/page')(applicationManagementModule);                               // 分页
+    require("../directives/_avatar.directive")(applicationManagementModule) ;                            // 头像
+    require('../directives/_check_service_name.direvtive')(applicationManagementModule);                 // 验证服务名称
+    require('../directives/_verify_application_name.directive')(applicationManagementModule);            // 验证应用名称
+    require('../directives/_verify_node.directive')(applicationManagementModule);                        // 验证节点名称
+    // require('../directives/caliper/_caliper.directive')(applicationManagementModule);                    // 标尺
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------
@@ -33,12 +38,6 @@ module.exports = angular => {
     //          server
     //--------------------------------------------------
     require('../server/_application.server')(applicationManagementModule);
-    //--------------------------------------------------
-    //         directive
-    //--------------------------------------------------
-    require('../directives/_check_service_name.direvtive')(applicationManagementModule);                 //  验证服务名称
-    require('../directives/_verify_application_name.directive')(applicationManagementModule);            // 验证应用名称
-    require('../directives/_verify_node.directive')(applicationManagementModule);                        // 验证节点名称
 } ;
 
 

@@ -29,6 +29,8 @@ class HomePageServer {
         this.checkUserName = $resource(API_USER+"/user/check",{},{}) ;
     // 更新用户
         this.updateUser = $resource(API_USER+"/user/update",{},{}) ;
+    // 修改密码
+        this.changePassword = $resource(API_USER+"/user/update/pwd",{},{}) ;
     // 更新用户状态
         this.updateUserStatus = $resource(API_USER+"/user/update/status",{},{}) ;
     // 删除用户

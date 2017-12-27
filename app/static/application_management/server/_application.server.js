@@ -49,7 +49,7 @@ class ApplicationServer {
 
 //   参数设置
         //查看应用参数
-        this.queryParameter = $resource(API_APPLICATION+"/config/get/param", {}, {});
+        this.queryParameter = $resource(API_APPLICATION+"/config/get/param/:id", {}, {});
         //更新应用参数
         this.updateParameter = $resource(API_APPLICATION+"/config/update/param", {}, {});
 
@@ -58,10 +58,10 @@ class ApplicationServer {
         this.queryRobotParameter = $resource(API_APPLICATION+"/config/get/robot/:id", {}, {});
         //更新机器人参数
         this.updateRobotParameter = $resource(API_APPLICATION+"/config/update/robot", {}, {});
-        // //保存经典机器人头像
-        // this.storeClassicalAvatar = $resource(API_APPLICATION+"/application/saveClassicHead", {}, {});
-        // //保存自定义机器人头像
-        // this.updateRobotParameter = $resource(API_APPLICATION+"/application/saveRobotSetting", {}, {});
+        //保存经典机器人头像
+        this.storeClassicalAvatar = $resource(API_APPLICATION+"/config/update/classic/avatar", {}, {});
+        //保存自定义机器人头像
+        // this.uploadCustomizedAvatar = $resource(API_APPLICATION+"/config/upload/avatar", {}, {});
 
 //  转人工设置
         //获取列表
@@ -123,7 +123,7 @@ class ApplicationServer {
                                                   ********************************/
 //应用信息
         //校验应用名称
-        this.verifyApplicationName = $resource(API_APPLICATION+"/application/checkName", {}, {});
+        this.verifyApplicationName = $resource(API_APPLICATION+"/application/name/check", {}, {});
         // //发布服务
         // this.releaseService = $resource(API_APPLICATION+"/service/publish", {}, {});
         // //查看服务列表
@@ -141,7 +141,7 @@ class ApplicationServer {
         //查看场景业务框架数量
         this.viewFrameNumber = $resource(API_APPLICATION+"/application/get/frame", {}, {});
         //修改应用名称
-        this.updateApplicationName = $resource(API_APPLICATION+"/application/updateApplication", {}, {});
+        this.updateApplicationName = $resource(API_APPLICATION+"/application/update", {}, {});
         //删除当前应用（当前所有服务）
         this.removeApplicationServer = $resource(API_APPLICATION+"/service/delete/all", {}, {});
 
