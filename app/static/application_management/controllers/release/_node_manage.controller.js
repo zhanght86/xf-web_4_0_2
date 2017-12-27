@@ -14,7 +14,6 @@ module.exports = applicationManagementModule =>{
                 pageSize : 5 ,
                 pagesLength : 8
             }  ,//分页条件
-
             nodeCode : "", //节点编号
             nodeId : "", //父级节点id
             nodeAccessIp : "", //父级节点访问地址
@@ -46,12 +45,9 @@ module.exports = applicationManagementModule =>{
             errorTip : "", //错误访问地址提示
             errorNodeIdTip : "" //错误节点id提示
         };
+        let addNodeHtml = require("../../views/release/node_manage/addOredit_node.html") ;
         listTypeData(); //查询节点类型数据
         listStatusData(); //查询状态数据
-        /**
-         * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
-         */
         listNodeData(1);
         //请求节点列表
         function listNodeData(index){
@@ -101,7 +97,7 @@ module.exports = applicationManagementModule =>{
                     initNodeInput() ;
                     layer.msg("当前节点正在使用中!");
                 }else{
-                    $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/release/node_manage/addOredit_node.html","550px",function(){
+                    $scope.$parent.$parent.MASTER.openNgDialog($scope,addNodeHtml,"550px",function(){
                         if($scope.vm.allowSubmit){
                             console.log(JSON.stringify($scope.vm.nodes));
                             angular.forEach($scope.vm.nodes,function(item){
@@ -149,7 +145,7 @@ module.exports = applicationManagementModule =>{
 
         //添加节点
         function addNode(){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/release/node_manage/addOredit_node.html","550px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,addNodeHtml,"550px",function(){
                 if($scope.vm.allowSubmit){
                     angular.forEach($scope.vm.nodes,function(item){
                         $scope.vm.newNodes.push({
@@ -239,7 +235,6 @@ module.exports = applicationManagementModule =>{
                 },function(error){console.log(error);})
             });
         }
-
         //删除节点
         function deleteNode(nodeCode){
             layer.confirm("确认删除？",{

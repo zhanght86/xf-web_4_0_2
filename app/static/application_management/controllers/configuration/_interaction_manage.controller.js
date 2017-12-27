@@ -1,36 +1,22 @@
 /**
  * @Author : MILES .
  * @Create : 2017/12/5.
- * @Module :  场景管理
+ * @Module :  交互管理
  */
 module.exports = applicationManagementModule =>{
     applicationManagementModule
-    .controller('SceneManageController', [
+    .controller('InteractionManageController', [
     '$scope', 'localStorageService' ,"ApplicationServer","$state" ,"ngDialog","$cookieStore",
     ($scope,localStorageService,ApplicationServer, $state,ngDialog,$cookieStore)=> {
         $scope.vm = {
-            showType : 0 ,  // 0 知识类型  1 交互 方式
-            sceneId : $cookieStore.get("sceneId") , // 场景id
-            wordsForKnowType: "",  //知识类型检索条件
             wordsInterviewMode: "",  //交互方式检索条件
-            //exchangeModeId: "", //交互方式的Id
-            //knowledgeTypeId: "", //知识类型的Id
-            //statusId: "", //状态
-
             knowledgeTypeData: "", //知识类型列表
             exchangeModeData: "",  //交互方式列表
             queryKnowledgeType: queryKnowledgeType, //查询知识类型
             queryInterviewMode: listExchangeMode,  //查询交互方式
 
-            //updateKnowledgeType:  updateKnowledgeType, //禁用或者启用知识类型
-            //updateExchangeMode: updateExchangeMode, //禁用或者启用交互方式
-            //saveMultiInteractive: saveMultiInteractive,  //多轮交互设置
-            //findMultiInteractive: findMultiInteractive, //查询多轮交互设置
             multipleConversationSetup : multipleConversationSetup ,//多轮交互设置
 
-            //turnOn : turnOn,//开关函数
-            //turnOn2 : turnOn2,
-            //
             multipleConversation : {   // 多轮会话配置项
                 settingId: "", //配置id
                 categoryFuzzyOn: 1,  //类目模糊开关
@@ -45,6 +31,7 @@ module.exports = applicationManagementModule =>{
                 matchTagOn: 1  //标签匹配开关
             }
         };
+        let roundSessionHtml = require("../../views/configuration/interaction/dialog_multiply_setup.html") ;
         //加载知识类型
         queryKnowledgeType();
         //加载交互方式
@@ -68,6 +55,19 @@ module.exports = applicationManagementModule =>{
             },function(error){console.log(error);}) ;
         }
         //多轮交互设置
+        $scope.$parent.$parent.MASTER.openNgDialog($scope,roundSessionHtml,"600px",function(){
+            // 参数设置
+            var parameter = angular.copy($scope.vm.multipleConversation) ;
+            parameter.userId = USER_ID ;
+            parameter.applicationId = APPLICATION_ID ;
+            ApplicationServer.storeMultipleConversation.save(parameter,function(response){
+                if(response.status==200){
+                    layer.msg("修改成功！") ;
+                }else{
+                    layer.msg("出现修改异常，请重新修改");
+                }
+            },function(error){console.log(error);})
+        })
         function multipleConversationSetup(){
             ApplicationServer.searchMultipleConversation.save({
                 "applicationId": APPLICATION_ID
@@ -86,7 +86,7 @@ module.exports = applicationManagementModule =>{
                         matchCompleteOn: response.data.matchCompleteOn, //完全匹配开关
                         matchTagOn: response.data.matchTagOn  //标签匹配开关
                     } ;
-                    $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/application_manage/config/scene_manage/multiply_setup.html","600px",function(){
+                    $scope.$parent.$parent.MASTER.openNgDialog($scope,roundSessionHtml,"600px",function(){
                         // 参数设置
                         var parameter = angular.copy($scope.vm.multipleConversation) ;
                             parameter.userId = USER_ID ;

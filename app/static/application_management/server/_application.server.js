@@ -104,6 +104,12 @@ class ApplicationServer {
 //节点管理
         //查看节点列表
         this.queryNodeList = $resource(API_APPLICATION+"/node/listNodeByPage", {}, {});
+
+        //查看未使用节点
+        this.queryUnusedNodeList = $resource(API_APPLICATION+"/node/get/nouse", {}, {});
+        //查看父节点信息
+        this.queryNodeList = $resource(API_APPLICATION+"/node/listNodeByPage", {}, {});
+
         //查询节点的基本信息
         this.queryNodeInfo = $resource(API_APPLICATION+"/node/findNodeInfo", {}, {});
         //新增节点

@@ -23,7 +23,6 @@
                         <tr>
                             <!--<th class="bold" width="5%"><input  type="checkbox" /></th>-->
                             <th class="bold" width="25%">名称</th>
-                            <th class="bold" width="20%">服务类型</th>
                             <th class="bold" width="20%">发布时间</th>
                             <th class="bold" width="15%">状态</th>
                             <th class="bold" width="20%">操作</th>
@@ -32,25 +31,23 @@
                         <tbody>
                         <tr ng-repeat="item in vm.serviceList">
                             <!--<td><input  type="checkbox" /></td>-->
-                            <td>{{item.serviceName}}</td>
-                            <td ng-if="item.serviceType==10">生产服务</td>
-                            <td ng-if="item.serviceType==11">测试服务</td>
-                            <td>{{item.serviceCreateTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td ng-if="item.serviceStatus==30001">未发布</td>
-                            <td ng-if="item.serviceStatus==30002">已发布</td>
-                            <td ng-if="item.serviceStatus==30003">已下线</td>
-                            <td ng-if="item.serviceStatus!=30001 && item.serviceStatus!=30002 && item.serviceStatus!=30003">&nbsp;</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td ng-if="item.status==30001">未发布</td>
+                            <td ng-if="item.status==30002">已发布</td>
+                            <td ng-if="item.status==30003">已下线</td>
+                            <td ng-if="item.status!=30001 && item.status!=30002 && item.status!=30003">&nbsp;</td>
                             <td>
-                                <a ng-if="item.serviceStatus==30001"
-                                   ng-click="vm.publishService(item.serviceId)" class="mr-10 c-orange">发布</a>
-                                <a ng-if="item.serviceStatus==30002"
-                                   ng-click="vm.stopService(item.serviceId)" class="mr-10 c-orange">下线</a>
-                                <a ng-if="item.serviceStatus==30003"
-                                   ng-click="vm.startService(item.serviceId)" class="mr-10 c-orange">上线</a>
-                                <a ng-if="item.serviceStatus==30002"
-                                   ng-click="vm.restartService(item.serviceId)" class="mr-10 c-orange">重启</a>
-                                <a ng-click="vm.addOrEditService(item.serviceId)" class="c-primary mr-10" >编辑</a>
-                                <a ng-click="vm.deleteService(item.serviceId)" class="c-error">删除</a>
+                                <a ng-if="item.status==30001"
+                                   ng-click="vm.publishService(item.id)" class="mr-10 c-orange">发布</a>
+                                <a ng-if="item.status==30002"
+                                   ng-click="vm.stopService(item.id)" class="mr-10 c-orange">下线</a>
+                                <a ng-if="item.status==30003"
+                                   ng-click="vm.startService(item.id)" class="mr-10 c-orange">上线</a>
+                                <a ng-if="item.status==30002"
+                                   ng-click="vm.restartService(item.id)" class="mr-10 c-orange">重启</a>
+                                <a ng-click="vm.addOrEditService(item.id)" class="c-primary mr-10" >编辑</a>
+                                <a ng-click="vm.deleteService(item.id)" class="c-error">删除</a>
                             </td>
                         </tr>
 

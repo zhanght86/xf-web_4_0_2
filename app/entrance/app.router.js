@@ -382,41 +382,21 @@ module.exports = (angular) => {
         },
         // 场景管理
         {
-            name: "AM.scene",
+            name: "AM.interaction",
             url: "/scene",
             data: {
                 roles: []
             },
             parent : "AM",
-            title : "场景管理" ,
+            title : "交互管理" ,
             views: {
                 "header": {
                     template: nav,
                     controller: "NavController"
                 },
                 "content": {
-                    template: require("../static/application_management/views/configuration/scene_manage/scene_manage.html"),
-                    controller: "SceneManageController"
-                }
-            }
-        },
-        // 渠道管理
-        {
-            name: "AM.channel",
-            url: "/channel",
-            data: {
-                roles: []
-            },
-            parent : "AM",
-            title : "渠道管理" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/application_management/views/configuration/channel_manage/channel_manage.html"),
-                    controller: "ChannelManageController"
+                    template: require("../static/application_management/views/configuration/interaction/interaction.html"),
+                    controller: "InteractionManageController"
                 }
             }
         },
