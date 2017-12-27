@@ -5,8 +5,8 @@
 module.exports=systemMonitoringModule => {
     systemMonitoringModule
     .controller('OperationLogController',
-        ['$scope',"localStorageService","$state","$log","SystemServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter",
-     ($scope,localStorageService,$state,$log,SystemServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter) => {
+        ['$scope',"localStorageService","$state","$log","SystemServer","$timeout","$stateParams","$location","ngDialog","$cookieStore","$filter",
+     ($scope,localStorageService,$state,$log,SystemServer,$timeout,$stateParams,$location,ngDialog,$cookieStore,$filter) => {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             listData : "",          //数据列表
@@ -15,23 +15,29 @@ module.exports=systemMonitoringModule => {
             endTime : "" ,          //结束时间
             //operationLogAuthor : "", //作者
             paginationConf : {      //分页条件
-                pageSize: 8,        //每页条目数量
-                pagesLength: 10,    //分页块数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search : getData,
+                location : true
             },
             pageJump : pageJump
 
         };
-        getData(1) ;
+        getData($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
         /**
          * 表格列表
          **/
-        function getData(index){
+        function getData(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             SystemServer.getOpeData.save({
                 "startTime": $scope.vm.startTime,
                 "endTime": $scope.vm.endTime,
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize,
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize,
                 //"operationLogAuthor" : $scope.vm.operationLogAuthor
             },function(data){
                 layer.close(i);
@@ -52,21 +58,7 @@ module.exports=systemMonitoringModule => {
             });
         }
 
-        /**
-         * 分页监控
-         **/
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout);
-                }
-                timeout = $timeout(function () {
-                    getData(current);
-                }, 100)
 
-            }
-        },true);
         /**
          **页面跳转
          **/
@@ -74,9 +66,23 @@ module.exports=systemMonitoringModule => {
             if(item.type==123){
                 alert("删除操作，页面不跳转");
             }else{
-                alert("页面跳");
+                //alert("页面跳转");
                 if(item.moduleType==1021){
-                    $state.go("MM.chatAdd",{knowTextId: (item.content.substring(item.content.indexOf(',')+1))});
+                    var mmId = item.content.substring(item.content.indexOf(',')+1);
+                    SystemServer.searchById.get({
+                        "id": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("MM.chatEdit",{knowTextId:mmId});
+                        }
+                        if(data.status==500){
+                           // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
                 }else if(item.moduleType==1004){
                     $state.go();
                 }else if(item.moduleType==1005){
@@ -90,6 +96,7 @@ module.exports=systemMonitoringModule => {
                 }
             }
         }
+
 
 
 

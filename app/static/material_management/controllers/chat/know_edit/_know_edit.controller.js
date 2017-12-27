@@ -4,12 +4,13 @@
  */
 module.exports=materialModule => {
     materialModule
-    .controller('KnowAddController', [
+    .controller('KnowEditController', [
     '$scope',"$state","MaterialServer","ngDialog", "$cookieStore","$stateParams",
     ($scope,$state,MaterialServer,ngDialog,$cookieStore,$stateParams)=> {
-        $state.go("MM.chatAdd");
+        $state.go("MM.chatEdit");
 
         $scope.vm = {
+            graphicMessageId : '',    //知识id
             standardQuestion :  '',   //标准问
             editStandardQuestion :'',    //编辑标准问
             extendedQuestion : "",         //扩展问
@@ -96,25 +97,30 @@ module.exports=materialModule => {
         //保存
         function save(){
             if(check()){
-                //alert("新增知识");
-                MaterialServer.faqSave.save({
-                    //"applicationId":APPLICATION_ID,
-                    "chatKnowledgeQuestionList":$scope.vm.extendedQuestionArr,
-                    "chatKnowledgeContentList":$scope.vm.contentArr,
-                    "modifierId":USER_ID,
-                    "origin":0,
-                    "topic":$scope.vm.standardQuestion,
-                },function(data){
-                    if(data.status==500){
-                        layer.msg("保存失败");
-                    }else if(data.status==200){
-                        //console.log();
-                        layer.msg("保存成功");
-                        $state.go("MM.chat");
-                    }
-                },function(err){
-                    console.log(err);
-                });
+                if($scope.vm.editStandardQuestion){
+                    //编辑
+                    //alert("更新知识");
+                    MaterialServer.saveChatKnowledge.save({
+                        //"applicationId":APPLICATION_ID,
+                        "id": $scope.vm.graphicMessageId,
+                        "chatKnowledgeQuestionList":$scope.vm.extendedQuestionArr,
+                        "chatKnowledgeContentList":$scope.vm.contentArr,
+                        "modifierId":USER_ID,
+                        "origin":0,
+                        "topic":$scope.vm.standardQuestion,
+                    },function(data){
+                        if(data.status==500){
+                            layer.msg("保存失败");
+                        }else if(data.status==200){
+                            //console.log();
+                            layer.msg("保存成功");
+                            $state.go("MM.chat");
+
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+                }
             }
         }
 
@@ -134,7 +140,6 @@ module.exports=materialModule => {
                         $("#standardQuestion").focus();
                     }
                     if(data.status==200){
-
                     }
                 },function(err){
                     console.log(err);
@@ -184,7 +189,35 @@ module.exports=materialModule => {
             }
             return result;
         }
+        //获取编辑知识ID
+        if($stateParams.knowTextId){
+            $scope.vm.graphicMessageId = $stateParams.knowTextId;
+            getKnowText($stateParams.knowTextId);
+        }
+        function getKnowText(id){
+                MaterialServer.searchById.get({
+                    "id": id
+                },function(data){
+                    if(data.status==200){
+                        console.log(data);
+                        $scope.vm.standardQuestion = data.data.topic;
+                        $scope.vm.extendedQuestionArr = data.data.chatQuestionList;
+                        $scope.vm.contentArr = data.data.chatKnowledgeContentList;
 
+                        $scope.vm.editStandardQuestion = data.data.topic;
+                        if(!data.data.chatQuestionList){
+                            //alert("chatQuestionList为空");
+                            $scope.vm.extendedQuestionArr=[];      //聊天新增不加扩展问，编辑时会报错
+                        }
+                    }
+                    if(data.status==500){
+                        layer.msg(data.info);
+                    }
+                },function(err){
+                    console.log(err);
+                });
+
+        }
 
 
     }

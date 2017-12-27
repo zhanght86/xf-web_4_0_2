@@ -18,6 +18,7 @@ module.exports = angular =>{
     //聊天知识库
     require('../controllers/chat/knowledge_base/_knowledge_base.controller')(materialModule);
     require('../controllers/chat/know_add/_know_add.controller')(materialModule);
+    require('../controllers/chat/know_edit/_know_edit.controller')(materialModule);
 
     //图片库
     require('../controllers/picture_library/_picture_library.controller')(materialModule);

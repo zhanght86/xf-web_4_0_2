@@ -20,10 +20,18 @@
                                 <table class="access_amount_table material_table">
                                     <tr>
                                         <td>
-                                            <input type="text" class="txt" enternextline ng-model="vm.extendedQuestion" ng-keyup="vm.addExtension($event)" style="width:100%;"/>
-                                            <!--<a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">-->
-                                                <!--<img src="../../images/images/delete_img.png" >-->
-                                            <!--</a>-->
+                                            <input type="text" class="txt"  ng-model="vm.extendedQuestion" placeholder="请输入用户问法" style="width:90%;"/>
+                                            <a href="javascript:;" class="create_a" ng-click="vm.addExtension()">
+                                                <img src="../../images/images/add_img.png" >
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="item in vm.extendedQuestionArr">
+                                        <td>
+                                            <input type="text" class="txt"  ng-model="item.content" readonly style="width:90%;"/>
+                                            <a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
+                                                <img src="../../images/images/delete_img.png" >
+                                            </a>
                                         </td>
                                     </tr>
 
@@ -37,13 +45,24 @@
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
                             <div>
-                                <table class="access_amount_table ">
+                                <table class="access_amount_table material_table">
                                     <tr>
-                                        <td><div contenteditable="true" ng-model="vm.contentVal"></div></td>
+                                        <td>
+                                            <input type="text" class="txt"  ng-model="vm.contentVal" placeholder="请输入知识内容" style="width:90%;"/>
+                                            <a href="javascript:;" class="create_a" ng-click="vm.addContent()">
+                                                <img src="../../images/images/add_img.png" >
+                                            </a>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td><div contenteditable="true"></div></td>
+                                    <tr ng-repeat="item in vm.contentArr">
+                                        <td>
+                                            <input type="text" class="txt"  ng-model="item.content" readonly style="width:90%;"/>
+                                            <a href="javascript:;" class="create_a" ng-click="vm.removeCon(item,vm.contentArr)">
+                                                <img src="../../images/images/delete_img.png" >
+                                            </a>
+                                        </td>
                                     </tr>
+
                                 </table>
                             </div>
                             <div class="c-red " style="display:none;" ></div>

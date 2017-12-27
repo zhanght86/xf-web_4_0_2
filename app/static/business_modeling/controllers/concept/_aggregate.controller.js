@@ -5,265 +5,180 @@
  */
 module.exports = applicationManagementModule =>{
     applicationManagementModule
-   .controller('AggregateConceptController', [
-    '$scope', 'localStorageService' ,"$state" ,"ngDialog","$timeout","$http",
-    ($scope,localStorageService, $state,ngDialog,$timeout,$http)=> {
+    .controller('AggregateConceptController', [
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout","$location",
+    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout,$location) =>{
         $scope.vm = {
-            success : 10000,
-            illegal : 10003,
-            failed : 10004,
-            empty : 10005,
-            // applicationId : $cookieStore.get("applicationId"),
-            applicationId : APPLICATION_ID,
-            addCollective : addCollective,
-            editCollective : editCollective,
-            deleteCollective:deleteCollective,
             listData : "",   // table 数据
-            singleDelCollectiveConcept : singleDelCollectiveConcept,    //單條刪除
-            singleAddCollectiveConcept : singleAddCollectiveConcept,
-            paginationConf : ""  ,//分页条件
-            pageSize : 5  , //默认每页数量
-            //查詢
-            searchCollectiveConcept : searchCollectiveConcept,
-            searchVal : "",
-            searchType : "collectiveConceptKey",
-            timeStart : "",
-            timeEnd : "",
-            //新增
+            topic:"",
             key: "" ,
-            // modifier: $cookieStore.get("userId"),
-            modifier: USER_ID,
+            oldKey: "" ,
             term: "",
+            termList:'',
             weight: "33" ,   //默認權重
             dialogTitle : "",
-            inputSelect : [],
-            inputVal : "",
-            termSpliter: "；",
-            percent:"%",
-            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
-            batchDelete:batchDelete
+             paginationConf : {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : loadSynonymConceptTable,
+                location : true
+            }, 
+            listData : "",   // table 数据  
+            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            loadSynonymConceptTable:loadSynonymConceptTable,
+            selectAll:selectAll,           //全选
+            selectSingle:selectSingle,     //单选 
+            singleAdd : singleAdd,
+            editSingle : editSingle,
+            deleteSingle:deleteSingle,
+            batchDelete:batchDelete,         //批量删除
+            addConcept : addConcept,    //新增概念
+            ids:[],
         };
 
-        /**
-         * 加载分页条
-         * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
-         */
-        init();
-
-        function init(){
-            $scope.vm.paginationConf = {
-                currentPage: 1,
-                totalItems: 0,
-                pageSize: 0,
-                pagesLength: 8
-            };
-        }
-        //请求列表
-        function loadCollectiveConceptTable(current){
-             $http.get("/api/ms/concept/collective/get/application/"+APPLICATION_ID+"").success(function(data,status,headers,congfig){
-                console.log(data)
-                loadCollectiveConcept(current,data);
-            },function(err){
-                console.log('请求失败');
+        //查询/请求列表 
+         loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function loadSynonymConceptTable(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+                // $location.search().currentPage = 1 ;
+            }
+            let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+            BusinessModelingServer.colConceptGetParam.save({
+                "topic":$scope.vm.topic,
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
+            },(data)=>{
+                layer.close(i);
+               if(data.status==200){
+                 $scope.vm.listData = data.data.data;
+                 $scope.vm.paginationConf.totalItems = data.data.total;
+                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+               }else{
+                  layer.close(i);
+               }
+            },(err)=>{
+                 layer.close(i);
             })
         }
+       
 
-        function loadCollectiveConcept(current,data){
-            clearSelectAll();
-            $scope.vm.listData = data.data;
-            $scope.vm.paginationConf = {
-                currentPage: current,//当前页
-                totalItems: data.total, //总条数
-                pageSize: $scope.vm.pageSize,//第页条目数
-                pagesLength: 8,//分页框数量
-            };
-        }
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
+    //概念单条新增
+        function singleAdd(){
+            assembleSynonymConceptTerm();
+            BusinessModelingServer.colConceptAdd.save({
+                "topic":  $scope.vm.key,
+                "termList":$scope.vm.term,
+                "weight": $scope.vm.weight
+            },(data)=>{
+                 if(data.status==200){
+                    layer.msg(data.info)
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                }else if(data.status==500){
+                    layer.msg(data.info)
                 }
-                timeout = $timeout(function () {
-                    if(nullCheck($("#collectiveConceptWeight").val())==true || nullCheck($scope.vm.searchVal)==true || (nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true)){
-                        searchCollectiveConcept(current);
-                    }else{
-                        loadCollectiveConceptTable(current);
-                    }
-                }, 100);
-            }
-        },true);
-        //全选
-        $("#selectAll").on("click",function(){
-            var ids = document.getElementsByName("sid");
-            var flag = false;
-            if(this.checked){
-                flag = true;
-            }
-            $.each(ids,function(index,value){
-                if(flag){
-                    $(value).attr("checked",true);
-                    $(value).prop("checked",true);
-                }else{
-                    $(value).attr("checked",false);
-                    $(value).prop("checked",false);
-                }
-            });
-        });
-        //清空全选
-        function clearSelectAll(){
-            console.log("=====clearSelectAll=====");
-            $("#selectAll").attr("checked",false);
-            $("#selectAll").prop("checked",false);
+            })
         }
-        //批量删除
-        function batchDelete(){
-            var ids = document.getElementsByName("sid");
-            var id_array = [];
-            for (var i = 0; i < ids.length; i++) {
-                if (ids[i].checked) {
-                    id_array.push(ids[i].value);
-                }
-            }
-            if (id_array.length == 0) {
-                layer.msg("请选择要删除的记录！",{time:1000});
-                return;
-            }
-            layer.confirm('确认要删除吗？', function (index) {
-                layer.close(index);
-                var request = new Object();
-                request.ids=id_array;
-                httpRequestPost("/api/ms/modeling/concept/collective/batchDelete",request,function(data){
-                    if(responseView(data)==true){
-                        loadCollectiveConceptTable($scope.vm.paginationConf.currentPage);
-                    }
-                });
-            });
-        }
-        //编辑
-        function editCollective(item){
+    //概念编辑       
+        function editSingle(item){
+            console.log(item)
+            console.log(item.term.split(";"))
             $scope.vm.dialogTitle="编辑集合概念";
-            $scope.vm.key = item.collectiveConceptKey;
-            $scope.vm.term =  item.collectiveConceptTerm;
-            $scope.vm.weight =  item.collectiveConceptWeight;
-            addCollectiveConceptDialog(singleEditCollectiveConcept,item);
+            $scope.vm.key = item.topic;
+            $scope.vm.id = item.id;
+            $scope.vm.term =  item.term.split(";");
+            $scope.vm.weight =  item.weight;
+            addSynonymConceptDialog(singleEditSynonymConcept,item);
         }
-        function searchCollectiveConcept(current){
-            if($scope.vm.searchType == "collectiveConceptModifier"){
-                searchCollectiveConceptByUser(current);
+      //編輯事件
+    function singleEditSynonymConcept(item){
+        assembleSynonymConceptTerm();
+        console.log(item)
+        console.log($scope.vm.item)
+        BusinessModelingServer.colConceptUpdate.save({
+            "id":item.id,
+            "topic":  $scope.vm.key,
+            "weight":  $scope.vm.weight,
+            "termList": $scope.vm.term,
+        },(data)=>{
+           if(data.status==200){
+                layer.msg(data.info);
+                loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                $scope.vm.key = "";
+                $scope.vm.oldKey = "";
+                $scope.vm.term = "";
+                $scope.vm.weight = 33;
             }else{
-                searchCollectiveConceptByType(current);
+                layer.msg(data.info)
+                $scope.vm.key = "";
+                $scope.vm.oldKey = "";
+                $scope.vm.term = "";
+                $scope.vm.weight = 33;
             }
-        }
-        //查询
-        function searchCollectiveConceptByUser(current){
-            httpRequestPost("/api/ms/modeling/concept/collective/listByModifier",{
-                "collectiveConceptModifier":$scope.vm.searchVal,
-                "collectiveConceptApplicationId": $scope.vm.applicationId,
-                "index":(current-1)*$scope.vm.pageSize,
-                "pageSize":$scope.vm.pageSize
-            },function(data){
-                loadCollectiveConcept(current,data);
-            },function(){
-                layer.msg("查询没有对应信息",{time:1000});
-            });
-        }
-        function searchCollectiveConceptByType(current){
-            var request = new Object();
-            request.collectiveConceptApplicationId=$scope.vm.applicationId;
-            request.index=(current-1)*$scope.vm.pageSize;
-            request.pageSize=$scope.vm.pageSize;
-            if($scope.vm.searchType != "collectiveConceptModifyTime"){
-                request=switchCollectiveConceptSearchType(request,$scope.vm.searchVal);
-            }else if(nullCheck($scope.vm.timeStart)==true && nullCheck($scope.vm.timeEnd)==true){
-                request.startTimeRequest=$scope.vm.timeStart;
-                request.endTimeRequest=$scope.vm.timeEnd;
-            }else{
-                layer.msg("请选择时间段",{time:1000});
-                return;
-            }
-            httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",request,function(data){
-                loadCollectiveConcept(current,data);
-            },function(){
-                layer.msg("查询没有对应信息");
-            });
-        }
-        /**
-         * 转换查询类型
-         * @param request
-         * @param value
-         * @returns {*}
-         */
-        function switchCollectiveConceptSearchType(request,value){
-            if($("#searchType").val()=="collectiveConceptKey"){
-                request.collectiveConceptKey=$scope.vm.percent+value+$scope.vm.percent;
-            }else if($("#searchType").val()=="collectiveConceptWeight"){
-                request.collectiveConceptWeight=$("#collectiveConceptWeight").val();
-            }else if($("#searchType").val()=="collectiveConceptTerm"){
-                request.collectiveConceptTerm=$scope.vm.percent+value+$scope.vm.percent;
-            }
-            return request;
-        }
-
-        //添加 窗口
-        function addCollective(){
+        })
+    }
+       
+        //添加窗口
+        function addConcept(){
+                $scope.vm.key = "";
+                $scope.vm.oldKey = "";
+                $scope.vm.term = "";
+                $scope.vm.weight = 33;
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/views/concept/aggregate/aggregate_dialog.html",
+                template:"/static/business_modeling/views/concept/synonym/synonym_dialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
                 showClose : true,
                 backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
+                preCloseCallback:(e)=>{    //关闭回掉
                     if(e === 1){
                         if(lengthCheck($scope.vm.key,0,50)==false){
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                             return false;
                         }
-                        httpRequestPost("/api/ms/concept/collective/repeat",{
-                            "topic": $scope.vm.key
-                        },function(data){          //类名重複
-                            if(data.status===10002){
+                        BusinessModelingServer.colConceptRepeat.get({
+                            "value":$scope.vm.key
+                        },(data)=>{
+                            //类名重複
+                            if(data.status==200&&data.data==true){
                                 layer.confirm("您添加的概念类已经在，是否前往编辑？",{
                                     btn:['前往','取消'],
                                     shade:false
-                                },function(index){
+                                },(index)=>{
                                     layer.close(index);
-                                    httpRequestPost("/api/ms/modeling/concept/collective/listByAttribute",{
-                                        "collectiveConceptApplicationId": $scope.vm.applicationId,
-                                        "collectiveConceptKey":$scope.vm.key,
-                                        "index":0,
-                                        "pageSize":1
-                                    },function(data){
+                                    BusinessModelingServer.colConceptGetParam.save({
+                                        "topic":$scope.vm.topic,
+                                        "index": 0,
+                                        "pageSize": 1,
+                                    },(data)=>{
                                         $scope.vm.dialogTitle="编辑集合概念";
-                                        console.log(data);
-                                        addCollectiveConceptDialog(singleEditCollectiveConcept,data.data[0]);
-                                        $scope.vm.key = data.data[0].collectiveConceptKey;
-                                        $scope.vm.term =  data.data[0].collectiveConceptTerm;
-                                        $scope.vm.weight =  data.data[0].collectiveConceptWeight;
-                                    },function(){
+                                        $scope.vm.key = data.data.data[0].topic;
+                                        $scope.vm.term =  data.data.data[0].term.split(";");
+                                        $scope.vm.weight =  data.data.data[0].weight;
+                                        $scope.vm.id =  data.data.data[0].id; 
+                                        addSynonymConceptDialog(singleEditSynonymConcept,data.data.data[0]);
                                         console.log("cancel");
                                     });
-                                },function(){
+                                },()=>{
                                     console.log("cancel");
                                 });
                             }else{
                                 //类名无冲突
                                 $scope.vm.dialogTitle="增加集合概念";
-                                $scope.vm.term="";
-                                $scope.vm.weight="33" ;   //默認權重
-                                addCollectiveConceptDialog(singleAddCollectiveConcept);
+                                addSynonymConceptDialog(singleAdd);
                             }
-                        },function(){
-                            //layer.msg("添加失败")
+                        },()=>{
                             console.log('添加失败');
                         })
                     }else{
                         $scope.vm.key = "";
+                        $scope.vm.oldKey = "";
                         $scope.vm.term = "";
                         $scope.vm.weight = 33;
                     }
@@ -272,8 +187,8 @@ module.exports = applicationManagementModule =>{
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor();
-                    $("#collectiveKey").blur(function(){
-                        if(lengthCheck($("#collectiveKey").val(),0,50)==false){
+                    $("#synonymKey").blur(function(){
+                        if(lengthCheck($("#synonymKey").val(),0,50)==false){
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                         }else{
                             $("#keyAddError").html('');
@@ -284,11 +199,10 @@ module.exports = applicationManagementModule =>{
         }
 
         //編輯彈框   添加公用
-        function addCollectiveConceptDialog(callback,item){
+        function addSynonymConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/views/concept/aggregate/aggregate_dialog2.html",
+                template:"/static/business_modeling/views/concept/synonym/synonym_dialog2.html",
                 scope: $scope,
-                Returns : {a:1},
                 closeByDocument:false,
                 closeByEscape: true,
                 showClose : true,
@@ -300,7 +214,7 @@ module.exports = applicationManagementModule =>{
                             return false;
                         }
                         var obj = $("#term").next();
-                        var term = "";
+                        var term = [];
                         var length = obj.find("li").length;
                         if(length<=0){
                             $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
@@ -312,14 +226,14 @@ module.exports = applicationManagementModule =>{
                             if(index>0){
                                 $.each($(value).find("div"),function(index1,value1){
                                     if(index1==1){
-                                        term+=$(value1).html()+$scope.vm.termSpliter;
+                                        term.push($(value1).html());
                                     }
                                 });
                             }
                         });
-                        term=term.substring(0,term.length-1);
+                        console.log(term)
                         $scope.vm.term=term;
-                        if(lengthCheck(term,0,500)==false){
+                        if(lengthCheck(term.join(";"),0,500)==false){
                             $("#termAddError").html($scope.vm.termNullOrBeyondLimit);
                             return false;
                         }else{
@@ -328,17 +242,17 @@ module.exports = applicationManagementModule =>{
                         callback(item);
                     }else{
                         $scope.vm.key = "";
+                        $scope.vm.oldKey = "";
                         $scope.vm.term = "";
-                        $scope.vm.weight =  33;
+                        $scope.vm.weight = 33;
                     }
                 }
-
             });
             if(dialog){
                 $timeout(function () {
                     termSpliterTagEditor();
-                    $("#colectiveKeyTwo").blur(function(){
-                        if(lengthCheck($("#colectiveKeyTwo").val(),0,50)==false){
+                    $("#synonymKeyTwo").blur(function(){
+                        if(lengthCheck($("#synonymKeyTwo").val(),0,50)==false){
                             $("#keyAddError").html($scope.vm.keyNullOrBeyondLimit);
                         }else{
                             $("#keyAddError").html('');
@@ -347,10 +261,11 @@ module.exports = applicationManagementModule =>{
                 }, 100);
             }
         }
-        //   刪除 彈框
-        function deleteCollective(id){
+        
+        //刪除彈框
+        function deleteSingle(id){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/concept_library/delete.html",
+                template:"/static/business_modeling/views/concept/delete.html",
                 scope: $scope,
                 width: '260px',
                 closeByDocument:false,
@@ -359,11 +274,35 @@ module.exports = applicationManagementModule =>{
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e === 1){
-                        singleDelCollectiveConcept(id)
-                    }
+                    httpRequestPost("/api/ms/concept/collective/delete/"+id+"",{
+                    },function(data){
+                        if(data.status==200){
+                             layer.msg("删除成功",{time:2000})
+                             loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                        }
+                    });
+                 }
                 }
             });
         }
+       //批量删除
+        function batchDelete(){
+            if($scope.vm.ids.length==0){
+               layer.msg("请选择要删除的概念",{time:2000})
+               return false
+            }
+            BusinessModelingServer.colConceptAllDelete.save({
+                 "conceptIds":$scope.vm.ids
+            },(data)=>{
+               if(data.status==200){
+                    console.log(data)
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                    layer.msg("删除成功");
+                    initBatchTest();
+               }
+            })
+        }
+
         //批量导入
         function batchUpload(){
             var dialog = ngDialog.openConfirm({
@@ -375,58 +314,53 @@ module.exports = applicationManagementModule =>{
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     //refresh
-                    loadCollectiveConceptTable($scope.vm.paginationConf.currentPage);
+                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                 }
             });
             if(dialog){
                 $timeout(function () {
-                    initUpload('/api/ms/modeling/concept/collective/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
+                    initUpload('/api/ms/modeling/concept/synonym/batchAdd?applicationId='+$scope.vm.applicationId+'&modifierId='+$scope.vm.modifier);
                 }, 100);
             }
         }
-        //編輯事件
-        function singleEditCollectiveConcept(item){
-            assembleCollectiveConceptTerm();
-            httpRequestPost("/api/ms/modeling/concept/collective/update",{
-                "collectiveConceptId":item.collectiveConceptId,
-                "collectiveConceptApplicationId": $scope.vm.applicationId,
-                "applicationId": $scope.vm.applicationId,
-                "collectiveConceptKey": $scope.vm.key,
-                "collectiveConceptModifier": $scope.vm.modifier,
-                "collectiveConceptTerm": $scope.vm.term,
-                "collectiveConceptWeight": $scope.vm.weight
-            },function(data){
-                if(responseView(data)==true){
-                    loadCollectiveConceptTable($scope.vm.paginationConf.currentPage);
-                }
-            });
+         //全选
+        function selectAll(){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false;
+                $scope.vm.ids = [];
+            }else{
+                $scope.vm.isSelectAll=true;
+                $scope.vm.ids=[];
+                angular.forEach($scope.vm.listData,function (val) {
+                    $scope.vm.ids.push(val.id);
+                })
+            }
+            console.log($scope.vm.ids);
         }
-        //单条新增
-        function singleAddCollectiveConcept(){
-            assembleCollectiveConceptTerm();
-            httpRequestPost("/api/ms/concept/collective/add",{
-                "topic":  $scope.vm.key,
-                "termList":[1,2,3],
-                "weight": $scope.vm.weight
-            },function(data){
-                if(data.status==200){
-                    layer.msg(data.info)
-                    loadSynonymConceptTable($scope.vm.paginationConf.currentPage);
-                }else if(data.status==500){
-                    layer.msg(data.info)
-                }
-            })
-        }
-        //单条刪除
-        function singleDelCollectiveConcept(id){
-            httpRequestPost("/api/ms/modeling/concept/collective/delete",{
-                "collectiveConceptId":id
-            },function(data){
-                if(responseView(data)==true){
-                    loadCollectiveConceptTable($scope.vm.paginationConf.currentPage);
-                }
-            });
-        }
+        //单选
+        function selectSingle(id){
+            if($scope.vm.ids.inArray(id)){
+                $scope.vm.ids.remove(id);
+                $scope.vm.isSelectAll = false;
+            }else{
+                $scope.vm.ids.push(id);
+
+            }
+            if($scope.vm.ids.length==$scope.vm.listData.length){
+                $scope.vm.isSelectAll = true;
+            }
+            console.log( $scope.vm.ids);
+            }
+            //全选清空
+            function initBatchTest(){
+                $scope.vm.isSelectAll=false;
+                $scope.vm.ids=[];
+
+            }
+       
+
+
+
         //初始化tagEditor插件
         function termSpliterTagEditor() {
             var term = $scope.vm.term;
@@ -435,8 +369,9 @@ module.exports = applicationManagementModule =>{
                     forceLowercase: false
                 });
             }else{
-                var terms = term.split($scope.vm.termSpliter);
+                var terms = term
                 console.log(terms);
+                console.log()
                 $("#term").tagEditor({
                     initialTags:terms,
                     autocomplete: {delay: 0, position: {collision: 'flip'}, source: terms},
@@ -444,52 +379,36 @@ module.exports = applicationManagementModule =>{
                 });
             }
         }
+
+
         //组装term数据
-        function assembleCollectiveConceptTerm(){
+        function assembleSynonymConceptTerm(){
             var obj = $("#term").next();
-            var term = "";
+            var term = [];
             $.each(obj.find("li"),function(index,value){
                 if(index>0){
                     $.each($(value).find("div"),function(index1,value1){
                         if(index1==1){
-                            term+=$(value1).html()+$scope.vm.termSpliter;
+                            term.push($(value1).html());
                         }
                     });
                 }
             });
-            term=term.substring(0,term.length-1);
             $scope.vm.term=term;
         }
-        //返回状态显示
-        function responseView(data){
-            $scope.vm.key = "";
-            $scope.vm.term = "";
-            $scope.vm.weight = 33;
-            clearSelectAll();
-            if(data==null){
-                return false;
-            }
-            layer.msg(data.info);
-            if(data.status==$scope.vm.success){
-                console.log("===success===");
-                return true;
-            }
-            return false;
-        }
+
         function downloadTemplate(){
             downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","","concept_with_weight_template.xlsx");
         }
         function exportAll(){
-            httpRequestPost("/api/ms/modeling/concept/collective/export",{
-                "collectiveConceptApplicationId":$scope.vm.applicationId
+            httpRequestPost("/api/ms/modeling/concept/synonym/export",{
+                "synonymConceptApplicationId":$scope.vm.applicationId
             },function(data){
-                if(responseView(data)==true){
                     for(var i=0;i<data.exportFileNameList.length;i++){
                         downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
                     }
-                }
+                
             });
         }
     }
 ])};
-

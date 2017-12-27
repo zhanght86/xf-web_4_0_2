@@ -1302,7 +1302,7 @@ module.exports = (angular) => {
         // 聊天知识库
         {
             name: "MM.chat",
-            url: "/chat/:userPermission",
+            url: "/chat",
             data: {
                 roles: []
             },
@@ -1322,7 +1322,7 @@ module.exports = (angular) => {
         // 聊天知识库-新增
         {
             name: "MM.chatAdd",
-            url: "/chatAdd/:knowTextId",
+            url: "/chatAdd",
             data: {
                 roles: []
             },
@@ -1339,7 +1339,26 @@ module.exports = (angular) => {
                 }
             }
         },
-       
+        // 聊天知识库-编辑
+        {
+            name: "MM.chatEdit",
+            url: "/chatEdit/:knowTextId",
+            data: {
+                roles: []
+            },
+            parent : "MM",
+            title : "聊天知识库" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/material_management/views/chat/know_edit/know_edit.html"),
+                    controller: "KnowEditController"
+                }
+            }
+        },
         // 图片库
         {
             name: "MM.pic",

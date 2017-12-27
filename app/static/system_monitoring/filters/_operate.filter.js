@@ -56,9 +56,12 @@ module.exports = module=>{
                     result ="应用管理/发布管理";
                     break;
                 case 1001:
-                    result ="类目库";
+                    result ="类目";
                     break;
                 case 1002:
+                    result ="类目库";
+                    break;
+                case 1003:
                     result ="框架库";
                     break;
                 case 1004:

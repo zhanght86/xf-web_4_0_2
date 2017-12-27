@@ -5,13 +5,15 @@
 module.exports=materialModule => {
     materialModule
     .controller('DocumentLibraryController', [
-    '$scope',"$state","ngDialog","MaterialServer", "$cookieStore","$stateParams","$timeout",
-    ($scope,$state,ngDialog,MaterialServer,$cookieStore,$stateParams,$timeout)=> {
+    '$scope',"$state","ngDialog","MaterialServer", "$cookieStore","$stateParams","$location","$timeout",
+    ($scope,$state,ngDialog,MaterialServer,$cookieStore,$stateParams,$location,$timeout)=> {
         $state.go("MM.doc");
         $scope.vm = {
             paginationConf:{
-                pageSize:10,           //每页条目数
-                pagesLength:10        //分页框数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: searchDoc ,
+                location:true
             },
             docList:[],              //文档列表
             docName:"",
@@ -35,17 +37,21 @@ module.exports=materialModule => {
         /**
         ** 查询
         **/
-        searchDoc(1);
-        function searchDoc(index){
+        searchDoc($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function searchDoc(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i= layer.msg("资源加载中...",{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             MaterialServer.searchDoc.get({
                 "name": $scope.vm.docName,
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize
             },{
                 "name": $scope.vm.docName,
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize
             },function(data){
                 layer.close(i);
                 if(data.status==200){
@@ -65,18 +71,7 @@ module.exports=materialModule => {
                 console.log(err);
             });
         }
-        var timeout;
-        $scope.$watch("vm.paginationConf.currentPage",function(current,old){
-            if(current && old != undefined){
-                if(timeout){
-                    $timeout.cancel(timeout);
-                }
-                timeout = $timeout(function(){
-                    initBatchTest();
-                    searchDoc(current);
-                },0);
-            }
-        },true);
+
 
         /**
          ** 批量删除

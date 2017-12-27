@@ -63,7 +63,7 @@ module.exports=materialModule => {
                 //'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
                 // 'print', 'preview', 'searchreplace', 'help', 'drafts'
             ]]
-            // ,UEDITOR_HOME_URL: "/js/ueditor1_4_3_3-utf8-jsp/utf8-jsp/"
+            ,UEDITOR_HOME_URL: "/assets/libs/ueditor1_4_3_3-utf8-jsp/utf8-jsp/"
             ,serverUrl : "/api/material/picture/upload/get"
             ,wordCount:false           //是否开启字数统计
             ,elementPathEnabled : false  //是否启用元素路径，默认是显示

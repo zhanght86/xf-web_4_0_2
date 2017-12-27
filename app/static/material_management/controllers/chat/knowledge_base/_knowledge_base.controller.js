@@ -13,11 +13,13 @@ module.exports=materialModule => {
             title : "" ,           //知识标题
             search : search,  //查询
             exportExcel:exportExcel,//知识导出
-            seeDtails:seeDtails,//标题预览
+            //seeDtails:seeDtails,//标题预览
             //searchList : "",   //查询数据结果
             paginationConf : {     //分页条件
-                pageSize : 5  ,    //默认每页数量
-                pagesLength: 10    //分页框数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: search ,
+                location:true
             }  ,
 
             getType : 0 ,    // 默认请求 0    查找 1
@@ -36,9 +38,23 @@ module.exports=materialModule => {
             "chatKnowledgeTopic": "",
             "chatQuestionContent": "",
             selectTimeType : selectTimeType,
+            batchAddition : batchAddition,                    //批量新增
+            isUploadStart : false,
 
         };
-        setCookie('applicationId',"450014113901314048");
+        //setCookie('applicationId',"450014113901314048");
+        /**
+         **批量新增
+         **/
+        function batchAddition(){
+            let batchAdd = require("../../../views/chat/knowledge_base/chat_knowledge_dialog.html");
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,batchAdd,"600px",function(){
+               $scope.vm.isUploadStart = true ;
+            },function(){
+                $scope.vm.isUploadStart = false ;
+            })
+        }
+
         /**
          * 全选
          */
@@ -124,20 +140,24 @@ module.exports=materialModule => {
         /**
          * 查询
          */
-        search(1);
-        function search(index){
+        search($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function search(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i = layer.msg('查询中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             //$scope.vm.getType = 1;
             $scope.vm.searchHeighFlag = false ;
             console.log($scope.vm.chatQuestionContent);
             MaterialServer.searchKnow.save({
-                "applicationId":APPLICATION_ID,
+                //"applicationId":APPLICATION_ID,
                 "context" : $scope.vm.chatQuestionContent,                //知识内容
                 "modifier" : $scope.vm.chatKnowledgeModifier,             //用户名
                 "modifyTimeType" : $scope.vm.modifyTimeType,             //时间类型
                 "topic" : $scope.vm.chatKnowledgeTopic ,                  //标题
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize
 
             },function(data){
                 layer.close(i);
@@ -161,22 +181,7 @@ module.exports=materialModule => {
             });
 
         }
-        /**
-         *分页 查询
-         */
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    initBatchTest();
-                    search(current);
 
-                }, 0)
-            }
-        });
         /**
          * 知识导出
          */
@@ -192,24 +197,6 @@ module.exports=materialModule => {
         function selectTimeType(type){
             $scope.vm.modifyTimeType = type;
         }
-        /**
-         *点击标题预览内容
-         */
-        function seeDtails(data){
-            console.log(data);
-            var params = {
-                standardQuestion : data.topic,
-                extendedQuestionArr :data.chatKnowledgeQuestionList,
-                contentArr : data.chatKnowledgeContentList,
-                applicationId: APPLICATION_ID,
-                //chatKnowledgeModifier : data.chatKnowledgeModifier,
-                chatKnowledgeId : data.id,
-                //chatKnowledgeSource:data.origin,   //类型 101  概念      100 faq
-                //editUrl : data.origin==100?"materialManagement.faqChat":"materialManagement.conceptChat"
 
-            };
-            $state.go("MM.chatAdd",{scanData:angular.toJson(params)});
-            //$state.go($scope.vm.editUrl,{scanDataList: $stateParams.scanData});
-        }
     }
 ])};

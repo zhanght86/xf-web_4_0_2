@@ -5,16 +5,16 @@
 module.exports=materialModule => {
     materialModule
     .controller('VoiceLibraryController', [
-    '$scope',"$state","ngDialog","$log", "MaterialServer","$cookieStore","$stateParams","$timeout","$window",
-    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$window)=> {
+    '$scope',"$state","ngDialog","$log", "MaterialServer","$cookieStore","$stateParams","$location","$timeout","$window",
+    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$location,$timeout,$window)=> {
         $state.go("MM.voice");
         $scope.vm = {
-           // getVoiceList : getVoiceList , //获取图片列表
             voiceList : [] ,        //所有声音列表
-            //removeVoice : removeVoice , //刪除
             paginationConf : {
-                pageSize: 8,//第页条目数
-                pagesLength: 10//分页框数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: searchVoice ,
+                location:true
             } ,
             uploadSpeech :uploadSpeech,
             voiceTitle :"",
@@ -42,13 +42,17 @@ module.exports=materialModule => {
         /**
          * 获取语音列表  查询
          */
-        searchVoice(1) ;
+        searchVoice($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
 
-        function searchVoice(index){
+        function searchVoice(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:5000}) ;
             MaterialServer.searchVoice.get({
-                "index":(index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize":$scope.vm.paginationConf.pageSize,
+                "index":(index-1)*pageSize,
+                "pageSize":pageSize,
                 "name":$scope.vm.voiceName
             },function(data){
                 layer.close(i);
@@ -70,19 +74,7 @@ module.exports=materialModule => {
             });
         }
 
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    initBatchTest();
-                    searchVoice(current);
-                }, 0)
 
-            }
-        },true);
         //上传语音
         function uploadSpeech(callback){
             let upload_html = require("../../views/voice_library/voice_library_dialog.html") ;
@@ -92,13 +84,7 @@ module.exports=materialModule => {
                 $scope.vm.isUploadStart = false ;
             })
 
-            // $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/material_management/voice/voice_library/voice_library_dialog.html','900px',function(){
-            //
-            // },function(){
-            //
-            // },function(){
-            //     $scope.vm.isUploadStart = false ;
-            // });
+
         }
         /**
          * 语音导出
