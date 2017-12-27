@@ -28,7 +28,7 @@ module.exports = homePageModule =>{
             userName : "",
             userLonginName :  "",
             userPassword :  "",
-            userPassWord : "", //用户所输入确认密码
+            userConfirmPassword : "", //用户所输入确认密码
             userPhoneNumber  :  "",
             userEmail :"",
             //查询所需数据
@@ -41,15 +41,15 @@ module.exports = homePageModule =>{
             applicationIds:[],
         };
         // 定义弹框
-        let verifyHtml = require("../../../../share/dialog_simple_operate.html") ;
-        let userHtml = require("../../views/permission_management/dialog_user.html") ;
+        let verifyHtml         = require("../../../../share/dialog_simple_operate.html") ;
+        let userHtml           = require("../../views/permission_management/dialog_user.html") ;
+        let changePasswordHtml = require("../../views/permission_management/dialog_change_password.html");
         //查询用户列表
         queryUserList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
         function queryUserList(index,pageSize,reset){
             if(reset){
                 $scope.vm.paginationConf.currentPage = 1 ;
                 $location.search("currentPage",1 ) ;
-                // $location.search().currentPage = 1 ;
             }
             $scope.vm.deleteIds    = [];   // 清楚选中用户
             $scope.vm.userListIds  = [];   // 清楚用户id列表
@@ -71,10 +71,21 @@ module.exports = homePageModule =>{
                 console.log(error);
             })
         }
-
         // // 修改密码
-        function changePassword(){
-
+        function changePassword(id,oldPwd,pwd){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,changePasswordHtml,"450px",function(){
+                HomePageServer.changePassword.save({
+                    "id":id,
+                    "oldPwd": $scope.vm.userOldPassword ,
+                    "pwd": $scope.vm.userPassword
+                },function (response) {
+                    if(response.status == 200){
+                        $state.reload() ;
+                    }else{
+                        layer.msg(response.data);
+                    }
+                },function (error) {console.log(error);})
+            })
         }
         //添加用户校验
         function verifyRelease(id,account,close){

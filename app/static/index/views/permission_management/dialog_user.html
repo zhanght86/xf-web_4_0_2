@@ -36,9 +36,9 @@
         <div class="mb-10 cl" ng-if="!vm.userId">
             <label class="form-label col-xs-3 col-sm-2">确认密码：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input name="userConfirmPassword" type="password" ng-model="vm.userPassWord" class="input-text" ng-minlength="1" required/>
+                <input name="userConfirmPassword" type="password" ng-model="vm.userConfirmPassword" class="input-text" ng-minlength="1" required/>
                  <span style="color:red" ng-show="myForm.userConfirmPassword.$valid ||  myForm.userConfirmPassword.$dirty">
-                    <small ng-show="vm.userPassWord!=vm.userPassword">密码不一致!</small>
+                    <small ng-show="vm.userConfirmPassword!=vm.userPassword">密码不一致!</small>
                 </span>
             </div>
         </div>

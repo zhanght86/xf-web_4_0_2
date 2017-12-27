@@ -7,7 +7,7 @@ const source = __dirname + '/static/';
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var minimize = process.argv.indexOf('--minimize') !== -1;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+// var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     // path: path.resolve(__dirname, 'dest'),
@@ -31,17 +31,8 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel',
-                // query: {
-                //     presets: ["es2015"]
-                // },
-                // plugins: [
-                //     "transform-es3-property-literals",
-                //     "transform-es3-member-expression-literals",
-                //     "transform-es2015-modules-simple-commonjs"
-                // ],
                 exclude: /node_modules/
             },
-
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
@@ -75,11 +66,6 @@ module.exports = {
             {
                 test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file?name=font/[name].[eot]',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url?name=font/[name].[svg]&limit=10&minetype=image/svg+xml',
                 exclude: /node_modules/
             },
             {

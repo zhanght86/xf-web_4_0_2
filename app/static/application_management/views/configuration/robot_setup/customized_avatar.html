@@ -1,21 +1,22 @@
 <div class="pd-20 add_custom_avatar">
     <!--<form class="form form-horizontal" id="form-robot-setting" action="/api/application/application/uploadHead" enctype="multipart/form-data" method="post">-->
         <div class="bk-gray pd-20">
-            <div class="bd_d text-c" style="width:100%;height:210px;overflow: auto;">
-                <img id="setting_head" src="../../images/u1134.png" style="width:100%;"/>
-            </div>
+            <!--<div class="bd_d text-c" style="width:100%;height:210px;overflow: auto;">-->
+                <img id="setting_head" src="../../images/u1134.png" style="width:100%;height: 100%;"/>
+            <!--</div>-->
         </div>
         <div class="row cl">
             <div class="pd-10">
                 <a href="javascript:;" class="file">
-                    <button type="button" class="btn btn-primary radius ">选择图片</button>
-                    <input type="file" id="file" file-model="vm.myFile"/>
-                    <input type="hidden" id="x" />
-                    <input type="hidden" id="y" />
-                    <input type="hidden" id="w" />
-                    <input type="hidden" id="h" />
+                    <button upload-avatar></button>
+                    <!--<button type="button" class="btn btn-primary radius ">选择图片</button>-->
+                    <!--<input type="file" id="file" file-model="vm.myFile"/>-->
+                    <!--<input type="hidden" id="x" />-->
+                    <!--<input type="hidden" id="y" />-->
+                    <!--<input type="hidden" id="w" />-->
+                    <!--<input type="hidden" id="h" />-->
                 </a>
-                <input type="submit" class="btn btn-primary radius"
+                <input type="submit" class="btn btn-primary radius start_upload_avatar"
                        ng-click="vm.isHeadPicSize()"
                        style="position: absolute;left: 150px;" value="确定"/>
             </div>
@@ -25,39 +26,39 @@
 
 <script>
 
-    $("#file").change(function () {
-        var objUrl = getObjectURL(this.files[0]);
-        if (objUrl) {
-            $("#setting_head").attr("src", objUrl);
-            cutImage()
-        }
-    });
-    function getObjectURL(file) {
-        var url = null;
-        if (window.createObjectURL != undefined) {
-            url = window.createObjectURL(file);
-        } else if (window.URL != undefined) {
-            url = window.URL.createObjectURL(file);
-        } else if (window.webkitURL != undefined) {
-            url = window.webkitURL.createObjectURL(file);
-        }
-        return url;
-    }
-    function cutImage(){
-        $("#setting_head").Jcrop({
-            aspectRatio : 1,
-            onChange : showCoords,
-            onSelect : showCoords,
-            allowSelect: true
-        },function(){
-            jcrop = this;
-        });
-        function showCoords(obj) {
-            $("#x").val(obj.x);
-            $("#y").val(obj.y);
-            $("#w").val(obj.w);
-            $("#h").val(obj.h);
-        }
-    }
+//    $("#file").change(function () {
+//        var objUrl = getObjectURL(this.files[0]);
+//        if (objUrl) {
+//            $("#setting_head").attr("src", objUrl);
+//            cutImage()
+//        }
+//    });
+//    function getObjectURL(file) {
+//        var url = null;
+//        if (window.createObjectURL != undefined) {
+//            url = window.createObjectURL(file);
+//        } else if (window.URL != undefined) {
+//            url = window.URL.createObjectURL(file);
+//        } else if (window.webkitURL != undefined) {
+//            url = window.webkitURL.createObjectURL(file);
+//        }
+//        return url;
+//    }
+//    function cutImage(){
+//        $("#setting_head").Jcrop({
+//            aspectRatio : 1,
+//            onChange : showCoords,
+//            onSelect : showCoords,
+//            allowSelect: true
+//        },function(){
+//            jcrop = this;
+//        });
+//        function showCoords(obj) {
+//            $("#x").val(obj.x);
+//            $("#y").val(obj.y);
+//            $("#w").val(obj.w);
+//            $("#h").val(obj.h);
+//        }
+//    }
 
 </script>
