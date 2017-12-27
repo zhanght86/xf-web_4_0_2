@@ -1,0 +1,47 @@
+<!--<div ui-view="header"></div>-->
+<div class="main warp">
+    <div class="page-lrcont210 clearfix bgwhite mt10">
+        <div class="l-aside fl">
+            <div class="aside-nav aside-nav2">
+                <ul>
+                    <li>
+                        <a class="slide-a ellipsis" ui-sref=".correction">
+                            <i class="icon-l icon-nav1"></i>
+                            <span>纠正学习</span>
+                            <!--<i class="icon-r icon-jt"></i>-->
+                        </a>
+                    </li>
+                    <li>
+                        <a class="slide-a ellipsis" ui-sref=".reinforcement">
+                            <i class="icon-l icon-nav3"></i>
+                            <span >智能学习</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="slide-a ellipsis"  ui-sref=".newKnow">
+                            <i class="icon-l icon-nav4"></i>
+                            <span >新知识发现 </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ui-view="content"></div>
+    </div>
+
+</div>
+<style>
+    .menu_1{
+        display: block;
+    }
+</style>
+<script>
+    $('.menu_1 li').click(function(){
+        $(this).css('background','#d0caca').siblings().css('background','#e6e6e6');
+    });
+</script>
+
+
+
+
+
