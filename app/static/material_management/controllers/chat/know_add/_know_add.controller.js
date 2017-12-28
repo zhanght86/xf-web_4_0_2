@@ -37,7 +37,7 @@ module.exports=materialModule => {
             }else{
                 //console.log($scope.vm.extendedQuestionArr);   //[]
                 MaterialServer.addExtension.get({
-                    "applicationId" : APPLICATION_ID,
+                    //"applicationId" : APPLICATION_ID,
                     "questionContent" : $scope.vm.extendedQuestion
                 },function(data){
                     console.log(data);
@@ -71,7 +71,7 @@ module.exports=materialModule => {
                 layer.msg("知识内容重复，请重新输入",{time:1000});
             }else{
                 MaterialServer.addContentArr.get({
-                    "applicationId":APPLICATION_ID,
+                    //"applicationId":APPLICATION_ID,
                     "content" : $scope.vm.contentVal
                 },function(data){
                     console.log(data);
@@ -126,7 +126,7 @@ module.exports=materialModule => {
                 layer.msg("请输入标准问法！");
             }else{
                 MaterialServer.checkKnowTitle.get({
-                    "applicationId":APPLICATION_ID,
+                    //"applicationId":APPLICATION_ID,
                     "topic":$scope.vm.standardQuestion
                 },function(data){
                     if(data.status==500){

@@ -91,7 +91,8 @@ module.exports=materialModule => {
          */
         function exportExcel(){
             var urlParams =
-                "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.voiceName;
+                "?name="+$scope.vm.voiceName;
+                // "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.voiceName;
             // var url = "/api/ms/voiceManage/exportExcel"+urlParams  ;//请求的url
            // $window.open(url,"_blank") ;
 

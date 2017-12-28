@@ -109,7 +109,8 @@ module.exports=materialModule => {
          */
         function exportExcel(){
             var urlParams =
-               "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.pictureName;
+                "?name="+$scope.vm.pictureName;
+               // "?applicationId="+APPLICATION_ID+"&name="+$scope.vm.pictureName;
             //var url = "/api/ms/picture/exportExcel"+urlParams  ;//请求的url
             //$window.open(url,"_blank") ;
 

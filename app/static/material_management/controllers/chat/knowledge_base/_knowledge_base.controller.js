@@ -106,7 +106,7 @@ module.exports=materialModule => {
                 }, function(){
                     var i = layer.msg('知识删除中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
                     MaterialServer.delKnowledge.save({
-                        "applicationId":APPLICATION_ID,
+                       // "applicationId":APPLICATION_ID,
                         "ids":$scope.vm.delArr
                     },{                                      //可为空
 
@@ -187,7 +187,9 @@ module.exports=materialModule => {
          */
         function exportExcel(){
             var urlParams =
-                "?applicationId="+APPLICATION_ID+"&topic="+$scope.vm.chatKnowledgeTopic+"&modifier="+$scope.vm.chatKnowledgeModifier +
+                // "?applicationId="+APPLICATION_ID+"&topic="+$scope.vm.chatKnowledgeTopic+"&modifier="+$scope.vm.chatKnowledgeModifier +
+                // "&context="+$scope.vm.chatQuestionContent +"&modifyTimeType="+$scope.vm.modifyTimeType;
+                "?topic="+$scope.vm.chatKnowledgeTopic+"&modifier="+$scope.vm.chatKnowledgeModifier +
                 "&context="+$scope.vm.chatQuestionContent +"&modifyTimeType="+$scope.vm.modifyTimeType;
 
             var url = MaterialServer.exportChat + urlParams;

@@ -26,9 +26,9 @@ module.exports = materialModule =>{
                 fileSingleSizeLimit:10*1024*1024,   //设定单个文件大小
                 //只允许上传word、excel、ppt、pdf
                 accept: {
-                    //title: '',
+                    title: 'file',
                     extensions: 'doc,docx,xlsx,xls,pptx,pdf',
-                    //mimeTypes: 'image/*'
+                    mimeTypes: 'file/doc,file/docx,file/xls,file/xlsx,file/pptx,file/pdf'
                 },
                 pick: '#picker',
 

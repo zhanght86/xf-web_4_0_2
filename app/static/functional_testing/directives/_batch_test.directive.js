@@ -29,10 +29,10 @@ module.exports= functionalTestModule =>{
                             auto: true, // 选完文件后，是否自动上传
                             // swf文件路径
                             //sendAsBinary:true, //指明使用二进制的方式上传文件
-                            swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
+                            swf: '/assets/libs/webuploader-0.1.5/dist/Uploader.swf',
                             formData: {
-                                "userId": $cookieStore.get("userId"),
-                                "applicationId": $cookieStore.get("applicationId")
+                               // "userId": $cookieStore.get("userId"),
+                                //"applicationId": $cookieStore.get("applicationId")
                             },   // 上传参数
                             // 文件接收服务端。
                             server: scope.server,

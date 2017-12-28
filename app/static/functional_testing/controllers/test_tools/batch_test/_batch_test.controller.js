@@ -9,7 +9,7 @@ module.exports=functionalTestModule => {
     '$scope',"localStorageService","$state","$log","FunctionServer","$location","$timeout","$stateParams","ngDialog","$cookieStore",
     ($scope,localStorageService,$state,$log,FunctionServer,$location, $timeout,$stateParams,ngDialog,$cookieStore)=> {
         $scope.vm = {
-            userId : $cookieStore.get("userId"),
+            //userId : $cookieStore.get("userId"),
             deleteQuestion : deleteQuestion,
             startUp : startUp,
             start : start ,
@@ -46,7 +46,7 @@ module.exports=functionalTestModule => {
          * 页面初始化加载已发布服务，页面加载
          * *****************/
         //getService();
-        //searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+        searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
         /*****************
          * //已发布服务
          * *****************/
@@ -76,7 +76,7 @@ module.exports=functionalTestModule => {
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.BatchsearchFile.save({
-                applicationId:APPLICATION_ID,
+               // applicationId:APPLICATION_ID,
                 batchName: $scope.vm.selectInput,
                 batchStatusId :$scope.vm.searchType,
                 index:(index - 1)*pageSize,
