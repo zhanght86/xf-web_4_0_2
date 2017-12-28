@@ -6,23 +6,21 @@
 module.exports=functionalTestModule => {
     functionalTestModule
     .controller('BatchTestController', [
-    '$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore",
-    ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore)=> {
+    '$scope',"localStorageService","$state","$log","FunctionServer","$location","$timeout","$stateParams","ngDialog","$cookieStore",
+    ($scope,localStorageService,$state,$log,FunctionServer,$location, $timeout,$stateParams,ngDialog,$cookieStore)=> {
         $scope.vm = {
             userId : $cookieStore.get("userId"),
             deleteQuestion : deleteQuestion,
-            uploadQuestion : uploadQuestion,
             startUp : startUp,
             start : start ,
-            stopTest : stopTest ,
             batchNumberId : "" ,
-            jumpD:jumpD,
             listData :[],           //table 数据
             listDataTotal : 0 ,      //共几条
-          //  listDataLength : '',
             paginationConf : {        //分页条件
-                pageSize : 5,
-                pagesLength : 10
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: searchFile ,
+                location:true
             },
             selectAllCheck : false,
             selectAll : selectAll,
@@ -37,8 +35,9 @@ module.exports=functionalTestModule => {
             serviceId : "" ,
             channel:"",
             channelList : [] ,
-            getService : getService
+            //getService : getService,
             //------------------------------渠道   服务end
+            addRemarks : addRemarks                //备注
 
 
         };
@@ -46,48 +45,52 @@ module.exports=functionalTestModule => {
         /*****************
          * 页面初始化加载已发布服务，页面加载
          * *****************/
-        getService();
-        searchFile(1) ;
+        //getService();
+        //searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
         /*****************
          * //已发布服务
          * *****************/
-        function getService(){
-            FunctionServer.getService.save({
-                applicationId:APPLICATION_ID
-            },function(data){
-                if(data.status == 10000){
-                    $scope.vm.listService = data.data;
-                    $scope.vm.serviceId = data.data[0].serviceId;
-                }else if(data.status == 10005){
-                    layer.msg('当前应用下没有发布服务，请发布服务后进行测试');
-                }
-            },function(err){
-                $log.log(err);
-            });
-
-        }
+        // function getService(){
+        //     FunctionServer.getService.save({
+        //         applicationId:APPLICATION_ID
+        //     },function(data){
+        //         if(data.status == 10000){
+        //             $scope.vm.listService = data.data;
+        //             $scope.vm.serviceId = data.data[0].serviceId;
+        //         }else if(data.status == 10005){
+        //             layer.msg('当前应用下没有发布服务，请发布服务后进行测试');
+        //         }
+        //     },function(err){
+        //         $log.log(err);
+        //     });
+        //
+        // }
 
         /*****************
          * //获取列表  、查询
          * *****************/
-        function searchFile(index){
+        function searchFile(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.BatchsearchFile.save({
-                index:(index - 1)*$scope.vm.paginationConf.pageSize,
-                pageSize:$scope.vm.paginationConf.pageSize,
                 applicationId:APPLICATION_ID,
-                batchStatusId :$scope.vm.searchType,
                 batchName: $scope.vm.selectInput,
-                channel: $scope.vm.selectInput,
-                batchOperator: $scope.vm.selectInput
+                batchStatusId :$scope.vm.searchType,
+                index:(index - 1)*pageSize,
+                pageSize: pageSize,
+                //channel: $scope.vm.selectInput,
+                //batchOperator: $scope.vm.selectInput
             },function(data){
                 layer.close(i);
-                if(data.status == 10005){
+                if(data.status == 500){
                     layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
                     $scope.vm.listDataTotal = 0;
                     $scope.vm.paginationConf.totalItems = 0;
-                }else{
+                }else if(data.status==200){
                     console.log(data);
                     //alert(typeof data.data.batchTestList[0].batchNumberId);
                     $scope.vm.listData = data.data.batchTestList;
@@ -103,51 +106,6 @@ module.exports=functionalTestModule => {
             });
         }
 
-        /*****************
-         * //查看页面跳转
-         * *****************/
-        function jumpD(url,id){
-            $state.go(url,{batchNumberId:id});
-        }
-
-        /*****************
-         * //分页定时器
-         * *****************/
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined ){
-                if (timeout) {
-                    $timeout.cancel(timeout);
-                }
-                timeout = $timeout(function () {
-                    initBatchTest();
-                    searchFile(current);
-                }, 0);
-            }
-        },true);
-
-        /*****************
-         * //批量上传
-         * *****************/
-        function uploadQuestion(callback){
-            //var timer = $timeout(function(){
-            //    var dialog = ngDialog.openConfirm({
-            //        template: "/static/functional_testing/batch_test/batch_test/batch_upload_dialog.html",
-            //        scope: $scope,
-            //        closeByDocument: false,
-            //        closeByEscape: true,
-            //        showClose: true,
-            //        backdrop: 'static',
-            //        preCloseCallback: function (e) {    //关闭回掉
-            //            if (e === 1) {
-            //                $scope.vm.upload = true
-            //            } else {
-            //
-            //            }
-            //        }
-            //    });
-            //},350)
-        }
 
         /*****************
          * //删除
@@ -183,15 +141,23 @@ module.exports=functionalTestModule => {
          * *****************/
         function startUp(id){
             if($scope.vm.serviceId) {
-                $scope.vm.batchNumberId = id ;                
-                $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test/start_up_dialog.html','450px',function(){
+                $scope.vm.batchNumberId = id ;
 
-                },function(){
+                let test_html = require("../../../views/test_tools/batch_test/start_up_dialog.html") ;
+                $scope.$parent.$parent.MASTER.openNgDialog($scope,test_html,"400px",function(){
 
-                },function(){
+                },"",function(){
                     $scope.vm.channel = "" ;
-                    //$scope.vm.serviceId = vm.listService[0].serviceId ;
                 });
+
+                // $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test/start_up_dialog.html','450px',function(){
+                //
+                // },function(){
+                //
+                // },function(){
+                //     $scope.vm.channel = "" ;
+                //     //$scope.vm.serviceId = vm.listService[0].serviceId ;
+                // });
 
             }else{
                 layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
@@ -234,20 +200,6 @@ module.exports=functionalTestModule => {
             }
         }
 
-        function stopTest(id){
-            FunctionServer.stopTest.save({
-                batchNumberId: id,
-                batchStatusId : 21007
-            },function(data){
-                console.log(data);
-                if(data.status=10000){
-                    searchFile($scope.vm.paginationConf.currentPage) ;
-                }
-            },function(){
-
-            });
-        }
-
         function startTest(id,name,channelId){
             FunctionServer.startTest.save({
                 batchNumberId: id,
@@ -265,6 +217,15 @@ module.exports=functionalTestModule => {
                 }
             },function(err){
                 $log.log(err);
+            });
+        }
+        //添加备注
+        function addRemarks(){
+            let remarks_html = require("../../../views/test_tools/batch_test/remarks_dialog.html") ;
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,remarks_html,"400px",function(){
+
+            },"",function(){
+
             });
         }
 

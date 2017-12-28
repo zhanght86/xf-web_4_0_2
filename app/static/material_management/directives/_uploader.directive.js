@@ -28,7 +28,7 @@ module.exports = materialModule =>{
                 swf: 'Uploader.swf',
                 formData : {
                     "userId":USER_ID,
-                    "applicationId":APPLICATION_ID,
+                    //"applicationId":APPLICATION_ID,
                     //"userName":USER_NAME
                 }  ,   // 上传参数
                 // 文件接收服务端。

@@ -10,7 +10,7 @@ module.exports=functionalTestModule => {
         $scope.vm = {
             testTitle : '',
             question : '',
-            applicationId : $cookieStore.get('applicationId'),
+            //applicationId : $cookieStore.get('applicationId'),
             comparisonTextArray:[],
             asklength :0,
             answerRes : '',
@@ -66,7 +66,7 @@ module.exports=functionalTestModule => {
             }
             var i = layer.msg("资源加载中...",{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.testQuestion.save({
-                "applicationId": $scope.vm.applicationId,
+                //"applicationId": APPLICATION_ID,
                 "title": $scope.vm.testTitle,
                 "comparisonTextArray": $scope.vm.comparisonTextArray
             },function(data){

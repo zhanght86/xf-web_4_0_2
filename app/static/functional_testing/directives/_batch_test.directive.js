@@ -19,7 +19,7 @@ module.exports= functionalTestModule =>{
 
                 },
                 template: '<div class="$container">' +
-                '<span  id="picker" style="">请添加文件</span>' +
+                '<span  id="picker" style="">上传</span>' +
                 '</div>'
                 ,
                 link: function (scope, element, attrs) {
