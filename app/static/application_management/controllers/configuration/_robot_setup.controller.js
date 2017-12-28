@@ -95,10 +95,10 @@ module.exports = applicationManagementModule =>{
                 "id": APPLICATION_ID
             },function(response){
                 if(response.status===200){
-                    voluation(response.data) ;
+                    valuation(response.data) ;
                 }else{
                     layer.msg(response.data) ;
-                    voluation() ;
+                    valuation() ;
                 }
             },function(error){console.log(error)})
         }
@@ -113,7 +113,7 @@ module.exports = applicationManagementModule =>{
 
                     if(response.status===200){
                         layer.msg("机器人设置修改成功");
-                        voluation(response.data)
+                        valuation(response.data)
                     }else{
                         layer.msg(response.data);
                     }
@@ -121,7 +121,7 @@ module.exports = applicationManagementModule =>{
             }
         }
         // 参数赋值
-        function voluation(data){
+        function valuation(data){
             for(let key in $scope.robot){
                 if(data){
                     $scope.robot[key] = data[key]

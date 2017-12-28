@@ -11,6 +11,12 @@
                 </div>
             </div>
         </div>
+        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
+            <span class="framework_s">推荐问相似度：</span>
+            <div>
+                <input type="number" class="bd" ng-model="vm.multipleConversation.subjectMemoryRounds" required  ng-disabled="vm.multipleConversation.subjectMemoryRounds==''?true:false"/>
+            </div>
+        </div>
         <!--<div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">-->
             <!--<span class="framework_s">推荐问题相似度：</span>-->
             <!--<div>-->
@@ -38,15 +44,15 @@
                 <input type="number" class="bd" ng-model="vm.multipleConversation.subjectMemoryRounds" required  ng-disabled="vm.multipleConversation.subjectMemoryRounds==''?true:false"/>
             </div>
         </div>
-        <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
-            <span class="framework_s">记忆方法：</span>
-            <div>
-                <select class="sel bd" ng-model="vm.multipleConversation.memoryMethod" ng-disabled="vm.memoryMethod==''?true:false">
-                    <!--<option value="0">衰减</option>-->
-                    <option value="1">恒定</option>
-                </select>
-            </div>
-        </div>
+        <!--<div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">-->
+            <!--<span class="framework_s">记忆方法：</span>-->
+            <!--<div>-->
+                <!--<select class="sel bd" ng-model="vm.multipleConversation.memoryMethod" ng-disabled="vm.memoryMethod==''?true:false">-->
+                    <!--&lt;!&ndash;<option value="0">衰减</option>&ndash;&gt;-->
+                    <!--<option value="1">恒定</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div>
         <h3 class="f14 mb-10 c-999">要素缺失配置:</h3>
@@ -68,7 +74,7 @@
             <!--</div>-->
         <!--</div>-->
         <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
-            <span class="framework_s">支持非零点启动：</span>
+            <span class="framework_s">是否支持：</span>
             <div>
                 <select class="sel bd" ng-model="vm.multipleConversation.nonZeroStartOn">
                     <option value="1">支持</option>
@@ -77,14 +83,23 @@
             </div>
         </div>
         <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
-            <span class="framework_s">是否完全匹配：</span>
+            <span class="framework_s">支持非零点启动：</span>
             <div>
-                <select class="sel bd" ng-model="vm.multipleConversation.matchCompleteOn">
-                    <option value="1">是</option>
-                    <option value="0">否</option>
+                <select class="sel bd" ng-model="vm.multipleConversation.nonZeroStartOn">
+                    <option value="1">支持</option>
+                    <option value="0">不支持</option>
                 </select>
             </div>
         </div>
+        <!--<div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">-->
+            <!--<span class="framework_s">是否完全匹配：</span>-->
+            <!--<div>-->
+                <!--<select class="sel bd" ng-model="vm.multipleConversation.matchCompleteOn">-->
+                    <!--<option value="1">是</option>-->
+                    <!--<option value="0">否</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
             <span class="framework_s">是否作为标签匹配：</span>
             <div>

@@ -30,8 +30,13 @@ module.exports = module =>{
                     let pageTimer = "time"+new Date().getTime() ; //声明 定时器name
                     let currentName = scope.conf.currentName?scope.conf.currentName:"currentPage";
                     let sizeName = scope.conf.sizeName?scope.conf.sizeName:"pageSize";
-                    scope.conf.pageSize = $location.search()[sizeName] || scope.conf.pageSize || 5  ;
-                    scope.conf.currentPage = $location.search()[currentName] || scope.conf.currentPage || 1  ;
+                    if(scope.conf.location){
+                        scope.conf.pageSize = $location.search()[sizeName] || scope.conf.pageSize || 5  ;
+                        scope.conf.currentPage = $location.search()[currentName] || scope.conf.currentPage || 1  ;
+                    }else{
+                        scope.conf.pageSize =  scope.conf.pageSize || 5  ;
+                        scope.conf.currentPage = scope.conf.currentPage || 1  ;
+                    }
                     scope.conf.pagesLength =  scope.conf.pagesLength || 8  ;
                     console.log(scope.conf)
                     //改变当前页

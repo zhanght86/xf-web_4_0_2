@@ -1,0 +1,21 @@
+<div class="r-cont pd30">
+    <p class="r-cont-hd mb-20">交互管理</p>
+    <div class="scene_box">
+        <div class="scene_box_bot">
+            <div class="cl">
+                <table class="stop_word_tab">
+                    <tr style="background:#f0f0f0">
+                        <td width="20%" class="bold">交互方式</td>
+                        <td width="60%" class="bold">详情</td>
+                        <td width="20%" class="bold">操作</td>
+                    </tr>
+                    <tr ng-repeat="item in vm.exchangeModeData">
+                        <td>{{item.exchangeModeName}}</td>
+                        <td>{{item.exchangeDescription}}</td>
+                        <td><a ng-if="item.exchangeModeId==13&&item.statusId==20001" ng-click="vm.multipleConversationSetup()">多轮会话配置</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

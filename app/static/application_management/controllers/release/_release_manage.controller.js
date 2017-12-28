@@ -6,13 +6,15 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('ReleaseManageController',
-    ['$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog","$cookieStore","$timeout","$interval",
-    ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$cookieStore,$timeout,$interval)=>{
+    ['$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"ngDialog","$cookieStore","$timeout","$location",
+    ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$cookieStore,$timeout,$location)=>{
         $scope.vm = {
             serviceList : "",   // 服务列表数据
             paginationConf :{   // 分页条件
-                pageSize : 5 ,
-                pagesLength : 10
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : queryServiceList,
+                location : true
             }  ,//分页条件
             nodeList : {     //节点数据
                 available : [] ,  // 可用的
@@ -37,18 +39,15 @@ module.exports = applicationManagementModule =>{
             serviceTypeList : "", //类型数据
             botRoot : "",     //根节点
             newCategoryIds : [],  //选中的分类节点
-
-            //flagDialog : true, //发布按钮是否可点击，默认不可点击
-
             verifyRelease : verifyRelease //发布服务校验
         };
         queryServiceTypeList();//获取发布类型数据
-        queryServiceList(1);    // 获取服务列表
+        queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);    // 获取服务列表
         //请求服务列表
-        function queryServiceList(index){
+        function queryServiceList(index,pageSize){
             ApplicationServer.queryServiceList.save({
-                "index" : (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                "index" : (index-1)*pageSize,
+                "pageSize": pageSize
             },function(response){
                 if(response.status == 200){
                     $scope.vm.serviceList = response.data;

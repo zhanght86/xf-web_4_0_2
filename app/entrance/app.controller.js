@@ -259,7 +259,6 @@ module.exports = ngModule =>
                     tree.getChildNode() ;
                     tree.selectNode() ;
                 },200) ;
-
                 //return tree ;
             }
            //  权限 数组

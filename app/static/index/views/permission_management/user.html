@@ -21,7 +21,7 @@
                 <table class="stop_word_tab" id="user_table">
                     <thead>
                     <tr>
-                        <th class="bold" width="3%"><input class="selectAllBtn" type="checkbox" ng-click="vm.deleteIds.length==vm.userListIds.length?vm.deleteIds=[]:vm.deleteIds=$parent.$parent.MASTER.selectAll(vm.userListIds,0)" ng-checked="(vm.deleteIds.length==vm.userListIds.length) && vm.userListIds.length!=0"/></th>
+                        <th class="bold" width="3%"><input class="selectAllBtn" type="checkbox" ng-click="vm.deleteIds.length==vm.userListIds.length?vm.deleteIds=[]:vm.deleteIds=$parent.$parent.MASTER.selectAll(vm.userListIds,0,)" ng-checked="(vm.deleteIds.length==vm.userListIds.length) && vm.userListIds.length!=0"/></th>
                         <th class="bold" width="8%">姓名</th>
                         <th class="bold" width="8%">登录名</th>
                         <th class="bold" width="11%">手机</th>
