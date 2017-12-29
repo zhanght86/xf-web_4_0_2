@@ -177,6 +177,7 @@ gulp.task('watch-module', function(done) {
         ]
     } ;
     gulp.watch(watchPath.img,["copy:images"] ).on('end', done);
+    gulp.watch(watchPath.img,["copy:imagestemp"] ).on('end', done);
     gulp.watch(watchPath.css,["fileinclude:css","concatcss"]).on('end', done);
     gulp.watch(watchPath.js,["fileinclude:js"] ).on('end', done);
     gulp.watch(watchPath.libs,["copy:libs"] ).on('end', done);

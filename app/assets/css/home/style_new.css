@@ -686,3 +686,37 @@
 
 .material_table td{text-align:left;height:30px;}
 
+/*测试*/
+#test-nav{border-top: 1px solid #dadada;
+          border-bottom: 1px solid #dadada;
+        }
+#test-nav li{background:#fff;}
+#test-nav li a{padding-left: 53px;
+                border-top: 1px solid #dadada;
+                margin-top: -1px;
+                line-height: 48px;
+                display: block;
+                position: relative;
+                font-size: 14px;
+                color: #666;
+                padding-left: 50px;
+                }
+#test-nav li:hover{background:#3ea9fb;border-left:3px solid #1c7cc5;}
+#test-nav .cur_test_li{background:#3ea9fb;border-left:3px solid #1c7cc5;}
+#test-nav .cur_test_li span{color:#fff;}
+#test-nav li .icon-l{
+                   width:20px;
+                   height:20px;
+                   display: inline-block;
+                   margin-right: 5px;
+                   vertical-align: middle;
+                  }
+#test-nav .icon-navquestion{background:url(../../images/test-icon.png) no-repeat -21px 0;}
+#test-nav .icon-navchat{background:url(../../images/test-icon.png) no-repeat -21px -21px;}
+#test-nav .icon-navbatch{background:url(../../images/test-icon.png) no-repeat -21px -42px;}
+
+#test-nav .cur_test_li .icon-navquestion{background:url(../../images/test-icon.png) no-repeat 0 0;}
+#test-nav .cur_test_li .icon-navchat{background:url(../../images/test-icon.png) no-repeat 0 -21px;}
+#test-nav .cur_test_li .icon-navbatch{background:url(../../images/test-icon.png) no-repeat 0 -42px;}
+
+

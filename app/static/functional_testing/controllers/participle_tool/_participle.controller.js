@@ -16,7 +16,9 @@ module.exports=functionalTestModule => {
             selectSingle : selectSingle,
             deleteIds:[],
 
+
         };
+
 
         //分页定时器
         var timeout ;

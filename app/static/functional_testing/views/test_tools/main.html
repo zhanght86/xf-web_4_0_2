@@ -2,24 +2,24 @@
 <div class="main warp">
     <div class="page-lrcont210 clearfix bgwhite mt10">
         <div class="l-aside fl">
-            <div class="aside-nav aside-nav2">
+            <div  id="test-nav">
                 <ul>
-                    <li>
+                    <li class="cur_test_li">
                         <a class="slide-a ellipsis" ui-sref=".question">
-                            <i class="icon-l icon-nav1"></i>
+                            <i class="icon-l icon-navquestion"></i>
                             <span>问法测试</span>
                             <!--<i class="icon-r icon-jt"></i>-->
                         </a>
                     </li>
                     <li>
                         <a class="slide-a ellipsis" ui-sref=".session">
-                            <i class="icon-l icon-nav3"></i>
+                            <i class="icon-l icon-navchat"></i>
                             <span >聊天测试</span>
                         </a>
                     </li>
                     <li>
                         <a class="slide-a ellipsis"  ui-sref=".batch">
-                            <i class="icon-l icon-nav4"></i>
+                            <i class="icon-l icon-navbatch"></i>
                             <span >批量测试 </span>
                         </a>
                     </li>
@@ -34,10 +34,11 @@
     .menu_1{
         display: block;
     }
+
 </style>
 <script>
-    $('.menu_1 li').click(function(){
-        $(this).css('background','#d0caca').siblings().css('background','#e6e6e6');
+    $('#test-nav li').click(function(){
+        $(this).addClass('cur_test_li').siblings().removeClass('cur_test_li');
     });
 </script>
 

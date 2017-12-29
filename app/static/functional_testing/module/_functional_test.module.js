@@ -22,9 +22,7 @@ module.exports = angular => {
     require('../controllers/test_tools/question_test/_question_test.controller')(functionalTestModule);
     require('../controllers/test_tools/session_test/_session_test.controller')(functionalTestModule);
     require('../controllers/test_tools/batch_test/_batch_test.controller')(functionalTestModule);
-    require('../controllers/test_tools/batch_test/_test_result.controller')(functionalTestModule);
-    require('../controllers/test_tools/batch_test/_view_details.controller')(functionalTestModule);
-    //----分词-----
+   //----分词-----
 
     require('../controllers/participle_tool/_participle.controller')(functionalTestModule);
     require('../controllers/participle_tool/_participle_result.controller')(functionalTestModule);

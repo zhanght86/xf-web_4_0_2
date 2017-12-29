@@ -4,16 +4,16 @@
         <span>相关度测试</span>
     </div>
     <div class="pd-30" style="background:#fff;">
-        <div class="mb-10 cl list_facContent" style="padding-left: 100px;">
-            <div class="list_facContent_L" style="width:100px;">标准问法：</div>
+        <div class="mb-10 cl list_facContent" style="padding-left: 100px;height:30px;">
+            <div class="list_facContent_L" style="width:100px;">预期知识：</div>
             <div >
-                <input type="text" class="input_text mr-20" placeholder="购买火车票能不能选择铺位" ng-model="vm.testTitle"/>
-                <button type="button"   class="btn btn-primary radius mr-20" ng-click="vm.test()">测试</button>
+                <input type="text" class="input_text mr-10" placeholder="购买火车票能不能选择铺位" ng-model="vm.testTitle"/>
+                <button type="button"   class="btn btn-primary radius mr-10" ng-click="vm.test()">测试</button>
                 <button type="button"   class="btn btn-warning radius" ng-click="vm.emptyInput()">清空</button>
             </div>
         </div>
         <div class="mb-10 cl list_facContent" style="padding-left: 100px;">
-            <div class="list_facContent_L" style="width:100px;">测试问法：</div>
+            <div class="list_facContent_L" style="width:100px;">可能问法：</div>
             <div >
                 <!--<textarea class="textarea"  ng-model="vm.question" ng-keypress="vm.addArr($event)"></textarea>-->
                 <textarea class="textarea"  ng-model="vm.question" ></textarea>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mb-10 cl list_facContent" style="padding-left: 100px;">
-            <div class="list_facContent_L" style="width:100px;margin-top:7px;">打标结果：</div>
+            <div class="list_facContent_L" style="width:100px;margin-top:7px;">测试结果：</div>
             <div  >
                 <div class="bd pd-10" style="min-height:200px;max-height:300px;overflow:auto;" id="solution">
                     <div class="c-red bold mb-10">

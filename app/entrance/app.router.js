@@ -311,49 +311,12 @@ module.exports = (angular) => {
                     controller: "NavController"
                 },
                 "content": {
-                    template: require("../static/functional_testing/views/test_tools/batch_test/batch_test/batch_test.html"),
+                    template: require("../static/functional_testing/views/test_tools/batch_test/batch_test.html"),
                     controller: "BatchTestController"
                 }
             }
         },
-        {
-            name: "ST.test.result",
-            url: "/result",
-            data: {
-                roles: []
-            },
-            parent : "ST.test",
-            title : "测试结果" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/functional_testing/views/test_tools/batch_test/test_result/test_result.html"),
-                    controller: "TestResultController"
-                }
-            }
-        },
-        {
-            name: "ST.test.details",
-            url: "/details",
-            data: {
-                roles: []
-            },
-            parent : "ST.test",
-            title : "测试详情" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/functional_testing/views/test_tools/batch_test/view_details/view_details.html"),
-                    controller: "ViewDetailsController"
-                }
-            }
-        },
+
 
         //----------分词工具------------
         {
