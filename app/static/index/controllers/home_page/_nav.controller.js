@@ -13,7 +13,6 @@ module.exports = homePageModule =>{
                 $scope.map = [] ; // 定义导航
                 $scope.vm = {
                         applicationId : APPLICATION_ID,
-                        sceneId : SCENE_ID,
                         loginout : loginout,
                         // userName : USER_NAME,
                         userName : getCookie("userName"),
@@ -44,7 +43,6 @@ module.exports = homePageModule =>{
                 }
                 function loginout(){
                     $cookieStore.remove('applicationId');
-                    $cookieStore.remove('sceneId');
                     $cookieStore.remove('userId');
                     $cookieStore.remove('userName');
                     $cookieStore.remove('userLoginName');

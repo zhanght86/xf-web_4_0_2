@@ -5,23 +5,19 @@
  */
 module.exports = applicationManagementModule =>{
     applicationManagementModule
-    .directive('uploadAvatar', function($timeout){
+    .directive('uploadAvatar', function($timeout,ngDialog){
         return {
             restrict:'EA',
-            template :'<span id="picker">1选择图片</span>' ,
+            template :'<span id="picker">选择图片</span>' ,
             replace:true,
             link: function($scope, ele, attrs, c){
                  let position = {} ;
-                 // let imgSize = {
-                 //     width : $("#setting_head").width(),
-                 //     height : $("#setting_head").height()
-                 // };
                 $timeout(function(){
                     var uploader = WebUploader.create({
                         auto: false, // 选完文件后，是否自动上传
                         // swf文件路径
                         swf: 'assets/libs/webuploader-0.1.5/dist/Uploader.swf',
-                        server: "/api/application/config/upload/avatar",
+                        server: API_MATERIAL+"/picture/upload/head/img",
                         accept: {
                             title: 'Images',
                             extensions: 'jpg,png,bmp',
@@ -40,7 +36,6 @@ module.exports = applicationManagementModule =>{
                         uploader.makeThumb(file, function (error, src) {
                             if (error) {
                                 layer.msg('预览错误');
-                                // $img.replaceWith('<span>不能预览</span>');
                                 return;
                             }
                             srcImg = src ;
@@ -60,15 +55,6 @@ module.exports = applicationManagementModule =>{
                                 onSelect: function(){},
                                 aspectRatio: 1
                             },function(){
-                                // Use the API to get the real image size
-                                // var bounds = this.getBounds();
-                                // boundx = bounds[0];
-                                // boundy = bounds[1];
-                                // // Store the API in the jcrop_api variable
-                                // jcrop_api = this;
-                                //
-                                // // Move the preview into the jcrop container for css positioning
-                                // $preview.appendTo(jcrop_api.ui.holder);
                             });
                         },1,1);
                     });
@@ -77,26 +63,29 @@ module.exports = applicationManagementModule =>{
                         console.log("上传失败")
                     });
                     uploader.on('uploadSuccess', function (file,response) {
-                        // if(response.status == 500){
-                        //     layer.msg("模板错误")
-                        // }else{
-                        //     scope.tableList = response ;
-                        //     scope.$apply();
-                        // }
+                        if(response.status == 200){
+                            ngDialog.closeAll();
+                            setCookie('avatarUrl',API_MATERIAL+"/picture/get/img/id?pictureId=");
+                            setCookie('avatarId',response.data);
+                            $scope.$parent.$parent.MASTER.avatarUrl = API_MATERIAL+"/picture/get/img/id?pictureId=" ;
+                            $scope.$parent.$parent.MASTER.avatarId = response.data ;
+                        }else{
+                            layer.msg(response.data)
+                        }
                         console.log(response)
                     });
                     $(".start_upload_avatar").click(function () {
                         uploader.options.formData = {
                             x : position.x,
                             y : position.y,
-                            h : position.h,
-                            w : position.w
+                            height : position.h,
+                            width : position.w,
+                            origin : 1 ,
+                            inTrusteeship : 1
                         } ;
                         uploader.upload()
                     })
-
                 })
-
             }
         }
     })

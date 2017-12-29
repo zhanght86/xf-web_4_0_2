@@ -24,7 +24,7 @@
                 </div>
                 <div class="value">
                     <div class="poto-box">
-                        <img ng-src="{{robot.imgUrl}}{{robot.avatarDocId}}"/>
+                        <img ng-src="{{$parent.$parent.MASTER.avatarUrl}}{{$parent.$parent.MASTER.avatarId}}"/>
                     </div>
                     <div class="up-tip">
                         网页聊天中左上角展示的圆形头像，<br />设置像素为70*70
@@ -154,10 +154,8 @@
         </div>
         <div class="tc">
             <button class="btn1 btn1_blue mr10" ng-click="vm.editRobot(mySetting.$valid)">保存</button>
-            <!--<button  class="btn btn-blue mr10" type="submit">保存</button>-->
             <button class="btn1 btn_gray" ng-click="vm.queryRobotParameter()">取消</button>
         </div>
         </form>
     </div>
-
 </div>

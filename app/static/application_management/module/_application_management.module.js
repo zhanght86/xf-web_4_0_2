@@ -16,7 +16,7 @@ module.exports = angular => {
     require('../directives/_check_service_name.direvtive')(applicationManagementModule);                 // 验证服务名称
     require('../directives/_verify_application_name.directive')(applicationManagementModule);            // 验证应用名称
     require('../directives/_verify_node.directive')(applicationManagementModule);                        // 验证节点名称
-    // require('../directives/caliper/_caliper.directive')(applicationManagementModule);                    // 标尺
+    // require('../directives/_caliper.directive')(applicationManagementModule);                    // 标尺
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------

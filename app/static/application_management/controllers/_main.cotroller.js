@@ -5,6 +5,7 @@ module.exports = applicationManagementModule =>{
     ($scope,$state, $stateParams,$cookieStore,$rootScope,ApplicationServer)=> {
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
+            classicAvatar : ['touxiang1.png','touxiang2.png','touxiang3.png','touxiang4.png', 'touxiang5.png','touxiang6.png','touxiang7.png','touxiang8.png'], //经典头像列表
             isSlide : isSlide,
             isSlide2 : isSlide2,
             robotName : "" //机器人名称
@@ -34,11 +35,16 @@ module.exports = applicationManagementModule =>{
                 "id": APPLICATION_ID
             },function(response){          //类名重複
                 if(response.status===200){
-                    setCookie('avatarUrl',response.data.imgUrl);
+                    let location ;
+                    if($scope.vm.classicAvatar.inArray(response.data.avatarDocId)){
+                        location = "./images/" ;
+                    }else{
+                        location = API_MATERIAL+"/picture/get/img/id?pictureId=";
+                    }
+                    setCookie('avatarUrl',location);
                     setCookie('avatarId',response.data.avatarDocId);
                     setCookie('robotName',response.data.name);
-
-                    $scope.$parent.MASTER.avatarUrl = response.data.imgUrl ;
+                    $scope.$parent.MASTER.avatarUrl = location ;
                     $scope.$parent.MASTER.avatarId = response.data.avatarDocId ;
                     $scope.$parent.MASTER.robotName = response.data.name; //机器人名称
                 }
