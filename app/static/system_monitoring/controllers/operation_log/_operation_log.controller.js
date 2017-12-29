@@ -68,7 +68,8 @@ module.exports=systemMonitoringModule => {
             }else{
                 //alert("页面跳转");
                 if(item.moduleType==1021){
-                    var mmId = item.content.substring(item.content.indexOf(',')+1);
+                    // var mmId = item.content.substring(item.content.indexOf(',')+1);
+                    var mmId = angular.fromJson(item.content).id;
                     SystemServer.searchById.get({
                         "id": mmId
                     },function(data){

@@ -20,7 +20,7 @@
                     </select>
                 </span>
                 <input type="text" class="input-text L mr-10" ng-model="vm.selectInput" placeholder="测试文件" style="width:250px;height:30px;" />
-                <button class="btn1 btn1_blue L mr-10" type="button"  ng-click="vm.searchFile(vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize,1)">查找</button>
+                <button class="btn1 btn1_blue L mr-10" type="button"  ng-click="vm.searchFile(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)">查找</button>
                 <span class="L btn1 btn_delete" ng-click="vm.deleteQuestion(vm.deleteIds)" style="line-height:20px;display:block;"> 删除</span>
                 <!--<span class="c-999 pl-10">共有数据：<strong >{{vm.listDataTotal}}</strong> 条 </span>-->
             </div>
@@ -57,7 +57,7 @@
                             <td>{{v.remark}}</td>
                             <td>
                                 <a href="javascript:;" class="c-green mr-5" ng-if="v.status==21009">下载</a>
-                                <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks()">备注</a>
+                                <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks(v.id)">备注</a>
                                 <a class="c-blue mr-5" ng-click="vm.startUp()" ng-if="v.status==21007">测试</a>
                                 <a class="c-blue mr-5" ng-if="v.status==21009">重测</a>
                                 <a class="c-red" ng-click="vm.deleteQuestion([v.id])">删除</a>

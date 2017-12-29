@@ -29,9 +29,13 @@
                     <td>{{item.applicationName}}</td>
                     <td>{{item.moduleType|moduleType}}</td>
                     <td>{{item.type|operateState}}</td>
+                    <!--<td>-->
+                        <!--<a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>-->
+                        <!--<span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>-->
+                    <!--</td>-->
                     <td>
-                        <a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="item.content.indexOf(',')!=-1">{{item.content|contentShow}}</a>
-                        <span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>
+                        <a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="(item.content|strToJson).id">{{(item.content|strToJson).title}}</a>
+                        <span ng-if="!(item.content|strToJson).id">{{(item.content|strToJson).title}}</span>
                     </td>
                     <td>{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>

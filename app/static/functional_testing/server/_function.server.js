@@ -30,6 +30,8 @@ class FunctionServer{
     this.BatchsearchFile = $resource(API_MS+'/test/get/file',{},{});
     //删除
     this.batchDelete = $resource(API_MS+'/test/batch/delete',{},{});
+    //标注
+    this.remark = $resource(API_MS+'/test/add/remark',{},{});
 
 
     //startTest
