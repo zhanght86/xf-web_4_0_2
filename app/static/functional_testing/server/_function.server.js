@@ -29,14 +29,14 @@ class FunctionServer{
     //查询
     this.BatchsearchFile = $resource(API_MS+'/test/get/file',{},{});
     //删除
-    this.batchDelete = $resource(API_APPLICATION_TEST+'/batchTest/batchDeleteByIds',{},{});
+    this.batchDelete = $resource(API_MS+'/test/batch/delete',{},{});
 
 
     //startTest
-    this.startTest = $resource(API_APPLICATION_TEST+'/batchTest/startTest',{},{});
+    //this.startTest = $resource(API_APPLICATION_TEST+'/batchTest/startTest',{},{});
 
     //start
-    this.start =  $resource(API_APPLICATION_TEST+'/batchTest/getChannelAndUserName', {}, {});
+    //this.start =  $resource(API_APPLICATION_TEST+'/batchTest/getChannelAndUserName', {}, {});
 
 
                                 /******************************
