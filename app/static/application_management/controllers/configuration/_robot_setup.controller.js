@@ -1,28 +1,15 @@
 /**
  * Created by dinfo on 2017/3/28.
  */
+// /app/assets/libs/jiaoben2728/js/ion.rangeSlider
+require("../../../../assets/libs/jiaoben2728/js/ion.rangeSlider");
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('RobotSetupController', [
     '$scope', 'localStorageService' ,"ApplicationServer", "$state" ,"ngDialog",'$http', "$cookieStore","$rootScope",
     ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$http,$cookieStore,$rootScope)=> {
         $scope.vm = {
-            classicHead:['touxiang1.png','touxiang2.png','touxiang3.png','touxiang4.png', 'touxiang5.png','touxiang6.png','touxiang7.png','touxiang8.png'], //经典头像列表
-            imgUrl : "", //文件服务器地址
-            robotExpire : "", //时间到期回复
-            robotHead : "",//头像
-            newRobotHead : "", //新的头像
-            robotHotQuestionTimeout : "",//热点问题更新频率
-            robotLearned : "",//学到新知识回答
-            robotName : "", //名称
-            robotRepeat : "",//重复问答回复
-            robotRepeatNumber : "",//重复问答次数
-            robotSensitive : "",// 敏感问答回复
-            robotTimeout : "",//超时提示回复
-            robotTimeoutLimit : "",//超时时长
-            robotUnknown : "",//未知问答回复
-            robotWelcome : "",//欢迎语
-            settingId : "",//机器人参数ID
+            newAvatarId : "", //新的头像
             editRobot : editRobot,  //编辑机器人参数
             queryRobotParameter : queryRobotParameter, //查询机器人参数
             addClassic : addClassic,  //弹出经典头像对话框
@@ -36,13 +23,13 @@ module.exports = applicationManagementModule =>{
             } ,
             // isHeadPicSize : isHeadPicSize  //头像大小是否合格 1Mb
         };
+        // 机器人参数
         $scope.robot = {
             "imgUrl"                 : "", //文件服务器地址
             "name"                   : "", //名称
             "id"                     : "", //机器人参数ID
             "avatarDocId"            : "", //头像
-            // "newAvatar"              : "", //新的头像
-            "welcomes"                : "", //欢迎语
+            "welcomes"               : "", //欢迎语
             "defaultUnknownAnswer"   : "", //未知问答回复
             "defaultSensitiveAnswer" : "", // 敏感问答回复
             "repeatNumber"           : "", //重复问答次数
@@ -56,16 +43,18 @@ module.exports = applicationManagementModule =>{
         let customizedAvatarHtml = require("../../views/configuration/robot_setup/customized_avatar.html") ; // 自定义头像
         //弹出经典头像对话框
         function addClassic(){
+            $scope.vm.newAvatarId = $scope.robot.avatarDocId ;
             $scope.$parent.$parent.MASTER.openNgDialog($scope,classAvatarHtml,"",function(){
                 ApplicationServer.storeClassicalAvatar.save({
-                    "avatarDocId": $scope.vm.newRobotHead,
+                    "avatarDocId": $scope.vm.newAvatarId,
                 },function(response){
                     if(response.status===200){
-                        layer.msg("修改头像成功");
-                        $state.reload();
-                    }else{
-                        layer.msg(response.data);
+                        setCookie('avatarUrl',"/images/");
+                        setCookie('avatarId',$scope.vm.newAvatarId);
+                        $scope.$parent.MASTER.avatarUrl = "/images/" ;
+                        $scope.$parent.MASTER.avatarId = $scope.vm.newAvatarId ;
                     }
+                    layer.msg(response.data);
                 },function(error){console.log(error)})
             })
         }
@@ -85,7 +74,6 @@ module.exports = applicationManagementModule =>{
                 // fd.append('w',$('#w').val());
                 // fd.append('h',$('#h').val());
                 // console.log(fd)
-
             })
         }
         queryRobotParameter() ;
