@@ -93,7 +93,7 @@ module.exports=functionalTestModule => {
                 }else if(data.status==200){
                     console.log(data);
                     //alert(typeof data.data.batchTestList[0].batchNumberId);
-                    $scope.vm.listData = data.data.batchTestList;
+                    $scope.vm.listData = data.data.list;
                     $scope.vm.listDataTotal = data.data.total;
                     $scope.vm.paginationConf.currentPage =index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
@@ -110,31 +110,32 @@ module.exports=functionalTestModule => {
         /*****************
          * //删除
          * *****************/
-        function deleteQuestion(callback){
-            if($scope.vm.deleteIds.length == 0){
+        function deleteQuestion(batchIds){
+            if(!batchIds.length){
                 layer.msg("请选择要删除的文件！",{time:1000});
-                return;
-            }            
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test_dialog.html','400px',function(){
-
-                FunctionServer.batchDelete.save({
-                    applicationId :  APPLICATION_ID,
-                    ids :  $scope.vm.deleteIds
-                },function(data){
-                    if(data.status == 10013){
-                        initBatchTest();
-                        //$scope.vm.selectAllCheck = false;
-                        layer.msg("删除成功",{time:100000});
-                        $state.reload();
-                    }else{
-                        layer.msg("删除失败");
-                    }
-                },function(err){
-                    $log.log(err);
+                //return;
+            }else{
+                layer.confirm("确定要删除吗",{
+                    btn:['确定','取消']
+                },function(){
+                    FunctionServer.batchDelete.save({
+                        ids :  $scope.vm.deleteIds
+                    },function(data){
+                        if(data.status == 10010){
+                            initBatchTest();
+                            layer.msg("删除成功",{time:1000});
+                            layer.closeAll('dialog');
+                            $state.reload();
+                        }else if(data.status == 500){
+                            layer.msg("删除失败");
+                        }
+                    },function(err){
+                        $log.log(err);
+                    });
                 });
-            },function(){
 
-            });
+            }
+
         }
         /*****************
          * //启动
@@ -237,7 +238,7 @@ module.exports=functionalTestModule => {
                 $scope.vm.selectAllCheck = true;
                 $scope.vm.deleteIds = [];
                 angular.forEach($scope.vm.listData,function(item){
-                    $scope.vm.deleteIds.push(item.batchNumberId);
+                    $scope.vm.deleteIds.push(item.id);
                 });
             }else{
                 $scope.vm.selectAllCheck = false;

@@ -6,7 +6,7 @@ module.exports = materialModule =>{
     materialModule
     .directive("uploaderBase", ["$parse",  "$cookieStore" ,"$state",
     function($parse,$cookieStore,$state) {
-    return {
+        return {
         restrict:'EA',
         // scope:{
         //     accept:'=',
