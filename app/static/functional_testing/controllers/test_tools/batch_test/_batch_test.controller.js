@@ -115,17 +115,18 @@ module.exports=functionalTestModule => {
                 layer.msg("请选择要删除的文件！",{time:1000});
                 //return;
             }else{
-                layer.confirm("确定要删除吗",{
+                layer.confirm('确定要删除吗',{
                     btn:['确定','取消']
                 },function(){
                     FunctionServer.batchDelete.save({
-                        ids :  $scope.vm.deleteIds
+                        ids :  batchIds
                     },function(data){
                         if(data.status == 10010){
                             initBatchTest();
                             layer.msg("删除成功",{time:1000});
-                            layer.closeAll('dialog');
+                            layer.closeAll();
                             $state.reload();
+
                         }else if(data.status == 500){
                             layer.msg("删除失败");
                         }
