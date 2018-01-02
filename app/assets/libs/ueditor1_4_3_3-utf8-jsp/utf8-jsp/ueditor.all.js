@@ -1635,7 +1635,7 @@
                     k = listeners.length;
                     while (k--) {
                         if(!listeners[k])continue;
-                        //t = listeners[k].apply(this, arguments);
+                        t = listeners[k].apply(this, arguments);
                         if(t === true){
                             return t;
                         }
@@ -24525,8 +24525,8 @@
                                 body = (iframe.contentDocument || iframe.contentWindow.document).body,
                                 result = body.innerText || body.textContent || '';
                             json = (new Function("return " + result))();
-                            link = me.options.imageUrlPrefix + json.data.url;
-                            //link = json.url;
+                            //link = me.options.imageUrlPrefix + json.data.url;
+                            link = json.url;
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', 'api/material/picture/upload/get?url='+link);

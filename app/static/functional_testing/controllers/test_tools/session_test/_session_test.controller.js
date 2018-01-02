@@ -18,7 +18,7 @@ module.exports=functionalTestModule => {
             listDimensionUpBack : "",
            // dimensionArray : [] ,
             //==============================================方法
-            getService:getService,
+           // getService:getService,
             serviceId : "" ,
             test : test,
             reset : reset,
@@ -30,28 +30,28 @@ module.exports=functionalTestModule => {
         /*****************
          * //页面初始化加载已发布服务
          * *****************/
-        getService();
-        function getService(){
-            FunctionServer.getService.save({
-                applicationId:APPLICATION_ID,
-            },function(data){
-                if(data.status == 10000){
-                    $scope.vm.listService = data.data;
-                    $scope.vm.serviceId = data.data[0].serviceId ;
-                   
-                }else if(data.status == 10005) {
-                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
-                }
-            },function(err){
-                $log.log('请求请求失败');
-            });
-        }
+        //getService();
+        // function getService(){
+        //     FunctionServer.getService.save({
+        //         applicationId:APPLICATION_ID,
+        //     },function(data){
+        //         if(data.status == 10000){
+        //             $scope.vm.listService = data.data;
+        //             $scope.vm.serviceId = data.data[0].serviceId ;
+        //
+        //         }else if(data.status == 10005) {
+        //             //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
+        //         }
+        //     },function(err){
+        //         $log.log('请求请求失败');
+        //     });
+        // }
 
         /*****************
          *  //开始测试
          * *****************/
        function test(){
-           if($scope.vm.serviceId){
+          // if($scope.vm.serviceId){
                if($scope.vm.testAsking==''){
                    layer.msg('请输入测试问题!',{time:1000});
                    return ;
@@ -81,9 +81,9 @@ module.exports=functionalTestModule => {
                    layer.close(i);
                    $log.log(err);
                });
-           }else{
-               layer.msg("当前应用下没有发布服务，请发布服务后进行测试",{time:1000});
-           }
+         //  }else{
+          //     layer.msg("当前应用下没有发布服务，请发布服务后进行测试",{time:1000});
+          // }
        }
 
         /*****************
