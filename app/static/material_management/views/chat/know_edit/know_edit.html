@@ -8,7 +8,8 @@
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">标准问法：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                            <input  type="text" ng-model="vm.standardQuestion" id="standardQuestion" class="bk-gray input-text mr-10" ng-blur="vm.checkTitle()" placeholder="请输入标准问法" style="width:250px;"/>
+                            <input  type="text" ng-model="vm.standardQuestion" id="standardQuestion" class="bk-gray input-text mr-10" maxlength="20" ng-blur="vm.checkTitle()" placeholder="请输入标准问法" style="width:350px;"/>
+                            <span><span>{{vm.standardQuestion.length}}</span>/20</span>
                             <div class="c-red " style="display:none;" ></div>
                         </div>
                     </div>
