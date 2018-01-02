@@ -46,10 +46,10 @@ module.exports=materialModule => {
         /**
          **批量新增
          **/
-        function batchAddition(){
+        function batchAddition(callback){
             let batchAdd = require("../../../views/chat/knowledge_base/chat_knowledge_dialog.html");
             $scope.$parent.$parent.MASTER.openNgDialog($scope,batchAdd,"600px",function(){
-               $scope.vm.isUploadStart = true ;
+                $scope.vm.isUploadStart = true ;
             },function(){
                 $scope.vm.isUploadStart = false ;
             })
