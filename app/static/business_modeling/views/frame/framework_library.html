@@ -29,8 +29,8 @@
             </div>
             <div class="tac mt10 mb-20" style="margin-top: 8px; text-align: left">
                 <!--<span class="bold">框架名称:</span> -->
-                <input type="text" class="input_text" id="keyWords" placeholder="框架名称"/>
-                <input type="button" value="查找" ng-click="vm.searchByFrameTitle(1,0)" class="btn1 btn1_blue"/>
+                <input type="text" class="input_text" id="keyWords" ng-model="vm.title" placeholder="框架名称"/>
+                <input type="button" value="查找" ng-click="vm.loadFrameLibrary(1)" class="btn1 btn1_blue"/>
             </div>
             <table class="stop_word_tab" style="margin-top: 10px;">
                 <thead>
@@ -43,11 +43,11 @@
                 </thead>
                 <tr ng-repeat="item in vm.listData">
                     <td><input type="checkbox" name="sid" value="{{item.frameId}}"></td>
-                    <td>{{item.frameTitle}}</td>
-                    <td>{{item.frameTypeId | frameTypeFilter}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.type | typeFilter}}</td>
                     <td>
                         <a href="javascript:;" class="color-blue modifyConcept" ng-click="vm.editFrame(item)">修改</a> &nbsp;
-                        <a href="javascript:;" class="delConcept" ng-click="vm.deleteFrame(item)">删除</a>
+                        <a href="javascript:;" class="delConcept"  ng-click="vm.deleteFrame(item)">删除</a>
                     </td>
                 </tr>
             </table>

@@ -1,7 +1,10 @@
 /**
  * Created by Administrator on 2017/4/10.
  */
-angular.module('knowledge_static_web').filter('typeFilter', function () {
+ 'use strict';
+
+module.exports = module =>{
+module.filter('typeFilter', function () {
     return function (val) {
         var result;
         if(val == 100){
@@ -11,4 +14,4 @@ angular.module('knowledge_static_web').filter('typeFilter', function () {
         }
         return result
     };
-});
+})};

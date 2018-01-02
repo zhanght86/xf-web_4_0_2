@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('BotConceptController', [
-    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout",
-    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout) =>{
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout","$location",
+    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout,$location) =>{
         $scope.vm = {
             listData : "",   // table 数据
             topic:"",
@@ -86,12 +86,10 @@ module.exports = applicationManagementModule =>{
         }
     //概念编辑       
         function editSingle(item){
-            console.log(item)
-            console.log(item.term.split(";"))
             $scope.vm.dialogTitle="编辑bot概念";
             $scope.vm.key = item.topic;
             $scope.vm.id = item.id;
-            $scope.vm.term =  item.term.split(";");
+            $scope.vm.term =(item.term==null) ? "" : item.term.split(";");
             $scope.vm.weight =  item.weight;
             addSynonymConceptDialog(singleEditSynonymConcept,item);
         }
@@ -131,7 +129,7 @@ module.exports = applicationManagementModule =>{
                 $scope.vm.term = "";
                 $scope.vm.weight = 33;
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/views/concept/synonym/synonym_dialog.html",
+                template:"/static/business_modeling/views/concept/bot/bot_dialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -202,7 +200,7 @@ module.exports = applicationManagementModule =>{
         //編輯彈框   添加公用
         function addSynonymConceptDialog(callback,item){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/views/concept/synonym/synonym_dialog2.html",
+                template:"/static/business_modeling/views/concept/bot/bot_dialog2.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,

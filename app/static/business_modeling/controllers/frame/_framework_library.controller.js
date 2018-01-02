@@ -5,8 +5,8 @@
  */
 module.exports = businessModelingModule =>{
     businessModelingModule.controller('FrameLibraryController', [
-    '$scope','$timeout',"$state", "$stateParams","$compile","ngDialog","$cookieStore","$interval",
-    ($scope,$timeout,$state, $stateParams,$compile,ngDialog,$cookieStore,$interval) =>{
+    '$scope','$timeout',"$state", "$stateParams","BusinessModelingServer","$compile","$location","ngDialog","$cookieStore","$interval","$http",
+    ($scope,$timeout,$state, $stateParams,BusinessModelingServer,$compile,$location,ngDialog,$cookieStore,$interval,$http) =>{
         // $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -20,13 +20,12 @@ module.exports = businessModelingModule =>{
             clearColor:clearColor,
             loadFrameLibrary:loadFrameLibrary,
             addFrame:addFrame,
-            paginationConf:{
-                currentPage: 1,//当前页
-                totalItems: 0, //总页数
-                pageSize: 1,//第页条目数
-                pagesLength: 8//分页框数量
+            paginationConf : {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : loadFrameLibrary,
+                location : true
             },
-            pageSize:6,
             frameInfo:null,
             addFaq:addFaq,
             addConcept:addConcept,
@@ -432,29 +431,44 @@ module.exports = businessModelingModule =>{
             }
             return style;
         }
-        //加载对应类目下的框架库
-        function loadFrameLibrary(current,type){
-            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
-                "frameCategoryId": $scope.vm.botSelectValue,
-                "index":(current-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize
+        /////////////////////////////////加载对应类目下的框架库///////////////////////////////////////////
+
+         /**
+        *   
+        框架库
+        列表展示
+        查询服务
+        *
+        */
+        loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function loadFrameLibrary(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+            }
+            let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+            httpRequestPost("/api/ms/frame/get/param",{
+                "title": $scope.vm.title,
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
             },function(data){
-                if(data.data){
-                    clearSelectAll();
-                    $scope.vm.listData = data.data;
-                    $scope.vm.paginationConf={
-                        currentPage: current,//当前页
-                        totalItems: data.total, //总页数
-                        pageSize: $scope.vm.pageSize,//第页条目数
-                        pagesLength: 8  //分页框数量
-                    };
-                }else{
-                    $scope.vm.listData="";
-                }
+                 layer.close(i);
+               if(data.status==200){
+                 $scope.vm.listData = data.data.data;
+                 $scope.vm.paginationConf.totalItems = data.data.total;
+                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+               }else{
+                  
+               }
                 $scope.$apply();
             },function(err){
+                layer.close(i);
             });
         }
+
+
+
+
         //修改框架
         function editFrame(item){
             $scope.vm.frameTypeId=item.frameTypeId;
@@ -480,8 +494,8 @@ module.exports = businessModelingModule =>{
                 btn: ['确认','取消'], //按钮
                 shade: 0.3 //不显示遮罩
             }, function(){
-                httpRequestPost("/api/ms/modeling/frame/delete",{
-                    "frameId":frameId
+                 httpRequestPost("api/ms/frame/delete/"+frameId+"",{
+                 
                 },function(data){
                     if(responseView(data)==true){
                         loadFrameLibrary(1,0);
@@ -633,23 +647,15 @@ module.exports = businessModelingModule =>{
             }
         }
 
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                if(nullCheck($("#keyWords").val())==true){
-                    searchByFrameTitle(current,0);
-                }else{
-                    loadFrameLibrary(current,0);
-                }
-            }
-        });
+   
         //添加框架
         function addFrame(){
-            if($scope.vm.botSelectValue=="root"){
-                layer.msg("请选择类目");
-                return;
-            }
+            // if($scope.vm.botSelectValue=="root"){
+            //     layer.msg("请选择类目");
+            //     return;
+            // }
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/framework_library_dialog.html",
+                template:"/static/business_modeling/views/frame/framework_library_dialog.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -670,13 +676,13 @@ module.exports = businessModelingModule =>{
                         if(frameTitleRepeatCheck(0,"#frameAddErrorObj")==false){
                             return false;
                         }
-                        if($scope.vm.frameTypeId==10011){
+                        if($scope.vm.frameTypeId==100){
                             addFaq();
                         }
-                        if($scope.vm.frameTypeId==10012){
+                        if($scope.vm.frameTypeId==101){
                             addConcept();
                         }
-                        if($scope.vm.frameTypeId==10013){
+                        if($scope.vm.frameTypeId==102){
                             addElement();
                         }
                     }
@@ -707,34 +713,27 @@ module.exports = businessModelingModule =>{
          * @returns {boolean}
          */
         function frameTitleRepeatCheck(type,selector){
-            var flag = false;
+            // var flag = false;
             var request = new Object();
-            request.frameTitle=$scope.vm.frameTitle;
-            request.frameTypeId=$scope.vm.frameTypeId;
-            request.frameCategoryId=$scope.vm.botSelectValue;
+            request.title=$scope.vm.frameTitle;
             if(type==1){
                 request.frameId=$scope.vm.frameId;
             }
-            httpRequestPostAsync("/api/ms/modeling/frame/repeatcheck",request,function(data){
-                if(data){
-                    if(responseWithoutView(data)==true){
-                        $(selector).html('');
-                        flag = true;
-                    }else{
-                        if(data){
-                            $(selector).html(data.info);
-                        }
-                    }
-                }
-            },function(err){
-            });
-            return flag;
+
+            BusinessModelingServer.frameRepeatTtitle.get({
+                "title":$scope.vm.frameTitle
+            },(data)=>{ 
+                console.log(data)
+            }
+          )
+          
+            //return flag;
         }
         //添加表达式
         function addFaq(){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/faq_new_frame.html",
-                width:"500px",
+                template:"/static/business_modeling/views/frame/faq_new_frame.html",
+                width:"650px",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -939,19 +938,17 @@ module.exports = businessModelingModule =>{
             return true;
         }
         function faqRequestAdd(){
-            httpRequestPost("/api/ms/modeling/frame/add",{
-                "elementAskContentArray":$scope.vm.elementAskContentArray,
-                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
-                "elementContentArray":$scope.vm.elementContentArray,
-                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
-                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
-                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
-                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
-                "frameCategoryId":$scope.vm.botSelectValue,
-                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
-                "frameModifierId":categoryModifierId,
-                "frameTitle":$scope.vm.frameTitle,
-                "frameTypeId":$scope.vm.frameTypeId
+            httpRequestPost("/api/ms/frame/add",{
+                "classifyId":"464206609644519424",
+                "status":1,
+                "title":"测试",
+                "type":"100",
+                "contentList":[{
+                "content":"扩展问1",
+                },
+                {
+                "content":"扩展问2",
+                }]
             },function(data){
                 if(data){
                     if(responseView(data)==true){
@@ -1207,7 +1204,7 @@ module.exports = businessModelingModule =>{
         //添加要素
         function addElement(){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/factor_new_frame.html",
+                template:"/static/business_modeling/views/frame/factor_new_frame.html",
                 width:"860px",
                 scope: $scope,
                 closeByDocument:false,

@@ -10,31 +10,42 @@
                         <td>访客访问次数</td>
                         <td>有效访问次数</td>
                     </tr>
-                    <tr ng-repeat="item in vm.dataTopLeft track by $index">
-                        <td>{{item.name}}</td>
-                        <td ng-repeat="val in item.data track by $index" >{{val}}</td>
+                    <tr>
+                        <td>今日</td>
+                        <td>{{vm.dataTopLeft.todayVisitorsOfNum}}</td>
+                        <td>{{vm.dataTopLeft.todayValidOfNum}}</td>
+                    </tr>
+                     <tr>
+                        <td>昨日</td>
+                        <td>{{vm.dataTopLeft.tomVisitorsOfNum}}</td>
+                        <td>{{vm.dataTopLeft.tomValidOfNum}}</td>
+                    </tr>
+                     <tr>
+                        <td>历史最高</td>
+                         <td>{{vm.dataTopLeft.highestVisitorsOfNum}} ( {{vm.dataTopLeft.highestVisitorsTime | date:'yyyy-MM-dd'}} )</td>
+                         <td>{{vm.dataTopLeft.highestValidOfNum}} ( {{vm.dataTopLeft.highestVisitorsTime | date:'yyyy-MM-dd'}} )</td>
                     </tr>
                 </table>
             </div>
             <div class="visitor_div R bd p20" >
                 <div class="visitor_div1 mb-10 clearfix">
                     <span class="dib L" style="width:50%;">
-                        今日有效访客总数
-                        <strong class="mr-30" ng-bind="vm.dataTopRigth.today[0]"></strong>
+                        今日访客总数
+                        <strong class="mr-30" ng-bind="vm.dataTopRigth.todayVisitorsOfNum"></strong>
                     </span>
                     <span class="dib L" style="width:50%;">
-                        今日有效会话总数
-                        <strong ng-bind="vm.dataTopRigth.today[1]"></strong>
+                        今日问答总数
+                        <strong ng-bind="vm.dataTopRigth.todayQaNum"></strong>
                     </span>
                 </div>
                 <div class="visitor_div1 clearfix">
                     <span class="dib L" style="width:50%;">
                         历史访客总数
-                        <strong class="mr-30" ng-bind="vm.dataTopRigth.history[0]"></strong>
+                        <strong class="mr-30" ng-bind="vm.dataTopRigth.historyQaNum"></strong>
                     </span>
                     <span class="dib L" style="width:50%;">
-                        历史会话总数
-                        <strong ng-bind="vm.dataTopRigth.history[1]"></strong>
+                        历史问答总数
+                        <strong ng-bind="vm.dataTopRigth.historyVisitorsOfNum"></strong>
                     </span>
                 </div>
             </div>
@@ -46,11 +57,12 @@
             </div>
             <div class="tab_con pt30 pb30">
                 <div ng-show="vm.contentType==0" class="StatisticsByTime">
-                    <div class="data_time_statis_top " style="width:910px;">
+                    <div class="data_time_statis_top " style="width:750px;">
                         <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.TimerSearchTimeType">
                             <option value="1" >今日</option>
                             <option value="2">昨日</option>
-                            <option value="3">过去7天</option>
+                            <option value="3">一周</option>
+                            <option value="4">一月</option>
                         </select>
                         <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
                             <option  value="" >全部渠道</option>
@@ -71,7 +83,7 @@
                         <div class="text-r pt-10">
                             <button class="btn1 btn_green" ng-click="vm.exportByTime()">导出表格</button>
                         </div>
-                        <div class="echart_div" id="access_echart_div" ng-show="vm.isTimerChartShow"  style="width:700px;height:400px">
+                        <div class="echart_div" id="access_echart_div" ng-show="vm.isTimerChartShow"  style="width:1100px;height:400px">
                             <!--<img src="../../../images/u28570.png" alt="">-->
                         </div>
                         <div ng-show="vm.isTimerChartShow">
@@ -104,7 +116,8 @@
                         <select class="sel bd L mr-5" id="request_time_typeId" ng-model="vm.accessSearchTimeType">
                             <option value="1">今日</option>
                             <option value="2">昨日</option>
-                            <option value="3">过去7天</option>
+                            <option value="3">一周</option>
+                            <option value="4">一月</option>
                         </select>
                         <span>
                             日期范围:
