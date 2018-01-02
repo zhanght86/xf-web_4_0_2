@@ -51,7 +51,8 @@ module.exports=materialModule => {
             $scope.$parent.$parent.MASTER.openNgDialog($scope,batchAdd,"600px",function(){
                 $scope.vm.isUploadStart = true ;
             },function(){
-                $scope.vm.isUploadStart = false ;
+                //$scope.vm.isUploadStart = false ;
+                //$state.reload();
             })
         }
 

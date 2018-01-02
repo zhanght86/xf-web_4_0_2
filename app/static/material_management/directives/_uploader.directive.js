@@ -5,7 +5,7 @@
 module.exports = materialModule =>{
     materialModule
     .directive("uploaderBase", ["$parse","$timeout","$state","ngDialog",
-    function($parse,$timeout,ngDialog) {
+    function($parse,$timeout,$state,ngDialog) {
         return {
         restrict:'EA',
             template:
@@ -86,10 +86,11 @@ module.exports = materialModule =>{
                         //layer.msg("模板错误")
                     }
                     if(response.status == 200){
-                        ngDialog.closeAll();
                         layer.msg("上传成功");
                         //alert(response.data);
+                        ngDialog.closeAll();
                         $state.reload() ;
+
                     }
                     console.log(response);
                 });
@@ -103,11 +104,11 @@ module.exports = materialModule =>{
                             } ;
                             console.log(uploader.options.formData);
                             uploader.upload() ;
-                            layer.closeAll();
+
                         }
                     }
                 })
-            },0)
+            },0);
 
         }
     }
