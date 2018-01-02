@@ -1,10 +1,14 @@
 <div class=" pt-20">
     <div class=" mb25 ">
-        <div class="p10">
-            <input type="text" class="input-text f22 pl-10 mb15" id="faqFrameTitle" style="width: 300px;height: 34px;" value="{{vm.frameTitle}}"/>
-            <p id="faqFrameAddErrorObj" class="c-error pd-5"></p>
-        </div>
         <div class=" p10 ">
+             <div style="height:50px">
+                <div class="framework mb-10" style="padding-left: 80px;">
+                    <span class="framework_s text-r">标准问题：</span>
+                    <div class="">
+                        <input type="text" class="L input-text mr-10 extended_query_txt" value="{{vm.frameTitle}}" style="width:300px;"/>
+                    </div>
+                </div>
+            </div>
             <div class="framework mb-10" style="padding-left: 80px;">
                 <span class="framework_s text-r">启用：</span>
                 <div >
@@ -16,12 +20,8 @@
             <div class="exten_problem" id="faq_extension">
                 <div class="framework mb-10" style="padding-left: 80px;">
                     <span class="framework_s text-r">扩展问题：</span>
-                    <div class="">
-                        <input type="text" class="L input-text mr-10 extended_query_txt" style="width:300px;"/>
-                        <a href="javascript:;" class="create_a" onclick="add_ques();">
-                            <img src="../../images/images/add_img.png" >
-                        </a>
-                        <p id="faqExtendQuestionErrorObj" style="display: inline-block;" class="c-error pd-5"></p>
+                    <div class="frameList">
+                        <input type="text" ng-model="vm.content" onblur="add_ques()"  class="L input-text mr-10 extended_query_txt" style="width:450px;"/>
                     </div>
                 </div>
             </div>
@@ -48,29 +48,18 @@
     function add_ques(){
         var oVal=$('.extended_query_txt').val();
         if(lengthCheck(oVal,0,255)==false){
-            $("#faqExtendQuestionErrorObj").html("扩展问题不能为空或长度超过255");
-            return;
-        }
-        if(isHtmlLabel(oVal)){
-            $("#faqExtendQuestionErrorObj").html("不能包含HTML标签");
+            layer.msg("扩展问题不能为空或长度超过200")
             return;
         }
         var flag = true;
-        $.each($(".exten_problem").find("input").filter(":gt(0)"),function(index,value){
-            console.log($(value).val()==oVal);
-            if($(value).val()==oVal){
-                flag = false;
-                return true;
-            }
-        });
-        if(flag==false){
-            $("#faqExtendQuestionErrorObj").html("不能与已有扩展问题重复");
-            return;
+        if(oVal==""){
+          $(this).remove();
+           var str='<input type="text"  class="L input-text mr-10 extended_query_txt" style="width:450px;" >';
+           $('.frameList').append(str);
         }
-        $("#faqExtendQuestionErrorObj").html('');
-        var str='<div class="framework mb-10" style="padding-left:80px;"><span class="framework_s text-r">扩展问题：</span><div ><input type="text" class="L input-text mr-10" value="'+oVal+'" style="width:300px;" disabled><a href="javascript:;"  onclick="rem_ques(this);"><img src="../../images/images/delete_img.png"></a></div></div>';
-        $('.exten_problem').append(str);
-        $('.extended_query_txt').val('');
+        var str='<input type="text"   class="L input-text mr-10 extended_query_txt" style="width:450px;" >';
+        $('.frameList').append(str);
+       
     }
     //删除扩展问
     function rem_ques(obj){

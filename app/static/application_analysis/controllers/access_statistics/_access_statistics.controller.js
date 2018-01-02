@@ -14,7 +14,7 @@ module.exports=applAnalysisModule => {
             dataTopRigth : "" ,//右上角表格数据
             dataByTimeTotalUser:"",
             contentType : 0 ,  //默认显示访问时间统计
-     //访问时间
+           //访问时间
             timerData : "" ,        //查询的所有数据
             channelId : "" ,        //渠道
            // dimensionId : "",       //維度
@@ -46,8 +46,8 @@ module.exports=applAnalysisModule => {
         /**
          * 改变 echart 数据   时间统计
          * **/
-        function setTimerChartOption(xData,yData1,yData2){
-            return {
+        function setTimerChartOption(xData,yData1,yData2,yData3){
+                  return {
                 title : {
                     text: '访问数据时间统计',
                 },
@@ -55,17 +55,18 @@ module.exports=applAnalysisModule => {
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['人数']
+                     data:['会话总人数','用户总人数','有效会话数']
                 },
-                toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {show: true, type: ['line', 'bar']},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
-                    }
+                 toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true},
+                       magicType: {
+                              type: ['line', 'bar', 'stack', 'tiled']
+                          },
+                    },
+                  
                 },
                 calculable : true,
                 xAxis : [
@@ -76,6 +77,7 @@ module.exports=applAnalysisModule => {
                         splitLine: {show:false},
                         data : xData
                     }
+                    
                 ],
                 yAxis : [
                     {
@@ -87,15 +89,31 @@ module.exports=applAnalysisModule => {
                 ],
                 series : [
                     {
-                        name:'总会话数',
+                        name:'会话总人数',
                         type:'line',
+                         smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 2,
+                        showAllSymbol: true,
+                        symbol: 'emptyCircle',
+                        symbolSize: 5,
                         data:yData1,
-                        markPoint : {
+
+                       /* markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'},
                                 {type : 'min', name: '最小值'}
                             ]
+                        },*/
+                        itemStyle: {
+                        normal: {
+                            color: '#2ec7c9',
+                            borderColor: '#2ec7c9',
+                            borderWidth: 2
+
                         },
+                        
+                    },
                         markLine : {
                             data : [
                                 {type : 'average', name: '平均值'}
@@ -103,14 +121,61 @@ module.exports=applAnalysisModule => {
                         }
                     },
                     {
-                        name:'总用户人数',
+                        name:'用户总人数',
                         type:'line',
+                         smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 2,
+                        showAllSymbol: true,
+                        symbol: 'emptyCircle',
+                        symbolSize: 5,
                         data:yData2,
-                        markPoint : {
+
+                        /*markPoint : {
                             data : [
-                                {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
                             ]
+                        },*/
+                        itemStyle: {
+                        normal: {
+                            color: '#d87a80',
+                            borderColor: '#d87a80',
+                            borderWidth: 2
+
                         },
+                        
+                    },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    },
+                    {
+                        name:'有效会话数',
+                        type:'line',
+                         smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 2,
+                        showAllSymbol: true,
+                        symbol: 'emptyCircle',
+                        symbolSize: 5,
+                        data:yData3,
+                         itemStyle: {
+                            normal: {
+                                color: '#ffb980',
+                                borderColor: '#ffb980',
+                                borderWidth: 2
+
+                            },
+                        },
+                       /* markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },*/
                         markLine : {
                             data : [
                                 {type : 'average', name : '平均值'}
@@ -279,22 +344,8 @@ module.exports=applAnalysisModule => {
          * **/
         void function getTopLeft(){            
             AppAnalysisServer.getTopLeft.save({
-                "applicationId":APPLICATION_ID
             },function(data){
-                $scope.vm.dataTopLeft = [
-                    {
-                        "name" : "今日",
-                        "data" : data.data["今天"]
-                    } ,
-                    {
-                        "name" : "昨天",
-                        "data" : data.data["昨天"]
-                    } ,
-                    {
-                        "name" : "历史最高",
-                        "data" : data.data["历史最高"]
-                    }
-                ] ;
+                $scope.vm.dataTopLeft =data.data;
             },function(err){
                 $log.log(err);
             });
@@ -305,12 +356,8 @@ module.exports=applAnalysisModule => {
          * **/
         void function getTopRight(){
            AppAnalysisServer.getTopRight.save({
-               "applicationId":APPLICATION_ID
            },function(data){
-               $scope.vm.dataTopRigth ={
-                   "today":data.data["今日"] ,
-                   "history":data.data["历史"]
-               } ;
+               $scope.vm.dataTopRigth=data.data;
            },function(err){
                 $log.log(err);
            });
@@ -319,8 +366,8 @@ module.exports=applAnalysisModule => {
          * 访问数据时间统计
          * **/
         function queryAccessDataByTime(){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            var xData,yData1,yData2 ;
+           // var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            var xData,yData1,yData2,yData3 ;
             var dateJump ; //获取时间间隔
             if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
                 dateJump = getTimeJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) + 1 ;
@@ -330,18 +377,16 @@ module.exports=applAnalysisModule => {
             }else{
                 dateJump = 7
             }
-            //alert(dateJump)
-
+            
             AppAnalysisServer.queryAccessDataByTime.save({
-                "applicationId":APPLICATION_ID ,
                 "startTime":$scope.vm.timerSearchStartTime ,
                 "endTime":$scope.vm.timerSearchEndTime ,
                 "requestTimeType" : $scope.vm.TimerSearchTimeType ,
                // "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
-                layer.close(i);
-                if(data.data["有效用户数"].length==0 && data.data["有效会话数"].length==0 && data.data["总会话数"].length==0 && data.data["总用户人数"].length==0){
+              //  layer.close(i);
+                if(data.data.length==0){
                     layer.msg("所查询时间段有效数据为空") ;
                     $scope.vm.timerData = "" ;
                     $scope.vm.isTimerChartShow = false ;
@@ -354,15 +399,21 @@ module.exports=applAnalysisModule => {
                      * **/
                     if(dateJump==1){
                         // echart 图表显示
-                        xData = ["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00",
-                            "13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"] ;
-                        yData1 = [].fill.call(new Array(24),0) ;
-                        yData2 = [].fill.call(new Array(24),0) ;
-                        angular.forEach(data.data["总会话数"], function(data,index1){
-                            yData1[data.date] = data.times ;
+                        xData = ["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00", "13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"] ;
+                        yData1 = [] ;
+                        yData2 = [] ;
+                        yData3 = [] ;
+                        angular.forEach(data.data, function(data,index1){
+                            yData1.push(data.totalSessions)  ;   //总会话数
+                          
                         });
-                        angular.forEach(data.data["总用户人数"], function(data,index1){
-                            yData2[data.date] = data.users ;
+                        console.log(yData1)
+                        angular.forEach(data.data, function(data,index1){
+                            console.log(index1)
+                            yData2.push(data.totalUsers) ;  //总用户数
+                        });
+                         angular.forEach(data.data, function(data,index1){
+                            yData3.push(data.validSessions) ;  //有效会话数
                         });
                         //表格数据
                         var tableDate = [];
@@ -446,10 +497,12 @@ module.exports=applAnalysisModule => {
                             yData2[index] = item.users ;
                         });
                     }
-                    TimerChart.setOption(setTimerChartOption(xData,yData1,yData2)) ;
+                    console.log(yData1)
+                    console.log(yData2)
+                    TimerChart.setOption(setTimerChartOption(xData,yData1,yData2,yData3)) ;
                 }
             },function(err){
-                layer.close(i);
+               // layer.close(i);
                 $log.log(err);
             });
         };
@@ -458,14 +511,14 @@ module.exports=applAnalysisModule => {
          * 访问数据渠道统计
          * **/
         function queryAccessDataByChannel(){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+           // var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             AppAnalysisServer.queryAccessDataByChannel.save({
                 "applicationId":APPLICATION_ID,
                 "startTime":$scope.vm.accessSearchStartTime ,
                 "endTime":$scope.vm.accessSearchEndTime ,
                 "requestTimeType" : $scope.vm.accessSearchTimeType ,
             },function(data){
-                layer.close(i);
+              //  layer.close(i);
                 var tableList = [] ;
                 // 初始渠道
                 var  intervaler = $interval(function(){
@@ -588,7 +641,7 @@ module.exports=applAnalysisModule => {
                 //}
                 //vx
             },function(err){
-                layer.close(i);
+                //layer.close(i);
                 $log.log(err);
             });
         };

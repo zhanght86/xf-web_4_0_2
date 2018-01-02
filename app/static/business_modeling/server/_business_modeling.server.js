@@ -24,6 +24,16 @@ class BusinessModelingServer {
         //根据类目名称获取信息
         this.classifyGetPath=$resource(API_MS+"/classify/get/path", {}, {});  
 
+
+
+        /******************************
+                        *框架库*
+                ********************************/   
+      
+        //检查类目名称
+        this.frameRepeatTtitle=$resource(API_MS+"/frame/repeat/title", {}, {});
+    
+
 		 /******************************
 		                        *同意词概念管理*
 		                ********************************/   

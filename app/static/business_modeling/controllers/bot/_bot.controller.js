@@ -291,10 +291,10 @@ module.exports = businessModelingModule =>{
         function editBot(pid,id){
         	var pid=pid;
         	var id=id;
-        	alert(pid)
+        	//alert(pid)
             if(pid==""){
             	var editpid="root";
-            	var relation="edge";
+            	var relation="node";
             }else if (pid=="root"){
                 var editpid= id;
             	var relation="node"
@@ -338,7 +338,7 @@ module.exports = businessModelingModule =>{
                             "type": $("#categoryTypeId").val(),
                             "depict": $scope.vm.categoryDescribe,
                             "leaf": 0,
-                            "relation":"edge",
+                            "relation":relation,
                         },function(data){
                              if(data.status==200){
                              	layer.msg(data.info)
@@ -369,7 +369,7 @@ module.exports = businessModelingModule =>{
         //节点删除
         function deleteBot(categoryId){
         	var categoryId=categoryId;
-        	alert(categoryId)
+        	//alert(categoryId)
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/bot/delete_category.html",
                 scope: $scope,
@@ -465,10 +465,9 @@ module.exports = businessModelingModule =>{
                     $scope.vm.categoryDescribe=$("#category-describe").val().trim();
                 }
             }
-            alert($scope.vm.categoryPid)
             if($scope.vm.categoryPid==""){
             	var pid="root";
-            	var relation="edge";
+            	var relation="node";
             }else if($scope.vm.categoryPid=="root"){
                 var pid= $scope.vm.categoryId;
             	var relation="node"
@@ -510,7 +509,7 @@ module.exports = businessModelingModule =>{
         function repeatCheck(selector,type){
             var flag = false;
             var request = new Object();
-            alert(type)
+           // alert(type)
             console.log($scope.vm.categoryId)
             if(type==1){
                 request.id=$scope.vm.categoryId;
