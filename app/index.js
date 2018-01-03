@@ -8,12 +8,6 @@ let routeStates,
     angular,
     ngDepModules = [];
 angular = require('angular');
-// require("oclazyload") ;
-// require("angular-cookies") ;
-// require("angular-ui-router");
-// require("angular-local-storage");
-// require("ng-dialog");
-// require("angular-route");
 function loadBasicModules() {
     // 按需加载
     require('oclazyload');
@@ -36,9 +30,6 @@ function loadBasicModules() {
     // 路由
     require('angular-route');
     ngDepModules.push('ngRoute');
-
-    // require('./assets/libs/compile/unminified/ng-img-crop');
-    // ngDepModules.push('ngImgCrop');
 }
 loadBasicModules()  ;
 // define one angular module
@@ -49,8 +40,6 @@ require('./entrance/app.controller')(xf_web);
 require('./entrance/app.directive')(xf_web);
 // 加载config
 require('./entrance/app.config')(xf_web);
-// 加载router
-// require('./entrance/app.router')(xf_web);
 // 加载service
 require('./entrance/app.service')(xf_web);
 // 加载filter

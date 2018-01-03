@@ -615,7 +615,7 @@ module.exports = (angular) => {
                 }
             }
         },
-        // 场景管理
+        // 交互管理
         {
             name: "AM.interaction",
             url: "/scene",

@@ -18,7 +18,7 @@
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box" style="width:100%;">
-                            <input class="ipt-txt bd " type="text" autofocus style="width:407px;height:32px;" ng-model="vm.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
+                            <input class="ipt-txt bd " type="text" autofocus style="width:407px;height:32px;" ng-model="parameter.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required />
                             <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                         </div>
                     </div>
@@ -46,16 +46,16 @@
                     </div>
                     <div class="value Div clearfix">
                         <div class="ipt-txt-box L mr-10">
-                            <p ng-repeat="ext in parameter.extensionQuestionList">
+                            <p ng-repeat="ext in parameter.extensionQuestionList track by $index">
                                 <input class="ipt-txt bd" style="width:407px;height:32px;" type="text"
-                                       ng-model="ext" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
+                                       ng-model="ext" ng-change="parameter.extensionQuestionList[$index]=ext" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="jqrsz-item">
-                <div ng-if="vm.scanContent" ng-repeat="(itemIndex,item) in vm.scanContent">
+                <div ng-if="parameter.contentList" ng-repeat="(itemIndex,item) in parameter.contentList">
                     <div class="item-line">
                         <div class="lable" style="padding-right:10px;box-sizing:border-box;">
                            内容{{itemIndex+1}}:
@@ -63,17 +63,17 @@
                         <div class="value">
                             <div class="ipt-txt-box clearfix">
                                 <div class="textareaDiv textareaDiv1 textareaDiv2 L">
-                                    <p ng-repeat="text in item.knowledgeContent.split('\n') ">{{text}}</p>
+                                    <p ng-repeat="text in item.content.split('\n') ">{{text}}</p>
                                 </div>
-                                <a href="javascript:;" ng-click="vm.scanContent.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
-                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(vm.scanContent[$index],$index)"></a>
+                                <a href="javascript:;" ng-click="parameter.contentList.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
+                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(parameter.contentList[$index],$index)"></a>
                             </div>
                         </div>
                     </div>
                     <div class="item-line item_line" >
                         <div class="left"></div>
                         <div class="optionDiv">渠道：
-                            <span class="mr-10" ng-bind="item.channelIdList | channel:$parent.$parent.MASTER.channelList"></span>
+                            <span class="mr-10" ng-bind="item.channel | channel:$parent.$parent.MASTER.channelList"></span>
                         </div>
                     </div>
                 </div>
