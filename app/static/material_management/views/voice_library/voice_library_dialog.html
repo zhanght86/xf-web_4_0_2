@@ -2,7 +2,8 @@
     <div class="framework mb-10">
         <span class="framework_s">语音标题：</span>
         <div>
-            <input type="text" class="bd input-text" ng-model="vm.voiceTitle"  maxlength="50" />
+            <input type="text" class="bd input-text" ng-model="vm.voiceTitle"  maxlength="20" style="width: 88%;"/>
+            <span><span>{{vm.voiceTitle.length}}</span>/20</span>
         </div>
     </div>
 
@@ -10,9 +11,7 @@
         <span class="framework_s">语音上传：</span>
         <div class="bd voice_upload_div  mb-10">
             <div class="p10">
-
-                        <span voice-upload></span>
-
+                 <span voice-upload></span>
             </div>
             <div class="clearfix pd-5" style="border-top:1px solid #eee;">
                 <p class="L">格式支持mp3、amr

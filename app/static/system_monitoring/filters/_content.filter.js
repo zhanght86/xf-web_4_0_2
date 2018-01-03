@@ -16,6 +16,14 @@ module.exports = module=>{
 
         }
     })
+    .filter("strToJson",function(){
+        return function(val){
+            if(val){
+                var json = JSON.parse(val);
+            }
+             return json;
+        }
+    })
 
 };
 

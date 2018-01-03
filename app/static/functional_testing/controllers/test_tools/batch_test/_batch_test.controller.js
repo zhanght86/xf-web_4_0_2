@@ -9,13 +9,12 @@ module.exports=functionalTestModule => {
     '$scope',"localStorageService","$state","$log","FunctionServer","$location","$timeout","$stateParams","ngDialog","$cookieStore",
     ($scope,localStorageService,$state,$log,FunctionServer,$location, $timeout,$stateParams,ngDialog,$cookieStore)=> {
         $scope.vm = {
-            //userId : $cookieStore.get("userId"),
             deleteQuestion : deleteQuestion,
             startUp : startUp,
             start : start ,
             batchNumberId : "" ,
             listData :[],           //table 数据
-            listDataTotal : 0 ,      //共几条
+           // listDataTotal : 0 ,      //共几条
             paginationConf : {        //分页条件
                 pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
                 currentPage: $location.search().currentPage?$location.search().currentPage:1,
@@ -37,7 +36,9 @@ module.exports=functionalTestModule => {
             channelList : [] ,
             //getService : getService,
             //------------------------------渠道   服务end
-            addRemarks : addRemarks                //备注
+            addRemarks : addRemarks,                //备注
+            remarks : remarks,
+            remark : ''
 
 
         };
@@ -88,13 +89,13 @@ module.exports=functionalTestModule => {
                 if(data.status == 500){
                     layer.msg("查询到记录为空",{time:1000});
                     $scope.vm.listData = "";
-                    $scope.vm.listDataTotal = 0;
+                    //$scope.vm.listDataTotal = 0;
                     $scope.vm.paginationConf.totalItems = 0;
                 }else if(data.status==200){
                     console.log(data);
                     //alert(typeof data.data.batchTestList[0].batchNumberId);
                     $scope.vm.listData = data.data.list;
-                    $scope.vm.listDataTotal = data.data.total;
+                   // $scope.vm.listDataTotal = data.data.total;
                     $scope.vm.paginationConf.currentPage =index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
@@ -112,29 +113,29 @@ module.exports=functionalTestModule => {
          * *****************/
         function deleteQuestion(batchIds){
             if(!batchIds.length){
-                layer.msg("请选择要删除的文件！",{time:1000});
-                //return;
+                layer.msg("请选择要删除的文件")
             }else{
-                layer.confirm('确定要删除吗',{
-                    btn:['确定','取消']
-                },function(){
-                    FunctionServer.batchDelete.save({
-                        ids :  batchIds
+                layer.confirm('确认删除文件？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    FunctionServer.batchDelete.save({},{
+                        "ids": batchIds
                     },function(data){
                         if(data.status == 10010){
                             initBatchTest();
-                            layer.msg("删除成功",{time:1000});
-                            layer.closeAll();
+                            layer.msg("文件删除成功") ;
+                            layer.close();
                             $state.reload();
-
                         }else if(data.status == 500){
-                            layer.msg("删除失败");
+                            layer.msg("文件删除失败") ;
                         }
                     },function(err){
-                        $log.log(err);
+                        console.log(err);
                     });
-                });
 
+                }, function(error){
+                    console.log(error);
+                });
             }
 
         }
@@ -222,12 +223,31 @@ module.exports=functionalTestModule => {
             });
         }
         //添加备注
-        function addRemarks(){
+        function addRemarks(id){
+            $scope.vm.batchNumberId = id;
+            //alert(id);
             let remarks_html = require("../../../views/test_tools/batch_test/remarks_dialog.html") ;
             $scope.$parent.$parent.MASTER.openNgDialog($scope,remarks_html,"400px",function(){
-
+                remarks(id);
             },"",function(){
 
+            });
+        }
+
+        function remarks(id){
+            FunctionServer.remark.save({
+                "batchNumberId": id,
+                "remark": $scope.vm.remark
+            },function(data){
+                if(data.status==200){
+                    layer.msg("标注成功");
+                    $state.reload();
+                }
+                if(data.status==500){
+                    layer.msg("标注失败");
+                }
+            },function(err){
+                console.log(err);
             });
         }
 
@@ -270,5 +290,11 @@ module.exports=functionalTestModule => {
             $scope.vm.deleteIds = [] ;
             $scope.vm.selectAllCheck = false;
         }
+
+
+
+
+
+
     }
     ])}

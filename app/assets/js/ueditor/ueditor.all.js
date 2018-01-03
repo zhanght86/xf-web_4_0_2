@@ -24521,11 +24521,15 @@ UE.plugin.register('simpleupload', function (){
                             body = (iframe.contentDocument || iframe.contentWindow.document).body,
                             result = body.innerText || body.textContent || '';
                         json = (new Function("return " + result))();
-                        link = me.options.imageUrlPrefix + json.url;
+                        //link = me.options.imageUrlPrefix + json.url;
+                        link = json.url;
                         if(json.state == 'SUCCESS' && json.url) {
                             loader = me.document.getElementById(loadingId);
-                            loader.setAttribute('src', link);
-                            loader.setAttribute('_src', link);
+                            loader.setAttribute('src', 'api/material/picture/upload/get?url='+link);
+                            //设置图片宽高
+                            //loader.setAttribute('width', "200px");
+                            //loader.setAttribute('height', "120px");
+                            loader.setAttribute('_src', 'api/material/picture/upload/get?url='+link);
                             loader.setAttribute('title', json.title || '');
                             loader.setAttribute('alt', json.original || '');
                             loader.removeAttribute('id');

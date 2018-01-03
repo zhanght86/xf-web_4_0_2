@@ -12,7 +12,7 @@ class MaterialServer {
                             ********************************/
 //聊天知识库
     //查询
-    this.searchKnow = $resource(API_MATERIAL+'/chat/knowledge/query/chat/knowledge',{},{});
+    this.searchKnow = $resource(API_MATERIAL+'/chat/knowledge/query',{},{});
     //删除知识
     this.delKnowledge = $resource(API_MATERIAL+"/chat/knowledge/delete", {}, {});
     //导出
@@ -33,7 +33,7 @@ class MaterialServer {
     //编辑保存
     this.saveChatKnowledge = $resource(API_MATERIAL+'/chat/knowledge/update',{},{});
      //根据id查询
-     this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/chat/knowledge',{},{});
+     this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/by/id',{},{});
 
 
 

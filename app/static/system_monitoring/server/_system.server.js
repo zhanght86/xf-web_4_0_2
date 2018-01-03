@@ -22,7 +22,7 @@ class SystemServer {
         this.getServiceDate = $resource(API_ANALYSIS+'/serviceMonitoring/monitoring',{},{});
         
         //根据id查询
-        this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/chat/knowledge',{},{});
+        this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/by/id',{},{});
     }
 }
 SystemServer.$inject = ['$resource'];
