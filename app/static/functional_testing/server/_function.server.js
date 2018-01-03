@@ -18,7 +18,7 @@ class FunctionServer{
     //test
     this.sessioonTest = $resource(API_MS+'/chat/test/passageway',{},{});
     //页面初始化加载服务
-    this.getService = $resource(API_APPLICATION_TEST+'/service/listServiceByApplicationId',{},{});
+    this.getService = $resource(API_APPLICATION_TEST+'/service/get/release',{},{});
                                                       
                     /******************************
                          *批量测试*    API_APPLICATION_TEST = "/api/application"

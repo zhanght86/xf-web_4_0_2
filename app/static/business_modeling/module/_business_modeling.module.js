@@ -18,7 +18,7 @@ module.exports = angular => {
     //--------------------------------------------------
     require('../../../components/switch_turn/_switch_turn.directive')(businessModelingModule);  // 开关
 
-    require('../../../components/WeightFilter/WeightFilter')(businessModelingModule);  // 开关
+    require('../../../components/weight_filter/weight_filter')(businessModelingModule);  // 开关
 
     //--------------------------------------------------
     //          controller

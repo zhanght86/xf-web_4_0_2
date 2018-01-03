@@ -73,8 +73,51 @@ module.exports = businessModelingModule =>{
             batchDelete:batchDelete,
             suggestionValue:"",
             suggestionData:"",
-            winHeight:0
+            winHeight:0,
+            contentList:[],
+            addQues:addQues,
+            keyLogin:keyLogin,
+            extensionProblem:[]
         };
+
+    //添加扩展问模板
+   
+     $scope.vm.extensionProblem.push({
+            "content":"0"
+        })
+         //键盘监听事件
+         function keyLogin(e){
+           var srcObj = e.srcElement ? e.srcElement : e.target;
+           var keycode = window.event?e.keyCode:e.which;
+            if(keycode==13){//回车
+                addQues();
+            }
+        }
+        function addQues(){
+            //初始化数字值
+            $scope.vm.contentList.length=0;
+            var len=$(".extensionProblem").length
+            for(var i=0;i<len;i++){
+                //当扩展问为空时删除扩展问
+                if($(".extensionProblem").eq(i).val()==""){
+                    $scope.vm.extensionProblem.splice(i,1)
+                }else{
+                    console.log($(".extensionProblem").eq(i).val())
+                    $scope.vm.contentList.push({
+                        "attributeType":"80",
+                        "content":$(".extensionProblem").eq(i).val()
+                    })
+                }
+            }
+            //当扩展问不为空时新增一行
+            $scope.vm.extensionProblem.push({
+            "content":"1"
+          })
+            console.log($scope.vm.contentList)
+        }
+
+
+
         $scope.categoryAttributeName;
 
         // var categoryApplicationId = $cookieStore.get("applicationId");
@@ -449,6 +492,7 @@ module.exports = businessModelingModule =>{
             let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             httpRequestPost("/api/ms/frame/get/param",{
                 "title": $scope.vm.title,
+                "classifyId":"466077551194800128",
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
             },function(data){
@@ -467,157 +511,35 @@ module.exports = businessModelingModule =>{
         }
 
 
-
-
         //修改框架
         function editFrame(item){
-            $scope.vm.frameTypeId=item.frameTypeId;
+            $scope.vm.frameTypeId=item.type;
             $scope.vm.frameInfo=JSON.stringify(item);
             var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
             //赋值
-            assembleFrame();
-
-            if($scope.vm.frameTypeId==10011){
+           // assembleFrame();
+            if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
                 updateFaq();
             }
-            if($scope.vm.frameTypeId==10012){
-                updateConcept();
-            }
-            if($scope.vm.frameTypeId==10013){
+            if($scope.vm.frameTypeId==102){
                 updateElement();
             }
         }
         //删除框架
         function deleteFrame(item){
-            var frameId = item.frameId;
+            var frameId = item.id;
             layer.confirm('确认删除？', {
                 btn: ['确认','取消'], //按钮
                 shade: 0.3 //不显示遮罩
             }, function(){
                  httpRequestPost("api/ms/frame/delete/"+frameId+"",{
-                 
                 },function(data){
                     if(responseView(data)==true){
-                        loadFrameLibrary(1,0);
+                        loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     }
                 },function(err){
                 });
             }, function(){
-            });
-        }
-
-        //批量导入
-        function batchUpload(){
-            var frameType = 10011;
-            if($scope.vm.botSelectValue=="root"){
-                layer.msg("请选择类目");
-                return;
-            }
-            var dialog1 = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e==10011){
-                        frameType=10011;
-                        batchUploadFrame(frameType)
-                    }else if(e==10012){
-                        frameType=10012;
-                        batchUploadFrame(frameType)
-                    }else if(e==10013){
-                        frameType=10013;
-                        batchUploadFrame(frameType)
-                    }
-                }
-            });
-        }
-
-        function batchUploadFrame(frameType){
-            var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/batch_upload.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    //refresh
-                    loadFrameLibrary(1,0);
-                }
-            });
-            if(dialog){
-                $timeout(function () {
-                    initUpload('/api/ms/modeling/frame/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&categoryId='+$scope.vm.botSelectValue+'&frameTypeId='+frameType);
-                }, 100);
-            }
-        }
-
-        function downloadTemplate(){
-            var frameTemplate = "frame_faq_template.xlsx";
-            var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e==10011){
-                        frameTemplate="frame_faq_template.xlsx";
-                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
-                    }else if(e==10012){
-                        frameTemplate="frame_concept_template.xlsx";
-                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
-                    }else if(e==10013){
-                        frameTemplate="frame_element_template.xlsx";
-                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
-                    }
-                }
-            });
-        }
-
-        function exportAll(){
-            var frameType = 10011;
-            if($scope.vm.botSelectValue=="root"){
-                layer.msg("请选择类目");
-                return;
-            }
-            var dialog1 = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
-                preCloseCallback:function(e){    //关闭回掉
-                    if(e==10011){
-                        frameType=10011;
-                        exportAllDialog(frameType)
-                    }else if(e==10012){
-                        frameType=10012;
-                        exportAllDialog(frameType)
-                    }else if(e==10013){
-                        frameType=10013;
-                        exportAllDialog(frameType)
-                    }
-                }
-            });
-        }
-
-        function exportAllDialog(frameType){
-            httpRequestPost("/api/ms/modeling/frame/export",{
-                "frameCategoryId": $scope.vm.botSelectValue,
-                "frameTypeId": frameType
-            },function(data){
-                if(responseView(data)==true){
-                    if(data.exportFileNameList.length>0){
-                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
-                    }
-                }
-            },function(err){
             });
         }
 
@@ -673,9 +595,9 @@ module.exports = businessModelingModule =>{
                             $("#frameAddErrorObj").html($scope.vm.notContainHtmlLabel);
                             return false;
                         }
-                        if(frameTitleRepeatCheck(0,"#frameAddErrorObj")==false){
-                            return false;
-                        }
+                        // if(frameTitleRepeatCheck(0,"#frameAddErrorObj")==false){
+                        //     return false;
+                        // }
                         if($scope.vm.frameTypeId==100){
                             addFaq();
                         }
@@ -713,21 +635,25 @@ module.exports = businessModelingModule =>{
          * @returns {boolean}
          */
         function frameTitleRepeatCheck(type,selector){
-            // var flag = false;
+           // var flag = false;
             var request = new Object();
             request.title=$scope.vm.frameTitle;
             if(type==1){
                 request.frameId=$scope.vm.frameId;
             }
-
             BusinessModelingServer.frameRepeatTtitle.get({
                 "title":$scope.vm.frameTitle
             },(data)=>{ 
-                console.log(data)
+               if(data.status==200){
+                    $(selector).html('');
+                   // flag = true;
+               }else{
+                   $(selector).html(data.info);
+               }
             }
           )
           
-            //return flag;
+           //return flag;
         }
         //添加表达式
         function addFaq(){
@@ -769,10 +695,48 @@ module.exports = businessModelingModule =>{
                 },100);
             }
         }
-        //修改表达式
+        //表达式数据校验
+        function faqValidata(type){
+            //框架标题校验
+            if(lengthCheck($scope.vm.frameTitle,0,50)==false){
+                layer.msg($scope.vm.frameTitleNullErrorInfo);
+                return false;
+            }
+            if(isHtmlLabel($scope.vm.frameTitle)){
+                layer.msg($scope.vm.notContainHtmlLabel);
+                return false;
+            }
+            if(frameTitleRepeatCheck(type,"#faqFrameAddErrorObj")==false){
+                return false;
+            }
+            //扩展问题校验
+            if($scope.vm.contentList.length==0){
+                layer.msg("至少应该有一个扩展问题");
+                return false;
+            }
+            return true;
+        }
+        //IFQ和概念要素的新增
+        function faqRequestAdd(){
+            httpRequestPost("/api/ms/frame/add",{
+                "classifyId":"466077551194800128",
+                "status":$scope.vm.frameEnableStatusId,
+                "title":$scope.vm.frameTitle,
+                "type":$scope.vm.frameTypeId,
+                "contentList":$scope.vm.contentList 
+            },function(data){
+                if(data.status==200){
+                     loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                 }else{
+                    layer.msg(data.info)
+                 }
+            },function(err){
+            });
+        }
+        //IFQ和概念要素的修改
         function updateFaq(){
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/update_faq_frame.html",
+                template:"/static/business_modeling/views/frame/update_faq_frame.html",
                 width:"625px",
                 scope: $scope,
                 closeByDocument:false,
@@ -915,66 +879,20 @@ module.exports = businessModelingModule =>{
                 $scope.vm.elementIdArray[i]=frameInfo.elements[i].elementId;
             }
         }
-        //表达式类型数据校验
-        function faqValidata(type){
-            //框架标题校验
-            if(lengthCheck($scope.vm.frameTitle,0,50)==false){
-                $("#faqFrameAddErrorObj").html($scope.vm.frameTitleNullErrorInfo);
-                return false;
-            }
-            if(isHtmlLabel($scope.vm.frameTitle)){
-                $("#faqFrameAddErrorObj").html($scope.vm.notContainHtmlLabel);
-                return false;
-            }
-            if(frameTitleRepeatCheck(type,"#faqFrameAddErrorObj")==false){
-                return false;
-            }
-            //扩展问题校验
-            var length = $(".exten_problem").find("input").filter(":gt(0)").length;
-            if(length==0){
-                $("#faqExtendQuestionErrorObj").html("至少应该有一个扩展问题");
-                return false;
-            }
-            return true;
-        }
-        function faqRequestAdd(){
-            httpRequestPost("/api/ms/frame/add",{
-                "classifyId":"464206609644519424",
-                "status":1,
-                "title":"测试",
-                "type":"100",
-                "contentList":[{
-                "content":"扩展问1",
-                },
-                {
-                "content":"扩展问2",
-                }]
-            },function(data){
-                if(data){
-                    if(responseView(data)==true){
-                        loadFrameLibrary(1,0);
-                    }
-                }
-            },function(err){
-            });
-        }
+        
         function faqRequestUpdate(){
-            httpRequestPost("/api/ms/modeling/frame/update",{
-                "elementAskContentArray":$scope.vm.elementAskContentArray,
-                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
-                "elementContentArray":$scope.vm.elementContentArray,
-                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
-                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
-                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
-                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
-                "elementIdArray":$scope.vm.elementIdArray,
-                "frameCategoryId":$scope.vm.botSelectValue,
-                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
-                "frameModifierId":categoryModifierId,
-                "frameTitle":$scope.vm.frameTitle,
-                "frameTypeId":$scope.vm.frameTypeId,
-                "frameId":$scope.vm.frameId
-            },function(data){
+            httpRequestPost("/api/ms/frame/update",{
+                "id":"465664598654058496",
+                "classifyId":"464206609644519424",
+                "status":$scope.vm.frameEnableStatusId,
+                "title":$scope.vm.title,
+                "type":$scope.vm.frameTypeId,
+                "contentList":[{
+                    "content":"扩展问2",
+                    "attributeType":"80",
+                }]
+            }
+            ,function(data){
                 if(data){
                     if(responseView(data)==true){
                         loadFrameLibrary(1,0);
@@ -1083,7 +1001,7 @@ module.exports = businessModelingModule =>{
         }
         //概念添加请求
         function conceptRequestAdd(){
-            httpRequestPost("/api/ms/modeling/frame/add",{
+            httpRequestPost("/api/ms/frame/add",{
                 "elementAskContentArray":$scope.vm.elementAskContentArray,
                 "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
                 "elementContentArray":$scope.vm.elementContentArray,
@@ -1201,6 +1119,11 @@ module.exports = businessModelingModule =>{
             },function(err){
             });
         }
+
+
+
+
+        //////////////////////////////////要素新////////////////////////////////////////
         //添加要素
         function addElement(){
             var dialog = ngDialog.openConfirm({
@@ -1286,131 +1209,7 @@ module.exports = businessModelingModule =>{
                             }
                         });
                     });
-                    $(".ele-asked").blur(function(){
-                        if(lengthCheck($(".ele-asked").val(),0,255)==false){
-                            $("#ele-asked-error").html('反问不能为空或超过长度限制255');
-                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                            return;
-                        }else if(isHtmlLabel($(".ele-asked").val())){
-                            $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
-                            $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                            return;
-                        }else{
-                            $("#ele-asked-error").html('');
-                            $("#ele-asked-error").attr("style","display:none;");
-                        }
-                        $.each($("#add-item").find("tr"),function(index,value){
-                            if($(".ele-asked").val()==$(value).find(".ele-asked-add").val()){
-                                $("#ele-asked-error").html('反问不能与已有反问重复');
-                                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                                return true;
-                            }else{
-                                $("#ele-asked-error").html('');
-                                $("#ele-asked-error").attr("style","display:none;");
-                            }
-                        });
-                    });
-                    $(".ele-concept").blur(function(){
-                        var relateConceptIds = $(".ele-concept").attr("data-option");
-                        var relateConceptVals = $(".ele-concept").val();
-                        relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
-                        var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
-                        if(lengthCheck(sumConceptStr,0,255)==false){
-                            $("#ele-concept-error").html('相关概念不能为空或超过长度限制');
-                            $("#ele-concept-error").attr("style","display:inline-block;left: 10px;");
-                            return;
-                        }else{
-                            $("#ele-concept-error").html('');
-                            $("#ele-concept-error").attr("style","display:none;");
-                        }
-                        if(relateConceptVals==null){
-                            return;
-                        }
-                        if(relateConceptVals==""){
-                            return;
-                        }
-                        if(relateConceptIds==null){
-                            return;
-                        }
-                        if(relateConceptIds==""){
-                            return;
-                        }
-                    });
-                    var keyword = "";
-                    var keywordarr = $("#ele-concept-autocomplete").val().split(",");
-                    keyword = keywordarr[keywordarr.length];
-                    var conceptParams = {
-                        "conceptKeyword":keyword,
-                        "applicationId":categoryApplicationId
-                    };
-                    $scope.vm.relateConcept = new HashMap();
-                    $("#ele-concept-autocomplete").on("keydown",function(event) {
-                        if ( event.keyCode === 9 &&
-                            $(this).autocomplete("instance").menu.active ) {
-                            event.preventDefault();
-                        }
-                    }).autocomplete({
-                        serviceUrl: "/api/ms/modeling/frame/searchconceptbykeyword",
-                        type:'POST',
-                        params:conceptParams,
-                        paramName:'conceptKeyword',
-                        dataType:'json',
-                        delimiter:",",
-                        transformResult:function(data){
-                            var result = new Object();
-                            var array = [];
-                            if(data.data){
-                                for(var i=0;i<data.data.length;i++){
-                                    array[i]={
-                                        data:data.data[i].id,
-                                        value:data.data[i].name
-                                    }
-                                }
-                            }
-                            result.suggestions = array;
-                            return result;
-                        },
-                        onSelect: function(suggestion) {
-                            $scope.vm.relateConcept.put(suggestion.value,suggestion.data);
-                            var selectConceptValue = "";
-                            if($("#ele-concept-autocomplete").val()!=suggestion.value){
-                                var terms = splitAuto($("#ele-concept-autocomplete").val());
-                                for(var i=0;i<terms.length;i++){
-                                    if(terms[i]==suggestion.value){
-                                        //如果重复不添加
-                                        continue;
-                                    }else{
-                                        selectConceptValue+=terms[i]+",";
-                                    }
-                                }
-                            }
-                            if(selectConceptValue==""){
-                                $("#ele-concept-autocomplete").val(suggestion.value+",");
-                            }else{
-                                $("#ele-concept-autocomplete").val(selectConceptValue+suggestion.value+",");
-                            }
-                            var selectConceptId = "";
-                            var selectedTerms = splitAuto($("#ele-concept-autocomplete").val());
-                            for(var i=0;i<selectedTerms.length;i++){
-                                if($scope.vm.relateConcept.get(selectedTerms[i])!=null){
-                                    selectConceptId+=$scope.vm.relateConcept.get(selectedTerms[i])+$scope.vm.conceptSplit;
-                                }
-                            }
-                            selectConceptId=selectConceptId.substring(0,selectConceptId.length-1);
-                            $("#ele-concept-autocomplete").attr("data-option",selectConceptId);
-                        },
-                        onSearchStart:function(){
-                            var selectConceptId = "";
-                            var selectedTerms = splitAuto($("#ele-concept-autocomplete").val());
-                            for(var i=0;i<selectedTerms.length;i++){
-                                if($scope.vm.relateConcept.get(selectedTerms[i])!=null){
-                                    selectConceptId+=$scope.vm.relateConcept.get(selectedTerms[i])+$scope.vm.conceptSplit;
-                                }
-                            }
-                            selectConceptId=selectConceptId.substring(0,selectConceptId.length-1);
-                            $("#ele-concept-autocomplete").attr("data-option",selectConceptId);
-                        }
-                    });
+                
                 }, 100);
             }
         }
@@ -1440,18 +1239,27 @@ module.exports = businessModelingModule =>{
         //元素类型数据组装
         function elementAssemble(type){
             requestArrayReset();
+            var contentJson={}
+            var len=$("#add-item").find("tr").length;
             $.each($("#add-item").find("tr"),function(index,value){
-                $scope.vm.elementAskContentArray[index]=$(value).find(".ele-asked-add").val();
-                $scope.vm.elementAttributeIdArray[index]=$scope.vm.defaultInt;
-                $scope.vm.elementContentArray[index]=$(value).find(".ele-name-add").val();
-                $scope.vm.elementFrameIdArray[index]=$scope.vm.defaultString;
-                $scope.vm.elementMiningTypeIdArray[index]=$(value).find(".mining-type-add").val();
-                if($(value).find(".ele-concept-add").attr("data-option")==""){
-                    $scope.vm.elementRelateConceptArray[index]=$scope.vm.defaultString;
-                }else{
-                    $scope.vm.elementRelateConceptArray[index]=$(value).find(".ele-concept-add").attr("data-option");
-                }
-                $scope.vm.elementTypeIdArray[index]=$(value).find(".ele-type-add").val();
+                $scope.vm.contentList[index]={
+                    askContent:$(value).find(".ele-asked-error-add").val(),
+                    relateConcept:$(value).find(".ele-concept-add").val(),
+                    content:$(value).find(".ele-name-add").val(),
+                    attributeType:$(value).find(".ele-type-add").val(),
+                } 
+                console.log($scope.vm.contentList)
+                // $scope.vm.elementAskContentArray[index].content=$(value).find(".ele-asked-add").val();
+                // $scope.vm.elementAttributeIdArray[index]=$scope.vm.defaultInt;
+                // $scope.vm.elementContentArray[index]=$(value).find(".ele-name-add").val();
+                // $scope.vm.elementFrameIdArray[index]=$scope.vm.defaultString;
+                // $scope.vm.elementMiningTypeIdArray[index]=$(value).find(".mining-type-add").val();
+                // if($(value).find(".ele-concept-add").attr("data-option")==""){
+                //     $scope.vm.elementRelateConceptArray[index]=$scope.vm.defaultString;
+                // }else{
+                //     $scope.vm.elementRelateConceptArray[index]=$(value).find(".ele-concept-add").attr("data-option");
+                // }
+                // $scope.vm.elementTypeIdArray[index]=$(value).find(".ele-type-add").val();
                 if(type==1){
                     if($(value).attr("element-id")){
                         $scope.vm.elementIdArray[index]=$(value).attr("element-id");
@@ -1460,22 +1268,16 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
+           
         }
         //元素类型添加请求
         function elementRequestAdd(){
             httpRequestPost("/api/ms/modeling/frame/add",{
-                "elementAskContentArray":$scope.vm.elementAskContentArray,
-                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
-                "elementContentArray":$scope.vm.elementContentArray,
-                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
-                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
-                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
-                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
-                "frameCategoryId":$scope.vm.botSelectValue,
-                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
-                "frameModifierId":categoryModifierId,
-                "frameTitle":$scope.vm.frameTitle,
-                "frameTypeId":$scope.vm.frameTypeId
+                "contentList":$scope.vm.contentList,
+                "classifyId":"464206609644519424",
+                "status":$scope.vm.frameEnableStatusId,
+                "title":$scope.vm.frameTitle,
+                "type":$scope.vm.frameTypeId
             },function(data){
                 if(data){
                     if(responseView(data)==true){
@@ -1487,21 +1289,13 @@ module.exports = businessModelingModule =>{
         }
         //元素类型修改请求
         function elementRequestUpdate(){
-            httpRequestPost("/api/ms/modeling/frame/update",{
-                "elementAskContentArray":$scope.vm.elementAskContentArray,
-                "elementAttributeIdArray":$scope.vm.elementAttributeIdArray,
-                "elementContentArray":$scope.vm.elementContentArray,
-                "elementFrameIdArray":$scope.vm.elementFrameIdArray,
-                "elementMiningTypeIdArray":$scope.vm.elementMiningTypeIdArray,
-                "elementRelateConceptArray":$scope.vm.elementRelateConceptArray,
-                "elementTypeIdArray":$scope.vm.elementTypeIdArray,
-                "elementIdArray":$scope.vm.elementIdArray,
-                "frameCategoryId":$scope.vm.botSelectValue,
-                "frameEnableStatusId":$scope.vm.frameEnableStatusId,
-                "frameModifierId":categoryModifierId,
-                "frameTitle":$scope.vm.frameTitle,
-                "frameTypeId":$scope.vm.frameTypeId,
-                "frameId":$scope.vm.frameId
+            httpRequestPost("/api/ms/frame/update",{
+                "contentList":$scope.vm.contentList,
+                "classifyId":"464206609644519424",
+                "status":$scope.vm.frameEnableStatusId,
+                "id":categoryModifierId,
+                "title":$scope.vm.frameTitle,
+                "type":$scope.vm.frameTypeId
             },function(data){
                 if(data){
                     if(responseView(data)==true){
@@ -1750,16 +1544,20 @@ module.exports = businessModelingModule =>{
                     '   <td><input type="text" style="width: 200px;" class="input_text ele-name-add" disabled="disabled" value="'+$scope.vm.elementContentArray[i]+'"/></td>'+
                     '   <td>'+
                     '       <select class="ele-type-add bd">'+
-                    '           <option value=10014>字符串</option>'+
-                    '           <option value=10015>数字</option>'+
-                    '           <option value=10016>范围</option>'+
-                    '       </select>'+
-                    '   </td>'+
-                    '   <td>'+
-                    '       <select class="mining-type-add bd" disabled="disabled">'+
-                    '           <option value=10017>NLP</option>'+
-                        /*'           <option value=10017>OEC</option>'+
-                         '           <option value=10018>GATE</option>'+*/
+                    '                   <option value=80>字符串</option>'+
+                    '                    <option value=83>日期</option>'+
+                    '                   <option value=89>整数</option>'+
+                    '                    <option value=92>国家/省份/城市</option>'+
+                    '                    <option value=81>时刻</option>'+
+                    '                    <option value=82>时刻区间</option>'+ 
+                    '                    <option value=84>日期区间</option>'+
+                    '                    <option value=85>日期时刻</option>'+
+                    '                    <option value=86>日期时刻区间</option>'+
+                    '                    <option value=87>时长</option>'+
+                    '                    <option value=88>时长区间</option>'+
+                    '                    <option value=90>基数</option>'+
+                    '                   <option value=91>分数</option>'+
+                    '                   <option value=92>百分比</option>'+
                     '       </select>'+
                     '   </td>'+
                     '   <td><input style="width: 200px;" type="text" class="input_text ele-asked-add" value="'+$scope.vm.elementAskContentArray[i]+'" disabled="disabled"/></td>'+
@@ -1900,29 +1698,29 @@ module.exports = businessModelingModule =>{
             var eleType = $(".ele-type").val();
             var miningType = $(".mining-type").val();
             var eleAsked = $(".ele-asked").val();
-            if(lengthCheck(eleAsked,0,255)==false){
-                $("#ele-asked-error").html('反问不能为空或超过长度限制255');
-                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                return;
-            }else if(isHtmlLabel(eleAsked)){
-                $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
-                $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                return;
-            }else{
-                $("#ele-asked-error").html('');
-                $("#ele-asked-error").attr("style","display:none;");
-            }
-            var flag2 = false;
-            $.each($("#add-item").find("tr"),function(index,value){
-                if(eleAsked==$(value).find(".ele-asked-add").val()){
-                    $("#ele-asked-error").html('反问不能与已有反问重复');
-                    $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                    flag2 = true;
-                }
-            });
-            if(flag2==true){
-                return;
-            }
+            // if(lengthCheck(eleAsked,0,255)==false){
+            //     $("#ele-asked-error").html('反问不能为空或超过长度限制255');
+            //     $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+            //     return;
+            // }else if(isHtmlLabel(eleAsked)){
+            //     $("#ele-asked-error").html($scope.vm.notContainHtmlLabel);
+            //     $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+            //     return;
+            // }else{
+            //     $("#ele-asked-error").html('');
+            //     $("#ele-asked-error").attr("style","display:none;");
+            // }
+            // var flag2 = false;
+            // $.each($("#add-item").find("tr"),function(index,value){
+            //     if(eleAsked==$(value).find(".ele-asked-add").val()){
+            //         $("#ele-asked-error").html('反问不能与已有反问重复');
+            //         $("#ele-asked-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+            //         flag2 = true;
+            //     }
+            // });
+            // if(flag2==true){
+            //     return;
+            // }
             $("#ele-asked-error").html('');
             $("#ele-asked-error").attr("style","display:none;");
             var relateConceptIds = "";
@@ -1932,16 +1730,7 @@ module.exports = businessModelingModule =>{
             }else{
                 relateConceptIds = $(".ele-concept").attr("data-option");
                 relateConceptVals = $(".ele-concept").val();
-                relateConceptVals=relateConceptVals.substring(0,relateConceptVals.length-1);
-                var sumConceptStr = relateConceptIds+$scope.vm.textAndTagSplit+relateConceptVals;
-                if(lengthCheck(sumConceptStr,0,255)==false){
-                    $("#ele-concept-error").html('相关概念不能为空或超过长度限制');
-                    $("#ele-concept-error").attr("style","display:inline-block;left: 10px;");
-                    return;
-                }else{
-                    $("#ele-concept-error").html('');
-                    $("#ele-concept-error").attr("style","display:none;");
-                }
+                alert(relateConceptVals)
                 if(relateConceptVals==null){
                     return;
                 }
@@ -1961,19 +1750,24 @@ module.exports = businessModelingModule =>{
                 '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-name-add" placeholder="地区" value="'+eleName+'" disabled="disabled"/></td>'+
                 '   <td>'+
                 '       <select class="ele-type-add bd">'+
-                '           <option value=10014>字符串</option>'+
-                '           <option value=10015>数字</option>'+
-                '           <option value=10016>范围</option>'+
+                 '                   <option value=80>字符串</option>'+
+                    '                    <option value=83>日期</option>'+
+                '                       <option value=89>整数</option>'+
+                    '                    <option value=92>国家/省份/城市</option>'+
+                    '                    <option value=81>时刻</option>'+
+                    '                    <option value=82>时刻区间</option>'+ 
+                    '                    <option value=84>日期区间</option>'+
+                    '                    <option value=85>日期时刻</option>'+
+                    '                    <option value=86>日期时刻区间</option>'+
+                    '                    <option value=87>时长</option>'+
+                    '                    <option value=88>时长区间</option>'+
+                    '                    <option value=90>基数</option>'+
+                    '                   <option value=91>分数</option>'+
+                    '                   <option value=92>百分比</option>'+
                 '       </select>'+
                 '   </td>'+
-                '   <td>'+
-                '       <select class="mining-type-add bd" disabled="disabled">'+
-                '           <option value=10017>NLP</option>'+
-                    /*'           <option value=10017>OEC</option>'+
-                     '           <option value=10018>GATE</option>'+*/
-                '       </select>'+
-                '   </td>'+
-                '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+
+               
+                '   <td class="pr"><input type="text" style="width: 200px;" class="input_text ele-asked-error-add" placeholder="" value="'+eleAsked+'" disabled="disabled"/></td>'+
                 '   <td class="pr"><input type="text" style="width: 180px;" class="input_text ele-concept-add" placeholder="从概念库中选择" value="'+relateConceptVals+'" data-option="'+relateConceptIds+'" disabled="disabled"/></td>'+
                 '</tr>';
             $("#add-item").prepend(html);
@@ -1982,8 +1776,7 @@ module.exports = businessModelingModule =>{
             $("#add-item").find("tr").filter(":eq(0)").find(".mining-type-add").val(miningType);
             //clear
             $(".ele-name").val("");
-            $(".ele-type").val(10014);
-            $(".mining-type").val(10017);
+            $(".ele-type").val(80);
             $(".ele-asked").val("");
             $(".ele-concept").attr("data-option","");
             $(".ele-concept").val("");
@@ -2112,5 +1905,124 @@ module.exports = businessModelingModule =>{
                 obj = new Object();
             };
         }
+
+        ////////////////////////////////导入、导出、模板下载///////////////////////////////////////////
+
+            //批量导入
+        function batchUpload(){
+            var frameType = 10011;
+            if($scope.vm.botSelectValue=="root"){
+                layer.msg("请选择类目");
+                return;
+            }
+            var dialog1 = ngDialog.openConfirm({
+                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e==10011){
+                        frameType=10011;
+                        batchUploadFrame(frameType)
+                    }else if(e==10012){
+                        frameType=10012;
+                        batchUploadFrame(frameType)
+                    }else if(e==10013){
+                        frameType=10013;
+                        batchUploadFrame(frameType)
+                    }
+                }
+            });
+        }
+
+        function batchUploadFrame(frameType){
+            var dialog = ngDialog.openConfirm({
+                template:"/static/business_modeling/batch_upload.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    //refresh
+                    loadFrameLibrary(1,0);
+                }
+            });
+            if(dialog){
+                $timeout(function () {
+                    initUpload('/api/ms/modeling/frame/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&categoryId='+$scope.vm.botSelectValue+'&frameTypeId='+frameType);
+                }, 100);
+            }
+        }
+
+        function downloadTemplate(){
+            var frameTemplate = "frame_faq_template.xlsx";
+            var dialog = ngDialog.openConfirm({
+                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e==10011){
+                        frameTemplate="frame_faq_template.xlsx";
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
+                    }else if(e==10012){
+                        frameTemplate="frame_concept_template.xlsx";
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
+                    }else if(e==10013){
+                        frameTemplate="frame_element_template.xlsx";
+                        downloadFile("/api/ms/knowledgeManage/downloadKnowledgeTemplate","",frameTemplate);
+                    }
+                }
+            });
+        }
+
+        function exportAll(){
+            var frameType = 10011;
+            if($scope.vm.botSelectValue=="root"){
+                layer.msg("请选择类目");
+                return;
+            }
+            var dialog1 = ngDialog.openConfirm({
+                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
+                scope: $scope,
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e==10011){
+                        frameType=10011;
+                        exportAllDialog(frameType)
+                    }else if(e==10012){
+                        frameType=10012;
+                        exportAllDialog(frameType)
+                    }else if(e==10013){
+                        frameType=10013;
+                        exportAllDialog(frameType)
+                    }
+                }
+            });
+        }
+
+        function exportAllDialog(frameType){
+            httpRequestPost("/api/ms/modeling/frame/export",{
+                "frameCategoryId": $scope.vm.botSelectValue,
+                "frameTypeId": frameType
+            },function(data){
+                if(responseView(data)==true){
+                    if(data.exportFileNameList.length>0){
+                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
+                    }
+                }
+            },function(err){
+            });
+        }
+
+
     }
 ])};

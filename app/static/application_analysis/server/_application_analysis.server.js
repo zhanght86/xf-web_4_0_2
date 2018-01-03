@@ -53,11 +53,11 @@ class AppAnalysisServer {
     //导出路径
     this.exportExcelUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
     //获取对应user 的 对话列表
-    this.getScanData = $resource(API_ANALYSIS+'/userSession/searchTimeBar',{},{});
+    this.getScanData = $resource(API_ANALYSIS+'/user/session/search/time/bar',{},{});
     ///表格列表
-    this.sessionGetList = $resource(API_ANALYSIS+'/userSession/searchList',{},{});
+    this.sessionGetList = $resource(API_ANALYSIS+'/user/session/search/list',{},{});
     ////弹窗获取
-    this.getdetail = $resource(API_ANALYSIS+'/userSession/searchTimeBarContent',{},{});
+    this.getdetail = $resource(API_ANALYSIS+'/user/session/search/time/content',{},{});
                                     /******************************
                                                 *会话满意度统计*    API_ANALYSIS = "/api/analysis" ;
                                          ********************************/
@@ -82,11 +82,11 @@ class AppAnalysisServer {
                                         *会话日志*    API_ANALYSIS = "/api/analysis" ;
                                      ********************************/
     //获取对应user 的 对话列表
-    this.getScanData = $resource(API_ANALYSIS+'/userSession/searchTimeBar',{},{});
+    this.getScanData = $resource(API_ANALYSIS+'/user/session/search/time/bar',{},{});
     //表格列表
     this.getSessionLogList = $resource(API_ANALYSIS+'/userSession/searchList',{},{});
     //获取
-    this.getdetail = $resource(API_ANALYSIS+'/userSession/searchTimeBarContent',{},{});
+    this.getdetail = $resource(API_ANALYSIS+'/user/session/search/time/content',{},{});
     //导出表格
     this.exportExcelSessionLog = $resource(API_ANALYSIS+'/userSession/export',{},{});
     //导出表格路径

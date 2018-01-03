@@ -81,7 +81,7 @@ class MaterialServer {
                                                                 
 //图文详情页
     //getImgText
-    this.getImgText = $resource(API_MATERIAL+'/graphic/message/find/graphic/by/id',{},{});
+    this.getImgText = $resource(API_MATERIAL+'/graphic/message/get/by/id',{},{});
                                                 
 //添加图文消息
     //获取本地图片
