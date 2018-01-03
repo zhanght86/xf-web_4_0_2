@@ -7,30 +7,26 @@ module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule.controller('FaqNewController', [
     '$scope', 'localStorageService',"KnowledgeService" ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","$stateParams","$window","$rootScope","$filter",
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
-        console.log($stateParams);
+        $state.go("KM.faq") ;
+        $scope.parameter = {
+            "title"	: "",           //	知识标题
+            "expDateStart" : "",	//知识有效期开始时间
+            "expDateEnd" : "",	    //知识有效期结束时间
+            "origin" : 120,	        //数据来源（见参数说明）
+            "classifyList" : "",	//所属类目ID集合
+            "extensionQuestionList" : [""],	//扩展问集合
+            "contentList" : ""	    //内容集合
+        } ;
         $scope.vm = {
             ctrName : "faq" ,
-            apiQueryRelatedQuestion : "queryFapRelatedQuestion" , // 相关文api
-            localNameOfExt : "cust_faq_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
-            knowledgeOrigin : 120 , //知识来源
-            knowledgeId : "",       // 知识编辑 id
-//标题
-            title : "",
             titleTip :  "",
 //时间
             isTimeTable : false,  //时间表隐藏
-            timeStart : "",      //起始时间
-            timeEnd : "",
 //bot
             frames : [],      //业务框架
-            frameId : "",
             creatSelectBot : [] ,//点击bot类目数生成
             botRoot : "",      //根节点
             botFullPath : null ,
-            frameCategoryId : "",
-//扩展问
-            extensions : [],      //手動生成
-            extensionsByFrame : [],  //業務框架生成
 //展示内容
             scanContent : [],
             save : save ,   //保存
@@ -39,19 +35,16 @@ module.exports = knowledgeManagementModule =>{
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
 //D 知识内容配置
             newTitle: "",    //标题
-            channelIdList : [],     //新添加的 channel
+            channelIdList : "",     //新添加的 channel
 
-            question : 1,
-            tip : 1,
-            tail : 1 ,
             appointRelativeGroup : [],
 
-            replaceType : 0,
             enterEvent : enterEvent ,
             limitSave : false , //限制多次打标
             isEditIndex : -1,   // 知识内容 弹框
                                 // -1 为内容新增
                                 // index 为知识的编辑索引
+            skipNewLine : skipNewLine ,
 //引导页
             showTip : showTip,
             hideTip : hideTip,
@@ -59,59 +52,7 @@ module.exports = knowledgeManagementModule =>{
             nextDiv : nextDiv,
             //引到页end
         };
-        //、、、、、、、、、、、、、、、、、、、、、、、   通过预览 编辑 判断   、、、、、、、、、、、、、、、、、、、、、、、、、
-        //組裝數據   擴展問   content
-        //BOT路径设置为 选择添加                  再次增加判断重复
-        //
-        //标题
-        if($stateParams.data && angular.fromJson($stateParams.data).knowledgeBase){
-            var data = angular.fromJson($stateParams.data);
-            //标题
-            $scope.vm.title =  data.knowledgeBase.knowledgeTitle ;
-            // 时间
-            if(data.knowledgeBase.knowledgeExpDateStart || data.knowledgeBase.knowledgeExpDateEnd){
-                $scope.vm.isTimeTable = true
-            }
-            $scope.vm.timeStart  =  $filter("date")(data.knowledgeBase.knowledgeExpDateStart,"yyyy-MM-dd") ;
-            $scope.vm.timeEnd  = $filter("date")(data.knowledgeBase.knowledgeExpDateEnd,"yyyy-MM-dd") ;
-            // bot 路径 s
-            $scope.vm.creatSelectBot = data.knowledgeBase.classificationAndKnowledgeList ;
-
-            //knowledgeId
-            $scope.vm.knowledgeId = data.knowledgeBase.knowledgeId ;
-            $scope.vm.knowledgeOrigin = data.knowledgeBase.knowledgeOrigin ;
-            //扩展问
-            $scope.vm.extensionsByFrame = data.extensionQuestions;
-            //内容
-            //$scope.vm.scanContent = data.knowledgeContents ;
-            angular.forEach(data.knowledgeContents,function(item){
-                var obj = {} ;
-                obj.knowledgeContent = item.knowledgeContent;
-                //維度，添加預覽效果   以name id 的 形式显示
-                obj.channelIdList =  item.channelIdList ;
-
-
-                obj.knowledgeRelatedQuestionOn =item.knowledgeRelatedQuestionOn ;   //显示相关问
-                obj.knowledgeBeRelatedOn  =  item.knowledgeBeRelatedOn ; //在提示
-                obj.knowledgeCommonOn = item.knowledgeCommonOn ;   //弹出评价小尾巴
-                obj.knowledgeRelevantContentList = item.knowledgeRelevantContentList ;  //业务扩展问
-                $scope.vm.scanContent.push(obj) ;
-                console.log(obj)
-            });
-            //
-        }else if($stateParams.data && angular.fromJson($stateParams.data).docmentation){
-            $scope.vm.docmentation = angular.fromJson($stateParams.data).docmentation;
-            $scope.vm.title = $scope.vm.docmentation.documentationTitle;
-            $scope.vm.newTitle = $scope.vm.docmentation.documentationContext; //填充新的知识内容
-            $scope.vm.knowledgeOrigin = 122 ;
-            $timeout(function(){$scope.vm.openContentConfirm(saveAddNew(0));},0) ;
-             //知识内容弹出框
-        } else if($stateParams.knowledgeTitle){
-            $scope.vm.title=$stateParams.knowledgeTitle;
-        }
-        //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
-
-// 通过类目id 获取框架
+        let knowNewHtml = require("../../views/public_html/knowledge_increase.html") ;
         function getFrame(id){
             httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
                 "frameCategoryId": id,
@@ -131,104 +72,7 @@ module.exports = knowledgeManagementModule =>{
                 //layer.msg("err or err")
             });
         }
-        $scope.$watch("vm.frameCategoryId",function(val,old){
-            if(val&&val!=old){
-                getFrame( val )
-            }
-        });
-        //  根據框架添加擴展問  --》 替換原來的條件
-        $scope.$watch("vm.frameId",function(val,old){
-            if(val&&val!=old){
-                if($scope.vm.extensionsByFrame.length){
-                   var frame ;
-                    angular.forEach($scope.vm.frames,function(item){
-                        if(item.frameId == val ){
-                            frame = item.frameTitle ;
-                            return true ;
-                        }
-                    }) ;
-                    //console.log(frame)  ;
-                    if(frame == $scope.vm.extensionsByFrame[0].source){
-                        return false
-                    }else{
-                        replace(val);//  替換條件
-                    }
-                }else{
-                    // 在未生成扩展问情況
-                    getExtensionByFrame(val);
-                }
-
-            }
-        });
-
         // 通过frame 获取扩展问
-        function getExtensionByFrame(id,type){
-            //console.log(id);
-            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
-                "frameTypeId": 10011,
-                "frameId": id,
-                "index": 0,
-                "pageSize":999999
-            },function(data){
-                if(data.status==10000){
-                    //console.log(data);
-                    if(data.data[0].elements){
-                        angular.forEach(data.data[0].elements,function(item){
-                            var isLocalHasExt = addLocalExtension(item.elementContent)  ;
-                            if(isLocalHasExt){
-                                if(type){
-                                    $scope.vm.extensionsByFrame.pop();
-                                    $scope.vm.extensionsByFrame.push(isLocalHasExt)
-                                }else{
-                                    $scope.vm.extensionsByFrame.push(isLocalHasExt)
-                                }
-                                return ;
-                            }
-                            var obj = {} ;
-                            obj.extensionQuestionTitle  = item.elementContent;
-                            obj.extensionQuestionType = 60;
-                            obj.source = data.data[0].frameTitle;
-                            if(type){
-                                $scope.vm.extensionsByFrame.pop();
-                                $scope.vm.extensionsByFrame.push(obj)
-                            }else{
-                                //if(){
-                                //    angular.forEach($scope.vm.extensionsByFrame,function(item){
-                                //
-                                //    })
-                                //}
-                                $scope.vm.extensionsByFrame.push(obj)
-                            }
-                        });
-                        //console.log($scope.vm.extensionsByFrame)
-                    }
-                    $scope.$apply();
-                }
-            },function(){
-                //layer.msg("err or err")
-            });
-        }
-        function replace(id){
-            var dia = angular.element(".ngdialog");
-            if(dia.length==0) {
-                var replace = ngDialog.openConfirm({
-                    template: "/static/knowledge_manage/faq/replace.html",
-                    scope: $scope,
-                    closeByDocument: false,
-                    closeByEscape: true,
-                    showClose: true,
-                    backdrop: 'static',
-                    preCloseCallback: function (e) {     //关闭回掉
-                        if (e === 1) {    //替换
-                            getExtensionByFrame(id, 1)
-                        } else if (e === 0) {
-                            // 添加不替换
-                            getExtensionByFrame(id, 0)
-                        }
-                    }
-                });
-            }
-        }
         function knowledgeAdd(data,index){
             if(data){    //增加
                 $scope.vm.isEditIndex = index ;
@@ -244,7 +88,7 @@ module.exports = knowledgeManagementModule =>{
         }
         //打开知识内容对话框
         function openContentConfirm(callback){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"/static/knowledge_manage/public_html/knowledge_increase.html","650px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,knowNewHtml,"650px",function(){
                 callback();
             },"",function(){
                 $scope.$parent.knowCtr.setKnowParamHasDialog($scope)
@@ -253,18 +97,16 @@ module.exports = knowledgeManagementModule =>{
         //  主页保存 获取参数
         function getParams(){
           return  {
-                "applicationId": APPLICATION_ID,
-                "knowledgeId" : $scope.vm.knowledgeId ,
-                "knowledgeTitle": $scope.vm.title,      //知识标题
-                "knowledgeExpDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-                "knowledgeExpDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-                "knowledgeUpdater": USER_LOGIN_NAME, //操作人
-                "knowledgeCreator": USER_LOGIN_NAME, //操作人
-                "knowledgeType": 100  ,//知识类型
-                "knowledgeOrigin" : $scope.vm.knowledgeOrigin ,
-                "knowledgeContents"     : $scope.vm.scanContent,      // 知识内容
-                "extensionQuestions"    :  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ,  // 扩展问
-                "classificationAndKnowledgeList" : $scope.vm.creatSelectBot  // bot
+                "title": $scope.vm.title,      //知识标题
+                "expDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
+                "expDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
+                "origin": 1,
+                "classifyList": [], //操作人
+                "extensionQuestionList": ""  ,//知识类型
+                "type" : 120 ,
+                "channel"     : $scope.vm.scanContent,      // 知识内容
+                "content"    :  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ,  // 扩展问
+                // "relevantList" : $scope.vm.creatSelectBot  // bot
             };
         }
         var limitTimer ;
@@ -376,7 +218,6 @@ module.exports = knowledgeManagementModule =>{
                 return true
             }
         }
-//***************************    save check channel dimension  **********************************************
         function increaseCheck(){
             //判斷维度是否为空 0 不变 1 全维度
             if(!$scope.vm.newTitle && !$scope.vm.channelIdList.length){
@@ -389,7 +230,18 @@ module.exports = knowledgeManagementModule =>{
                 ngDialog.closeAll(1) ;
             }
         }
-
+        function skipNewLine(e) {
+            if(e!="blur"){
+                console.log( $scope.parameter.extensionQuestionList)
+                let len = $scope.parameter.extensionQuestionList.length ;
+                let keycode = window.event?e.keyCode:e.which;
+                if(keycode==13 && $scope.parameter.extensionQuestionList[len-1]!=""){
+                    $scope.parameter.extensionQuestionList.push("")
+                }
+            }else{
+                console.log(1)
+            }
+        }
         //引导页方法
         function showTip(){
             $('.shadow_div').show();
@@ -401,7 +253,6 @@ module.exports = knowledgeManagementModule =>{
             $('.shadow_div').hide();
             $('.step_div').hide();
         }
-
         //上一个
         function prevDiv(e){
             var  obj = e.srcElement ? e.srcElement : e.target;

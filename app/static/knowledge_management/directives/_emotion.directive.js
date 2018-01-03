@@ -1,7 +1,8 @@
 /**
  * Created by 41212 on 2017/7/15.
  */
-knowledge_static_web.directive('emotion',["$timeout",function($timeout){
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule.directive('emotion',["$timeout",function($timeout){
     return{
         restrict:'EA',
         link:function(scope,element,attrs){
@@ -35,4 +36,4 @@ knowledge_static_web.directive('emotion',["$timeout",function($timeout){
             }) ;
         }
     }
-}]);
+}])};

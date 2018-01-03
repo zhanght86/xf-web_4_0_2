@@ -22,7 +22,24 @@ module.exports = ngModule =>
                 avatarUrl : getCookie("avatarUrl") , // 头像 url
                 avatarId :  getCookie("avatarId") ,  // 头像id
                 applicationName : APPLICATION_NAME,
-                channelList : "",
+                channelList : [
+                    {
+                        "name":"全部",
+                        "code" :130
+                    },
+                    {
+                        "name":"微信",
+                        "code" :131
+                    },
+                    {
+                        "name":"web",
+                        "code" :132,
+                    },
+                     {
+                        "name":"app",
+                        "code" :133 ,
+                    }
+                ],
                 channelListIds :[],
                 /*>>>>>=========method for DownStream simple========<<<<<<<<*/
                 queryChannelList : queryChannelList ,  //获取渠道
@@ -36,7 +53,6 @@ module.exports = ngModule =>
                 searchBotAutoTag : searchBotAutoTag , //BOT搜索自动补全   For 知识新增bot添加
                 /* bot 下拉树的公共方法 */
                 botTreeOperate : botTreeOperate ,
-                //isTitleHasExt : isTitleHasExt
                 selectAll : selectAll
             } ;
             if(APPLICATION_ID){
@@ -113,22 +129,8 @@ module.exports = ngModule =>
                 }
             }
             function queryChannelList(applicationId){
-                //var  channels = [] ;
-                // return knowledgeAddServer.getChannels({ "applicationId" : applicationId},
-                //     function(data) {
-                //         if(data.data){
-                //             $scope.MASTER.channelListIds = [] ;
-                //             $scope.MASTER.channelList = data.data ;
-                //             angular.forEach(data.data,function(item,index){
-                //                 $scope.MASTER.channelListIds.push(item.channelCode)
-                //             })
-                //         }
-                //     }, function(error) {
-                //         console.log(error) ;
-                //     });
-                //return   channels ;
             }
-
+  //------------------------------------------------------ 后期确认删除-----------------------------------------------------------
             //BOT搜索自动补全
             function searchBotAutoTag(el,url,callback){
                 $(el).autocomplete({

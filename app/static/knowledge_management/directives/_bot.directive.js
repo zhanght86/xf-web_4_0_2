@@ -3,7 +3,9 @@
  * @Create : 2017/9/20.
  * @Module : bot
  */
-angular.module("knowledgeManagementModule").directive("botClassTree",
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule
+    .directive("botClassTree",
     ["KnowledgeService","$templateCache","$timeout","$sce",
         function(KnowledgeService,$templateCache,$timeout,$sce){
         return {
@@ -21,27 +23,22 @@ angular.module("knowledgeManagementModule").directive("botClassTree",
                     knowledgeBotVal : "",  //bot 内容
                 } ;
                 function getBotFullPath(id){
-                    KnowledgeService.getBotFullPath.save({
-                        categoryId: id
-                    },function(data){
-                        if(data.status = 10000){
+                    KnowledgeService.getBotFullPath.get({
+                        id: id
+                    },function(response){
+                        if(response.status = 200){
                             var allBot = angular.copy(scope.vm.creatSelectBot) ,
-                                botResult = scope.$parent.knowCtr.isBotRepeat(id,data.categoryFullName.split("/"),"",allBot) ;
-                            //scope.$apply(function(){
-                                console.log(data) ;
-                                scope.dirBot.knowledgeBotVal = data.categoryFullName;
+                                botResult = scope.$parent.knowCtr.isBotRepeat(id,response.data.split("/"),"",allBot) ;
+                                scope.dirBot.knowledgeBotVal = response.data;
                                 if(botResult != false){
                                     scope.vm.botFullPath = botResult;
                                 }
-                            //});
                         }
                     },function(error){console.log(error)})
                 }
-                scope.MASTER.botTreeOperate(scope,"/api/ms/modeling/category/listbycategorypid","/api/ms/modeling/category/listbycategorypid",getBotFullPath
-                    //"/api/ms/modeling/category/searchbycategoryname"
-                ) ;
+                scope.$parent.knowCtr.botTreeOperate(scope,getBotFullPath) ;
                 //BOT搜索自动补全
-                scope.MASTER.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
+                scope.$parent.knowCtr.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
                     scope.$apply(function(){
                         var allBot = angular.copy(scope.vm.creatSelectBot) ,
                             botResult = scope.$parent.knowCtr.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
@@ -56,11 +53,10 @@ angular.module("knowledgeManagementModule").directive("botClassTree",
                     if(scope.vm.botFullPath){
                         console.log(scope.vm.botFullPath) ;
                         scope.vm.creatSelectBot.push(scope.vm.botFullPath);
-                        scope.vm.frameCategoryId = scope.vm.botFullPath.classificationId;
                         scope.vm.botFullPath = "";
                         scope.dirBot.knowledgeBotVal = "";
                     }
                 }
             }
         }
-}]);
+}])};

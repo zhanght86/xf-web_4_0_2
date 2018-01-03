@@ -2,39 +2,11 @@
     <div class="checkboxStr mb-10">
         <div>渠道：</div>
         <label ng-repeat="channel in $parent.$parent.MASTER.channelList track by $index">
-            <input style="vertical-align: middle; margin:-2px 2px 0 0;" type="checkbox"  ng-click="$parent.knowCtr.selectChannel(this,channel.channelCode)" ng-checked="vm.channelIdList.inArray(channel.channelCode)">
-            {{channel.channelName}}
+            <input name="channel" style="vertical-align: middle; margin:-2px 2px 0 0;" type="radio"  ng-click="vm.channelIdList = channel.code" ng-checked="vm.channelIdList == channel.code">
+            {{channel.name}}
         </label>
     </div>
-    <div class="checkboxAddress pr"  style="padding-left:50px;height:auto;">
-        <span class="pa" style="top:0;left:0;">维度：</span>
-        <!--{{vm.dimensionArr.id}}-->
-        <div auto-complete  result="vm.dimensionArr"></div>
-
-    </div>
-    <div class="channel_div mb-10" style="padding-left:80px;">
-        <span class="channel_s" >高级选项：</span>
-        <a href="javascript:;" class="c-primary unfold_fit" ng-click="dirCont.slideDown()">
-            <span ng-if="!dirCont.slideFlag">展开</span>
-            <span ng-if="dirCont.slideFlag">隐藏</span>
-        </a>
-    </div>
-    <div class="senior_div"  style="display: none">
-        <div class=" mb-20">
-            <span >知识配置：</span>
-            <div class="dib pt-5 mr-15">
-                <span switch value="vm.question"></span>
-                <span>显示相关问题</span>
-            </div>
-            <div class="dib pt-5 mr-15"  style="margin-left: 81px;">
-                <span switch value="vm.tip"></span>
-                <span>在相关问题内提示</span>
-            </div>
-            <div class="dib pt-5 mr-15" style="margin-left: 81px;">
-                <span switch value="vm.tail"></span>
-                <span>弹出评价小尾巴{{vm.knowledgeRelevantContentList}}</span>
-            </div>
-        </div>
+    <div class="senior_div">
         <div>
             <div class="mb-10" style="position: relative;padding-left:100px;">
                 <span class="pa" style="left:0;top:0;">指定相关知识:</span>

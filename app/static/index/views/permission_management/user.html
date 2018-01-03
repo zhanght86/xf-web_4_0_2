@@ -22,8 +22,8 @@
                     <thead>
                     <tr>
                         <th class="bold" width="3%"><input class="selectAllBtn" type="checkbox" ng-click="vm.deleteIds.length==vm.userListIds.length?vm.deleteIds=[]:vm.deleteIds=$parent.$parent.MASTER.selectAll(vm.userListIds,0,)" ng-checked="(vm.deleteIds.length==vm.userListIds.length) && vm.userListIds.length!=0"/></th>
-                        <th class="bold" width="8%">姓名</th>
                         <th class="bold" width="8%">登录名</th>
+                        <th class="bold" width="8%">姓名</th>
                         <th class="bold" width="11%">手机</th>
                         <th class="bold" width="13%">邮箱</th>
                         <th class="bold" width="8%">角色</th>
@@ -36,8 +36,8 @@
                     <tr ng-repeat="user in vm.userList track by $index">
                         <!--<td>    {{item}}</td>-->
                         <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(user.id)" ng-click="vm.deleteIds.inArray(user.id)?vm.deleteIds.remove(user.id):vm.deleteIds.push(user.id)"/></td>
-                        <td>{{user.name}}</td>
                         <td>{{user.account}}</td>
+                        <td>{{user.name}}</td>
                         <td>{{user.phone}}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.roleName}}</td>

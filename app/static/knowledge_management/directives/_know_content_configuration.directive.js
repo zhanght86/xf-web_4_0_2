@@ -3,7 +3,8 @@
  * @Create : 2017/9/15.
  * @Module :  list factor 知识内容 组件
  */
-angular.module("knowledgeManagementModule").directive("knowContentConfiguration",
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule.directive("knowContentConfiguration",
     ["KnowledgeService","$templateCache","$timeout","$sce",
     function(KnowledgeService,$templateCache,$timeout,$sce){
     // 要素 列表
@@ -86,7 +87,7 @@ angular.module("knowledgeManagementModule").directive("knowContentConfiguration"
             }
         }
     }
-}])
+}])}
 // 相关问题 键盘选择
 //function selectEvent(e){
 //        var  srcObj = e.srcElement ? e.srcElement : e.target;

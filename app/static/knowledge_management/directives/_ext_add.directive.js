@@ -3,7 +3,8 @@
  * @Create : 2017/9/19.
  * @Module : 概念扩展
  */
-angular.module("knowledgeManagementModule").directive("conceptExtension",
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule.directive("conceptExtension",
     ["KnowledgeService","$templateCache","$timeout","$sce","localStorageService",
     function(KnowledgeService,$templateCache,$timeout,$sce,localStorageService){
     return {
@@ -193,4 +194,4 @@ angular.module("knowledgeManagementModule").directive("conceptExtension",
 
         }
     }
-}]) ;
+}])} ;
