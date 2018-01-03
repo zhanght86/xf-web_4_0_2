@@ -1,4 +1,6 @@
 module.exports = applicationManagementModule =>{
+    // require('../../../components/page/page')(applicationManagementModule);  // 分页
+    // console.log(2)
     applicationManagementModule
     .controller('ApplicationSettingController',
     ['$scope', "$state", "$stateParams","$cookieStore","$rootScope","ApplicationServer",

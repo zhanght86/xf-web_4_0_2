@@ -5,13 +5,15 @@
  */
 module.exports = angular => {
     const applicationManagementModule = angular.module('applicationManagementModule', []);
+
+
     require('../controllers/_main.cotroller')(applicationManagementModule);  // 控制器
     require('../../index/controllers/home_page/_nav.controller')(applicationManagementModule);  // 导航
     //--------------------------------------------------
     //          directive
     //--------------------------------------------------
     require('../../../components/switch_turn/_switch_turn.directive')(applicationManagementModule);      // 开关
-    require('../../../components/page/page')(applicationManagementModule);                               // 分页
+    // require('../../../components/page/page')(applicationManagementModule);                               // 分页
     require("../directives/_avatar.directive")(applicationManagementModule) ;                            // 头像
     require('../directives/_check_service_name.direvtive')(applicationManagementModule);                 // 验证服务名称
     require('../directives/_verify_application_name.directive')(applicationManagementModule);            // 验证应用名称
@@ -37,6 +39,11 @@ module.exports = angular => {
     //          server
     //--------------------------------------------------
     require('../server/_application.server')(applicationManagementModule);
+    // applicationManagementModule.run(['$injector', function($injector) {
+    //     console.log(11);
+    //
+    //     console.log($injector.get('paginationDirective'));
+    // }])
 } ;
 
 
