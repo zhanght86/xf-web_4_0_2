@@ -3,7 +3,8 @@
  */
 //uploader    https://my.oschina.net/u/3354666/blog/858285
 //    http://blog.csdn.net/lai_xu/article/details/49535847
-knowledge_static_web.directive('myUpload', function (FileUploader) {
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule.directive('myUpload', function (FileUploader) {
     var helper = {
         getType: function (name) {
             return '|' + name.slice(name.lastIndexOf('.') + 1) + '|';
@@ -249,4 +250,4 @@ knowledge_static_web.directive('myUpload', function (FileUploader) {
             };
         }
     };
-});
+})};

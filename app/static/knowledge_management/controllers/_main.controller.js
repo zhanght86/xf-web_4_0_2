@@ -5,8 +5,8 @@
  */
 module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule.controller('KnowledgeManagementController', [
-    '$scope', 'localStorageService' ,"$state" ,"$filter",
-    ($scope,localStorageService, $state,$filter) =>{
+    '$scope', 'localStorageService' ,"$state" ,"KnowledgeService","$timeout",
+    ($scope,localStorageService, $state,KnowledgeService,$timeout) =>{
         $state.go("KM.overview");
         $scope.knowCtr = {
             selectChannel : selectChannel , //选择渠道
@@ -14,6 +14,9 @@ module.exports = knowledgeManagementModule =>{
             rmeoveExtToLocal : rmeoveExtToLocal ,           //删除扩展问并添加到localStorage , 应用于所有知识编辑
             setKnowParamHasDialog : setKnowParamHasDialog ,  //弹框重置参数  应用于概念，faq
             isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
+            botTreeOperate : botTreeOperate ,
+            searchBotAutoTag : searchBotAutoTag,
+            keyEnter : keyEnter
         };
         function selectChannel(self,channelId){
             if(self.vm.channelIdList.inArray(channelId)){
@@ -127,5 +130,141 @@ module.exports = knowledgeManagementModule =>{
                 });
             }
             return result;
+        }
+        /*bot*/
+        function botTreeOperate(self,selectCall,searchAutoUrl){
+            var tree = {
+                init : function(){
+                    KnowledgeService.queryChildNodes.get({"id":"root"},function (response) {
+                        self.vm.botRoot = response.data;
+                    },function (error) {
+                        console.log(error)
+                    }) ;
+                } ,
+                getChildNode : getChildNode ,
+                selectNode : selectNode ,
+            } ;
+            function getChildNode(){
+                $(".aside-navs").on("click",'i',function(){
+                    var id = $(this).attr("data-option");
+                    var that = $(this);
+                    if(!that.parent().parent().siblings().length){
+                        that.css("backgroundPosition","0% 100%");
+                        KnowledgeService.queryChildNodes.get({"id":id},function (response) {
+                           if(response.status == 200){
+                               if(response.data){
+                                   var  html = '<ul class="menus">';
+                                   for(var i=0;i<response.data.length;i++){
+                                       var typeClass ;
+
+                                       // 叶子节点 node
+                                       if((response.data[i].leaf == 0)){
+                                           typeClass = "bot-leaf"　;
+                                       }else if((response.data[i].leaf != 0) && (response.data[i].relation == "edge" )){
+                                           typeClass = "bot-edge"　;
+                                       }else if((response.data[i].leaf != 0) && (response.data[i].relation == "node" )){
+                                           typeClass = "icon-jj"
+                                       }
+                                       var  backImage ;
+                                       switch(response.data[i].type){
+                                           case 160 :
+                                               backImage = " bot-divide" ;
+                                               break  ;
+                                           case 161 :
+                                               backImage = " bot-process";
+                                               break  ;
+                                           case 162 :
+                                               backImage = " bot-attr" ;
+                                               break  ;
+                                           case 163 :
+                                               backImage = " bot-default" ;
+                                               break  ;
+                                       }
+                                       html+= '<li>' +
+                                           '<div class="slide-a">'+
+                                           ' <a class="ellipsis" href="javascript:;">' ;
+                                       html+=              '<i class="'+typeClass + backImage +'" data-option="'+response.data[i].id+'"></i>' ;
+                                       html+=              '<span>'+response.data[i].name+'</span>'+
+                                           '</a>' +
+                                           '</div>' +
+                                           '</li>'
+                                   }
+                                   html+="</ul>";
+                                   $(html).appendTo((that.parent().parent().parent()));
+                                   that.parent().parent().next().slideDown()
+                               }
+                           }
+                        },function (error) {
+                            console.log(error)
+                        }) ;
+                    }else{
+                        if(that.css("backgroundPosition")=="0% 0%"){
+                            that.css("backgroundPosition","0% 100%");
+                            that.parent().parent().next().slideDown()
+                        }else{
+                            that.css("backgroundPosition","0% 0%");
+                            that.parent().parent().next().slideUp()
+                        }
+                    }
+                });
+            }
+            function selectNode(){
+                $(".aside-navs").on("click","span",function(){
+                    //类型节点
+                    var pre = $(this).prev() ;
+                    angular.element(".icon-jj").css("backgroundPosition","0% 0%");
+                    var id = pre.attr("data-option");
+                    selectCall(id) ;   //添加bot分類
+                    angular.element(".rootClassfy,.menus").slideToggle();
+                });
+            }
+            tree.init() ;
+            $timeout(function(){
+                tree.getChildNode() ;
+                tree.selectNode() ;
+            },200) ;
+            //return tree ;
+        }
+        //BOT搜索自动补全
+        function searchBotAutoTag(el,url,callback){
+            $(el).autocomplete({
+                serviceUrl: url,
+                type:'POST',
+                params:{
+                    "categoryName":$(el).val(),
+                    "categoryAttributeName":"node",
+                    "categoryApplicationId":APPLICATION_ID
+                },
+                paramName:'categoryName',
+                dataType:'json',
+                transformResult:function(data){
+                    var result = {
+                        suggestions : []
+                    };
+                    if(data.data){
+                        angular.forEach(data.data,function(item){
+                            result.suggestions.push({
+                                data:item.categoryId,
+                                value:item.categoryName,
+                                type : item.categoryTypeId
+                            })
+                        }) ;
+                    }
+                    return result;
+                },
+                onSelect: function(suggestion) {
+                    console.log(suggestion) ;
+                    callback(suggestion) ;
+                }
+            });
+        }
+        // 键盘事件
+        function keyEnter(e,callback) {
+            var  srcObj = e.srcElement ? e.srcElement : e.target;
+            var keycode = window.event?e.keyCode:e.which;
+            if(keycode==13){
+                srcObj.blur();
+                callback();
+            }
         }
 }])};

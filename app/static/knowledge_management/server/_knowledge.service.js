@@ -34,20 +34,18 @@ class KnowledgeService {
                  **********************************/
 //   bot
                 //获取bot全路径
-                this.getBotFullPath = $resource(API_MODELING + "/category/getcategoryfullname", {}, {});
+                this.getBotFullPath = $resource(API_MS + "/classify/get/fullname/:id", {}, {});
                 //根据名字模糊搜索
                 this.seekBotByName = $resource(API_MODELING + "/category/searchbycategoryname", {}, {});
                 //获取bot子节点
-                this.queryChildNodes = $resource(API_MODELING + "/category/listbycategorypid", {}, {});
+                this.queryChildNodes = $resource(API_MS + "/classify/get/children/:id", {}, {});
 //   faq知识新增
                 // 获取相关问
                 this.queryFapRelatedQuestion = $resource(API_MS + "/conceptKnowledge/getKnowledgeTitle", {}, {});
-                // 检验扩展问
-                this.queryFaqExtension = $resource(API_MS + "/faqKnowledge/checkExtensionQuestion", {}, {});
                 // 保存
-                this.storeFaqKnow = $resource(API_MS + "/faqKnowledge/addFAQKnowledge", {}, {});
+                this.storeFaqKnow = $resource(API_MS + "/knowledge/FAQ/add", {}, {});
                 // 编辑
-                this.updateFaqKnow = $resource(API_MS + "/faqKnowledge/editFAQKnowledge", {}, {});
+                this.updateFaqKnow = $resource(API_MS + "/knowledge/FAQ/update", {}, {});
 //   概念知识新增
                 // 获取相关问
                 this.queryConceptRelatedQuestion = $resource(API_MS + "/conceptKnowledge/getKnowledgeTitle", {}, {});

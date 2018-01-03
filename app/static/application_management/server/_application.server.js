@@ -65,9 +65,9 @@ class ApplicationServer {
 
 //  转人工设置
         //获取列表
-        this.manualGetData = $resource(API_APPLICATION+"/artificial/get/setting/"+APPLICATION_ID, {}, {});
+        this.manualGetData = $resource(API_APPLICATION+"/config/customservice/get/:applicationId", {}, {});
         //修改
-        this.manualSaveData = $resource(API_APPLICATION+"/artificial/update", {}, {});
+        this.manualSaveData = $resource(API_APPLICATION+"/config/customservice/update", {}, {});
 
 
        

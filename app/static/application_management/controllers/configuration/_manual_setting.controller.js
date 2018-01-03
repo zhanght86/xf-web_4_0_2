@@ -59,8 +59,8 @@ module.exports = applicationManagementModule =>{
          **/
         function getData(){
             var i = layer.msg('资源加载中..',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:1000});
-            ApplicationServer.manualGetData.save({
-                // applicationId : APPLICATION_ID
+            ApplicationServer.manualGetData.get({
+                applicationId : APPLICATION_ID
             },function(data){
                 layer.close(i);
                 console.log(data);

@@ -185,26 +185,32 @@ gulp.task('watch-module', function(done) {
 });
 //使用connect启动一个Web服务器
 //使用'http-proxy-middleware'作为反向代理
-var host = JSON.parse(fs.readFileSync("./server.config.json")) ;
+// var host = JSON.parse(fs.readFileSync("./server.config.json")) ;
 gulp.task('server', function() {
-    connect.server({
-        root:  host.root,
-        port: host.port,
-        livereload: true,
-        middleware: function(connect, opt) {
-            // return host.proxy
-            var proxyList = [] ;
-            for(var i = 0 ; i<host.proxy.length;i++){
-                proxyList.push(
-                    proxy(host.proxy[i].location, {
-                    target: host.proxy[i].target,
-                    changeOrigin:true
-                })
-                )
-            }
-            return proxyList
+    gulp.src("./server.config.json",function(e,file){
+        console.log(e,file)
+        if(file.length!=0){
+            var host = JSON.parse(fs.readFileSync("./server.config.json")) ;
+            connect.server({
+                root:  host.root,
+                port: host.port,
+                livereload: true,
+                middleware: function(connect, opt) {
+                    var proxyList = [] ;
+                    for(var i = 0 ; i<host.proxy.length;i++){
+                        proxyList.push(
+                            proxy(host.proxy[i].location, {
+                            target: host.proxy[i].target,
+                            changeOrigin:true
+                        })
+                        )
+                    }
+                    return proxyList
+                }
+            });
         }
-    });
+    })
+
 });
 //发布
 gulp.task('release', ['imgmin', 'fileinclude', 'md5:css', 'md5:js', 'open']);

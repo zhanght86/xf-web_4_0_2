@@ -48,15 +48,15 @@ module.exports = angular => {
     //--------------------------------------------------
     //         directive
     //--------------------------------------------------
-    // require('../directives/_bot.directive')(knowledgeManagementModule);
+    require('../directives/_bot.directive')(knowledgeManagementModule);
     // require('../directives/_business_frame.directive')(knowledgeManagementModule);
     // require('../directives/_contenteditable.directive')(knowledgeManagementModule);
-    // require('../directives/_date.directive')(knowledgeManagementModule);
-    // require('../directives/_emotion.directive')(knowledgeManagementModule);
-    // require('../directives/_ext_add.directive')(knowledgeManagementModule);
-    // require('../directives/_gateway_menu.directive')(knowledgeManagementModule);
-    // require('../directives/_know_content_configuration.directive')(knowledgeManagementModule);
-    // require('../directives/_upload')(knowledgeManagementModule);
+    require('../directives/_date.directive')(knowledgeManagementModule);
+    require('../directives/_emotion.directive')(knowledgeManagementModule);
+    require('../directives/_ext_add.directive')(knowledgeManagementModule);
+    require('../directives/_gateway_menu.directive')(knowledgeManagementModule);
+    require('../directives/_know_content_configuration.directive')(knowledgeManagementModule);
+    require('../directives/_upload')(knowledgeManagementModule);
     //--------------------------------------------------
     //         filter
     //--------------------------------------------------
@@ -70,21 +70,22 @@ module.exports = angular => {
     //--------------------------------------------------
     //         页面缓存
     //--------------------------------------------------
-    // knowledgeManagementModule
-    //     .run(function($templateCache){
-    //     // 知识内容配置
-    //     $templateCache.put("has-dialog",'<div ng-include="\'/static/knowledge_manage/components/know_content_has_dialog.html\'"></div>');
-    //     $templateCache.put("not-dialog",'<div ng-include="\'/static/knowledge_manage/components/know_content_not_dialog.html\'"></div>');
-    //     // bot 选择框
-    //     $templateCache.put("bot-class",'<div ng-include="\'/static/knowledge_manage/components/bot.html\'"></div>');
-    //     $templateCache.put("bot-class-not-dialog",'<div ng-include="\'/static/knowledge_manage/components/bot_not_dialog.html\'"></div>');
-    //     //扩展问
-    //     $templateCache.put("ext",'<div ng-include="\'/static/knowledge_manage/components/ext.html\'"></div>');
-    //     $templateCache.put("ext-not-dialog",'<div ng-include="\'/static/knowledge_manage/components/ext_not_dialog.html\'"></div>');
-    //     // 时间选择
-    //     $templateCache.put("select-start-end-time",'<div ng-include="\'/static/knowledge_manage/components/select_start_end_time.html\'"></div>');
-    //     $templateCache.put("select-start-end-time-not-dialog",'<div ng-include="\'/static/knowledge_manage/components/select_start_end_time_not_dialog.html\'"></div>');
-    // });
+    knowledgeManagementModule
+        .run(function($templateCache){
+        // 知识内容配置
+        $templateCache.put("has-dialog",require("../views/components/know_content_has_dialog.html"));
+        $templateCache.put("not-dialog",require("../views/components/know_content_not_dialog.html"));
+        // bot 选择框
+        $templateCache.put("bot-class",require("../views/components/bot.html"));
+
+        $templateCache.put("bot-class-not-dialog",require("../views/components/bot_not_dialog.html"));
+        //扩展问
+        $templateCache.put("ext",require("../views/components/ext.html"));
+        $templateCache.put("ext-not-dialog",require("../views/components/ext_not_dialog.html"));
+        // 时间选择
+        $templateCache.put("select-start-end-time",require("../views/components/select_start_end_time.html"));
+        $templateCache.put("select-start-end-time-not-dialog",require("../views/components/select_start_end_time.html"));
+    });
 };
 
 

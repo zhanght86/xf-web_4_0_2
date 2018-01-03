@@ -9,8 +9,8 @@ module.exports = module =>{
         return function (value,params) {
             var result;
             angular.forEach(params,function(item){
-                if(value == item.channelCode){
-                    result = item.channelName
+                if(value == item.code){
+                    result = item.name
                 }
             });
             return result

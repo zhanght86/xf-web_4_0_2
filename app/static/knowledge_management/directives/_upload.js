@@ -5,7 +5,8 @@
  * webuploader  ====》》  指令
  */
 
-knowledge_static_web
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule
     .directive("uploaderFactor", ["$parse", function($parse) {
     return {
         restrict:'EA',
@@ -235,7 +236,7 @@ knowledge_static_web
                     }, 0)
                 }
             }
-        }]) ;
+        }])} ;
     // .directive("uploaderHandle2", ["$parse", function($parse) {
     //     return {
     //         restrict:'EA',

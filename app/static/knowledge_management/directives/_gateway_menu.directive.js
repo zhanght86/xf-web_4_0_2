@@ -2,7 +2,8 @@
  * Created by mileS on 2017/4/12.
  */
 
-knowledge_static_web.directive("gatewayMenu", function () {
+module.exports = knowledgeManagementModule =>{
+    knowledgeManagementModule.directive("gatewayMenu", function () {
     return {
         restrict: "AE",
         scope: {},
@@ -18,9 +19,7 @@ knowledge_static_web.directive("gatewayMenu", function () {
             })
         }
     }
-});
-
-knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
+}).directive('plupload', ['$timeout',"$cookieStore","$state",
     function ($timeout,$cookieStore,$state) {
     return {
         restrict: 'A',
@@ -136,9 +135,7 @@ knowledge_static_web.directive('plupload', ['$timeout',"$cookieStore","$state",
             uploader.init();
         }
     };
-}]);
-
-knowledge_static_web.directive('tempPlupload', ['$timeout',"$location","$state", function ($timeout,$location,$state) {
+}]).directive('tempPlupload', ['$timeout',"$location","$state", function ($timeout,$location,$state) {
     return {
         restrict: 'A',
         //template : '<span></span>'  ,
@@ -262,7 +259,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout',"$location","$state",
             uploader.init();
         }
     };
-}]);
+}])
 
 // knowledge_static_web.directive('sinPlupload', ['$timeout', function ($timeout) {
 //     return {
@@ -374,7 +371,7 @@ knowledge_static_web.directive('tempPlupload', ['$timeout',"$location","$state",
 //     };
 // }]);
 
-knowledge_static_web.directive("advanceMenu", function () {
+.directive("advanceMenu", function () {
     return {
         restrict: "AE",
         scope: {},
@@ -392,9 +389,7 @@ knowledge_static_web.directive("advanceMenu", function () {
             });
         }
     }
-});
-
-knowledge_static_web.directive("advansearchdiv", function () {
+}).directive("advansearchdiv", function () {
     return {
         restrict: "AE",
         scope: {},
@@ -410,12 +405,12 @@ knowledge_static_web.directive("advansearchdiv", function () {
             })
         }
     }
-});
+})
 
 
 // src \app\static\knowledgeManagement\document_know_process\main_container.html
 // For 选择模板名称
-knowledge_static_web.directive("templateInput", function () {
+.directive("templateInput", function () {
     return {
         restrict: "AE",
         link: function ($scope, elem, attrs) {
@@ -429,9 +424,9 @@ knowledge_static_web.directive("templateInput", function () {
             })
         }
     }
-});
+})
 //模板选择 存储id
-knowledge_static_web.directive("templateCon", function () {
+.directive("templateCon", function () {
     return {
         restrict: "AE",
         link: function ($scope, elem, attrs) {
@@ -450,12 +445,12 @@ knowledge_static_web.directive("templateCon", function () {
             });
         }
     }
-});
+})
 
 
 
 //模板选择 关闭按钮
-knowledge_static_web.directive("closeMenu", function () {
+.directive("closeMenu", function () {
     return {
         restrict: "AE",
         scope: {},
@@ -468,10 +463,10 @@ knowledge_static_web.directive("closeMenu", function () {
             });
         }
     }
-});
+})
 
 //================================================================================= no-use ==========================================================//
-knowledge_static_web.directive("processMethodMenu", function () {
+.directive("processMethodMenu", function () {
     return {
         restrict: "AE",
         link: function ($scope, elem, attrs) {
@@ -488,8 +483,8 @@ knowledge_static_web.directive("processMethodMenu", function () {
             })
         }
     }
-});
-knowledge_static_web.directive("mouldShowMenu", function () {
+})
+.directive("mouldShowMenu", function () {
     return {
         restrict: "AE",
         scope: {},
@@ -501,8 +496,8 @@ knowledge_static_web.directive("mouldShowMenu", function () {
             })
         }
     }
-});
-knowledge_static_web.directive("onOff", function () {
+})
+.directive("onOff", function () {
     return {
         restrict: "AE",
         scope: {
@@ -524,13 +519,12 @@ knowledge_static_web.directive("onOff", function () {
             })
         }
     }
-});
-
+})
 
 /**
  * ztree下拉树控件,文档上传，单条添加
  */
-knowledge_static_web.directive("dropDownMenuByZtree", function () {
+.directive("dropDownMenuByZtree", function () {
     return {
         restrict: "AE",
         scope: {
@@ -696,6 +690,6 @@ knowledge_static_web.directive("dropDownMenuByZtree", function () {
             });
         }
     }
-});
+})};
 
 
