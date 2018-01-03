@@ -4,22 +4,21 @@
  */
 module.exports=applAnalysisModule => {applAnalysisModule
              .controller('sessionDetailsController',
-              ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore",
-              ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore) => {
-        //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
+              ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$location",
+              ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$location) => {
         $scope.vm = {
             scan:scan ,
             getList : getList ,
             listData : null ,   // table 数据
-           // paginationConf : null ,//分页条件
-            paginationConf:{
-
+            paginationConf : {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : getList,
+                location : true
             },
-            pageSize : 10  , //默认每页数量
             dimensions : [] ,
             channels : [] ,
-            channelId  : null ,
-           // dimensionId : null ,
+            channelId  : 130 ,
             timeType : 1,
             timeStart : null,
             timeEnd : null,
@@ -39,11 +38,41 @@ module.exports=applAnalysisModule => {applAnalysisModule
             exportExcel : exportExcel  //导出
         };
 
+         /**
+         * 表格列表
+         **/
 
-        /**
-         *  init echart 图表
-         */
-        var myChart = echarts.init(document.getElementById('sessionDetail'));
+        getList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function getList(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+            }
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+            AppAnalysisServer.sessionGetList.save({
+                "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
+                "requestTimeType":$scope.vm.timeType,
+                "startTime": $scope.vm.timeStart,
+                "endTime": $scope.vm.timeEnd,
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
+            },function(data){
+                layer.close(i);
+                 if(data.status==200){
+                 $scope.vm.listData = data.data.objs;
+                 $scope.vm.paginationConf.totalItems = data.data.total;
+                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+                   if(data.data.objs==null){
+                      layer.msg(data.info)
+                   }
+               }else{
+                   layer.close(i);
+               }
+            },function(err){
+                layer.close(i);
+                $log.log(err);
+            });
+        }
 
         /**
          * 点击查看
@@ -51,11 +80,22 @@ module.exports=applAnalysisModule => {applAnalysisModule
         function scan(id){
             $scope.vm.userId = id;
             getScanData(id,1);
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/session_details/session_details_dialog.html','930px',function(){
-
-            },function(){
+              var dialog = ngDialog.openConfirm({
+                template:"/static/application_analysis/views/session_details/session_details_dialog.html",
+                scope: $scope,
+                width:"930px",
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回调
+                    if(e === 1){
+                       
+                }
+            }
 
             });
+           
         }
         function clearHistory(){
             $scope.vm.total = 0;
@@ -70,45 +110,28 @@ module.exports=applAnalysisModule => {applAnalysisModule
             //清空历史数据
             clearHistory();            
             AppAnalysisServer.getScanData.save({
-                "applicationId" :APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
+                "channelId":$scope.vm.channelId==130?null:$scope.vm.channelId,
                // "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize,
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
                 "userId" : id
             },function(data){
-                if(data!=null){
-                    $scope.vm.total = data.data.total/$scope.vm.pageSize<1?1:data.data.total/$scope.vm.pageSize;
+                if(data.status==200){
+                    $scope.vm.total = data.data.total/$scope.vm.paginationConf.pageSize<1?1:data.data.total/$scope.vm.paginationConf.pageSize;
                     $scope.vm.timeList = data.data.objs;
-                    getdetail($scope.vm.timeList[0].sessionId,1);
+                   getdetail($scope.vm.timeList[0].sessionId,1);
+                 
+                }else{
+                    layer.msg(data.info)
                 }
             },function(err){
                 $log.log(err);
             });
         }
 
-        /**
-         * list 分页变化加载数据
-         **/
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                getList(current);
-            }
-        });
-
-        /**
-         * 排序  按会话数量
-         **/
-        $scope.$watch('vm.orderForSessionNumber', function(){
-            if($scope.vm.paginationConf.currentPage){
-                getList($scope.vm.paginationConf.currentPage);
-            }else{
-                getList(1);
-            }
-        });
 
         /**
          * 排序 按时间
@@ -122,38 +145,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
             }
         });
 
-        /**
-         * 表格列表
-         **/
-        function getList(index){
-            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            AppAnalysisServer.sessionGetList.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
-                "requestTimeType":$scope.vm.timeType,
-                "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeEnd,
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize,
-                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
-                "orderForSessionTime": $scope.vm.orderForSessionTime
-            },function(data){
-                layer.close(i);
-                console.log(data) ;
-                var xData=[] ,yData=[] ;
-                angular.forEach(data.data.objs,function(item,index){
-                    xData.push(item.userId) ;
-                    yData.push(item.sessionNumber);
-                    console.log(xData);
-                }) ;
-                myChart.setOption(setEchartOption(xData,yData));
-                $scope.vm.listData = data.data.objs;
-            },function(err){
-                layer.close(i);
-                $log.log(err);
-            });
-        }
+   
 
         /**
          * 弹窗获取
@@ -161,8 +153,8 @@ module.exports=applAnalysisModule => {applAnalysisModule
         function getdetail(sessionId,index){            
             AppAnalysisServer.getdetail.save({
                 "sessionId" : sessionId,
-                "index": (index-1)*$scope.vm.pageSize,
-                "pageSize": $scope.vm.pageSize
+               "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
             },function(data){
                 if(data!=null){
                     $scope.vm.talkDetail = data.data.objs;
@@ -191,15 +183,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
             }
         }
 
-        /**
-         * 初始化数据
-         **/
-        init();
-        function init(){
-           // getDimensions();
-           // getChannel();
-            getList(1);
-        }
+      
 
         /**
          * 导出表格
@@ -237,72 +221,5 @@ module.exports=applAnalysisModule => {applAnalysisModule
 
         }
 
-        function setEchartOption(xData,yData){
-            return {
-                //title: '知识点排名统计表' ,
-                color: ['#3398DB'],
-                tooltip : {
-                    trigger: 'axis',
-                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis : [
-                    {
-                        type : 'category',
-                        data : xData,
-                        axisTick: {
-                            alignWithLabel: true
-                        } ,
-                        axisLabel:{
-                            interval: 0 ,
-                            rotate:-30 ,
-                            formatter:function(val){
-                                if(val.length>10){
-                                    val = val.toString().substring(0,10)+"...";
-                                }
-                                return val //横轴信息文字竖直显示
-                            }
-                        } ,
-                    }
-                ],
-                grid: { // 控制图的大小，调整下面这些值就可以，
-                    x: 40,
-                    x2: 100,
-                    y2: 150// y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
-                },
-                yAxis : [
-                    {
-                        type : 'value'
-                    }
-                ],
-                series : [
-                    {
-                        name:'访问次数',
-                        type:'bar',
-                        barWidth: '60%',
-                        data:yData,
-                        itemStyle: {
-                            normal: {
-                                color: function (params) {
-                                    // build a color map as your need.
-                                    var colorList = [
-                                        '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
-                                        '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
-                                        '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
-                                    ];
-                                    return colorList[params.dataIndex]
-                                }
-                            }
-                        }}
-                ]
-            }
-        }
     }
 ])};
