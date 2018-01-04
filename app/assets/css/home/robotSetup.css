@@ -75,13 +75,10 @@
 /*裁剪弹窗*/
 .pop-cut-box{height: 386px; position: relative;}
 .cut-btn{padding: 0 20px; font-size: 14px; line-height: 35px;}
-
-
 /*客服场景知识总览*/
 .search-box{display: inline-block; position: relative; vertical-align: middle; text-align: left;}
 .search-box:after{content: ""; width: 19px; height: 19px; display: block; position: absolute; right: 10px; top: 50%; margin-top: -10px; background: url(../../images/images/icon-search_03.png) no-repeat right center;}
 .se-search-btn{ background-color: #fff; border: 1px solid #3ea9fb; color: #3ea9fb; line-height: 32px; padding: 0 20px; border-radius: 2px; vertical-align: middle;}
-
 
 .csso-cz-box{height: 34px;}
 .csso-cont .csso-hd{height: 40px; line-height: 40px; border-top: 1px solid #dadada; background-color: #f0f0f0; padding: 0 15px; font-size: 14px; color: #666;}

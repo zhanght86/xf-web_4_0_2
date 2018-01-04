@@ -38,6 +38,7 @@ const xf_web = angular.module('xf_web', ngDepModules) ;
 require('./entrance/app.controller')(xf_web);
 // 加载指令
 require('./entrance/app.directive')(xf_web);
+require('./components/page/page')(xf_web);
 // 加载config
 require('./entrance/app.config')(xf_web);
 // 加载service

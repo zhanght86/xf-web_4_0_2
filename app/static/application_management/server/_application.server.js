@@ -8,28 +8,6 @@ class ApplicationServer {
                 /******************************
                                   *应用配置*
                             ********************************/
-//   渠道管理
-        //请求渠道列表
-        this.queryChannelList = $resource(API_APPLICATION+"/channel/listChannelByPage", {}, {});
-        //获取黑名单列表
-        this.queryBlacklist = $resource(API_APPLICATION+"/channel/listBlackListByPage", {}, {});
-        //添加黑名单
-        this.addBlacklist = $resource(API_APPLICATION+"/channel/addBlackList", {}, {});
-        //校验黑名单
-        this.checkBlackList = $resource(API_APPLICATION+"/channel/addBlackList", {}, {});
-        //移除黑名单 》》单个批量合并为一个
-        this.removeBlacklist = $resource(API_APPLICATION+"/channel/batchDelBlackList", {}, {});
-        //改变渠道状态
-        this.changeChannelStatus = $resource(API_APPLICATION+"/channel/changeStatus", {}, {});
-//   场景管理
-        //获取知识类型
-        this.queryKnowTypeList = $resource(API_APPLICATION+"/scene/listKnowledgeTypeByApplicationId", {}, {});
-        //获取交互方式
-        this.queryInterviewModeList = $resource(API_APPLICATION+"/scene/listExchangeModeByApplicationId", {}, {});
-        //多轮会话搜索
-        this.searchMultipleConversation = $resource(API_APPLICATION+"/scene/findMultiInteractiveSetting", {}, {});
-        //多轮会话设置
-        this.storeMultipleConversation = $resource(API_APPLICATION+"/scene/saveMultiInteractiveSetting", {}, {});
 
 //   热点知识设置
         //获取热点知识列表 + 查询       删除 /hotQuestion/getHotQuestionList
@@ -55,7 +33,7 @@ class ApplicationServer {
 
 //   机器人设置
         //查看机器人参数
-        this.queryRobotParameter = $resource(API_APPLICATION+"/config/get/robot/:id", {}, {});
+        this.queryRobotParameter = $resource(API_APPLICATION+"/config/robot/get/:id", {}, {});
         //更新机器人参数
         this.updateRobotParameter = $resource(API_APPLICATION+"/config/update/robot", {}, {});
         //保存经典机器人头像
@@ -144,8 +122,6 @@ class ApplicationServer {
         this.stopAllService = $resource(API_APPLICATION+"/service/stop/all", {}, {});
         //查看应用信息
         this.viewApplicationInfo = $resource(API_APPLICATION+"/application/get/:id", {}, {});
-        //查看场景业务框架数量
-        this.viewFrameNumber = $resource(API_APPLICATION+"/application/get/frame", {}, {});
         //修改应用名称
         this.updateApplicationName = $resource(API_APPLICATION+"/application/update", {}, {});
         //删除当前应用（当前所有服务）
