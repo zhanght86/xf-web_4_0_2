@@ -32,9 +32,11 @@ module.exports=functionalTestModule => {
             //-----------------------------渠道   服务
             listService:[],
             serviceId : "" ,
-            channel:"",
-            channelList : [] ,
-            //getService : getService,
+            // channel:"",
+            // channelList : [] ,
+            channel:'',
+            selectChannel : selectChannel,
+            getService : getService,
             //------------------------------渠道   服务end
             addRemarks : addRemarks,                //备注
             remarks : remarks,
@@ -42,27 +44,33 @@ module.exports=functionalTestModule => {
 
 
         };
-
+        /**
+         * 选择渠道
+         */
+        function selectChannel(channelCode){
+            $scope.vm.channel=channelCode;
+        }
         /*****************
          * 页面初始化加载已发布服务，页面加载
          * *****************/
-        //getService();
+        getService();
 
-        // function getService(){
-        //     FunctionServer.getService.save({
-        //         applicationId:APPLICATION_ID
-        //     },function(data){
-        //         if(data.status == 10000){
-        //             $scope.vm.listService = data.data;
-        //             $scope.vm.serviceId = data.data[0].serviceId;
-        //         }else if(data.status == 10005){
-        //             layer.msg('当前应用下没有发布服务，请发布服务后进行测试');
-        //         }
-        //     },function(err){
-        //         $log.log(err);
-        //     });
-        //
-        // }
+        function getService(){
+            FunctionServer.getService.save({
+                //applicationId:APPLICATION_ID,
+            },function(data){
+                if(data.status == 200){
+                    console.log(data);
+                    $scope.vm.listService = data.data;
+                    $scope.vm.serviceId = data.data[0].id;
+                }else if(data.status==500){
+                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
+                }
+            },function(err){
+                $log.log('请求请求失败');
+            });
+
+        }
 
         /*****************
          * //获取列表  、查询
@@ -115,15 +123,16 @@ module.exports=functionalTestModule => {
                 layer.msg("请选择要删除的文件")
             }else{
                 layer.confirm('确认删除文件？', {
-                    btn: ['确定','取消'] //按钮
+                    btn: ['确定','取消']                     //按钮
                 }, function(){
                     FunctionServer.batchDelete.save({},{
                         "ids": batchIds
                     },function(data){
-                        if(data.status == 10010){
+                        if(data.status == 200){
                             initBatchTest();
                             layer.msg("文件删除成功") ;
                             layer.close();
+                            layer.closeAll();
                             $state.reload();
                         }else if(data.status == 500){
                             layer.msg("文件删除失败") ;

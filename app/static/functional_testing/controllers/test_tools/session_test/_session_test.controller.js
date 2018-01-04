@@ -45,7 +45,6 @@ module.exports=functionalTestModule => {
         getService();
         function getService(){
             FunctionServer.getService.save({
-                //applicationId:APPLICATION_ID,
             },function(data){
                 if(data.status == 200){
                     console.log(data);

@@ -12,19 +12,18 @@ class FunctionServer{
                             ********************************/
     //问法测试
     this.testQuestion = $resource(API_MS+"/question/test/passageway", {}, {});
+
             /******************************
                     *会话测试*    API_APPLICATION_TEST = "/api/application"
                     ********************************/
     //test
     this.sessioonTest = $resource(API_MS+'/chat/test/passageway',{},{});
     //页面初始化加载服务
-    this.getService = $resource(API_APPLICATION_TEST+'/service/get/release',{},{});
+    this.getService = $resource(API_APPLICATION_TEST+'/service/released/get',{},{});
                                                       
                     /******************************
                          *批量测试*    API_APPLICATION_TEST = "/api/application"
                         ********************************/
-    //页面初始化加载已发布服务
-    //this.getService = $resource(API_APPLICATION_TEST+'/service/listServiceByApplicationId',{},{});
                                                       
     //查询
     this.BatchsearchFile = $resource(API_MS+'/test/get/file',{},{});
@@ -33,12 +32,20 @@ class FunctionServer{
     //标注
     this.remark = $resource(API_MS+'/test/add/remark',{},{});
 
-
     //startTest
     //this.startTest = $resource(API_APPLICATION_TEST+'/batchTest/startTest',{},{});
 
     //start
     //this.start =  $resource(API_APPLICATION_TEST+'/batchTest/getChannelAndUserName', {}, {});
+
+        /******************************
+                                    *分词工具*    API_APPLICATION_TEST = "/api/application"
+                             ********************************/
+    //获取列表
+    this.getPartList = $resource(API_MS+'/participle/test/get/list',{},{});
+    //删除
+    this.deletePart = $resource(API_MS+'participle/test/delete',{},{});
+
 
 
                                 /******************************

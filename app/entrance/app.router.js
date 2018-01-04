@@ -338,25 +338,25 @@ module.exports = (angular) => {
                 }
             }
         },
-        {
-            name: "ST.participleResult",
-            url: "/participleResult",
-            data: {
-                roles: []
-            },
-            parent : "ST",
-            title : "分词工具" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/functional_testing/views/participle_tool/participle_result.html"),
-                    controller: "ParticipleResultController"
-                }
-            }
-        },
+        // {
+        //     name: "ST.participleResult",
+        //     url: "/participleResult",
+        //     data: {
+        //         roles: []
+        //     },
+        //     parent : "ST",
+        //     title : "分词工具" ,
+        //     views: {
+        //         "header": {
+        //             template: nav,
+        //             controller: "NavController"
+        //         },
+        //         "content": {
+        //             template: require("../static/functional_testing/views/participle_tool/participle_result.html"),
+        //             controller: "ParticipleResultController"
+        //         }
+        //     }
+        // },
 
 
         //----------智能学习-------------

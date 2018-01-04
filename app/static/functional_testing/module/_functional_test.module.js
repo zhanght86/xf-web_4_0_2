@@ -12,7 +12,7 @@ module.exports = angular => {
     //--------------------------------------------------
     //          directive
     //--------------------------------------------------
-    require('../../../components/page/page')(functionalTestModule);  // 分页
+    //require('../../../components/page/page')(functionalTestModule);  // 分页
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------
@@ -42,6 +42,7 @@ module.exports = angular => {
     //         directive
     //--------------------------------------------------
     require('../directives/_batch_test.directive')(functionalTestModule);
+    require('../directives/_part_test.directive')(functionalTestModule);
     //--------------------------------------------------
     //         filters
     //--------------------------------------------------

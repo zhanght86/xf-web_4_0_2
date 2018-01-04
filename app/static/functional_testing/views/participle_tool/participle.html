@@ -9,17 +9,20 @@
         <div class="cl" style="width:420px;height:30px;margin:0 auto 20px;">
             <select class="sel bd L mr-10" id="selected" ng-model="vm.searchType">
                 <option value="0">全部</option>
-                <option value="">待测试</option>
-                <option value="">测试中</option>
-                <option value="">已完成</option>
+                <option value="21006">分词失败</option>
+                <option value="21007">待分词</option>
+                <option value="21008">分词中</option>
+                <option value="21009">已完成</option>
+
             </select>
             <input type="text" class="input-text L mr-10" ng-model="vm.selectInput" placeholder="测试文件/操作人" style="width:250px;height:30px;" />
-            <button class="btn1 btn1_blue L" type="button"  ng-click="">查找</button>
+            <button class="btn1 btn1_blue L" type="button"  ng-click="vm.getPartList(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)">查找</button>
         </div>
         <div class="bd p20" style="background:#fcfdfd;">
             <div class="mb-10 cl">
                 <div class="L">
-                    <button class="L mr-10 btn1 btn1_blue">上传</button>
+                    <!--<button class="L mr-10 btn1 btn1_blue">上传</button>-->
+                    <div class="L mr-10" style="display:inline-block;"  part-test  factor="vm.paginationConf.currentPage" is-upload="vm.upload"></div>
                     <span class="L btn1 btn_delete" ng-click="" style="line-height:20px;display:block;"> 删除</span>
                 </div>
                 <div class="R">
@@ -43,46 +46,43 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr >
-                                <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.batchNumberId)"  ng-click="vm.selectSingle(v.batchNumberId)"></td>
-                                <!--<td>1</td>-->
-                                <td><a href="javascript:;" class="c_blue" ui-sref="functionalTest.participleResult">高铁管家第一版.xlsx</a></td>
-                                <td>分词中</td>
-                                <td>100</td>
-                                <td>2016-8-17 13:45:23</td>
-                                <td>cuipeijun</td>
-                                <td><a href="javascript:;" class="c_blue">停止</a></td>
-                            </tr>
-                            <tr >
-                                <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.batchNumberId)"  ng-click="vm.selectSingle(v.batchNumberId)"></td>
-                                <!--<td>1</td>-->
-                                <td><a href="javascript:;" class="c_blue" ui-sref="functionalTest.participleResult">高铁管家第一版.xlsx</a></td>
-                                <td>分词中</td>
-                                <td>100</td>
-                                <td>2016-8-17 13:45:23</td>
-                                <td>cuipeijun</td>
+                            <tr ng-repeat="item in vm.listData" >
+                                <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(item.id)"  ng-click="vm.selectSingle(item.id)"></td>
+
+                                <td class="c_blue">{{item.fileName}}</td>
+                                <td ng-if="item.status==21007">待分词</td>
+                                <td ng-if="item.status==21008">分词中</td>
+                                <td ng-if="item.status==21009">已完成</td>
+
+                                <td>{{item.amount}}</td>
+                                <td>{{item.testTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td>{{item.modifierName}}</td>
                                 <td>
-                                    <a href="javascript:;" class="mr10 c-green">重测</a>
-                                    <a href="javascript:;" class="c_blue" ui-sref="ST.participleResult">查看</a>
+                                    <a href="javascript:;" class="mr10 c_blue" ng-if="item.status==21007">启动</a>
+                                    <a href="javascript:;" class=" mr10 c_orange " ng-if="item.status==21009">重测</a>
+                                    <a href="javascript:;" class="c-green" ng-if="item.status==21009">下载</a>
                                 </td>
                             </tr>
-                            <tr >
-                                <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.batchNumberId)"  ng-click="vm.selectSingle(v.batchNumberId)"></td>
-                                <!--<td>1</td>-->
-                                <td><a href="javascript:;" class="c_blue" ui-sref="functionalTest.participleResult">高铁管家第一版.xlsx</a></td>
-                                <td>分词中</td>
-                                <td>100</td>
-                                <td>2016-8-17 13:45:23</td>
-                                <td>cuipeijun</td>
-                                <td><a href="javascript:;" class="c_blue">启动</a></td>
-                            </tr>
+                            <!--<tr >-->
+                                <!--<td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.batchNumberId)"  ng-click="vm.selectSingle(v.batchNumberId)"></td>-->
+                                <!--&lt;!&ndash;<td>1</td>&ndash;&gt;-->
+                                <!--<td><a href="javascript:;" class="c_blue" ui-sref="functionalTest.participleResult">高铁管家第一版.xlsx</a></td>-->
+                                <!--<td>分词中</td>-->
+                                <!--<td>100</td>-->
+                                <!--<td>2016-8-17 13:45:23</td>-->
+                                <!--<td>cuipeijun</td>-->
+                                <!--<td>-->
+                                    <!--<a href="javascript:;" class="c_blue">启动</a>-->
+                                    <!--<a href="javascript:;" class="mr10 c-green">重测</a>-->
+                                    <!--<a href="javascript:;" class="c_blue" >下载</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+
                         </tbody>
                     </table>
 
                     <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
-                    <div class="text-r pt-10">
-                        <button type="button" class="btn1 btn1_blue" >导出</button>
-                    </div>
+
                 </div>
             </div>
         </div>
