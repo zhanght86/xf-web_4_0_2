@@ -131,7 +131,6 @@ module.exports=functionalTestModule => {
                         if(data.status == 200){
                             initBatchTest();
                             layer.msg("文件删除成功") ;
-                            layer.close();
                             layer.closeAll();
                             $state.reload();
                         }else if(data.status == 500){

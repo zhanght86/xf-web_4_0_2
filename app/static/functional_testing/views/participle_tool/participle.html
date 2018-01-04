@@ -1,6 +1,6 @@
 <div ui-view="header"></div>
 
-<div class="wrap pr chat_test_wrap" style="padding-top:10px;">
+<div class="wrap pr chat_test_wrap participle" style="padding-top:10px;">
 
     <div class="p20 cl" style="background:#fff;height:100%;">
         <div class="r-cont-hd mb-10">
@@ -23,7 +23,7 @@
                 <div class="L">
                     <!--<button class="L mr-10 btn1 btn1_blue">上传</button>-->
                     <div class="L mr-10" style="display:inline-block;"  part-test  factor="vm.paginationConf.currentPage" is-upload="vm.upload"></div>
-                    <span class="L btn1 btn_delete" ng-click="" style="line-height:20px;display:block;"> 删除</span>
+                    <button class="L btn1 btn_delete"  ng-click="vm.deletePart(vm.deleteIds)"> 删除</button>
                 </div>
                 <div class="R">
                     <!--<span class="c-999 pl-10">共有数据：<strong >3</strong> 条 </span>-->
@@ -58,9 +58,10 @@
                                 <td>{{item.testTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                 <td>{{item.modifierName}}</td>
                                 <td>
-                                    <a href="javascript:;" class="mr10 c_blue" ng-if="item.status==21007">启动</a>
+                                    <a href="javascript:;" class="mr10 c_blue" ng-if="item.status==21007" ng-click="vm.startTestPart(item.id)">启动</a>
                                     <a href="javascript:;" class=" mr10 c_orange " ng-if="item.status==21009">重测</a>
-                                    <a href="javascript:;" class="c-green" ng-if="item.status==21009">下载</a>
+                                    <a href="javascript:;" ng-click="vm.exportPart(item.id)" class="c-green" ng-if="item.status==21009">下载</a>
+                                    <!--<a href="api/ms/participle/test/result/export/excel/{{item.id}}"  class="c-green" ng-if="item.status==21009">下载</a>-->
                                 </td>
                             </tr>
                             <!--<tr >-->

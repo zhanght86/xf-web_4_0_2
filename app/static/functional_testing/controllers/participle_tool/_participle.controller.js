@@ -22,7 +22,9 @@ module.exports=functionalTestModule => {
             selectInput :'',
             searchType :0,
             listData :[],
-
+            deletePart : deletePart,                    //删除
+            startTestPart : startTestPart ,              //启动
+            exportPart : exportPart
 
 
         };
@@ -60,6 +62,76 @@ module.exports=functionalTestModule => {
                 console.log(err);
             });
         }
+
+        /**
+         *   启动
+         **/
+        function startTestPart(id){
+            FunctionServer.startTestPart.save({
+                "id":id
+            },function(data){
+                if(data.status==200){
+                    $state.reload();
+                    start(id);
+                }
+
+            },function(err){
+                console.log(err);
+            });
+        }
+        function start(id){
+            FunctionServer.startPart.save({
+                "id":id
+            },function(data){
+                if(data.status==200){
+                    $state.reload();
+                }
+            },function(err){
+                console.log(err);
+            });
+        }
+
+        /**
+         ** 导出    (get方法)
+         **/
+        function exportPart(id){
+            var urlParams = "/"+id;
+            var url = FunctionServer.exportPart + urlParams;
+            downLoadFiles($('.participle')[0],url);
+
+        }
+
+        /**
+         ** 删除
+         ***/
+        function deletePart(deleteIds){
+            if(!deleteIds.length){
+                layer.msg("请选择要删除的文件")
+            }else{
+                layer.confirm('确认删除文件？',{
+                    btn:['确认','取消']
+                },function(){
+                    FunctionServer.deletePart.save({
+                        "ids":deleteIds
+                    },function(data){
+                        if(data.status == 200){
+                            initBatchTest();
+                            layer.msg("文件删除成功") ;
+                            layer.closeAll();
+                            $state.reload();
+                        }else if(data.status == 500){
+                            layer.msg("文件删除失败") ;
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+                },function(error){
+                    console.log(error);
+                });
+            }
+
+        }
+
 
         /**
          ** 全选

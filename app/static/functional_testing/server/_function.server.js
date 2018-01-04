@@ -44,7 +44,14 @@ class FunctionServer{
     //获取列表
     this.getPartList = $resource(API_MS+'/participle/test/get/list',{},{});
     //删除
-    this.deletePart = $resource(API_MS+'participle/test/delete',{},{});
+    this.deletePart = $resource(API_MS+'/participle/test/delete',{},{});
+    //启动
+    this.startTestPart = $resource(API_MS+'/participle/test/update/status',{},{});
+    //
+    this.startPart = $resource(API_MS+'/participle/test/start',{},{});
+    //导出
+    this.exportPart = API_MS+'/participle/test/result/export/excel';
+
 
 
 
