@@ -6,8 +6,7 @@
 module.exports = angular => {
     const homePageModule = angular.module('homePageModule', []);
     require('../directives/_permission_tree.directive')(homePageModule);  //zTree
-    require('../../../components/page/page')(homePageModule);  // 分页
-    require('../../../components/page/page')(homePageModule);  // 分页
+    // require('../../../components/page/page')(homePageModule);  // 分页
     require('../server/_home_page.server')(homePageModule);  // api
     require('../controllers/home_page/_nav.controller')(homePageModule);  // 导航
     require('../controllers/home_page/_content.controller')(homePageModule);  // 主

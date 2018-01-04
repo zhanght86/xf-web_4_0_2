@@ -19,27 +19,27 @@ module.exports = homePageModule =>{
         };
         let addApplicationHtml = require("../../views/switch_application/add_application.html") ;
         //获取用户信息
-            HomePageServer.getUserRoleList.get({
-                "id" : getCookie("userId")
-            },function(response){
-                if(response.status==200){
-                    $scope.vm.userRole = response.data.roleList;
-                }
-            },function(error){
-                console.log(error)
-            }) ;
-        //获取用户关联应用
-            HomePageServer.qeuryApplicationAtUser.get({
-                id : getCookie("userId")
-            },function(response){
-                if(response.status == 200 ){
-                    $scope.vm.myApplication = response.data;
-                }else{
+        HomePageServer.getUserRoleList.get({
+            "id" : getCookie("userId")
+        },function(response){
+            if(response.status==200){
+                $scope.vm.userRole = response.data.roleList;
+            }
+        },function(error){
+            console.log(error)
+        }) ;
+         //获取用户关联应用
+        HomePageServer.qeuryApplicationAtUser.get({
+            id : getCookie("userId")
+        },function(response){
+            if(response.status == 200 ){
+                $scope.vm.myApplication = response.data;
+            }else{
 
-                }
-            },function(error){
-                console.log(error)
-            });
+            }
+        },function(error){
+            console.log(error)
+        });
         function selectApplication(application){
             setCookie("applicationName",application.name);
             setCookie("applicationId",application.id);

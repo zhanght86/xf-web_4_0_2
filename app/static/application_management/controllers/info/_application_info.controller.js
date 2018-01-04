@@ -10,11 +10,11 @@ module.exports = applicationManagementModule =>{
     ($scope,localStorageService,ApplicationServer , $state, ngDialog,$cookieStore,$rootScope,$timeout) =>{
         $scope.vm = {
             serviceData : "",   // 发布服务列表数据
-            paginationConf : {     //分页条件
-                search : listServiceData,
-                location : false ,
-                pageSize : 5
-            }  ,
+            // paginationConf : {     //分页条件
+            //     search : listServiceData,
+            //     location : false ,
+            //     pageSize : 5
+            // }  ,
             applicationInfo : {
                 name        :APPLICATION_NAME, //应用名称
                 newName     :"" ,
@@ -23,11 +23,11 @@ module.exports = applicationManagementModule =>{
                 license     : "", //应用序列号
                 statusId    : "", //应用状态
             } ,
-            sceneInfo : {              //场景信息
-                knowledgeTypeNum : 6, //知识类型数量
-                exchangeModeNum  : 2,//交互方式数量
-                businessFrameNum :0,//业务框架数量(默认)
-            } ,
+            // sceneInfo : {              //场景信息
+            //     knowledgeTypeNum : 6, //知识类型数量
+            //     exchangeModeNum  : 2,//交互方式数量
+            //     businessFrameNum :0,//业务框架数量(默认)
+            // } ,
             allowSubmit : 1, //是否允许提交
             // listServiceData : listServiceData, //查看服务列表信息
             publishService : publishService,  //发布服务
@@ -40,27 +40,19 @@ module.exports = applicationManagementModule =>{
         };
         //编辑应用的名称
         let changeName = require("../../views/info/dialog_edit_application_name.html") ;
-        //查看业务框架数量
-        ApplicationServer.viewFrameNumber.save({
-            "id": APPLICATION_ID
-        },function(response){
-            if(response.status==200){
-                $scope.vm.sceneInfo.businessFrameNum = response.data.businessFrameNum
-            }else{
-                console.log("业务框架数量查询失败");
-            }
-        },function(error){console.log(error)}) ;
         findApplicationInfo(); //查看应用的基本信息
         listServiceData(1);
         //获取服务列表
         function listServiceData(index){
             ApplicationServer.queryServiceList.save({
-                "index" : (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
+                // "index" : (index-1)*$scope.vm.paginationConf.pageSize,
+                // "pageSize": $scope.vm.paginationConf.pageSize
+                "index" : 0,
+                "pageSize": 9999
             },function(response){
-                $scope.vm.serviceData = response.data;
-                $scope.vm.paginationConf.totalItems = response.total ;
-                $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize ;
+                $scope.vm.serviceData = response.data.data;
+                // $scope.vm.paginationConf.totalItems = response.data.total ;
+                // $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize ;
             },function(error){console.log(error)})
         }
         //发布服务
@@ -72,7 +64,7 @@ module.exports = applicationManagementModule =>{
                     layer.msg("发布服务成功");
                     listServiceData(1);
                 }else{
-                    layer.msg(response.data);
+                    layer.msg(response.info);
                 }
             },function(error){console.log(error)})
         }
@@ -164,7 +156,7 @@ module.exports = applicationManagementModule =>{
                             APPLICATION_NAME = $scope.vm.applicationInfo.newName ;
                             findApplicationInfo();
                         } ;
-                        layer.msg(response.data)
+                        layer.msg(response.info)
                     },function(error){console.log(error)})
             }) ;
         }

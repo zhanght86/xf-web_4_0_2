@@ -1,46 +1,41 @@
-<div class="msgR-cont pd30 L">
-    <div class="r-cont-hd">
-        <span>应用信息</span>
-    </div>
-    <p class="msgR-name">
-        {{vm.applicationInfo.name}}
-        <span ng-click="vm.editName()"><i></i>修改名称</span>
-    </p>
-    <ul class="msgR-state">
-        <li ng-if="vm.applicationInfo.statusId==40001">应用状态：未使用</li>
-        <li ng-if="vm.applicationInfo.statusId==40002">应用状态：使用中</li>
-        <li ng-if="vm.applicationInfo.statusId==40003">应用状态：已停用</li>
-        <li>场景类型：<span ng-bind="'客服型'"></span></li>
-        <li>创建时间：{{vm.applicationInfo.createTime | date : 'yyyy-MM-dd'}}</li>
-    </ul>
-    <div class="jqrsz-btn-box" style="padding: 30px 0;margin-bottom:0; ">
-        <a class="btn btn-blue mr10" ng-click="vm.stopAllServices()" >下线所有服务</a>
-        <a class="btn btn-gray mr10" id="deletePop" ng-click="vm.deleteApplication()" style="background: #e2e2e2; color: #666;">删除应用</a>
-        <a class="btn btn-green" ui-sref="AM.restore">备份/还原</a>
-    </div>
-    <p class="msgR-title mb-10">应用高级信息</p>
-    <div class="clearfix" >
-        <ul class="msgR-table-1 L">
-            <li class="msgR-table-head">场景信息</li>
-            <li>业务框架 <span>{{vm.sceneInfo.businessFrameNum}}种</span></li>
-            <li>知识类型 <span>{{vm.sceneInfo.knowledgeTypeNum}}种</span></li>
-            <li>交互方式 <span>{{vm.sceneInfo.exchangeModeNum}}种</span></li>
-        </ul>
-        <ul class="msgR-table-1 msgR-table-2 L">
-            <li class="msgR-table-head">发布信息</li>
-            <li ng-repeat="item in vm.serviceData track by $index">
-                <span class="Nrelease" ng-if="item.status==30001">未发布</span>
-                <span class="Nrelease" ng-if="item.status==30002">已发布</span>
-                <span class="release"  ng-if="item.status==30003">已下线</span>
-                &nbsp; {{item.name}}
-                <p ng-if="item.status==30001"><a class="release" ng-click="vm.publishService(item.id)">发布</a>
-                </p>
-                <p ng-if="item.status==30002"><a class="Offline" ng-click="vm.stopService(item.id)">下线</a>&nbsp; | &nbsp;<a class="restart" ng-click="vm.restartService(item.id)">重启</a>
-                </p>
-                <p ng-if="item.status==30003"><a class="release" ng-click="vm.startService(item.id)">上线</a>
-                </p>
+<div class="msgR-cont" style="width: 100%;">
+    <p class="r-cont-hd" style="border-bottom: 1px solid #f0f0f0;line-height: 78px;margin-bottom: 30px;font-weight: 600;padding-left: 20px;">应用信息</p>
+    <div style="padding-left: 40px;">
+        <ul class="msgR-state">
+            <li >应用名称：{{vm.applicationInfo.name}}</li>
+            <li >应用状态：
+                <span ng-if="vm.applicationInfo.statusId==40001">未使用</span>
+                <span ng-if="vm.applicationInfo.statusId==40002">使用中</span>
+                <span ng-if="vm.applicationInfo.statusId==40003">已停用</span>
             </li>
+            <li>场景类型：客服性</li>
+            <li>创建时间：{{vm.applicationInfo.createTime | date : 'yyyy-MM-dd'}}</li>
         </ul>
+        <div class="jqrsz-btn-box" style="padding: 30px 0;margin-bottom:0; ">
+            <a class="btn btn-gray mr10" id="deletePop" ng-click="vm.deleteApplication()" style="background: #e2e2e2; color: #666;">删除应用</a>
+            <a class="btn btn-blue mr10" ng-click="vm.stopAllServices()" >下线所有服务</a>
+        </div>
+        <p class="msgR-title mb-10">应用高级信息</p>
+        <div class="clearfix" >
+            <ul class="msgR-table-1 msgR-table-2 L">
+                <li class="msgR-table-head">发布信息</li>
+                <li ng-repeat="item in vm.serviceData track by $index">
+                    <div style="width: 36%;float: left;text-align: center;">
+                        {{item.name}}
+                    </div>
+                    <div style="width: 25%;float: left;text-align: center;">
+                        <span  ng-if="item.status==30002">已发布</span>
+                        <span  ng-if="item.status==30001">未发布</span>
+                    </div>
+                    <div style="width: 30%;float: left;text-align: right;">
+                        <buttom class="btn btn-gray" ng-if="item.status==30002" ng-click="vm.stopService(item.id)">下线</buttom>
+                        <buttom class="btn btn-blue" ng-if="item.status==30003" ng-click="vm.startService(item.id)">发布</buttom>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+        <!--<pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>-->
     </div>
-    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+
 </div>
