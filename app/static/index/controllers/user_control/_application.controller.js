@@ -17,6 +17,7 @@ module.exports = homePageModule =>{
             newDescribe : "",
             selectApplication : selectApplication
         };
+        let addApplicationHtml = require("../../views/switch_application/add_application.html") ;
         //获取用户信息
             HomePageServer.getUserRoleList.get({
                 "id" : getCookie("userId")
@@ -27,7 +28,7 @@ module.exports = homePageModule =>{
             },function(error){
                 console.log(error)
             }) ;
-        //获取所有应用
+        //获取用户关联应用
             HomePageServer.qeuryApplicationAtUser.get({
                 id : getCookie("userId")
             },function(response){
@@ -36,7 +37,6 @@ module.exports = homePageModule =>{
                 }else{
 
                 }
-                console.log(response);
             },function(error){
                 console.log(error)
             });
@@ -49,7 +49,7 @@ module.exports = homePageModule =>{
         }
         //打开添加窗口
         function addApplicationWindow() {
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,"static/index/views/user_control/switch_application/add_application.html","650px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,addApplicationHtml,"650px",function(){
                 if(applicationValidate()==false){
                     return false;
                 }
@@ -60,27 +60,6 @@ module.exports = homePageModule =>{
                 $scope.vm.newDescribe="";
             },function(){
             });
-            // var dialog = ngDialog.openConfirm({
-            //     template:"/static/index/user_control/switch_application/add_application.html",
-            //     scope:$scope,
-            //     closeByDocument:false,
-            //     closeByEscape: true,
-            //     showClose : true,
-            //     backdrop : 'static',
-            //     preCloseCallback:function(e){    //关闭回掉
-            //         if(e === 1){
-            //             if(applicationValidate()==false){
-            //                 return false;
-            //             }
-            //             addApplication();
-            //         }else{
-            //             $scope.vm.newApplicationName="";
-            //             $scope.vm.newLicence="";
-            //             $scope.vm.newDescribe="";
-            //         }
-            //     }
-            //
-            // });
         }
         function applicationValidate(){
             if(lengthCheck($scope.vm.newApplicationName,0,50)==false){
@@ -96,8 +75,6 @@ module.exports = homePageModule =>{
         //添加
         function addApplication(){
             HomePageServer.addApplication.save({
-                // "accessToken" : "",
-                // "sceneId" : "" ,
                 "name": $scope.vm.newApplicationName,
                 "license": $scope.vm.newLicence,
                 "description": $scope.vm.newDescribe
