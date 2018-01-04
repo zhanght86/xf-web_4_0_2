@@ -47,10 +47,7 @@ module.exports=functionalTestModule => {
          * 页面初始化加载已发布服务，页面加载
          * *****************/
         //getService();
-        searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
-        /*****************
-         * //已发布服务
-         * *****************/
+
         // function getService(){
         //     FunctionServer.getService.save({
         //         applicationId:APPLICATION_ID
@@ -70,6 +67,8 @@ module.exports=functionalTestModule => {
         /*****************
          * //获取列表  、查询
          * *****************/
+        searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+
         function searchFile(index,pageSize,reset){
             if(reset){
                 $scope.vm.paginationConf.currentPage = 1;
