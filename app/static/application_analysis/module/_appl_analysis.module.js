@@ -9,6 +9,7 @@
     const applAnalysisModule = angular.module('applAnalysisModule', []);
  	 require('../controllers/_main.controller')(applAnalysisModule);  // 控制器
      require('../../index/controllers/home_page/_nav.controller')(applAnalysisModule);  // 导航
+     require('../../../components/page/page')(applAnalysisModule);  // 分页
 
     //--------------------------------------------------
     //         server

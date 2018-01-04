@@ -9,13 +9,17 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
         $state.go("KM.faq") ;
         $scope.parameter = {
-            "title"	: "",           //	知识标题
-            "expDateStart" : "",	//知识有效期开始时间
-            "expDateEnd" : "",	    //知识有效期结束时间
-            "origin" : 120,	        //数据来源（见参数说明）
-            "classifyList" : "",	//所属类目ID集合
-            "extensionQuestionList" : [""],	//扩展问集合
-            "contentList" : ""	    //内容集合
+            "title"	                : "",   //知识标题
+            "expDateStart"          : "",   //知识有效期开始时间
+            "expDateEnd"            : "",   //知识有效期结束时间
+            "origin"                : 120,  //数据来源
+            "classifyList"          : [],   //所属类目ID集合
+            "extensionQuestionList" : [""], //扩展问集合
+            "contentList"           : []    //内容集合
+        } ;
+        $scope.newKnow = {
+            "content"	: "",           //知识内容
+            "channel"	: "",           //渠道
         } ;
         $scope.vm = {
             ctrName : "faq" ,
@@ -28,7 +32,6 @@ module.exports = knowledgeManagementModule =>{
             botRoot : "",      //根节点
             botFullPath : null ,
 //展示内容
-            scanContent : [],
             save : save ,   //保存
             scan :scan ,    //预览
             knowledgeAdd: knowledgeAdd,  //新增点击事件
@@ -94,53 +97,38 @@ module.exports = knowledgeManagementModule =>{
                 $scope.$parent.knowCtr.setKnowParamHasDialog($scope)
             });
         }
-        //  主页保存 获取参数
-        function getParams(){
-          return  {
-                "title": $scope.vm.title,      //知识标题
-                "expDateStart" : $scope.vm.isTimeTable?$scope.vm.timeStart:null,  //开始时间
-                "expDateEnd": $scope.vm.isTimeTable?$scope.vm.timeEnd:null,     //结束时间
-                "origin": 1,
-                "classifyList": [], //操作人
-                "extensionQuestionList": ""  ,//知识类型
-                "type" : 120 ,
-                "channel"     : $scope.vm.scanContent,      // 知识内容
-                "content"    :  $scope.vm.extensions.concat($scope.vm.extensionsByFrame) ,  // 扩展问
-                // "relevantList" : $scope.vm.creatSelectBot  // bot
-            };
-        }
+
         var limitTimer ;
-        function save(api){
+        function save(){
                 if (!checkSave()) {
                     return false
-                } else {
-                    if(!$scope.vm.limitSave) {
-                        $timeout.cancel(limitTimer) ;
-                        $scope.vm.limitSave = true ;
-                        limitTimer = $timeout(function(){
-                            $scope.vm.limitSave = false ;
-                        },180000) ;
-                        $scope.vm.data = getParams();
-                        KnowledgeService[api].save(params,function (data) {
-                            if (data.status == 200) {
-                                if ($scope.vm.docmentation) {
-                                    //文档知识分类状态回掉
-                                    knowledgeClassifyCall()
-                                } else {
-                                    $state.go('knowledgeManagement.custOverview');
-                                }
-
-                            }else if (data.status == 500) {
-                                layer.msg("知识保存失败") ;
-                                $timeout.cancel(limitTimer) ;
-                                $scope.vm.limitSave = false ;
+                }
+                if(!$scope.vm.limitSave) {
+                    $timeout.cancel(limitTimer) ;
+                    limitTimer = "" ;
+                    $scope.vm.limitSave = true ;
+                    limitTimer = $timeout(function(){
+                        $scope.vm.limitSave = false ;
+                    },180000) ;
+                    KnowledgeService.storeFaqKnow.save($scope.parameter,function (response) {
+                        if (response.status == 200) {
+                            if ($scope.vm.docmentation) {
+                                //文档知识分类状态回掉
+                                knowledgeClassifyCall()
+                            } else {
+                                // $state.go('knowledgeManagement.custOverview');
                             }
-                        }, function (err) {
+
+                        }else if (data.status == 500) {
+                            layer.msg("知识保存失败") ;
                             $timeout.cancel(limitTimer) ;
                             $scope.vm.limitSave = false ;
-                        });
+                        }
+                    }, function (err) {
+                        $timeout.cancel(limitTimer) ;
+                        $scope.vm.limitSave = false ;
+                    });
                 }
-            }
         }
         // 知识文档分类回调
         function knowledgeClassifyCall(){
@@ -167,9 +155,7 @@ module.exports = knowledgeManagementModule =>{
                 return false
             }else{
                 var obj = {};
-                var params = getParams();
-                console.log(params);
-                obj.params = params;
+                obj.params = $scope.paremeter;
                 obj.editUrl = "knowledgeManagement.faqAdd";
                 obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
                 if($scope.vm.knowledgeId){
@@ -188,30 +174,28 @@ module.exports = knowledgeManagementModule =>{
             }
         };
         function saveAddNew(cur){
-            $scope.vm.scanContent[cur] =  {
-                knowledgeContent : $scope.vm.newTitle ,
-                channelIdList : $scope.vm.channelIdList ,
-
-                knowledgeRelatedQuestionOn : $scope.vm.question,
-                knowledgeBeRelatedOn : $scope.vm.tip,
-                knowledgeCommonOn : $scope.vm.tail,
-                knowledgeRelevantContentList : $scope.vm.knowledgeRelevantContentList
+            $scope.parameter.contentList[cur] =  {
+                "channel":$scope.newKnow.channel,
+                "type": 110,
+                "content":$scope.newKnow.content
             } ;
         }
 //        提交 检验参数
         function checkSave(){
-            var params = getParams();
+            var params = $scope.parameter;
+            $scope.parameter.classifyList = [] ;
+            console.log(params) ;
             if($scope.vm.titleTip!=""){
                 layer.msg($scope.vm.titleTip);
                 return false;
             }
-            if(!params.knowledgeTitle){
+            if(!$scope.parameter.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false
-            }else if(!params.classificationAndKnowledgeList.length){
+            }else if(!nullCheck($scope.parameter.classifyList)){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
-            }else if(!params.knowledgeContents.length){
+            }else if(!nullCheck($scope.parameter.contentList)){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
             }else{
@@ -220,28 +204,31 @@ module.exports = knowledgeManagementModule =>{
         }
         function increaseCheck(){
             //判斷维度是否为空 0 不变 1 全维度
-            if(!$scope.vm.newTitle && !$scope.vm.channelIdList.length){
+            if(!$scope.newKnow.content && !$scope.newKnow.channel){
                 layer.msg("请填写知识内容,并选择渠道后保存")
-            }else if(!$scope.vm.newTitle){
+            }else if(!$scope.newKnow.content){
                 layer.msg("请填写知识内容后保存")
-            }else if(!$scope.vm.channelIdList.length){
+            }else if(!$scope.newKnow.channel){
                 layer.msg("请选择渠道后保存")
             }else{
                 ngDialog.closeAll(1) ;
             }
         }
         function skipNewLine(e) {
+            let len = $scope.parameter.extensionQuestionList.length ;
             if(e!="blur"){
-                console.log( $scope.parameter.extensionQuestionList)
-                let len = $scope.parameter.extensionQuestionList.length ;
-                let keycode = window.event?e.keyCode:e.which;
-                if(keycode==13 && $scope.parameter.extensionQuestionList[len-1]!=""){
+                e = e || window.event ;
+                let keycode = e.keyCode|| e.which;
+                if(keycode==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
                     $scope.parameter.extensionQuestionList.push("")
                 }
             }else{
-                console.log(1)
+                if(nullCheck($scope.parameter.extensionQuestionList[len-1])){
+                    $scope.parameter.extensionQuestionList.push("")
+                }
             }
         }
+
         //引导页方法
         function showTip(){
             $('.shadow_div').show();

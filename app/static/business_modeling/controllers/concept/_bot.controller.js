@@ -41,7 +41,7 @@ module.exports = applicationManagementModule =>{
         };
 
         //查询/请求列表 
-         loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
         function loadSynonymConceptTable(index,pageSize,reset){
             if(reset){
                 $scope.vm.paginationConf.currentPage = 1 ;

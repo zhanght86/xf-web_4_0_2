@@ -18,15 +18,15 @@
                 </div>
             </div>
             <div class="exten_problem" id="faq_extension">
-                <div class="framework mb-10" style="padding-left: 80px;">
-                    <span class="framework_s text-r">扩展问题：</span>
+                <div class="framework " style="padding-left: 80px;" ng-repeat="item in vm.extensionProblem">
+                    <span class="framework_s text-r" ng-if="item.content==0">扩展问题：</span>
                     <div class="frameList">
-                        <input type="text" ng-model="vm.content" onblur="add_ques()"  class="L input-text mr-10 extended_query_txt" style="width:450px;"/>
+                          <input type="text"  ng-keydown="vm.keyLogin($event)"  ng-blur="vm.addQues()"  class="L input-text mr-10 extended_query_txt extensionProblem" style="width:450px;margin-top:-1px;" value="" /> 
                     </div>
                 </div>
             </div>
 
-            <div class="framework mb-10 pt-10">
+            <div class="framework mb-10 pt-10 mt-30">
                 <span class="framework_s text-r"></span>
                 <div class="">
                     <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
@@ -43,29 +43,7 @@
     }
 
 </style>
-<script>
-    //添加扩展问
-    function add_ques(){
-        var oVal=$('.extended_query_txt').val();
-        if(lengthCheck(oVal,0,255)==false){
-            layer.msg("扩展问题不能为空或长度超过200")
-            return;
-        }
-        var flag = true;
-        if(oVal==""){
-          $(this).remove();
-           var str='<input type="text"  class="L input-text mr-10 extended_query_txt" style="width:450px;" >';
-           $('.frameList').append(str);
-        }
-        var str='<input type="text"   class="L input-text mr-10 extended_query_txt" style="width:450px;" >';
-        $('.frameList').append(str);
-       
-    }
-    //删除扩展问
-    function rem_ques(obj){
-        $(obj).parent().parent().remove();
-    }
-</script>
+
 
 
 

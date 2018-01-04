@@ -1,8 +1,8 @@
-<!--<script type="text/ng-template" id="has-dialog">-->
+
     <div class="checkboxStr mb-10">
         <div>渠道：</div>
         <label ng-repeat="channel in $parent.$parent.MASTER.channelList track by $index">
-            <input name="channel" style="vertical-align: middle; margin:-2px 2px 0 0;" type="radio"  ng-click="vm.channelIdList = channel.code" ng-checked="vm.channelIdList == channel.code">
+            <input name="channel" style="vertical-align: middle; margin:-2px 2px 0 0;" type="radio"  ng-click="newKnow.channel = channel.code" ng-checked="vm.channel == channel.code">
             {{channel.name}}
         </label>
     </div>
@@ -29,4 +29,3 @@
             </div>
         </div>
     </div>
-<!--</script>-->

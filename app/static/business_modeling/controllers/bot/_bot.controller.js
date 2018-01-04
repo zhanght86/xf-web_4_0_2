@@ -63,7 +63,7 @@ module.exports = businessModelingModule =>{
 
         var categoryApplicationId = APPLICATION_ID;
         var categoryModifierId = USER_ID;
-        var categorySceneId = SCENE_ID;
+        //var categorySceneId = SCENE_ID;
         autoHeight();
         function autoHeight(){
             var $win = $(window);
@@ -141,6 +141,7 @@ module.exports = businessModelingModule =>{
         }
         function recursion(suggestion,node){
             var list = $(".aside-navs").find("li");
+            console.log(list.length)
             var flag = false;
             $.each(list,function(index,value){
                 if($(value).attr("data-option")==$(node).attr("data-option")){
@@ -234,7 +235,7 @@ module.exports = businessModelingModule =>{
                         '<div class="slide-a">'+
                         '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
                         '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -252,6 +253,7 @@ module.exports = businessModelingModule =>{
             });
         }
         $(".aside-navs").on("click","span",function(){
+
             clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
@@ -266,6 +268,7 @@ module.exports = businessModelingModule =>{
             }
             updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
             disableAttributeType();
+             alert( $scope.vm.categoryAttributeName)
             $scope.$apply();
         });
 
@@ -439,6 +442,7 @@ module.exports = businessModelingModule =>{
         }
         //类目新增
         function addBot(){
+           
             //数据校验
             if($scope.vm.botSelectValue==""){
                 return;
@@ -470,10 +474,10 @@ module.exports = businessModelingModule =>{
             	var relation="node";
             }else if($scope.vm.categoryPid=="root"){
                 var pid= $scope.vm.categoryId;
-            	var relation="node"
+            	var relation= ($scope.vm.categoryAttributeName=="node") ? "edge" :"node"
             }else{
             	var pid= $scope.vm.categoryId;
-            	var relation="node"
+            	var relation= ($scope.vm.categoryAttributeName=="node") ? "edge" :"node"
             }
             
 	          BusinessModelingServer.classifyAdd.save({
