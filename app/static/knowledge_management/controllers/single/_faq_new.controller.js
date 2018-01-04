@@ -184,9 +184,6 @@ module.exports = knowledgeManagementModule =>{
         function checkSave(){
             var params = $scope.parameter;
             $scope.parameter.classifyList = [] ;
-            angular.forEach($scope.vm.creatSelectBot,function(item){
-                // $scope.parameter.classifyList = item.
-            }) ;
             console.log(params) ;
             if($scope.vm.titleTip!=""){
                 layer.msg($scope.vm.titleTip);

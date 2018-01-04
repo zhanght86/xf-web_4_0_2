@@ -12,9 +12,9 @@ class HomePageServer {
         this.login = $resource(API_USER+"/user/logout", {}, {});
 
     // 获取用户关联的应用
-        this.qeuryApplicationAtUser = $resource(API_APPLICATION+"/application/get/user",{},{}) ;
+        this.qeuryApplicationAtUser = $resource(API_APPLICATION+"/application/list/get/:id",{},{}) ;
     // 获取用户信息
-        this.getUserRoleList = $resource(API_USER+"/user/get/role/by/user",{},{}) ;
+        this.getUserRoleList = $resource(API_USER+"/user/role/get/:id",{},{}) ;
     // 添加应用
         this.addApplication = $resource(API_APPLICATION+"/application/add",{},{}) ;
         /******************************

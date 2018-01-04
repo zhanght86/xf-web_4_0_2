@@ -18,7 +18,7 @@ module.exports = homePageModule =>{
             selectApplication : selectApplication
         };
         //获取用户信息
-            HomePageServer.getUserRoleList.save({
+            HomePageServer.getUserRoleList.get({
                 "id" : getCookie("userId")
             },function(response){
                 if(response.status==200){
@@ -28,7 +28,8 @@ module.exports = homePageModule =>{
                 console.log(error)
             }) ;
         //获取所有应用
-            HomePageServer.qeuryApplicationAtUser.save({
+            HomePageServer.qeuryApplicationAtUser.get({
+                id : getCookie("userId")
             },function(response){
                 if(response.status == 200 ){
                     $scope.vm.myApplication = response.data;
