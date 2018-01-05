@@ -71,7 +71,8 @@ module.exports=functionalTestModule => {
                 "id":id
             },function(data){
                 if(data.status==200){
-                    $state.reload();
+                    //$state.reload();
+                    getPartList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     start(id);
                 }
 
@@ -84,7 +85,8 @@ module.exports=functionalTestModule => {
                 "id":id
             },function(data){
                 if(data.status==200){
-                    $state.reload();
+                   // $state.reload();
+                    getPartList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                 }
             },function(err){
                 console.log(err);

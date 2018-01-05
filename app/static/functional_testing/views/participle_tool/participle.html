@@ -59,7 +59,7 @@
                                 <td>{{item.modifierName}}</td>
                                 <td>
                                     <a href="javascript:;" class="mr10 c_blue" ng-if="item.status==21007" ng-click="vm.startTestPart(item.id)">启动</a>
-                                    <a href="javascript:;" class=" mr10 c_orange " ng-if="item.status==21009">重测</a>
+                                    <a href="javascript:;" class=" mr10 c_orange " ng-if="item.status==21009" ng-click="vm.startTestPart(item.id)">重测</a>
                                     <a href="javascript:;" ng-click="vm.exportPart(item.id)" class="c-green" ng-if="item.status==21009">下载</a>
                                     <!--<a href="api/ms/participle/test/result/export/excel/{{item.id}}"  class="c-green" ng-if="item.status==21009">下载</a>-->
                                 </td>

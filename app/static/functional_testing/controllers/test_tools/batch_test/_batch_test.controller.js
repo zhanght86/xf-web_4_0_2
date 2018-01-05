@@ -180,28 +180,18 @@ module.exports=functionalTestModule => {
             if(!$scope.vm.channel){
                 layer.msg("选择渠道")
             }else{
-                var name ;
-                angular.forEach($scope.vm.channelList,function(item){
-                    if(item.channelCode == $scope.vm.channel){
-                        return name = item.channelName  ;
-                    }
-                }) ;
-
                 FunctionServer.start.save({
-                    batchNumberId:  id,
-                    userId : USER_ID,
-                    //channel:$scope.vm.channel,
-                    channelName : name,
+                    batchNumberId:id,
                     channel:channelId,
-                    applicationId:APPLICATION_ID,
                     serviceId:$scope.vm.serviceId,
                 },function (data) {
-                    if(data.status == 20002){
+                    if(data.status == 500){
                         layer.msg(data.data,{time:1000});
                     }
-                    if(data.status == 10018){
-                        searchFile($scope.vm.paginationConf.currentPage);
-                        startTest(id,name,channelId);
+                    if(data.status == 200){
+                        //$state.reload();
+                        searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                        startTest(id,channelId);
                     }
                 },function(err){
                     $log.log(err);
@@ -210,20 +200,19 @@ module.exports=functionalTestModule => {
             }
         }
 
-        function startTest(id,name,channelId){
+        function startTest(id,channelId){
             FunctionServer.startTest.save({
                 batchNumberId: id,
-                //userId: $scope.vm.userId,
-                userId : USER_ID,
-                channelName : name ,
                 channel:channelId,
-                applicationId:APPLICATION_ID,
                 serviceId:$scope.vm.serviceId,
-                //serviceId:22
             },function(data){
                 console.log(data);
-                if(data.status=10000){
-                    searchFile($scope.vm.paginationConf.currentPage) ;
+                if(data.status=200){
+                   // $state.reload();
+                    searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                }
+                if(data.status==500){
+                    layer.msg(data.data,{time:10000});
                 }
             },function(err){
                 $log.log(err);

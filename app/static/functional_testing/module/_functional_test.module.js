@@ -25,7 +25,6 @@ module.exports = angular => {
    //----分词-----
 
     require('../controllers/participle_tool/_participle.controller')(functionalTestModule);
-    require('../controllers/participle_tool/_participle_result.controller')(functionalTestModule);
 
     //----学习-----
     require('../controllers/division_knowledge/correction_learning/_correction_learning.controller')(functionalTestModule);

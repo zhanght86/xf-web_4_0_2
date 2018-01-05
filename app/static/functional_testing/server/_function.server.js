@@ -33,12 +33,11 @@ class FunctionServer{
     this.remark = $resource(API_MS+'/test/add/remark',{},{});
 
     //startTest
-    //this.startTest = $resource(API_APPLICATION_TEST+'/batchTest/startTest',{},{});
-
+    this.start = $resource(API_MS+'/test/save/channel/user',{},{});
     //start
-    //this.start =  $resource(API_APPLICATION_TEST+'/batchTest/getChannelAndUserName', {}, {});
+    this.startTest =  $resource(API_MS+'/test/start', {}, {});
 
-        /******************************
+                            /******************************
                                     *分词工具*    API_APPLICATION_TEST = "/api/application"
                              ********************************/
     //获取列表
