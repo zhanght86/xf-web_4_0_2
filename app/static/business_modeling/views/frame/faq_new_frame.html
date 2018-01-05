@@ -5,7 +5,7 @@
                 <div class="framework mb-10" style="padding-left: 80px;">
                     <span class="framework_s text-r">标准问题：</span>
                     <div class="">
-                        <input type="text" class="L input-text mr-10 extended_query_txt" value="{{vm.frameTitle}}" style="width:300px;"/>
+                        <input type="text" class="L input-text mr-10 extended_query_txt" ng-model="vm.frameTitle" value="vm.frameTitle" style="width:300px;"/>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
             </div>
             <div class="exten_problem" id="faq_extension">
                 <div class="framework " style="padding-left: 80px;" ng-repeat="item in vm.extensionProblem">
-                    <span class="framework_s text-r" ng-if="item.content==0">扩展问题：</span>
+                    <span class="framework_s text-r" ng-if="item.order==0">扩展问题：</span>
                     <div class="frameList">
                           <input type="text"  ng-keydown="vm.keyLogin($event)"  ng-blur="vm.addQues()"  class="L input-text mr-10 extended_query_txt extensionProblem" style="width:450px;margin-top:-1px;" value="" /> 
                     </div>

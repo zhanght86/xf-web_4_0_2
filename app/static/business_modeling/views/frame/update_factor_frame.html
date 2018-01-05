@@ -1,7 +1,7 @@
 <div class=" pt-20">
     <div class=" mb25 ">
         <div class="p10">
-            <input type="text" class="input-text f22 pl-10 mb15" id="elementFrameTitle" style="width: 300px;height: 34px;" value="{{vm.frameTitle}}"/>
+            <input type="text" class="input-text f22 pl-10 mb15" id="elementFrameTitle" style="width: 300px;height: 34px;" ng-model="vm.frameTitle" value="vm.frameTitle"/>
             <p id="elementFrameAddErrorObj" class="c-error pd-5"></p>
         </div>
         <div class=" p10 ">
@@ -23,32 +23,44 @@
                     <div>
                         <table class="essential_factor_tab">
                             <tr>
-                                <td><input type="checkbox" id="selectAll"></td>
+                                <td><input type="checkbox" id="selectAll"  ng-click="vm.delSelectAll()" ng-checked="vm.isSelectAll"></td>
                                 <td>要素名称</td>
                                 <td>要素类型</td>
-                                <td>挖掘技术</td>
+                               <!--  <td>挖掘技术</td> -->
                                 <td>反问</td>
-                                <td>相关概念</td>
+                               <!--  <td>相关概念</td> -->
                             </tr>
-                            <tr id="add-bar">
-                                <td></td>
-                                <td id="ele-name-tr" class="pr"><input type="text" style="width: 200px;" class="input_text ele-name"/><label id="ele-name-error" style="left: 148px;" class="l-error"></label></td>
+                            <tr id="add-bar" ng-repeat="item in vm.extensionProblem">
+                                <td ng-if="item.order==0"></td>
+                                <td ng-if="item.order!=0"><input type="checkbox" ng-checked="vm.delIds.inArray($index)" ng-click="vm.delSelectSingle($index)"></td>
+                                <td id="ele-name-tr" class="pr"><input type="text" style="width: 220px;"  ng-model="item.content" value="item.content" class="input_text ele-name"/><label id="ele-name-error" style="left: 148px;" class="l-error"></label></td>
                                 <td>
-                                    <select class="ele-type bd">
-                                        <option value=10014>字符串</option>
-                                        <option value=10015>数字</option>
-                                        <option value=10016>范围</option>
+                                     <select class="ele-type bd" ng-model="item.attributeType">
+                                        <option value=80>字符串</option>
+                                        <option value=83>日期</option>
+                                        <option value=89>整数</option>
+                                        <option value=92>国家/省份/城市</option>
+                                        <option value=81>时刻</option>
+                                        <option value=82>时刻区间</option> 
+                                        <option value=84>日期区间</option>
+                                        <option value=85>日期时刻</option>
+                                        <option value=86>日期时刻区间</option>
+                                        <option value=87>时长</option>
+                                        <option value=88>时长区间</option>
+                                        <option value=90>基数</option>
+                                        <option value=91>分数</option>
+                                        <option value=92>百分比</option>
                                     </select>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <select class="mining-type bd" disabled="disabled">
-                                        <!--<option value=10017>OEC</option>
-                                        <option value=10018>GATE</option>-->
+                                        <option value=10017>OEC</option>
+                                        <option value=10018>GATE</option>
                                         <option value=10017>NLP</option>
                                     </select>
-                                </td>
-                                <td id="ele-asked-tr" class="pr"><input style="width: 200px;" type="text" class="input_text ele-asked"/><label id="ele-asked-error" style="left: 496px;" class="l-error"></label></td>
-                                <td id="ele-concept-tr"><input style="width: 180px;" type="text" id="ele-concept-autocomplete" class="input_text ele-concept" placeholder="从概念库中选择"/><label style="left: 710px;" id="ele-concept-error" class="l-error"></label></td>
+                                </td> -->
+                                <td id="ele-asked-tr"  class="pr"><input style="width: 220px;" type="text" ng-model="item.askContent" value="item.askContent" class="input_text ele-asked"/><label id="ele-asked-error" style="left: 496px;" class="l-error"></label></td>
+                               <!--  <td id="ele-concept-tr"><input style="width: 180px;" type="text" id="ele-concept-autocomplete" class="input_text ele-concept" placeholder="从概念库中选择"/><label style="left: 710px;" id="ele-concept-error" class="l-error"></label></td> -->
                             </tr>
                             <tbody id="add-item"></tbody>
                         </table>

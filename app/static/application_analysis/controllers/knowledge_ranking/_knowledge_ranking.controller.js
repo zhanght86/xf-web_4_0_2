@@ -5,8 +5,8 @@
 module.exports=applAnalysisModule => {
     applAnalysisModule
     .controller('knowledgeRankingController', 
-        ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$window",
-         ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window)=>{
+        ['$scope',"localStorageService","$state","$log","AppAnalysisServer","$timeout","$stateParams","ngDialog","$cookieStore","$filter","$window","$location",
+         ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window,$location)=>{
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
            // applicationId :APPLICATION_ID,
@@ -16,7 +16,7 @@ module.exports=applAnalysisModule => {
             listDataK:null,// table 数据 
             dimensions : [] ,
             channels : [] ,
-            channelId  : null ,
+            channelId  : 130 ,
            // dimensionId : null ,
             timeType : 1,
             timeStart : null,
@@ -28,41 +28,54 @@ module.exports=applAnalysisModule => {
             userId : null,
             exportKnowledgeExcel : exportKnowledgeExcel,  //导出知识点排名统计
             exportNoMatchExcel : exportNoMatchExcel, //未匹配问题导出
-            contentType:0
+            contentType:0,
+            paginationConf: {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : getKnowledgeList,
+                location : true
+            },
+             paginationConf1:{     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : getList,
+                location : true
+            },
+            
         };
-
-        /**
-         * init echart 图表
-         */
-        var myChart = echarts.init(document.getElementById('knowRanking'));
-        var myChartQuestion = echarts.init(document.getElementById('questionRanking'));
 
         /**
          * 未匹配問題
          */
-        function getList(index){            
-            getKnowledgeList(1);            
+        function getList(index,pageSize,reset){            
+            getKnowledgeList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize); 
+             if(reset){
+                $scope.vm.paginationConf1.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+            }
+            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.getList.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
+                 "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-                "index": 0,
-                "pageSize": 10
+                "index": (index-1)*$scope.vm.paginationConf1.pageSize,
+                "pageSize": $scope.vm.paginationConf1.pageSize,
+                "sort":1,
             },function(data){
-                console.log(data) ;
-                var xData=[] ,yData=[] ;
-                angular.forEach(data.data.objs,function(item,index){
-                    xData.push(item.userQuestion) ;
-                    yData.push(item.questionNumber) ;
-                    console.log(xData)
-                }) ;
-                myChartQuestion.setOption(setEchartOption(xData,yData));
-                $scope.vm.listData = data.data.objs;
-                $scope.vm.listDataTotal = data.data.total;
+                 layer.close(i);
+                  if(data.status==200){
+                    $scope.vm.listData = data.data.objs;
+                    $scope.vm.paginationConf1.totalItems = data.data.total;
+                    $scope.vm.paginationConf1.numberOfPages = data.data.total/$scope.vm.paginationConf1.pageSize;
+                    if(data.data.objs==null){
+                      layer.msg(data.info)
+                    }
+               }else{
+                   layer.close(i);
+               }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
@@ -70,29 +83,35 @@ module.exports=applAnalysisModule => {
         /**
          * 知識點排名
          */
-        function getKnowledgeList(index){
+       
+        function getKnowledgeList(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+            }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.getKnowledgeList.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
+                "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
                // "dimensionId": $scope.vm.dimensionId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-                "index": 0,
-                "pageSize": 10
+                "index": (index-1)*$scope.vm.paginationConf.pageSize,
+                "pageSize": $scope.vm.paginationConf.pageSize,
+                "sort":1,
             },function(data){
                 layer.close(i);
-                console.log(data) ;
-                var xData=[] ,yData=[] ;
-                angular.forEach(data.data.objs,function(item,index){
-                    xData.push(item.knowledgeTitle) ;
-                    yData.push(item.questionNumber)
-                    console.log(xData)
-                }) ;
-                myChart.setOption(setEchartOption(xData,yData));
-                $scope.vm.listDataK = data.data.objs;
-                $scope.vm.listDataTotalK = data.data.total;
+                 if(data.status==200){
+                    $scope.vm.listDataK = data.data.objs;
+                    $scope.vm.paginationConf.totalItems = data.data.total;
+                   // $scope.vm.order=data.data.objs[0].order;
+                    $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+                    if(data.data.objs==null){
+                      layer.msg(data.info)
+                    }
+               }else{
+                   layer.close(i);
+               }
             },function(err){
                 layer.close(i);
                 $log.log(err);
@@ -105,9 +124,8 @@ module.exports=applAnalysisModule => {
         init();
         function init(){
             //getDimensions();
-            //getChannel();
-            getKnowledgeList(1);
-            getList(1);
+            getKnowledgeList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize)
+            getList($scope.vm.paginationConf1.currentPage,$scope.vm.paginationConf1.pageSize);
         }
 
         /**
@@ -171,77 +189,5 @@ module.exports=applAnalysisModule => {
             });
 
         }
-        function setEchartOption(xData,yData){
-            return {
-                    //title: '知识点排名统计表' ,
-                    color: ['#3398DB'],
-                    tooltip : {
-                        trigger: 'axis',
-                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        }
-                    },
-                formatDate:function(datestring){
-                    if(datestring.length!=8) return;
-                    return datestring.substring(2,4)+'/'+datestring.substring(4,6)+'/'+datestring.substring(6,8);
-                },
-                    grid: {
-                        left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                    },
-                    xAxis : [
-                        {
-                            type : 'category',
-                            data : xData,
-                            axisTick: {
-                                alignWithLabel: true
-                            },
-                            axisLabel:{
-                                interval: 0 ,
-                                rotate:-30 ,
-                                formatter:function(val){
-                                    if(val.length>7){
-                                        val = val.toString().substring(0,7)+"...";
-                                    }
-                                    return val//横轴信息文字竖直显示
-                                }
-                            } ,
-                        }
-                    ],
-                    grid: { // 控制图的大小，调整下面这些值就可以，
-                        x: 40,
-                        x2: 100,
-                        y2: 150// y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
-                    },
-                    yAxis : [
-                        {
-                            type : 'value'
-                        }
-                    ],
-                    series : [
-                        {
-                            name:'访问次数',
-                            type:'bar',
-                            barWidth: '60%',
-                            data:yData,
-                            itemStyle: {
-                                normal: {
-                                    color: function (params) {
-                                        // build a color map as your need.
-                                        var colorList = [
-                                            '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
-                                            '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
-                                            '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
-                                        ];
-                                        return colorList[params.dataIndex]
-                                    }
-                                }
-                            }}
-                    ]
-            }
-        }
-
     }
 ])};
