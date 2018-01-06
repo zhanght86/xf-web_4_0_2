@@ -32,9 +32,9 @@ class AppAnalysisServer {
                                             *知识点排名统计*    API_ANALYSIS = "/api/analysis" ;
                                             ********************************/
     //未匹配问题
-    this.getList = $resource(API_ANALYSIS+'/noMatch/searchList',{},{});
+    this.getList = $resource(API_ANALYSIS+'/no/match/search/list',{},{});
     //知识点排名
-    this.getKnowledgeList = $resource(API_ANALYSIS+'/knowledgeRanking/searchKnowledgeRankingList',{},{});
+    this.getKnowledgeList = $resource(API_ANALYSIS+'/knowledge/ranking/query/list',{},{});
 
     //知识点排名导出表格
     this.exportKnowledgeExcel = $resource(API_ANALYSIS+'/knowledgeRanking/export',{},{});

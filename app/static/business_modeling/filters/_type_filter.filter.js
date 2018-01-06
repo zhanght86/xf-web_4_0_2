@@ -9,8 +9,11 @@ module.filter('typeFilter', function () {
         var result;
         if(val == 100){
             result = "FAQ型聊天知识"
-        }else{
-            result = "概念型聊天知识"
+        }else if(val == 101){
+             result = "概念扩展知识"
+        }
+        else{
+            result = "要素知识"
         }
         return result
     };

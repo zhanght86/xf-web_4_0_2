@@ -9,11 +9,14 @@
                     <select class="sel bd L mr-5 " ng-model="vm.timeType">
                         <option value="1">今日</option>
                         <option value="2">昨日</option>
-                        <option value="3">过去7天</option>
-                        <option value="4">过去30天</option>
+                        <option value="3">一周</option>
+                        <option value="4">一月</option>
                     </select>
-                    <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
-                        <option  value="" >全部渠道</option>
+                    <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" >
+                        <option  value="130" >全部渠道</option>
+                        <option value="131">微信</option>
+                        <option value="132">web</option>
+                        <option value="133">app</option>
                     </select>
 
                     <!--<select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
@@ -35,9 +38,9 @@
                     </div>
                     <div class="tab_con pt20 pb30">
                         <div class="knowledgeRanking"  ng-show="vm.contentType == 0">
-                            <div id="knowRanking" style="width: 900px;height:400px;margin:0 auto 20px;"></div>
+                            <!-- <div id="knowRanking" style="width: 900px;height:400px;margin:0 auto 20px;"></div> -->
                             <div class="clearfix mb-10">
-                                <p class="L bold"> 知识点排名统计TOP10</p>
+                                <p class="L bold"> 知识点排名统计TOP100</p>
                                 <!--<span>共有数据：<b >{{vm.listDataTotalK}}</b> 条</span>-->
                                 <!--<a href="javascript:;" class="R c_blue">导出表格</a>-->
                                 <button class="R btn1 btn_green" ng-click="vm.exportKnowledgeExcel()">导出表格</button>
@@ -45,7 +48,10 @@
                             <div>
                                 <table class="access_amount_table">
                                     <tr>
-                                        <td class="bold" width="15%">排名</td>
+                                        <td class="bold" width="15%">排名
+                                       <!--  <span ng-click="vm.getList(0)" ng-if="vm.order==1"  style="display: inline-block; width: 20px; cursor: pointer; vertical-align: text-bottom;">↓</span></td>
+                                        <span ng-click="vm.getList(1)" ng-if="vm.order==0"  style="display: inline-block; width: 20px; cursor: pointer; vertical-align: text-bottom;">↑</span> -->
+                                        </td>
                                         <td class="bold" width="35%">知识标题</td>
                                         <td class="bold" width="35%">所属BOT</td>
                                         <td class="bold" width="15%">访问次数</td>
@@ -53,19 +59,24 @@
                                     <tr ng-repeat="item in vm.listDataK">
                                         <td>{{item.order}}</td>
                                         <td>{{item.knowledgeTitle}}</td>
-                                        <td>{{item.knowledgeBot}}</td>
+                                        <td>
+                                            <span ng-repeat="itemList in item.botList">
+                                                {{itemList}}
+                                            </span>
+                                        
+                                        </td>
                                         <td>{{item.questionNumber}}</td>
                                     </tr>
                                 </table>
                                 <!--<div >分页</div>-->
-                                <!--<pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>-->
+                                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
                             </div>
                         </div>
                         <div class="noMatch" ng-show="vm.contentType == 1">
-                            <div id="questionRanking"  style="width: 900px;height:400px;margin: 0 auto 20px;"></div>
+                           <!--  <div id="questionRanking"  style="width: 900px;height:400px;margin: 0 auto 20px;"></div> -->
                             <div class="clearfix mb-10">
-                                <!--<p class="L bold"> 未匹配问题统计</p>-->
-                                <p class="L bold"> 未匹配问题统计TOP10</p>
+                                <p class="L bold"> 未匹配问题统计</p>
+                               <!--  <p class="L bold"> 未匹配问题统计TOP10</p> -->
                                 <span class="R">
                                     <!--<span class="mr-10">共有数据<b>3</b>条</span>-->
                                     <!--<span>共有数据：<b >{{vm.listDataTotal}}</b> 条</span>-->
@@ -77,19 +88,17 @@
                                 <table class="access_amount_table">
                                     <tr>
                                         <td class="bold" width="45%">用户提问</td>
-                                        <td class="bold" width="15%">提问次数</td>
-                                        <td class="bold" width="20%">首次提问时间</td>
-                                        <td class="bold" width="20%">末次提问时间</td>
+                                        <td class="bold" width="20%">提问次数</td>
+                                        <td class="bold" width="35%">末次提问时间</td>
                                     </tr>
                                     <tr ng-repeat="item in vm.listData">
                                         <td>{{item.userQuestion}}</td>
                                         <td>{{item.questionNumber}}</td>
-                                        <td>{{item.requestTimeF | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                                         <td>{{item.requestTimeL | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
                                     </tr>
                                 </table>
                             </div>
-                            <!--<pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>-->
+                            <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
                         </div>
                     </div>
                 </div>

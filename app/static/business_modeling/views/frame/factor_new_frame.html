@@ -1,13 +1,13 @@
-<div class="pt-20">
-    <div class="mb25 ">
+<div class=" pt-20">
+    <div class=" mb25 ">
         <div class="p10">
-            <input type="text" class="input-text f22 pl-10 mb15" id="elementFrameTitle" style="width: 300px;height: 34px;" value="{{vm.frameTitle}}"/>
+            <input type="text" class="input-text f22 pl-10 mb15" id="elementFrameTitle" style="width: 300px;height: 34px;" ng-model="vm.frameTitle" value="vm.frameTitle"/>
             <p id="elementFrameAddErrorObj" class="c-error pd-5"></p>
         </div>
         <div class=" p10 ">
-            <div class="clearfix mb-10">
-                <span class="L mr-10">启用：</span>
-                <div class="L mb-10">
+            <div class="enable-bar mb-10 clearfix">
+                <label class="L">启用：</label>
+                <div class="mb-10 L">
                     <div ng-class="{1: 'open1 b_box', 0: 'close1 b_box'}[vm.frameEnableStatusId]" ng-click="vm.turnOn(vm.frameEnableStatusId,'frameEnableStatusId')" style="float:left;margin-right:10px;" class="b_box open1">
                         <div ng-class="{1: 'open2 s_box', 0: 'close2 s_box'}[vm.frameEnableStatusId]" class="s_box open2"></div>
                     </div>
@@ -23,20 +23,19 @@
                     <div>
                         <table class="essential_factor_tab">
                             <tr>
-                                <td><input type="checkbox" id="selectAll"></td>
+                                <td><input type="checkbox" id="selectAll"  ng-click="vm.delSelectAll()" ng-checked="vm.isSelectAll"></td>
                                 <td>要素名称</td>
                                 <td>要素类型</td>
-                                <td>挖掘技术</td>
-                                <td>相关概念</td>
+                               <!--  <td>挖掘技术</td> -->
+                                <td>反问</td>
+                               <!--  <td>相关概念</td> -->
                             </tr>
-                            <tr id="add-bar">
-                                <td></td>
-                                <td id="ele-name-tr" class="pr">
-                                    <input type="text" style="width: 200px;" class="input_text ele-name"/>
-                                    <label id="ele-name-error" style="left:10px;z-index:9999;" class="l-error"></label>
-                                </td>
+                            <tr id="add-bar" ng-repeat="item in vm.extensionProblem">
+                                <td ng-if="item.order==0"></td>
+                                <td ng-if="item.order!=0"><input type="checkbox" ng-checked="vm.delIds.inArray($index)" ng-click="vm.delSelectSingle($index)"></td>
+                                <td id="ele-name-tr" class="pr"><input type="text" style="width: 220px;"  ng-model="item.content" value="item.content" class="input_text ele-name"/><label id="ele-name-error" style="left: 148px;" class="l-error"></label></td>
                                 <td>
-                                    <select class="ele-type bd">
+                                     <select class="ele-type bd" ng-model="item.attributeType">
                                         <option value=80>字符串</option>
                                         <option value=83>日期</option>
                                         <option value=89>整数</option>
@@ -51,17 +50,17 @@
                                         <option value=90>基数</option>
                                         <option value=91>分数</option>
                                         <option value=92>百分比</option>
-                                   
                                     </select>
                                 </td>
-                                <td id="ele-asked-tr" class="pr">
-                                    <input style="width: 200px;" type="text" class="input_text ele-asked"/>
-                                    <label id="ele-asked-error" style="left:10px;" class="l-error"></label>
-                                </td>
-                                <td id="ele-concept-tr" class="pr">
-                                    <input style="width: 180px;" type="text" id="ele-concept-autocomplete" class="input_text ele-concept" placeholder="从概念库中选择"/>
-                                    <label style="left: 10px;" id="ele-concept-error" class="l-error"></label>
-                                </td>
+                                <!-- <td>
+                                    <select class="mining-type bd" disabled="disabled">
+                                        <option value=10017>OEC</option>
+                                        <option value=10018>GATE</option>
+                                        <option value=10017>NLP</option>
+                                    </select>
+                                </td> -->
+                                <td id="ele-asked-tr"  class="pr"><input style="width: 220px;" type="text" ng-model="item.askContent" value="item.askContent" class="input_text ele-asked"/><label id="ele-asked-error" style="left: 496px;" class="l-error"></label></td>
+                               <!--  <td id="ele-concept-tr"><input style="width: 180px;" type="text" id="ele-concept-autocomplete" class="input_text ele-concept" placeholder="从概念库中选择"/><label style="left: 710px;" id="ele-concept-error" class="l-error"></label></td> -->
                             </tr>
                             <tbody id="add-item"></tbody>
                         </table>
@@ -80,7 +79,6 @@
     .ngdialog.ngdialog-theme-default .ngdialog-content {
         width: 840px;
     }
-
     .enable-bar{
         position: relative;
         padding-left: 19px;
