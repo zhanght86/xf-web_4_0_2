@@ -21,16 +21,16 @@
                                 <table class="access_amount_table material_table">
                                     <tr>
                                         <td>
-                                            <input type="text" class="txt"  ng-model="vm.extendedQuestion" placeholder="请输入用户问法" style="width:90%;"/>
-                                            <a href="javascript:;" class="create_a" ng-click="vm.addExtension()">
-                                                <img src="../../images/images/add_img.png" >
-                                            </a>
+                                            <input type="text" class="txt"  ng-model="vm.extendedQuestion" ng-keydown="vm.addExtension1($event)" placeholder="请输入用户问法" style="width:90%;"/>
+                                            <!--<a href="javascript:;" class="create_a" ng-click="vm.addExtension()">-->
+                                                <!--<img src="../../images/images/add_img.png" >-->
+                                            <!--</a>-->
                                         </td>
                                     </tr>
                                     <tr ng-repeat="item in vm.extendedQuestionArr">
-                                        <td>
+                                        <td ng-mouseenter="vm.addExtensionShow($event)" ng-mouseleave="vm.addExtensionHide($event)">
                                             <input type="text" class="txt"  ng-model="item.content" readonly style="width:90%;"/>
-                                            <a href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
+                                            <a style="display: none;" href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
                                                 <img src="../../images/images/delete_img.png" >
                                             </a>
                                         </td>
@@ -49,16 +49,16 @@
                                 <table class="access_amount_table material_table">
                                     <tr>
                                         <td>
-                                            <input type="text" class="txt"  ng-model="vm.contentVal" placeholder="请输入知识内容" style="width:90%;"/>
-                                            <a href="javascript:;" class="create_a" ng-click="vm.addContent()">
-                                                <img src="../../images/images/add_img.png" >
-                                            </a>
+                                            <input type="text" class="txt"  ng-model="vm.contentVal" ng-keydown="vm.addContent1($event)" placeholder="请输入知识内容" style="width:90%;"/>
+                                            <!--<a href="javascript:;" class="create_a" ng-click="vm.addContent()">-->
+                                                <!--<img src="../../images/images/add_img.png" >-->
+                                            <!--</a>-->
                                         </td>
                                     </tr>
                                     <tr ng-repeat="item in vm.contentArr">
-                                        <td>
+                                        <td ng-mouseenter="vm.addExtensionShow($event)" ng-mouseleave="vm.addExtensionHide($event)">
                                             <input type="text" class="txt"  ng-model="item.content" readonly style="width:90%;"/>
-                                            <a href="javascript:;" class="create_a" ng-click="vm.removeCon(item,vm.contentArr)">
+                                            <a style="display: none;" href="javascript:;" class="create_a" ng-click="vm.removeCon(item,vm.contentArr)">
                                                 <img src="../../images/images/delete_img.png" >
                                             </a>
                                         </td>
