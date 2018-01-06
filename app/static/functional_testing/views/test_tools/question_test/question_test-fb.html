@@ -26,31 +26,23 @@
                 <div class="bd pd-10" style="min-height:200px;max-height:300px;overflow:auto;" id="solution">
                     <div class="c-red bold mb-10">
                         <span ng-show="vm.show_tit">标准问法：</span>
-                        <ul ng-repeat="v in vm.listData.askDebugInfo track by $index" style="display:inline-block;">
-                            <li>
-                                [
-                                <span>{{v.topic}}：</span>
-                                <!--<span>{{v.content}}</span>-->
-                                <span ng-repeat="i in v.content.split(' ') track by $index">
-                                    {{i}}
-                                </span>
-                                ]
-                            </li>
-                        </ul>
-
+                        <!--{{vm.answerRes.standardQueryResult}}-->
+                        <span ng-repeat="v in vm.answerRes.standardQueryResult track by $index">[ {{v.tagList.join(',')}} ]</span>
                     </div>
-                    <ul class="mb-10" ng-repeat="v in vm.listData.compareDebugInfo track by $index">测试问法{{$index+1}}：
-                        <li ng-repeat="item in v track by $index" style="display:inline-block;margin-right:5px;">
-                            [
-                            <span>{{item.topic}}：</span>
-                            <!--<span>{{item.content}}</span>-->
-                            <span ng-repeat="i in item.content.split(' ') track by $index" ng-class="vm.check(i,vm.listData.askDebugInfo)?'c-red':'c-green'">
-                                {{i}}
-                            </span>
-                            ]
-                        </li>
-                    </ul>
+                    <div class="mb-10" ng-repeat="v in vm.answerRes.comparisonResult track by $index">测试问法{{$index+1}}:
 
+                                <span ng-repeat="i in v.wordTagResultList track by $index" ng-class="">
+                                    [<span ng-repeat="val in i.tagList track by $index" ng-class="vm.check(val,v.matchedWordTagResults)?'c-red':'c-green'">{{val}}<i ng-if="$index!=i.tagList.length-1">，</i></span>]
+                                </span>
+                        <span > ; 相似度：{{v.similarity}}</span>
+                    </div>
+                    <!--<div>测试问答1:-->
+                    <!--<span class="c-red">key_1_购买,key_1_买入 </span>-->
+                    <!--<span class="c-success">key_1_网上,key_1_互联网</span>-->
+                    <!--<span class="c-blue">key_1_再,key_1_同时</span>-->
+                    <!--<span class="c-orange">key_1_再,key_1_同时</span>-->
+                    <!--<span class="c-green">key_1_再,key_1_同时</span>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
