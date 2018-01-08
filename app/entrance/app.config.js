@@ -35,6 +35,7 @@ module.exports = ngModule => {
 
             //监听路由的变化，一旦发生变化校验用户登录情况
             $rootScope.$on("$stateChangeStart", function (event, next, toParams, fromState, fromParams) {
+                layer.closeAll() ;
                 console.log(next, toParams, fromState, fromParams)
             });
 

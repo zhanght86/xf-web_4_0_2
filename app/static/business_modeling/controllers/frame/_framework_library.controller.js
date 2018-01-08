@@ -63,7 +63,6 @@ module.exports = businessModelingModule =>{
             listData:"",
             editFrame:editFrame,
             deleteFrame:deleteFrame,
-            searchByFrameTitle:searchByFrameTitle,
             downloadTemplate:downloadTemplate,
             exportAll:exportAll,
             batchUpload:batchUpload,
@@ -554,31 +553,7 @@ module.exports = businessModelingModule =>{
             });
         }
 
-        function searchByFrameTitle(current,type){
-            if(nullCheck($("#keyWords").val())==true){
-                httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
-                    "frameCategoryId": $scope.vm.botSelectValue,
-                    "frameTitle": "%"+$("#keyWords").val().trim()+"%",
-                    "index":(current-1)*$scope.vm.pageSize,
-                    "pageSize": $scope.vm.pageSize
-                },function(data){
-                    if(data.data){
-                        clearSelectAll();
-                        $scope.vm.listData = data.data;
-                        $scope.vm.paginationConf={
-                            currentPage: current,//当前页
-                            totalItems: data.total, //总页数
-                            pageSize: $scope.vm.pageSize,//第页条目数
-                            pagesLength: 8  //分页框数量
-                        };
-                    }else{
-                        $scope.vm.listData="";
-                    }
-                    $scope.$apply();
-                },function(err){
-                });
-            }
-        }
+     
 
    
         //添加框架
@@ -587,6 +562,7 @@ module.exports = businessModelingModule =>{
                 layer.msg("请选择类目");
                 return;
             }
+
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/frame/framework_library_dialog.html",
                 scope: $scope,
@@ -614,13 +590,10 @@ module.exports = businessModelingModule =>{
                             return false;
                         }
                         if(frameTitleRepeatCheck("#frameAddErrorObj")==false){
-                             $("#frameAddErrorObj").html("标题重复");
+                            alert(frameTitleRepeatCheck("#frameAddErrorObj"))
                             return false;
                         }
-                        if($scope.vm.frameTypeId==100){
-                            addFaq();
-                        }
-                        if($scope.vm.frameTypeId==101){
+                        if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
                             addFaq();
                         }
                         if($scope.vm.frameTypeId==102){
@@ -636,21 +609,21 @@ module.exports = businessModelingModule =>{
          * @param selector
          * @returns {boolean}
          */
+        var flag=false ;
         function frameTitleRepeatCheck(selector){
-            var flag = false;
             BusinessModelingServer.frameRepeatTtitle.get({
                 "title":$scope.vm.frameTitle
             },(data)=>{ 
                if(data.status==200){
                     $(selector).html('');
-                    flag = true;
+                   flag=true;
                }else{
                    $(selector).html(data.info);
-                   alert(data.info)
+                   flag=false;
                }
             })
-          
-           return flag;
+            alert(flag)
+          return flag;
         }
         //添加表达式
         function addFaq(){
@@ -665,7 +638,7 @@ module.exports = businessModelingModule =>{
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         if(faqValidata(0)==true){
-                            faqAssemble(0);
+                           
                             faqRequestAdd();
                              
                         }else{

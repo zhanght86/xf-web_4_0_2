@@ -47,11 +47,13 @@ module.exports = homePageModule =>{
                     $cookieStore.remove('userName');
                     $cookieStore.remove('userLoginName');
                     localStorage.removeItem('history');
-                    httpRequestPost("/api/user/userOut",{
-                        "userId" : USER_ID ,
-                        "userLoginName" : USER_LOGIN_NAME
-                    },function(){});
-                    self.location = "index.html" ;
+                    // HomePageServer.logout.save({
+                    //     "id" : USER_ID ,
+                    //     "account" : USER_LOGIN_NAME
+                    // },function(){
+                    //     $state.go("login")
+                    // })
+
                 }
                 //初始化分页配置
                 self.initSearch = function (column) {

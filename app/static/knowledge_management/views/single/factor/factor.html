@@ -7,8 +7,8 @@
             <div class="content_box mb25 mt10">
                 <div class="cl mb-20">
                     <div class="L">
-                        <h3 class="f22 pl-10 mb15" ng-if="!vm.knowledgeId">要素型知识新增</h3>
-                        <h3 class="f22 pl-10 mb15" ng-if="vm.knowledgeId">要素型知识编辑</h3>
+                        <h3 class="f22 pl-10 mb15" ng-if="!vm.knowledgeId">任务知识新增</h3>
+                        <h3 class="f22 pl-10 mb15" ng-if="vm.knowledgeId">任务知识编辑</h3>
                     </div>
                     <a href="javascript:;" class="c_green R" ng-click="vm.showTip();">使用帮助</a>
                 </div>
@@ -40,14 +40,14 @@
                         </div>
                     </div>
 
-                    <div class="list_facContent mb-10">
-                        <div class="list_facContent_L">业务框架：</div>
-                        <div >
-                            <select class="input-text" style="width:395px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">
-                                <option value="" ng-if="vm.frames.length">--请选择以上业务框架--</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!--<div class="list_facContent mb-10">-->
+                        <!--<div class="list_facContent_L">业务框架：</div>-->
+                        <!--<div >-->
+                            <!--<select class="input-text" style="width:395px;"  ng-model="vm.frameId" ng-options="frame.frameId as frame.frameTitle for frame in vm.frames">-->
+                                <!--<option value="" ng-if="vm.frames.length">&#45;&#45;请选择以上业务框架&#45;&#45;</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <!--  扩展问 -->
                     <span concept-extension="notDialog" tag="true" api="queryFactorExtension"></span>
                     <div class="exten_problem"  ng-repeat="(itemIndex,item) in vm.extensions track by $index">

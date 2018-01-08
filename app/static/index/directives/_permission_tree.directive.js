@@ -5,9 +5,8 @@
  */
 module.exports = module =>{
     module
-        .directive('zTree',["HomePageServer",function(HomePageServer){
+        .directive('zTree',["HomePageServer","$interval",function(HomePageServer,$interval){
             return {
-                // require: '?ngModel',
                 restrict: 'A',
                 link: function ($scope, element, attrs, ngModel) {
                     var setting = {
@@ -21,45 +20,50 @@ module.exports = module =>{
                             simpleData: {
                                 enable: true
                             }
+                        },
+                        callback:{
+                            onCheck:onCheck
                         }
                     };
                     $scope.permissionList = [] ;
                     // 新增角色 查询所有权限
-                    HomePageServer.queryPermissionList.save({},function(response){
-                        if(response.status == 200){
-                            angular.forEach(response.data,function(permission,index){
-                                if(parseInt(permission.id)<10){
-                                    permission.open = false ;
-                                }
-                                permission.checked = false ;
-                                $scope.permissionList.push(permission)
-                            }) ;
-                            console.log($scope.permissionList)
+                    HomePageServer.queryPermissionList.save({},function(allPermission){
+                        if(allPermission.status == 200){
+                            console.log($scope.permissionList,$scope.vm.roleId);
+                            // 查询角色对应的权限
+                            if($scope.vm.roleId){
+                                HomePageServer.queryRoleInfo.get({roleId:$scope.vm.roleId},function (rolePermission) {
+                                    angular.forEach(allPermission.data,function(permission,index){
+                                        if(parseInt(permission.id)<10){
+                                            permission.open = false ;
+                                        }
+                                        permission.checked = rolePermission.data.roleMenuList.some((item)=>{
+                                            return item.groupId == permission.id
+                                        }) ;
+                                        $scope.permissionList.push(permission)
+                                    }) ;
+                                }).$promise.then(function(){
+                                    $.fn.zTree.init(element, setting, $scope.permissionList).expandAll(true);
+                                })
+                            }else{
+                                angular.forEach(allPermission.data,function(permission,index){
+                                    if(parseInt(permission.id)<10){
+                                        permission.open = false ;
+                                    }
+                                    permission.checked = false ;
+                                    $scope.permissionList.push(permission)
+                                }) ;
+                                $.fn.zTree.init(element, setting, $scope.permissionList).expandAll(true);
+                            }
                         }
-                    }).$promise.then(function(){
-                        $.fn.zTree.init(element, setting, $scope.permissionList).expandAll(true);
-                    }) ;
-                    //ztree用于初始化的静态数据
-                    // var zNodes = [
-                    //     { id:1, pId:0, name:"随意勾选 1", open:true},
-                    //     { id:11, pId:1, name:"随意勾选 1-1", open:true},
-                    //     { id:111, pId:11, name:"随意勾选 1-1-1"},
-                    //     { id:112, pId:11, name:"随意勾选 1-1-2"},
-                    //     { id:12, pId:1, name:"随意勾选 1-2", open:true},
-                    //     { id:121, pId:12, name:"随意勾选 1-2-1"},
-                    //     { id:122, pId:12, name:"随意勾选 1-2-2"},
-                    //     { id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
-                    //     { id:21, pId:2, name:"随意勾选 2-1"},
-                    //     { id:22, pId:2, name:"随意勾选 2-2", open:true},
-                    //     { id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
-                    //     { id:222, pId:22, name:"随意勾选 2-2-2"},
-                    //     { id:23, pId:2, name:"随意勾选 2-3"}
-                    // ];
+                    });
                     //过滤节点的机制 直接return node表示不做任何过滤
                     function filter(node) {
                         return node;
                     }
-
+                    function onCheck(data,data2,data3,data4) {
+                    //   点击回调
+                    }
                     ///动态设置zTree的所有节点有checkbox
                     function DynamicUpdateNodeCheck() {
                         var zTree = $.fn.zTree.getZTreeObj("treeDemo");

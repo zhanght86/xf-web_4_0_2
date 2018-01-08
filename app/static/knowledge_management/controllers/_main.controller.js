@@ -112,18 +112,21 @@ module.exports = knowledgeManagementModule =>{
             //className  classificationId  classificationType(不推送)
             //重复 提示   不重复返回bot对象
             // 校验对象  className
+            console.log(1) ;
             var result = {             //定义bot对象
-                "className" : path,
-                "classificationId" : id,
-                "classificationType" : type?type:67
+                "value" : path ,
+                "id"    : id
             } ;    //返回對象
             var len = allBot.length;  //所有bot 長度
             // 集合转为string 便于比较  并不改变原数组
-            var backUpPath = angular.copy(path).join("/") ;
             if(len){                  //需要验证
                 angular.forEach(allBot,function(item){
-                    console.log(item.className.join("/"),backUpPath) ;
-                    if(item.className.join("/") == backUpPath){
+                    // console.log(item.className.join("/"),backUpPath) ;
+                    // if(item.className.join("/") == backUpPath){
+                    //     result = false ;
+                    //     return  layer.msg("添加分类重复，已阻止添加");
+                    // }
+                    if(item.name == path){
                         result = false ;
                         return  layer.msg("添加分类重复，已阻止添加");
                     }
