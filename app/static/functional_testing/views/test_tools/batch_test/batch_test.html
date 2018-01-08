@@ -12,7 +12,7 @@
             <div class="R">
                 <span class="L mr-5">
                     状态：
-                    <select class="sel bd " id="selected" ng-model="vm.searchType">
+                    <select class="sel bd " id="selected" ng-model="vm.searchType" style="width:90px;">
                         <option value="0">全部</option>
                         <option value="21007">待测试</option>
                         <option value="21008">测试中</option>
@@ -25,28 +25,32 @@
                 <!--<span class="c-999 pl-10">共有数据：<strong >{{vm.listDataTotal}}</strong> 条 </span>-->
             </div>
         </div>
-        <div class="bd p20" style="background:#fcfdfd;">
+        <div class="bd p10" style="background:#fcfdfd;">
 
             <div class="mt-20">
                 <div class="dataTables_wrapper no-footer">
                     <table class="stop_word_tab" >
                         <thead>
                         <tr>
-                            <th class="bold" width="3%"><input class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/></th>
+                            <th class="bold" width="3%">
+                                <input class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/>
+                            </th>
                             <th class="bold" width="16%">测试文件</th>
-                            <th class="bold" width="8%">状态</th>
-                            <th class="bold" width="8%">测试总数</th>
-                            <th class="bold" width="8%">准确率</th>
+                            <th class="bold" width="7%">渠道</th>
+                            <th class="bold" width="7%">状态</th>
+                            <th class="bold" width="7%">测试总数</th>
+                            <th class="bold" width="7%">准确率</th>
                             <th class="bold" width="15%">上传时间</th>
-                            <th class="bold" width="8%">操作人</th>
+                            <th class="bold" width="7%">操作人</th>
                             <th class="bold" width="10%">备注</th>
-                            <th class="bold" width="19%">操作</th>
+                            <th class="bold" width="16%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="v in vm.listData">
                             <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.id)"  ng-click="vm.selectSingle(v.id)"></td>
                             <td><span class="c-primary" >{{v.docName}}</span></td>
+                            <td>{{v.channelId}}</td>
                             <td ng-if="v.status==21007">待测试</td>
                             <td ng-if="v.status==21008">测试中</td>
                             <td ng-if="v.status==21009">已完成</td>
@@ -58,7 +62,7 @@
                             <td>
                                 <a href="javascript:;" class="c-green mr-5" ng-if="v.status==21009">下载</a>
                                 <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks(v.id)">备注</a>
-                                <a class="c-blue mr-5" ng-click="vm.startUp()" ng-if="v.status==21007">测试</a>
+                                <a class="c-blue mr-5" ng-click="vm.startUp(v.id)" ng-if="v.status==21007">测试</a>
                                 <a class="c-blue mr-5" ng-if="v.status==21009">重测</a>
                                 <a class="c-red" ng-click="vm.deleteQuestion([v.id])">删除</a>
                             </td>

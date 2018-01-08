@@ -26,8 +26,32 @@ module.exports=materialModule => {
             chatKnowledgeId : '',
             save : save ,
             checkTitle : checkTitle ,          //标题
+            addExtension1 : addExtension1,
+            addContent1 : addContent1,
+            addExtensionShow: addExtensionShow,
+            addExtensionHide: addExtensionHide,
 
         };
+        //显示隐藏 删除标签
+        function addExtensionShow(e){
+            var obj = e.srcElement ? e.srcElement : e.target;
+            $(obj).children('a').show();
+        }
+        function addExtensionHide(e){
+            var obj = e.srcElement ? e.srcElement : e.target;
+            $(obj).children('a').hide();
+        }
+        /**
+         ** 添加扩展问
+         **/
+        function addExtension1(e) {
+            e = e || window.event ;
+            let keycode = e.keyCode|| e.which;
+            if(keycode==13 ){
+                $scope.vm.addExtension();
+
+            }
+        }
 
         //添加扩展问 (先在前台校验重复，再校验后台与数据库的是否重复---点完保存后数据才能添加到数据库)
         function addExtension(){
@@ -63,6 +87,18 @@ module.exports=materialModule => {
         //刪除
         function remove(item,arr){
             arr.remove(item);
+        }
+
+        /**
+         ** 添加知识内容
+         **/
+        function addContent1(e) {
+            e = e || window.event ;
+            let keycode = e.keyCode|| e.which;
+            if(keycode==13 ){
+                $scope.vm.addContent();
+
+            }
         }
         //添加知识内容
         function addContent(){

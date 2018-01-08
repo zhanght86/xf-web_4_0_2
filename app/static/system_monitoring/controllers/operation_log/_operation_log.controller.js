@@ -43,7 +43,7 @@ module.exports=systemMonitoringModule => {
                 layer.close(i);
                 if(data.status == 200){
                     console.log(data);
-                    $scope.vm.listData = data.data ;
+                    $scope.vm.listData = data.data.data ;
                     $scope.vm.paginationConf.currentPage = index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = Math.ceil(data.data.total/ $scope.vm.paginationConf.pageSize) ;

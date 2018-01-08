@@ -10,7 +10,7 @@ module.exports = angular =>{
     //--------------------------------------------------
     //          directive
     //--------------------------------------------------
-    require('../../../components/page/page')(systemMonitoringModule);  // 分页
+    //require('../../../components/page/page')(systemMonitoringModule);  // 分页
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------

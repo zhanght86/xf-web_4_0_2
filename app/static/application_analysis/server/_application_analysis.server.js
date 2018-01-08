@@ -32,12 +32,12 @@ class AppAnalysisServer {
                                             *知识点排名统计*    API_ANALYSIS = "/api/analysis" ;
                                             ********************************/
     //未匹配问题
-    this.getList = $resource(API_ANALYSIS+'/noMatch/searchList',{},{});
+    this.getList = $resource(API_ANALYSIS+'/no/match/search/list',{},{});
     //知识点排名
-    this.getKnowledgeList = $resource(API_ANALYSIS+'/knowledgeRanking/searchKnowledgeRankingList',{},{});
+    this.getKnowledgeList = $resource(API_ANALYSIS+'/knowledge/ranking/query/list',{},{});
 
     //知识点排名导出表格
-    this.exportKnowledgeExcel = $resource(API_ANALYSIS+'/knowledgeRanking/export',{},{});
+    this.exportKnowledgeExcel = $resource(API_ANALYSIS+'/knowledge/ranking/export',{},{});
     //知识点排名Url
     this.exportKnowledgeExcelUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
 
@@ -49,7 +49,7 @@ class AppAnalysisServer {
                                                 *会话明细统计*    API_ANALYSIS = "/api/analysis" ;
                                             ********************************/
     //导出
-    this.exportExcel = $resource(API_ANALYSIS+'/userSession/export',{},{});
+    this.exportExcel = $resource(API_ANALYSIS+'/user/session/export',{},{});
     //导出路径
     this.exportExcelUrl = API_ANALYSIS+'/download/downloadExcel?fileName=';
     //获取对应user 的 对话列表

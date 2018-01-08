@@ -10,35 +10,33 @@ module.exports=functionalTestModule => {
         $scope.vm = {
             testTitle : '',
             question : '',
-            //applicationId : $cookieStore.get('applicationId'),
             comparisonTextArray:[],
             asklength :0,
-            answerRes : '',
             emptyInput : emptyInput,
             //addArr : addArr,
             test : test,
             check : check,
-            show_tit:false
+            show_tit:false,
+            listData : [],
 
         };
         /*****************
             * //比较测试回答有没有重的词；
         * *****************/
-        function check(val,matchedWordTagResults){
-            var allLen = matchedWordTagResults.length ;
-            angular.forEach(matchedWordTagResults,function (tag) {
-                var len = tag.tagList.length ;
-                angular.forEach(tag.tagList,function (value) {
+        function check(val,askDebugInfo){
+            var allLen = askDebugInfo.length;
+            angular.forEach(askDebugInfo,function (tag) {
+                var len = tag.content.split(' ').length ;
+                angular.forEach(tag.content.split(' '),function (value) {
                     if(value == val){
                         len-=1 ;
                     }
                 }) ;
-                if(len != tag.tagList.length){
+                if(len != tag.content.split(' ').length){
                     allLen-=1 ;
                 }
             }) ;
-
-            if(allLen==matchedWordTagResults.length){
+            if(allLen==askDebugInfo.length){
                 return false ;
             }else{
                 return true ;
@@ -71,13 +69,16 @@ module.exports=functionalTestModule => {
                 "comparisonTextArray": $scope.vm.comparisonTextArray
             },function(data){
                 layer.close(i);
-                $scope.vm.show_tit=true;
-                //$scope.vm.botRoot = data.data;
                 console.log(data);
-                if(data.data.status == 500){
-                    layer.msg(data.data.data,{time:1000});
+                if(data.data.status==200){
+                    $scope.vm.show_tit=true;
+                    $scope.vm.listData = data.data.data;
                 }
-                $scope.vm.answerRes=data.data.data;
+
+                if(data.data.status == 500){
+                    layer.msg(data.data.info,{time:1000});
+                }
+
 
             },function(err){
                 layer.close(i);
@@ -93,7 +94,7 @@ module.exports=functionalTestModule => {
             $scope.vm.testTitle='';
             $scope.vm.question='';
             $scope.vm.comparisonTextArray=[];
-            $scope.vm.answerRes="";
+            $scope.vm.listData=[];
             $scope.vm.show_tit=false;
 
         }

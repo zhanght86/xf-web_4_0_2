@@ -35,14 +35,14 @@
             <table class="stop_word_tab" style="margin-top: 10px;">
                 <thead>
                 <tr>
-                    <th class="bold" width="10%"><input id="selectAll" type="checkbox"/></th>
+                    <th class="bold" width="10%"><input id="selectAll" type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/></th>
                     <th class="bold" width="30%">框架名称</th>
                     <th class="bold" width="30%">框架类型</th>
                     <th class="bold" width="30%">操作</th>
                 </tr>
                 </thead>
                 <tr ng-repeat="item in vm.listData">
-                    <td><input type="checkbox" name="sid" value="{{item.frameId}}"></td>
+                    <td><input type="checkbox" name="sid" value="{{item.frameId}}" ng-checked="vm.ids.inArray(item.id)" ng-click="vm.selectSingle(item.id)"></td>
                     <td>{{item.title}}</td>
                     <td>{{item.type | typeFilter}}</td>
                     <td>

@@ -51,15 +51,7 @@ module.exports = businessModelingModule =>{
             winHeight:0
         };
 
-        //搜索
-      
-
-         BusinessModelingServer.classifyGetPath.get({
-         	name:"测试"
-         },function(data){
-            console.log(data)
-         })
-
+       
 
         var categoryApplicationId = APPLICATION_ID;
         var categoryModifierId = USER_ID;

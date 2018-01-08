@@ -188,7 +188,7 @@ module.exports=applAnalysisModule => {
         /**
          * 改变 echart 数据   渠道统计
          * **/
-        function setAccessChartOption(ydata130,ydata131,ydata132){
+        function setAccessChartOption(ydata131,ydata132,ydata133){
             return {
                 title: {
                     text: '总会话数',
@@ -229,7 +229,7 @@ module.exports=applAnalysisModule => {
                         name:'会话数',
                         type:'bar',
                         stack: '总量',
-                        data:[ydata130,ydata131,ydata132]
+                        data:[ydata131,ydata132,ydata133]
                     },
                 ]
             };
@@ -280,6 +280,20 @@ module.exports=applAnalysisModule => {
             console.log(timer)
             return timer ;
         }
+
+       /**
+         * 时间戳转化
+         * **/
+           function add0(m){return m<10?'0'+m:m }
+            function format(date)
+            {
+            //shijianchuo是整数，否则要parseInt转换
+            var time = new Date(date);
+            var y = time.getFullYear();
+            var m = time.getMonth()+1;
+            var d = time.getDate();
+            return ""+y+'-'+add0(m)+'-'+add0(d)+"";
+            }
         //*********************************************************************************************************************************8//
 
         /**
@@ -366,7 +380,7 @@ module.exports=applAnalysisModule => {
          * 访问数据时间统计
          * **/
         function queryAccessDataByTime(){
-           // var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             var xData,yData1,yData2,yData3 ;
             var dateJump ; //获取时间间隔
             if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
@@ -374,8 +388,10 @@ module.exports=applAnalysisModule => {
                 console.log(dateJump)
             }else if($scope.vm.TimerSearchTimeType==1 || $scope.vm.TimerSearchTimeType==2 ){
                 dateJump = 1 ;
-            }else{
+            }else if($scope.vm.TimerSearchTimeType==3){
                 dateJump = 7
+            }else{
+                dateJump = 30
             }
             
             AppAnalysisServer.queryAccessDataByTime.save({
@@ -385,7 +401,7 @@ module.exports=applAnalysisModule => {
                // "dimensionId" : $scope.vm.dimensionId,
                 "channelId" : $scope.vm.channelId
             },function(data){
-              //  layer.close(i);
+               layer.close(i);
                 if(data.data.length==0){
                     layer.msg("所查询时间段有效数据为空") ;
                     $scope.vm.timerData = "" ;
@@ -400,20 +416,19 @@ module.exports=applAnalysisModule => {
                     if(dateJump==1){
                         // echart 图表显示
                         xData = ["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00", "13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"] ;
-                        yData1 = [] ;
-                        yData2 = [] ;
-                        yData3 = [] ;
+                        yData1 = [].fill.call(new Array(24),0) ;
+                        yData2 = [].fill.call(new Array(24),0) ;
+                        yData3 = [].fill.call(new Array(24),0) ;
+                        yData1 = [].fill.call(new Array(24),0) ;
                         angular.forEach(data.data, function(data,index1){
-                            yData1.push(data.totalSessions)  ;   //总会话数
+                             yData1[data.hour] = data.totalSessions ; //总会话数
                           
                         });
-                        console.log(yData1)
                         angular.forEach(data.data, function(data,index1){
-                            console.log(index1)
-                            yData2.push(data.totalUsers) ;  //总用户数
+                            yData2[data.hour] =data.totalUsers ;  //总用户数
                         });
                          angular.forEach(data.data, function(data,index1){
-                            yData3.push(data.validSessions) ;  //有效会话数
+                            yData3[data.hour] =data.validSessions ;  //有效会话数
                         });
                         //表格数据
                         var tableDate = [];
@@ -423,24 +438,25 @@ module.exports=applAnalysisModule => {
                             }
                         }
                         $scope.vm.timerData = getOriginData(tableDate.length,tableDate);
+                        console.log($scope.vm.timerData)
                         angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
-                            angular.forEach(data.data["有效用户数"],function(item,index){
-                                $scope.vm.timerData["有效用户数"][item.date].users = item.users
+                            angular.forEach(data.data,function(item,index){
+                                $scope.vm.timerData["有效用户数"][item.hour].users = item.validUsers
                             }) ;
                         }) ;
                         angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
-                            angular.forEach(data.data["有效会话数"],function(item,index){
-                                $scope.vm.timerData["有效会话数"][item.date].times = item.times
+                            angular.forEach(data.data,function(item,index){
+                                $scope.vm.timerData["有效会话数"][item.hour].times = item.validSessions
                             }) ;
                         }) ;
                         angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
-                            angular.forEach(data.data["总会话数"],function(item,index){
-                                $scope.vm.timerData["总会话数"][item.date].times = item.times
+                            angular.forEach(data.data,function(item,index){
+                                $scope.vm.timerData["总会话数"][item.hour].times = item.totalSessions
                             }) ;
                         }) ;
                         angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
-                            angular.forEach(data.data["总用户人数"],function(item,index){
-                                $scope.vm.timerData["总用户人数"][item.date].users = item.users
+                            angular.forEach(data.data,function(item,index){
+                                $scope.vm.timerData["总用户人数"][item.hour].users = item.totalUsers
                             }) ;
                         }) ;
                         /***
@@ -448,7 +464,7 @@ module.exports=applAnalysisModule => {
                          *  @params 过去七天
                          *  @params 自定义时间大于一天
                          * **/
-                    }else{
+                    }else if(dateJump==7){
                         //获取时间段内的所有时间
                         if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
                             xData = getAllDateFromDateJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) ;
@@ -459,50 +475,107 @@ module.exports=applAnalysisModule => {
                         console.log($scope.vm.timerData)  ;
                         console.log(xData)  ;
                         // 表格显示数据
-                        angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
-                            angular.forEach(data.data["有效用户数"],function(item,index){
-                                if(item.date==useData.date){
-                                    $scope.vm.timerData["有效用户数"][useIndex].users = item.users
-                                }
+                         // 表格显示数据
+                            angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
+                                    }
+                                }) ;
                             }) ;
-                        }) ;
-                        angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
-                            angular.forEach(data.data["有效会话数"],function(item,index){
-                                if(item.date==useData.date){
-                                    $scope.vm.timerData["有效会话数"][useIndex].times = item.times
-                                }
+                            angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
+                                    }
+                                }) ;
                             }) ;
-                        }) ;
-                        angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
-                            angular.forEach(data.data["总会话数"],function(item,index){
-                                if(item.date==useData.date){
-                                    $scope.vm.timerData["总会话数"][useIndex].times = item.times
-                                }
+                            angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["总会话数"][useIndex].times = item.totalSessions
+                                    }
+                                }) ;
                             }) ;
-                        }) ;
-                        angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
-                            angular.forEach(data.data["总用户人数"],function(item,index){
-                                if(item.date==useData.date){
-                                    $scope.vm.timerData["总用户人数"][useIndex].users = item.users
-                                }
+                            angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["总用户人数"][useIndex].users = item.totalUsers
+                                    }
+                                }) ;
                             }) ;
-                        }) ;
                         //echart 图表数据
                         yData1 = [].fill.call(new Array(7),0) ;
                         yData2 = [].fill.call(new Array(7),0) ;
+                        yData3 = [].fill.call(new Array(7),0) ;
                         angular.forEach($scope.vm.timerData["总会话数"],function(item,index){
                             yData1[index] = item.times ;
                         });
                         angular.forEach($scope.vm.timerData["总用户人数"], function(item,index){
                             yData2[index] = item.users ;
                         });
+                        angular.forEach($scope.vm.timerData["有效会话数"], function(item,index){
+                            yData3[index] = item.times ;
+                        });
+                    }else {
+                         //获取时间段内的所有时间
+                        if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
+                            xData = getAllDateFromDateJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) ;
+                        }else{
+                            xData = getBeforeDate(dateJump,true,true)  ;
+                        }
+                        $scope.vm.timerData = getOriginData(xData.length,xData);
+                        console.log($scope.vm.timerData)  ;
+                        console.log(xData)  ;
+                        // 表格显示数据
+                         // 表格显示数据
+                            angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
+                                    }
+                                }) ;
+                            }) ;
+                            angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
+                                    }
+                                }) ;
+                            }) ;
+                            angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["总会话数"][useIndex].times = item.totalSessions
+                                    }
+                                }) ;
+                            }) ;
+                            angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
+                                angular.forEach(data.data,function(item,index){
+                                    if(format(item.countTime)==useData.date){
+                                        $scope.vm.timerData["总用户人数"][useIndex].users = item.totalUsers
+                                    }
+                                }) ;
+                            }) ;
+                        //echart 图表数据
+                        yData1 = [].fill.call(new Array(30),0) ;
+                        yData2 = [].fill.call(new Array(30),0) ;
+                        yData3 = [].fill.call(new Array(30),0) ;
+                        angular.forEach($scope.vm.timerData["总会话数"],function(item,index){
+                            yData1[index] = item.times ;
+                        });
+                        angular.forEach($scope.vm.timerData["总用户人数"], function(item,index){
+                            yData2[index] = item.users ;
+                        });
+                        angular.forEach($scope.vm.timerData["有效会话数"], function(item,index){
+                            yData3[index] = item.times ;
+                        });
                     }
-                    console.log(yData1)
-                    console.log(yData2)
+                  
                     TimerChart.setOption(setTimerChartOption(xData,yData1,yData2,yData3)) ;
                 }
             },function(err){
-               // layer.close(i);
+                layer.close(i);
                 $log.log(err);
             });
         };
@@ -511,9 +584,8 @@ module.exports=applAnalysisModule => {
          * 访问数据渠道统计
          * **/
         function queryAccessDataByChannel(){
-           // var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             AppAnalysisServer.queryAccessDataByChannel.save({
-                "applicationId":APPLICATION_ID,
                 "startTime":$scope.vm.accessSearchStartTime ,
                 "endTime":$scope.vm.accessSearchEndTime ,
                 "requestTimeType" : $scope.vm.accessSearchTimeType ,
@@ -534,82 +606,46 @@ module.exports=applAnalysisModule => {
 
                         });
                         $interval.cancel(intervaler) ;
-                        var data130 =[];
-                        //web
                         var data131 =[];
-                        //app
+                        //web
                         var data132 =[];
-
-                        $scope.dataChannelTalk = data.data["总会话数"];
-                        $scope.dataChannelUser = data.data["总用户人数"];
-                        $scope.dataChannelVilidTalk = data.data["有效会话数"];
-                        $scope.dataChannelVilidUser = data.data["有效用户数"];
-                        //console.log( $scope.dataChannelTalk[0]["times"]);
+                        //app
+                        var data133 =[];
+                        $scope.dataChannel=data.data;
                         //总会话数
-                        for(var i = 0;i<$scope.dataChannelTalk.length;i++){
-                            if($scope.dataChannelTalk[i]["channel"] == "130"){
-                                data130.push({_key:0,_value:$scope.dataChannelTalk[i]["times"]});
+                        for(var i = 0;i<$scope.dataChannel.length;i++){
+                            if($scope.dataChannel[i].channelId == "131"){
+                                data131.push({_key:0,_value:$scope.dataChannel[i].totalSessions});
+                                data131.push({_key:1,_value:$scope.dataChannel[i].totalUsers});
+                                data131.push({_key:2,_value:$scope.dataChannel[i].validSessions});
+                                data131.push({_key:3,_value:$scope.dataChannel[i].validUsers});
                             }
-                            if($scope.dataChannelTalk[i]["channel"] == "131"){
-                                data131.push({_key:0,_value:$scope.dataChannelTalk[i]["times"]});
+                           if($scope.dataChannel[i].channelId == "132"){
+                                data132.push({_key:0,_value:$scope.dataChannel[i].totalSessions});
+                                data132.push({_key:1,_value:$scope.dataChannel[i].totalUsers});
+                                data132.push({_key:2,_value:$scope.dataChannel[i].validSessions});
+                                data132.push({_key:3,_value:$scope.dataChannel[i].validUsers});
                             }
-                            if($scope.dataChannelTalk[i]["channel"] == "132"){
-                                data132.push({_key:0,_value:$scope.dataChannelTalk[i]["times"]});
-                            }
-                        }
-                        //总用户人数
-                        for(var i = 0;i<$scope.dataChannelUser.length;i++){
-                            if($scope.dataChannelUser[i]["channel"] == "130"){
-                                data130.push({_key:1,_value:$scope.dataChannelUser[i]["users"]});
-                            }
-                            if($scope.dataChannelUser[i]["channel"] == "131"){
-                                data131.push({_key:1,_value:$scope.dataChannelUser[i]["users"]});
-                            }
-                            if($scope.dataChannelUser[i]["channel"] == "132"){
-                                data132.push({_key:1,_value:$scope.dataChannelUser[i]["users"]});
+                            if($scope.dataChannel[i].channelId == "133"){
+                                data133.push({_key:0,_value:$scope.dataChannel[i].totalSessions});
+                                data133.push({_key:1,_value:$scope.dataChannel[i].totalUsers});
+                                data133.push({_key:2,_value:$scope.dataChannel[i].validSessions});
+                                data133.push({_key:3,_value:$scope.dataChannel[i].validUsers});
                             }
                         }
-                        //有效会话数
-                        for(var i = 0;i<$scope.dataChannelVilidTalk.length;i++){
-                            if($scope.dataChannelVilidTalk[i]["channel"] == "130"){
-
-                                data130.push({_key:2,_value:$scope.dataChannelVilidTalk[i]["times"]});
-                            }
-                            if($scope.dataChannelVilidTalk[i]["channel"] == "131"){
-                                data131.push({_key:2,_value:$scope.dataChannelVilidTalk[i]["times"]});
-                            }
-                            if($scope.dataChannelVilidTalk[i]["channel"] == "132"){
-                                data132.push({_key:2,_value:$scope.dataChannelVilidTalk[i]["times"]});
-                            }
-                        }
-                        //有效用户数
-                        for(var i = 0;i<$scope.dataChannelVilidUser.length;i++){
-                            if($scope.dataChannelVilidUser[i]["channel"] == "130"){
-                                data130.push({_key:3,_value:$scope.dataChannelVilidUser[i]["users"]});
-                            }
-                            if($scope.dataChannelVilidUser[i]["channel"] == "131"){
-                                data131.push({_key:3,_value:$scope.dataChannelVilidUser[i]["users"]});
-                            }
-                            if($scope.dataChannelVilidUser[i]["channel"] == "132"){
-                                data132.push({_key:3,_value:$scope.dataChannelVilidUser[i]["users"]});
-                            }
-                        }
-                        $scope.data130 = data130;
+                       
                         $scope.data131 = data131;
                         $scope.data132 = data132;
-
-                        var ydata130;
+                        $scope.data133 = data133;
                         var ydata131;
                         var ydata132;
+                        var ydata133;
 
                         // 指定图表的配置项和数据
-//    var data130 = data130[0]._value;
-//    var data131 = data131[0]._value;
-//    var data132 = data132[0]._value;
-                        if(data130[0] == undefined ){
-                            ydata130 =0
+                        if(data133[0] == undefined ){
+                            ydata133 =0
                         }else{
-                            ydata130 =$scope.data130[0]._value
+                            ydata133 =$scope.data133[0]._value
                         }
                         if(data131[0] == undefined ){
                             ydata131 =0
@@ -623,25 +659,12 @@ module.exports=applAnalysisModule => {
                         }
 
                         // 使用刚指定的配置项和数据显示图表。
-                        accessChart.setOption(setAccessChartOption(ydata130,ydata131,ydata132));
-
+                        accessChart.setOption(setAccessChartOption(ydata131,ydata132,ydata133));
 
                     }
                 },50) ;
-                console.log(tableList) ;
-                //有效用户数
-                //有效会话数
-                //总会话数
-                //总用户人数
-                //for(var key in data.data){
-                //        angular.forEach(data.data["总会话数"],function(item,index){
-                //            if(item.channel == 131)
-                //            tableList[0].tableList.push(item)
-                //        })
-                //}
-                //vx
             },function(err){
-                //layer.close(i);
+                layer.close(i);
                 $log.log(err);
             });
         };

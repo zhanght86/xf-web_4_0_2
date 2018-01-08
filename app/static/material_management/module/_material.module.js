@@ -11,7 +11,7 @@ module.exports = angular =>{
     //--------------------------------------------------
     //         directive
     //--------------------------------------------------
-    require('../../../components/page/page')(materialModule);  // 分页
+   // require('../../../components/page/page')(materialModule);  // 分页
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------
@@ -44,11 +44,13 @@ module.exports = angular =>{
     require('../directives/_voice_upload.directive')(materialModule);               //语音
     require('../directives/_teletext_upload.directive')(materialModule);            //图文
     require('../directives/_uploader.directive')(materialModule);                   //聊天知识库
-   // require('../directives/_searchinput.directive')(materialModule);
-   // require('../directives/_enternextline.directive')(materialModule);
 
-  // 富文本编辑器
-    
+
+    //--------------------------------------------------
+    //         filter
+    //--------------------------------------------------
+    require('../filters/_to_html.filter')(materialModule);
+
 
 }
 

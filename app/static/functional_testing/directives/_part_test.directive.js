@@ -5,7 +5,7 @@
  */
 module.exports= functionalTestModule =>{
     functionalTestModule
-    .directive("batchTestOnly", ["$parse", "ngDialog", "$cookieStore", "$state", "$timeout",
+    .directive("partTest", ["$parse", "ngDialog", "$cookieStore", "$state", "$timeout",
         function ($parse, ngDialog, $cookieStore, $state, $timeout) {
             return {
                 //restrict: 'EA',
@@ -34,7 +34,7 @@ module.exports= functionalTestModule =>{
                                 //"applicationId": $cookieStore.get("applicationId")
                             },   // 上传参数
                             // 文件接收服务端。
-                            server: '/api/ms/test/batch/upload',
+                            server: '/api/ms/participle/test/upload',
                             accept: {
                                 title: 'file',
                                 extensions: 'xls,xlsx',

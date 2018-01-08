@@ -32,9 +32,11 @@ module.exports=functionalTestModule => {
             //-----------------------------渠道   服务
             listService:[],
             serviceId : "" ,
-            channel:"",
-            channelList : [] ,
-            //getService : getService,
+            // channel:"",
+            // channelList : [] ,
+            channel:'',
+            selectChannel : selectChannel,
+            getService : getService,
             //------------------------------渠道   服务end
             addRemarks : addRemarks,                //备注
             remarks : remarks,
@@ -42,27 +44,33 @@ module.exports=functionalTestModule => {
 
 
         };
-
+        /**
+         * 选择渠道
+         */
+        function selectChannel(channelCode){
+            $scope.vm.channel=channelCode;
+        }
         /*****************
          * 页面初始化加载已发布服务，页面加载
          * *****************/
-        //getService();
+        getService();
 
-        // function getService(){
-        //     FunctionServer.getService.save({
-        //         applicationId:APPLICATION_ID
-        //     },function(data){
-        //         if(data.status == 10000){
-        //             $scope.vm.listService = data.data;
-        //             $scope.vm.serviceId = data.data[0].serviceId;
-        //         }else if(data.status == 10005){
-        //             layer.msg('当前应用下没有发布服务，请发布服务后进行测试');
-        //         }
-        //     },function(err){
-        //         $log.log(err);
-        //     });
-        //
-        // }
+        function getService(){
+            FunctionServer.getService.save({
+                //applicationId:APPLICATION_ID,
+            },function(data){
+                if(data.status == 200){
+                    console.log(data);
+                    $scope.vm.listService = data.data;
+                    $scope.vm.serviceId = data.data[0].id;
+                }else if(data.status==500){
+                    //layer.msg("当前应用下没有发布服务，请发布服务后进行测试")
+                }
+            },function(err){
+                $log.log('请求请求失败');
+            });
+
+        }
 
         /*****************
          * //获取列表  、查询
@@ -115,15 +123,15 @@ module.exports=functionalTestModule => {
                 layer.msg("请选择要删除的文件")
             }else{
                 layer.confirm('确认删除文件？', {
-                    btn: ['确定','取消'] //按钮
+                    btn: ['确定','取消']                     //按钮
                 }, function(){
                     FunctionServer.batchDelete.save({},{
                         "ids": batchIds
                     },function(data){
-                        if(data.status == 10010){
+                        if(data.status == 200){
                             initBatchTest();
                             layer.msg("文件删除成功") ;
-                            layer.close();
+                            layer.closeAll();
                             $state.reload();
                         }else if(data.status == 500){
                             layer.msg("文件删除失败") ;
@@ -172,28 +180,18 @@ module.exports=functionalTestModule => {
             if(!$scope.vm.channel){
                 layer.msg("选择渠道")
             }else{
-                var name ;
-                angular.forEach($scope.vm.channelList,function(item){
-                    if(item.channelCode == $scope.vm.channel){
-                        return name = item.channelName  ;
-                    }
-                }) ;
-
                 FunctionServer.start.save({
-                    batchNumberId:  id,
-                    userId : USER_ID,
-                    //channel:$scope.vm.channel,
-                    channelName : name,
+                    batchNumberId:id,
                     channel:channelId,
-                    applicationId:APPLICATION_ID,
                     serviceId:$scope.vm.serviceId,
                 },function (data) {
-                    if(data.status == 20002){
+                    if(data.status == 500){
                         layer.msg(data.data,{time:1000});
                     }
-                    if(data.status == 10018){
-                        searchFile($scope.vm.paginationConf.currentPage);
-                        startTest(id,name,channelId);
+                    if(data.status == 200){
+                        //$state.reload();
+                        searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                        startTest(id,channelId);
                     }
                 },function(err){
                     $log.log(err);
@@ -202,20 +200,19 @@ module.exports=functionalTestModule => {
             }
         }
 
-        function startTest(id,name,channelId){
+        function startTest(id,channelId){
             FunctionServer.startTest.save({
                 batchNumberId: id,
-                //userId: $scope.vm.userId,
-                userId : USER_ID,
-                channelName : name ,
                 channel:channelId,
-                applicationId:APPLICATION_ID,
                 serviceId:$scope.vm.serviceId,
-                //serviceId:22
             },function(data){
                 console.log(data);
-                if(data.status=10000){
-                    searchFile($scope.vm.paginationConf.currentPage) ;
+                if(data.status=200){
+                   // $state.reload();
+                    searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                }
+                if(data.status==500){
+                    layer.msg(data.data,{time:10000});
                 }
             },function(err){
                 $log.log(err);
