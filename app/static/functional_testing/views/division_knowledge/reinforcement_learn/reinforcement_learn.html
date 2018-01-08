@@ -12,7 +12,7 @@
             </div>
             <div class="tab_con pt10 ">
                 <div ng-show="vm.contentType==0" >
-                    <div class="con_box mb25  mt10" style="min-height:500px;">
+                    <div class="con_box mb25  mt10" style="min-height:500px;padding:0;">
                         <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;">
                             <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
                                 <option value="0">全部时间</option>
@@ -31,13 +31,13 @@
 
                     <span>
                         日期范围:
-                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                            <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
                             -
-                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                            <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:160px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
                     </span>
                     <span>
                         用户提问:
-                            <input type="text" id="question" ng-model="vm.question" class="input-text" style="width: 180px"/>
+                            <input type="text" id="question" ng-model="vm.question" class="input-text" style="width: 178px"/>
                     </span>
 
                             <input type="button" class="btn1 btn1_blue" ng-click="vm.searchReinforcement(1)" value="查找" />
@@ -77,8 +77,8 @@
                     </div>
                 </div>
                 <div ng-show="vm.contentType==1">
-                    <div class="con_box mb25  mt10" style="min-height:500px;">
-                        <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;padding-left: 60px;">
+                    <div class="con_box mb25  mt10" style="min-height:500px;padding:0;">
+                        <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;">
                             <!--<select class="sel bd L mr-5" id="request_time_type1" ng-model="vm.timeType1">-->
                                 <!--<option value="0">全部时间</option>-->
                                 <!--<option value="1">今日</option>-->
@@ -94,29 +94,25 @@
                                 <!--<option  value="" >全部维度</option>-->
                             <!--</select>-->
 
-                    <span class="mr-10">
-                        日期范围:
-                            <input type="text" id="startTime1" onchange=""  ng-model="vm.timeStart1"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
-                            -
-                            <input type="text" id="endTime1"   onchange="" ng-model="vm.timeEnd1" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
-                    </span>
-                    <span>
-                        审核状态:
-                            <select class="sel bd" id="statusId" ng-model="vm.statusId">
-                                <option value="0">待审核</option>
-                                <option value="1">已审核</option>
-                            </select>
-                        <!--通过状态:-->
-                            <!--<select class="sel bd" id="passStatusId" ng-model="vm.passStatusId">-->
-                                <!--<option value="0">不通过</option>-->
-                                <!--<option value="1">通过</option>-->
-                            <!--</select>-->
-                        <span >
-                            用户提问:
-                                <input type="text" id="question1" ng-model="vm.question1" class="input-text" style="width: 180px"/>
-                            <input type="button" class="btn1 btn1_blue" ng-click="vm.listNoReview(1)" value="查找" />
-                        </span>
-                    </span>
+                            <span class="mr-10">
+                                日期范围:
+                                    <input type="text" id="startTime1" onchange=""  ng-model="vm.timeStart1"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                                    -
+                                    <input type="text" id="endTime1"   onchange="" ng-model="vm.timeEnd1" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                            </span>
+                            <span>
+                                审核状态:
+                                    <select class="sel bd" id="statusId" ng-model="vm.statusId">
+                                        <option value="0">待审核</option>
+                                        <option value="1">已审核</option>
+                                    </select>
+                            </span>
+                            <span >
+                                用户提问:
+                                    <input type="text" id="question1" ng-model="vm.question1" class="input-text" style="width: 160px"/>
+                                <input type="button" class="btn1 btn1_blue" ng-click="vm.listNoReview(1)" value="查找" />
+                            </span>
+
 
 
                         </div>
