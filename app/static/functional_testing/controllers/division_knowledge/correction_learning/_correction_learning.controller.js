@@ -64,6 +64,13 @@ module.exports=functionalTestModule =>{
             selectAll1 : selectAll1,
             selectSingle1 : selectSingle1,
             studyArr : [],
+            //未学习
+            unLearnLook : unLearnLook,          //查看
+            unlearnContent : unlearnContent,     //上下文
+            unlearnRelation : unlearnRelation ,           //关联其他
+            //已学习
+            learnLook : learnLook,          //查看
+            learnContent : learnContent,     //上下文
 
         };
         function keyLogin(e){
@@ -82,9 +89,67 @@ module.exports=functionalTestModule =>{
         function init(){
             //getDimensions();
             //getChannel();
-            searchReinforcement(1);
-            listNoReview(1);
+           // searchReinforcement(1);
+           // listNoReview(1);
         }
+        /**
+         * 未学习查看
+         ***/
+        function unLearnLook(){
+            let unLearnLook = require('../../../views/division_knowledge/correction_learning/unlearn_look.html');
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,unLearnLook,'900px',function(){
+
+            },function(){
+
+            })
+
+        }
+        // 上下文
+         function unlearnContent(){
+             //alert("上下文");
+             let unlearnContent = require('../../../views/division_knowledge/correction_learning/unlearn_content.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,unlearnContent,'800px',function(){
+
+             },function(){
+
+             },'',2)
+
+         }
+         //关联其他
+         function unlearnRelation(){
+             //alert("关联其他");
+             let unlearn_relation = require('../../../views/division_knowledge/correction_learning/unlearn_relation.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,unlearn_relation,'600px',function(){
+
+             },function(){
+
+             },'',2)
+
+         }
+         /**
+          * 已学习查看
+          ***/
+         function learnLook(){
+             let learnLook = require('../../../views/division_knowledge/correction_learning/learn_look.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,learnLook,'900px',function(){
+
+             },function(){
+
+             })
+
+         }
+         // 上下文
+         function learnContent(){
+             //alert("上下文");
+             let learnContent = require('../../../views/division_knowledge/correction_learning/learn_content.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,learnContent,'800px',function(){
+
+             },function(){
+
+             },'',2)
+
+         }
+
 
         /**
          *  list 分页变化加载数据  未学习
@@ -153,7 +218,7 @@ module.exports=functionalTestModule =>{
                 question = "%"+$scope.vm.question+"%";
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            AppAnalysisServer.searchReinforcement.save({
+            FunctionServer.searchReinforcement.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "question": question,
@@ -187,7 +252,7 @@ module.exports=functionalTestModule =>{
                 question = "%"+$scope.vm.question1+"%";
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            AppAnalysisServer.listNoReview.save({
+            FunctionServer.listNoReview.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId1,
                 "question": question,
@@ -222,7 +287,7 @@ module.exports=functionalTestModule =>{
             $scope.vm.knowledgeList=null;
           if(nullCheck($("#inputValue").val())==true){
           //if(nullCheck($scope.vm.inputValue)==true){
-                AppAnalysisServer.searchByKnowledgeTitle.save({
+              FunctionServer.searchByKnowledgeTitle.save({
                     "applicationId": APPLICATION_ID,
                     "index": (index-1)*$scope.vm.paginationConf1.pageSize,
                     "pageSize": $scope.vm.paginationConf1.pageSize,
@@ -265,7 +330,7 @@ module.exports=functionalTestModule =>{
                 layer.close(index);
                 var request = new Object();
                 request.ids = $scope.vm.unstudyArr;
-                AppAnalysisServer.ignore.save(request
+                FunctionServer.ignore.save(request
                     ,function (data) {
                         if(data!=null){
                             searchReinforcement($scope.vm.paginationConf.currentPage);
@@ -286,7 +351,7 @@ module.exports=functionalTestModule =>{
          */
         function getRecommend(requestId){
             console.log("====="+requestId);
-            AppAnalysisServer.getRecommend.save({
+            FunctionServer.getRecommend.save({
                 "qalogId" : requestId
             },function(data){
                 $scope.vm.knowledgeList = data.data;
@@ -331,7 +396,7 @@ module.exports=functionalTestModule =>{
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            AppAnalysisServer.assembleLearnData.save({
+            FunctionServer.assembleLearnData.save({
                 "qalog_id" : requestId,
                 "knowledge_id":id_array.pop(),
                 "knowledge_type":100,
@@ -365,7 +430,7 @@ module.exports=functionalTestModule =>{
             }
             layer.confirm('确认要'+msg+'吗？', function (index) {
                 layer.close(index);
-                AppAnalysisServer.review.save({
+                FunctionServer.review.save({
                     "ids" : $scope.vm.studyArr,
                     "pass_status_id": pass,
                     "userId": USER_ID,

@@ -153,7 +153,7 @@ module.exports=functionalTestModule =>{
                 question = "%"+$scope.vm.question+"%";
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            AppAnalysisServer.searchReinforcement.save({
+            FunctionServer.searchReinforcement.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "question": question,
@@ -187,7 +187,7 @@ module.exports=functionalTestModule =>{
                 question = "%"+$scope.vm.question1+"%";
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            AppAnalysisServer.listNoReview.save({
+            FunctionServer.listNoReview.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId1,
                 "question": question,
@@ -222,7 +222,7 @@ module.exports=functionalTestModule =>{
             $scope.vm.knowledgeList=null;
           if(nullCheck($("#inputValue").val())==true){
           //if(nullCheck($scope.vm.inputValue)==true){
-                AppAnalysisServer.searchByKnowledgeTitle.save({
+              FunctionServer.searchByKnowledgeTitle.save({
                     "applicationId": APPLICATION_ID,
                     "index": (index-1)*$scope.vm.paginationConf1.pageSize,
                     "pageSize": $scope.vm.paginationConf1.pageSize,
@@ -265,7 +265,7 @@ module.exports=functionalTestModule =>{
                 layer.close(index);
                 var request = new Object();
                 request.ids = $scope.vm.unstudyArr;
-                AppAnalysisServer.ignore.save(request
+                FunctionServer.ignore.save(request
                     ,function (data) {
                         if(data!=null){
                             searchReinforcement($scope.vm.paginationConf.currentPage);
@@ -286,7 +286,7 @@ module.exports=functionalTestModule =>{
          */
         function getRecommend(requestId){
             console.log("====="+requestId);
-            AppAnalysisServer.getRecommend.save({
+            FunctionServer.getRecommend.save({
                 "qalogId" : requestId
             },function(data){
                 $scope.vm.knowledgeList = data.data;
@@ -331,7 +331,7 @@ module.exports=functionalTestModule =>{
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            AppAnalysisServer.assembleLearnData.save({
+            FunctionServer.assembleLearnData.save({
                 "qalog_id" : requestId,
                 "knowledge_id":id_array.pop(),
                 "knowledge_type":100,
@@ -365,7 +365,7 @@ module.exports=functionalTestModule =>{
             }
             layer.confirm('确认要'+msg+'吗？', function (index) {
                 layer.close(index);
-                AppAnalysisServer.review.save({
+                FunctionServer.review.save({
                     "ids" : $scope.vm.studyArr,
                     "pass_status_id": pass,
                     "userId": USER_ID,
