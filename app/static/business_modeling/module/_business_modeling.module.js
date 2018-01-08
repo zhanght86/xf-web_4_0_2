@@ -7,7 +7,6 @@ module.exports = angular => {
     const businessModelingModule = angular.module('businessModelingModule', []);
     require('../controllers/_main.controller')(businessModelingModule);  // 控制器
     require('../../index/controllers/home_page/_nav.controller')(businessModelingModule);  // 导航
-    require('../../../components/page/page')(businessModelingModule);  // 分页
     //--------------------------------------------------
     //          filters
     //--------------------------------------------------

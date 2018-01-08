@@ -35,7 +35,8 @@ module.exports=applAnalysisModule => {applAnalysisModule
             nextPage : nextPage,
             clearHistory:clearHistory,
             contentIndex:2 ,
-            exportExcel : exportExcel  //导出
+            exportExcel : exportExcel,  //导出
+            applicationId:APPLICATION_ID
         };
 
          /**
@@ -48,6 +49,9 @@ module.exports=applAnalysisModule => {applAnalysisModule
                 $scope.vm.paginationConf.currentPage = 1 ;
                 $location.search("currentPage",1 ) ;
             }
+            if($scope.vm.timeStart==null&&$scope.vm.endTime!=null){
+                 layer.msg("请输入开始时间")
+            }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.sessionGetList.save({
                 "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
@@ -59,12 +63,16 @@ module.exports=applAnalysisModule => {applAnalysisModule
             },function(data){
                 layer.close(i);
                  if(data.status==200){
-                 $scope.vm.listData = data.data.objs;
-                 $scope.vm.paginationConf.totalItems = data.data.total;
-                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
-                   if(data.data.objs==null){
-                      layer.msg(data.info)
-                   }
+                    if(data.data.data!=null){ 
+                     $scope.vm.listData = data.data.data;
+                     $scope.vm.paginationConf.totalItems = data.data.total;
+                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+                    }else{
+                        $scope.vm.listData=[];
+                         $scope.vm.paginationConf.totalItems = 0;
+                        $scope.vm.paginationConf.numberOfPages = 0;
+                        layer.msg(data.info)
+                    }
                }else{
                    layer.close(i);
                }
@@ -121,7 +129,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
             },function(data){
                 if(data.status==200){
                     $scope.vm.total = data.data.total/$scope.vm.paginationConf.pageSize<1?1:data.data.total/$scope.vm.paginationConf.pageSize;
-                    $scope.vm.timeList = data.data.objs;
+                    $scope.vm.timeList = data.data.data;
                    getdetail($scope.vm.timeList[0].sessionId,1);
                  
                 }else{
@@ -157,7 +165,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
                 "pageSize": $scope.vm.paginationConf.pageSize,
             },function(data){
                 if(data!=null){
-                    $scope.vm.talkDetail = data.data.objs;
+                    $scope.vm.talkDetail = data.data.data;
                     $scope.vm.talkDetailTotal = data.data.total;
                     
                 }
@@ -191,16 +199,11 @@ module.exports=applAnalysisModule => {applAnalysisModule
         function exportExcel(){
             var i = layer.msg('导出中...',{icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000});
             AppAnalysisServer.exportExcel.save({
-                "applicationId" : $scope.vm.applicationId,
-                "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
+               "applicationId":APPLICATION_ID,
+               "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
                 "requestTimeType":$scope.vm.timeType,
-                "startTime" : $scope.vm.timeStart ,
+                "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
-                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
-                "orderForSessionTime": $scope.vm.orderForSessionTime,
-                "index": 0,
-                "pageSize": 10
             },function(data){
                 layer.close(i);
                 console.log(data);
@@ -218,6 +221,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
                 layer.close(i);
                 $log.log(err);
             });
+         // window.open("api/analysis/user/session/export/"+APPLICATION_ID+"");
 
         }
 

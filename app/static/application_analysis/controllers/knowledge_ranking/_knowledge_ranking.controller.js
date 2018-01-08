@@ -65,18 +65,18 @@ module.exports=applAnalysisModule => {
             },function(data){
                  layer.close(i);
                   if(data.status==200){
-                    $scope.vm.listData = data.data.objs;
+                    $scope.vm.listData = data.data.data;
                     $scope.vm.paginationConf1.totalItems = data.data.total;
                     $scope.vm.paginationConf1.numberOfPages = data.data.total/$scope.vm.paginationConf1.pageSize;
-                    if(data.data.objs==null){
-                      layer.msg(data.info)
+                    if(data.data.data==null){
+                     layer.msg(data.info)
                     }
                }else{
                    layer.close(i);
                }
             },function(err){
                 layer.close(i);
-                $log.log(err);
+                console.log(err);
             });
         }
 
@@ -100,13 +100,14 @@ module.exports=applAnalysisModule => {
                 "pageSize": $scope.vm.paginationConf.pageSize,
                 "sort":1,
             },function(data){
+                console.log(data)
                 layer.close(i);
                  if(data.status==200){
-                    $scope.vm.listDataK = data.data.objs;
+                    $scope.vm.listDataK = data.data.data;
                     $scope.vm.paginationConf.totalItems = data.data.total;
                    // $scope.vm.order=data.data.objs[0].order;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
-                    if(data.data.objs==null){
+                    if(data.data.data==null){
                       layer.msg(data.info)
                     }
                }else{
@@ -114,7 +115,7 @@ module.exports=applAnalysisModule => {
                }
             },function(err){
                 layer.close(i);
-                $log.log(err);
+                console.log(err);
             });
         }
 
@@ -132,61 +133,38 @@ module.exports=applAnalysisModule => {
          **知识点排名导出表格；
          */
         function exportKnowledgeExcel(){            
-            AppAnalysisServer.exportKnowledgeExcel.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
-              //  "dimensionId": $scope.vm.dimensionId,
-                "requestTimeType":$scope.vm.timeType,
-                "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeEnd,
-                "index": 0,
-                "pageSize": 10
-            },function(data){
-                console.log(data);
-                if(data.status==500){                    
-                    console.log("导出失败");
-                }else{
-                    //alert(data.data);
-                   // window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
-                     var url = AppAnalysisServer.exportKnowledgeExcelUrl + data.data;
-                     downLoadFiles($('.knowledgeRanking')[0],url);
-
-                }
-                console.log();
-            },function(err){
-                $log.log(err);
-            });
+           
+            if($scope.vm.timeStart==null){
+               $scope.vm.timeStart=""
+            }
+            if($scope.vm.timeEnd==null){
+              $scope.vm.timeEnd=""
+            }
+            if($scope.vm.channelId=="null"){
+               $scope.vm.channelId=""
+            }
+             var urlParams ="?channelId="+ $scope.vm.channelId+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd
+             var url = "api/analysis/knowledge/ranking/export" + urlParams;
+                downLoadFiles(angular.element('.knowledgeRanking')[0] ,url);
         }
         /**
         *未匹配问题统计导出表格；
         **/
         function exportNoMatchExcel(){
-            AppAnalysisServer.exportNoMatchExcel.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
-                "requestTimeType":$scope.vm.timeType,
-                "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeEnd,
-                "index": 0,
-                "pageSize": 10
-            },function(data){
-                console.log(data);
-                if(data.status==500){
-                    //layer.msg("导出失败")
-                    console.log("导出失败");
-                }else{
-                    //alert(data.data);
-                    //window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
-                    var url = AppAnalysisServer.exportNoMatchExcelUrl+data.data;
-                    downLoadFiles($('.noMatch')[0],url);
+           
 
-                }
-                console.log();
-
-            },function(err){
-                $log.log(err);
-            });
+             if($scope.vm.timeStart==null){
+               $scope.vm.timeStart=""
+            }
+            if($scope.vm.timeEnd==null){
+              $scope.vm.timeEnd=""
+            }
+            if($scope.vm.channelId==130){
+               $scope.vm.channelId=""
+            }
+             var urlParams ="?channelId="+ $scope.vm.channelId+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd
+             var url = "api/analysis/knowledge/noMatch/export" + urlParams;
+                downLoadFiles(angular.element('.noMatch')[0] ,url);
 
         }
     }
