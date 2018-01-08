@@ -60,10 +60,10 @@ module.exports = homePageModule =>{
             },function(response){
                 if(response.status == 200 ){
                     $scope.vm.userIds = [] ;
-                    $scope.vm.userList = response.data;
-                    $scope.vm.paginationConf.totalItems = response.total ;
-                    $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize;
-                    angular.forEach(response.data,function(user,index){
+                    $scope.vm.userList = response.data.data;
+                    $scope.vm.paginationConf.totalItems = response.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize;
+                    angular.forEach(response.data.data,function(user,index){
                         $scope.vm.userListIds.push(user.id)
                     })
                 }
@@ -229,11 +229,11 @@ module.exports = homePageModule =>{
         //得到角色列表
         (function queryRoleList(index){
             HomePageServer.queryRoleList.save({
-                "index":(index -1)*$scope.vm.paginationConf.pageSize,
-                "pageSize":$scope.vm.paginationConf.pageSize
+                "index":0,
+                "pageSize":999
             },function (response) {
                 if(response.status == 200) {
-                    $scope.vm.roleList = response.data.filter(item => (item.name != '超级管理员'));
+                    $scope.vm.roleList = response.data.data.filter(item => (item.name != '超级管理员'));
                 }
             })
         })()

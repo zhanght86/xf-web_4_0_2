@@ -31,19 +31,20 @@ module.exports = loginModule => {
         //登陆
         function login(){
             //$state.go("materialManagement.chatKnowledgeBase",{userPermission : "['超级管理员','初级管理员']"});
-            if($scope.vm.randomNumberValue.length==0){
-                console.log($scope.vm.randomNumberValue);
-                layer.msg("验证码不能为空");
-                setRandomNumber();
-            }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
-                layer.msg("验证码错误");
-                setRandomNumber();
-            }else if($scope.vm.userName == ""){
+            // if($scope.vm.randomNumberValue.length==0){
+            //     console.log($scope.vm.randomNumberValue);
+            //     layer.msg("验证码不能为空");
+            //     setRandomNumber();
+            // }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
+            //     layer.msg("验证码错误");
+            //     setRandomNumber();
+            // }else
+                if($scope.vm.userName == ""){
                 layer.msg("用户名不能为空");
-                setRandomNumber();
+                // setRandomNumber();
             }else if($scope.vm.password == ""){
                 layer.msg("密码不能为空");
-                setRandomNumber();
+                // setRandomNumber();
             }else{
                 LoginServer.login.save({
                     "account":$scope.vm.userName,
@@ -56,11 +57,11 @@ module.exports = loginModule => {
                         setCookie("accessToken" , response.data.accessToken);
                         $state.go("HP.management");
                     }else{
-                        setRandomNumber();
-                        // layer.msg("用户名或密码错误");
+                        // setRandomNumber();
+                        layer.msg(response.info);
                     }
                 },function(error){
-                    setRandomNumber();
+                    // setRandomNumber();
                    console.log(error)
                 });
             }

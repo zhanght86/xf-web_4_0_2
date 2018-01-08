@@ -9,6 +9,7 @@ module.exports = knowledgeManagementModule =>{
     "knowledgeAddServer","$window","$stateParams","$interval","$rootScope","$filter",
     ($scope,localStorageService,KnowledgeService, $state,ngDialog,$cookieStore,$timeout,$compile,
      knowledgeAddServer,$window,$stateParams,$interval,$rootScope,$filter) =>{
+        $state.go("KM.factor");
         $scope.vm = {
             ctrName : "list" ,
             apiQueryRelatedQuestion : "queryFactorRelatedQuestion" , // 相关问 api

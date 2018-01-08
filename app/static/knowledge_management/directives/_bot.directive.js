@@ -20,7 +20,10 @@ module.exports = knowledgeManagementModule =>{
             link : function(scope,attr,el,ctr){
                 scope.dirBot = {
                     botSelectAdd : botSelectAdd ,
-                    knowledgeBotVal : "",  //bot 内容
+                    knowledgeBotVal : {
+                        id : "" ,
+                        value : ""
+                    },  //bot 内容
                 } ;
                 function getBotFullPath(id){
                     KnowledgeService.getBotFullPath.get({
@@ -29,7 +32,10 @@ module.exports = knowledgeManagementModule =>{
                         if(response.status = 200){
                             var allBot = angular.copy(scope.vm.creatSelectBot) ,
                                 botResult = scope.$parent.knowCtr.isBotRepeat(id,response.data.split("/"),"",allBot) ;
-                                scope.dirBot.knowledgeBotVal = response.data;
+                                scope.dirBot.knowledgeBotVal = {
+                                    id : id ,
+                                    value : response.data
+                                };
                                 if(botResult != false){
                                     scope.vm.botFullPath = botResult;
                                 }
