@@ -5,65 +5,81 @@
 module.exports=functionalTestModule =>{
     functionalTestModule
     .controller('ReinforcementLearnController',
-     ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore",
-     ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore) => {
+     ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore","$location",
+     ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,$location) => {
         $scope.vm = {
+
+            //--------未学习------------
             searchReinforcement : searchReinforcement ,
-            listNoReview : listNoReview ,
-            listData : null ,   // table 数据
             paginationConf : {    //分页条件
-                pageSize : 5,     //默认每页数量
-                pagesLength: 10   //分页框数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: searchReinforcement ,
+                location:true
             } ,
-            listData1 : null ,   // table 数据
-            paginationConf1 : {    //分页条件
-                pageSize : 5,     //默认每页数量
-                pagesLength: 10   //分页框数量
-            } ,
-            paginationConf2 : {    //分页条件
-                pageSize : 5,     //默认每页数量
-                pagesLength: 10   //分页框数量
-            } ,
-            dimensions : [] ,
-            channels : [] ,
-            channelId  : null ,
-           // dimensionId : null ,
+            listData : [] ,     // table 数据
+            question:'',
+            channelId  : '' ,
             timeType : 0,
-            timeStart : null,
-            timeEnd : null,
-            channelId1  : null ,
-            dimensionId1 : null ,
-            timeType1 : 0,
-            timeStart1 : null,
-            timeEnd1 : null,
-            timeList : [],
-            currentPage : 1,
-            total : null,
-            total1 : null,
-            ignore:ignore,
-            learn:learn,
-            review:review,
-            statusId:0,
-            passStatusId:0,
-            currQuestion:"",
-            searchByKnowledgeTitle:searchByKnowledgeTitle,
-            knowledgeList:null,
-            question:null,
-            question1:null,
-            keyLogin:keyLogin,
-            getRecommend:getRecommend,
-            contentType : 0,    //默认显示未学习；
-            inputValue :'',
+            timeStart : '',
+            timeEnd : '',
+            ignore:ignore,             //忽略
+            learn:learn,               //学习
+
             //未学习全选 单选；
             selectAllCheck : false,
             selectAll : selectAll,
             selectSingle : selectSingle,
             unstudyArr : [],
+
+            //-----弹窗
+            inputValue :'',
+            keyLogin:keyLogin,
+            knowledgeList:[],          //学习弹窗，关联知识列表
+            currQuestion:"",           //学习弹窗问题
+            searchByKnowledgeTitle:searchByKnowledgeTitle,       //弹窗查询
+            paginationConf2 : {    //分页条件
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: searchByKnowledgeTitle ,
+                location:true
+            } ,
+
+
+
+            //------已学习--------------
+            listNoReview : listNoReview ,
+            paginationConf1 : {    //分页条件
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: listNoReview ,
+                location:true
+            } ,
+            listData1 : [] ,     // table 数据
+            question1:'',
+            channelId1  : '' ,
+            timeType1 : 0,
+            timeStart1 : '',
+            timeEnd1 : '',
+            statusId:0,            //审核状态
+            review:review,         //通过   不通过
+
+
             //已学习全选 单选；
             selectAllCheck1 : false,
             selectAll1 : selectAll1,
             selectSingle1 : selectSingle1,
             studyArr : [],
+
+
+            //--------------------------
+            timeList : [],
+            currentPage : 1,
+            passStatusId:0,
+            contentType : 0,    //默认显示未学习；
+
+
+
 
         };
         function keyLogin(e){
@@ -78,180 +94,231 @@ module.exports=functionalTestModule =>{
         /**
          * 初始化 获取
          **/
-        init();
-        function init(){
-            //getDimensions();
-            //getChannel();
-            searchReinforcement(1);
-            listNoReview(1);
-        }
+         searchReinforcement($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+         listNoReview($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
 
-        /**
-         *  list 分页变化加载数据  未学习
-         **/
-        var timer ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timer) {
-                    $timeout.cancel(timer)
-                }
-                timer = $timeout(function () {
-                    clearSelect();
-                    searchReinforcement(current);
-                }, 0)
-            }
-        },true);
+         /**
+          * 表格列表 未学习
+          */
+         function searchReinforcement(index,pageSize,reset){
+             if(reset){
+                 $scope.vm.paginationConf.currentPage=1;
+                 $location.search('currentPage',1);
+             }
+             var question = null;
+             if(nullCheck($scope.vm.question)==true){
+                 question = "%"+$scope.vm.question+"%";
+             }
+             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+             FunctionServer.searchReinforcement.save({
+                 "index": (index-1)*pageSize,
+                 "pageSize": pageSize,
+                 "startTime": $scope.vm.timeStart,
+                 "endTime": $scope.vm.timeEnd,
+                 "requestType" : $scope.vm.timeType,
+                 "channelId": $scope.vm.channelId,
+                 //"question": question,
+             },function(data){
+                 layer.close(i);
+                 if(data.status==200){
+                     console.log(data);
+                     clearSelect();
+                     $scope.vm.listData = data.data.data;
+                     $scope.vm.paginationConf.currentPage =index ;
+                     $scope.vm.paginationConf.totalItems =data.data.total ;
+                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
+                     console.log($scope.vm.paginationConf);
+                 }
+                 if(data.status==500){
+                     layer.msg(data.info,{time:10000});
+                 }
 
-        /**
-         *  list 分页变化加载数据   已学习
-         **/
-        var timer1 ;
-        $scope.$watch('vm.paginationConf1.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timer1) {
-                    $timeout.cancel(timer1)
-                }
-                timer1 = $timeout(function () {
-                    clearSelect1();
-                    listNoReview(current);
-                }, 0)
-            }
-        },true);
+             },function(err){
+                 layer.close(i);
+                 console.log(err);
+             });
+         }
+         /**
+          * 表格列表 已学习
+          */
+         function listNoReview(index,pageSize,reset){
+             if(reset){
+                 $scope.vm.paginationConf.currentPage=1;
+                 $location.search('currentPage',1);
+             }
+             var question = null;
+             if(nullCheck($scope.vm.question1)==true){
+                 question = "%"+$scope.vm.question1+"%";
+             }
+             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+             FunctionServer.listNoReview.save({
+                 "index": (index-1)*pageSize,
+                 "pageSize": pageSize,
+                 "startTime": $scope.vm.timeStart1,
+                 "endTime": $scope.vm.timeEnd1,
+                 "requestType":$scope.vm.timeType1,
+                 "channelId": $scope.vm.channelId1,
+                 "status": $scope.vm.statusId,
 
-        /**
+                 //"question": question,
+
+             },function(data){
+                 layer.close(i);
+                 if(data.status==200){
+                     console.log(data);
+                     clearSelect1();
+                     $scope.vm.listData1 = data.data.data;
+                     $scope.vm.paginationConf1.currentPage =index ;
+                     $scope.vm.paginationConf1.totalItems =data.data.total ;
+                     $scope.vm.paginationConf1.numberOfPages = data.data.total/$scope.vm.paginationConf1.pageSize ;
+                     console.log($scope.vm.paginationConf1);
+                 }
+                 if(data.status==500){
+                     layer.msg(data.info,{time:10000});
+                 }
+             },function(err){
+                 layer.close(i);
+                 console.log(err);
+             });
+         }
+         /**
+          *  学习
+          **/
+         function learn(requestId,content){
+             $scope.vm.knowledgeList=null;
+             getRecommend(requestId);
+             $scope.vm.currQuestion="用户问题:"+content;
+
+             let study = require('../../../views/division_knowledge/reinforcement_learn/associate_learn.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,study,'600px',function(){
+                 assembleLearnData(requestId);
+             },function () {
+
+             });
+         }
+
+         /**
+          * 获取推荐知识
+          * @param requestId
+          */
+         function getRecommend(requestId){
+             console.log("====="+requestId);
+             FunctionServer.getRecommend.get({
+                "id": requestId
+             },function(data){
+                 if(data.status==200){
+                     console.log(data);
+                     $scope.vm.knowledgeList = data.data;
+                 }
+             },function(err){
+                 $log.log(err);
+             });
+         }
+
+         /**
+          * 组装知识学习数据
+          * @param requestId
+          * @param content
+          */
+         function assembleLearnData(requestId){
+             var ids = document.getElementsByName("sid2");
+             var id_array = [];
+             //var knowledgeTitle="";
+             //var knowledgeType=0;
+             for (var i = 0; i < ids.length; i++) {
+                 if (ids[i].checked) {
+                     id_array.push(ids[i].value);
+                    // knowledgeTitle = $(ids[i]).attr("knowledgeTitle");
+                    // knowledgeType = $(ids[i]).attr("knowledgeType");
+                 }
+             }
+
+             if (id_array.length == 0) {
+                 layer.msg("请选择要关联的知识");
+                 return;
+             }
+             //console.log('aaaaaaaaaaaa'+id_array.pop());
+             FunctionServer.assembleLearnData.save({
+                 "id":requestId,
+                 "knowledgeId" : id_array.pop(),       //要关联的知识编号
+
+                 // "qalog_id" : requestId,
+                 // "knowledge_id":id_array.pop(),
+                 // "knowledge_type":100,
+                 // "knowledge_title":knowledgeTitle,
+                 // "learn_type":0,
+                 // "knowledge_learn_type":0
+             },function (data) {
+                 if(data.status==200){
+                     console.log(data);
+                     $state.reload();
+                     //searchReinforcement($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                    // listNoReview($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                 }
+                 if(data.status==500){
+                     layer.msg(data.info,{time:10000});
+                 }
+                 // if(data.info){
+                 //     layer.msg(data.info);
+                 //     searchReinforcement(1);
+                 // }
+             },function(err){
+                 $log.log(err);
+             });
+         }
+
+         /**
+          * 表格列表 学习弹窗
+          */
+         function searchByKnowledgeTitle(index,pageSize){
+             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+             $scope.vm.knowledgeList=null;
+             if(nullCheck($("#inputValue").val())==true){
+                 //if(nullCheck($scope.vm.inputValue)==true){
+                 FunctionServer.searchByKnowledgeTitle.save({
+                     "applicationId": APPLICATION_ID,
+                     "index": (index-1)*pageSize,
+                     "pageSize": pageSize,
+                     "sceneIds":null,
+                     "knowledgeTitle": $("#inputValue").val().trim(),
+                     //"knowledgeTitle": $scope.vm.inputValue,
+                     "knowledgeContent":null,
+                     "knowledgeUpdate":null,
+                     "knowledgeExpDateEnd":null,
+                     "knowledgeExpDateStart":null,
+                     "knowledgeOrigin":0,
+                     "updateTimeType":0,
+                     "knowledgeType":"",
+                     "knowledgeExtensionQuestion":""
+                 },function (data) {
+                     layer.close(i);
+                     $scope.vm.knowledgeList = data.data.objs;
+                     $scope.vm.paginationConf2.currentPage =index ;
+                     $scope.vm.paginationConf2.totalItems =data.data.total ;
+                     $scope.vm.paginationConf2.numberOfPages = data.data.total/$scope.vm.paginationConf2.pageSize ;
+                     console.log($scope.vm.paginationConf2);
+                 },function(err){
+                     layer.close(i);
+                     console.log(err);
+                 });
+             }else{
+                 layer.msg("请输入要查找的标题");
+             }
+         }
+
+         /**
          *  list 分页变化加载数据   弹窗分页
          **/
-        var timer2 ;
-        $scope.$watch('vm.paginationConf2.currentPage', function(current,old){
-            if(current && old != undefined){
-                if (timer2) {
-                    $timeout.cancel(timer2)
-                }
-                timer2 = $timeout(function () {
-                    searchByKnowledgeTitle(current);
-                }, 100)
-            }
-        },true);
-
-        $scope.$watch('vm.channelId1', function(){
-            $scope.vm.listData1 = null;
-            // $scope.vm.paginationConf1 = {
-            //     currentPage: 0,//当前页
-            //     totalItems: 0, //总条数
-            //     pageSize: 1,//第页条目数
-            //     pagesLength: 8//分页框数量
-            // };
-        });
-
-        /**
-         * 表格列表 未学习
-         */
-        function searchReinforcement(index){
-
-            var question = null;
-            if(nullCheck($scope.vm.question)==true){
-                question = "%"+$scope.vm.question+"%";
-            }
-            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            FunctionServer.searchReinforcement.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
-                "question": question,
-               // "dimensionId": $scope.vm.dimensionId,
-                "requestTimeType":$scope.vm.timeType,
-                "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeEnd,
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
-            },function(data){
-                layer.close(i);
-                console.log(data);
-                clearSelect();
-                $scope.vm.listData = data.qaLogs;
-                $scope.vm.paginationConf.currentPage =index ;
-                $scope.vm.paginationConf.totalItems =data.qalogTotal ;
-                $scope.vm.paginationConf.numberOfPages = data.qalogTotal/$scope.vm.paginationConf.pageSize ;
-                console.log($scope.vm.paginationConf);
-            },function(err){
-                layer.close(i);
-                console.log(err);
-            });
-        }
-        /**
-         * 表格列表 已学习
-         */
-        function listNoReview(index){
-
-            var question = null;
-            if(nullCheck($scope.vm.question1)==true){
-                question = "%"+$scope.vm.question1+"%";
-            }
-            var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            FunctionServer.listNoReview.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId1,
-                "question": question,
-               // "dimensionId": $scope.vm.dimensionId1,
-                "requestTimeType":$scope.vm.timeType1,
-                "startTime": $scope.vm.timeStart1,
-                "endTime": $scope.vm.timeEnd1,
-                "index": (index-1)*$scope.vm.paginationConf1.pageSize,
-                "pageSize": $scope.vm.paginationConf1.pageSize,
-                "status_id": $scope.vm.statusId,
-                "pass_status_id": $scope.vm.passStatusId,
-                "learn_type": 0
-            },function(data){
-                layer.close(i);
-                clearSelect1();
-                console.log(data);
-                $scope.vm.listData1 = data.reviewRecords;                
-                $scope.vm.paginationConf1.currentPage =index ;
-                $scope.vm.paginationConf1.totalItems =data.reviewRecordTotal ;
-                $scope.vm.paginationConf1.numberOfPages = data.reviewRecordTotal/$scope.vm.paginationConf1.pageSize ;
-                console.log($scope.vm.paginationConf1);
-            },function(err){
-                layer.close(i);
-                console.log(err);
-            });
-        }
-        /**
-         * 表格列表 学习弹窗
-         */
-        function searchByKnowledgeTitle(index){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            $scope.vm.knowledgeList=null;
-          if(nullCheck($("#inputValue").val())==true){
-          //if(nullCheck($scope.vm.inputValue)==true){
-              FunctionServer.searchByKnowledgeTitle.save({
-                    "applicationId": APPLICATION_ID,
-                    "index": (index-1)*$scope.vm.paginationConf1.pageSize,
-                    "pageSize": $scope.vm.paginationConf1.pageSize,
-                    "sceneIds":null,
-                    "knowledgeTitle": $("#inputValue").val().trim(),
-                    //"knowledgeTitle": $scope.vm.inputValue,
-                    "knowledgeContent":null,
-                    "knowledgeUpdate":null,
-                    "knowledgeExpDateEnd":null,
-                    "knowledgeExpDateStart":null,
-                    "knowledgeOrigin":0,
-                    "updateTimeType":0,
-                    "knowledgeType":"",
-                    "knowledgeExtensionQuestion":""
-                },function (data) {
-                    layer.close(i);
-                    $scope.vm.knowledgeList = data.data.objs;
-                    $scope.vm.paginationConf2.currentPage =index ;
-                    $scope.vm.paginationConf2.totalItems =data.data.total ;
-                    $scope.vm.paginationConf2.numberOfPages = data.data.total/$scope.vm.paginationConf2.pageSize ;
-                    console.log($scope.vm.paginationConf2);
-                },function(err){
-                    layer.close(i);
-                    console.log(err);
-                });
-            }else{
-                layer.msg("请输入要查找的标题");
-            }
-        }
+        //
+        // $scope.$watch('vm.channelId1', function(){
+        //     $scope.vm.listData1 = null;
+        //     // $scope.vm.paginationConf1 = {
+        //     //     currentPage: 0,//当前页
+        //     //     totalItems: 0, //总条数
+        //     //     pageSize: 1,//第页条目数
+        //     //     pagesLength: 8//分页框数量
+        //     // };
+        // });
 
         /**
          *  忽略
@@ -277,74 +344,6 @@ module.exports=functionalTestModule =>{
                         $log.log(err);
                     }
                 );
-            });
-        }
-
-        /**
-         * 获取推荐知识
-         * @param requestId
-         */
-        function getRecommend(requestId){
-            console.log("====="+requestId);
-            FunctionServer.getRecommend.save({
-                "qalogId" : requestId
-            },function(data){
-                $scope.vm.knowledgeList = data.data;
-            },function(err){
-                $log.log(err);
-            });
-        }
-
-        /**
-         *  学习
-         **/
-        function learn(requestId,content){
-            $scope.vm.knowledgeList=null;
-            getRecommend(requestId);
-            $scope.vm.currQuestion="用户问题:"+content;
-
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/reinforcement_learn/associate_learn.html','480px',function(){
-                assembleLearnData(requestId);
-            },function () {
-
-            });
-        }
-
-        /**
-         * 组装知识学习数据
-         * @param requestId
-         * @param content
-         */
-        function assembleLearnData(requestId){
-            var ids = document.getElementsByName("sid2");
-            var id_array = [];
-            var knowledgeTitle="";
-            var knowledgeType=0;
-            for (var i = 0; i < ids.length; i++) {
-                if (ids[i].checked) {
-                    id_array.push(ids[i].value);
-                    knowledgeTitle = $(ids[i]).attr("knowledgeTitle");
-                    knowledgeType = $(ids[i]).attr("knowledgeType");
-                }
-            }
-            if (id_array.length == 0) {
-                layer.msg("请选择要关联的知识");
-                return;
-            }
-            FunctionServer.assembleLearnData.save({
-                "qalog_id" : requestId,
-                "knowledge_id":id_array.pop(),
-                "knowledge_type":100,
-                "knowledge_title":knowledgeTitle,
-                "learn_type":0,
-                "knowledge_learn_type":0
-            },function (data) {
-                if(data.info){
-                    layer.msg(data.info);
-                    searchReinforcement(1);
-                }
-            },function(err){
-                $log.log(err);
             });
         }
 
