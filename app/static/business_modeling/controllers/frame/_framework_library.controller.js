@@ -579,6 +579,10 @@ module.exports = businessModelingModule =>{
                 layer.msg("请选择类目");
                 return;
             }
+            if($scope.vm.categoryAttributeName=="edge"){
+                layer.msg("edge下不可以新建框架库",{time:2000});
+                return false;
+            }
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/frame/framework_library_dialog.html",
                 scope: $scope,
@@ -594,7 +598,7 @@ module.exports = businessModelingModule =>{
                           "attributeType":80,
                            "order":0
                         })
-                        alert(frameTitleRepeatCheck())
+                        
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
                         $scope.vm.frameTitle=$("#frameTitle").val().trim();
                         if(lengthCheck($("#frameTitle").val(),0,50)==false){
@@ -609,6 +613,7 @@ module.exports = businessModelingModule =>{
                             $("#frameAddErrorObj").html("标题重复"); 
                             return false;
                            }
+
                         if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
                             addFaq();
                         }
@@ -625,24 +630,27 @@ module.exports = businessModelingModule =>{
          * @param selector
          * @returns {boolean}
          */
-         // $promis.then(function(){ 
-         //      frameTitleRepeatCheck()
-         //    })
-        function frameTitleRepeatCheck(){
-            var flag=false;
-            return BusinessModelingServer.frameRepeatTtitle.get({
-                "title":$scope.vm.frameTitle
-            },function(data){ 
-              if(data.status==200){
-                    flag=true;
-               }else{
-                   flag=false;
-               } 
+         function frameTitleRepeatCheck(){
+            var flag;
+            $.ajax("/api/ms/frame/repeat/title",{
+                dataType: 'json', //服务器返回json格式数据
+                type: "GET", //HTTP请求类型
+                async:false,
+                cache:false,
+                data: {
+                  "title":$scope.vm.frameTitle
+                }, 
+                success:function(data) {
+                    if(data.status==200){
+                       flag=true;
+                    }else if(data.status==500){
+                       flag=false;
+                    }
+                },error:function(data) {
+                    console.log(data)
+                },
             })
-            console.log(flag)
              return flag
-            
-           
         }
         //添加表达式
         function addFaq(){
@@ -678,6 +686,7 @@ module.exports = businessModelingModule =>{
                 return false;
             }
             if(frameTitleRepeatCheck("#faqFrameAddErrorObj")==false){
+                $("#frameAddErrorObj").html("标题重复"); 
                 return false;
             }
             //扩展问题校验
