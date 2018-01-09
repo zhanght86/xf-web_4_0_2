@@ -653,21 +653,21 @@ module.exports = businessModelingModule =>{
 
         //禁用指定属性类型
         function disableAttributeType(){
-           //  $.each($("#category-type").find("option"),function(index,value){
-           //      if($scope.vm.categoryAttributeName=="node"){
-           //          $(value).attr("disabled",null);
-           //          $(value).attr("style","");
-           //      }else{
-           //          if(($(value).val()==$scope.vm.botSelectType)>0){
-           //              $("#category-type").val($scope.vm.botSelectType);
-           //              $(value).attr("disabled",null);
-           //              $(value).attr("style","");
-           //          }else{
-           //              $(value).attr("disabled","disabled");
-           //              $(value).attr("style","background-color: lightgrey");
-           //          }
-           //      }
-           // });
+            $.each($("#category-type").find("option"),function(index,value){
+                if($scope.vm.categoryAttributeName=="node"){
+                    $(value).attr("disabled",null);
+                    $(value).attr("style","");
+                }else{
+                    if(($(value).val()==$scope.vm.botSelectType)>0){
+                        $("#category-type").val($scope.vm.botSelectType);
+                        $(value).attr("disabled",null);
+                        $(value).attr("style","");
+                    }else{
+                        $(value).attr("disabled","disabled");
+                        $(value).attr("style","background-color: lightgrey");
+                    }
+                }
+           });
         }
 
         //清除已选颜色

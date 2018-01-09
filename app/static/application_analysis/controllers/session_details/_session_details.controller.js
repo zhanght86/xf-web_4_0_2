@@ -20,8 +20,8 @@ module.exports=applAnalysisModule => {applAnalysisModule
             channels : [] ,
             channelId  : 130 ,
             timeType : 1,
-            timeStart : null,
-            timeEnd : null,
+            timeStart : "",
+            timeEnd : "",
             orderForSessionNumber : null,
             orderForSessionTime : null,
             timeList : [],
@@ -49,8 +49,9 @@ module.exports=applAnalysisModule => {applAnalysisModule
                 $scope.vm.paginationConf.currentPage = 1 ;
                 $location.search("currentPage",1 ) ;
             }
-            if($scope.vm.timeStart==null&&$scope.vm.endTime!=null){
-                 layer.msg("请输入开始时间")
+            if($scope.vm.timeStart==""&&$scope.vm.timeEnd!=""){
+              layer.msg("请输入开始时间")
+              return
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             AppAnalysisServer.sessionGetList.save({
@@ -191,39 +192,19 @@ module.exports=applAnalysisModule => {applAnalysisModule
             }
         }
 
-      
-
         /**
          * 导出表格
          **/
         function exportExcel(){
-            var i = layer.msg('导出中...',{icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000});
-            AppAnalysisServer.exportExcel.save({
-               "applicationId":APPLICATION_ID,
-               "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
-                "requestTimeType":$scope.vm.timeType,
-                "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeEnd,
-            },function(data){
-                layer.close(i);
-                console.log(data);
-                if(data.status==500){
-                    //layer.msg("导出失败")
-                    console.log("导出失败");
-                }else{
-                    //alert(data.data);
-                    //window.open("/api/analysis/download/downloadExcel?fileName="+ data.data);
-                    var url=AppAnalysisServer.exportExcelUrl+data.data;
-                    downLoadFiles($('.session_details')[0],url);
-                }
-                console.log();
-            },function(err){
-                layer.close(i);
-                $log.log(err);
-            });
-         // window.open("api/analysis/user/session/export/"+APPLICATION_ID+"");
-
+           if($scope.vm.channelId==130){
+               var channelId=""
+            }else{
+                var channelId=$scope.vm.channelId
+            }
+             var urlParams ="?channelId="+channelId+"&applicationId="+APPLICATION_ID+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd
+               console.log(urlParams)
+             var url = "/api/analysis/user/session/export" + urlParams;
+                downLoadFiles(angular.element('.noMatch')[0] ,url);
         }
-
     }
 ])};
