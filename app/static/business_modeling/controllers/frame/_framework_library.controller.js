@@ -84,6 +84,7 @@ module.exports = businessModelingModule =>{
             delSelectAll:delSelectAll,
             delSelectSingle:delSelectSingle,
             delIds:[],
+            flag:false
 
         };
        
@@ -313,20 +314,20 @@ module.exports = businessModelingModule =>{
             },function(){
             });
         }
-        $(".aside-navs").on("click","span",function(){
+         $(".aside-navs").on("click","span",function(){
             clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
             $scope.vm.botSelectType = $(this).attr("type-option");
             $scope.vm.categoryAttributeName = $(this).attr("node-option");
-            $scope.vm.classifyId=$(this).attr("id-option");
+           $scope.vm.classifyId=$(this).attr("id-option");
             $scope.vm.categoryPid=$(this).attr("pid-option")
             if($scope.vm.categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryAttributeName=="edge"){
                 $(this).attr("style","color:#ED7D31;font-weight:bold;");
             }
-            loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+             loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
             $scope.$apply();
         });
 
@@ -401,9 +402,9 @@ module.exports = businessModelingModule =>{
         //清除已选颜色
         function clearColor(){
             $.each($(".aside-navs").find("span"),function(index,value){
-                if($(this).attr("attribute-option")=="node"){
+                if($(this).attr("node-option")=="node"){
                     $(this).attr("style","");
-                }else if($(this).attr("attribute-option")=="edge"){
+                }else if($(this).attr("node-option")=="edge"){
                     $(this).attr("style","color:#ED7D31;");
                 }
             });
@@ -437,7 +438,6 @@ module.exports = businessModelingModule =>{
         查询服务
         *
         */
-        
         function loadFrameLibrary(index,pageSize,reset){
             if(reset){
                 $scope.vm.paginationConf.currentPage = 1 ;
@@ -464,8 +464,12 @@ module.exports = businessModelingModule =>{
             });
         }
 
-
-        //修改框架
+          /**
+            *   
+            框架库
+            编辑
+            *
+            */
         function editFrame(item){
             $scope.vm.frameTypeId=item.type;
             $scope.vm.frameInfo=JSON.stringify(item);
@@ -478,7 +482,12 @@ module.exports = businessModelingModule =>{
                 updateElement(item);
             }
         }
-        //删除框架
+         /**
+            *   
+            框架库
+            单条框架信息删除
+            *
+            */
         function deleteFrame(item){
             var frameId = item.id;
             layer.confirm('确认删除？', {
@@ -488,9 +497,10 @@ module.exports = businessModelingModule =>{
                  httpRequestPost("api/ms/frame/delete/"+frameId+"",{
                 },function(data){
                    if(data.status==200){
+                       layer.msg(data.info,{time:2000})
                         loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     }else{
-                        layer.msg(data.info)
+                        layer.msg(data.info,{time:2000})
                     }
                 },function(err){
                 });
@@ -532,7 +542,12 @@ module.exports = businessModelingModule =>{
             $scope.vm.isSelectAll=false;
             $scope.vm.ids=[];
         }    
-        //批量删除
+        /**
+        *   
+        框架库
+        批量删除
+        *
+        */
         function batchDelete(){
             if ($scope.vm.ids.length == 0) {
                 layer.msg("请选择要删除的记录！");
@@ -544,25 +559,26 @@ module.exports = businessModelingModule =>{
                     "frameIds":$scope.vm.ids,
                 },function(data){
                     if(data.status==200){
-                        layer.msg(data.info)
-                         loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                         loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize); 
+                         layer.msg(data.info,{time:2000})
                     }else{
-                        layer.msg(data.info)
+                         layer.msg(data.info,{time:2000})
                     }
                 });
             });
         }
-
      
-
-   
-        //添加框架
+        /**
+        *   
+        框架库
+        新增
+        *
+        */
         function addFrame(){
             if($scope.vm.classifyId==""){
                 layer.msg("请选择类目");
                 return;
             }
-
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/frame/framework_library_dialog.html",
                 scope: $scope,
@@ -578,7 +594,7 @@ module.exports = businessModelingModule =>{
                           "attributeType":80,
                            "order":0
                         })
-                        ////////////////////
+                        alert(frameTitleRepeatCheck())
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
                         $scope.vm.frameTitle=$("#frameTitle").val().trim();
                         if(lengthCheck($("#frameTitle").val(),0,50)==false){
@@ -589,10 +605,10 @@ module.exports = businessModelingModule =>{
                             $("#frameAddErrorObj").html($scope.vm.notContainHtmlLabel);
                             return false;
                         }
-                        if(frameTitleRepeatCheck("#frameAddErrorObj")==false){
-                            alert(frameTitleRepeatCheck("#frameAddErrorObj"))
+                        if(frameTitleRepeatCheck()==false){
+                            $("#frameAddErrorObj").html("标题重复"); 
                             return false;
-                        }
+                           }
                         if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
                             addFaq();
                         }
@@ -609,21 +625,24 @@ module.exports = businessModelingModule =>{
          * @param selector
          * @returns {boolean}
          */
-        var flag=false ;
-        function frameTitleRepeatCheck(selector){
-            BusinessModelingServer.frameRepeatTtitle.get({
+         // $promis.then(function(){ 
+         //      frameTitleRepeatCheck()
+         //    })
+        function frameTitleRepeatCheck(){
+            var flag=false;
+            return BusinessModelingServer.frameRepeatTtitle.get({
                 "title":$scope.vm.frameTitle
-            },(data)=>{ 
-               if(data.status==200){
-                    $(selector).html('');
-                   flag=true;
+            },function(data){ 
+              if(data.status==200){
+                    flag=true;
                }else{
-                   $(selector).html(data.info);
                    flag=false;
-               }
+               } 
             })
-            alert(flag)
-          return flag;
+            console.log(flag)
+             return flag
+            
+           
         }
         //添加表达式
         function addFaq(){
@@ -638,7 +657,6 @@ module.exports = businessModelingModule =>{
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         if(faqValidata(0)==true){
-                           
                             faqRequestAdd();
                              
                         }else{
@@ -672,17 +690,17 @@ module.exports = businessModelingModule =>{
         //IFQ和概念要素的新增
         function faqRequestAdd(){
             httpRequestPost("/api/ms/frame/add",{
-                "classifyId":"466077551194800128",
+                "classifyId":$scope.vm.classifyId,
                 "status":$scope.vm.frameEnableStatusId,
                 "title":$scope.vm.frameTitle,
                 "type":$scope.vm.frameTypeId,
                 "contentList":$scope.vm.contentList 
             },function(data){
                 if(data.status==200){
-                     layer.msg(data.info)
+                     layer.msg(data.info,{time:2000})
                      loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                  }else{
-                    layer.msg(data.info)
+                    layer.msg(data.info,{time:2000})
                  }
             },function(err){
             });
@@ -741,10 +759,10 @@ module.exports = businessModelingModule =>{
             }
             ,function(data){
                  if(data.status==200){
-                     layer.msg(data.info)
+                    layer.msg(data.info,{time:2000})
                      loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                  }else{
-                    layer.msg(data.info)
+                    layer.msg(data.info,{time:2000})
                  }
             },function(err){
             });
@@ -764,10 +782,8 @@ module.exports = businessModelingModule =>{
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         if(elementValidate()==true){
-                           // elementAssemble(0);
                             elementRequestAdd();
                         }else{
-                            alert(1)
                             return false;
                         }
                     }
@@ -823,28 +839,7 @@ module.exports = businessModelingModule =>{
             return true;
             console.log($scope.vm.contentList)
         }
-        //元素类型数据组装
-        function elementAssemble(type){
-            requestArrayReset();
-            var contentJson={}
-            var len=$("#add-item").find("tr").length;
-            $.each($("#add-item").find("tr"),function(index,value){
-                $scope.vm.contentList[index]={
-                    askContent:$(value).find(".ele-asked-error-add").val(),
-                    content:$(value).find(".ele-name-add").val(),
-                    attributeType:$(value).find(".ele-type-add").val(),
-                } 
-                console.log($scope.vm.contentList)
-                if(type==1){
-                    if($(value).attr("element-id")){
-                        $scope.vm.elementIdArray[index]=$(value).attr("element-id");
-                    }else{
-                        $scope.vm.elementIdArray[index]=$scope.vm.defaultString;
-                    }
-                }
-            });
-           
-        }
+        
         //元素类型添加请求
         function elementRequestAdd(){
             httpRequestPost("/api/ms/frame/add",{
@@ -856,8 +851,10 @@ module.exports = businessModelingModule =>{
             },function(data){
                 if(data.status==200){
                      loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                     layer.msg(data.info,{time:2000})
+
                  }else{
-                    layer.msg(data.info)
+                   layer.msg(data.info,{time:2000})
                  }
             },function(err){
                 console.log(err)
@@ -876,10 +873,10 @@ module.exports = businessModelingModule =>{
                 "type":$scope.vm.frameTypeId
             },function(data){
                 if(data.status==200){
-                     layer.msg(data.info)
                      loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                     layer.msg(data.info,{time:2000})
                  }else{
-                    layer.msg(data.info)
+                   layer.msg(data.info,{time:2000})
                  }
             },function(err){
             });
@@ -916,7 +913,6 @@ module.exports = businessModelingModule =>{
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         if(elementValidate()==true){
-                           // elementAssemble(1);
                             elementRequestUpdate();
                         }else{
                             return false;
@@ -1007,7 +1003,24 @@ module.exports = businessModelingModule =>{
             });
         }
         
-        
+        /**
+     * 长度检测 包括边界
+     * @param value
+     * @param min
+     * @param max
+     */
+    function lengthCheck(value,min,max){
+        if(nullCheck(value)==false){
+            return false;
+        }
+        if(value.length<min){
+            return false;
+        }
+        if(value.length>max){
+            return false;
+        }
+        return true;
+    }
        
 
         ////////////////////////////////导入、导出、模板下载///////////////////////////////////////////

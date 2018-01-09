@@ -27,7 +27,7 @@ class AppAnalysisServer {
     //访问数据时间统计
     this.queryAccessDataByTime = $resource(API_ANALYSIS+'/access/query/access/by/time',{},{});
     //访问数据渠道统计
-    this.queryAccessDataByChannel = $resource(API_ANALYSIS+'/access/query/access/data/by/type',{},{});
+    this.queryAccessDataByChannel = $resource(API_ANALYSIS+'/access/query/access/data/by/channel',{},{});
                                 /******************************
                                             *知识点排名统计*    API_ANALYSIS = "/api/analysis" ;
                                             ********************************/

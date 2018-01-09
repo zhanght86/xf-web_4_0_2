@@ -4,13 +4,15 @@
  */
 module.exports=homePageModule => {homePageModule
     .controller('uploadRecordController', 
-        ['$scope',"localStorageService","$state","$log","HomePageServer","$timeout","$stateParams","ngDialog","$cookieStore",
-       ($scope,localStorageService,$state,$log,HomePageServer, $timeout,$stateParams,ngDialog,$cookieStore) => {
+        ['$scope',"localStorageService","$state","$log","HomePageServer","$timeout","$stateParams","ngDialog","$cookieStore","$location",
+       ($scope,localStorageService,$state,$log,HomePageServer, $timeout,$stateParams,ngDialog,$cookieStore,$location) => {
         $scope.vm = {
-	    	  paginationConf : {           //分页条件
-	                pageSize: 5,        //每页条目数量
-	                pagesLength: 10,    //分页块数量
-	          } ,//分页条件
+	    	   paginationConf : {     //分页条件
+                pageSize :$location.search().pageSize?$location.search().pageSize:5 ,
+                currentPage: $location.search().currentPage?$location.search().currentPage:1 ,
+                search : getList,
+                location : true
+            },
               modifierName:"",      //操作名称
               startTime:"",         //开始时间
               endTime:"",           //结束时间
@@ -23,7 +25,11 @@ module.exports=homePageModule => {homePageModule
          * 表格列表
          */
          getList(1);
-        function getList(index){
+          function getList(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1 ;
+                $location.search("currentPage",1 ) ;
+            }
            if($scope.vm.startTime==""&&$scope.vm.endTime!=""){
               layer.msg("请输入开始时间")
            }else{
@@ -37,15 +43,20 @@ module.exports=homePageModule => {homePageModule
               },(data) => {
                   console.log(data)
                   layer.close(i);
-                  if(data.status==200){
-                    if(data.data==null){
-                       $scope.vm.uploadList="";
-                      $scope.vm.paginationConf.totalItems="";
+                   if(data.status==200){
+                    if(data.data.data!=null){ 
+                     $scope.vm.uploadList = data.data.data;
+                     $scope.vm.paginationConf.totalItems = data.data.total;
+                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
                     }else{
-                      $scope.vm.uploadList=data.data.objs;
-                      $scope.vm.paginationConf.totalItems=data.data.total;
+                        $scope.vm.uploadList=[];
+                         $scope.vm.paginationConf.totalItems = 0;
+                        $scope.vm.paginationConf.numberOfPages = 0;
+                        layer.msg(data.info)
                     }
-                  }
+               }else{
+                   layer.close(i);
+               }
               },(err) => {
                   layer.close(i);
                   $log.log(err);

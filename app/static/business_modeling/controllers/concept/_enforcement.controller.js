@@ -153,7 +153,7 @@ module.exports = applicationManagementModule =>{
                                 },(index)=>{
                                     layer.close(index);
                                     BusinessModelingServer.forceConceptGetParam.save({
-                                        "topic":$scope.vm.topic,
+                                        "topic":$scope.vm.key,
                                         "index": 0,
                                         "pageSize": 1,
                                     },(data)=>{
@@ -285,23 +285,40 @@ module.exports = applicationManagementModule =>{
                 }
             });
         }
-       //批量删除
-        function batchDelete(){
+      
+         //批量删除
+         function batchDelete(){
             if($scope.vm.ids.length==0){
-               layer.msg("请选择要删除的概念",{time:2000})
-               return false
+                layer.msg("请选择删除的概念",{time:2000}) ;
+            }else{
+             var dialog = ngDialog.openConfirm({
+                template:"/static/business_modeling/views/concept/delete.html",
+                scope: $scope,
+                width: '260px',
+                closeByDocument:false,
+                closeByEscape: true,
+                showClose : true,
+                backdrop : 'static',
+                preCloseCallback:function(e){    //关闭回掉
+                    if(e === 1){
+                         BusinessModelingServer.forceConceptAllDelete.save({
+                         "conceptIds":$scope.vm.ids
+                        },(data)=>{
+                           if(data.status==200){
+                                console.log(data)
+                                loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                                layer.msg("删除成功",{time:2000})
+                                initBatchTest();
+                           }else{
+                               layer.msg(data.info)
+                           }
+                        })
+                    }
+                }
+              });
             }
-            BusinessModelingServer.forceConceptAllDelete.save({
-                 "conceptIds":$scope.vm.ids
-            },(data)=>{
-               if(data.status==200){
-                    console.log(data)
-                     loadSynonymConceptTable($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                    layer.msg("删除成功");
-                    initBatchTest();
-               }
-            })
-        }
+            
+        } 
 
         //批量导入
         function batchUpload(){

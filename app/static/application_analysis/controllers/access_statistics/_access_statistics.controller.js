@@ -16,7 +16,7 @@ module.exports=applAnalysisModule => {
             contentType : 0 ,  //默认显示访问时间统计
            //访问时间
             timerData : "" ,        //查询的所有数据
-            channelId : "" ,        //渠道
+            channelId : 130 ,        //渠道
            // dimensionId : "",       //維度
             TimerSearchTimeType : 1 ,   //time类型
             timerSearchStartTime : "" , //开始时间
@@ -376,12 +376,16 @@ module.exports=applAnalysisModule => {
                 $log.log(err);
            });
         }();
+
+       
+       queryAccessDataByTime();
+
         /**
          * 访问数据时间统计
          * **/
         function queryAccessDataByTime(){
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            var xData,yData1,yData2,yData3 ;
+            var j = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
+            var xData,yData1,yData2,yData3;
             var dateJump ; //获取时间间隔
             if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
                 dateJump = getTimeJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) + 1 ;
@@ -392,194 +396,208 @@ module.exports=applAnalysisModule => {
                 dateJump = 7
             }else{
                 dateJump = 30
-            }
-            
+            } 
             AppAnalysisServer.queryAccessDataByTime.save({
                 "startTime":$scope.vm.timerSearchStartTime ,
                 "endTime":$scope.vm.timerSearchEndTime ,
                 "requestTimeType" : $scope.vm.TimerSearchTimeType ,
-               // "dimensionId" : $scope.vm.dimensionId,
-                "channelId" : $scope.vm.channelId
+                "channelId" : ($scope.vm.channelId==130)?null:$scope.vm.channelId
             },function(data){
-               layer.close(i);
-                if(data.data.length==0){
-                    layer.msg("所查询时间段有效数据为空") ;
-                    $scope.vm.timerData = "" ;
-                    $scope.vm.isTimerChartShow = false ;
-                }else{
-                    $scope.vm.isTimerChartShow = true ;
-                    /***
-                     *  @type单天查询
-                     *  @params 昨天 今天
-                     *  @params 自定义时间相等
-                     * **/
-                    if(dateJump==1){
-                        // echart 图表显示
-                        xData = ["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00", "13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"] ;
-                        yData1 = [].fill.call(new Array(24),0) ;
-                        yData2 = [].fill.call(new Array(24),0) ;
-                        yData3 = [].fill.call(new Array(24),0) ;
-                        yData1 = [].fill.call(new Array(24),0) ;
-                        angular.forEach(data.data, function(data,index1){
-                             yData1[data.hour] = data.totalSessions ; //总会话数
-                          
-                        });
-                        angular.forEach(data.data, function(data,index1){
-                            yData2[data.hour] =data.totalUsers ;  //总用户数
-                        });
-                         angular.forEach(data.data, function(data,index1){
-                            yData3[data.hour] =data.validSessions ;  //有效会话数
-                        });
-                        //表格数据
-                        var tableDate = [];
-                        for(var i = 0 ;i < xData.length ; i++ ){
-                            if(i!=xData.length-1){
-                                tableDate.push(xData[i]+'-'+xData[i+1])
-                            }
-                        }
-                        $scope.vm.timerData = getOriginData(tableDate.length,tableDate);
-                        console.log($scope.vm.timerData)
-                        angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
-                            angular.forEach(data.data,function(item,index){
-                                $scope.vm.timerData["有效用户数"][item.hour].users = item.validUsers
-                            }) ;
-                        }) ;
-                        angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
-                            angular.forEach(data.data,function(item,index){
-                                $scope.vm.timerData["有效会话数"][item.hour].times = item.validSessions
-                            }) ;
-                        }) ;
-                        angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
-                            angular.forEach(data.data,function(item,index){
-                                $scope.vm.timerData["总会话数"][item.hour].times = item.totalSessions
-                            }) ;
-                        }) ;
-                        angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
-                            angular.forEach(data.data,function(item,index){
-                                $scope.vm.timerData["总用户人数"][item.hour].users = item.totalUsers
-                            }) ;
-                        }) ;
+                console.log(j)
+                 layer.close(j);
+                if(data.status==200){
+                    console.log(data)
+                   //  layer.close(i);
+                    if(data.data.length==0){
+                        layer.msg("所查询时间段有效数据为空") ;
+                        $scope.vm.timerData = "" ;
+                        $scope.vm.isTimerChartShow = false ;
+                    }else{
+                        $scope.vm.isTimerChartShow = true ;
                         /***
                          *  @type单天查询
-                         *  @params 过去七天
-                         *  @params 自定义时间大于一天
+                         *  @params 昨天 今天
+                         *  @params 自定义时间相等
                          * **/
-                    }else if(dateJump==7){
-                        //获取时间段内的所有时间
-                        if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
-                            xData = getAllDateFromDateJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) ;
-                        }else{
-                            xData = getBeforeDate(dateJump,true,true)  ;
-                        }
-                        $scope.vm.timerData = getOriginData(xData.length,xData);
-                        console.log($scope.vm.timerData)  ;
-                        console.log(xData)  ;
-                        // 表格显示数据
-                         // 表格显示数据
-                            angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
-                                angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
-                                        $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
-                                    }
+                        if(dateJump==1){
+                            // echart 图表显示
+                            xData = ["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00", "13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"] ;
+                            yData1 = [].fill.call(new Array(24),0) ;
+                            yData2 = [].fill.call(new Array(24),0) ;
+                            yData3 = [].fill.call(new Array(24),0) ;
+                            yData1 = [].fill.call(new Array(24),0) ;
+                            angular.forEach(data.data, function(data,index1){
+                                 yData1[data.hour] = data.totalSessions ; //总会话数
+                              
+                            });
+                            angular.forEach(data.data, function(data,index1){
+                                yData2[data.hour] =data.totalUsers ;  //总用户数
+                            });
+                             angular.forEach(data.data, function(data,index1){
+                                yData3[data.hour] =data.validSessions ;  //有效会话数
+                            });
+                            //表格数据
+                            var tableDate = [];
+                            for(var i = 0 ;i < xData.length ; i++ ){
+                                if(i!=xData.length-1){
+                                    tableDate.push(xData[i]+'-'+xData[i+1])
+                                }
+                            }
+                            $scope.vm.timerData = getOriginData(tableDate.length,tableDate);
+                            console.log($scope.vm.timerData)
+                             angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(item.hour==useData.date){
+                                            $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
+                                        }
+                                    }) ;
                                 }) ;
-                            }) ;
                             angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
-                                angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
-                                        $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
-                                    }
+                                    angular.forEach(data.data,function(item,index){
+                                         if(item.hour==useData.date){
+                                            $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
+                                        }
+                                    }) ;
                                 }) ;
-                            }) ;
                             angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
                                 angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
+                                     if(item.hour==useData.date){
                                         $scope.vm.timerData["总会话数"][useIndex].times = item.totalSessions
                                     }
                                 }) ;
                             }) ;
                             angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
                                 angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
+                                     if(item.hour==useData.date){
                                         $scope.vm.timerData["总用户人数"][useIndex].users = item.totalUsers
                                     }
                                 }) ;
                             }) ;
-                        //echart 图表数据
-                        yData1 = [].fill.call(new Array(7),0) ;
-                        yData2 = [].fill.call(new Array(7),0) ;
-                        yData3 = [].fill.call(new Array(7),0) ;
-                        angular.forEach($scope.vm.timerData["总会话数"],function(item,index){
-                            yData1[index] = item.times ;
-                        });
-                        angular.forEach($scope.vm.timerData["总用户人数"], function(item,index){
-                            yData2[index] = item.users ;
-                        });
-                        angular.forEach($scope.vm.timerData["有效会话数"], function(item,index){
-                            yData3[index] = item.times ;
-                        });
-                    }else {
-                         //获取时间段内的所有时间
-                        if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
-                            xData = getAllDateFromDateJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) ;
-                        }else{
-                            xData = getBeforeDate(dateJump,true,true)  ;
+                           
+                            /***
+                             *  @type单天查询
+                             *  @params 过去七天
+                             *  @params 自定义时间大于一天
+                             * **/
+                        }else if(dateJump==7){
+                            //获取时间段内的所有时间
+                            if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
+                                xData = getAllDateFromDateJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) ;
+                            }else{
+                                xData = getBeforeDate(dateJump,true,true)  ;
+                            }
+                            $scope.vm.timerData = getOriginData(xData.length,xData);
+                            console.log($scope.vm.timerData)  ;
+                            console.log(xData)  ;
+                            // 表格显示数据
+                             // 表格显示数据
+                                angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
+                                        }
+                                    }) ;
+                                }) ;
+                                angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
+                                        }
+                                    }) ;
+                                }) ;
+                                angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["总会话数"][useIndex].times = item.totalSessions
+                                        }
+                                    }) ;
+                                }) ;
+                                angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["总用户人数"][useIndex].users = item.totalUsers
+                                        }
+                                    }) ;
+                                }) ;
+                            //echart 图表数据
+                            yData1 = [].fill.call(new Array(7),0) ;
+                            yData2 = [].fill.call(new Array(7),0) ;
+                            yData3 = [].fill.call(new Array(7),0) ;
+                            angular.forEach($scope.vm.timerData["总会话数"],function(item,index){
+                                yData1[index] = item.times ;
+                            });
+                            angular.forEach($scope.vm.timerData["总用户人数"], function(item,index){
+                                yData2[index] = item.users ;
+                            });
+                            angular.forEach($scope.vm.timerData["有效会话数"], function(item,index){
+                                yData3[index] = item.times ;
+                            });
+                        }else {
+                             //获取时间段内的所有时间
+                            if($scope.vm.timerSearchStartTime && $scope.vm.timerSearchEndTime){
+                                xData = getAllDateFromDateJump($scope.vm.timerSearchStartTime,$scope.vm.timerSearchEndTime) ;
+                            }else{
+                                xData = getBeforeDate(dateJump,true,true)  ;
+                            }
+                            $scope.vm.timerData = getOriginData(xData.length,xData);
+                            console.log($scope.vm.timerData)  ;
+                            console.log(xData)  ;
+                            // 表格显示数据
+                             // 表格显示数据
+                                angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
+                                        }
+                                    }) ;
+                                }) ;
+                                angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
+                                        }
+                                    }) ;
+                                }) ;
+                                angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["总会话数"][useIndex].times = item.totalSessions
+                                        }
+                                    }) ;
+                                }) ;
+                                angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
+                                    angular.forEach(data.data,function(item,index){
+                                        if(format(item.countTime)==useData.date){
+                                            $scope.vm.timerData["总用户人数"][useIndex].users = item.totalUsers
+                                        }
+                                    }) ;
+                                }) ;
+                            //echart 图表数据
+                            yData1 = [].fill.call(new Array(30),0) ;
+                            yData2 = [].fill.call(new Array(30),0) ;
+                            yData3 = [].fill.call(new Array(30),0) ;
+                            angular.forEach($scope.vm.timerData["总会话数"],function(item,index){
+                                yData1[index] = item.times ;
+                            });
+                            angular.forEach($scope.vm.timerData["总用户人数"], function(item,index){
+                                yData2[index] = item.users ;
+                            });
+                            angular.forEach($scope.vm.timerData["有效会话数"], function(item,index){
+                                yData3[index] = item.times ;
+                            });
                         }
-                        $scope.vm.timerData = getOriginData(xData.length,xData);
-                        console.log($scope.vm.timerData)  ;
-                        console.log(xData)  ;
-                        // 表格显示数据
-                         // 表格显示数据
-                            angular.forEach($scope.vm.timerData["有效用户数"],function(useData,useIndex){
-                                angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
-                                        $scope.vm.timerData["有效用户数"][useIndex].users = item.validUsers
-                                    }
-                                }) ;
-                            }) ;
-                            angular.forEach($scope.vm.timerData["有效会话数"],function(useData,useIndex){
-                                angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
-                                        $scope.vm.timerData["有效会话数"][useIndex].times = item.validSessions
-                                    }
-                                }) ;
-                            }) ;
-                            angular.forEach($scope.vm.timerData["总会话数"],function(useData,useIndex){
-                                angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
-                                        $scope.vm.timerData["总会话数"][useIndex].times = item.totalSessions
-                                    }
-                                }) ;
-                            }) ;
-                            angular.forEach($scope.vm.timerData["总用户人数"],function(useData,useIndex){
-                                angular.forEach(data.data,function(item,index){
-                                    if(format(item.countTime)==useData.date){
-                                        $scope.vm.timerData["总用户人数"][useIndex].users = item.totalUsers
-                                    }
-                                }) ;
-                            }) ;
-                        //echart 图表数据
-                        yData1 = [].fill.call(new Array(30),0) ;
-                        yData2 = [].fill.call(new Array(30),0) ;
-                        yData3 = [].fill.call(new Array(30),0) ;
-                        angular.forEach($scope.vm.timerData["总会话数"],function(item,index){
-                            yData1[index] = item.times ;
-                        });
-                        angular.forEach($scope.vm.timerData["总用户人数"], function(item,index){
-                            yData2[index] = item.users ;
-                        });
-                        angular.forEach($scope.vm.timerData["有效会话数"], function(item,index){
-                            yData3[index] = item.times ;
-                        });
+                      
+                        TimerChart.setOption(setTimerChartOption(xData,yData1,yData2,yData3)) ;
                     }
-                  
-                    TimerChart.setOption(setTimerChartOption(xData,yData1,yData2,yData3)) ;
-                }
+            }else{
+                 layer.close(j);
+            }
+
             },function(err){
-                layer.close(i);
-                $log.log(err);
+                layer.close(j);
+                console.log(err);
             });
         };
-        queryAccessDataByTime();
         /**
          * 访问数据渠道统计
          * **/
@@ -590,7 +608,7 @@ module.exports=applAnalysisModule => {
                 "endTime":$scope.vm.accessSearchEndTime ,
                 "requestTimeType" : $scope.vm.accessSearchTimeType ,
             },function(data){
-              //  layer.close(i);
+                layer.close(i);
                 var tableList = [] ;
                 // 初始渠道
                 var  intervaler = $interval(function(){
