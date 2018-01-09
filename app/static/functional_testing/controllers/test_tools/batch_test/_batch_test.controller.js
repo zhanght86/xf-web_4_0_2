@@ -6,8 +6,8 @@
 module.exports=functionalTestModule => {
     functionalTestModule
     .controller('BatchTestController', [
-    '$scope',"localStorageService","$state","$log","FunctionServer","$location","$timeout","$stateParams","ngDialog","$cookieStore",
-    ($scope,localStorageService,$state,$log,FunctionServer,$location, $timeout,$stateParams,ngDialog,$cookieStore)=> {
+    '$scope',"localStorageService","$state","$log","FunctionServer","$location","$timeout","$stateParams","ngDialog","$window","$cookieStore",
+    ($scope,localStorageService,$state,$log,FunctionServer,$location, $timeout,$stateParams,ngDialog,$window,$cookieStore)=> {
         $scope.vm = {
             deleteQuestion : deleteQuestion,
             startUp : startUp,
@@ -208,7 +208,7 @@ module.exports=functionalTestModule => {
             },function(data){
                 console.log(data);
                 if(data.status=200){
-                   // $state.reload();
+                    //$state.reload();
                     searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
                 }
                 if(data.status==500){
