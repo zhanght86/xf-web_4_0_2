@@ -446,10 +446,10 @@ module.exports = businessModelingModule =>{
         //类目新增
         function addBot(){
             //数据校验
-            if($scope.vm.categoryPid==""){
-                layer.msg("请选择类目")
-                return;
-            }
+            // if($scope.vm.categoryPid==""){
+            //     layer.msg("请选择类目")
+            //     return;
+            // }
             if(lengthCheck($("#category-name").val(),0,50)==false){
                 $("#category-name-error").html($scope.vm.categoryNameNullOrBeyondLimit);
                 return;
