@@ -1003,47 +1003,6 @@ module.exports = (angular) => {
                 }
             }
         },
-        //概念
-            // 新增
-        {
-            name: "KM.concept",
-            url: "/concept",
-            data: {
-                roles: []
-            },
-            parent : "KM",
-            title : "概念 新增" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/knowledge_management/views/single/concept/concept.html"),
-                    controller: "ConceptNewController"
-                }
-            }
-        },
-            // 编辑
-        {
-            name: "KM.concept.edit",
-            url: "/concept/edit/:knowledgeId",
-            data: {
-                roles: []
-            },
-            parent : "KM",
-            title : "概念 编辑" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/knowledge_management/views/single/concept/concept.html"),
-                    controller: "ConceptEditController"
-                }
-            }
-        },
         //列表
             // 新增
         {
@@ -1126,16 +1085,16 @@ module.exports = (angular) => {
                 }
             }
         },
-        //富文本
+        //概念
             // 新增
         {
-            name: "KM.richText",
-            url: "/richText",
+            name: "KM.concept",
+            url: "/concept",
             data: {
                 roles: []
             },
             parent : "KM",
-            title : "富文本 新增" ,
+            title : "概念 新增" ,
             views: {
                 "header": {
                     template: nav,
@@ -1149,13 +1108,13 @@ module.exports = (angular) => {
         },
             // 编辑
         {
-            name: "KM.richText.edit",
-            url: "/richText/edit/:knowledgeId",
+            name: "KM.concept.edit",
+            url: "/concept/edit/:knowledgeId",
             data: {
                 roles: []
             },
             parent : "KM",
-            title : "富文本 编辑" ,
+            title : "概念 编辑" ,
             views: {
                 "header": {
                     template: nav,

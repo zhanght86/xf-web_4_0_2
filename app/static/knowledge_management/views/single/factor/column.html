@@ -6,39 +6,28 @@
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">要素名称：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text"  name="greeting_word_key" ng-model="vm.factorName" class="input-text"/>
+                <input type="text"  name="greeting_word_key" ng-model="column.name" class="input-text"/>
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">要素类型：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <select class="input-text" ng-model="vm.tableType">
-                    <option value="字符串">字符串</option>
-                    <option value="数值">数值</option>
-                    <option value="日期">日期</option>
+                <select class="input-text" ng-model="column.type">
+                    <option value="80">字符串</option>
+                    <option value="89">整数</option>
+                    <option value="83">日期</option>
                 </select>
-            </div>
-        </div>
-        <div class="mb-10 cl">
-            <label class="form-label col-xs-3 col-sm-2">挖掘技术：</label>
-            <div class="formControls col-xs-9 col-sm-9">
-                <label class="mr-10">
-                    <!--<input type="checkbox" ng-checked="vm.gorithm.inArray('OEC')" ng-click="vm.gorithm.inArray('OEC')?vm.gorithm.remove('OEC'):vm.gorithm.push('OEC')"/> NLP-->
-                    <input type="checkbox" ng-checked="vm.gorithm.inArray('NLP')" ng-disabled="true"/> NLP
-                </label>
-                <!--<label class="mr-10"><input type="checkbox" ng-checked="vm.gorithm.inArray('OEC')" ng-click="vm.gorithm.inArray('OEC')?vm.gorithm.remove('OEC'):vm.gorithm.push('OEC')"/> OEC语义挖掘</label>-->
-                <!--<label class="mr-10"><input type="checkbox" ng-checked="vm.gorithm.inArray('GATE')" ng-click="vm.gorithm.inArray('GATE')?vm.gorithm.remove('GATE'):vm.gorithm.push('GATE')"/> gate算法</label>-->
             </div>
         </div>
         <div class="mb-10 cl">
             <label class="form-label col-xs-3 col-sm-2">反问：</label>
             <div class="formControls col-xs-9 col-sm-9">
-                <input type="text" placeholder="请问您需要的收益率多少？" ng-model="vm.elementAsk" class="input-text"/>
+                <input type="text" placeholder="请问您需要的收益率多少？" ng-model="column.ask" class="input-text"/>
             </div>
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <input type="button" class="btn1 btn1_blue ml-10" ng-click="vm.tableSaveCheck(closeThisDialog)" value="保存" />
+                <input type="button" class="btn1 btn1_blue ml-10" ng-disabled="!column.name || !column.type || !column.ask"  ng-click="closeThisDialog(1)" value="保存" />
                 <input type="button" class="btn1 btn1_blue ml-10" ng-click="closeThisDialog(0)" value="取消" />
             </div>
         </div>

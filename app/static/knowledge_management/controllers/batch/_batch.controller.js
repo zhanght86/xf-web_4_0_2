@@ -5,7 +5,7 @@
  */
 module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule
-    .controller('KnowBatchAdditionsController'
+    .controller('KnowBatchAdditionsController',
     ['$scope', 'localStorageService' ,"$state","ngDialog","$cookieStore","$stateParams","$window","$rootScope","$filter",
     ($scope,localStorageService, $state,ngDialog,$cookieStore,$stateParams,$window,$rootScope,$filter)=> {
         //console.log($stateParams);

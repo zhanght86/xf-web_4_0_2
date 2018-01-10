@@ -21,45 +21,39 @@ module.exports = knowledgeManagementModule =>{
                 scope.dirBot = {
                     botSelectAdd : botSelectAdd ,
                     knowledgeBotVal : {
-                        id : "" ,
+                        classifyId : "" ,
                         value : ""
-                    },  //bot 内容
+                    },
                 } ;
-                function getBotFullPath(id){
+                function getBotFullPath(classifyId){
                     KnowledgeService.getBotFullPath.get({
-                        id: id
+                        id: classifyId
                     },function(response){
                         if(response.status = 200){
-                            var allBot = angular.copy(scope.vm.creatSelectBot) ,
-                                botResult = scope.$parent.knowCtr.isBotRepeat(id,response.data.split("/"),"",allBot) ;
-                                scope.dirBot.knowledgeBotVal = {
-                                    id : id ,
-                                    value : response.data
-                                };
-                                if(botResult != false){
-                                    scope.vm.botFullPath = botResult;
+                            let botResult = scope.$parent.knowCtr.isBotRepeat(classifyId,response.data,scope.parameter.classifyList) ;
+
+                                if(!botResult){
+                                    scope.dirBot.knowledgeBotVal = {"value":"","classifyId":""}
+                                }else{
+                                    scope.dirBot.knowledgeBotVal = {
+                                        classifyId : classifyId ,
+                                        value : response.data
+                                    };
                                 }
                         }
                     },function(error){console.log(error)})
                 }
                 scope.$parent.knowCtr.botTreeOperate(scope,getBotFullPath) ;
                 //BOT搜索自动补全
-                scope.$parent.knowCtr.searchBotAutoTag(".botTagAuto","/api/ms/modeling/category/searchbycategoryname",function(suggestion){
-                    scope.$apply(function(){
-                        var allBot = angular.copy(scope.vm.creatSelectBot) ,
-                            botResult = scope.$parent.knowCtr.isBotRepeat(suggestion.data,suggestion.value.split("/"),suggestion.type,allBot) ;
-                        scope.dirBot.knowledgeBotVal = suggestion.value;
-                        if(botResult != false){
-                            scope.vm.botFullPath= botResult;
-                        }
-                    })
+                scope.$parent.knowCtr.searchBotAutoTag(".botTagAuto",API_MS+"/classify/get/path",function(suggestion){
+                    let botResult = scope.$parent.knowCtr.isBotRepeat(suggestion.classifyId,suggestion.value,scope.parameter.classifyList) ;
+                    scope.dirBot.knowledgeBotVal = botResult || {"value":"","classifyId":""};
                 });
                 //点击bot分类的 加号
                 function botSelectAdd(){
-                    if(scope.vm.botFullPath){
-                        console.log(scope.vm.botFullPath) ;
-                        scope.vm.creatSelectBot.push(scope.vm.botFullPath);
-                        scope.vm.botFullPath = "";
+                    console.log(1)
+                    if(scope.dirBot.knowledgeBotVal.value && scope.dirBot.knowledgeBotVal.classifyId){
+                        scope.parameter.classifyList.push(scope.dirBot.knowledgeBotVal);
                         scope.dirBot.knowledgeBotVal = "";
                     }
                 }

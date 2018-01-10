@@ -1,0 +1,95 @@
+<div class="pd-10 selectImage">
+    <h3 class="media_header">选择语音</h3>
+    <div class="media_content" ng-if="newKnow.voiceList.length">
+        <div class="search">
+            <input type="text" ng-model="newKnow.voiceKeyWord" class="search_key">
+            <input type="button" value="" ng-click="newKnow.getVoiceList(newKnow.voicePaginationConf.currentPage,newKnow.voicePaginationConf.pageSize)" class="search_btn">
+        </div>
+        <table class="voice_list">
+            <tr class="voice_header">
+                <th width="20%">选择</th>
+                <th width="60%">文件名</th>
+                <th width="20%">播放</th>
+            </tr>
+            <tr ng-repeat="item in newKnow.voiceList">
+                <td><input type="radio" name="voice"></td>
+                <td>{{item.name}}</td>
+                <td>--播放--</td>
+            </tr>
+        </table>
+        <pagination ng-if="(newKnow.voicePaginationConf.totalItems) && (newKnow.voicePaginationConf.totalItems>0) && (newKnow.type==1020)" conf="newKnow.voicePaginationConf"></pagination>
+    </div>
+    <div class="media_empty" ng-if="!newKnow.voiceList.length">
+        <p class="empty_tip ">当前记录为空</p>
+        <p class="empty_add"><a href=""></a>点击跳转到添加素材页面</p>
+    </div>
+    <div class="row cl">
+        <div class="text-c">
+            <button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>
+            <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>
+        </div>
+    </div>
+</div>
+<style>
+    .selectImage .media_header{
+        width:100%;
+        padding-bottom:10px;
+        padding-left:6%;
+        line-height:20px;
+        text-align: left;
+    }
+    .selectImage .media_content{
+        width:100%;
+        margin:10px 0;
+        padding-bottom:10px;
+        line-height:20px;
+        text-align: left;
+        border-bottom: 1px solid #8f949a;
+        border-top: 1px solid #8f949a;
+    }
+    .selectImage .media_empty{
+        width:100%;
+        margin:10px 0;
+        padding:20px 0 50px 0;
+        line-height:20px;
+        text-align: center;
+        border-bottom: 1px solid #8f949a;
+        border-top: 1px solid #8f949a;
+    }
+    .selectImage .media_empty .empty_tip{
+        margin:0 auto;
+        display: inline-block;
+        padding-left:20px;
+        backgroud:url("assets/images/warning.png") no-repeat left;
+        font-size:80%;
+        color: #6f7377;
+    }
+    .selectImage .media_empty .empty_add{
+        color: #3679b6;
+    }
+    .selectImage .voice_list .voice_header{
+        background : #e1e6ea;
+    }
+    .selectImage .media_content .search{
+        margin:10px 0;
+        text-align: right;
+    }
+    .selectImage .media_content .search .search_btn{
+        width: 50px;
+        height: 31px;
+        background: url("assets/images/tw_search_png.png") #378ee1 no-repeat center center ;;
+        margin-left: -1px;
+        cursor: pointer;
+    }
+    .selectImage .media_content .search .search_key{
+        width: 200px;
+        height: 31px;
+        text-indent: 6px;
+        border:1px solid #8f949a;
+    }
+    .selectImage .media_content .voice_list th ,td{
+        text-align: center;
+        height:36px;
+    }
+
+</style>

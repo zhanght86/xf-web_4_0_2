@@ -10,7 +10,7 @@ class KnowledgeService {
                  **********************************/
 //   客服知识
                 //获取知识列表
-                this.queryCustKnowList = $resource(API_MS + "/knowledgeManage/overView/searchList", {}, {});
+                this.queryCustKnowList = $resource(API_MS + "/knowledge/params", {}, {});
                 //知识导出
                 this.custKnowExport = API_MS + "/knowledgeManage/exportExcel";
                 //获取新增知识数量
@@ -49,12 +49,17 @@ class KnowledgeService {
 //   概念知识新增
                 // 获取相关问
                 this.queryConceptRelatedQuestion = $resource(API_MS + "/conceptKnowledge/getKnowledgeTitle", {}, {});
-                // 检验扩展问
-                this.queryConceptExtension = $resource(API_MS + "/conceptKnowledge/checkExtensionQuestion", {}, {});
+                // 获取图片
+                this.queryConceptImage = $resource(API_MATERIAL + "/picture/query", {}, {});
+                // 获取语音
+                this.queryConceptVoice = $resource(API_MATERIAL + "/voice/query", {}, {});
+                // 获取图文
+                this.queryConceptImageText = $resource(API_MATERIAL + "/graphic/message/query", {}, {});
+
                 // 保存
-                this.storeConceptKnow = $resource(API_MS + "/conceptKnowledge/addConceptKnowledge", {}, {});
+                this.storeConceptKnow = $resource(API_MS + "/knowledge/concept/add", {}, {});
                 // 编辑
-                this.updateConceptKnow = $resource(API_MS + "/conceptKnowledge/editKnowledge", {}, {});
+                this.updateConceptKnow = $resource(API_MS + "/knowledge/concept/update", {}, {});
 //   列表知识新增
                 // 获取相关问
                 this.queryListRelatedQuestion = $resource(API_MS + "/listKnowledge/getKnowledgeTitle", {}, {});

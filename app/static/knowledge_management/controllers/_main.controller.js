@@ -9,22 +9,21 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService, $state,KnowledgeService,$timeout) =>{
         $state.go("KM.overview");
         $scope.knowCtr = {
-            selectChannel : selectChannel , //选择渠道
-            isExtensionTagRepeat : isExtensionTagRepeat  ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
+            // selectChannel : selectChannel , //选择渠道
+            // isExtensionTagRepeat : isExtensionTagRepeat  ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
             rmeoveExtToLocal : rmeoveExtToLocal ,           //删除扩展问并添加到localStorage , 应用于所有知识编辑
             setKnowParamHasDialog : setKnowParamHasDialog ,  //弹框重置参数  应用于概念，faq
             isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
             botTreeOperate : botTreeOperate ,
             searchBotAutoTag : searchBotAutoTag,
-            keyEnter : keyEnter
+            keyEnter : keyEnter,
+            introduction : {
+                showTip : showTip,
+                hideTip : hideTip,
+                prevDiv : prevDiv,
+                nextDiv : nextDiv
+             }
         };
-        function selectChannel(self,channelId){
-            if(self.vm.channelIdList.inArray(channelId)){
-                self.vm.channelIdList.remove(channelId);
-            }else{
-                self.vm.channelIdList.push(channelId);
-            }
-        }
         /**
          * 检测扩展问标签是否重复
          * false   return   ；  true  return ext
@@ -86,7 +85,6 @@ module.exports = knowledgeManagementModule =>{
          *  富文本 ： cust_rich_text_ext
          * */
         function rmeoveExtToLocal(isEdit,localName,item){
-            //
             if(isEdit){
                 //localStorageService.clearAll() ;
                 var local = localStorageService.get(localName) ;
@@ -101,17 +99,12 @@ module.exports = knowledgeManagementModule =>{
         }
         function setKnowParamHasDialog(self) {
             self.vm.newTitle = "";
-            self.vm.channelIdList = [];
-            self.vm.question = 1;    //显示相关问
-            self.vm.tip = 1;   //在提示
-            self.vm.tail =1;   //弹出评价小尾巴
+            self.vm.channelIdList = "";
             self.vm.knowledgeRelevantContentList = [] ;//业务扩展问
-            self.vm.dimensionArr = [];
         }
-        function isBotRepeat(id,path,type,allBot){
+        function isBotRepeat(id,path,allBot){
             //className  classificationId  classificationType(不推送)
             //重复 提示   不重复返回bot对象
-            // 校验对象  className
             console.log(1) ;
             var result = {             //定义bot对象
                 "value" : path ,
@@ -121,12 +114,7 @@ module.exports = knowledgeManagementModule =>{
             // 集合转为string 便于比较  并不改变原数组
             if(len){                  //需要验证
                 angular.forEach(allBot,function(item){
-                    // console.log(item.className.join("/"),backUpPath) ;
-                    // if(item.className.join("/") == backUpPath){
-                    //     result = false ;
-                    //     return  layer.msg("添加分类重复，已阻止添加");
-                    // }
-                    if(item.name == path){
+                    if(item.value == path){
                         result = false ;
                         return  layer.msg("添加分类重复，已阻止添加");
                     }
@@ -226,19 +214,16 @@ module.exports = knowledgeManagementModule =>{
                 tree.getChildNode() ;
                 tree.selectNode() ;
             },200) ;
-            //return tree ;
         }
         //BOT搜索自动补全
         function searchBotAutoTag(el,url,callback){
             $(el).autocomplete({
                 serviceUrl: url,
-                type:'POST',
+                type:'GET',
                 params:{
-                    "categoryName":$(el).val(),
-                    "categoryAttributeName":"node",
-                    "categoryApplicationId":APPLICATION_ID
+                    "name":$(el).val(),
                 },
-                paramName:'categoryName',
+                paramName:'name',
                 dataType:'json',
                 transformResult:function(data){
                     var result = {
@@ -247,9 +232,8 @@ module.exports = knowledgeManagementModule =>{
                     if(data.data){
                         angular.forEach(data.data,function(item){
                             result.suggestions.push({
-                                data:item.categoryId,
-                                value:item.categoryName,
-                                type : item.categoryTypeId
+                                id:item.id,
+                                value:item.name,
                             })
                         }) ;
                     }
@@ -268,6 +252,45 @@ module.exports = knowledgeManagementModule =>{
             if(keycode==13){
                 srcObj.blur();
                 callback();
+            }
+        }
+        //引导页方法
+        function showTip(){
+            $('.shadow_div').show();
+            $('.step_div').show();
+            $('#step_one').show().siblings().hide();
+
+        }
+        function hideTip(){
+            $('.shadow_div').hide();
+            $('.step_div').hide();
+        }
+        //上一个
+        function prevDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().prev()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().prev().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().prev().offset().top-20
+                }, 500);
+            }else{
+                // $(obj).attr('disabled',true);
+                return;
+            }
+        }
+        //下一个
+        function nextDiv(e){
+            var  obj = e.srcElement ? e.srcElement : e.target;
+            if($(obj).parent().parent().parent().next()){
+                $(obj).parent().parent().parent().hide();
+                $(obj).parent().parent().parent().next().show();
+                $('html, body').animate({
+                    scrollTop: $(obj).parent().parent().parent().next().offset().top-20
+                }, 500);
+            }else{
+                //$(obj).attr('disabled',true);
+                return;
             }
         }
 }])};

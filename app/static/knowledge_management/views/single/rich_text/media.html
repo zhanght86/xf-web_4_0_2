@@ -1,52 +1,56 @@
 <div class="pd-10 selectImage">
-    <form class="form form-horizontal" >
-        <div>
-            <p class="tc mb-10" ng-show="vm.contentType==111">请选择要上传的图片</p>
-            <p class="tc mb-10" ng-show="vm.contentType==112">请选择要上传的语音</p>
-            <p class="tc mb-10" ng-show="vm.contentType==114">请选择要上传的图文</p>
-            <ul class="classic_head_ul clearfix" ng-if="vm.contentType==111">
-                <li ng-repeat="item in vm.imageList"  ng-class="vm.imgSelected.id==item.pictureId ? 'active' : ''"
-                    ng-click="vm.addMultimedia(item)">
-                    <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
-                        <img title="{{item.pictureName}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/img/{{item.pictureUrl}}">
-                    </div>
-                    <p class="f14">{{item.pictureName}}</p>
-                </li>
-            </ul>
-            <ul class="classic_head_ul clearfix" ng-if="vm.contentType==112">
-                <li ng-repeat="item in vm.voiceList"  ng-class="vm.voiceSelected.id==item.voiceId ? 'active' : ''"
-                    ng-click="vm.addMultimedia(item)">
-                    <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
-                        <img style="width: 100%;height: 100%;cursor:pointer;" title="{{item.voiceName}}" src="../../../../images/audio_pic1.png" />
-                    </div>
-                    <p class="f14">{{item.voiceName}}</p>
-                </li>
-            </ul>
-            <ul class="classic_head_ul clearfix" ng-if="vm.contentType==114">
-                <!--{{vm.imgTextList}}-->
-                <li ng-repeat="item in vm.imgTextList"  ng-class="vm.imgTextSelected.id==item.graphicMessageId ? 'active' : ''"
-                    ng-click="vm.addMultimedia(item)">
-                    <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
-                        <img style="width: 100%;height: 100%;cursor:pointer;" title="{{item.graphicMessageTitle}}" ng-src="/img/{{item.pictureUrl}}" />
-                    </div>
-                    <p class="f14">{{item.graphicMessageTitle}}</p>
-                </li>
-            </ul>
-        </div>
-        <pagination ng-if="(vm.imgPaginationConf.totalItems) && (vm.imgPaginationConf.totalItems>0) && (vm.contentType==111)" conf="vm.imgPaginationConf"></pagination>
-        <pagination ng-if="(vm.voicePaginationConf.totalItems) && (vm.voicePaginationConf.totalItems>0) && (vm.contentType==112)" conf="vm.voicePaginationConf"></pagination>
-        <pagination ng-if="(vm.imgTextPaginationConf.totalItems) && (vm.imgTextPaginationConf.totalItems>0) && (vm.contentType==114)" conf="vm.imgTextPaginationConf"></pagination>
-        <!--<div class="row cl">-->
-            <!--<div class="text-c">-->
-                <!--<button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>-->
-                <!--<button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    </form>
+    <h3 class="media_header">选择图片</h3>
+        <!-- 图片 -->
+    <div class="media_content">
+        <ul class="media_list">
+            <li ng-repeat="item in newKnow.imageList"  ng-class="newKnow.imgSelected.id==item.id ? 'active' : ''"
+                ng-click="vm.addMultimedia(1018,item,closeThisDialog)">
+                <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
+                    <img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/api/material/picture/get/img/id?pictureId={{item.id}}">
+                </div>
+                <p class="f14">{{item.name}}</p>
+            </li>
+        </ul>
+    </div>
+        <ul class="classic_head_ul" ng-if="newKnow.type==1018">
+            <li ng-repeat="item in newKnow.imageList"  ng-class="newKnow.imgSelected.id==item.id ? 'active' : ''"
+                ng-click="vm.addMultimedia(1018,item,closeThisDialog)">
+                <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
+                    <img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/api/material/picture/get/img/id?pictureId={{item.id}}">
+                </div>
+                <p class="f14">{{item.name}}</p>
+            </li>
+        </ul>
+        <!-- 图文 -->
+        <ul class="classic_head_ul" ng-if="newKnow.type==1019">
+            <!--{{vm.imgTextList}}-->
+            <li ng-repeat="item in newKnow.imgTextList"  ng-class="newKnow.imgTextSelected.id == item.coverPicId ? 'active' : ''"
+                ng-click="vm.addMultimedia(1019,item,closeThisDialog)">
+                <p class="f14">{{item.title}}<span>{{item.modifyTime| date : 'yyyy-MM-dd ' }}</span></p>
+                <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
+                    <img style="width: 100%;height: 100%;cursor:pointer;" title="{{item.title}}" ng-src="/api/material/picture/get/img/id?pictureId={{item.coverPicId}}" />
+                </div>
+            </li>
+        </ul>
+        <pagination ng-if="(newKnow.imgPaginationConf.totalItems) && (newKnow.imgPaginationConf.totalItems>0) && (newKnow.type==1018)" conf="newKnow.imgPaginationConf"></pagination>
+        <pagination ng-if="(newKnow.imgTextPaginationConf.totalItems) && (newKnow.imgTextPaginationConf.totalItems>0) && (newKnow.type==1019)" conf="newKnow.imgTextPaginationConf"></pagination>
+
+    <!--</div>-->
 </div>
 <style>
-    .ipt-txt-box .ipt-txt{
-        border:1px solid gray
+    .selectImage .media_header{
+        width:100%;
+        line-height:20px;
+        text-align: left;
+        padding-left:6%;
+        border-bottom: 1px solid #8f949a;
+    }
+    .selectImage .media_header{
+        width:100%;
+        line-height:20px;
+        text-align: left;
+        padding-left:6%;
+        border-bottom: 1px solid #8f949a;
     }
 
 </style>

@@ -4,11 +4,20 @@
  * @Module :  要素知识编辑
  */
 module.exports = knowledgeManagementModule =>{
-    knowledgeManagementModule.controller('FactorNewController', [
+    knowledgeManagementModule.controller('FactorEditController', [
     '$scope', 'localStorageService' ,"KnowledgeService","$state" ,"ngDialog","$cookieStore","$timeout","$compile",
-    "knowledgeAddServer","$window","$stateParams","$interval","$rootScope","$filter",
+    "$window","$stateParams","$interval","$rootScope","$filter",
     ($scope,localStorageService,KnowledgeService, $state,ngDialog,$cookieStore,$timeout,$compile,
-     knowledgeAddServer,$window,$stateParams,$interval,$rootScope,$filter) =>{
+     $window,$stateParams,$interval,$rootScope,$filter) =>{
+        $scope.parameter = {
+            "title"	                : "",   //知识标题
+            "expDateStart"          : "",   //知识有效期开始时间
+            "expDateEnd"            : "",   //知识有效期结束时间
+            "origin"                : 120,  //数据来源
+            "classifyList"          : [],   //所属类目ID集合
+            "extensionQuestionList" : [""], //扩展问集合
+            "contentList"           : []    //内容集合
+        } ;
         $scope.vm = {
             ctrName : "list" ,
             apiQueryRelatedQuestion : "queryFactorRelatedQuestion" , // 相关问 api

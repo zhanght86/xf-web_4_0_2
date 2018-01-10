@@ -1,0 +1,40 @@
+<div class="pd-10 selectImage">
+    <h2 class="media_header">选择图片</h2>
+    <div class="media_content">
+        <ul class="media_list">
+            <li class="image_container" ng-repeat="item in newKnow.imageList" ng-class="newKnow.imgSelected.id==item.id ? 'active' : ''"
+                ng-click="vm.addMultimedia(1018,item,closeThisDialog)">
+                <img title="{{item.name}}"  ng-src="/api/material/picture/get/img/id?pictureId={{item.id}}">
+                <p class="image_title">{{item.name}}</p>
+            </li>
+        </ul>
+    </div>
+    <pagination ng-if="(newKnow.imgPaginationConf.totalItems) && (newKnow.imgPaginationConf.totalItems>0) && (newKnow.type==1018)" conf="newKnow.imgPaginationConf"></pagination>
+</div>
+<style>
+    .selectImage .media_header{
+        width:100%;
+        padding-bottom:10px;
+        padding-left:6%;
+        line-height:20px;
+        text-align: left;
+        border-bottom: 1px solid #8f949a;
+    }
+    .selectImage .media_list{
+        overflow: hidden;
+    }
+    .selectImage .media_list .image_container{
+        margin: 10px;;
+        float: left;
+    }
+    .selectImage .image_container img{
+        width:180px;
+        height:150px;
+        cursor:pointer;
+    }
+    .selectImage .image_container .image_title{
+        line-height:30px;
+        text-align: center;
+    }
+
+</style>

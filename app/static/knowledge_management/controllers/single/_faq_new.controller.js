@@ -15,7 +15,7 @@ module.exports = knowledgeManagementModule =>{
             "origin"                : 120,  //数据来源
             "classifyList"          : [],   //所属类目ID集合
             "extensionQuestionList" : [""], //扩展问集合
-            "contentList"           : []    //内容集合
+            "contents"           : []    //内容集合
         } ;
         $scope.newKnow = {
             "content"	: "",           //知识内容
@@ -24,13 +24,11 @@ module.exports = knowledgeManagementModule =>{
         $scope.vm = {
             ctrName : "faq" ,
             titleTip :  "",
+            localExtensionName : "cust_faq_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
 //时间
             isTimeTable : false,  //时间表隐藏
 //bot
             frames : [],      //业务框架
-            creatSelectBot : [] ,//点击bot类目数生成
-            botRoot : "",      //根节点
-            botFullPath : null ,
 //展示内容
             save : save ,   //保存
             scan :scan ,    //预览
@@ -48,31 +46,15 @@ module.exports = knowledgeManagementModule =>{
                                 // -1 为内容新增
                                 // index 为知识的编辑索引
             skipNewLine : skipNewLine ,
-//引导页
-            showTip : showTip,
-            hideTip : hideTip,
-            prevDiv : prevDiv,
-            nextDiv : nextDiv,
-            //引到页end
+            showFrame : showFrame //选择业务框架
         };
         let knowNewHtml = require("../../views/public_html/knowledge_increase.html") ;
-        function getFrame(id){
-            httpRequestPost("/api/ms/modeling/frame/listbyattribute",{
-                "frameCategoryId": id,
-                "frameEnableStatusId": 1,
-                "frameTypeId":10011,
-                "index": 0,
-                "pageSize":999999
-            },function(data){
-                //console.log(data);
-                if(data.status!=10005){
-                    if(data.data.length){
-                        $scope.vm.frames = $scope.vm.frames.concat(data.data);
-                        $scope.$apply();
-                    }
-                }
-            },function(){
-                //layer.msg("err or err")
+        let frameHtml   = require("../../views/public_html/frame.html") ;
+        function showFrame(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,frameHtml,"650px",function(){
+
+            },"",function(){
+
             });
         }
         // 通过frame 获取扩展问
@@ -81,11 +63,12 @@ module.exports = knowledgeManagementModule =>{
                 $scope.vm.isEditIndex = index ;
                 $scope.vm.newTitle = data.knowledgeContent;
                 $scope.vm.channelIdList = data.channelIdList;
-
-                $scope.vm.tip  = data.knowledgeBeRelatedOn; //在提示
-                $scope.vm.question = data.knowledgeRelatedQuestionOn;
-                $scope.vm.tail = data.knowledgeCommonOn;
                 $scope.vm.knowledgeRelevantContentList = data.knowledgeRelevantContentList;
+            }else{
+                $scope.vm.isEditIndex = "" ;
+                $scope.vm.newTitle = ""
+                $scope.vm.channelIdList = "";
+                $scope.vm.knowledgeRelevantContentList = [];
             }
             openContentConfirm(function(){saveAddNew(index)})
         }
@@ -97,7 +80,6 @@ module.exports = knowledgeManagementModule =>{
                 $scope.$parent.knowCtr.setKnowParamHasDialog($scope)
             });
         }
-
         var limitTimer ;
         function save(){
                 if (!checkSave()) {
@@ -110,7 +92,10 @@ module.exports = knowledgeManagementModule =>{
                     limitTimer = $timeout(function(){
                         $scope.vm.limitSave = false ;
                     },180000) ;
-                    KnowledgeService.storeFaqKnow.save($scope.parameter,function (response) {
+                    var params = angular.copy($scope.parameter);
+                    params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+                    params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
+                    KnowledgeService.storeFaqKnow.save(params,function (response) {
                         if (response.status == 200) {
                             if ($scope.vm.docmentation) {
                                 //文档知识分类状态回掉
@@ -119,8 +104,8 @@ module.exports = knowledgeManagementModule =>{
                                 // $state.go('knowledgeManagement.custOverview');
                             }
 
-                        }else if (data.status == 500) {
-                            layer.msg("知识保存失败") ;
+                        }else{
+                            layer.msg(response.info) ;
                             $timeout.cancel(limitTimer) ;
                             $scope.vm.limitSave = false ;
                         }
@@ -150,7 +135,7 @@ module.exports = knowledgeManagementModule =>{
                 }
             );
         };
-        function scan(api){
+        function scan(){
             if(!checkSave()){
                 return false
             }else{
@@ -174,17 +159,15 @@ module.exports = knowledgeManagementModule =>{
             }
         };
         function saveAddNew(cur){
-            $scope.parameter.contentList[cur] =  {
+            $scope.parameter.contents[cur] =  {
                 "channel":$scope.newKnow.channel,
                 "type": 110,
-                "content":$scope.newKnow.content
-            } ;
+                "content":$scope.newKnow.content,
+                "contentRelevantList" : []
+            }
         }
 //        提交 检验参数
         function checkSave(){
-            var params = $scope.parameter;
-            $scope.parameter.classifyList = [] ;
-            console.log(params) ;
             if($scope.vm.titleTip!=""){
                 layer.msg($scope.vm.titleTip);
                 return false;
@@ -195,7 +178,7 @@ module.exports = knowledgeManagementModule =>{
             }else if(!nullCheck($scope.parameter.classifyList)){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false
-            }else if(!nullCheck($scope.parameter.contentList)){
+            }else if(!nullCheck($scope.parameter.contents)){
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
             }else{
@@ -216,58 +199,13 @@ module.exports = knowledgeManagementModule =>{
         }
         function skipNewLine(e) {
             let len = $scope.parameter.extensionQuestionList.length ;
-            if(e!="blur"){
-                e = e || window.event ;
-                let keycode = e.keyCode|| e.which;
-                if(keycode==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                    $scope.parameter.extensionQuestionList.push("")
-                }
-            }else{
-                if(nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                    $scope.parameter.extensionQuestionList.push("")
-                }
+            e = e || window.event ;
+            if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
+                $scope.parameter.extensionQuestionList.push("") ;
             }
+            $timeout(function(){
+                $(e.target).parent().next().find("input").focus();
+            },)
         }
-
-        //引导页方法
-        function showTip(){
-            $('.shadow_div').show();
-            $('.step_div').show();
-            $('#step_one').show().siblings().hide();
-
-        }
-        function hideTip(){
-            $('.shadow_div').hide();
-            $('.step_div').hide();
-        }
-        //上一个
-        function prevDiv(e){
-            var  obj = e.srcElement ? e.srcElement : e.target;
-            if($(obj).parent().parent().parent().prev()){
-                $(obj).parent().parent().parent().hide();
-                $(obj).parent().parent().parent().prev().show();
-                $('html, body').animate({
-                    scrollTop: $(obj).parent().parent().parent().prev().offset().top-20
-                }, 500);
-            }else{
-                // $(obj).attr('disabled',true);
-                return;
-            }
-        }
-        //下一个
-        function nextDiv(e){
-            var  obj = e.srcElement ? e.srcElement : e.target;
-            if($(obj).parent().parent().parent().next()){
-                $(obj).parent().parent().parent().hide();
-                $(obj).parent().parent().parent().next().show();
-                $('html, body').animate({
-                    scrollTop: $(obj).parent().parent().parent().next().offset().top-20
-                }, 500);
-            }else{
-                //$(obj).attr('disabled',true);
-                return;
-            }
-        }
-        //引导页方法end
     }
 ])};

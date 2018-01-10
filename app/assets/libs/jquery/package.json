@@ -1,107 +1,49 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "jquery@1.9.1",
-        "scope": null,
-        "escapedName": "jquery",
-        "name": "jquery",
-        "rawSpec": "1.9.1",
-        "spec": "1.9.1",
-        "type": "version"
-      },
-      "D:\\work-5.0\\xf-web_5_0"
-    ]
-  ],
-  "_from": "jquery@1.9.1",
-  "_id": "jquery@1.9.1",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/jquery",
-  "_npmUser": {
-    "name": "timmywil",
-    "email": "timmywillisn@gmail.com"
-  },
-  "_npmVersion": "1.5.0-alpha-1",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "jquery@1.9.1",
-    "scope": null,
-    "escapedName": "jquery",
-    "name": "jquery",
-    "rawSpec": "1.9.1",
-    "spec": "1.9.1",
-    "type": "version"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "https://registry.npmjs.org/jquery/-/jquery-1.9.1.tgz",
-  "_shasum": "e4cd4835faaefbade535857613c0fc3ff2adaf34",
-  "_shrinkwrap": null,
-  "_spec": "jquery@1.9.1",
-  "_where": "D:\\work-5.0\\xf-web_5_0",
+  "name": "jquery",
+  "description": "jQuery: The Write Less, Do More, JavaScript Library (packaged for Node.JS)",
+  "version": "1.8.2",
+  "url": "http://jquery.com",
+  "homepage": "https://github.com/coolaj86/node-jquery",
   "author": {
-    "name": "jQuery Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery/blob/master/AUTHORS.txt"
+    "name": "James Morrin",
+    "email": "treasonx@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/coolaj86/node-jquery.git"
   },
   "bugs": {
-    "url": "http://bugs.jquery.com"
+    "url": "https://github.com/coolaj86/node-jquery/issues"
   },
-  "dependencies": {},
-  "description": "JavaScript library for DOM operations",
-  "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-compare-size": "~0.3.0",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-uglify": "~0.1.1",
-    "grunt-contrib-watch": "~0.1.1",
-    "grunt-git-authors": "~1.1.0",
-    "grunt-update-submodules": "~0.2.0",
-    "testswarm": "0.2.2"
-  },
-  "directories": {},
-  "dist": {
-    "shasum": "e4cd4835faaefbade535857613c0fc3ff2adaf34",
-    "tarball": "https://registry.npmjs.org/jquery/-/jquery-1.9.1.tgz"
-  },
-  "gitHead": "d71f6a53927ad02d728503385d15539b73d21ac8",
-  "homepage": "http://jquery.com",
-  "keywords": [],
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt"
+      "url": "https://github.com/coolaj86/node-jquery/blob/master/LICENSE-MIT"
     }
   ],
-  "maintainers": [
-    {
-      "name": "dmethvin",
-      "email": "dave.methvin@gmail.com"
-    },
-    {
-      "name": "scott.gonzalez",
-      "email": "scott.gonzalez@gmail.com"
-    },
-    {
-      "name": "m_gol",
-      "email": "m.goleb@gmail.com"
-    },
-    {
-      "name": "timmywil",
-      "email": "timmywillisn@gmail.com"
-    }
-  ],
-  "name": "jquery",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jquery/jquery.git"
+  "main": "lib/node-jquery",
+  "engines": {
+    "node": ">=0.6"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt test"
   },
-  "title": "jQuery",
-  "version": "1.9.1"
+  "dependencies": {
+    "jsdom": "~0.2.14",
+    "htmlparser": "1.7.6",
+    "xmlhttprequest": "~1.4.2",
+    "location": "0.0.1",
+    "navigator": "~1.0.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.8",
+    "nodeunit": "~0.7.4"
+  },
+  "keywords": [
+    "util",
+    "dom",
+    "jquery"
+  ],
+  "_from": "jquery@1.8.2",
+  "_resolved": "http://registry.npm.taobao.org/jquery/download/jquery-1.8.2.tgz"
 }
