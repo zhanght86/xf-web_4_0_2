@@ -33,7 +33,9 @@
                             <tr id="add-bar" ng-repeat="item in vm.extensionProblem">
                                 <td ng-if="item.order==0"></td>
                                 <td ng-if="item.order!=0"><input type="checkbox" ng-checked="vm.delIds.inArray($index)" ng-click="vm.delSelectSingle($index)"></td>
-                                <td  ng-if="item.order!=0" id="ele-name-tr" class="pr"><input type="text" style="width: 250px;"  ng-model="item.content" value="item.content" class="input_text ele-name" disabled="disabled"/><label id="ele-name-error" style="left: 148px;" class="l-error" ></label></td>
+
+                                <td  ng-if="item.order!=0" id="ele-name-tr" class="pr"><input type="text" style="width: 250px;"  ng-model="item.content" value="item.content" class="input_text ele-name-add" disabled="disabled"/><label id="ele-name-error" style="left: 148px;" class="l-error" ></label></td>
+                                
                                 <td  ng-if="item.order==0" id="ele-name-tr" class="pr"><input type="text" style="width: 250px;"  ng-model="item.content" value="item.content" class="input_text ele-name"/><label id="ele-name-error" style="left: 148px;" class="l-error"></label></td>
                                 <td>
                                      <select class="ele-type bd" ng-model="item.attributeType" style="width:175px;height:30px">
