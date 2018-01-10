@@ -35,7 +35,7 @@
                     <!--</td>-->
                     <td>
                         <a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="(item.content|strToJson).id">{{(item.content|strToJson).title}}</a>
-                        <span ng-if="!(item.content|strToJson).id">{{(item.content|strToJson).title}}</span>
+                        <span ng-if="!(item.content|strToJson).id">{{item.content}}</span>
                     </td>
                     <td>{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>
