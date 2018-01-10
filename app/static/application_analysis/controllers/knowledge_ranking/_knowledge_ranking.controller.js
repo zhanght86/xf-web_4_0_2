@@ -9,7 +9,6 @@ module.exports=applAnalysisModule => {
          ($scope,localStorageService,$state,$log,AppAnalysisServer, $timeout,$stateParams,ngDialog,$cookieStore,$filter,$window,$location)=>{
         //$state.go("admin.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-           // applicationId :APPLICATION_ID,
             getList : getList ,
             getKnowledgeList:getKnowledgeList,
             listData : null ,
@@ -19,13 +18,15 @@ module.exports=applAnalysisModule => {
             channelId  : 130 ,
            // dimensionId : null ,
             timeType : 1,
-            timeStart : null,
-            timeEnd : null,
+            timeStart : "",
+            timeEnd : "",
             timeList : [],
             total : null,
             talkDetail : null,
             talkDetailTotal : 0,
             userId : null,
+            sort:0,
+            sortList:sortList,
             exportKnowledgeExcel : exportKnowledgeExcel,  //导出知识点排名统计
             exportNoMatchExcel : exportNoMatchExcel, //未匹配问题导出
             contentType:0,
@@ -98,7 +99,7 @@ module.exports=applAnalysisModule => {
                 "endTime": $scope.vm.timeEnd,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
-                "sort":1,
+                "sort":$scope.vm.sort,
             },function(data){
                 console.log(data)
                 layer.close(i);
@@ -129,21 +130,26 @@ module.exports=applAnalysisModule => {
             getList($scope.vm.paginationConf1.currentPage,$scope.vm.paginationConf1.pageSize);
         }
 
+         /**
+         * 排序
+         */
+
+         function sortList(sort){
+            $scope.vm.sort=sort;
+            init();
+         }
+
         /**
          **知识点排名导出表格；
          */
         function exportKnowledgeExcel(){            
-           
-            if($scope.vm.timeStart==null){
-               $scope.vm.timeStart=""
+            if($scope.vm.channelId==130){
+               var channelId=""
+            }else{
+                var channelId=$scope.vm.channelId
             }
-            if($scope.vm.timeEnd==null){
-              $scope.vm.timeEnd=""
-            }
-            if($scope.vm.channelId=="null"){
-               $scope.vm.channelId=""
-            }
-             var urlParams ="?channelId="+ $scope.vm.channelId+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd
+             var urlParams ="?channelId="+ channelId+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd+"&sort="+$scope.vm.sort
+             console.log(urlParams)
              var url = "api/analysis/knowledge/ranking/export" + urlParams;
                 downLoadFiles(angular.element('.knowledgeRanking')[0] ,url);
         }
@@ -151,19 +157,14 @@ module.exports=applAnalysisModule => {
         *未匹配问题统计导出表格；
         **/
         function exportNoMatchExcel(){
-           
-
-             if($scope.vm.timeStart==null){
-               $scope.vm.timeStart=""
-            }
-            if($scope.vm.timeEnd==null){
-              $scope.vm.timeEnd=""
-            }
             if($scope.vm.channelId==130){
-               $scope.vm.channelId=""
+               var channelId=""
+            }else{
+                var channelId=$scope.vm.channelId
             }
-             var urlParams ="?channelId="+ $scope.vm.channelId+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd
-             var url = "api/analysis/knowledge/noMatch/export" + urlParams;
+             var urlParams ="?channelId="+channelId+"&requestTimeType="+$scope.vm.timeType +"&startTime="+ $scope.vm.timeStart +"&endTime="+ $scope.vm.timeEnd
+               console.log(urlParams)
+             var url = "/api/analysis/no/match/export" + urlParams;
                 downLoadFiles(angular.element('.noMatch')[0] ,url);
 
         }

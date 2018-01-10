@@ -47,7 +47,7 @@ module.exports = angular => {
     //--------------------------------------------------
     require('../filters/_float.filter')(functionalTestModule);
     require('../filters/_replace_code.filter')(functionalTestModule);
-
+    require('../filters/_channel.filter')(functionalTestModule);
 
 
 

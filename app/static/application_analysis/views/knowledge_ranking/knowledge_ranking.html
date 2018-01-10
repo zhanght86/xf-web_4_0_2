@@ -40,20 +40,17 @@
                         <div class="knowledgeRanking"  ng-show="vm.contentType == 0">
                             <!-- <div id="knowRanking" style="width: 900px;height:400px;margin:0 auto 20px;"></div> -->
                             <div class="clearfix mb-10">
-                                <p class="L bold"> 知识点排名统计TOP100</p>
-                                <!--<span>共有数据：<b >{{vm.listDataTotalK}}</b> 条</span>-->
-                                <!--<a href="javascript:;" class="R c_blue">导出表格</a>-->
                                 <button class="R btn1 btn_green" ng-click="vm.exportKnowledgeExcel()">导出表格</button>
                             </div>
                             <div>
                                 <table class="access_amount_table">
                                     <tr>
                                         <td class="bold" width="15%">排名
-                                       <!--  <span ng-click="vm.getList(0)" ng-if="vm.order==1"  style="display: inline-block; width: 20px; cursor: pointer; vertical-align: text-bottom;">↓</span></td>
-                                        <span ng-click="vm.getList(1)" ng-if="vm.order==0"  style="display: inline-block; width: 20px; cursor: pointer; vertical-align: text-bottom;">↑</span> -->
+                                        <span ng-click="vm.sortList(0)"ng-if="vm.listDataK.length!=0&&vm.sort==1"  style="display: inline-block; width: 20px; cursor: pointer; vertical-align: text-bottom;">↓</span>
+                                         <span ng-click="vm.sortList(1)" ng-if="vm.listDataK.length!=0&&vm.sort==0" style="display: inline-block; width: 20px; cursor: pointer; vertical-align: text-bottom;">↑</span> 
                                         </td>
                                         <td class="bold" width="35%">知识标题</td>
-                                        <td class="bold" width="35%">所属BOT</td>
+                                        <td class="bold" width="35%">所属BOT</td> 
                                         <td class="bold" width="15%">访问次数</td>
                                     </tr>
                                     <tr ng-repeat="item in vm.listDataK">

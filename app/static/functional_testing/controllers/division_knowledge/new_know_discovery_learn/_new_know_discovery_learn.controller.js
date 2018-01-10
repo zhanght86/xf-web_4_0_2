@@ -4,7 +4,7 @@
  */
 module.exports=functionalTestModule=>{
     functionalTestModule
-    .controller('NewKnowledgeDiscoveryLearnController',
+    .controller('NewKnowDiscoveryLearnController',
      ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore",
      ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore)=>{
         $scope.vm = {
@@ -155,8 +155,8 @@ module.exports=functionalTestModule=>{
             var question = null;
             if(nullCheck($scope.vm.question)==true){
                 question = "%"+$scope.vm.question+"%";
-            }            
-            AppAnalysisServer.searchNewKnowledgeDiscovery.save({
+            }
+            FunctionServer.searchNewKnowledgeDiscovery.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId,
                 "question": question,
@@ -185,7 +185,7 @@ module.exports=functionalTestModule=>{
         function searchByKnowledgeTitle(index){
             if(nullCheck($("#inputValue").val())==true){
 
-                AppAnalysisServer.searchByKnowledgeTitle2.save({
+                FunctionServer.searchByKnowledgeTitle2.save({
                     "applicationId": APPLICATION_ID,
                     "index": (index-1)*$scope.vm.paginationConf2.pageSize,
                     "pageSize": $scope.vm.paginationConf2.pageSize,
@@ -221,7 +221,7 @@ module.exports=functionalTestModule=>{
             if(nullCheck($scope.vm.question1)==true){
                 question = "%"+$scope.vm.question1+"%";
             }
-            AppAnalysisServer.listNoReview2.save({
+            FunctionServer.listNoReview2.save({
                 "applicationId" : APPLICATION_ID,
                 "channelId": $scope.vm.channelId1,
                 "question": question,
@@ -260,7 +260,7 @@ module.exports=functionalTestModule=>{
                 layer.close(index);
                 var request = new Object();
                 request.ids=$scope.vm.unstudyArr;
-                AppAnalysisServer.ignore2.save(request,function(data){
+                FunctionServer.ignore2.save(request,function(data){
                     if(data!=null){
                         searchNewKnowledgeDiscovery($scope.vm.paginationConf.currentPage);
                         layer.msg('已忽略',{time:2000});
@@ -306,7 +306,7 @@ module.exports=functionalTestModule=>{
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            AppAnalysisServer.assembleLearnData2.save({
+            FunctionServer.assembleLearnData2.save({
                 "qalog_id" : requestId,
                 "knowledge_id":id_array.pop(),
                 "knowledge_type":knowledgeType,
@@ -338,8 +338,8 @@ module.exports=functionalTestModule=>{
                 return;
             }
             layer.confirm('确认要'+msg+'吗？', function (index) {
-                layer.close(index);                
-                AppAnalysisServer.review2.save({
+                layer.close(index);
+                FunctionServer.review2.save({
                     "ids" : $scope.vm.studyArr,
                     "pass_status_id": pass,
                     "userId": USER_ID,
@@ -391,7 +391,7 @@ module.exports=functionalTestModule=>{
          * @param requestId
          */
         function content(requestId){
-            AppAnalysisServer.content.save({
+            FunctionServer.content.save({
                 "qalogId" : requestId,
                 "index": 0,
                 "pageSize": 32767

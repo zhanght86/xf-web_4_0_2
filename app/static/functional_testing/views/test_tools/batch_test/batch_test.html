@@ -50,7 +50,7 @@
                         <tr ng-repeat="v in vm.listData">
                             <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.id)"  ng-click="vm.selectSingle(v.id)"></td>
                             <td><span class="c-primary" >{{v.docName}}</span></td>
-                            <td>{{v.channelId}}</td>
+                            <td>{{v.channelId|channelFilter}}</td>
                             <td ng-if="v.status==21007">待测试</td>
                             <td ng-if="v.status==21008">测试中</td>
                             <td ng-if="v.status==21009">已完成</td>
@@ -60,11 +60,11 @@
                             <td>{{v.userName}}</td>
                             <td>{{v.remark}}</td>
                             <td>
-                                <a href="javascript:;" class="c-green mr-5" ng-if="v.status==21009">下载</a>
-                                <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks(v.id)">备注</a>
+                                <a href="/api/material/document/get/document/id?id={{v.docId}}" target="_blank" class="c-green mr-5" ng-if="v.status==21009" >下载</a>
+                                <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks(v.id)" ng-if="v.status==21009||v.status==21007">备注</a>
                                 <a class="c-blue mr-5" ng-click="vm.startUp(v.id)" ng-if="v.status==21007">测试</a>
-                                <a class="c-blue mr-5" ng-if="v.status==21009">重测</a>
-                                <a class="c-red" ng-click="vm.deleteQuestion([v.id])">删除</a>
+                                <a class="c-blue mr-5" ng-click="vm.startUp(v.id)" ng-if="v.status==21009">重测</a>
+                                <a class="c-red" ng-click="vm.deleteQuestion([v.id])" ng-if="v.status==21009||v.status==21007">删除</a>
                             </td>
                         </tr>
                         <!--<tr >-->

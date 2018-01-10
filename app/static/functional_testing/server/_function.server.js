@@ -59,19 +59,19 @@ class FunctionServer{
                                                     API_MS = "/api/ms",
                                  ********************************/
         //表格列表 未学习
-        this.searchReinforcement = $resource(API_ANALYSIS+'/knowledgeLearn/reinforcementLearnUnlearn',{},{});
+        this.searchReinforcement = $resource(API_ANALYSIS+'/knowledge/learning/intelligent/unlearn/get',{},{});
         //表格列表 已学习
-        this.listNoReview = $resource(API_ANALYSIS+'/knowledgeLearn/listNoReview',{},{});
-        //表格列表 学习弹窗
-        this.searchByKnowledgeTitle = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
-        //忽略
-        this.ignore = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
+        this.listNoReview = $resource(API_ANALYSIS+'/knowledge/learning/intelligent/learned/get',{},{});
         //获取推荐知识
-        this.getRecommend = $resource(API_ANALYSIS+'/userSession/getOneRecommend',{},{});
-        //组装知识学习数据
-        this.assembleLearnData = $resource(API_ANALYSIS+'/knowledgeLearn/learnByContent',{},{});
-        //通过 不通过
-        this.review = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
+        this.getRecommend = $resource(API_ANALYSIS+'/knowledge/learning/recommend/question/get/:id',{},{});
+        //组装知识学习数据(保存)
+        this.assembleLearnData = $resource(API_ANALYSIS+'/knowledge/learning/associate',{},{});
+        //批量忽略
+        this.batchIgnore = $resource(API_ANALYSIS+'/knowledge/learning/batch/delete',{},{});
+        //表格列表 学习弹窗
+        this.searchByKnowledgeTitle = $resource(API_ANALYSIS+'/knowledge/learning/knowledge/get',{},{});
+        //审核
+        this.review = $resource(API_ANALYSIS+'/knowledge/learning/batch/review',{},{});
 
                                 /******************************
                                        *新知识发现*    API_ANALYSIS = "/api/analysis" ;    API_MS = "/api/ms",

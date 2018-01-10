@@ -16,8 +16,12 @@
             </thead>
             <tbody>
                 <tr role="row" class="odd" ng-repeat="item in vm.knowledgeList">
-                    <td ng-if="$index==0"><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}" checked="checked"></td>
-                    <td ng-if="$index!=0"><input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}"></td>
+                    <td ng-if="$index==0">
+                        <input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}" checked="checked">
+                    </td>
+                    <td ng-if="$index!=0">
+                        <input type="radio" name="sid2" value="{{item.knowledgeId}}" knowledgeTitle="{{item.knowledgeTitle}}" knowledgeType="{{item.knowledgeType}}">
+                    </td>
                     <td>{{item.knowledgeTitle}}</td>
                 </tr>
             </tbody>
@@ -26,7 +30,7 @@
     <pagination ng-if="vm.paginationConf2.totalItems && vm.paginationConf2.totalItems>0" conf="vm.paginationConf2"></pagination>
     <div class="framework mb-10 pt-10">
         <span class="framework_s text-r"></span>
-        <div class="">
+        <div class="text-c">
             <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
             <input type="button" class="btn1 btn_green" ng-click="closeThisDialog(0)" value="返回"/>
         </div>

@@ -4,24 +4,15 @@
 
 module.exports = module=>{
     module
-    // .filter("contentShow",function(){
-    //     return function(text){
-    //         var i;
-    //         i=text.indexOf(",");
-    //         if(i!=-1){
-    //             return  text.substring(0,i);
-    //         }else{
-    //             return  text;
-    //         }
-    //
-    //     }
-    // })
     .filter("strToJson",function(){
         return function(val){
-            if(val){
-                var json = JSON.parse(val);
+            var result;
+            if(val.indexOf('{')!=-1){
+                result = JSON.parse(val);
+            }else{
+                result=val;
             }
-             return json;
+             return result;
         }
     })
 
