@@ -797,35 +797,24 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
-            // if(dialog){
-            //     $timeout(function () {
-            //         $(".ele-name").blur(function(){
-            //             if(lengthCheck($(".ele-name").val(),0,50)==false){
-            //                 $("#ele-name-error").html('要素名称不能为空或超过长度限制50');
-            //                 $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999");
-            //                 return;
-            //             }else if(isHtmlLabel($(".ele-name").val())){
-            //                 $("#ele-name-error").html($scope.vm.notContainHtmlLabel);
-            //                 $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index;");
-            //                 return;
-            //             }else{
-            //                 $("#ele-name-error").html('');
-            //                 $("#ele-name-error").attr("style","display:none;");
-            //             }
-            //             $.each($("#add-item").find("tr"),function(index,value){
-            //                 if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
-            //                     $("#ele-name-error").html('要素名称不能与已有要素名称重复');
-            //                     $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-            //                     return true;
-            //                 }else{
-            //                     $("#ele-name-error").html('');
-            //                     $("#ele-name-error").attr("style","display:none;");
-            //                 }
-            //             });
-            //         });
+            if(dialog){
+                $timeout(function () {
+                    $(".ele-name").blur(function(){
+                        alert(1)
+                        $.each($("#add-item").find("tr"),function(index,value){
+                            if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
+                               layer.msg('要素名称不能与已有要素名称重复');
+                                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                                return true;
+                            }else{
+                                $("#ele-name-error").html('');
+                                $("#ele-name-error").attr("style","display:none;");
+                            }
+                        });
+                    });
                 
-            //     }, 100);
-            // }
+                }, 100);
+            }
         }
         //元素类型验证
         function elementValidate(){
