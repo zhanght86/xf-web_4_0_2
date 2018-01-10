@@ -48,14 +48,14 @@ module.exports = businessModelingModule =>{
             suggestionValue:"",
             suggestionData:"",
             categoryRootPid:"",
-            winHeight:0
+            winHeight:0,
+            dataSplit:{}
         };
 
        
 
         var categoryApplicationId = APPLICATION_ID;
         var categoryModifierId = USER_ID;
-        //var categorySceneId = SCENE_ID;
         autoHeight();
         function autoHeight(){
             var $win = $(window);
@@ -112,6 +112,7 @@ module.exports = businessModelingModule =>{
         	console.log(suggestion)
             var currentNodeId = suggestion.data;
             var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
+            console.log(firstNode.attr("data-option"))
             if($(firstNode).css("backgroundPosition")=="0% 0%"){
                 appendTree(firstNode);
             }else if($(firstNode).parent().parent().next()==null){
@@ -133,9 +134,10 @@ module.exports = businessModelingModule =>{
         }
         function recursion(suggestion,node){
             var list = $(".aside-navs").find("li");
-            console.log(list.length)
             var flag = false;
             $.each(list,function(index,value){
+                console.log($(node).attr("data-option"))
+                console.log($(value).attr("data-option"))
                 if($(value).attr("data-option")==$(node).attr("data-option")){
                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
@@ -162,7 +164,7 @@ module.exports = businessModelingModule =>{
                             return false;
                         }
                         //递归
-                        recursion(suggestion,currNode);
+                      //  recursion(suggestion,currNode);
                     }
                 }
             });
@@ -278,8 +280,8 @@ module.exports = businessModelingModule =>{
              $scope.vm.categoryName=$(this).parent().attr("bot-name");
              $scope.vm.categoryTypeId=$(this).parent().attr("bot-type");
              $scope.vm.categoryDescribe=$(this).parent().attr("depict-option");
-             $scope.vm.categoryAttributeName = $(this).attr("node-option");
-
+             $scope.vm.categoryAttributeName = $(this).parent().attr("node-option");
+             
            botInfoToCategoryAttribute();
             editBot($(this).parent().attr("bot-pid"),$(this).parent().attr("bot-id"));
         });
@@ -293,10 +295,10 @@ module.exports = businessModelingModule =>{
                 var relation="node";
             }else if($scope.vm.categoryPid=="root"){
                 var editpid=$scope.vm.categoryPid;
-                var relation= ($scope.vm.categoryAttributeName=="node") ? "node":"edge"
+                var relation= $scope.vm.categoryAttributeName
             }else{
                 var editpid= $scope.vm.categoryPid;
-                var relation= ($scope.vm.categoryAttributeName=="node") ? "node":"edge"
+                var relation= $scope.vm.categoryAttributeName
             }
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/bot/edit_category.html",
@@ -337,7 +339,13 @@ module.exports = businessModelingModule =>{
                             "relation":relation,
                         },function(data){
                              if(data.status==200){
-                             	layer.msg(data.info)
+                             	layer.msg(data.info);
+                                $scope.vm.dataSplit.name=$("#categoryName").val().trim();
+                                $scope.vm.dataSplit.pid=editpid;
+                                $scope.vm.dataSplit.relation=relation;
+                                $scope.vm.dataSplit.id=data.data;
+                                $scope.vm.dataSplit.type=$("#categoryTypeId").val();
+                                console.log($scope.vm.dataSplit)
                                //重新加载
                                 reloadBot(data,0);
                              }else if(data.status==500){
@@ -436,7 +444,8 @@ module.exports = businessModelingModule =>{
         //类目新增
         function addBot(){
             //数据校验
-            if($scope.vm.botSelectValue==""){
+            if($scope.vm.categoryPid==""){
+                layer.msg("请选择类目")
                 return;
             }
             if(lengthCheck($("#category-name").val(),0,50)==false){
@@ -480,10 +489,15 @@ module.exports = businessModelingModule =>{
 					  "type": $("#category-type").val(),
 					  "depict":$("#category-describe").val(),
 	            },function(data){
-	            	 console.log(data)
 	            	 if(data.status==200){
 						  $("#category-name").val('');
-		                    reloadBot(data,0);
+                          $scope.vm.dataSplit.name=$("#categoryName").val();
+                            $scope.vm.dataSplit.pid=editpid;
+                            $scope.vm.dataSplit.relation=relation;
+                            $scope.vm.dataSplit.id=data.data;
+                            $scope.vm.dataSplit.type=$("#categoryTypeId").val();
+                            console.log($scope.vm.dataSplit)
+		                   // reloadBot(data,0);
 		                  $("#category-describe").val('');
 		                  $scope.vm.categoryRootPid=data.data;
 	            	 }else if(data.status==500){
@@ -505,7 +519,7 @@ module.exports = businessModelingModule =>{
         function repeatCheck(selector,type){
             var flag = false;
             var request = new Object();
-           // alert(type)
+          
             console.log($scope.vm.categoryId)
             if(type==1){
                 request.id=$scope.vm.categoryId;
@@ -515,16 +529,25 @@ module.exports = businessModelingModule =>{
                 request.pid=$scope.vm.categoryId;
                 request.name=$("#category-name").val().trim();
             }
-           BusinessModelingServer.classifyNameCheck.get(request,function(data){
-               if(responseWithoutView(data)==false){
-                if(data.status==500){
-                	layer.msg(data.info)
-                }
-	            }else{
-	               	flag=true;
-	            }
-           })
-            return flag;
+            var flag;
+            $.ajax("/api/ms/classify/check/name",{
+                dataType: 'json', //服务器返回json格式数据
+                type: "GET", //HTTP请求类型
+                async:false,
+                cache:false,
+                data: request, 
+                success:function(data) {
+                    if(data.status==200){
+                       flag=true;
+                    }else if(data.status==500){
+                       layer.msg(data.info)
+                       flag=false;
+                    }
+                },error:function(data) {
+                    console.log(data)
+                },
+            })
+             return flag
         }
         //局部加载 type:0->添加 1:删除 2:修改
         function reloadBot(data,type){

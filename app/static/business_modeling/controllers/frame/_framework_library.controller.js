@@ -443,14 +443,14 @@ module.exports = businessModelingModule =>{
                 $scope.vm.paginationConf.currentPage = 1 ;
                 $location.search("currentPage",1 ) ;
             }
-            let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+           // let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             httpRequestPost("/api/ms/frame/get/param",{
                 "title": $scope.vm.title,
                 "classifyId":$scope.vm.classifyId,
                 "index": (index-1)*$scope.vm.paginationConf.pageSize,
                 "pageSize": $scope.vm.paginationConf.pageSize,
             },function(data){
-                 layer.close(i);
+                // layer.close(i);
                if(data.status==200){
                  $scope.vm.listData = data.data.data;
                  $scope.vm.paginationConf.totalItems = data.data.total;
@@ -460,7 +460,7 @@ module.exports = businessModelingModule =>{
                }
                 $scope.$apply();
             },function(err){
-                layer.close(i);
+               // layer.close(i);
             });
         }
 
@@ -555,14 +555,15 @@ module.exports = businessModelingModule =>{
             }
             layer.confirm('确认要删除吗？', function (index) {
                 layer.close(index);
-                httpRequestPost("/api/ms/frame/delete/batch/delete",{
+                httpRequestPost("/api/ms/frame/batch/delete",{
                     "frameIds":$scope.vm.ids,
                 },function(data){
                     if(data.status==200){
-                         loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize); 
-                         layer.msg(data.info,{time:2000})
+                         loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                         initBatchTest();  //清空选项 
+                         layer.msg(data.data.statusName,{time:2000})
                     }else{
-                         layer.msg(data.info,{time:2000})
+                         layer.msg(data.data.statusName,{time:2000})
                     }
                 });
             });
@@ -575,6 +576,8 @@ module.exports = businessModelingModule =>{
         *
         */
         function addFrame(){
+            //清空类目
+            $scope.vm.frameTitle="";
             if($scope.vm.classifyId==""){
                 layer.msg("请选择类目");
                 return;
@@ -683,10 +686,6 @@ module.exports = businessModelingModule =>{
             }
             if(isHtmlLabel($scope.vm.frameTitle)){
                 layer.msg($scope.vm.notContainHtmlLabel);
-                return false;
-            }
-            if(frameTitleRepeatCheck("#faqFrameAddErrorObj")==false){
-                $("#frameAddErrorObj").html("标题重复"); 
                 return false;
             }
             //扩展问题校验
