@@ -66,17 +66,12 @@ class FunctionServer{
         this.getRecommend = $resource(API_ANALYSIS+'/knowledge/learning/recommend/question/get/:id',{},{});
         //组装知识学习数据(保存)
         this.assembleLearnData = $resource(API_ANALYSIS+'/knowledge/learning/associate',{},{});
-
-
-
-
+        //批量忽略
+        this.batchIgnore = $resource(API_ANALYSIS+'/knowledge/learning/batch/delete',{},{});
         //表格列表 学习弹窗
-        this.searchByKnowledgeTitle = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
-        //忽略
-        this.ignore = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
-
-        //通过 不通过
-        this.review = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
+        this.searchByKnowledgeTitle = $resource(API_ANALYSIS+'/knowledge/learning/knowledge/get',{},{});
+        //审核
+        this.review = $resource(API_ANALYSIS+'/knowledge/learning/batch/review',{},{});
 
                                 /******************************
                                        *新知识发现*    API_ANALYSIS = "/api/analysis" ;    API_MS = "/api/ms",
