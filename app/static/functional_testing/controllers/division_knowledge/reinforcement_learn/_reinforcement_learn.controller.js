@@ -301,20 +301,6 @@ module.exports=functionalTestModule =>{
              }
          }
 
-         /**
-         *  list 分页变化加载数据   弹窗分页
-         **/
-        //
-        // $scope.$watch('vm.channelId1', function(){
-        //     $scope.vm.listData1 = null;
-        //     // $scope.vm.paginationConf1 = {
-        //     //     currentPage: 0,//当前页
-        //     //     totalItems: 0, //总条数
-        //     //     pageSize: 1,//第页条目数
-        //     //     pagesLength: 8//分页框数量
-        //     // };
-        // });
-
         /**
          *  忽略
          **/
