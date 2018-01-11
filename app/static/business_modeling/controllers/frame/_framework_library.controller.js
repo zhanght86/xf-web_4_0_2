@@ -255,7 +255,7 @@ module.exports = businessModelingModule =>{
             var list = $(".aside-navs").find("li");
             var flag = false;
             $.each(list,function(index,value){
-                if($(value).attr("data-option")==$(node).attr("data-option")){
+               // if($(value).attr("data-option")==$(node).attr("data-option")){
                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
                         clearColor();
@@ -279,9 +279,45 @@ module.exports = businessModelingModule =>{
                             appendTree(currNode);
                         }
                         //递归
-                        recursionForFrame(suggestion,currNode);
+                        //recursionForFrame(suggestion,currNode);
                     }
-                }
+              //  }
+            });
+            recursionForFrameAgain(suggestion,node);
+        }
+
+        function recursionForFrameAgain(suggestion,node){
+            var list = $(".aside-navs").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+               // if($(value).attr("data-option")==$(node).attr("data-option")){
+                    var currNode = $(value).find("i").filter(":eq(0)");
+                    if($(currNode).attr("data-option")==suggestion.data){
+                        clearColor();
+                        $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                        $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                        $scope.vm.classifyId = $(currNode).next().attr("data-option");
+                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                        $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        loadFrameLibrary(1,0);
+                        $scope.$apply();
+                        flag = true;
+                        //跳出
+                        return false;
+                    }else{
+                        if(flag==true){
+                            return false;
+                        }
+                        //展开
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendTree(currNode);
+                        }
+                        //递归
+                        //recursionForFrame(suggestion,currNode);
+                    }
+              //  }
             });
         }
         //加载业务树
@@ -295,7 +331,7 @@ module.exports = businessModelingModule =>{
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].id+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
                         '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
                         // '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
@@ -363,32 +399,38 @@ module.exports = businessModelingModule =>{
             $scope.vm.elementIdArray=[];
         }
         //加载子树
-        function appendTree(obj){
+         function appendTree(obj){
             var id = $(obj).attr("data-option");
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-               $http.get('api/ms/classify/get/children/'+""+id+"").success(function(data,status,headers,congfig){
-                    console.log(data)
-                    if(data.data){
-                        var html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
+                $.ajax("api/ms/classify/get/children/"+id+"",{
+                dataType: 'json', //服务器返回json格式数据
+                type: "GET", //HTTP请求类型
+                async:false,
+                cache:false,
+                success:function(data) {
+                    if(data.status==200){
+                        if(data.data){
+                            var html = '<ul class="menus">';
+                            for(var i=0;i<data.data.length;i++){
                              html+= '<li data-option="'+data.data[i].id+'">' +
-                        '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
-                        '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
-                        // '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
-                        '</a>' +
-                        '</div>' +
-                        '</li>';
+                                '<div class="slide-a">'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
+                                '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                                // '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>';
                         }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown();
+                            html+="</ul>";
+                            $(html).appendTo((that.parent().parent().parent()));
+                            that.parent().parent().next().slideDown();
+                        }
                     }
-                },function(err){
-                });
+                },
+            })
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
                     that.css("backgroundPosition","0% 100%");
@@ -419,10 +461,12 @@ module.exports = businessModelingModule =>{
                 return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
             }
             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
-            switch (type){
+           switch (type){
+                case 160:
+                    style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';break;
                 case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 160:
+                case 163:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
                 case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
@@ -800,7 +844,7 @@ module.exports = businessModelingModule =>{
             if(dialog){
                 $timeout(function () {
                     $(".ele-name").blur(function(){
-                        alert(1)
+                         alert(1)
                         $.each($("#add-item").find("tr"),function(index,value){
                             if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
                                layer.msg('要素名称不能与已有要素名称重复');
@@ -833,8 +877,9 @@ module.exports = businessModelingModule =>{
                 }) 
                }
             } 
-            return true;
             console.log($scope.vm.contentList)
+            return true;
+            
         }
         
         //元素类型添加请求
