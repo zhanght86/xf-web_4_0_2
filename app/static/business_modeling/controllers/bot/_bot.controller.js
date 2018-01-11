@@ -76,6 +76,7 @@ module.exports = businessModelingModule =>{
             paramName:'name',
             dataType:'json',
             transformResult:function(data){
+                console.log(data)
                 var result = new Object();
                 var array = [];
                 if(data.data){
@@ -109,10 +110,8 @@ module.exports = businessModelingModule =>{
         },2000);
         //搜寻节点
         function searchNode(suggestion){
-        	console.log(suggestion)
             var currentNodeId = suggestion.data;
             var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
-            console.log(firstNode.attr("data-option"))
             if($(firstNode).css("backgroundPosition")=="0% 0%"){
                 appendTree(firstNode);
             }else if($(firstNode).parent().parent().next()==null){
@@ -130,17 +129,17 @@ module.exports = businessModelingModule =>{
                 $scope.$apply();
             }else{
                 recursion(suggestion,firstNode);
+               
             }
         }
         function recursion(suggestion,node){
             var list = $(".aside-navs").find("li");
             var flag = false;
             $.each(list,function(index,value){
-                console.log($(node).attr("data-option"))
-                console.log($(value).attr("data-option"))
-                if($(value).attr("data-option")==$(node).attr("data-option")){
-                    var currNode = $(value).find("i").filter(":eq(0)");
+               // if($(value).attr("data-option")==$(node).attr("data-option")){ 
+                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
+                       // alert("============")
                         clearColor();
                         $scope.vm.knowledgeBotVal = $(currNode).next().html();
                         $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
@@ -157,6 +156,7 @@ module.exports = businessModelingModule =>{
                         //展开
                         if($(currNode).css("backgroundPosition")=="0% 0%"){
                             appendTree(currNode);
+                            alert(2)
                         }else if($(currNode).parent().parent().next()==null){
                             appendTree(currNode);
                         }
@@ -164,10 +164,12 @@ module.exports = businessModelingModule =>{
                             return false;
                         }
                         //递归
-                      //  recursion(suggestion,currNode);
+                       //recursion(suggestion,node); 
                     }
-                }
-            });
+               // }
+           });
+          // recursion(suggestion,node);
+           
         }
         //定位
         function location(suggestion){
@@ -227,9 +229,9 @@ module.exports = businessModelingModule =>{
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].id+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
                         '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].depict+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
                         '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
@@ -247,7 +249,7 @@ module.exports = businessModelingModule =>{
             });
         }
         $(".aside-navs").on("click","span",function(){
-
+            
             clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
@@ -255,7 +257,7 @@ module.exports = businessModelingModule =>{
             $scope.vm.categoryAttributeName = $(this).attr("node-option");
             $scope.vm.categoryId=$(this).attr("id-option");
             $scope.vm.categoryPid=$(this).attr("pid-option")
-            $scope.vm.categoryDescribe=$(this).attr("depict-option")
+            $scope.vm.categoryDescribe=$(this).attr("depict-option");
             if($scope.vm.categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryAttributeName=="edge"){
@@ -419,9 +421,9 @@ module.exports = businessModelingModule =>{
                         for(var i=0;i<data.data.length;i++){
                          html+= '<li data-option="'+data.data[i].id+'">' +
                             '<div class="slide-a">'+
-                            '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
+                            '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
                             '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                            '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].depict+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                            '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
                             '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                             '</a>' +
                             '</div>' +
@@ -583,9 +585,9 @@ module.exports = businessModelingModule =>{
                             count++;
                               var html = '<li data-option="'+data.pid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.categoryDescribe)+'>'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.name)+'>'+
                                 '<i '+styleSwitch(data.type,data.leaf,data.relation)+' data-option="'+data.id+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.relation)+' node-option="'+data.relation+'" type-option="'+data.type+'" data-option="'+data.id+'" title="'+data.name+'">'+subStringWithTail(data.name,10,"...")+'</span>'+
+                                '<span '+nodeStyleSwitch(data.relation)+' node-option="'+data.relation+'"  id-option="'+data.id+'" type-option="'+data.type+'" data-option="'+data.id+'" title="'+data.name+'">'+subStringWithTail(data.name,10,"...")+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data)+' node-option="'+data.relation+'" bot-name="'+data.name+'" bot-type="'+data.type+'" bot-pid="'+data.pid+'" depict-option="'+data.depict+'"  bot-id="'+data.id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -598,9 +600,9 @@ module.exports = businessModelingModule =>{
                             count++;
                             var html = '<li data-option="'+data.pid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.categoryDescribe)+'>'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.name)+'>'+
                                 '<i '+styleSwitch(data.type,data.leaf,data.relation)+' data-option="'+data.id+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.relation)+' node-option="'+data.relation+'" type-option="'+data.type+'" data-option="'+data.id+'" title="'+data.name+'">'+subStringWithTail(data.name,10,"...")+'</span>'+
+                                '<span '+nodeStyleSwitch(data.relation)+' node-option="'+data.relation+'" id-option="'+data.id+'" type-option="'+data.type+'" data-option="'+data.id+'" title="'+data.name+'">'+subStringWithTail(data.name,10,"...")+'</span>'+
                                 '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data)+' node-option="'+data.relation+'" bot-name="'+data.name+'" bot-type="'+data.type+'" bot-pid="'+data.pid+'" depict-option="'+data.depict+'"  bot-id="'+data.id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
@@ -613,7 +615,7 @@ module.exports = businessModelingModule =>{
                             }else if(data.relation=="edge"){
                                 nodeType = "node";
                             }
-                            var sty = styleSwitch(data.id,1,nodeType);
+                            var sty = styleSwitch(data.type,1,nodeType);
                             sty = sty.substring(7,sty.length-1);
                             if($(value).parent().parent().next()!=null){
                                 var len = $(value).parent().parent().next().find("li").length;
