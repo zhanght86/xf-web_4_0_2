@@ -156,7 +156,7 @@ module.exports = businessModelingModule =>{
                         //展开
                         if($(currNode).css("backgroundPosition")=="0% 0%"){
                             appendTree(currNode);
-                            alert(2)
+                           // alert(2)
                         }else if($(currNode).parent().parent().next()==null){
                             appendTree(currNode);
                         }
