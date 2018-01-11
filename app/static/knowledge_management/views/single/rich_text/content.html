@@ -20,26 +20,26 @@
     </div>
     <!-- pic-->
     <div name="Teletext" class="miles-textArea-container" ng-show="newKnow.type==1018"
-         style="width: 100%;overflow-y: auto;">
-        <img name="title"  ng-click="vm.selectMultimedia(1018)" ng-src="{{newKnow.imgSelected?'/api/material/picture/get/img/id?pictureId='+newKnow.imgSelected.url:'/assets/images/photo_add3.png'}}"
+         style="width: 100%;min-height: 220px;">
+        <img name="title"  ng-click="vm.selectMultimedia(1018)" ng-src="{{newKnow.imgSelected?vm.imageApi+newKnow.imgSelected.id:'/assets/images/photo_add3.png'}}"
              alt="" style="width: 188px;height: 150px;"/>
         <p ng-if="newKnow.imgSelected" style="margin-top: 10px;">已添加：{{newKnow.imgSelected.name}}</p>
     </div>
     <!-- pic-text-->
     <div name="imgText" class="miles-textArea-container" ng-show="newKnow.type==1019"
-         style="width: 100%;overflow-y: auto;">
-        <img name="title" ng-click="vm.selectMultimedia(1019)" ng-src="{{newKnow.imgTextSelected?'/api/material/picture/get/img/id?pictureId='+newKnow.imgTextSelected.url:'/assets/images/photo_add3.png'}}"
+         style="width: 100%;min-height: 220px;">
+        <img name="title" ng-click="vm.selectMultimedia(1019)" ng-src="{{newKnow.imgTextSelected?vm.imageApi+newKnow.imgTextSelected.url:'/assets/images/photo_add3.png'}}"
              alt="" style="width: 188px;height: 150px;"/>
         <p ng-if="newKnow.imgTextSelected" style="margin-top: 10px;">已添加：{{newKnow.imgTextSelected.name}}</p>
     </div>
     <!--voice-->
     <div name="voice" class="miles-textArea-container" ng-show="newKnow.type==1020"
-         style="width: 100%;overflow-y: auto;">
-        <img name="title" ng-if="newKnow.voiceSelected" ng-click="vm.selectMultimedia(1020)" ng-src="{{newKnow.voiceSelected?'/assets/images/audio_pic1.png':'/assets/images/photo_add3.png'}}" alt=""
+         style="width:100%;min-height: 220px;">
+        <img name="title" ng-click="vm.selectMultimedia(1020)" ng-src="{{newKnow.voiceSelected?'/assets/images/audio_pic1.png':'/assets/images/photo_add3.png'}}" alt=""
              style="width: 150px;height: 150px;cursor:pointer;"/>
-
         <p ng-if="newKnow.voiceSelected" style="margin-top: 10px;">已添加：{{newKnow.voiceSelected.name}}</p>
     </div>
+    <br>
     <div know-content-configuration="queryRichTextRelatedQuestion" template-type="false"></div>
     <div class="tc mb-10">
         <input  value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="vm.newKnowCheck(closeThisDialog)" >

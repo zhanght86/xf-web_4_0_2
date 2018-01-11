@@ -34,7 +34,7 @@ module.exports = knowledgeManagementModule =>{
             listTableType       : "",
             data                : "",
             column              : "" ,
-            limitSave           : false ,//限制多次打标
+            saveLimitTimer      : true ,//限制多次打标
             enterEvent          : enterEvent,  //鍵盤事件
             editColumn          : editColumn ,// 修改新增列
             tableRemove         : tableRemove, //删除行或列
@@ -50,6 +50,7 @@ module.exports = knowledgeManagementModule =>{
             "ask"  : ""   //反问
         };
         let tableRowHtml = require("../../views/single/factor/column.html");
+        let limitTimer ;
         function tableRemove(type){
             switch (type){
                 case 1:
@@ -130,37 +131,33 @@ module.exports = knowledgeManagementModule =>{
             })
         }
         //限制一个知识多次保存
-        var limitTimer ;
         function save() {
-            if (!checkSave() || $scope.vm.limitSave) {
+            let resultParams = checkSave();
+            if (!resultParams||!$scope.vm.saveLimitTimer) {
                 return false
-            } ;
+            }
             $timeout.cancel(limitTimer) ;
-            $scope.vm.limitSave = true ;
+            $scope.vm.saveLimitTimer = true ;
             limitTimer = $timeout(function(){
-                $scope.vm.limitSave = false ;
+                $scope.vm.saveLimitTimer = false ;
             },180000) ;
-            let params = angular.copy($scope.parameter) ;
-            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
-            params.contents = JSON.stringify(params.contents) ;
-            KnowledgeService.storeFactorKnow.save($scope.parameter,function (response) {
+            KnowledgeService.storeFactorKnow.save(resultParams,function (response) {
                 if (response.status == 200) {
                     // $state.go('knowledgeManagement.custOverview');
                 } else {
                     layer.msg(response.info) ;
                     $timeout.cancel(limitTimer) ;
-                    $scope.vm.limitSave = false ;
-                    console.log($scope.vm.limitSave)
+                    $scope.vm.saveLimitTimer = false ;
+                    console.log($scope.vm.saveLimitTimer)
                 }
             }, function (error) {
                 $timeout.cancel(limitTimer) ;
-                $scope.vm.limitSave = false ;
+                $scope.vm.saveLimitTimer = false ;
             })
 
         }
         function scan(){
-            if(!checkSave() || $scope.vm.limitSave){
+            if(!checkSave() || $scope.vm.saveLimitTimer){
                 return false
             }
             $window.knowledgeScan = {
@@ -173,7 +170,14 @@ module.exports = knowledgeManagementModule =>{
         }
 //        提交 检验参数
         function checkSave(){
-            var params =  $scope.parameter ;
+            let result = false ;
+            let params = angular.copy($scope.parameter) ;
+            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
+            angular.forEach(params.contents,function(item,index){
+                item.contentRelevantList.map(value=>item.id)
+            });
+            params.contents = JSON.stringify(params.contents) ;
             if(!params.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
@@ -183,9 +187,10 @@ module.exports = knowledgeManagementModule =>{
             }else if(params.contents[0].length<=1){
                 layer.msg("请完善表格知识");
                 return false;
-            }else{
-                return true
+            } else {
+                result = params
             }
+            return result ;
         }
         // 扩展问换行
         function skipNewLine(e) {

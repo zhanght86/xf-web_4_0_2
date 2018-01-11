@@ -37,11 +37,9 @@ module.exports = knowledgeManagementModule =>{
 //D 知识内容配置
             newTitle: "",    //标题
             channelIdList : "",     //新添加的 channel
-
             appointRelativeGroup : [],
-
             enterEvent : enterEvent ,
-            limitSave : false , //限制多次打标
+            saveLimitTimer : true , //限制多次打标
             isEditIndex : -1,   // 知识内容 弹框
                                 // -1 为内容新增
                                 // index 为知识的编辑索引
@@ -50,6 +48,7 @@ module.exports = knowledgeManagementModule =>{
         };
         let knowNewHtml = require("../../views/public_html/knowledge_increase.html") ;
         let frameHtml   = require("../../views/public_html/frame.html") ;
+        let limitTimer ;
         function showFrame(){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,frameHtml,"650px",function(){
 
@@ -80,40 +79,36 @@ module.exports = knowledgeManagementModule =>{
                 $scope.$parent.knowCtr.setKnowParamHasDialog($scope)
             });
         }
-        var limitTimer ;
         function save(){
-                if (!checkSave()) {
-                    return false
-                }
-                if(!$scope.vm.limitSave) {
-                    $timeout.cancel(limitTimer) ;
-                    limitTimer = "" ;
-                    $scope.vm.limitSave = true ;
-                    limitTimer = $timeout(function(){
-                        $scope.vm.limitSave = false ;
-                    },180000) ;
-                    var params = angular.copy($scope.parameter);
-                    params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-                    params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
-                    KnowledgeService.storeFaqKnow.save(params,function (response) {
-                        if (response.status == 200) {
-                            if ($scope.vm.docmentation) {
-                                //文档知识分类状态回掉
-                                knowledgeClassifyCall()
-                            } else {
-                                // $state.go('knowledgeManagement.custOverview');
-                            }
+            let resultParams = checkSave();
+            if (!resultParams||!$scope.vm.saveLimitTimer) {
+                return false
+            }
+            $timeout.cancel(limitTimer) ;
+            limitTimer = "" ;
+            $scope.vm.saveLimitTimer = false ;
+            limitTimer = $timeout(function(){
+                $scope.vm.saveLimitTimer = true ;
+            },180000) ;
+            KnowledgeService.storeFaqKnow.save(resultParams,function (response) {
+                if (response.status == 200) {
+                    if ($scope.vm.docmentation) {
+                        //文档知识分类状态回掉
+                        knowledgeClassifyCall()
+                    } else {
+                        // $state.go('knowledgeManagement.custOverview');
+                    }
 
-                        }else{
-                            layer.msg(response.info) ;
-                            $timeout.cancel(limitTimer) ;
-                            $scope.vm.limitSave = false ;
-                        }
-                    }, function (err) {
-                        $timeout.cancel(limitTimer) ;
-                        $scope.vm.limitSave = false ;
-                    });
+                }else{
+                    layer.msg(response.info) ;
+                    $timeout.cancel(limitTimer) ;
+                    $scope.vm.saveLimitTimer = false ;
                 }
+            }, function (err) {
+                $timeout.cancel(limitTimer) ;
+                $scope.vm.saveLimitTimer = false ;
+            });
+
         }
         // 知识文档分类回调
         function knowledgeClassifyCall(){
@@ -168,10 +163,10 @@ module.exports = knowledgeManagementModule =>{
         }
 //        提交 检验参数
         function checkSave(){
-            if($scope.vm.titleTip!=""){
-                layer.msg($scope.vm.titleTip);
-                return false;
-            }
+            let result = false ;
+            var params = angular.copy($scope.parameter);
+            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
             if(!$scope.parameter.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false
@@ -182,8 +177,9 @@ module.exports = knowledgeManagementModule =>{
                 layer.msg("知识内容不能为空，请点击新增填写");
                 return false
             }else{
-                return true
+                result = params
             }
+            return result ;
         }
         function increaseCheck(){
             //判斷维度是否为空 0 不变 1 全维度

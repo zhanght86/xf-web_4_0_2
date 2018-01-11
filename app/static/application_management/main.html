@@ -1,6 +1,6 @@
 <div ui-view="header"></div>
 <div class="main warp">
-    <div class="page-lrcont210 clearfix bgwhite mt10">
+    <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px">
         <div class="l-aside fl">
             <div class="aside-hd tac">
                 <div style="width:110px;height:110px;overflow: hidden;border-radius:50%;margin:0 auto;border:3px solid #fff;">
@@ -46,12 +46,6 @@
                             <li>
                                 <a class="ellipsis" ui-sref=".manual"><span>转人工设置</span></a>
                             </li>
-                            <!--<li>-->
-                                <!--<a class="ellipsis" ui-sref=".scene"><span>场景管理</span></a>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<a class="ellipsis" ui-sref=".channel"><span>渠道管理</span></a>-->
-                            <!--</li>-->
                         </ul>
                     </li>
                     <li>
@@ -77,11 +71,7 @@
     </div>
 
 </div>
-<style>
-    .menu_1{
-        display: block;
-    }
-</style>
+
 <script>
     $('.menu_1 li').click(function(){
         $(this).css('background','#d0caca').siblings().css('background','#e6e6e6');

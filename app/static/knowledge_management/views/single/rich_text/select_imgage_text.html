@@ -6,7 +6,7 @@
                 ng-click="vm.addMultimedia(1019,item,closeThisDialog)">
                 <p class="title">{{item.title}}</p>
                 <p class="time"><small>{{item.modifyTime | date : "yyyy-MM-dd-HH-mm-ss"}}</small></p>
-                <img title="{{item.title}}" ng-src="/api/material/picture/get/img/id?pictureId={{item.coverPicId}}" />
+                <img title="{{item.title}}" ng-src="{{vm.imageApi+item.coverPicId}}" />
             </li>
         </ul>
     </div>

@@ -1020,7 +1020,7 @@ module.exports = (angular) => {
                 },
                 "content": {
                     template: require("../static/knowledge_management/views/single/list/list.html"),
-                    controller: "ConceptNewController"
+                    controller: "ListNewController"
                 }
             }
         },

@@ -15,12 +15,9 @@ module.exports = applicationManagementModule =>{
             commandOn: 0,                     //人工命令开关 Int
             noAnswerOn: 0,                     //机器人未直接回答  Int
             noAnswerNumber: 0,                  //机器人未直接回答次数 Int
-            showTip: showTip,
-            hideTip: hideTip,
             getData: getData,
             saveData: saveData,
             checkNum: checkNum,
-
         };
 
         /**
@@ -105,15 +102,5 @@ module.exports = applicationManagementModule =>{
                     console.log(err);
                 });
         }
-        //提示文字
-        function showTip(ev){
-            var event=ev.target;
-            $(event).addClass("on").next("span").show();
-        }
-        function hideTip(ev){
-            var event=ev.target;
-            $(event).removeClass("on").next("span").hide();
-        }
-
     }
 ])};

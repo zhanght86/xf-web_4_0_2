@@ -4,7 +4,7 @@
         <ul class="media_list">
             <li class="image_container" ng-repeat="item in newKnow.imageList" ng-class="newKnow.imgSelected.id==item.id ? 'active' : ''"
                 ng-click="vm.addMultimedia(1018,item,closeThisDialog)">
-                <img title="{{item.name}}"  ng-src="/api/material/picture/get/img/id?pictureId={{item.id}}">
+                <img title="{{item.name}}"  ng-src="{{vm.imageApi+item.id}}">
                 <p class="image_title">{{item.name}}</p>
             </li>
         </ul>
