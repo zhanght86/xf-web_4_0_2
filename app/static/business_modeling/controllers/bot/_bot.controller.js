@@ -76,7 +76,6 @@ module.exports = businessModelingModule =>{
             paramName:'name',
             dataType:'json',
             transformResult:function(data){
-                console.log(data)
                 var result = new Object();
                 var array = [];
                 if(data.data){
@@ -136,40 +135,64 @@ module.exports = businessModelingModule =>{
             var list = $(".aside-navs").find("li");
             var flag = false;
             $.each(list,function(index,value){
-               // if($(value).attr("data-option")==$(node).attr("data-option")){ 
-                     var currNode = $(value).find("i").filter(":eq(0)");
-                    if($(currNode).attr("data-option")==suggestion.data){
-                       // alert("============")
-                        clearColor();
-                        $scope.vm.knowledgeBotVal = $(currNode).next().html();
-                        $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
-                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
-                        $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
-                        $(currNode).next().attr("style","color:black;font-weight:bold;");
-                        updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
-                        disableAttributeType();
-                        $scope.$apply();
-                        flag = true;
-                        //跳出
-                        return false;
-                    }else{
-                        //展开
-                        if($(currNode).css("backgroundPosition")=="0% 0%"){
-                            appendTree(currNode);
-                           // alert(2)
-                        }else if($(currNode).parent().parent().next()==null){
-                            appendTree(currNode);
-                        }
-                        if(flag==true){
-                            return false;
-                        }
-                        //递归
-                       //recursion(suggestion,node); 
+                var currNode = $(value).find("i").filter(":eq(0)");
+                if($(currNode).attr("data-option")==suggestion.data){
+                    clearColor();
+                    $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                    $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                    $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                    $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
+                    $(currNode).next().attr("style","color:black;font-weight:bold;");
+                    updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
+                    disableAttributeType();
+                    $scope.$apply();
+                    flag = true;
+                    //跳出
+                    return false;
+                }else{
+                    //展开
+                    if($(currNode).css("backgroundPosition")=="0% 0%"){
+                        appendTree(currNode);
+                    }else if($(currNode).parent().parent().next()==null){
+                        appendTree(currNode);
                     }
-               // }
+                    if(flag==true){
+                        return false;
+                    }
+                }
            });
-          // recursion(suggestion,node);
-           
+            recursionAgain(suggestion,node);
+        }
+         function recursionAgain(suggestion,node){
+            var list = $(".aside-navs").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+                 var currNode = $(value).find("i").filter(":eq(0)");
+                if($(currNode).attr("data-option")==suggestion.data){
+                    clearColor();
+                    $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                    $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                    $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                    $scope.vm.categoryAttributeName = $(currNode).next().attr("node-option");
+                    $(currNode).next().attr("style","color:black;font-weight:bold;");
+                    updateCreateMethod($scope.vm.knowledgeBotVal,$scope.vm.categoryAttributeName);
+                    disableAttributeType();
+                    $scope.$apply();
+                    flag = true;
+                    //跳出
+                    return false;
+                }else{
+                    //展开
+                    if($(currNode).css("backgroundPosition")=="0% 0%"){
+                        appendTree(currNode);
+                    }else if($(currNode).parent().parent().next()==null){
+                        appendTree(currNode);
+                    }
+                    if(flag==true){
+                        return false;
+                    }
+                }
+           });
         }
         //定位
         function location(suggestion){
@@ -224,7 +247,6 @@ module.exports = businessModelingModule =>{
         function initBot(){
             $(".aside-navs").empty();
             $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
-              console.log(data)
                 var html =  '<ul class="menus show">';
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].id+'">' +
@@ -249,7 +271,6 @@ module.exports = businessModelingModule =>{
             });
         }
         $(".aside-navs").on("click","span",function(){
-            
             clearColor();
             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
@@ -278,7 +299,6 @@ module.exports = businessModelingModule =>{
         }
         $(".aside-navs").on("click",".edit",function(){
             $scope.vm.botInfo = $(this).parent().attr("bot-info");
-             console.log($(this).parent().attr("bot-type"))
              $scope.vm.categoryName=$(this).parent().attr("bot-name");
              $scope.vm.categoryTypeId=$(this).parent().attr("bot-type");
              $scope.vm.categoryDescribe=$(this).parent().attr("depict-option");
@@ -350,7 +370,6 @@ module.exports = businessModelingModule =>{
                                 $scope.vm.dataSplit.leaf=0;
                                 $scope.vm.dataSplit.depict=$scope.vm.categoryDescribe;
                                $scope.vm.categoryId=data.data;
-                               console.log($scope.vm.dataSplit)
                                //重新加载
                                 reloadBot($scope.vm.dataSplit,2);
                              }else if(data.status==500){
@@ -386,7 +405,6 @@ module.exports = businessModelingModule =>{
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                     $http.post("api/ms/classify/delete/"+categoryId+"").success(function(data){
-                    	console.log(data)
                     	if(data.status==200){ 
                             //数据组装
                             $scope.vm.categoryId=data.data;
@@ -414,27 +432,33 @@ module.exports = businessModelingModule =>{
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-               $http.get('api/ms/classify/get/children/'+""+id+"").success(function(data,status,headers,congfig){
-                	console.log(data)
-                    if(data.data){
-                        var html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                         html+= '<li data-option="'+data.data[i].id+'">' +
-                            '<div class="slide-a">'+
-                            '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
-                            '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                            '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
-                            '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
-                            '</a>' +
-                            '</div>' +
-                            '</li>';
+                $.ajax("api/ms/classify/get/children/"+id+"",{
+                dataType: 'json', //服务器返回json格式数据
+                type: "GET", //HTTP请求类型
+                async:false,
+                cache:false,
+                success:function(data) {
+                    if(data.status==200){
+                        if(data.data){
+                            var html = '<ul class="menus">';
+                            for(var i=0;i<data.data.length;i++){
+                             html+= '<li data-option="'+data.data[i].id+'">' +
+                                '<div class="slide-a">'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
+                                '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>';
+                        }
+                            html+="</ul>";
+                            $(html).appendTo((that.parent().parent().parent()));
+                            that.parent().parent().next().slideDown();
+                        }
                     }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown();
-                    }
-                },function(err){
-                });
+                },
+            })
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
                     that.css("backgroundPosition","0% 100%");
@@ -503,7 +527,6 @@ module.exports = businessModelingModule =>{
                             $scope.vm.dataSplit.leaf=0;
                             $scope.vm.dataSplit.depict=$("#category-describe").val();
                             $scope.vm.categoryId=data.data;
-                            console.log($scope.vm.dataSplit)
                             $("#category-name").val('');
 		                    $("#category-describe").val('');
                             reloadBot($scope.vm.dataSplit,0);
@@ -713,15 +736,18 @@ module.exports = businessModelingModule =>{
             if(attrType=="node"){
                 return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
             }
-            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
+                case 160:
+                    style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';break;
                 case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 160:
+                case 163:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
                 case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
+            
             return style;
 
         }
