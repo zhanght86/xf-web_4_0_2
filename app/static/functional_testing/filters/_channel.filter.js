@@ -7,11 +7,11 @@ module.exports=module=>{
     .filter('channelFilter', function () {
         return function (value) {
             switch (value){
-                case 131 : return "微信";
+                case '131' : return "微信";
                     break;
-                case 132 : return "web";
+                case '132' : return "web";
                     break;
-                case 133 : return "app";
+                case '133' : return "app";
                     break;
             }
         };

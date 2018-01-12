@@ -62,8 +62,8 @@
                             <td>
                                 <a href="/api/material/document/get/document/id?id={{v.docId}}" target="_blank" class="c-green mr-5" ng-if="v.status==21009" >下载</a>
                                 <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks(v.id)" ng-if="v.status==21009||v.status==21007">备注</a>
-                                <a class="c-blue mr-5" ng-click="vm.startUp(v.id)" ng-if="v.status==21007">测试</a>
-                                <a class="c-blue mr-5" ng-click="vm.startUp(v.id)" ng-if="v.status==21009">重测</a>
+                                <a class="c-blue mr-5" ng-click="vm.startUp(v.id,v.remark)" ng-if="v.status==21007">测试</a>
+                                <a class="c-blue mr-5" ng-click="vm.startUpagain(v.id,v.docName)" ng-if="v.status==21009">重测</a>
                                 <a class="c-red" ng-click="vm.deleteQuestion([v.id])" ng-if="v.status==21009||v.status==21007">删除</a>
                             </td>
                         </tr>

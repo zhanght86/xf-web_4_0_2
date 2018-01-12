@@ -32,10 +32,13 @@ class FunctionServer{
     //标注
     this.remark = $resource(API_MS+'/test/add/remark',{},{});
 
-    //startTest
+    //获取状态
     this.start = $resource(API_MS+'/test/save/channel/user',{},{});
     //start
     this.startTest =  $resource(API_MS+'/test/start', {}, {});
+    //重测
+    this.retest = $resource(API_MS+'test/restart/insert',{},{});
+
 
                             /******************************
                                     *分词工具*    API_APPLICATION_TEST = "/api/application"
@@ -76,20 +79,26 @@ class FunctionServer{
                                 /******************************
                                        *新知识发现*    API_ANALYSIS = "/api/analysis" ;    API_MS = "/api/ms",
                                  ********************************/
+        //获取聚类列表
+        this.clusteringList = $resource(API_ANALYSIS+'/knowledge/learning/clustering/get',{},{});
         //表格列表 未学习
-        this.searchNewKnowledgeDiscovery = $resource(API_ANALYSIS+'/knowledgeLearn/newKnowledgeDiscoveryLearnUnlearn',{},{});
+        this.searchNewKnowledgeDiscovery = $resource(API_ANALYSIS+'/knowledge/learning/unmatched/question/unlearn/get',{},{});
         //表格列表 已学习
-        this.listNoReview2 = $resource(API_ANALYSIS+'/knowledgeLearn/listNoReview',{},{});
-        //未学习关联弹窗
-        this.searchByKnowledgeTitle2 = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
+        this.listNoReview2 = $resource(API_ANALYSIS+'/knowledge/learning/unmatched/question/learned/get',{},{});
         //忽略
         this.ignore2 = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
+        //上下文
+        this.content = $resource(API_ANALYSIS+'/log/content/get',{},{});
+
+
+
+        //未学习关联弹窗
+        this.searchByKnowledgeTitle2 = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
         //关联
         this.assembleLearnData2 = $resource(API_ANALYSIS+'/knowledgeLearn/learnByContent',{},{});
         //通过 不通过
         this.review2 = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
-        //上下文
-        this.content = $resource(API_ANALYSIS+'/userSession/searchContent',{},{});
+
 
 
     }

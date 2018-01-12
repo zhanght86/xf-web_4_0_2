@@ -6,7 +6,7 @@
 .homePageNav .header .nav{float: left; }
 .homePageNav .header .nav:before{content: ""; height: 20px; border-left:1px solid #3c3c3f; border-right: 1px solid #1d1d20; float: left; margin-top: 20px;}
 .homePageNav .header .nav>li{float: left; position: relative;}
-.homePageNav .header .nav>li>a{font-size: 16px; color: #fff; display: block; text-align: center; padding: 0 16px;border-top: 3px solid transparent; height: 60px;}
+.homePageNav .header .nav>li>a{font-size: 15px; color: #fff; display: block; text-align: center; padding: 0 15px;border-top: 3px solid transparent; height: 60px;}
 .homePageNav .header .menu_1{position: absolute; left: 0; top: 60px; float: left; padding: 0 0 10px; background-color: #39393c; line-height: 35px; display: none;}
 .homePageNav .header .menu_1 li{padding: 0 19px;}
 .homePageNav .header .menu_1 a{color: #afafb8; font-size: 14px; white-space:nowrap; display: block; position: relative;}

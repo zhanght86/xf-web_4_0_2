@@ -40,7 +40,12 @@ module.exports=functionalTestModule => {
             //------------------------------渠道   服务end
             addRemarks : addRemarks,                //备注
             remarks : remarks,
-            remark : ''
+            remark : '',
+            remarkOne:'',
+            remark2 : '',                     //重测备注
+            startUpagain :startUpagain,
+            start2:start2,
+            batchName :'',
 
 
         };
@@ -149,25 +154,16 @@ module.exports=functionalTestModule => {
         /*****************
          * //启动
          * *****************/
-        function startUp(id){
+        function startUp(id,remark){
             if($scope.vm.serviceId) {
                 $scope.vm.batchNumberId = id ;
-
+                $scope.vm.remarkOne = remark;
                 let test_html = require("../../../views/test_tools/batch_test/start_up_dialog.html") ;
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,test_html,"400px",function(){
 
                 },"",function(){
                     $scope.vm.channel = "" ;
                 });
-
-                // $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/functional_testing/batch_test/batch_test/start_up_dialog.html','450px',function(){
-                //
-                // },function(){
-                //
-                // },function(){
-                //     $scope.vm.channel = "" ;
-                //     //$scope.vm.serviceId = vm.listService[0].serviceId ;
-                // });
 
             }else{
                 layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
@@ -176,6 +172,7 @@ module.exports=functionalTestModule => {
         }
         function start(){
             var id = $scope.vm.batchNumberId ;
+            var remark = $scope.vm.remarkOne;
             var channelId = angular.copy($scope.vm.channel) ;
             if(!$scope.vm.channel){
                 layer.msg("选择渠道")
@@ -184,6 +181,8 @@ module.exports=functionalTestModule => {
                     batchNumberId:id,
                     channel:channelId,
                     serviceId:$scope.vm.serviceId,
+                    remark:remark
+
                 },function (data) {
                     if(data.status == 500){
                         layer.msg(data.data,{time:1000});
@@ -218,6 +217,76 @@ module.exports=functionalTestModule => {
                 $log.log(err);
             });
         }
+
+        /*****************
+         * 重测
+         * *****************/
+        function startUpagain(id,name){
+            if($scope.vm.serviceId) {
+                $scope.vm.batchNumberId = id ;
+                $scope.vm.batchName = name;
+                let test_html = require("../../../views/test_tools/batch_test/start_up_dialog2.html") ;
+                $scope.$parent.$parent.MASTER.openNgDialog($scope,test_html,"400px",function(){
+
+                },"",function(){
+                    $scope.vm.channel = "" ;
+                });
+
+            }else{
+                layer.msg("当前应用下没有发布服务，请发布服务后进行测试");
+            }
+
+        }
+        function start2(){
+            var id = $scope.vm.batchNumberId ;
+            var name = $scope.vm.batchName;
+            var channelId = angular.copy($scope.vm.channel) ;
+            if(!$scope.vm.channel){
+                layer.msg("选择渠道")
+            }else{
+                FunctionServer.start.save({
+                    batchNumberId:id,
+                    channel:channelId,
+                    serviceId:$scope.vm.serviceId,
+                    remark : $scope.vm.remark2
+                },function (data) {
+                    if(data.status == 500){
+                        layer.msg(data.data,{time:1000});
+                    }
+                    if(data.status == 200){
+                        //$state.reload();
+                        searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                        startTest2(id,channelId,name);
+                    }
+                },function(err){
+                    $log.log(err);
+                });
+                ngDialog.closeAll() ;
+            }
+        }
+
+        function startTest2(id,channelId,name){
+            FunctionServer.retest.save({
+                batchNumberId: id,
+                channel:channelId,
+                serviceId:$scope.vm.serviceId,
+                batchName:name
+            },function(data){
+                console.log(data);
+                if(data.status=200){
+                    //$state.reload();
+                    searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                }
+                if(data.status==500){
+                    layer.msg(data.data,{time:10000});
+                }
+            },function(err){
+                $log.log(err);
+            });
+        }
+
+
+
         //添加备注
         function addRemarks(id){
             $scope.vm.batchNumberId = id;
