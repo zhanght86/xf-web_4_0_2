@@ -2,25 +2,26 @@
 
 <div class="wrap">
     <div class="con_box mb25 p30 mt-10" style="min-height:500px;">
-        <div class="" style="width:910px;margin:0 auto 20px;">
+        <div class="" style="width:700px;margin:0 auto 20px;">
             <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
                 <option value="1">今日</option>
                 <option value="2">昨日</option>
-                <option value="3">过去7天</option>
-                <option value="4">过去30天</option>
+                <option value="3">一周</option>
+                <option value="4">一月</option>
             </select>
-            <!--<select class="sel bd L mr-5" id="dimensionId" ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
-                <!--<option  value="" >全部维度</option>-->
-            <!--</select>-->
-            <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
+            <select class="sel bd L mr-5" id="channel_id" ng-model="vm.channelId">
                 <option  value="" >全部渠道</option>
+                <option value=131>微信</option>
+                <option value=132>web</option>
+                <option value=133>app</option>
             </select>
-             <span>
-                日期范围:
-                <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
-                -
-                <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 35px;font-size: 15px;color: #333!important;" placeholder="yyyy-mm-dd" readonly>
-             </span>
+              <span class="L mr-5">
+                        日期范围:
+                        <input type="text" id="startTime" onchange="" ng-model="vm.timeStart" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly="">
+                        -
+                        <input type="text" id="endTime" onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate  ng-pristine ng-valid" style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly="">
+
+                    </span>
             <input type="button" class="btn1 btn1_blue" ng-click="vm.getList(1)" value="查找" />
         </div>
         <!--<div class="mb-20" style="height:20px;">-->
