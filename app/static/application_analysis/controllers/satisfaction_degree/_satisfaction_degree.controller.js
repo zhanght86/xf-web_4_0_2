@@ -16,7 +16,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
             },
             dimensions : [] ,
             channels : [] ,
-            channelId  : null ,
+            channelId  : 130 ,
            // dimensionId : null ,
             sendDimensions : [] ,
             sendChannels : [],
@@ -54,72 +54,25 @@ module.exports=applAnalysisModule => {applAnalysisModule
             getList(1)
         }
 
-        /**
-         *  表格列表
-         **/
-        function getList(index){
-            //console.log((index-1)*$scope.vm.paginationConf.pageSize );
-            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            getPieData();
-            AppAnalysisServer.satisfactionGetList.save({
-                "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
-                "applicationId" : APPLICATION_ID,
-                "requestTimeType":$scope.vm.timeType,
-                "startTime": $scope.vm.timeStart,
-                "endTime": $scope.vm.timeEnd,
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize,
-                "orderForSatisfactionRate": $scope.vm.orderForSatisfactionRate,
-                "orderForSessionNumber": $scope.vm.orderForSessionNumber,
-                "orderForUnsatisfiedNumber": $scope.vm.orderForUnsatisfiedNumber,
-            },function(data){
-                layer.close(i);
-                //console.log(data.data);
-                $scope.vm.listData = data.data.objs;
-                $scope.vm.paginationConf.currentPage =index ;
-                $scope.vm.paginationConf.totalItems =data.data.total ;
-                $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
-                console.log($scope.vm.paginationConf);
-                console.log(data)
-            },function(err){
-                layer.close(i);
-                $log.log(err);
-            });
-        };
-
-        /**
-         *  list 分页变化加载数据
-         **/
-        var timeout;
-        $scope.$watch('vm.paginationConf.currentPage', function(current,old){
-            if(current && old != undefined){
-                if(timeout){
-                    $timeout.cancel(timeout);
-                }
-                timeout = $timeout(function(){
-                    getList(current);
-                } ,0);
-            }
-        });
 
         /**
          *  获取Echart 图数据
          **/
 
-        function getPieData(){
-
+        function getList(){
+             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
             AppAnalysisServer.getPieData.save({
-                "applicationId" : APPLICATION_ID,
-                "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
+                "channelId": $scope.vm.channelId==130?null:$scope.vm.channelId,
                 "requestTimeType":$scope.vm.timeType,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
             },function(data){
+                layer.close(i);
+                console.log(data)
+                $scope.vm.listData = data.data;
                 var params;
                 if(data && data.status == 200 && data.data != null && data.data.length != 0)
-                    params = data.data.objs[0];
+                    params = data.data[0];
                 else
                     params = {
                         satisfiedNumber: 0,
@@ -129,6 +82,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
                 // 指定图表的配置项和数据
                 var option = {
                     title : {
+                        top: '10%',
                         text: '满意率统计',
                         x:'center'
                     },
@@ -143,6 +97,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
                     },
                     series : [
                         {
+                             name:'满意率统计',
                             type: 'pie',
                             radius : '55%',
                             center: ['50%', '60%'],
@@ -175,7 +130,6 @@ module.exports=applAnalysisModule => {applAnalysisModule
             //getDimensions();
             //getChannel();
             getList(1);
-            getPieData()
         }
 
         
