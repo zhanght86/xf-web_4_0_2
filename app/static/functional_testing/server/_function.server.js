@@ -37,7 +37,7 @@ class FunctionServer{
     //start
     this.startTest =  $resource(API_MS+'/test/start', {}, {});
     //重测
-    this.retest = $resource(API_MS+'test/restart/insert',{},{});
+    this.retest = $resource(API_MS+'/test/restart/insert',{},{});
 
 
                             /******************************

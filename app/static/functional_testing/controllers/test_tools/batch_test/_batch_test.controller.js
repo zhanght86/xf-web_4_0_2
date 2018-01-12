@@ -32,8 +32,7 @@ module.exports=functionalTestModule => {
             //-----------------------------渠道   服务
             listService:[],
             serviceId : "" ,
-            // channel:"",
-            // channelList : [] ,
+
             channel:'',
             selectChannel : selectChannel,
             getService : getService,
@@ -46,6 +45,7 @@ module.exports=functionalTestModule => {
             startUpagain :startUpagain,
             start2:start2,
             batchName :'',
+            idNew : '',
 
 
         };
@@ -200,11 +200,13 @@ module.exports=functionalTestModule => {
         }
 
         function startTest(id,channelId){
+            var i = layer.msg('测试中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.startTest.save({
                 batchNumberId: id,
                 channel:channelId,
                 serviceId:$scope.vm.serviceId,
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status=200){
                     //$state.reload();
@@ -214,6 +216,7 @@ module.exports=functionalTestModule => {
                     layer.msg(data.data,{time:10000});
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }
@@ -244,19 +247,22 @@ module.exports=functionalTestModule => {
             if(!$scope.vm.channel){
                 layer.msg("选择渠道")
             }else{
-                FunctionServer.start.save({
+                FunctionServer.retest.save({
                     batchNumberId:id,
                     channel:channelId,
                     serviceId:$scope.vm.serviceId,
-                    remark : $scope.vm.remark2
+                    remark : $scope.vm.remark2,
+                    batchName :name
                 },function (data) {
                     if(data.status == 500){
-                        layer.msg(data.data,{time:1000});
+                        // layer.msg(data.info,{time:10000});
+                        console.log(data.info);
                     }
                     if(data.status == 200){
                         //$state.reload();
+                        $scope.vm.idNew = data.data;
                         searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
-                        startTest2(id,channelId,name);
+                        startTest2(channelId);
                     }
                 },function(err){
                     $log.log(err);
@@ -265,22 +271,25 @@ module.exports=functionalTestModule => {
             }
         }
 
-        function startTest2(id,channelId,name){
-            FunctionServer.retest.save({
-                batchNumberId: id,
+        function startTest2(channelId){
+            var i = layer.msg('测试中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+            FunctionServer.startTest.save({
+                batchNumberId: $scope.vm.idNew ,
                 channel:channelId,
                 serviceId:$scope.vm.serviceId,
-                batchName:name
             },function(data){
+                layer.close(i);
                 console.log(data);
                 if(data.status=200){
                     //$state.reload();
                     searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
                 }
                 if(data.status==500){
-                    layer.msg(data.data,{time:10000});
+                   // layer.msg(data.info,{time:10000});
+                    console.log(data.info);
                 }
             },function(err){
+                layer.close(i);
                 $log.log(err);
             });
         }

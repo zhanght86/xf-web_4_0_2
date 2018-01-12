@@ -5,8 +5,8 @@
 module.exports=functionalTestModule=>{
     functionalTestModule
     .controller('NewKnowDiscoveryLearnController',
-     ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore","$location","localStorageService",
-     ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,$location,localStorageService )=>{
+     ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore","$location",
+     ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,$location, )=>{
         $scope.vm = {
             //-------未学习-------
             searchNewKnowledgeDiscovery : searchNewKnowledgeDiscovery ,
