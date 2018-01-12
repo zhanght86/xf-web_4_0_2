@@ -10,28 +10,26 @@ class KnowledgeService {
                  **********************************/
 //   客服知识
                 //获取知识列表
-                this.queryCustKnowList = $resource(API_MS + "/knowledgeManage/overView/searchList", {}, {});
+                this.queryCustKnowList = $resource(API_MS + "/knowledge/params", {}, {});
                 //知识导出
                 this.custKnowExport = API_MS + "/knowledgeManage/exportExcel";
                 //获取新增知识数量
-                this.queryCustNewNumber = $resource(API_MS + "/knowledgeManage/overView/searchTotalAndToday", {}, {});
+                this.queryCustNewNumber = $resource(API_MS + "/knowledge/count", {}, {});
                 //删除知识
-                this.removeCustKnow = $resource(API_MS + "/knowledgeManage/deleteKnowledge", {}, {});
+                this.removeCustKnow = $resource(API_MS + "/knowledge/batch/delete", {}, {});
 //   知识预览 获取知识
                 //faq
-                this.queryFaqKnow = $resource(API_MS + "/faqKnowledge/getKnowledge", {}, {});
+                this.queryFaqKnow = $resource(API_MS + "/knowledge/FAQ/get/:id", {id:"@id"}, {});
                 //概念
-                this.queryConceptKnow = $resource(API_MS + "/conceptKnowledge/getKnowledge", {}, {});
-                //富文本
-                this.queryRichTextKnow = $resource(API_MS + "/richtextKnowledge/getKnowledge", {}, {});
+                this.queryConceptKnow = $resource(API_MS + "/knowledge/concept/get/:id", {id:"@id"}, {});
                 //列表
-                this.queryListKnow = $resource(API_MS + "/listKnowledge/getKnowledge", {}, {});
+                this.queryListKnow = $resource(API_MS + "/knowledge/list/get/:id", {id:"@id"}, {});
                 //要素
-                this.queryFactorKnow = $resource(API_MS + "/elementKnowledgeAdd/findElementKnowledgeByKnowledgeId", {}, {});
+                this.queryFactorKnow = $resource(API_MS + "/knowledge/task/get/:id", {id:"@id"}, {});
 
                 /******************************
-                 * 知识单条新增 *
-                 **********************************/
+                          * 知识单条新增 *
+                         **********************************/
 //   bot
                 //获取bot全路径
                 this.getBotFullPath = $resource(API_MS + "/classify/get/fullname/:id", {}, {});
@@ -40,55 +38,31 @@ class KnowledgeService {
                 //获取bot子节点
                 this.queryChildNodes = $resource(API_MS + "/classify/get/children/:id", {}, {});
 //   faq知识新增
-                // 获取相关问
-                this.queryFapRelatedQuestion = $resource(API_MS + "/conceptKnowledge/getKnowledgeTitle", {}, {});
                 // 保存
                 this.storeFaqKnow = $resource(API_MS + "/knowledge/FAQ/add", {}, {});
                 // 编辑
                 this.updateFaqKnow = $resource(API_MS + "/knowledge/FAQ/update", {}, {});
 //   概念知识新增
-                // 获取相关问
-                this.queryConceptRelatedQuestion = $resource(API_MS + "/conceptKnowledge/getKnowledgeTitle", {}, {});
-                // 检验扩展问
-                this.queryConceptExtension = $resource(API_MS + "/conceptKnowledge/checkExtensionQuestion", {}, {});
+                // 获取图片
+                this.queryConceptImage = $resource(API_MATERIAL + "/picture/query", {}, {});
+                // 获取语音
+                this.queryConceptVoice = $resource(API_MATERIAL + "/voice/query", {}, {});
+                // 获取图文
+                this.queryConceptImageText = $resource(API_MATERIAL + "/graphic/message/query", {}, {});
                 // 保存
-                this.storeConceptKnow = $resource(API_MS + "/conceptKnowledge/addConceptKnowledge", {}, {});
+                this.storeConceptKnow = $resource(API_MS + "/knowledge/concept/add", {}, {});
                 // 编辑
-                this.updateConceptKnow = $resource(API_MS + "/conceptKnowledge/editKnowledge", {}, {});
+                this.updateConceptKnow = $resource(API_MS + "/knowledge/concept/update", {}, {});
 //   列表知识新增
-                // 获取相关问
-                this.queryListRelatedQuestion = $resource(API_MS + "/listKnowledge/getKnowledgeTitle", {}, {});
-                // 检验扩展问
-                this.queryListExtension = $resource(API_MS + "/listKnowledge/checkExtensionQuestion", {}, {});
                 // 保存
-                this.storeListKnow = $resource(API_MS + "/listKnowledge/addListKnowledge", {}, {});
+                this.storeListKnow = $resource(API_MS + "/knowledge/list/add", {}, {});
                 // 编辑
-                this.updateListKnow = $resource(API_MS + "/listKnowledge/editKnowledge", {}, {});
+                this.updateListKnow = $resource(API_MS + "/knowledge/list/update", {}, {});
 //   要素知识新增
-                // 获取相关问
-                this.queryFactorRelatedQuestion = $resource(API_MS + "/factorKnowledge/getKnowledgeTitle", {}, {});
-                // 检验扩展问
-                this.queryFactorExtension = $resource(API_MS + "/elementKnowledgeAdd/checkDistribute", {}, {});
                 // 保存
-                this.storeFactorKnow = $resource(API_MS + "/elementKnowledgeAdd/addElementKnowledge", {}, {});
+                this.storeFactorKnow = $resource(API_MS + "/knowledge/task/add", {}, {});
                 // 编辑
-                this.updateFactorKnow = $resource(API_MS + "/elementKnowledgeAdd/editElementKnowledge", {}, {});
-//   富文本知识新增
-                // 获取相关问
-                this.queryRichTextRelatedQuestion = $resource(API_MS + "/richtextKnowledge/getKnowledgeTitle", {}, {});
-                // 检验扩展问
-                this.queryRichTextExtension = $resource(API_MS + "/richtextKnowledge/checkExtensionQuestion", {}, {});
-                // 保存
-                this.storeRichTextKnow = $resource(API_MS + "/elementKnowledgeAdd/addElementKnowledge", {}, {});
-                // 编辑
-                this.updateRichTextKnow = $resource(API_MS + "/elementKnowledgeAdd/editElementKnowledge", {}, {});
-                // 根据id 获取图文封面图片 url ，title 方法     //pic
-                this.getMediaPicture = $resource(API_MS + "/picture/queryPictureUrl", {}, {});
-                // 根据id 获取图文封面图片 url ，title 方法     //voice
-                this.getMediaVoice = $resource(API_MS + "/voiceManage/queryVoiceUrl", {}, {});
-                // 根据id 获取图文封面图片 url ，title 方法     //pic
-                this.getMediaImgText = $resource(API_MS + "/graphicMessage/findOneGraphicMessage", {}, {});
-
+                this.updateFactorKnow = $resource(API_MS + "/knowledge/task/update", {}, {});
         }};
         KnowledgeService.$inject = ['$resource'];
 module.exports = knowledgeManagementModule =>{

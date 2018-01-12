@@ -2,13 +2,15 @@
 <div class="shadow_div dn" style="height:60px;" ></div>
 <!--引导页头部遮罩end-->
 <div class="main warp knowledgeFaq">
+
     <div class="addContent pd30">
         <div class="cl">
+            {{parameter}}
             <div class="r-cont-hd L">
                 <span ng-if="!vm.knowledgeId" style="color:#666;">FAQ知识新增</span>
                 <span ng-if="vm.knowledgeId" style="color:#666;">FAQ知识编辑</span>
             </div>
-            <a href="javascript:;" class="c_green R" ng-click="vm.showTip();">使用帮助</a>
+            <a href="javascript:;" class="c_green R" ng-click="$parent.knowCtr.introduction.showTip();">使用帮助</a>
         </div>
         <div class="r-cont-bd oh pr">
             <div class="jqrsz-item">
@@ -28,34 +30,37 @@
                 <!--  bot -->
                 <span bot-class-tree="dialog" ></span>
                 <!--bot  類目數 点击生成  -->
-                <div class="item-line mb-10" ng-if="vm.creatSelectBot.length" ng-repeat="item in  vm.creatSelectBot track by $index">
+                <div class="item-line mb-10" ng-repeat="item in parameter.classifyList track by $index">
                     <div class="lable"> BOT路径：</div>
                     <div class="value Div clearfix" >
                         <div class="ipt-txt-box L mr-10">
                             <div class="ipt-txt" style="overflow:hidden;line-height:24px;width:407px;">
-                                <a title="{{item.value.join('/')}}">{{item.value.join("/")}}</a>
+                                <a title="{{item.value}}">{{item.value}}</a>
                             </div>
                         </div>
-                        <a href="javascript:;" class="L mr-10 mt-5"  ng-click="vm.creatSelectBot.splice($index,1)"><img src="../../../../images/images/delete_img.png"  alt=""></a>
+                        <a href="javascript:;" class="L mr-10 mt-5"  ng-click="parameter.classifyList.splice($index,1)"><img src="../../../../images/images/delete_img.png"  alt=""></a>
                     </div>
                 </div>
                 <div class="item-line mb-10">
                     <div class="lable"> 用户问法：</div>
                     <div class="value Div clearfix" style="padding-top: 8px;">
-                        不知道怎么写扩展问？试试套用业务框架吧
+                        不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame">业务框架</a>吧
                     </div>
                     <div class="value Div clearfix">
                         <div class="ipt-txt-box L mr-10">
-                            <p ng-repeat="ext in parameter.extensionQuestionList track by $index">
+                            <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
                                 <input class="ipt-txt bd" style="width:407px;height:32px;" type="text"
                                        ng-model="ext" ng-change="parameter.extensionQuestionList[$index]=ext" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
+                                <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
+                                    ng-click="($last&&$first)?parameter.extensionQuestionList.splice($index,1):''"
+                                ></span>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="jqrsz-item">
-                <div ng-if="parameter.contentList" ng-repeat="(itemIndex,item) in parameter.contentList">
+                <div ng-if="parameter.contents" ng-repeat="(itemIndex,item) in parameter.contents">
                     <div class="item-line">
                         <div class="lable" style="padding-right:10px;box-sizing:border-box;">
                            内容{{itemIndex+1}}:
@@ -65,8 +70,8 @@
                                 <div class="textareaDiv textareaDiv1 textareaDiv2 L">
                                     <p ng-repeat="text in item.content.split('\n') ">{{text}}</p>
                                 </div>
-                                <a href="javascript:;" ng-click="parameter.contentList.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
-                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(parameter.contentList[$index],$index)"></a>
+                                <a href="javascript:;" ng-click="parameter.contents.splice($index,1)" class="delete_a ml-10 L mt-20"></a>
+                                <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(parameter.contents[$index],$index)"></a>
                             </div>
                         </div>
                     </div>
@@ -102,9 +107,9 @@
                     <div class="step_one_con">
                         <p>知识标题：您需要填写这个知识的标准的提问方式哦~~</p>
                         <div class="tr introjs-tooltipbuttons">
-                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
-                            <button  disabled class="c-999 introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
-                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                            <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
+                            <button  disabled class="c-999 introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
                         </div>
                     </div>
                 </div>
@@ -114,9 +119,9 @@
                     <div class="step_one_con">
                         <p>BOT:除了自动生成的BOT路径，您还可以点击选择按钮选择您所希望的BOT类目路径。选好了别忘了点击后面的加号，路径可以添加多个哦~</p>
                         <div class="tr introjs-tooltipbuttons">
-                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
-                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
-                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                            <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
                         </div>
                     </div>
                 </div>
@@ -127,9 +132,9 @@
                         <p>业务框架：选择完毕路径之后，我们根据目前所选择的BOT，为您列出符合要求的业务框架，您可以选择对应的业务框架以节省编写扩展问的时间。业务框架可以添加多个哦~
                         </p>
                         <div class="tr introjs-tooltipbuttons">
-                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
-                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
-                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                            <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
                         </div>
                     </div>
                 </div>
@@ -140,9 +145,9 @@
                         <p>扩展问题：您可以自行填写扩展问题，应对问题的多样化.
                         </p>
                         <div class="tr introjs-tooltipbuttons">
-                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
-                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
-                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                            <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
                         </div>
                     </div>
                 </div>
@@ -153,9 +158,9 @@
                         <p>知识内容：知识内容就是答案，可以根据渠道维度的不同填写多个哦!
                         </p>
                         <div class="tr introjs-tooltipbuttons">
-                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">跳出</button>
-                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
-                            <button  class="introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                            <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
+                            <button  class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
+                            <button  class="introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
                         </div>
                     </div>
                 </div>
@@ -165,9 +170,9 @@
                     <div class="step_one_con">
                         <p>最后一步：编辑完知识可以选择预览，或者保存，就可以啦!</p>
                         <div class="tr introjs-tooltipbuttons">
-                            <button  class="introjs-button introjs-skip" ng-click="vm.hideTip()">完成</button>
-                            <button  class="introjs-button introjs-prev" ng-click="vm.prevDiv($event)">上一步</button>
-                            <button  disabled class="c-999 introjs-button introjs-next" ng-click="vm.nextDiv($event)">下一步</button>
+                            <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">完成</button>
+                            <button  class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
+                            <button  disabled class="c-999 introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
                         </div>
                     </div>
                 </div>

@@ -18,15 +18,15 @@
                 </div>
             </div>
             <div class="exten_problem" id="faq_extension">
-                <div class="framework " style="padding-left: 80px;" ng-repeat="item in vm.extensionProblem">
-                    <span class="framework_s text-r" ng-if="item.order==0">扩展问题：</span>
-                    <div class="frameList">
-                          <input type="text"  ng-keydown="vm.keyLogin($event)"  ng-blur="vm.addQues()"  class="L input-text mr-10 extended_query_txt extensionProblem" style="width:450px;margin-top:-1px;" value="" /> 
+                <div class="framework " style="padding-left: 80px;min-height: 31px;" >
+                    <span class="framework_s text-r">扩展问题：</span>
+                    <div class="frameList" style="height: 31px;position:relative;" ng-repeat="item in vm.extensionProblem">
+                          <input type="text"  ng-keydown="vm.keyLogin($event)"  ng-blur="vm.addQues($event)" ng-model="item.content" class="L input-text mr-10 extended_query_txt extensionProblem ipt-txt:focus" style="width:450px;" value="item.content" /> 
+                           <span style="position:absolute;right: 80px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')" ng-click="($last&&$first)?vm.extensionProblem.splice($index,1):''"></span>    
                     </div>
                 </div>
             </div>
-
-            <div class="framework mb-10 pt-10 mt-30">
+            <div class="framework mb-10  mt-30">
                 <span class="framework_s text-r"></span>
                 <div class="">
                     <input type="button" class="btn1 btn1_blue mr-20" ng-click="closeThisDialog(1)" value="保存"/>
@@ -41,7 +41,6 @@
     .ngdialog.ngdialog-theme-default .ngdialog-content {
         width:625px;
     }
-
 </style>
 
 

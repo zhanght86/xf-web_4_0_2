@@ -21,6 +21,7 @@ module.exports = applicationManagementModule =>{
                 search : queryHotKnowledgeList,
                 location : true
             },
+            updataRate : "", // 更新频率
             hotKnowDelIds : [] ,     //要删除热点知识的 id 集合
             addHotHotKnow : addHotHotKnow,  //添加方法
             queryHotKnowledgeList : queryHotKnowledgeList , //获取热点知识列表
@@ -51,7 +52,7 @@ module.exports = applicationManagementModule =>{
             ApplicationServer.queryHotKnowledgeList.save({
                     index:(index - 1)*pageSize,
                     pageSize:pageSize,
-                    keyWords : $scope.vm.hotQuestionTitle
+                    knowledgeTitle : $scope.hotKnowledge.keyWord
                 },
                 function(response){
                     if( response.status == 200 ){
@@ -69,9 +70,9 @@ module.exports = applicationManagementModule =>{
         //从聊天知识库查询知识
         function queryKnowledgeList(index,pageSize){
             ApplicationServer.queryKnowledgeList.save({
-                knowledgeTitle : $scope.vm.keyWord,
-                pageSize : pageSize,
-                index : (index - 1)*pageSize
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize,
+                "title": $scope.knowledge.knowledgeTitle,         //知识标题默认值null
             },function(response){
                 if( response.data.total == 0 ){
                     layer.msg("查询记录为空") ;
@@ -84,10 +85,6 @@ module.exports = applicationManagementModule =>{
                 }
             },function(error){console.log(error)})
         }
-        // 分页
-        // let timeout ,timeout2;
-        // $scope.$parent.$parent.MASTER.initPageTimer($scope,timeout,"vm.hotPaginationConf.currentPage",queryHotKnowledgeList) ;
-        // $scope.$parent.$parent.MASTER.initPageTimer($scope,timeout2,"vm.knowPaginationConf.currentPage",queryKnowledgeList) ;
         //添加知识
         function addHotHotKnow(){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,addHotHtml,"700px",function(){
@@ -164,13 +161,22 @@ module.exports = applicationManagementModule =>{
                 queryHotKnowledgeList(1);
             },function(error){console.log(error)})
         }
-
+        getHotKnowledgeConfig() ;
+        // 热点知识配置（更新频率）
+        function getHotKnowledgeConfig(){
+            ApplicationServer.getHotKnowledgeConfig.get({
+                id : APPLICATION_ID
+            },function (response) {
+                if(response.status == 200){
+                    $scope.hotKnowledge.updataRate = response.data.hotQuestionTimeout
+                }
+            })
+        }
         //重置已选择的热点知识
         function initHotKnowSelected(){
             $scope.vm.hotKnowDelIds = [];
             $scope.vm.isAllHotKnowSelected = false;
         }
-
     }
     ])
 };

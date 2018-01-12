@@ -3,21 +3,17 @@
     <div class="page-lrcont210 clearfix bgwhite mt10" style="min-height: 800px;">
         <div class="l-aside fl">
             <div class="aside-hd tac">
-                <!--<img class="hd-img" src="../../../images/images/poto.png"/>-->
-                <!--{{vm.imgUrl}}  +++    {{vm.robotHead}}-->
-                <!--<img class="hd-img" ng-src="{{vm.imgUrl}}{{vm.robotHead}}"/>-->
                 <div style="width:110px;height:110px;overflow: hidden;border-radius:50%;margin:0 auto;border:3px solid #fff;">
-                    <!--<img class="hd-img" ng-src="../../images/touxiang1.png"/>-->
-                    <img class="hd-img" ng-src="{{$parent.$parent.MASTER.headImage}}"/>
+                    <img class="hd-img" ng-src="{{$parent.$parent.MASTER.avatarUrl}}{{$parent.MASTER.avatarId}}"/>
                 </div>
-                <span class="hd-name ellipsis">{{vm.applicationName}}</span>
+                <span class="hd-name ellipsis">{{$parent.$parent.MASTER.applicationName}}</span>
             </div>
             <div class="aside-nav aside-navn">
                 <ul class="">
-                    <li class="type1"  ng-repeat="item in vm.botRoot" data-option-id="{{item.categoryId}}">
+                    <li class="type1"  ng-repeat="item in vm.botRoot" data-option-id="{{item.id}}">
                         <a class="slide-a ellipsis" href="javascript:;">
-                            <i class="icon-jj ngBotAdd" data-option-id="{{item.categoryId}}"></i>
-                            <span data-option-id="{{item.categoryId}}">{{item.categoryName}}</span>
+                            <i class="icon-jj ngBotAdd" data-option-id="{{item.id}}"></i>
+                            <span data-option-id="{{item.id}}">{{item.name}}</span>
                         </a>
                     </li>
                 </ul>
@@ -39,7 +35,7 @@
                     <div class="L pr ">
                         <div class="">
                             <div class="L" style="position: relative;">
-                                <input type="text" class="input_text L mr-10" ng-model="vm.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)"  />
+                                <input type="text" class="input_text L mr-10" ng-model="vm.seekAdvanceParameter.knowledgeTitle" placeholder="请输入知识标题" ng-keypress="vm.keySearch($event)"  />
                                 <button class="btn1 btn1_blue L mr-10" ng-click="vm.napSearch()" style="height:31px;font-size:14px;">查找</button>
                                 <!--<span ng-click="vm.napSearch()" class="cust_searchTip" ></span>-->
                             </div>
@@ -52,10 +48,10 @@
                                 <span class="framework_s">知识内容:</span>
                                 <input type="text" class="input_text" ng-model="vm.seekAdvanceParameter.knowledgeContent"/>
                             </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">知识扩展问:</span>
-                                <input type="text" ng-model="vm.seekAdvanceParameter.searchExtension" class="input_text"/>
-                            </div>
+                            <!--<div class="framework mb-10" style="padding-left: 85px;">-->
+                                <!--<span class="framework_s">知识扩展问:</span>-->
+                                <!--<input type="text" ng-model="vm.seekAdvanceParameter.searchExtension" class="input_text"/>-->
+                            <!--</div>-->
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识有效期：</span>
                                 <span>
@@ -68,23 +64,24 @@
                                 <span class="framework_s">作者:</span>
                                 <input type="text" class="input_text" ng-model="vm.seekAdvanceParameter.knowledgeCreator"/>
                             </div>
-                            <div class="framework mb-10" style="padding-left: 85px;">
-                                <span class="framework_s">知识类型:</span>
-                                <div>
-                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType"  value="" type="radio" name="knoe_type"/>全部</label>
-                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType"  value="100" type="radio" name="knoe_type" />FAQ</label>
-                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>
-                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>
-                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>
-                                    <label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="106"  type="radio" name="knoe_type" />富文本</label>
+                            <!--<div class="framework mb-10" style="padding-left: 85px;">-->
+                                <!--<span class="framework_s">知识类型:</span>-->
+                                <!--<div>-->
+                                    <!--<label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType"  value="" type="radio" name="knoe_type"/>全部</label>-->
+                                    <!--<label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType"  value="100" type="radio" name="knoe_type" />FAQ</label>-->
+                                    <!--<label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="101" type="radio" name="knoe_type" />概念</label>-->
+                                    <!--<label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="102" type="radio" name="knoe_type" />列表</label>-->
+                                    <!--<label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="103"  type="radio" name="knoe_type" />要素</label>-->
+                                    <!--<label class="mr-10"><input ng-model="vm.seekAdvanceParameter.knowledgeType" value="106"  type="radio" name="knoe_type" />富文本</label>-->
 
-                                </div>
-                            </div>
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="framework mb-10" style="padding-left: 85px;">
                                 <span class="framework_s">知识来源:</span>
                                 <div>
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="0" />全部</label>
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="120" />单条新增</label>
+                                    <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="121" />批量导入</label>
                                     <label class="mr-10"><input type="radio" name="knoe_sources" ng-model="vm.seekAdvanceParameter.sourceType" value="122" />文档加工</label>
                                 </div>
                             </div>
@@ -112,7 +109,6 @@
                             <option value="101">概念知识型新增</option>
                             <option value="102">列表型知识新增</option>
                             <option value="103">要素型知识新增</option>
-                            <option value="106">富文本知识新增</option>
                         </select>
                         <a class="L btn btn-blue mr-10" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions" style="line-height:17px;">批量导入</a>
                         <!--<a class="btn btn-green" href="javascript:;" style="line-height:17px;">知识加工</a>-->
@@ -125,7 +121,7 @@
                     <div class="clearfix csso-hd">
                         <div class="fl">
                             <!--<input type="checkbox" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"/>-->
-                            <!--<a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>-->
+                            <a href="javascript:;" class="selectall_a  selectall_a1  L" ng-checked="vm.isSelectAll" ng-click="vm.selectAll(vm.listData)"></a>
                             <!-- 全选-->
                             <span class="L" checkbox-overview ng-click="vm.selectAll(vm.listData)" result="vm.isSelectAll"></span>
 
@@ -166,9 +162,9 @@
                                                     <p  ng-if="item.knowledgeContentNegative==111">
                                                         图片
                                                     </p>
-                                                    <p ng-if="item.knowledgeContentNegative==112">语音</p>
-                                                    <p ng-if="item.knowledgeContentNegative==113">文本</p>
-                                                    <p ng-if="item.knowledgeContentNegative==114">图文</p>
+                                                    <p ng-if="item.type==112">语音</p>
+                                                    <p ng-if="item.type==113">文本</p>
+                                                    <p ng-if="item.type==114">图文</p>
                                                 </li>
                                                 <!-- 列表 概念  faq 知識-->
                                                 <li ng-if="item.knowledgeType!=103 && item.knowledgeType!=106" title="{{item.knowledgeContent}}">

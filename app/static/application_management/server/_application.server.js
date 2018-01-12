@@ -11,9 +11,11 @@ class ApplicationServer {
 
 //   热点知识设置
         //获取热点知识列表 + 查询       删除 /hotQuestion/getHotQuestionList
-        this.queryHotKnowledgeList = $resource(API_APPLICATION+"/hotQuestion/get/by/knowledge/name", {}, {});
-        //获取知识列表 + 查询                                                                                                      //**********OTHER >>>> API_MS
-        this.queryKnowledgeList = $resource(API_MS+"/knowledgeManage/overView/findKnowledgeByApplicationId", {}, {});
+        this.queryHotKnowledgeList = $resource(API_APPLICATION+"/hot/question/get", {}, {});
+        //获取热点知识配置 (更新频率)
+        this.getHotKnowledgeConfig = $resource(API_APPLICATION+"/hot/question/config/get/:id", {}, {});
+        //获取知识列表 + 查询
+        this.queryKnowledgeList = $resource(API_APPLICATION+"/hot/question/knowledge/get", {}, {});
         //添加热点知识
         this.addHotKnowledge = $resource(API_APPLICATION+"/hotQuestion/batchAdd", {}, {});
         //删除热点知识

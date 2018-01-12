@@ -28,7 +28,7 @@ module.exports = knowledgeManagementModule =>{
                 appointRelativeList : "" ,
                 addAppoint : addAppoint ,
                 leaveAppointEnter : leaveAppointEnter ,
-                slideDown :slideDown
+                // slideDown :slideDown
             } ;
             scope.$watch("dirCont.appointRelative",function(val,old){
                 if(val){

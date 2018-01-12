@@ -11,7 +11,7 @@ module.exports = knowledgeManagementModule =>{
                     id : 'facebox',
                     wrapper : "block" ,
                     assign:'emotion-container',       //赋值对象
-                    path:'/libs/qqFace/arclist/'	//表情存放的路径
+                    path:'assets/libs/qqFace/arclist/'	//表情存放的路径
                 });
             },100) ;
         }

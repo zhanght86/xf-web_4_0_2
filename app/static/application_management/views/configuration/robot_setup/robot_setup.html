@@ -12,12 +12,12 @@
                 <div>
                     <input name="robotName" class="input-text" type="text" placeholder="给机器人起个名字吧"
                            ng-model="robot.name" ng-maxlength="8" ng-pattern="/^[\u2E80-\uFE4F]+$/"/>
+                    <span tip-bar="'昵称将会被用作聊天页面中上方机器人的名字，长度不超过8个字'"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotName.$dirty && mySetting.robotName.$invalid">
                         昵称输入不能超过8个汉字，请重新输入！
                     </div>
                 </div>
             </div>
-
             <div class="item-line mt15 mb10">
                 <div class="lable">
                     机器人头像：
@@ -42,6 +42,7 @@
                     <textarea class="textarea" name="robotWelcome" check-welcome="robotWelcome" placeholder="请再次输入欢迎语!"
                               ng-model="robot.welcomes"
                               ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！\\r\n]+$/"/> >小富机器人欢迎您！</textarea>
+                    <span tip-bar="'昵称将会被用作聊天页面中欢迎语'"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotWelcome.$error.pattern">
                         欢迎语只能是汉字，请重新输入
                     </div>
@@ -60,6 +61,7 @@
                     <input class="input-text" type="text" name="robotUnknown" placeholder="当机器人答不上来时，机器人的回复"
                            ng-model="robot.defaultUnknownAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
+                    <span tip-bar="'昵称将会被用作聊天页面回答不上来的回复'"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotUnknown.$dirty && mySetting.robotUnknown.$invalid">
                         您输入的未知回答不能超过50个汉字，请重新输入
                     </div>
@@ -71,6 +73,7 @@
                     <input class="input-text" type="text" name="defaultFuzzyAnswer" placeholder="答案匹配不高时，机器人的模糊回答"
                            ng-model="robot.defaultFuzzyAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
+                    <span tip-bar="'昵称将会被用作聊天页面中答案匹配不高时，机器人的模糊回答'"></span>
                     <!--<div class="error-tip c-red" ng-show="mySetting.defaultFuzzyAnswer.$dirty && mySetting.defaultFuzzyAnswer.$invalid">-->
                         <!--您输入的未知回答不能超过50个汉字，请重新输入-->
                     <!--</div>-->
@@ -83,24 +86,12 @@
                     <input class="input-text" type="text" name="robotSensitive" placeholder="当会话中包含敏感词时，机器人的回复"
                            ng-model="robot.defaultSensitiveAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
+                    <span tip-bar="'昵称将会被用作聊天页面会话中含敏感词时，机器人的回复'"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotSensitive.$dirty && mySetting.robotSensitive.$invalid">
                         您输入的敏感词回答不能超过50个汉字，请重新输入
                     </div>
                 </div>
             </div>
-
-            <div class="setting_div">
-                <span class="setting_span">过期知识回答：</span>
-                <div>
-                    <input class="input-text" name="robotExpire" type="text" placeholder="当问答的知识已经过期了，机器人的回复"
-                           ng-model="robot.defaultExpireAnswer" ng-maxlength="50"
-                           ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <div class="error-tip c-red" ng-show="mySetting.robotExpire.$dirty && mySetting.robotExpire.$invalid">
-                        过期知识回答不能超过50个汉字，请重新输入
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <div class="jqrsz-item">
@@ -148,6 +139,17 @@
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                     <div class="error-tip c-red" ng-show="mySetting.robotTimeout.$dirty && mySetting.robotTimeout.$invalid">
                         会话超时提示不能超过50个汉字，请重新输入
+                    </div>
+                </div>
+            </div>
+            <div class="setting_div">
+                <span class="setting_span">过期知识回答：</span>
+                <div>
+                    <input class="input-text" name="robotExpire" type="text" placeholder="当问答的知识已经过期了，机器人的回复"
+                           ng-model="robot.defaultExpireAnswer" ng-maxlength="50"
+                           ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
+                    <div class="error-tip c-red" ng-show="mySetting.robotExpire.$dirty && mySetting.robotExpire.$invalid">
+                        过期知识回答不能超过50个汉字，请重新输入
                     </div>
                 </div>
             </div>

@@ -5,8 +5,8 @@
             <div class="value Div clearfix">
                 <div class="ipt-txt-box L mr-10">
                     <input class="ipt-txt bd botTagAuto"
-                           style="padding-right:28px;width:395px;height:32px;box-sizing: border-box;" botTagAuto
-                           ng-model="vm.knowledgeBotVal" id="ipt-txt" type="text"
+                           style="padding-right:28px;width:395px;height:32px;box-sizing: border-box;"
+                           ng-model="dirBot.knowledgeBotVal.value" id="ipt-txt" type="text"
                            style="width: 380px;border: solid 1px #ddd;"/>
                     <i class="btn-menu_1" ng-click="MASTER.slideToggle('.rootClassfy')"
                        style="right:1px;top:2px;width:23px;height:28px;"></i>
@@ -17,8 +17,8 @@
                             <li ng-repeat="item in vm.botRoot">
                                 <div class="slide-a">
                                     <a class="ellipsis" href="javascript:;">
-                                        <i class="icon-jj" data-option="{{item.categoryId}}"></i>
-                                        <span>{{item.categoryName}}</span>
+                                        <i class="icon-jj" data-option="{{item.id}}"></i>
+                                        <span>{{item.name}}</span>
                                     </a>
                                 </div>
                             </li>

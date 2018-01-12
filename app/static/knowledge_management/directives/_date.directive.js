@@ -10,15 +10,14 @@ module.exports = knowledgeManagementModule =>{
             return {
                 restrict : "A" ,
                 template : function(scope,attr){
-                    if(attr.selectStartEndTime=="dialog"){
-                        return $templateCache.get("select-start-end-time")
-                    }else{
+                    console.log(attr.selectStartEndTime)
+                    if(attr.selectStartEndTime=="notDialog"){
                         return $templateCache.get("select-start-end-time-not-dialog")
+                    }else{
+                        return $templateCache.get("select-start-end-time")
                     }
                 },
                 link : function(scope,attr,el,ctr){
-
-
                 }
             }
         }])

@@ -14,14 +14,14 @@
 		var tip = option.tip;
 		
 		if(assign.length<=0){
-			console.log('缺少表情赋值对象。');
+			alert('缺少表情赋值对象。');
 			return false;
 		}
 		
 		$(this).click(function(e){
 			var strFace, labFace;
 			if($('#'+id).length<=0){
-				strFace = '<div id="'+id+'" style="padding:5px;position:absolute;background:#fff;border:1px solid #eee;display:none;z-index:1000;" class="qqFace">' +
+				strFace = '<div id="'+id+'" style="position:absolute;display:none;z-index:1000;" class="qqFace">' +
 							  '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 				for(var i=1; i<=75; i++){
 					labFace = '['+tip+i+']';
@@ -56,8 +56,7 @@ unselectContents: function(){
 	} 
 }); 
 jQuery.fn.extend({ 
-	selectContents: function(){
-		console.log(1)
+	selectContents: function(){ 
 		$(this).each(function(i){ 
 			var node = this; 
 			var selection, range, doc, win; 

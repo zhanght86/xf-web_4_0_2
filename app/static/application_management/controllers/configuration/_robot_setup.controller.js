@@ -1,8 +1,6 @@
 /**
  * Created by dinfo on 2017/3/28.
  */
-// /app/assets/libs/jiaoben2728/js/ion.rangeSlider
-require("../../../../assets/libs/jiaoben2728/js/ion.rangeSlider");
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('RobotSetupController', [

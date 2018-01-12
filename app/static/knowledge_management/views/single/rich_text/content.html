@@ -1,57 +1,48 @@
-<script type="text/ng-template">
-</script>
+<!--
+1010	纯文本类型
+1011	否定文本类型
+1018	图片类型
+1019	图文类型
+1020	语音类型
+-->
 <div class="pd-20 knowPopup" style="width: 100%;">
     <div class="tab_tit" style="width: 70%;border-bottom:0;">
-        <span ng-class="vm.contentType==113?'cur':''" ng-click="vm.contentType=113">文本新增</span>
-        <span ng-class="vm.contentType==111?'cur':''" ng-click="vm.contentType=111">图片新增</span>
-        <span ng-class="vm.contentType==112?'cur':''" ng-click="vm.contentType=112">语音新增</span>
-        <span ng-class="vm.contentType==114?'cur':''" ng-click="vm.contentType=114">图文新增</span>
+        <span ng-class="newKnow.type==1010?'cur':''"  ng-click="newKnow.type=1010" >文本</span>
+        <span ng-class="newKnow.type==1018?'cur':''" ng-click="newKnow.type=1018">图片</span>
+        <span ng-class="newKnow.type==1019?'cur':''" ng-click="newKnow.type=1019">图文消息</span>
+        <span ng-class="newKnow.type==1020?'cur':''" ng-click="newKnow.type=1020">语音</span>
     </div>
     <!--emotion-->
-    <div name="emotion" class="miles-textArea-container" ng-show="vm.contentType==113"
+    <div name="emotion" class="miles-textArea-container" ng-show="newKnow.type==1010"
          style="width: 100%;overflow-y: auto;">
-        {{vm.emotionText}}
-        <div class="miles-textArea mb-5" id="emotion-container" name="title" ng-model="vm.emotionText" emotion-format contenteditable="true"
-            style="overflow:auto;height:160px;">
-        </div>
-        <div>
-            <span class="emotion" emotion>表情</span>
-            <span ng-click="vm.addLint()" style="cursor: pointer;margin-left: 8px;">添加连接</span>
-        </div>
+
+        <textarea class="miles-textArea mb-5" ng-model="newKnow.content"></textarea>
     </div>
     <!-- pic-->
-    <div name="Teletext" class="miles-textArea-container" ng-show="vm.contentType==111"
-         style="width: 100%;overflow-y: auto;">
-        <img name="title" ng-if="vm.imgSelected" ng-click="vm.selectMultimedia()" ng-src="/img/{{vm.imgSelected.url}}"
+    <div name="Teletext" class="miles-textArea-container" ng-show="newKnow.type==1018"
+         style="width: 100%;min-height: 220px;">
+        <img name="title"  ng-click="vm.selectMultimedia(1018)" ng-src="{{newKnow.imgSelected?vm.imageApi+newKnow.imgSelected.id:'/assets/images/photo_add3.png'}}"
              alt="" style="width: 188px;height: 150px;"/>
-        <img name="title" ng-if="!vm.imgSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
-             style="width: 150px;height: 150px;cursor:pointer;"/>
-
-        <p ng-if="vm.imgSelected" style="margin-top: 10px;">已添加：{{vm.imgSelected.name}}</p>
+        <p ng-if="newKnow.imgSelected" style="margin-top: 10px;">已添加：{{newKnow.imgSelected.name}}</p>
     </div>
     <!-- pic-text-->
-    <div name="imgText" class="miles-textArea-container" ng-show="vm.contentType==114"
-         style="width: 100%;overflow-y: auto;">
-        <img name="title" ng-if="vm.imgTextSelected" ng-click="vm.selectMultimedia()" ng-src="/img/{{vm.imgTextSelected.url}}"
+    <div name="imgText" class="miles-textArea-container" ng-show="newKnow.type==1019"
+         style="width: 100%;min-height: 220px;">
+        <img name="title" ng-click="vm.selectMultimedia(1019)" ng-src="{{newKnow.imgTextSelected?vm.imageApi+newKnow.imgTextSelected.url:'/assets/images/photo_add3.png'}}"
              alt="" style="width: 188px;height: 150px;"/>
-        <img name="title" ng-if="!vm.imgTextSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
-             style="width: 150px;height: 150px;cursor:pointer;"/>
-
-        <p ng-if="vm.imgTextSelected" style="margin-top: 10px;">已添加：{{vm.imgTextSelected.name}}</p>
+        <p ng-if="newKnow.imgTextSelected" style="margin-top: 10px;">已添加：{{newKnow.imgTextSelected.name}}</p>
     </div>
     <!--voice-->
-    <div name="voice" class="miles-textArea-container" ng-show="vm.contentType==112"
-         style="width: 100%;overflow-y: auto;">
-        <img name="title" ng-if="vm.voiceSelected" ng-click="vm.selectMultimedia()" src="/images/audio_pic1.png" alt=""
+    <div name="voice" class="miles-textArea-container" ng-show="newKnow.type==1020"
+         style="width:100%;min-height: 220px;">
+        <img name="title" ng-click="vm.selectMultimedia(1020)" ng-src="{{newKnow.voiceSelected?'/assets/images/audio_pic1.png':'/assets/images/photo_add3.png'}}" alt=""
              style="width: 150px;height: 150px;cursor:pointer;"/>
-        <img name="title" ng-if="!vm.voiceSelected" ng-click="vm.selectMultimedia()" src="/images/photo_add3.png" alt=""
-             style="width: 150px;height: 150px;cursor:pointer;"/>
-
-        <p ng-if="vm.voiceSelected" style="margin-top: 10px;">已添加：{{vm.voiceSelected.name}}</p>
-    </div>{{vm.channelIdList}}
+        <p ng-if="newKnow.voiceSelected" style="margin-top: 10px;">已添加：{{newKnow.voiceSelected.name}}</p>
+    </div>
+    <br>
     <div know-content-configuration="queryRichTextRelatedQuestion" template-type="false"></div>
     <div class="tc mb-10">
-        <input  value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="vm.increaseCheck(closeThisDialog)" >
+        <input  value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="vm.newKnowCheck(closeThisDialog)" >
         <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>
     </div>
 </div>

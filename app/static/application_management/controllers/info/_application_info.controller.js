@@ -44,9 +44,7 @@ module.exports = applicationManagementModule =>{
         listServiceData(1);
         //获取服务列表
         function listServiceData(index){
-            ApplicationServer.queryServiceList.save({
-                // "index" : (index-1)*$scope.vm.paginationConf.pageSize,
-                // "pageSize": $scope.vm.paginationConf.pageSize
+            return ApplicationServer.queryServiceList.save({
                 "index" : 0,
                 "pageSize": 9999
             },function(response){
@@ -54,7 +52,14 @@ module.exports = applicationManagementModule =>{
                 // $scope.vm.paginationConf.totalItems = response.data.total ;
                 // $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize ;
             },function(error){console.log(error)})
+
         }
+// var a = listServiceData()
+//
+//           a.$promise.then(function(re){
+//                 console.log(re)})
+
+
         //发布服务
         function publishService(serviceId){
             ApplicationServer.releaseService.save({

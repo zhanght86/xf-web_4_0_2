@@ -3,10 +3,10 @@
  * @Create : 2017/12/7.
  * @Module : 框架库
  */
-module.exports = businessModelingModule =>{
+ module.exports = businessModelingModule =>{
     businessModelingModule.controller('FrameLibraryController', [
-    '$scope','$timeout',"$state", "$stateParams","BusinessModelingServer","$compile","$location","ngDialog","$cookieStore","$interval","$http",
-    ($scope,$timeout,$state, $stateParams,BusinessModelingServer,$compile,$location,ngDialog,$cookieStore,$interval,$http) =>{
+        '$scope','$timeout',"$state", "$stateParams","BusinessModelingServer","$compile","$location","ngDialog","$cookieStore","$interval","$http",
+        ($scope,$timeout,$state, $stateParams,BusinessModelingServer,$compile,$location,ngDialog,$cookieStore,$interval,$http) =>{
         // $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             success : 10000,
@@ -80,60 +80,55 @@ module.exports = businessModelingModule =>{
             selectSingle:selectSingle,
             initBatchTest:initBatchTest,
             classifyId:"",
-
             delSelectAll:delSelectAll,
             delSelectSingle:delSelectSingle,
             delIds:[],
-            flag:false
-
         };
-       
-    //添加扩展问模板
-     $scope.vm.extensionProblem.push({
-           "attributeType":80,
-            "order":0
+
+        //添加扩展问模板
+        $scope.vm.extensionProblem.push({
+         "attributeType":80,
+         "order":0
         })
          //键盘监听事件
          function keyLogin(e){
-           var srcObj = e.srcElement ? e.srcElement : e.target;
-           var keycode = window.event?e.keyCode:e.which;
+             var keycode = window.event?e.keyCode:e.which;
             if(keycode==13){//回车
                 addQues();
             }
+             $timeout(function(){
+                $(e.target).parent().next().find("input").focus();
+            },100)
         }
-        function addQues(){
+        function addQues(e){
+              e = e || window.event ;
             //初始化数字值
-            $scope.vm.contentList.length=0;
+            $scope.vm.extensionProblem.length=0;
             var len=$(".extensionProblem").length
             for(var i=0;i<len;i++){
                 //当扩展问为空时删除扩展问
                 if($(".extensionProblem").eq(i).val()==""){
                     $scope.vm.extensionProblem.splice(i,1)
                 }else{
-                    console.log($(".extensionProblem").eq(i).val())
-                    $scope.vm.contentList.push({
-                        "attributeType":"80",
-                        "content":$(".extensionProblem").eq(i).val()
+                     //当扩展问不为空时新增一行
+                    $scope.vm.extensionProblem.push({
+                        "attributeType":80,
+                        "content":$(".extensionProblem").eq(i).val(),
                     })
+                    $scope.vm.contentList=$scope.vm.extensionProblem
                 }
             }
-            //当扩展问不为空时新增一行
             $scope.vm.extensionProblem.push({
-            "order":1
-          })
-            console.log($scope.vm.contentList)
+                "attributeType":80,
+                "content":"",
+            })
+
         }
-
-
         $scope.categoryAttributeName;
-
-        // var categoryApplicationId = $cookieStore.get("applicationId");
-        // var categoryModifierId = $cookieStore.get("userId");
         var categoryApplicationId = APPLICATION_ID;
         var categoryModifierId = USER_ID;
-
+        //自动获高度
         autoHeightForFrame();
-
         function autoHeightForFrame(){
             var $win = $(window);
             var winHeight = $win.height()*0.75;
@@ -142,7 +137,7 @@ module.exports = businessModelingModule =>{
             $(".libraryRth").attr("style","width: 710px;height: "+winHeight+"px;overflow-y: auto;background: #fff;float: right;padding: 30px;box-sizing:border-box;");
         }
 
-       var params = {
+        var params = {
             "name":$("#category-autocomplete").val().trim(),
         };
         //类目查找自动补全
@@ -255,17 +250,17 @@ module.exports = businessModelingModule =>{
             var list = $(".aside-navs").find("li");
             var flag = false;
             $.each(list,function(index,value){
-                if($(value).attr("data-option")==$(node).attr("data-option")){
-                    var currNode = $(value).find("i").filter(":eq(0)");
-                    if($(currNode).attr("data-option")==suggestion.data){
-                        clearColor();
-                        $scope.vm.knowledgeBotVal = $(currNode).next().html();
-                        $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
-                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
-                        $(currNode).next().attr("style","color:black;font-weight:bold;");
-                        loadFrameLibrary(1,0);
-                        $scope.$apply();
-                        flag = true;
+               // if($(value).attr("data-option")==$(node).attr("data-option")){
+                var currNode = $(value).find("i").filter(":eq(0)");
+                if($(currNode).attr("data-option")==suggestion.data){
+                    clearColor();
+                    $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                    $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                    $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                    $(currNode).next().attr("style","color:black;font-weight:bold;");
+                    loadFrameLibrary(1,0);
+                    $scope.$apply();
+                    flag = true;
                         //跳出
                         return false;
                     }else{
@@ -279,11 +274,47 @@ module.exports = businessModelingModule =>{
                             appendTree(currNode);
                         }
                         //递归
-                        recursionForFrame(suggestion,currNode);
+                        //recursionForFrame(suggestion,currNode);
                     }
-                }
-            });
-        }
+              //  }
+          });
+recursionForFrameAgain(suggestion,node);
+}
+
+function recursionForFrameAgain(suggestion,node){
+    var list = $(".aside-navs").find("li");
+    var flag = false;
+    $.each(list,function(index,value){
+               // if($(value).attr("data-option")==$(node).attr("data-option")){
+                var currNode = $(value).find("i").filter(":eq(0)");
+                if($(currNode).attr("data-option")==suggestion.data){
+                    clearColor();
+                    $scope.vm.knowledgeBotVal = $(currNode).next().html();
+                    $scope.vm.botSelectValue = $(currNode).next().attr("data-option");
+                    $scope.vm.classifyId = $(currNode).next().attr("data-option");
+                    $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                    $(currNode).next().attr("style","color:black;font-weight:bold;");
+                    loadFrameLibrary(1,0);
+                    $scope.$apply();
+                    flag = true;
+                        //跳出
+                        return false;
+                    }else{
+                        if(flag==true){
+                            return false;
+                        }
+                        //展开
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendTree(currNode);
+                        }
+                        //递归
+                        //recursionForFrame(suggestion,currNode);
+                    }
+              //  }
+          });
+}
         //加载业务树
         initBot();
         //获取root 数据
@@ -291,45 +322,45 @@ module.exports = businessModelingModule =>{
             $(".aside-navs").empty();
             $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
               console.log(data)
-                var html =  '<ul class="menus show">';
-                for(var i=0;data.data != null && i<data.data.length;i++){
-                    html+= '<li data-option="'+data.data[i].id+'">' +
-                        '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
-                        '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+              var html =  '<ul class="menus show">';
+              for(var i=0;data.data != null && i<data.data.length;i++){
+                html+= '<li data-option="'+data.data[i].id+'">' +
+                '<div class="slide-a">'+
+                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
+                '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
                         // '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
-                }
-                html+='</ul>';
-                $(".aside-navs").append(html);
-                var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
-                if($(firstNode).css("backgroundPosition")=="0% 0%"){
-                    appendTree(firstNode);
-                }else if($(firstNode).parent().parent().next()==null){
-                    appendTree(firstNode);
-                }
-            },function(){
-            });
-        }
-         $(".aside-navs").on("click","span",function(){
-            clearColor();
-            $scope.vm.knowledgeBotVal = $(this).html();
-            $scope.vm.botSelectValue = $(this).attr("data-option");
-            $scope.vm.botSelectType = $(this).attr("type-option");
-            $scope.vm.categoryAttributeName = $(this).attr("node-option");
-           $scope.vm.classifyId=$(this).attr("id-option");
-            $scope.vm.categoryPid=$(this).attr("pid-option")
-            if($scope.vm.categoryAttributeName=="node"){
-                $(this).attr("style","color:black;font-weight:bold;");
-            }else if($scope.vm.categoryAttributeName=="edge"){
-                $(this).attr("style","color:#ED7D31;font-weight:bold;");
-            }
-             loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-            $scope.$apply();
-        });
+                    }
+                    html+='</ul>';
+                    $(".aside-navs").append(html);
+                    var firstNode = $(".aside-navs").find("i").filter(":eq(0)");
+                    if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                        appendTree(firstNode);
+                    }else if($(firstNode).parent().parent().next()==null){
+                        appendTree(firstNode);
+                    }
+                },function(){
+                });
+}
+$(".aside-navs").on("click","span",function(){
+    clearColor();
+    $scope.vm.knowledgeBotVal = $(this).html();
+    $scope.vm.botSelectValue = $(this).attr("data-option");
+    $scope.vm.botSelectType = $(this).attr("type-option");
+    $scope.vm.categoryAttributeName = $(this).attr("node-option");
+    $scope.vm.classifyId=$(this).attr("id-option");
+    $scope.vm.categoryPid=$(this).attr("pid-option")
+    if($scope.vm.categoryAttributeName=="node"){
+        $(this).attr("style","color:black;font-weight:bold;");
+    }else if($scope.vm.categoryAttributeName=="edge"){
+        $(this).attr("style","color:#ED7D31;font-weight:bold;");
+    }
+    loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+    $scope.$apply();
+});
 
         //节点样式转换
         function nodeStyleSwitch(attrType){
@@ -368,37 +399,43 @@ module.exports = businessModelingModule =>{
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-               $http.get('api/ms/classify/get/children/'+""+id+"").success(function(data,status,headers,congfig){
-                    console.log(data)
-                    if(data.data){
-                        var html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                             html+= '<li data-option="'+data.data[i].id+'">' +
-                        '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].relation)+'>'+
-                        '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
-                        // '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
-                        '</a>' +
-                        '</div>' +
-                        '</li>';
+                $.ajax("api/ms/classify/get/children/"+id+"",{
+                dataType: 'json', //服务器返回json格式数据
+                type: "GET", //HTTP请求类型
+                async:false,
+                cache:false,
+                success:function(data) {
+                    if(data.status==200){
+                        if(data.data){
+                            var html = '<ul class="menus">';
+                            for(var i=0;i<data.data.length;i++){
+                               html+= '<li data-option="'+data.data[i].id+'">' +
+                               '<div class="slide-a">'+
+                               '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
+                               '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                               '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                                // '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                                '</a>' +
+                                '</div>' +
+                                '</li>';
+                            }
+                            html+="</ul>";
+                            $(html).appendTo((that.parent().parent().parent()));
+                            that.parent().parent().next().slideDown();
                         }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown();
                     }
-                },function(err){
-                });
-            }else{
-                if(that.css("backgroundPosition")=="0% 0%"){
-                    that.css("backgroundPosition","0% 100%");
-                    that.parent().parent().next().slideDown();
-                }else{
-                    that.css("backgroundPosition","0% 0%");
-                    that.parent().parent().next().slideUp();
-                }
-            }
-        }
+                },
+            })
+}else{
+    if(that.css("backgroundPosition")=="0% 0%"){
+        that.css("backgroundPosition","0% 100%");
+        that.parent().parent().next().slideDown();
+    }else{
+        that.css("backgroundPosition","0% 0%");
+        that.parent().parent().next().slideUp();
+    }
+}
+}
         //清除已选颜色
         function clearColor(){
             $.each($(".aside-navs").find("span"),function(index,value){
@@ -420,12 +457,14 @@ module.exports = businessModelingModule =>{
             }
             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
-                case 161:
-                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
                 case 160:
-                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
+                style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';break;
+                case 161:
+                style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
+                case 163:
+                style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
                 case 162:
-                    style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
+                style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
             return style;
         }
@@ -444,25 +483,25 @@ module.exports = businessModelingModule =>{
                 $location.search("currentPage",1 ) ;
             }
            // let i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
-            httpRequestPost("/api/ms/frame/get/param",{
-                "title": $scope.vm.title,
-                "classifyId":$scope.vm.classifyId,
-                "index": (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize,
-            },function(data){
+           httpRequestPost("/api/ms/frame/get/param",{
+            "title": $scope.vm.title,
+            "classifyId":$scope.vm.classifyId,
+            "index": (index-1)*$scope.vm.paginationConf.pageSize,
+            "pageSize": $scope.vm.paginationConf.pageSize,
+        },function(data){
                 // layer.close(i);
-               if(data.status==200){
-                 $scope.vm.listData = data.data.data;
-                 $scope.vm.paginationConf.totalItems = data.data.total;
-                 $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
+                if(data.status==200){
+                   $scope.vm.listData = data.data.data;
+                   $scope.vm.paginationConf.totalItems = data.data.total;
+                   $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize;
                }else{
-                  
+
                }
-                $scope.$apply();
-            },function(err){
+               $scope.$apply();
+           },function(err){
                // layer.close(i);
-            });
-        }
+           });
+       }
 
           /**
             *   
@@ -470,10 +509,10 @@ module.exports = businessModelingModule =>{
             编辑
             *
             */
-        function editFrame(item){
-            $scope.vm.frameTypeId=item.type;
-            $scope.vm.frameInfo=JSON.stringify(item);
-            var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
+            function editFrame(item){
+                $scope.vm.frameTypeId=item.type;
+                $scope.vm.frameInfo=JSON.stringify(item);
+                var frameInfo = eval('(' + $scope.vm.frameInfo + ')');
             //赋值
             if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
                 updateFaq(item);
@@ -488,27 +527,27 @@ module.exports = businessModelingModule =>{
             单条框架信息删除
             *
             */
-        function deleteFrame(item){
-            var frameId = item.id;
-            layer.confirm('确认删除？', {
+            function deleteFrame(item){
+                var frameId = item.id;
+                layer.confirm('确认删除？', {
                 btn: ['确认','取消'], //按钮
                 shade: 0.3 //不显示遮罩
             }, function(){
-                 httpRequestPost("api/ms/frame/delete/"+frameId+"",{
-                },function(data){
-                   if(data.status==200){
-                       layer.msg(data.info,{time:2000})
-                        loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                    }else{
-                        layer.msg(data.info,{time:2000})
-                    }
-                },function(err){
-                });
-            }, function(){
+               httpRequestPost("api/ms/frame/delete/"+frameId+"",{
+               },function(data){
+                 if(data.status==200){
+                     layer.msg(data.info,{time:2000})
+                     loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                 }else{
+                    layer.msg(data.info,{time:2000})
+                }
+            },function(err){
             });
-        }
+           }, function(){
+           });
+            }
 
-       
+
         //全选
         function selectAll(){
             if($scope.vm.isSelectAll){
@@ -559,16 +598,16 @@ module.exports = businessModelingModule =>{
                     "frameIds":$scope.vm.ids,
                 },function(data){
                     if(data.status==200){
-                         loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                       loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                          initBatchTest();  //清空选项 
                          layer.msg(data.data.statusName,{time:2000})
-                    }else{
-                         layer.msg(data.data.statusName,{time:2000})
-                    }
-                });
+                     }else{
+                       layer.msg(data.data.statusName,{time:2000})
+                   }
+               });
             });
         }
-     
+
         /**
         *   
         框架库
@@ -599,8 +638,8 @@ module.exports = businessModelingModule =>{
                         $scope.vm.extensionProblem.length=0;
                         $scope.vm.extensionProblem.push({
                           "attributeType":80,
-                           "order":0
-                        })
+                          "order":0
+                      })
                         
                         $scope.vm.frameTypeId=$("#frameTypeId").val();
                         $scope.vm.frameTitle=$("#frameTitle").val().trim();
@@ -615,7 +654,7 @@ module.exports = businessModelingModule =>{
                         if(frameTitleRepeatCheck()==false){
                             $("#frameAddErrorObj").html("标题重复"); 
                             return false;
-                           }
+                        }
 
                         if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
                             addFaq();
@@ -626,7 +665,7 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
-        }
+}
 
         /**
          * 框架标题重复判断
@@ -642,18 +681,18 @@ module.exports = businessModelingModule =>{
                 cache:false,
                 data: {
                   "title":$scope.vm.frameTitle
-                }, 
-                success:function(data) {
-                    if(data.status==200){
-                       flag=true;
-                    }else if(data.status==500){
-                       flag=false;
-                    }
-                },error:function(data) {
-                    console.log(data)
-                },
-            })
-             return flag
+              }, 
+              success:function(data) {
+                if(data.status==200){
+                 flag=true;
+             }else if(data.status==500){
+                 flag=false;
+             }
+         },error:function(data) {
+            console.log(data)
+        },
+    })
+            return flag
         }
         //添加表达式
         function addFaq(){
@@ -669,7 +708,7 @@ module.exports = businessModelingModule =>{
                     if(e === 1){
                         if(faqValidata(0)==true){
                             faqRequestAdd();
-                             
+
                         }else{
                             return false;
                         }
@@ -705,44 +744,44 @@ module.exports = businessModelingModule =>{
                 "contentList":$scope.vm.contentList 
             },function(data){
                 if(data.status==200){
-                     layer.msg(data.info,{time:2000})
-                     loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                 }else{
-                    layer.msg(data.info,{time:2000})
-                 }
-            },function(err){
-            });
+                   layer.msg(data.info,{time:2000})
+                   loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+               }else{
+                layer.msg(data.info,{time:2000})
+            }
+        },function(err){
+        });
         }
 
         //IFQ和概念要素的修改
         function updateFaq(item){
             console.log(item)
-           $scope.vm.extensionProblem.length=0;
-           $scope.vm.frameEnableStatusId=item.status;
-           $scope.vm.frameTitle=item.title;
-           $scope.vm.frameTypeId=item.type;
-           $scope.vm.classifyId=item.classifyId;
-           $scope.vm.id=item.id;
-           for (let i= 0; i < item.frameContentList.length; i++) {
-               $scope.vm.extensionProblem.push({
-                  "content":item.frameContentList[i].content,
-                  "order":i
-               })
-           };
-            $scope.vm.extensionProblem.push(
-                {
-                 "content":"",
-                  "order":1
-                })
-          
-            var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/views/frame/update_faq_frame.html",
-                width:"625px",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
+            $scope.vm.extensionProblem.length=0;
+            $scope.vm.frameEnableStatusId=item.status;
+            $scope.vm.frameTitle=item.title;
+            $scope.vm.frameTypeId=item.type;
+            $scope.vm.classifyId=item.classifyId;
+            $scope.vm.id=item.id;
+            for (let i= 0; i < item.frameContentList.length; i++) {
+             $scope.vm.extensionProblem.push({
+              "content":item.frameContentList[i].content,
+              "order":i
+          })
+         };
+         $scope.vm.extensionProblem.push(
+         {
+           "content":"",
+           "order":1
+       })
+
+         var dialog = ngDialog.openConfirm({
+            template:"/static/business_modeling/views/frame/update_faq_frame.html",
+            width:"625px",
+            scope: $scope,
+            closeByDocument:false,
+            closeByEscape: true,
+            showClose : true,
+            backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         if(faqValidata(1)==true){
@@ -754,28 +793,28 @@ module.exports = businessModelingModule =>{
                     loadFrameLibrary(1,0);
                 }
             });
+     }
+
+     function faqRequestUpdate(){
+        httpRequestPost("/api/ms/frame/update",{
+            "id":$scope.vm.id,
+            "classifyId":$scope.vm.classifyId,
+            "status":$scope.vm.frameEnableStatusId,
+            "title":$scope.vm.frameTitle,
+            "type":$scope.vm.frameTypeId,
+            "contentList":$scope.vm.contentList 
         }
-       
-        function faqRequestUpdate(){
-            httpRequestPost("/api/ms/frame/update",{
-                "id":$scope.vm.id,
-                "classifyId":$scope.vm.classifyId,
-                "status":$scope.vm.frameEnableStatusId,
-                "title":$scope.vm.frameTitle,
-                "type":$scope.vm.frameTypeId,
-                "contentList":$scope.vm.contentList 
-            }
-            ,function(data){
-                 if(data.status==200){
-                    layer.msg(data.info,{time:2000})
-                     loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                 }else{
-                    layer.msg(data.info,{time:2000})
-                 }
-            },function(err){
-            });
+        ,function(data){
+           if(data.status==200){
+            layer.msg(data.info,{time:2000})
+            loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        }else{
+            layer.msg(data.info,{time:2000})
         }
-      
+    },function(err){
+    });
+    }
+
         //////////////////////////////////要素新////////////////////////////////////////
         //添加要素
         function addElement(){
@@ -799,44 +838,52 @@ module.exports = businessModelingModule =>{
             });
             if(dialog){
                 $timeout(function () {
-                    $(".ele-name").blur(function(){
-                        alert(1)
-                        $.each($("#add-item").find("tr"),function(index,value){
-                            if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
-                               layer.msg('要素名称不能与已有要素名称重复');
-                                $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                                return true;
-                            }else{
-                                $("#ele-name-error").html('');
-                                $("#ele-name-error").attr("style","display:none;");
-                            }
-                        });
-                    });
+                //     $(".ele-name").blur(function(){
+                //         alert(1)
+                //         console.log($(this).val())
+                //         //  alert(1)
+                //         // $.each($("#add-item").find("tr"),function(index,value){
+                //         //     if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
+                //         //        layer.msg('要素名称不能与已有要素名称重复');
+                //         //         $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
+                //         //         return true;
+                //         //     }else{
+                //         //         $("#ele-name-error").html('');
+                //         //         $("#ele-name-error").attr("style","display:none;");
+                //         //     }
+                //         // });
+                // });
                 
+
                 }, 100);
             }
         }
+
+
+              
         //元素类型验证
         function elementValidate(){
-             $scope.vm.contentList.length=0;
-            var len=$scope.vm.extensionProblem.length;
-            for(var i=1;i<len;i++){
-               var value=$(".ele-name").eq(i).val();
-               if(value==""){
-                  layer.msg("要素名称不能为空");
-                   return false;
-               }else{
-                  $scope.vm.contentList.push({
-                    askContent:$(".ele-asked").eq(i).val(),
-                    content:$(".ele-name").eq(i).val(),
-                    attributeType:$(".ele-type").eq(i).val(),
-                }) 
-               }
-            } 
-            return true;
-            console.log($scope.vm.contentList)
-        }
-        
+           $scope.vm.contentList.length=0;
+           var len=$scope.vm.extensionProblem.length;
+           console.log("===================")
+           console.log($scope.vm.extensionProblem)
+           for(var i=1;i<len;i++){
+             var value=$(".ele-name").eq(i).val();
+             if(value==""){
+              layer.msg("要素名称不能为空");
+              return false;
+          }else{
+              $scope.vm.contentList.push({
+                askContent:$(".ele-asked").eq(i).val(),
+                content:$(".ele-name").eq(i).val(),
+                attributeType:$(".ele-type").eq(i).val(),
+            }) 
+          }
+      } 
+      return true;
+
+  }
+
         //元素类型添加请求
         function elementRequestAdd(){
             httpRequestPost("/api/ms/frame/add",{
@@ -847,15 +894,15 @@ module.exports = businessModelingModule =>{
                 "type":$scope.vm.frameTypeId
             },function(data){
                 if(data.status==200){
-                     loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                     layer.msg(data.info,{time:2000})
-
-                 }else{
+                   loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                    layer.msg(data.info,{time:2000})
-                 }
-            },function(err){
-                console.log(err)
-            });
+
+               }else{
+                 layer.msg(data.info,{time:2000})
+             }
+         },function(err){
+            console.log(err)
+        });
         }
 
 
@@ -870,43 +917,43 @@ module.exports = businessModelingModule =>{
                 "type":$scope.vm.frameTypeId
             },function(data){
                 if(data.status==200){
-                     loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                     layer.msg(data.info,{time:2000})
-                 }else{
+                   loadFrameLibrary($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                    layer.msg(data.info,{time:2000})
-                 }
-            },function(err){
-            });
+               }else{
+                 layer.msg(data.info,{time:2000})
+             }
+         },function(err){
+         });
         }
         //修改要素
         function updateElement(item){
             console.log(item)
-           $scope.vm.extensionProblem.length=0;
-           $scope.vm.frameEnableStatusId=item.status;
-           $scope.vm.frameTitle=item.title;
-           $scope.vm.frameTypeId=item.type;
-           $scope.vm.classifyId=item.classifyId;
-           $scope.vm.id=item.id;
-           for (let i= 0; i < item.frameContentList.length; i++) {
-               $scope.vm.extensionProblem.push({
-                  "content":item.frameContentList[i].content,
-                  "askContent":item.frameContentList[i].askContent,
-                  "attributeType":item.frameContentList[i].attributeType,
-                  "order":1
-               })
-           };
-            $scope.vm.extensionProblem.splice(0,0,{
-                "attributeType":80,
-                 "order":0
-            })
-            var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/views/frame/update_factor_frame.html",
-                width:"840px",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
+            $scope.vm.extensionProblem.length=0;
+            $scope.vm.frameEnableStatusId=item.status;
+            $scope.vm.frameTitle=item.title;
+            $scope.vm.frameTypeId=item.type;
+            $scope.vm.classifyId=item.classifyId;
+            $scope.vm.id=item.id;
+            for (let i= 0; i < item.frameContentList.length; i++) {
+             $scope.vm.extensionProblem.push({
+              "content":item.frameContentList[i].content,
+              "askContent":item.frameContentList[i].askContent,
+              "attributeType":item.frameContentList[i].attributeType,
+              "order":1
+          })
+         };
+         $scope.vm.extensionProblem.splice(0,0,{
+            "attributeType":80,
+            "order":0
+        })
+         var dialog = ngDialog.openConfirm({
+            template:"/static/business_modeling/views/frame/update_factor_frame.html",
+            width:"840px",
+            scope: $scope,
+            closeByDocument:false,
+            closeByEscape: true,
+            showClose : true,
+            backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
                         if(elementValidate()==true){
@@ -917,28 +964,33 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
-        }
-        
-        
+     }
+
+
         //开关
         function turnOn(targetValue,targetName){
             $scope.vm[targetName] = targetValue ? 0 : 1 ;
         }
-       
+
         //添加表格子元素
         function addEle(){
             var eleName = $(".ele-name").val();
             if(lengthCheck(eleName,0,50)==false){
-               layer.msg('要素名称不能为空或超过长度限制50');
-                return;
+             layer.msg('要素名称不能为空或超过长度限制50');
+             return;
+            }
+            for(var i=1;i<$scope.vm.extensionProblem.length;i++){
+                if($scope.vm.extensionProblem[0].content==$scope.vm.extensionProblem[i].content){
+                  layer.msg('要素名称不能与已有要素名称重复');
+                  return;
+                }
             }
             //初始化表格元素
             $scope.vm.extensionProblem[0].order=1;
             $scope.vm.extensionProblem.splice(0,0,{
-            "attributeType":80,
-            "order":0
-           })
-
+                "attributeType":80,
+                "order":0
+            })
         }
 
         //全选
@@ -952,7 +1004,6 @@ module.exports = businessModelingModule =>{
                 for (var i =1 ; i <$scope.vm.extensionProblem.length; i++) {
                     $scope.vm.delIds.push(i);
                 };
-               
             }
             console.log($scope.vm.delIds);
         }
@@ -975,8 +1026,6 @@ module.exports = businessModelingModule =>{
             $scope.vm.isSelectAll=false;
             $scope.vm.delIds=[];
         }    
-
-        
         //删除表格子元素
         function delEle(){
             console.log($scope.vm.delIds)
@@ -984,29 +1033,29 @@ module.exports = businessModelingModule =>{
             if($scope.vm.delIds.length==0){
               layer.msg("请选择要删除的信息！")
               return;
-            }
-            layer.confirm("确认删除？",{
-                btn:['确认','取消'],
-                shade:false
-            },function(index){
-                layer.close(index);
-               for(let i=0;i<$scope.vm.delIds.length;i++){
-                     $scope.vm.extensionProblem.splice($scope.vm.delIds.sort(function(a,b){return b-a})[i],1)
-               }
-               layer.msg("删除成功")
-               delSelect();
+          }
+          layer.confirm("确认删除？",{
+            btn:['确认','取消'],
+            shade:false
+        },function(index){
+            layer.close(index);
+            for(let i=0;i<$scope.vm.delIds.length;i++){
+               $scope.vm.extensionProblem.splice($scope.vm.delIds.sort(function(a,b){return b-a})[i],1)
+           }
+           layer.msg("删除成功")
+           delSelect();
 
-            },function(){
-            });
-        }
-        
+       },function(){
+       });
+      }
+
         /**
      * 长度检测 包括边界
      * @param value
      * @param min
      * @param max
      */
-    function lengthCheck(value,min,max){
+     function lengthCheck(value,min,max){
         if(nullCheck(value)==false){
             return false;
         }
@@ -1018,24 +1067,24 @@ module.exports = businessModelingModule =>{
         }
         return true;
     }
-       
+
 
         ////////////////////////////////导入、导出、模板下载///////////////////////////////////////////
 
             //批量导入
-        function batchUpload(){
-            var frameType = 10011;
-            if($scope.vm.botSelectValue=="root"){
-                layer.msg("请选择类目");
-                return;
-            }
-            var dialog1 = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
+            function batchUpload(){
+                var frameType = 10011;
+                if($scope.vm.botSelectValue=="root"){
+                    layer.msg("请选择类目");
+                    return;
+                }
+                var dialog1 = ngDialog.openConfirm({
+                    template:"/static/business_modeling/frame_database/frame_select_dialog.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e==10011){
                         frameType=10011;
@@ -1049,37 +1098,36 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
-        }
+            }
 
-        function batchUploadFrame(frameType){
-            var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/batch_upload.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
+            function batchUploadFrame(frameType){
+                var dialog = ngDialog.openConfirm({
+                    template:"/static/business_modeling/batch_upload.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     //refresh
                     loadFrameLibrary(1,0);
                 }
             });
-            if(dialog){
-                $timeout(function () {
-                    initUpload('/api/ms/modeling/frame/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&categoryId='+$scope.vm.botSelectValue+'&frameTypeId='+frameType);
-                }, 100);
+                if(dialog){
+                    $timeout(function () {
+                        initUpload('/api/ms/modeling/frame/batchAdd?applicationId='+categoryApplicationId+'&modifierId='+categoryModifierId+'&categoryId='+$scope.vm.botSelectValue+'&frameTypeId='+frameType);
+                    }, 100);
+                }
             }
-        }
-
-        function downloadTemplate(){
-            var frameTemplate = "frame_faq_template.xlsx";
-            var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
+            function downloadTemplate(){
+                var frameTemplate = "frame_faq_template.xlsx";
+                var dialog = ngDialog.openConfirm({
+                    template:"/static/business_modeling/frame_database/frame_select_dialog.html",
+                    scope: $scope,
+                    closeByDocument:false,
+                    closeByEscape: true,
+                    showClose : true,
+                    backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e==10011){
                         frameTemplate="frame_faq_template.xlsx";
@@ -1093,21 +1141,20 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
-        }
-
-        function exportAll(){
-            var frameType = 10011;
-            if($scope.vm.botSelectValue=="root"){
-                layer.msg("请选择类目");
-                return;
-            }
-            var dialog1 = ngDialog.openConfirm({
-                template:"/static/business_modeling/frame_database/frame_select_dialog.html",
-                scope: $scope,
-                closeByDocument:false,
-                closeByEscape: true,
-                showClose : true,
-                backdrop : 'static',
+}
+function exportAll(){
+    var frameType = 10011;
+    if($scope.vm.botSelectValue=="root"){
+        layer.msg("请选择类目");
+        return;
+    }
+    var dialog1 = ngDialog.openConfirm({
+        template:"/static/business_modeling/frame_database/frame_select_dialog.html",
+        scope: $scope,
+        closeByDocument:false,
+        closeByEscape: true,
+        showClose : true,
+        backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回掉
                     if(e==10011){
                         frameType=10011;
@@ -1121,22 +1168,21 @@ module.exports = businessModelingModule =>{
                     }
                 }
             });
+}
+function exportAllDialog(frameType){
+    httpRequestPost("/api/ms/modeling/frame/export",{
+        "frameCategoryId": $scope.vm.botSelectValue,
+        "frameTypeId": frameType
+    },function(data){
+        if(responseView(data)==true){
+            if(data.exportFileNameList.length>0){
+                downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
+            }
         }
-
-        function exportAllDialog(frameType){
-            httpRequestPost("/api/ms/modeling/frame/export",{
-                "frameCategoryId": $scope.vm.botSelectValue,
-                "frameTypeId": frameType
-            },function(data){
-                if(responseView(data)==true){
-                    if(data.exportFileNameList.length>0){
-                        downloadFile("/api/ms/modeling/downloadWithPath",data.filePath,data.exportFileNameList[0]);
-                    }
-                }
-            },function(err){
-            });
-        }
+    },function(err){
+    });
+}
 
 
-    }
+}
 ])};

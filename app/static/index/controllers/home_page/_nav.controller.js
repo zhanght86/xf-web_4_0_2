@@ -51,7 +51,7 @@ module.exports = homePageModule =>{
                     //     "id" : USER_ID ,
                     //     "account" : USER_LOGIN_NAME
                     // },function(){
-                    //     $state.go("login")
+                        $state.go("login")
                     // })
 
                 }
