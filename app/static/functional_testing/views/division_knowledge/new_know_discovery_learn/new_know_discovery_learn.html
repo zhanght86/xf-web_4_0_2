@@ -36,7 +36,7 @@
                                 <option value="未聚类">未聚类</option>
                                 <option ng-repeat="v in vm.clusteringList">{{v}}</option>
                             </select>
-                            <span>
+                            <span >
                                 日期范围:
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
                                     -
@@ -78,7 +78,7 @@
                                     <td>{{item.clustering}}</td>
                                     <td>{{item.modifyTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <td><a href="javascript:;" class="c-green" ng-click="vm.content(item.id)">上下文</a>&nbsp;
-                                        <a href="javascript:;" class="c-green" ng-click="vm.associate(item.requestId,item.content)">关联</a>&nbsp;
+                                        <a href="javascript:;" class="c-green" ng-click="vm.associate(item.id,item.question)">关联</a>&nbsp;
                                         <a href="javascript:;" class="c-green" ng-click="vm.learn(item.requestId,item.content)">学习</a></td>
                                 </tr>
 
@@ -115,14 +115,14 @@
                                     -
                                     <input type="text" id="endTime1"   onchange="" ng-model="vm.timeEnd1" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
                             </span>
-                            <span>
-                                审核状态:
-                                <select class="sel bd" id="statusId" ng-model="vm.statusId">
-                                    <option value="0">所有状态</option>
-                                    <option value="2">未审核</option>
-                                    <option value="3">审核已通过</option>
-                                </select>
-                            </span>
+                            <!--<span>-->
+                                <!--审核状态:-->
+                                <!--<select class="sel bd" id="statusId" ng-model="vm.statusId">-->
+                                    <!--<option value="0">所有状态</option>-->
+                                    <!--<option value="2">未审核</option>-->
+                                    <!--<option value="3">审核已通过</option>-->
+                                <!--</select>-->
+                            <!--</span>-->
                             <span >
                                 用户提问:
                                 <input type="text" id="question1" ng-model="vm.question1" class="input-text" style="width: 160px"/>
@@ -134,49 +134,47 @@
                             <!--<p class="r f-12 c-999" style="display: none;">共有数据<span id="total1"></span>条</p>-->
                         </div>
                         <div class="mt-10 mb-10">
-                            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.review(1)" value="通过" />
-                            <input type="button" class="btn1 btn_delete" ng-click="vm.review(0)" value="不通过" />
+                            <input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.review(3)" value="通过" />
+                            <input type="button" class="btn1 btn_delete" ng-click="vm.review(1)" value="不通过" />
                         </div>
                         <div>
                             <table class="access_amount_table" id="user_session_statistic1">
                                 <thead>
                                 <tr>
-                                    <th width="10%"><input type="checkbox" id="selectAll1" ng-click="vm.selectAll1()" ng-checked="vm.selectAllCheck1"></th>
+                                    <th width="10%">
+                                        <input type="checkbox" id="selectAll1" ng-click="vm.selectAll1()" ng-checked="vm.selectAllCheck1">
+                                    </th>
                                     <th width="25%">用户提问</th>
                                     <th width="15%">来源渠道</th>
-                                    <th width="10%">学习类型</th>
+                                    <th width="15%">学习类型</th>
                                     <th width="15%">创建时间</th>
-                                    <th width="10%">审核状态</th>
-                                    <th width="10%">操作</th>
+                                    <!--<th width="10%">审核状态</th>-->
+                                    <th width="15%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <tr role="row" class="odd" ng-repeat="item in vm.listData1">
                                     <td>
-                                        <input type="checkbox" name="sid1" value="{{item.recordId}}"  ng-checked="vm.studyArr.inArray(item.recordId)" ng-click="vm.selectSingle1(item.recordId)">
+                                        <input type="checkbox" name="sid1" value="{{item.id}}"  ng-checked="vm.studyArr.inArray(item.id)" ng-click="vm.selectSingle1(item.id)">
                                     </td>
                                     <td>{{item.question}}</td>
                                     <td>
-                                        <span ng-if="vm.channelId1==null">
-                                            {{item.channelId | channelFilterMulti}}
-                                        </span>
-                                        <span ng-if="vm.channelId1!=null">
-                                            {{vm.channelId1 | channelFilter}}
-                                        </span>
+                                        {{item.channelId | channelFilter}}
                                     </td>
                                     <td>
-                                        <font ng-if="item.knowledgeLearnType==0">关联学习</font>
-                                        <font ng-if="item.knowledgeLearnType==1">新增知识</font>
+                                        <span >关联学习</span>
                                     </td>
                                     <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <!--<td>-->
+                                        <!--<font ng-if="item.statusId==0">未审核</font>-->
+                                        <!--<font ng-if="item.statusId==1 && item.passStatusId==0">未通过</font>-->
+                                        <!--<font ng-if="item.statusId==1 && item.passStatusId==1">通过</font>-->
+                                    <!--</td>-->
                                     <td>
-                                        <font ng-if="item.statusId==0">未审核</font>
-                                        <font ng-if="item.statusId==1 && item.passStatusId==0">未通过</font>
-                                        <font ng-if="item.statusId==1 && item.passStatusId==1">通过</font>
+                                        <a href="javascript:;" class="c-blue mr-10" ng-click="vm.content(item.id)">上下文</a>
+                                        <a href="javascript:;" class="c-green" ng-click="vm.associateCheck(item.question,item.knowledgeTitle)">查看</a>
                                     </td>
-                                    <td><a href="javascript:;" class="c-green" ng-click="vm.content(item.qalogId)">上下文</a>&nbsp;
-                                        <a href="javascript:;" class="c-green" ng-click="vm.associateCheck(item.question,item.knowledgeTitle)">查看</a></td>
                                 </tr>
 
                                 </tbody>

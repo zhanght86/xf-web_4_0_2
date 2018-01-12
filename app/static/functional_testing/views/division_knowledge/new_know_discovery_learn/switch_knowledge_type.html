@@ -3,28 +3,25 @@
     <p class="f16 tc mb-30 mt-30">请选择知识类型</p>
     <div class="tc mb-10 ">
         <div class="tc" style="min-height:45px;">
-            <a class="btn1 btn1_blue  mr-5 " ui-sref="knowledgeManagement.faqAdd({knowledgeTitle:vm.knowledgeContent})" style="line-height:20px;">
+            <a class="btn1 btn1_blue mr-20 " target="_blank" ui-sref="KM.faq({knowledgeTitle:vm.clustering,})" style="line-height:20px;">
                 FAQ知识新增
             </a>
-            <a class="btn1 btn_green  mr-5 " ui-sref="knowledgeManagement.singleAddConcept({knowledgeTitle:vm.knowledgeContent})" style="line-height:20px;">
+            <a class="btn1 btn_green" target="_blank" ui-sref="KM.concept({knowledgeTitle:vm.clustering})" style="line-height:20px;">
                 概念知识新增
             </a>
         </div>
         <div class="tc" style="min-height:45px;">
-            <a class="btn1 btn1_blue  mr-5 " ui-sref="knowledgeManagement.listAdd({knowledgeTitle:vm.knowledgeContent})" style="line-height:20px;">
+            <a class="btn1 btn_green mr-20 " target="_blank" ui-sref="KM.list({knowledgeTitle:vm.clustering})" style="line-height:20px;">
                 列表知识新增
             </a>
-            <a class="btn1 btn_green  mr-5 " ui-sref="knowledgeManagement.factorAdd({knowledgeTitle:vm.knowledgeContent})" style="line-height:20px;">
-                要素知识新增
-            </a>
-            <a class="btn1 btn_green2  mb-5" ui-sref="knowledgeManagement.markKnow({knowledgeTitle:vm.knowledgeContent})" style="line-height:20px;">
-                营销知识新增
+            <a class="btn1 btn1_blue" target="_blank" ui-sref="KM.factor({knowledgeTitle:vm.clustering})" style="line-height:20px;">
+                任务知识新增
             </a>
         </div>
     </div>
 </div>
-<style>
-</style>
+
+
 
 
 

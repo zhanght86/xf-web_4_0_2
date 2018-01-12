@@ -85,17 +85,10 @@ class FunctionServer{
         this.searchNewKnowledgeDiscovery = $resource(API_ANALYSIS+'/knowledge/learning/unmatched/question/unlearn/get',{},{});
         //表格列表 已学习
         this.listNoReview2 = $resource(API_ANALYSIS+'/knowledge/learning/unmatched/question/learned/get',{},{});
-        //忽略
-        this.ignore2 = $resource(API_ANALYSIS+'/knowledgeLearn/ignoreByContent',{},{});
         //上下文
         this.content = $resource(API_ANALYSIS+'/log/content/get',{},{});
 
 
-
-        //未学习关联弹窗
-        this.searchByKnowledgeTitle2 = $resource(API_MS+'/knowledgeManage/overView/searchList',{},{});
-        //关联
-        this.assembleLearnData2 = $resource(API_ANALYSIS+'/knowledgeLearn/learnByContent',{},{});
         //通过 不通过
         this.review2 = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
 

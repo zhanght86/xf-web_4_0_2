@@ -5,8 +5,8 @@
 module.exports=functionalTestModule=>{
     functionalTestModule
     .controller('NewKnowDiscoveryLearnController',
-     ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore","$location",
-     ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,$location, )=>{
+     ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore","$location","localStorageService",
+     ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,$location,localStorageService )=>{
         $scope.vm = {
             //-------未学习-------
             searchNewKnowledgeDiscovery : searchNewKnowledgeDiscovery ,
@@ -28,21 +28,24 @@ module.exports=functionalTestModule=>{
             ignore:ignore,
             learn:learn,
             clustering :'全部',                       //聚类
-            clusteringList:[],
+            clusteringList:[],                                  //聚类数据
             getClusteringList : getClusteringList,             //获取聚类列表
             talkDetail:[],                       //聊天数据
-
+            knowledgeContent : "",
 
 
 
             //弹窗
             searchByKnowledgeTitle:searchByKnowledgeTitle,
+            keyLogin:keyLogin,                                       //回车查询
             paginationConf2 : {       //分页条件
                 pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
                 currentPage: $location.search().currentPage?$location.search().currentPage:1,
                 search: searchByKnowledgeTitle ,
                 location:true
             } ,
+            currQuestion:"",      // 关联弹窗
+            knowledgeList:[],     //关联列表
 
 
             //--------------------已学习------------------------
@@ -60,21 +63,15 @@ module.exports=functionalTestModule=>{
             timeEnd1 : '',
             question1:'',
             statusId:0,
-            review:review,
+            review:review,                        //审核
             clustering1 : '全部',                  //聚类
-            clusteringList1:[],
+            clusteringList1:[],                                  //聚类数据
             getClusteringList1 : getClusteringList1,             //获取聚类列表
+            associateCheck:associateCheck,              //关联查看
+            currKnowledgeTitle:'' ,                    //关联查看弹窗表格数据
 
             //---------------------------------------
-
-            passStatusId:0,
-            currQuestion:"",
-            knowledgeList:[],
-
-            associateCheck:associateCheck,
-            currKnowledgeTitle:'' ,
-            knowledgeContent : "",
-            keyLogin:keyLogin,
+            //passStatusId:0,
             contentType : 0 ,  //默认显示未学习
 
 
@@ -90,6 +87,30 @@ module.exports=functionalTestModule=>{
             studyArr : [],
 
         };
+         // var YourCtrl = function($scope, localStorageService) {
+         //     // To add to local storage
+         //     localStorageService.set('localStorageKey','Add this!');
+         //     // Read that value back
+         //     var value = localStorageService.get('localStorageKey');
+         //     // To remove a local storage
+         //     localStorageService.remove('localStorageKey');
+         //     // Removes all local storage
+         //     localStorageService.clearAll();
+         //     // You can also play with cookies the same way
+         //     localStorageService.cookie.set('localStorageKey','I am a cookie value now');
+         // }
+         //
+         //
+         // //我的angular实例
+         // localStorage.setItem('localStorageKey','Example');
+         // var sign = localStorage.getItem('localStorageKey');
+         // alert(sign);
+
+        //localStorageService
+         //localStorage.setItem({title:'信用卡办理1',extension:['信用卡办理2','信用卡办理3']});
+
+
+
         function keyLogin(e){
             var srcObj = e.srcElement ? e.srcElement : e.target;
             var keycode = window.event?e.keyCode:e.which;
@@ -127,7 +148,7 @@ module.exports=functionalTestModule=>{
          /**
           * 已学习获取聚类列表
           **/
-         //getClusteringList1();
+         getClusteringList1();
          function getClusteringList1(){
              FunctionServer.clusteringList.save({
                  "learnType": 3,
@@ -218,7 +239,7 @@ module.exports=functionalTestModule=>{
                 "startTime": $scope.vm.timeStart1,
                 "endTime": $scope.vm.timeEnd1,
                 "channelId": $scope.vm.channelId1,
-                "status": $scope.vm.statusId,
+                "status": 2,                             //传固定值,为审核
                 "question": question,
                 "clustering":$scope.vm.clustering1,
 
@@ -246,29 +267,28 @@ module.exports=functionalTestModule=>{
           *  表格列表 未学习关联弹窗
           **/
          function searchByKnowledgeTitle(index){
+             var i = layer.msg('查询中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
              if(nullCheck($("#inputValue").val())==true){
 
-                 FunctionServer.searchByKnowledgeTitle2.save({
-                     "applicationId": APPLICATION_ID,
+                 FunctionServer.searchByKnowledgeTitle.save({
                      "index": (index-1)*$scope.vm.paginationConf2.pageSize,
                      "pageSize": $scope.vm.paginationConf2.pageSize,
-                     "sceneIds":null,
-                     "knowledgeTitle": $("#inputValue").val().trim(),
-                     "knowledgeContent":null,
-                     "knowledgeUpdate":null,
-                     "knowledgeExpDateEnd":null,
-                     "knowledgeExpDateStart":null,
-                     "knowledgeOrigin":0,
-                     "updateTimeType":0,
-                     "knowledgeType":"",
-                     "knowledgeExtensionQuestion":""
+                     "title": $("#inputValue").val().trim(),
                  },function(data){
-                     $scope.vm.knowledgeList = data.data.objs;
-                     $scope.vm.paginationConf2.currentPage =index ;
-                     $scope.vm.paginationConf2.totalItems =data.data.total ;
-                     $scope.vm.paginationConf2.numberOfPages = data.data.total/$scope.vm.paginationConf2.pageSize ;
-                     console.log($scope.vm.paginationConf2);
+                     layer.close(i);
+                     if(data.status==500){
+                         layer.msg(data.info,{time:10000});
+                     }
+                     if(data.status==200){
+                         console.log(data);
+                         $scope.vm.knowledgeList = data.data.data;
+                         $scope.vm.paginationConf2.currentPage =index ;
+                         $scope.vm.paginationConf2.totalItems =data.data.total ;
+                         $scope.vm.paginationConf2.numberOfPages = data.data.total/$scope.vm.paginationConf2.pageSize ;
+                         console.log($scope.vm.paginationConf2);
+                     }
                  },function(err){
+                     layer.close(i);
                      console.log(err);
                  });
              }else{
@@ -347,10 +367,10 @@ module.exports=functionalTestModule=>{
          * 关联
          **/
         function associate(requestId,content){
-            $scope.vm.knowledgeList=null;
+            $scope.vm.knowledgeList=[];
             $scope.vm.currQuestion="用户问题:"+content;
 
-            let associateLearn = require('../../../views/division_knowledge/new_know_discovery_learn/associate_learn_check.html');
+            let associateLearn = require('../../../views/division_knowledge/new_know_discovery_learn/associate_learn.html');
             $scope.$parent.$parent.MASTER.openNgDialog($scope,associateLearn,'480px',function () {
                 assembleLearnData(requestId);
             },function(){
@@ -367,66 +387,96 @@ module.exports=functionalTestModule=>{
             var ids = document.getElementsByName("sid2");
             var id_array = [];
             var knowledgeTitle="";
-            var knowledgeType=0;
+            //var knowledgeType=0;
             for (var i = 0; i < ids.length; i++) {
                 if (ids[i].checked) {
                     id_array.push(ids[i].value);
                     knowledgeTitle = $(ids[i]).attr("knowledgeTitle");
-                    knowledgeType = $(ids[i]).attr("knowledgeType");
+                   // knowledgeType = $(ids[i]).attr("knowledgeType");
                 }
             }
+
             if (id_array.length == 0) {
                 layer.msg("请选择要关联的知识");
                 return;
             }
-            FunctionServer.assembleLearnData2.save({
-                "qalog_id" : requestId,
-                "knowledge_id":id_array.pop(),
-                "knowledge_type":knowledgeType,
-                "knowledge_title":knowledgeTitle,
-                "learn_type":1,
-                "knowledge_learn_type":0
-            },function(data){
-                if(data.info){
-                    layer.msg(data.info);
-                    searchNewKnowledgeDiscovery(1);
+
+            FunctionServer.assembleLearnData.save({
+                "id":requestId,
+                "knowledgeId" : id_array.pop(),       //要关联的知识编号
+
+            },function (data) {
+                if(data.status==200){
+                    console.log(data);
+                    $state.reload();
+                    //searchReinforcement($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                    // listNoReview($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                 }
-            },function (err) {
-                console.log(err);
+                if(data.status==500){
+                    layer.msg(data.info,{time:10000});
+                }
+            },function(err){
+                $log.log(err);
             });
         }
 
-        /**
+         /**
+          * 已学习关联知识查看
+          * @param content
+          * @param knowledgeTitle
+          */
+         function associateCheck(content,knowledgeTitle){
+             $scope.vm.currQuestion="用户问题:"+content;
+             $scope.vm.currKnowledgeTitle=knowledgeTitle;
+
+             let associate_learn_check = require('../../../views/division_knowledge/new_know_discovery_learn/associate_learn_check.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,associate_learn_check,'450px',function(){
+
+             },function () {
+
+             });
+         }
+
+
+         /**
          * 通过 不通过
          **/
         function review(pass){
             var msg = "";
-            if(pass==0){
+            if(pass==1){
                 msg = "拒绝";
-            }else{
+            }else if(pass==3){
                 msg = "通过";
             }
             if ($scope.vm.studyArr.length == 0) {
                 layer.msg("请选择要"+msg+"的记录！");
                 return;
-            }
-            layer.confirm('确认要'+msg+'吗？', function (index) {
-                layer.close(index);
-                FunctionServer.review2.save({
-                    "ids" : $scope.vm.studyArr,
-                    "pass_status_id": pass,
-                    "userId": USER_ID,
-                    "userName": USER_NAME
-                },function(data){
-                    if(data.info){
-                        layer.msg(data.info);
-                        listNoReview(1);
-                        clearSelect1();
-                    }
+            }else{
+                layer.confirm('确定要'+msg+'吗？',{
+                    btn:['确定','取消']
+                },function(){
+                    FunctionServer.review.save({
+                        "idList": $scope.vm.studyArr,              //知识编号
+                        "status": pass                          //1:拒绝 3:通过
+                    },function(data){
+                        if(data.status==500){
+                            layer.msg(data.info,{time:1000});
+                        }
+                        if(data.status==200){
+                            layer.msg('审核完成');
+                            clearSelect1();
+                            layer.closeAll();
+                            searchNewKnowledgeDiscovery($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                            listNoReview($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                        }
+                    },function(err){
+                        $log.log(err);
+                    });
                 },function(err){
                     console.log(err);
                 });
-            });
+            }
+
         }
 
         /**
@@ -436,28 +486,14 @@ module.exports=functionalTestModule=>{
             $scope.vm.knowledgeContent = content ;
             console.log("======="+$scope.vm.knowledgeContent);
 
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/switch_knowledge_type.html','500px',function(){
+            let switch_knowledge_type = require('../../../views/division_knowledge/new_know_discovery_learn/switch_knowledge_type.html');
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,switch_knowledge_type,'500px',function(){
 
             },function(){
 
             });
         }
 
-        /**
-         * 关联知识查看
-         * @param content
-         * @param knowledgeTitle
-         */
-        function associateCheck(content,knowledgeTitle){
-            $scope.vm.currQuestion="用户问题:"+content;
-            $scope.vm.currKnowledgeTitle=knowledgeTitle;
-
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,'/static/application_analysis/new_know_discovery_learn/associate_learn_check.html','450px',function(){
-
-            },function () {
-
-            });
-        }
 
         /**
          * 未学习全选
@@ -506,7 +542,7 @@ module.exports=functionalTestModule=>{
                 $scope.vm.selectAllCheck1 = true;
                 $scope.vm.studyArr = [];
                 angular.forEach($scope.vm.listData1,function(item){
-                    $scope.vm.studyArr.push(item.recordId);
+                    $scope.vm.studyArr.push(item.id);
                 });
             }else{
                 $scope.vm.selectAllCheck1 = false;
