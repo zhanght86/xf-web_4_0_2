@@ -3,7 +3,7 @@
         <div class="hd">
             <img class="log-logo" src="./assets/images/images/log-logo.png"/>
             <span>小富机器人控制平台</span>
-            <em>V4.0</em>
+            <em>V4.4</em>
         </div>
         <div class="bd" style="border: 0;">
             <h3 class="title">登 &nbsp;录</h3>
@@ -15,10 +15,11 @@
                 <div class="item">
                     <input class="login-ipt-box textIndent10" style="border: 0;" type="password" ng-keydown="vm.keyLogin($event)" ng-model="vm.password" placeholder="密码" />
                 </div>
-                <!--<div class="item">-->
-                    <!--<input class="login-ipt-box textIndent10" style="width: 216px;border:0" ng-keydown="vm.keyLogin($event)" ng-model="vm.randomNumberValue" type="text" placeholder="验证码" />-->
+                <div class="item">
+                    <input class="login-ipt-box textIndent10" style="width: 216px;border:0" ng-keydown="vm.keyLogin($event)" ng-model="vm.randomNumberValue" type="text" placeholder="验证码" />
                     <!--<span class="yzm"  ng-click="vm.randomNumberChange()">{{vm.randomNumber}}</span>-->
-                <!--</div>-->
+                    <img title="看不清？点击换一张" id="random-number" class="yzm" src="/api/authority/validate/code/get" onclick="this.src='/api/authority/validate/code/get?r='+Math.random();"/>
+                </div>
                 <div class="tac">
                     <span  class="login-btn"   ng-click="vm.login()">登录</span>
                 </div>
