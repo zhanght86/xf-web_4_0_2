@@ -31,7 +31,11 @@ module.exports=functionalTestModule=>{
             clusteringList:[],                                  //聚类数据
             getClusteringList : getClusteringList,             //获取聚类列表
             talkDetail:[],                       //聊天数据
-            knowledgeContent : "",
+
+            setStorage : setStorage,            //本地存储
+            clusteringContent : "",                    //
+            check : check ,                           //查找聚类名称相同数据
+            juleiList:[] ,                           //聚类名称相同的数据列表
 
 
 
@@ -75,6 +79,7 @@ module.exports=functionalTestModule=>{
             contentType : 0 ,  //默认显示未学习
 
 
+
             //未学习全选 单选；
             selectAllCheck : false,
             selectAll : selectAll,
@@ -87,29 +92,40 @@ module.exports=functionalTestModule=>{
             studyArr : [],
 
         };
-         // var YourCtrl = function($scope, localStorageService) {
-         //     // To add to local storage
-         //     localStorageService.set('localStorageKey','Add this!');
-         //     // Read that value back
-         //     var value = localStorageService.get('localStorageKey');
-         //     // To remove a local storage
-         //     localStorageService.remove('localStorageKey');
-         //     // Removes all local storage
-         //     localStorageService.clearAll();
-         //     // You can also play with cookies the same way
-         //     localStorageService.cookie.set('localStorageKey','I am a cookie value now');
-         // }
-         //
-         //
-         // //我的angular实例
-         // localStorage.setItem('localStorageKey','Example');
-         // var sign = localStorage.getItem('localStorageKey');
-         // alert(sign);
 
-        //localStorageService
-         //localStorage.setItem({title:'信用卡办理1',extension:['信用卡办理2','信用卡办理3']});
+        //设置本地存储
 
+        localStorageService.set("localStorageKey",'');
+        function setStorage(titleVal,listData){
 
+            check(titleVal,listData);
+            //var obj = {
+            //          "title":"信用卡办理1",
+            //          "extension":[{"question":"信用卡办理2","id":"460141182823956482"},{"question":"信用卡办理3","id":"460141182823956483"}]
+            // }
+
+            var obj = {
+                      title : titleVal,
+                      extension : $scope.vm.juleiList
+                   }
+            localStorageService.set("localStorageKey",JSON.stringify(obj));
+            var sign =  localStorageService.get("localStorageKey");
+            console.log(sign);
+        }
+        //查找聚类名称相同的知识
+         function check(val,listData){
+             var allLen = listData.length;
+             angular.forEach(listData,function (obj) {
+                 if(obj.clustering==val){
+                     var object={};
+                     object.question = angular.copy(obj.question);
+                     object.id = angular.copy(obj.id);
+                     $scope.vm.juleiList.push(object);
+                     allLen-=1;
+                 }
+             }) ;
+             console.log($scope.vm.juleiList);
+         }
 
         function keyLogin(e){
             var srcObj = e.srcElement ? e.srcElement : e.target;
@@ -262,6 +278,21 @@ module.exports=functionalTestModule=>{
                 console.log(err);
             });
         }
+
+         /**
+          * 学习
+          **/
+         function learn(id,clustering){
+             $scope.vm.clusteringContent = clustering ;
+             console.log("======="+$scope.vm.knowledgeContent);
+
+             let switch_knowledge_type = require('../../../views/division_knowledge/new_know_discovery_learn/switch_knowledge_type.html');
+             $scope.$parent.$parent.MASTER.openNgDialog($scope,switch_knowledge_type,'500px',function(){
+
+             },function(){
+
+             });
+         }
 
          /**
           *  表格列表 未学习关联弹窗
@@ -479,20 +510,7 @@ module.exports=functionalTestModule=>{
 
         }
 
-        /**
-         * 学习
-         **/
-        function learn(requestId,content){
-            $scope.vm.knowledgeContent = content ;
-            console.log("======="+$scope.vm.knowledgeContent);
 
-            let switch_knowledge_type = require('../../../views/division_knowledge/new_know_discovery_learn/switch_knowledge_type.html');
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,switch_knowledge_type,'500px',function(){
-
-            },function(){
-
-            });
-        }
 
 
         /**

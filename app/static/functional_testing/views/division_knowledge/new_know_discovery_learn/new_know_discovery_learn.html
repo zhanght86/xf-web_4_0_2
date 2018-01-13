@@ -74,12 +74,12 @@
                                         <input type="checkbox" name="sid" value="{{item.id}}" ng-checked="vm.unstudyArr.inArray(item.id)" ng-click="vm.selectSingle(item.id)">
                                     </td>
                                     <td>{{item.question}}</td>
-                                    <td>{{item.channelId | channelFilter}}</td>
+                                    <td>{{item.channelId | channelFilter2}}</td>
                                     <td>{{item.clustering}}</td>
                                     <td>{{item.modifyTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <td><a href="javascript:;" class="c-green" ng-click="vm.content(item.id)">上下文</a>&nbsp;
                                         <a href="javascript:;" class="c-green" ng-click="vm.associate(item.id,item.question)">关联</a>&nbsp;
-                                        <a href="javascript:;" class="c-green" ng-click="vm.learn(item.requestId,item.content)">学习</a></td>
+                                        <a href="javascript:;" class="c-green" ng-click="vm.learn(item.id,item.clustering)">学习</a></td>
                                 </tr>
 
                                 </tbody>
