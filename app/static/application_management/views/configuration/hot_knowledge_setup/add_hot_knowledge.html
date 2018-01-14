@@ -4,7 +4,7 @@
         <div class="framework cl">
             <span class="framework_s bold">已选知识：</span>
             <div >
-                <ul id="already_select" ng-repeat="item in vm.selectedKnow track by $index">
+                <ul id="already_select" ng-repeat="item in knowledge.selectedKnow track by $index">
                     <!--{{item}}-->
                     <li><span class="mr-10">{{item.chatKnowledgeTopic}}</span>
                         <a href="javascript:;" ng-click="vm.selectedKnow.splice($index,1)" class="c-red">X</a>
@@ -12,33 +12,30 @@
                 </ul>
             </div>
         </div>
-        <div class="mb-10 framework">
-            <span class="framework_s bold">未选知识：</span>
+        <div class="mb-10 framework" style="padding-left: 70px;">
+            <span class="framework_s bold"></span>
             <div >
                 <div class="mb-10">
-                    <input id="inputValue" type="text" placeholder="请输入要查找的知识" ng-model="vm.knowledgeTitle" style="width:220px" class="input-text">
-                    <!--<button class="btn1 btn1_blue" >查找</button>-->
-                    <!--<button class="btn1 btn_green" >全部</button>-->
-                    <button class="btn1 btn1_blue" type="button"  ng-click="vm.queryKnowledgeList(1)">查找</button>
+                    <input id="inputValue" type="text" placeholder="请输入要查找的知识" ng-model="knowledge.knowledgeTitle" style="width:220px" class="input-text">
+                    <button class="btn1 btn1_blue" type="button"  ng-click="knowledge.queryKnowledgeList(1,knowledge.paginationConf.pageSize)">查找</button>
                 </div>
                 <table class="table table-border  table-bordered" id="knowledge-tab" style="width: 88%;">
                     <thead class="text-c bg-1">
                     <tr>
-                        <th><input  class="selectAllBtnDialog" type="checkbox" ng-click="vm.selectAllKnow($event)" ng-checked="vm.isAllKnowSelected"/></th>
+                        <th><input  class="selectAllBtnDialog" type="checkbox" ng-click="knowledge.selectAllKnow()" ng-checked="knowledge.isAllKnowSelected"/></th>
                         <th>知识标题</th>
                     </tr>
                     </thead>
                     <tbody class="text-c">
-                    <!--{{vm.knowledgeList}}-->
-                    <tr ng-repeat="item in vm.knowledgeList track by $index">
-                        <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="vm.selectSingleKnow($event,item.knowledgeId,item.knowledgeTitle,$index)"/></td>
-                        <td>{{item.knowledgeTitle}}</td>
+                    <tr ng-repeat="item in knowledge.knowledgeList track by $index">
+                        <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="knowledge.selectSingle(item.item.id)"/></td>
+                        <td>{{item.title}}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <pagination ng-if="vm.knowPaginationConf.totalItems && vm.knowPaginationConf.totalItems>0" conf="vm.knowPaginationConf" style="width: 96%;"></pagination>
+        <pagination ng-if="knowledge.paginationConf.totalItems && knowledge.paginationConf.totalItems>0" conf="knowledge.paginationConf" style="width: 96%;"></pagination>
 
     </div>
     <div class="row tc">

@@ -51,6 +51,7 @@ module.exports = homePageModule =>{
                 $scope.vm.paginationConf.currentPage = 1 ;
                 $location.search("currentPage",1 ) ;
             }
+            let i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
             $scope.vm.deleteIds    = [];   // 清楚选中用户
             $scope.vm.userListIds  = [];   // 清楚用户id列表
             HomePageServer.queryUserList.save({
@@ -58,6 +59,7 @@ module.exports = homePageModule =>{
                 "index":(index -1)*pageSize,
                 "pageSize":pageSize
             },function(response){
+                layer.close(i) ;
                 if(response.status == 200 ){
                     $scope.vm.userIds = [] ;
                     $scope.vm.userList = response.data.data;
@@ -68,6 +70,7 @@ module.exports = homePageModule =>{
                     })
                 }
             },function(error){
+                layer.close(i) ;
                 console.log(error);
             })
         }

@@ -40,6 +40,8 @@ class KnowledgeService {
 //   faq知识新增
                 // 保存
                 this.storeFaqKnow = $resource(API_MS + "/knowledge/FAQ/add", {}, {});
+                // 获取
+                this.getFaqKnow = $resource(API_MS + "/knowledge/FAQ/get/:id", {}, {});
                 // 编辑
                 this.updateFaqKnow = $resource(API_MS + "/knowledge/FAQ/update", {}, {});
 //   概念知识新增
@@ -51,16 +53,22 @@ class KnowledgeService {
                 this.queryConceptImageText = $resource(API_MATERIAL + "/graphic/message/query", {}, {});
                 // 保存
                 this.storeConceptKnow = $resource(API_MS + "/knowledge/concept/add", {}, {});
+                // 获取
+                this.getConceptKnow = $resource(API_MS + "/knowledge/concept/get/:id", {}, {});
                 // 编辑
                 this.updateConceptKnow = $resource(API_MS + "/knowledge/concept/update", {}, {});
 //   列表知识新增
                 // 保存
                 this.storeListKnow = $resource(API_MS + "/knowledge/list/add", {}, {});
+                // 获取
+                this.getListKnow = $resource(API_MS + "/knowledge/list/get/:id", {}, {});
                 // 编辑
                 this.updateListKnow = $resource(API_MS + "/knowledge/list/update", {}, {});
 //   要素知识新增
                 // 保存
                 this.storeFactorKnow = $resource(API_MS + "/knowledge/task/add", {}, {});
+                // 获取
+                this.storeFactorKnow = $resource(API_MS + "/knowledge/task/get/:id", {}, {});
                 // 编辑
                 this.updateFactorKnow = $resource(API_MS + "/knowledge/task/update", {}, {});
         }};

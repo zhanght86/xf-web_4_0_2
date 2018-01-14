@@ -944,7 +944,7 @@ module.exports = (angular) => {
         },
         {
             name: "KM.preview",
-            url: "/preview",
+            url: "/preview/:id/:type",
             data: {
                 roles: []
             },

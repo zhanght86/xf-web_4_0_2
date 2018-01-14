@@ -7,9 +7,16 @@
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
                 <div class="cl mb-20">
                     热点知识更新频率：
-                    <input type="text" class="txt bd" placeholder="" ng-model="hotKnowledge.updataRate" style="width:100px;">
+                    <input type="text" class="txt bd" placeholder="" ng-model="hotKnowledge.hotQuestionTimeout" style="width:100px;">
                     分钟
                 </div>
+                <div class="cl mb-20">
+                    热点知识上限个数：
+                    <input type="text" class="txt bd" placeholder="" ng-model="hotKnowledge.hotQuestionLimit  " style="width:100px;">
+                    个
+                </div>
+                <!--<button class="btn1 btn1_blue mr-10" ng-click="">确认修改热点知识配置</button>-->
+
                 <div class="cl mb-20">
                     <button class="btn1 btn_delete mr-10" ng-click="hotKnowledge.removeHotKnowledge()">批量删除</button>
                     <button class="btn1 btn1_blue mr-10" ng-click="hotKnowledge.addHotHotKnow()">添加</button>
