@@ -156,7 +156,7 @@ module.exports=functionalTestModule =>{
                  "endTime": $scope.vm.timeEnd1,
                  "requestType":$scope.vm.timeType1,
                  "channelId": $scope.vm.channelId1,
-                 "status": $scope.vm.statusId,
+                 "status": 2,                   //传固定值未审核
                  "question": question,
 
              },function(data){
@@ -239,12 +239,6 @@ module.exports=functionalTestModule =>{
                  "id":requestId,
                  "knowledgeId" : id_array.pop(),       //要关联的知识编号
 
-                 // "qalog_id" : requestId,
-                 // "knowledge_id":id_array.pop(),
-                 // "knowledge_type":100,
-                 // "knowledge_title":knowledgeTitle,
-                 // "learn_type":0,
-                 // "knowledge_learn_type":0
              },function (data) {
                  if(data.status==200){
                      console.log(data);
@@ -255,10 +249,6 @@ module.exports=functionalTestModule =>{
                  if(data.status==500){
                      layer.msg(data.info,{time:10000});
                  }
-                 // if(data.info){
-                 //     layer.msg(data.info);
-                 //     searchReinforcement(1);
-                 // }
              },function(err){
                  $log.log(err);
              });

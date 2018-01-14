@@ -12,7 +12,7 @@ module.exports = loginModule => {
             // randomNumber: randomNumber(4),
             // randomNumberValue: "",
             randomNumber: 0,
-            randomNumberValue:0,
+            randomNumberValue:"",
             randomNumberChange : randomNumberChange,
             login: login,
             keyLogin : keyLogin
@@ -39,15 +39,16 @@ module.exports = loginModule => {
             //     layer.msg("验证码错误");
             //     setRandomNumber();
             // }else
-                if($scope.vm.userName == ""){
+            if($scope.vm.randomNumberValue == ""){
+                layer.msg("验证码不能为空");
+            }else if($scope.vm.userName == ""){
                 layer.msg("用户名不能为空");
-                // setRandomNumber();
             }else if($scope.vm.password == ""){
                 layer.msg("密码不能为空");
-                // setRandomNumber();
             }else{
                 LoginServer.login.save({
                     "account":$scope.vm.userName,
+                    "validateCode":$scope.vm.randomNumberValue,
                     "pwd": hex_md5($scope.vm.password)
                 },function(response){
                     if(response.status==200){

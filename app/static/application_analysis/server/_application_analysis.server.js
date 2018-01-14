@@ -62,17 +62,17 @@ class AppAnalysisServer {
                                                 *会话满意度统计*    API_ANALYSIS = "/api/analysis" ;
                                          ********************************/
     //表格列表
-    this.satisfactionGetList = $resource(API_ANALYSIS+'/satisfaction/searchList',{},{});
+    this.satisfactionGetList = $resource(API_ANALYSIS+'/satisfaction/search',{},{});
     //获取Echart 图数据
-    this.getPieData = $resource(API_ANALYSIS+'/satisfaction/chartAndTotal',{},{} );
+    this.getPieData = $resource(API_ANALYSIS+'/satisfaction/search',{},{} );
                                 /******************************
                                         *问答解决率统计*    API_ANALYSIS = "/api/analysis" ;
                                         ********************************/
     //表格列表
     //解决率统计图表数据
-    this.resolutionStatistics = $resource(API_ANALYSIS+'/solutionStatistics/qaAskSolutionStatistics',{},{});
-    //回复数图表数据
-    this.replyStatistics = $resource(API_ANALYSIS+'/solutionStatistics/qaAskMatchStatistics',{},{});
+    this.solveStatistics = $resource(API_ANALYSIS+'/solution/solve',{},{});
+    //问答匹配详情图表数据
+    this.matchStatistics = $resource(API_ANALYSIS+'/solution/match',{},{});
                                 /******************************
                                              *操作日志*    API_ANALYSIS = "/api/analysis" ;
                                         ********************************/

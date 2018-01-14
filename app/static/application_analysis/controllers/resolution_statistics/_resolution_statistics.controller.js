@@ -17,11 +17,7 @@ module.exports=applAnalysisModule => {applAnalysisModule
             timeStart : "",
             timeEnd : "",
         };
-        //獲取渠道
-        //$scope.MASTER.getDimensions($scope,["dimensions"]) ;
-        //获取维度
-        //$scope.MASTER.getChannels($scope,["channels"]) ;
-
+       
         /**
          * 表格列表
          **/
@@ -30,22 +26,18 @@ module.exports=applAnalysisModule => {applAnalysisModule
             var i = layer.msg('资源加载中',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             var parameter = {
                 "channelId": $scope.vm.channelId,
-               // "dimensionId": $scope.vm.dimensionId,
                 "startTime": $scope.vm.timeStart,
                 "endTime": $scope.vm.timeEnd,
                 "requestTimeType":$scope.vm.timeType,
-                "applicationId" : APPLICATION_ID ,
-                "index": 0 ,
-                "pageSize" : 1000
-            } ;
+            } ; 
             // 解决率统计图表数据
-            AppAnalysisServer.resolutionStatistics.save(parameter
+            AppAnalysisServer.solveStatistics.save(parameter
                 ,function(data){
                     layer.close(i);
                     console.log(data) ;
-                    if(data.status == 10014){
+                    if(data.status == 200&&data.data!=null){
                         var chart = [{value:data.data.noSolutionTotal, name:'未解决'},
-                                     {value:data.data.total, name:'解决'}] ;
+                                     {value:data.data.solutionTotal, name:'解决'}] ;
                         solutionRateChartSet(chart) ;
 
                     }
@@ -56,15 +48,20 @@ module.exports=applAnalysisModule => {applAnalysisModule
             );
 
             // 回复数图表数据
-            AppAnalysisServer.replyStatistics.save(parameter
+            AppAnalysisServer.matchStatistics.save(parameter
                 ,function(data){
                     layer.close(i);
                     console.log(data) ;
-                    if(data.status == 10014){
-                        specificRateChartSet(data.data.responseOfStandardTotal,data.data.responseOfGreetingTotal,
-                                            data.data.sensitiveWordResponseTotal,data.data.repeatQuestionResponseTotal,
-                                            data.data.expiredKnowledgeResponseTotal,data.data.unknownQuestionResponseTotal)
+                   if(data.status == 200&&data.data!=null){
+                        specificRateChartSet(data.data.responseOfStandardTotal,
+                                            data.data.responseOfGreetingTotal,
+                                            data.data.sensitiveWordResponseTotal,
+                                            data.data.repeatQuestionResponseTotal,
+                                            data.data.expiredKnowledgeResponseTotal,
+                                            data.data.unknownQuestionResponseTotal)
 
+                    }else{
+                        specificRateChartSet("","","","","","")
                     }
                 },function(err){
                     layer.close(i);
@@ -86,11 +83,12 @@ module.exports=applAnalysisModule => {applAnalysisModule
         }() ;;
 
         /**
-         * 解决率统计图表 Echart
+         * 问答解决率统计图表 Echart
          **/
         function solutionRateChartSet(data){
             solutionRateChart.setOption({
                 title : {
+                    top: '10%',
                     text: '解决率统计',
                     x:'center'
                 },
@@ -98,13 +96,34 @@ module.exports=applAnalysisModule => {applAnalysisModule
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
+                  toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'center',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
                 legend: {
                     orient: 'vertical',
                     left: 'left',
                     data: ['未解决','解决']
                 },
                 series : [
-                    {
+                    {  
                         type: 'pie',
                         radius : '55%',
                         center: ['50%', '60%'],
@@ -122,13 +141,25 @@ module.exports=applAnalysisModule => {applAnalysisModule
         }
 
         /**
-         * 回复数图表   Echart
+         * 问答匹配数图表   Echart
          **/
         function specificRateChartSet(val1,val2,val3,val4,val5,val6){
             specificRateChart.setOption({
+                title : {
+                    top: '10%',
+                    text: '问答匹配详情',
+                    x:'center'
+                },
                 tooltip : {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                grid: {
+                    left: '1%',
+                    right: '35%',
+                    top: '5%',
+                    bottom: '6%',
+                    containLabel: true
                 },
                 legend: {
                     orient : 'vertical',
@@ -159,9 +190,10 @@ module.exports=applAnalysisModule => {applAnalysisModule
                 calculable : true,
                 series : [
                     {
-                        //name:'访问来源',
+                        name:'问答匹配详情',
                         type:'pie',
-                        radius : ['50%', '70%'],
+                         center: ['50%', '58%'],
+                        radius : ['40%', '60%'],
                         itemStyle : {
                             normal : {
                                 label : {

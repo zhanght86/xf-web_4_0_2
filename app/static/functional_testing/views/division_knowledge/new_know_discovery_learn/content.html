@@ -6,7 +6,7 @@
                     <div>
                         <p>
                             <span class="chatPopLeftMeMSg">
-                                <sub></sub>{{item.content}}
+                                <sub></sub>{{item.question}}
                             </span>
                         </p>
                     </div>
@@ -15,9 +15,9 @@
                     <div>
                         <p><sub></sub>
                             <span class="RecommendCnt">
-                                <span class="RecommendCnt1">{{item.answer}}</span>
+                                <span class="RecommendCnt1">{{item.answerList[0].answer}}</span>
                                 <span class="RecommendCnt1-line" ng-if="item.prompt!=null && item.prompt!=''">{{item.prompt}}</span>
-                                <span ng-if="item.recommendQuestions!=null && item.recommendQuestions.length>0" ng-repeat="reco in item.recommendQuestions">
+                                <span ng-if="item.recommendQuestionList!=null && item.recommendQuestionList.length>0" ng-repeat="reco in item.recommendQuestionList">
                                     <i style="display:inline">{{reco.knowledgeTitle}}</i>
                                 </span>
                             </span>
