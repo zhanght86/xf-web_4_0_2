@@ -174,20 +174,17 @@ module.exports = knowledgeManagementModule =>{
             let params = angular.copy($scope.parameter) ;
             params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
-            angular.forEach(params.contents,function(item,index){
-                item.contentRelevantList.map(value=>item.id)
-            });
-            params.contents = JSON.stringify(params.contents) ;
             if(!params.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
             }else if(!params.classifyList.length){
                 layer.msg("知识类目不能为空，请选择分类");
                 return false;
-            }else if(params.contents[0].length<=1){
+            }else if(params.contents[0].content.length<=1){
                 layer.msg("请完善表格知识");
                 return false;
             } else {
+                params.contents = JSON.stringify(params.contents) ;
                 result = params
             }
             return result ;

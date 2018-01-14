@@ -4,10 +4,10 @@
         <div class="framework cl">
             <span class="framework_s bold">已选知识：</span>
             <div >
-                <ul id="already_select" ng-repeat="item in knowledge.selectedKnow track by $index">
+                <ul id="already_select" ng-repeat="item in knowledge.selectedList track by $index">
                     <!--{{item}}-->
-                    <li><span class="mr-10">{{item.chatKnowledgeTopic}}</span>
-                        <a href="javascript:;" ng-click="vm.selectedKnow.splice($index,1)" class="c-red">X</a>
+                    <li><span class="mr-10">{{item.title}}</span>
+                        <a href="javascript:;" ng-click="knowledge.removeSelected($index)" class="c-red">X</a>
                     </li>
                 </ul>
             </div>
@@ -28,7 +28,7 @@
                     </thead>
                     <tbody class="text-c">
                     <tr ng-repeat="item in knowledge.knowledgeList track by $index">
-                        <td ><input class="selectSingle"  type="checkbox" ng-checked="vm.selectAllCheckDialog" ng-click="knowledge.selectSingle(item.item.id)"/></td>
+                        <td ><input class="selectSingle"  type="checkbox" ng-checked="knowledge.isAllKnowSelected" ng-click="knowledge.selectSingle(item,item.id)"/></td>
                         <td>{{item.title}}</td>
                     </tr>
                     </tbody>
@@ -39,7 +39,7 @@
 
     </div>
     <div class="row tc">
-        <button  class="btn btn-primary radius mr-10" type="button"  ng-click="closeThisDialog(1)">保存</button>
+        <button  class="btn btn-primary radius mr-10" type="button" ng-disabled="knowledge.selectedList.length==0"  ng-click="closeThisDialog(1)">保存</button>
         <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
     </div>
 </div>

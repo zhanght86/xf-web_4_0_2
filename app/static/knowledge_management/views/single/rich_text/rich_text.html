@@ -11,10 +11,10 @@
                     <a href="javascript:;" class="c_green R" ng-click="$parent.knowCtr.introduction.showTip();">使用帮助</a>
                 </div>
                 <div class=" pr">
-                    <div class="pt30 pb30">
+                    <div class="pt30">
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">知识标题：</div>
-                            <div >
+                            <div>
                                 <input  type="text" class="bk-gray input-text " autofocus  placeholder="请输入标题" ng-model="parameter.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:394px;"/>
                                 <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                             </div>

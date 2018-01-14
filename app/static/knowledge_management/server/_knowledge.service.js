@@ -68,7 +68,7 @@ class KnowledgeService {
                 // 保存
                 this.storeFactorKnow = $resource(API_MS + "/knowledge/task/add", {}, {});
                 // 获取
-                this.storeFactorKnow = $resource(API_MS + "/knowledge/task/get/:id", {}, {});
+                this.getFactorKnow = $resource(API_MS + "/knowledge/task/get/:id", {}, {});
                 // 编辑
                 this.updateFactorKnow = $resource(API_MS + "/knowledge/task/update", {}, {});
         }};

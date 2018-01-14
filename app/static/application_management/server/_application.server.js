@@ -44,6 +44,13 @@ class ApplicationServer {
         this.storeClassicalAvatar = $resource(API_APPLICATION+"/config/classic/avatar/update", {}, {});
         //保存自定义机器人头像
         // this.uploadCustomizedAvatar = $resource(API_APPLICATION+"/config/upload/avatar", {}, {});
+//   授权
+        //查看授权参数
+        this.getLicenseInfo = $resource(API_APPLICATION+"/config/license/info/:applicationId", {}, {});
+        //更新授权参数
+        this.updateRobotParameter = $resource(API_APPLICATION+"/config/robot/update", {}, {});
+        //重新授权参数
+        this.updateLicense = $resource(API_APPLICATION+"/config/license/regrant", {}, {});
 
 //  转人工设置
         //获取列表

@@ -23,8 +23,11 @@ module.exports = applicationManagementModule =>{
             },
             hotQuestionTimeout : "", // 热点知识更新频率
             hotQuestionLimit : "", // 热点知识限制个数
+            oldHotQuestionTimeout : "", // 热点知识更新频率
+            oldHotQuestionLimit : "", // 热点知识限制个数
             hotKnowDelIds : [] ,     //要删除热点知识的 id 集合
             addHotHotKnow : addHotHotKnow,  //添加方法
+            updateHotKnowledgeConfig : updateHotKnowledgeConfig , // 修改热点知识配置
             queryHotKnowledgeList : queryHotKnowledgeList , //获取热点知识列表
             top : top, //知识置顶
             up : up, //知识上移
@@ -43,6 +46,7 @@ module.exports = applicationManagementModule =>{
                 location:false
             },
             isAllKnowSelected : false,  //是否全选
+            removeSelected : removeSelected,
             selectAllKnow :selectAllKnow ,  //全部选择
             selectSingle : selectSingle ,// 单条选择
             queryKnowledgeList : queryKnowledgeList,  // 知识列表弹框
@@ -53,14 +57,20 @@ module.exports = applicationManagementModule =>{
         queryHotKnowledgeList($scope.hotKnowledge.paginationConf.currentPage,$scope.hotKnowledge.paginationConf.pageSize) ;
         //加载热点知识列表
         function queryHotKnowledgeList(index,pageSize){
+            let i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
+            $scope.hotKnowledge.hotKnowListIds = [] ;
             ApplicationServer.queryHotKnowledgeList.save({
                     index:(index - 1)*pageSize,
                     pageSize:pageSize,
                     knowledgeTitle : $scope.hotKnowledge.keyWord
                 },
                 function(response){
+                    layer.close(i) ;
                     if( response.status == 200 ){
-                        $scope.hotKnowledge.hotKnowList = response.data.hotQuestionList;
+                        if(response.data.data.length){
+                            $scope.hotKnowledge.hotKnowListIds =  response.data.data.map(item=>item.id) ;
+                        }
+                        $scope.hotKnowledge.hotKnowList = response.data.data;
                         $scope.hotKnowledge.paginationConf.totalItems = response.data.total ;
                         $scope.hotKnowledge.paginationConf.numberOfPages = response.data.total/pageSize ;
                     }else{
@@ -68,12 +78,11 @@ module.exports = applicationManagementModule =>{
                         $scope.hotKnowledge.paginationConf.totalItems = 0 ;
                     }
                     initHotKnowSelected() ;
-                },function(error){console.log(error)})
+                },function(error){console.log(error);layer.close(i) ;})
         }
-        queryKnowledgeList($scope.knowledge.paginationConf.currentPage,$scope.knowledge.paginationConf.pageSize) ;
         //从聊天知识库查询知识
         function queryKnowledgeList(index,pageSize){
-            ApplicationServer.queryKnowledgeList.save({
+            return ApplicationServer.queryKnowledgeList.save({
                 "index": (index-1)*pageSize,
                 "pageSize": pageSize,
                 "title": $scope.knowledge.knowledgeTitle,         //知识标题默认值null
@@ -90,35 +99,50 @@ module.exports = applicationManagementModule =>{
             },function(error){console.log(error)})
         }
         function selectAllKnow() {
-            if($scope.knowledge.isAllKnowSelected){   // 取消全部
+            if($scope.knowledge.isAllKnowSelected == false){   // // 选择全部
+                $scope.knowledge.selectedList = $scope.knowledge.selectedList.concat(knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList));
+            }else{//取消全部
                 let i = 0 ;
-                while (i == $scope.knowledge.selectedList.length){
-                    i++;
-                    has = $scope.knowledge.selectedList.every(item=>(item.id != $scope.knowledge.knowledgeList[i].id));
-                    if(has){
-                        $scope.knowledge.selectedList.splice(i,1)
-                    }
-                }
-                $scope.knowledge.isAllKnowSelected = false ;
-            }else{                                    // 选择全部
-                $scope.knowledge.selectedList.push(knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList));
-                $scope.knowledge.isAllKnowSelected = true ;
+                angular.forEach($scope.knowledge.knowledgeList,function(val,cur){
+                    angular.forEach($scope.knowledge.selectedList,function(know,index){
+                        if(know.id == val.id){
+                            $scope.knowledge.selectedList.splice(index,1);
+                        }
+                    })
+                });
+                // while (i == $scope.knowledge.knowledgeList.length){
+                //     i++;
+                //     angular.forEach($scope.knowledge.selectedList,function(know,index){
+                //         if(know.id == $scope.knowledge.knowledgeList[i].id){
+                //             $scope.knowledge.selectedList.splice(index,1);
+                //         }
+                //     })
+                // }
             }
+            $scope.knowledge.isAllKnowSelected = !$scope.knowledge.isAllKnowSelected ;
         }
         function selectSingle(item,id) {
+            console.log(item,id);
             let has = false;
-            angular.forEach($scope.knowledge.selectedList,function (val,index) {
-                if(val.id == id){
-                    has = true ;
-                    $scope.knowledge.selectedList.splice(index,0)
-                }
-            }) ;
-            if(has){
+            let str = JSON.stringify(knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList));
+            if(str.length!=0){
+                angular.forEach($scope.knowledge.selectedList,function (val,index) {
+                    if(str.indexOf(JSON.stringify(val))!=-1){
+                        $scope.knowledge.selectedList.splice(index,1)
+                    }
+                }) ;
+            }
+            if(!has){
                 $scope.knowledge.selectedList.push(item)
             }
             // 是否全选
-            $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList)?true:false
+            $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList).length==0?true:false
 
+        }
+        function removeSelected(index) {
+            $scope.knowledge.selectedList.splice(index,1);
+            // 是否全选
+            $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList).length==0?true:false
         }
         function knowUnselected(selected,pageList){
             // 全选返回数组，未false
@@ -127,37 +151,41 @@ module.exports = applicationManagementModule =>{
             let has ;
             let i = 0;
             let result = [] ;
-            while (i == len){
-                i++;
-                has = selected.some(item=>(item.id == pageList[i].id));
-                if(!has){
-                    $scope.knowledge.selectedList.push(pageList[i])
+            // while (i == len){
+            //     i++;
+            //     has = selected.some(item=>(item.id == pageList[i].id));
+            //     if(!has){
+            //         $scope.knowledge.selectedList.push(pageList[i])
+            //     }
+            // }
+            let  str = JSON.stringify(selected) ;
+            angular.forEach(pageList,function(item,index){
+                if(str.indexOf(JSON.stringify(item))==-1){
+                    result.push(item)
                 }
-            }
+            });
             return result ;
         }
         //添加知识
         function addHotHotKnow(){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,addHotHtml,"700px",function(){
-                console.log($scope.vm.seleceAddAll);
-                ApplicationServer.addHotKnowledge.save({
-                    applicationId : APPLICATION_ID,
-                    userId :  USER_ID,
-                    hotKnowledgeList : $scope.vm.seleceAddAll
-                },function(response){
-                    if(response.status == 10012){
-                        layer.msg("该知识已经存在,请重新添加!")
-                    }else{
-                        queryHotKnowledgeList(1);
-                    }
-                },function(error){console.log(error)}) ;
-            },function(){
-                //取消的同时清空数据
-                $scope.vm.selectAllCheckDialog = false;
-                $scope.vm.seleceAddAll = [];
-                $scope.vm.knowledgeList = [];
-                $scope.vm.keyWord = "";
-                $scope.vm.paginationCon = '' ;
+            queryKnowledgeList($scope.knowledge.paginationConf.currentPage,$scope.knowledge.paginationConf.pageSize).$promise.then(function () {
+                $scope.$parent.$parent.MASTER.openNgDialog($scope,addHotHtml,"700px",function(){
+                    ApplicationServer.addHotKnowledge.save({
+                        "ids" : $scope.knowledge.selectedList.map(item=>item.id)
+                    },function(response){
+                        if(response.status == 200){
+                            layer.msg("该知识已经存在,请重新添加!")
+                        }else{
+                            queryHotKnowledgeList($scope.hotKnowledge.paginationConf.currentPage,$scope.hotKnowledge.paginationConf.pageSize) ;
+                        }
+                    },function(error){console.log(error)}) ;
+                },function(){
+                    //取消的同时清空数据
+                    $scope.knowledge.selectAllCheckDialog = false;
+                    $scope.knowledge.selectedList = [];
+                    $scope.knowledge.knowledgeList = [];
+                    $scope.knowledge.keyWord = "";
+                }) ;
             }) ;
         }
         //删除知识
@@ -215,14 +243,16 @@ module.exports = applicationManagementModule =>{
         getHotKnowledgeConfig() ;
         // 热点知识配置（更新频率）
         function getHotKnowledgeConfig(){
-            ApplicationServer.getHotKnowledgeConfig.get({
-                id : APPLICATION_ID
-            },function (response) {
-                if(response.status == 200){
-                    $scope.hotKnowledge.hotQuestionTimeout = response.data.hotQuestionTimeout;
-                    $scope.hotKnowledge.hotQuestionLimit   = response.data.hotQuestionLimit;
-                }
-            })
+            if($scope.hotKnowledge.oldHotQuestionTimeout != $scope.hotKnowledge.hotQuestionTimeout || $scope.hotKnowledge.oldHotQuestionLimit != $scope.hotKnowledge.hotQuestionLimit){
+                ApplicationServer.getHotKnowledgeConfig.get({
+                    id : APPLICATION_ID
+                },function (response) {
+                    if(response.status == 200){
+                        $scope.hotKnowledge.oldHotQuestionTimeout = response.data.hotQuestionTimeout;
+                        $scope.hotKnowledge.oldHotQuestionLimit   = response.data.hotQuestionLimit;
+                    }
+                })
+            }
         }
         //修改知识配置（更新频率）
         function updateHotKnowledgeConfig(){

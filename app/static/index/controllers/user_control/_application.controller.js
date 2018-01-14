@@ -9,14 +9,20 @@ module.exports = homePageModule =>{
     ($scope,  $state,$timeout,$stateParams,ngDialog,$cookieStore,$rootScope,HomePageServer) =>{
         $scope.vm = {
             userName :getCookie("userName"),
+            licensePass : false ,
             userRole : $stateParams.userPermission,
             addApplicationWindow : addApplicationWindow,
             myApplication : "",
             newApplicationName : "",
             newLicence : "",
-            newDescribe : "",
-            selectApplication : selectApplication
+            selectApplication : selectApplication,
+            applicationValidate : applicationValidate,
+            isLicenseValidate :isLicenseValidate,
         };
+        $scope.info = {
+
+        } ;
+
         let addApplicationHtml = require("../../views/switch_application/add_application.html") ;
         //获取用户信息
         HomePageServer.getUserRoleList.get({
@@ -50,34 +56,43 @@ module.exports = homePageModule =>{
         //打开添加窗口
         function addApplicationWindow() {
             $scope.$parent.$parent.MASTER.openNgDialog($scope,addApplicationHtml,"650px",function(){
-                if(applicationValidate()==false){
-                    return false;
-                }
                 addApplication();
             },function(){
                 $scope.vm.newApplicationName="";
                 $scope.vm.newLicence="";
-                $scope.vm.newDescribe="";
             },function(){
             });
         }
+        function isLicenseValidate() {
+            HomePageServer.checkLicense.save({
+                "license" : $scope.vm.newLicence
+            }).$promise.then(function (response) {
+                if(response.status == 200){
+                    $scope.info = response.data;
+                    $scope.vm.licensePass = true ;
+                }else{
+                    layer.msg(response.info);
+                    $scope.vm.licensePass = false ;
+                }
+            }) ;
+        }
         function applicationValidate(){
-            if(lengthCheck($scope.vm.newApplicationName,0,50)==false){
+            let result = true ;
+            if(!lengthCheck($scope.vm.newApplicationName,0,50)){
                 layer.msg("应用名称不能为空或超过长度限制50");
-                return false;
+                result = false;
             }
-            if(lengthCheck($scope.vm.newLicence,0,20)==false){
+            if(!lengthCheck($scope.vm.newLicence,0,20)){
                 layer.msg("LICENSE不能为空或超过长度限制20");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
         //添加
         function addApplication(){
             HomePageServer.addApplication.save({
                 "name": $scope.vm.newApplicationName,
                 "license": $scope.vm.newLicence,
-                "description": $scope.vm.newDescribe
             },function(data){
                 if(data.status==200){
                     $state.reload();

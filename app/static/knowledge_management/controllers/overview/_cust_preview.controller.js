@@ -17,6 +17,9 @@ module.exports = knowledgeManagementModule =>{
                 listData : null,
                 edit :  edit
             };
+            $scope.knowledge = {
+
+            } ;
             //修改
             let editUrl,
                 params={
@@ -25,29 +28,31 @@ module.exports = knowledgeManagementModule =>{
                 apiRes;
             switch($scope.vm.type){
                 case 100 :
-                    editUrl = "KM.faq";
+                    editUrl = "KM.faq.edit";
                     apiRes = KnowledgeService.getFaqKnow.get(params);
                     break;
                 case 101 :
-                    editUrl = "KM.concept" ;
+                    editUrl = "KM.concept.edit" ;
                     apiRes = KnowledgeService.getConceptKnow.get(params);
                     break;
                 case 102 :
-                    editUrl = "KM.listAdd";
+                    editUrl = "KM.list.edit";
                     apiRes = KnowledgeService.getListKnow.get(params);
                     break;
                 case 103 :
-                    editUrl = "KM.factor";
+                    editUrl = "KM.factor.edit";
                     apiRes = KnowledgeService.getFactorKnow.get(params);
                     break;
             }
             function edit(){
-                // $state.go(editUrl,{data:angular.toJson($scope.vm.listData)})
+                $state.go(editUrl,{knowledgeId: $scope.vm.id})
             }
            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
            apiRes.$promise.then(function(response){
+               if(response.status == 200 ){
+                   $scope.knowledge = response.data
+               }
                 layer.close(i) ;
-
             },function(error){
                console.log(error);
                layer.close(i)
