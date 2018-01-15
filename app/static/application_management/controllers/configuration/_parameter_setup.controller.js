@@ -19,6 +19,38 @@ module.exports = applicationManagementModule =>{
             upperLimit         : ""	,               //深度学习上限阈值
             lowerLimit         : "",	            //深度学习下限阈值
         } ;
+        // 寒暄
+        $('.slider-input-greeting').jRange({
+            from: 0,
+            to: 1,
+            step: 0.01,
+            scale: [0,0.2,0.4,0.6,0.8,1],
+            format: '%s',
+            width: 400,
+            showLabels: true,
+            isRange : true,
+            onstatechange : function(val){
+                val = val.split(",") ;
+                $scope.parameter.lowerLimit = val[0] ;
+                $scope.parameter.upperLimit = val[1] ;
+            }
+        });
+        // 标签
+        $('.slider-input-tag').jRange({
+            from: 0,
+            to: 1,
+            step: 0.01,
+            scale: [0,0.2,0.4,0.6,0.8,1],
+            format: '%s',
+            width: 400,
+            showLabels: true,
+            isRange : true,
+            onstatechange : function(val){
+                val = val.split(",") ;
+                $scope.parameter.tagLowerLimit = val[0]
+                $scope.parameter.tagUpperLimit = val[1]
+            }
+        });
         $scope.vm = {
             updateParameter    : updateParameter,   //更新应用参数
             queryParameter     : queryParameter,    //查询应用参数
@@ -55,7 +87,7 @@ module.exports = applicationManagementModule =>{
         }
         //编辑应用参数
         function updateParameter(){
-            ApplicationServer.updateParameter.save($scope,vm.parameter,function(data){
+            ApplicationServer.updateParameter.save($scope.parameter,function(data){
                 if(data.status===200){
                     layer.msg("保存成功");
                 }else{
@@ -72,6 +104,14 @@ module.exports = applicationManagementModule =>{
                     $scope.parameter[key] = "" ;
                 }
             }
+            let greeting = [];
+            let tag  = [] ;
+            greeting.push(data.lowerLimit,data.upperLimit)
+            tag.push(data.tagLowerLimit,data.tagUpperLimit);
+            console.log(greeting,tag) ;
+            $('.slider-input-greeting').jRange('setValue',greeting.join(","));
+            $('.slider-input-tag').jRange('setValue',tag.join(",") )
+
         }
         //开关
         function turnOn(targetValue,targetName){

@@ -50,9 +50,9 @@ module.exports = applicationManagementModule =>{
                 "pageSize": pageSize
             },function(response){
                 if(response.status == 200){
-                    $scope.vm.serviceList = response.data;
-                    $scope.vm.paginationConf.totalItems = response.total ;
-                    $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize ;
+                    $scope.vm.serviceList = response.data.data;
+                    $scope.vm.paginationConf.totalItems = response.data.total ;
+                    $scope.vm.paginationConf.numberOfPages = response.total/pageSize ;
                 }else{
 
                 }
@@ -73,28 +73,13 @@ module.exports = applicationManagementModule =>{
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
          */
-        var timeout ;
-        $scope.$watch('vm.paginationConf.currentPage', function(current){
-            if(current){
-                if (timeout) {
-                    $timeout.cancel(timeout)
-                }
-                timeout = $timeout(function () {
-                    queryServiceList(current);
-                }, 100)
-            }
-        },true);
-
         //根据服务id查询服务信息
         function findServiceByServiceId(serviceId){
             $scope.vm.dialogTitle="编辑服务";
-            ApplicationServer.queryServiceById.save({
-                "serviceId": serviceId
+            ApplicationServer.queryServiceById.get({
+                "id": serviceId
             },function(data){
                 if(data.status==200){
-                    $scope.vm.categoryIds=data.data.categoryIds;//分类id列表
-                    $scope.vm.newCategoryIds=data.data.categoryIds;//选中的分类初始化
-                    $scope.vm.channels=data.data.channels;//渠道id列表
                     $scope.vm.nodeCode=data.data.nodeCode;//节点编号
                     $scope.vm.serviceName=data.data.serviceName;//服务名称
                     $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
@@ -109,14 +94,8 @@ module.exports = applicationManagementModule =>{
             if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
                 layer.msg("发布服务的名称不能为空!");
                 return 0;
-            }else if($scope.vm.categoryIds==null||$scope.vm.categoryIds.length==0){
-                layer.msg("发布服务时未选择分类!");
-                return 0;
             }else if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
                 layer.msg("发布服务时未选择发布节点!");
-                return 0;
-            }else if($scope.vm.serviceType==null||$scope.vm.serviceType==""){
-                layer.msg("发布服务时未选择发布类型!");
                 return 0;
             }else{
                 return 1;
@@ -225,32 +204,6 @@ module.exports = applicationManagementModule =>{
                     }
                 },function(error){console.log(error)})
         }
-        //选择渠道
-        function selectChannel(channelId){
-            if($scope.vm.channels==null){
-                $scope.vm.channels=[];
-            }
-            var index=$scope.vm.channels.inArray(channelId);
-            if(index){
-                $scope.vm.channels.remove(channelId);
-            }else{
-                $scope.vm.channels.push(channelId);
-            }
-        }
-        //编辑服务
-        // conosole.oog
-        // var dialog1 = ngDialog.openConfirm({
-        //     templateUrl: require("../../views/release/release_manage/release_service.html"),
-        //     // width:width?width:"450px",
-        //     plain: true ,
-        //     scope: $scope,
-        //     // closeByDocument: false,
-        //     // closeByEscape: true,
-        //     // showClose: true,
-        //     // backdrop: 'static',
-        //     preCloseCallback: function (e) {    //关闭回掉
-        //     }
-        // });
         function addOrEditService(serviceId){
             let server_html = require("../../views/release/release_manage/release_service.html") ;
             if(!serviceId){   // 新增
@@ -265,7 +218,6 @@ module.exports = applicationManagementModule =>{
             $scope.$parent.$parent.MASTER.openNgDialog($scope,server_html,"700px",function(){
                 var parameter = {
                     "applicationId": APPLICATION_ID,
-                    "channels" : $scope.vm.channels, //渠道id列表
                     "nodeCode" : $scope.vm.nodeCode, //节点编号
                     "serviceName": $scope.vm.serviceName, //服务名称
                     "serviceType" : $scope.vm.serviceType, //服务类型

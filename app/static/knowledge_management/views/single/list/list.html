@@ -55,7 +55,7 @@
                             <div style="width:397px">
                                 <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
                                     <input class="ipt-txt bd" style="width:395px;height:32px;" type="text"
-                                           ng-model="ext" ng-change="parameter.extensionQuestionList[$index]=ext" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
+                                           ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="vm.skipNewLine($event)">
                                     <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
                                           ng-click="($last&&$first)?parameter.extensionQuestionList.splice($index,1):''"
                                     ></span>
@@ -80,7 +80,7 @@
                 <div class="list_facContent " style="margin-bottom:80px;">
                     <div class="list_facContent_L"></div>
                     <div>
-                        <input type="button" class="btn1 btn1_blue mr-20" value="预览" ng-click="vm.scan()"/>
+                        <!--<input type="button" class="btn1 btn1_blue mr-20" value="预览" ng-click="vm.scan()"/>-->
                         <input type="button" class="btn1 btn_green" ng-click="vm.save()"
                                value="保存"/>
                     </div>

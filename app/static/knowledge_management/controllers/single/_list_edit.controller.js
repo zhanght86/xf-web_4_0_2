@@ -46,6 +46,11 @@ module.exports = knowledgeManagementModule =>{
                         $scope.vm.isTimeTable = true ;
                         $scope.parameter.expDateStart =  $scope.parameter.expDateStart?$filter("date")(response.data.expDateStart,"yyyy-MM-dd"):"";
                         $scope.parameter.expDateEnd =  $scope.parameter.expDateEnd? $filter("date")(response.data.expDateEnd,"yyyy-MM-dd"):"";
+                    } ;
+                    if(response.data.extensionQuestionList.length==0){
+                        $scope.parameter.extensionQuestionList = [{"title":""}]
+                    }else{
+                        $scope.parameter.extensionQuestionList.push([{"title":""}])
                     }
                 }
             })
@@ -92,7 +97,7 @@ module.exports = knowledgeManagementModule =>{
         function checkSave() {
             let result = false ;
             let params = angular.copy($scope.parameter);
-            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             angular.forEach(params.contents,function(item,index){
                 if(item.type==1010 && !item.content){

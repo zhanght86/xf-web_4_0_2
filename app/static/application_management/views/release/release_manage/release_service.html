@@ -14,22 +14,22 @@
                                 ng-model="vm.serviceName"
                                 name="serviceName" check-service-name="serviceName"
                                 placeholder=""  style="width:100%;" required>
-                        <p class="c-red" ng-show="myService.serviceName.$dirty && myForm.serviceName.$invalid">
+                        <!--<p class="c-red" ng-show="myService.serviceName.$dirty && myForm.serviceName.$invalid">-->
                             <!--<div class="c-red" ng-show="myService.serviceName.$error.required">服务名称不能为空！</div>-->
-                        <div class="c-red" ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</div>
+                        <!--<div class="c-red" ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</div>-->
                         </p>
                     </div>
                 </div>
 
 
-                <div class="framework mb-10">
-                    <span class="framework_s text-r">发布渠道：</span>
-                    <div >
-                        <label class="mr-10" ng-repeat="channel in $parent.$parent.$parent.MASTER.channelList">
-                            <input type="radio" ng-model="vm.channels"/> {{channel.channelName}}
-                        </label>
-                    </div>
-                </div>
+                <!--<div class="framework mb-10">-->
+                    <!--<span class="framework_s text-r">发布渠道：</span>-->
+                    <!--<div >-->
+                        <!--<label class="mr-10" ng-repeat="channel in $parent.$parent.$parent.MASTER.channelList">-->
+                            <!--<input type="radio" ng-model="vm.channels"/> {{channel.channelName}}-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="framework mb-10">
                     <span class="framework_s text-r">发布类型：</span>
                     <div >
@@ -50,7 +50,7 @@
                                 ng-click="vm.nodeCode=node.nodeCode">{{node.nodeAccessIp}}
                             </li>
                         </ul>
-                        <a ui-sref="setting.nodeMan" class="c-primary" ng-click="closeThisDialog(0)">不在列表内，去创建新节点</a>
+                        <a ui-sref="AM.node" class="c-primary" ng-click="closeThisDialog(0)">不在列表内，去创建新节点</a>
                     </div>
                 </div>
 

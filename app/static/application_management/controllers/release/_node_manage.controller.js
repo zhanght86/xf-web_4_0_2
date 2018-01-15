@@ -50,15 +50,13 @@ module.exports = applicationManagementModule =>{
         listStatusData(); //查询状态数据
         listNodeData(1);
         //请求节点列表
-        function listNodeData(index){
-            ApplicationServer.queryNodeList.save({
+        function listNodeData(index,pageSize){
+            ApplicationServer.queryNodeList.get({
                 "applicationId": APPLICATION_ID,
-                "index" : (index-1)*$scope.vm.paginationConf.pageSize,
-                "pageSize": $scope.vm.paginationConf.pageSize
             },function(response){
-                $scope.vm.nodeData = response.data;
-                $scope.vm.paginationConf.totalItems = response.total ;
-                $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize;
+                $scope.vm.nodeData = response.data.data;
+                // $scope.vm.paginationConf.totalItems = response.total ;
+                // $scope.vm.paginationConf.numberOfPages = response.total/$scope.vm.paginationConf.pageSize;
             },function(error){console.log(error);})
         }
         var timeout ;

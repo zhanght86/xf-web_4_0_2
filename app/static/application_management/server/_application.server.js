@@ -31,9 +31,9 @@ class ApplicationServer {
 
 //   参数设置
         //查看应用参数
-        this.queryParameter = $resource(API_APPLICATION+"/config/get/param/:id", {}, {});
+        this.queryParameter = $resource(API_APPLICATION+"/config/param/get/:id", {}, {});
         //更新应用参数
-        this.updateParameter = $resource(API_APPLICATION+"/config/update/param", {}, {});
+        this.updateParameter = $resource(API_APPLICATION+"/config/param/update", {}, {});
 
 //   机器人设置
         //查看机器人参数
@@ -67,13 +67,13 @@ class ApplicationServer {
         //查看服务列表
         this.queryServiceList = $resource(API_APPLICATION+"/service/get", {}, {});
         //获取服务类型
-        this.queryServiceTypeList = $resource(API_APPLICATION+"/service/listServiceType", {}, {});
+        this.queryServiceTypeList = $resource(API_APPLICATION+"/service/type/get", {}, {});
         //获取可用节点
         this.queryAvailableNodeList = $resource(API_APPLICATION+"/node/listNoUsingNode", {}, {});
         //检查服务名称是否重复
-        this.verifyServiceName = $resource(API_APPLICATION+"/service/checkName", {}, {});
+        this.verifyServiceName = $resource(API_APPLICATION+"/service/name/check", {}, {});
         //通过id查看服务
-        this.queryServiceById = $resource(API_APPLICATION+"/service/findServiceById", {}, {});
+        this.queryServiceById = $resource(API_APPLICATION+"/service/get/:id", {}, {});
         //获取己用节点(通过父节点信息)
         this.queryParentNodeInfo = $resource(API_APPLICATION+"/node/findParentNodeInfo", {}, {});
         //新增服务
@@ -92,15 +92,14 @@ class ApplicationServer {
         this.restartService = $resource(API_APPLICATION+"/service/restart", {}, {});
 //节点管理
         //查看节点列表
-        this.queryNodeList = $resource(API_APPLICATION+"/node/listNodeByPage", {}, {});
-
+        this.queryNodeList = $resource(API_APPLICATION+"/node/id/get/:applicationId", {}, {});
         //查看未使用节点
-        this.queryUnusedNodeList = $resource(API_APPLICATION+"/node/get/nouse", {}, {});
+        this.queryUnusedNodeList = $resource(API_APPLICATION+"/node/free/get", {}, {});
         //查看父节点信息
-        this.queryNodeList = $resource(API_APPLICATION+"/node/listNodeByPage", {}, {});
+        this.queryParentNodeInfo = $resource(API_APPLICATION+"/node/parent/get/:id", {}, {});
 
         //查询节点的基本信息
-        this.queryNodeInfo = $resource(API_APPLICATION+"/node/findNodeInfo", {}, {});
+        // this.queryNodeInfo = $resource(API_APPLICATION+"/node/findNodeInfo", {}, {});
         //新增节点
         this.addNode = $resource(API_APPLICATION+"/node/addNode", {}, {});
         //编辑节点

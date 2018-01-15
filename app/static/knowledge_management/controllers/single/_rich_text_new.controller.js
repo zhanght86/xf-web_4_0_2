@@ -149,9 +149,9 @@ module.exports = knowledgeManagementModule => {
                     layer.msg("请选择渠道后保存")
                 } else if (!isContentExist && !$scope.newKnow.channel) {
                     layer.msg("请完善知识内容,并选择渠道后保存")
-                } else if($scope.newKnow.channel==130 && $scope.vm.channelList.length){
+                } else if($scope.newKnow.channel==130 && $scope.parameter.contents.length){
                     layer.msg("添加渠道重复，请重新选择");
-                }else if ($scope.vm.channelList.inArray($scope.newKnow.channel)) {
+                }else if (!$scope.parameter.contents.every(item=>item.channel!=$scope.newKnow.channel)) {
                     layer.msg("已添加此渠道内容");
                 } else {
                     close(1);

@@ -172,7 +172,7 @@ module.exports = knowledgeManagementModule =>{
         function checkSave(){
             let result = false ;
             let params = angular.copy($scope.parameter) ;
-            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             if(!params.title){
                 layer.msg("知识标题不能为空，请填写");
@@ -184,7 +184,9 @@ module.exports = knowledgeManagementModule =>{
                 layer.msg("请完善表格知识");
                 return false;
             } else {
-                params.contents = JSON.stringify(params.contents) ;
+                angular.forEach(params.contents,function (item,index) {
+                    params.contents[index].content =JSON.stringify(item.content)
+                });
                 result = params
             }
             return result ;

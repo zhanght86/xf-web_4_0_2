@@ -85,6 +85,8 @@ module.exports = knowledgeManagementModule =>{
                     }
                     if(response.data.extensionQuestionList.length==0){
                         $scope.parameter.extensionQuestionList = [{"title":""}]
+                    }else{
+                        $scope.parameter.extensionQuestionList.push([{"title":""}])
                     }
                     delete $scope.parameter.modifyTime;
                     delete $scope.parameter.modifierId;
@@ -172,9 +174,9 @@ module.exports = knowledgeManagementModule =>{
                 layer.msg("请选择渠道后保存")
             } else if (!isContentExist && !$scope.newKnow.channel) {
                 layer.msg("请完善知识内容,并选择渠道后保存")
-            } else if($scope.newKnow.channel==130 && $scope.vm.channelList.length){
+            } else if($scope.newKnow.channel==130 && $scope.parameter.contents.length){
                 layer.msg("添加渠道重复，请重新选择");
-            }else if ($scope.vm.channelList.inArray($scope.newKnow.channel)) {
+            }else if (!$scope.parameter.contents.every(item=>item.channel!=$scope.newKnow.channel)) {
                 layer.msg("已添加此渠道内容");
             } else {
                 close(1);
@@ -234,24 +236,24 @@ module.exports = knowledgeManagementModule =>{
             $scope.newKnow.imgTextSelected = "";
             $scope.newKnow.voiceSelected = "" ;
             if(params){
-                switch (params.type) {
-                    case  "1010" :    //文本
+                switch (parseInt(params.type)) {
+                    case  1010 :    //文本
                         $scope.newKnow.content = params.content;
                         break;
-                    case  "1018" :  //图片
+                    case  1018 :  //图片
                         $scope.newKnow.imgSelected = {
                             "name": params.name,
                             "id": params.content,
                         };
                         break;
-                    case  "1020" :  // 图文
+                    case  1020 :  // 图文
                         $scope.newKnow.imgTextSelected = {
                             "id": params.content,
                             "name": params.name,
                             "url": params.url
                         };
                         break;
-                    case  "1019": //声音
+                    case  1019: //声音
                         $scope.newKnow.voiceSelected = {
                             "name": params.name,
                             "id": params.content,
@@ -260,7 +262,7 @@ module.exports = knowledgeManagementModule =>{
                 }
                 $scope.newKnow.type = params.type;
                 $scope.newKnow.channel = params.channel;
-                $scope.vm.knowledgeRelevantContentList = params.contentRelevantList;
+                $scope.vm.knowledgeRelevantContentList = angular.copy(params.contentRelevantList);
             }else{
                 $scope.newKnow.type                = 1010 ;
                 $scope.newKnow.content             = "" ;
@@ -335,7 +337,7 @@ module.exports = knowledgeManagementModule =>{
         function checkSave() {
             let result = false ;
             let params = angular.copy($scope.parameter);
-            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             angular.forEach(params.contents,function(item,index){
                 if(item.name){
