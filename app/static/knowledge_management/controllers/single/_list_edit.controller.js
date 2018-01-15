@@ -50,7 +50,6 @@ module.exports = knowledgeManagementModule =>{
                 }
             })
         }
-
         let  limitTimer;
         //限制一个知识多次保存
         function save() {
@@ -64,7 +63,7 @@ module.exports = knowledgeManagementModule =>{
                 $scope.vm.saveLimitTimer = true;
             }, 180000);
             let i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            KnowledgeService.storeListKnow.save(resultParams,function (response) {
+            KnowledgeService.updateListKnow.save(resultParams,function (response) {
                 layer.close(i);
                 if(response.status == 200){
 

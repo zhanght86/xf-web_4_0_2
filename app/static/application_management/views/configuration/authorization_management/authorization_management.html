@@ -4,7 +4,7 @@
     </div>
     <div class="pl30 mb20 mt20 clearfix">
         <span class="">请输入lisence：</span>
-        <input type="text" class="bd txt " style="width: 60%;height:31px;" ng-model="vm.license"/>
+        <input type="text" class="bd txt " style="width: 60%;height:31px;" ng-model="info.license"/>
         <input type="button" class="btn1 btn1_blue " style="width: 15%;" ng-click="vm.authorize()" value="重新授权">
     </div>
     <form class="pl30 license_info">
@@ -12,21 +12,22 @@
             <legend  style="width:auto;border-bottom: 0">授权信息</legend>
             <div class="info_line">
                 <p>项目名称：{{info.projectName}}</p>
-                <p>发布渠道：{{info.projectName}}</p>
-                <p>授权状态：{{info.projectName}}</p>
+                <p>授权状态：{{info.status}}</p>
+                <p>项目类型：{{info.projectType}}</p>
             </div>
             <div class="info_line">
-                <p>项目类型：{{info.projectType}}</p>
                 <p>场景：{{info.scene}}</p>
                 <p>版本：{{info.version}}</p>
+                <p>业务知识数量：{{info.knowledgeNum}}</p>
             </div>
             <div class="info_line">
-                <p>业务知识数量：{{info.knowledgeNum}}</p>
                 <p>项目领域：{{info.sector}}</p>
                 <p>并发数量：{{info.concurrentNum}}</p>
             </div>
             <div class="info_line info_address_date">
                 <p>mac地址：{{info.macAddressStr}}</p>
+            </div>
+            <div class="info_line info_address_date">
                 <p>有效期：{{info.startTime | date : 'yyyy-MM-dd'}}-{{info.endTime | date : 'yyyy-MM-dd'}}</p>
             </div>
         </fieldset>
@@ -44,6 +45,6 @@
         text-align: left;
     }
     .license_info .info_address_date p{
-        width:50%;
+        width:100%;
     }
 </style>

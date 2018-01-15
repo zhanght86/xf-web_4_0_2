@@ -285,7 +285,7 @@ module.exports = knowledgeManagementModule =>{
                 $scope.vm.saveLimitTimer = true;
             }, 180000);
             let i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
-            KnowledgeService.storeConceptKnow.save(resultParams,function (response) {
+            KnowledgeService.updateConceptKnow.save(resultParams,function (response) {
                 layer.close(i);
                 if(response.status == 200){
 

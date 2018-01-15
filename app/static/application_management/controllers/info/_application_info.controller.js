@@ -196,7 +196,7 @@ module.exports = applicationManagementModule =>{
                 },function(response){
                     if(response.status==200){
                         layer.msg("删除成功");
-                        // $state.go("admin.manage");
+                        $state.go("HP.management");
                     }else{
                         layer.msg("删除失败");
                     }

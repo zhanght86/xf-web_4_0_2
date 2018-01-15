@@ -7,9 +7,8 @@ module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule.controller('FaqNewController', [
     '$scope', 'localStorageService',"KnowledgeService" ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","$stateParams","$window","$rootScope","$filter",
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
-        $state.go("KM.faq.edit") ;
+        $state.go("KM.faq") ;
         $scope.parameter = {
-            "title"	                : "",   //知识标题
             "title"	                : "",   //知识标题
             "expDateStart"          : "",   //知识有效期开始时间
             "expDateEnd"            : "",   //知识有效期结束时间

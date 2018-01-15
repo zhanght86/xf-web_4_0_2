@@ -7,7 +7,7 @@ module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule.controller('FaqEditController', [
     '$scope', 'localStorageService',"KnowledgeService" ,"$state" ,"ngDialog","$cookieStore","$timeout","$compile","$stateParams","$window","$rootScope","$filter",
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
-        $state.go("KM.faq") ;
+        $state.go("KM.faq.edit") ;
         $scope.parameter = {
             "id"	                : "",   //知识id
             "expDateStart"          : "",   //知识有效期开始时间
@@ -103,7 +103,7 @@ module.exports = knowledgeManagementModule =>{
             limitTimer = $timeout(function(){
                 $scope.vm.saveLimitTimer = true ;
             },180000) ;
-            KnowledgeService.storeFaqKnow.save(resultParams,function (response) {
+            KnowledgeService.updateFaqKnow.save(resultParams,function (response) {
                 if (response.status == 200) {
                     if ($scope.vm.docmentation) {
                         //文档知识分类状态回掉

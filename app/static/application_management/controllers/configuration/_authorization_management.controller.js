@@ -12,7 +12,6 @@ module.exports = applicationManagementModule =>{
 
         } ;
         $scope.vm = {
-            license : "" ,
             authorize : authorize
         };
         getInfo() ;
@@ -29,12 +28,12 @@ module.exports = applicationManagementModule =>{
             })
         }
         function authorize() {
-            if(!$scope.vm.license){
+            if(!$scope.info.license){
                 return layer.msg("请填写授权码")
             }
             let i = layer.msg('重新授权中，请稍后...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
             ApplicationServer.updateLicense.save({
-                "license":$scope.vm.license
+                "license":$scope.info.license
             },function (response) {
                 if(response.status == 200){
                     getInfo()

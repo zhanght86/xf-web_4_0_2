@@ -243,28 +243,30 @@ module.exports = applicationManagementModule =>{
         getHotKnowledgeConfig() ;
         // 热点知识配置（更新频率）
         function getHotKnowledgeConfig(){
-            if($scope.hotKnowledge.oldHotQuestionTimeout != $scope.hotKnowledge.hotQuestionTimeout || $scope.hotKnowledge.oldHotQuestionLimit != $scope.hotKnowledge.hotQuestionLimit){
                 ApplicationServer.getHotKnowledgeConfig.get({
                     id : APPLICATION_ID
                 },function (response) {
                     if(response.status == 200){
                         $scope.hotKnowledge.oldHotQuestionTimeout = response.data.hotQuestionTimeout;
                         $scope.hotKnowledge.oldHotQuestionLimit   = response.data.hotQuestionLimit;
+                        $scope.hotKnowledge.hotQuestionTimeout = response.data.hotQuestionTimeout;
+                        $scope.hotKnowledge.hotQuestionLimit   = response.data.hotQuestionLimit;
                     }
                 })
-            }
         }
         //修改知识配置（更新频率）
         function updateHotKnowledgeConfig(){
-            ApplicationServer.updateHotKnowledgeConfig.save({
-                "hotQuestionTimeout ": $scope.hotKnowledge.hotQuestionTimeout,
-                "hotQuestionLimit ": $scope.hotKnowledge.hotQuestionLimit
+            if($scope.hotKnowledge.oldHotQuestionTimeout != $scope.hotKnowledge.hotQuestionTimeout || $scope.hotKnowledge.oldHotQuestionLimit != $scope.hotKnowledge.hotQuestionLimit) {
+                ApplicationServer.updateHotKnowledgeConfig.save({
+                "hotQuestionTimeout": parseInt($scope.hotKnowledge.hotQuestionTimeout),
+                "hotQuestionLimit": parseInt($scope.hotKnowledge.hotQuestionLimit)
             },function (response) {
                 layer.msg(response.info);
                 if(response.status != 200){
                     getHotKnowledgeConfig()
                 }
             })
+            }
         }
         //重置已选择的热点知识
         function initHotKnowSelected(){
