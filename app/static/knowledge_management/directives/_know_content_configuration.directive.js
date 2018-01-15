@@ -39,7 +39,8 @@ module.exports = knowledgeManagementModule =>{
                          timer = $timeout(function () {
                                 scope.dirCont.empty = false ;
                                 scope.dirCont.search = true ;
-                                KnowledgeService[attr.knowContentConfiguration].save({
+                                KnowledgeService.queryCustKnowList.save({
+                                    "applicationId":APPLICATION_ID ,
                                     "title" : val
                                 },function(response){
                                     if(response.status == 200 ){
@@ -48,7 +49,7 @@ module.exports = knowledgeManagementModule =>{
                                             scope.dirCont.empty = true ;
                                             scope.dirCont.appointRelativeList = [] ;
                                         }else{
-                                            scope.dirCont.appointRelativeList = response.data ;
+                                            scope.dirCont.appointRelativeList = response.data.data ;
                                             scope.dirCont.empty = false ;
                                         }
                                     }else{
@@ -63,11 +64,13 @@ module.exports = knowledgeManagementModule =>{
             }) ;
             //点击添加相关问
               function addAppoint(item,arr){
-                  console.log(scope.vm.knowledgeRelevantContentList)
-                    if(arr.indexOf(item)==-1){
+                  if(arr == undefined ){
+                      arr = []
+                  };
+                  console.log(scope.vm.knowledgeRelevantContentList);
+                    if(JSON.stringify(arr).indexOf(JSON.stringify(item))==-1){
                         arr.push(item)
                     }
-                  console.log(arr)
                   console.log(scope.vm.knowledgeRelevantContentList)
                 }
             // 光标移开
@@ -78,13 +81,13 @@ module.exports = knowledgeManagementModule =>{
                 scope.dirCont.empty = false ;
                 scope.dirCont.search = false ;
             }
-           function slideDown(){
-                scope.dirCont.slideFlag = ! scope.dirCont.slideFlag;
-                $(".senior_div").slideToggle();
-                if(scope.dirCont.slideFlag){
-                    $(".senior_div").css('overflow','visible');
-                }
-            }
+           // function slideDown(){
+           //      scope.dirCont.slideFlag = ! scope.dirCont.slideFlag;
+           //      $(".senior_div").slideToggle();
+           //      if(scope.dirCont.slideFlag){
+           //          $(".senior_div").css('overflow','visible');
+           //      }
+           //  }
         }
     }
 }])}

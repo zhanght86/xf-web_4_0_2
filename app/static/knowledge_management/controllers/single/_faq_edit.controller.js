@@ -9,24 +9,26 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
         $state.go("KM.faq.edit") ;
         $scope.parameter = {
-            "id"	                : "",   //知识id
+            "id"	                : $stateParams.knowledgeId,   //知识id
+            "title"	                : "",   //知识标题
             "expDateStart"          : "",   //知识有效期开始时间
             "expDateEnd"            : "",   //知识有效期结束时间
             "origin"                : 120,  //数据来源
             "classifyList"          : [],   //所属类目ID集合
-            "extensionQuestionList" : [""], //扩展问集合
+            "extensionQuestionList" : [{"title":""}], //扩展问集合
             "contents"           : []    //内容集合
         } ;
         $scope.newKnow = {
             "content"	: "",           //知识内容
             "channel"	: "",           //渠道
+            "type"      : 110
         } ;
         $scope.vm = {
             ctrName : "faq" ,
             titleTip :  "",
             localExtensionName : "cust_faq_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
 //时间
-            isTimeTable : false,  //时间表隐藏
+            isTimeTable : false ,  //时间表隐藏
 //bot
             frames : [],      //业务框架
 //展示内容
@@ -35,14 +37,8 @@ module.exports = knowledgeManagementModule =>{
             knowledgeAdd: knowledgeAdd,  //新增点击事件
             increaseCheck  : increaseCheck , //知识新增弹框保存按钮
 //D 知识内容配置
-            newTitle: "",    //标题
-            channelIdList : "",     //新添加的 channel
-            appointRelativeGroup : [],
-            enterEvent : enterEvent ,
+            knowledgeRelevantContentList : [] ,
             saveLimitTimer : true , //限制多次打标
-            isEditIndex : -1,   // 知识内容 弹框
-                                // -1 为内容新增
-                                // index 为知识的编辑索引
             skipNewLine : skipNewLine ,
             showFrame : showFrame //选择业务框架
         };
@@ -59,6 +55,15 @@ module.exports = knowledgeManagementModule =>{
                         $scope.parameter.expDateStart =  $scope.parameter.expDateStart?$filter("date")(response.data.expDateStart,"yyyy-MM-dd"):"";
                         $scope.parameter.expDateEnd =  $scope.parameter.expDateEnd? $filter("date")(response.data.expDateEnd,"yyyy-MM-dd"):"";
                     }
+                    if(response.data.extensionQuestionList.length==0){
+                        $scope.parameter.extensionQuestionList = [{"title":""}]
+                    }
+                    delete $scope.parameter.modifyTime;
+                    delete $scope.parameter.modifierId;
+                    delete $scope.parameter.param1;
+                    delete $scope.parameter.param2;
+                    delete $scope.parameter.param3;
+                    delete $scope.parameter.applicationId;
                 }
             })
         }
@@ -71,25 +76,35 @@ module.exports = knowledgeManagementModule =>{
         }
         // 通过frame 获取扩展问
         function knowledgeAdd(data,index){
+            // 判断是否渠道添加重复
+            if(!data){
+                if(($scope.parameter.contents.length==1 && $scope.parameter.contents[0].channel == 130) || $scope.parameter.contents.length==3){
+                    return layer.msg("已添加所有渠道内容");
+                }
+            }
             if(data){    //增加
-                $scope.vm.isEditIndex = index ;
-                $scope.vm.newTitle = data.knowledgeContent;
-                $scope.vm.channelIdList = data.channelIdList;
-                $scope.vm.knowledgeRelevantContentList = data.knowledgeRelevantContentList;
+                $scope.newKnow.content = data.content;
+                $scope.newKnow.channel = data.channel ;
+                $scope.vm.knowledgeRelevantContentList = data.contentRelevantList;
             }else{
-                $scope.vm.isEditIndex = "" ;
-                $scope.vm.newTitle = ""
-                $scope.vm.channelIdList = "";
+                $scope.newKnow.content                 = "";
+                $scope.newKnow.channel                 = "" ;
                 $scope.vm.knowledgeRelevantContentList = [];
             }
-            openContentConfirm(function(){saveAddNew(index)})
-        }
-        //打开知识内容对话框
-        function openContentConfirm(callback){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,knowNewHtml,"650px",function(){
-                callback();
-            },"",function(){
-                $scope.$parent.knowCtr.setKnowParamHasDialog($scope)
+                if($scope.parameter.contents[index] == undefined){
+                    $scope.parameter.contents[index] =  {
+                        "channel"             : $scope.newKnow.channel,
+                        "type"                : $scope.newKnow.type,
+                        "content"             : $scope.newKnow.content,
+                        "contentRelevantList" : $scope.vm.knowledgeRelevantContentList
+                    }
+                }else{
+                    $scope.parameter.contents[index].channel             = $scope.newKnow.channel;
+                    $scope.parameter.contents[index].type                = $scope.newKnow.type;
+                    $scope.parameter.contents[index].content             = $scope.newKnow.content;
+                    $scope.parameter.contents[index].contentRelevantList = $scope.vm.knowledgeRelevantContentList;
+                }
             });
         }
         function save(){
@@ -114,12 +129,13 @@ module.exports = knowledgeManagementModule =>{
 
                 }else{
                     layer.msg(response.info) ;
+                    limitTimer = "";
                     $timeout.cancel(limitTimer) ;
-                    $scope.vm.saveLimitTimer = false ;
+                    $scope.vm.saveLimitTimer = true ;
                 }
             }, function (err) {
                 $timeout.cancel(limitTimer) ;
-                $scope.vm.saveLimitTimer = false ;
+                $scope.vm.saveLimitTimer = true ;
             });
 
         }
@@ -166,20 +182,12 @@ module.exports = knowledgeManagementModule =>{
                 $window.open(url,'_blank');
             }
         };
-        function saveAddNew(cur){
-            $scope.parameter.contents[cur] =  {
-                "channel":$scope.newKnow.channel,
-                "type": 110,
-                "content":$scope.newKnow.content,
-                "contentRelevantList" : []
-            }
-        }
 //        提交 检验参数
         function checkSave(){
             let result = false ;
             var params = angular.copy($scope.parameter);
-            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
+            // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             if(!$scope.parameter.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false
@@ -209,11 +217,14 @@ module.exports = knowledgeManagementModule =>{
         function skipNewLine(e) {
             let len = $scope.parameter.extensionQuestionList.length ;
             e = e || window.event ;
-            if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
+            // if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
+            //     $scope.parameter.extensionQuestionList.push("") ;
+            // }
+            if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
                 $scope.parameter.extensionQuestionList.push("") ;
+                $timeout(function(){
+                    $(e.target).parent().parent().children().last().find("input").focus();
+                })
             }
-            $timeout(function(){
-                $(e.target).parent().next().find("input").focus();
-            },)
         }
 }])};

@@ -10,6 +10,7 @@ module.exports = homePageModule =>{
         $scope.vm = {
             userName :getCookie("userName"),
             licensePass : false ,
+            description : "xf",
             userRole : $stateParams.userPermission,
             addApplicationWindow : addApplicationWindow,
             myApplication : "",
@@ -50,17 +51,19 @@ module.exports = homePageModule =>{
             setCookie("applicationName",application.name);
             setCookie("applicationId",application.id);
             setCookie("description",application.description);
+            APPLICATION_ID   = application.id;
+            APPLICATION_NAME = application.name;
             $.getScript('assets/js/common/config.js');
-            $scope.MASTER.queryChannelList(application.id) ;
         }
         //打开添加窗口
         function addApplicationWindow() {
             $scope.$parent.$parent.MASTER.openNgDialog($scope,addApplicationHtml,"650px",function(){
                 addApplication();
             },function(){
+            },function(){
+                $scope.info = {} ;
                 $scope.vm.newApplicationName="";
                 $scope.vm.newLicence="";
-            },function(){
             });
         }
         function isLicenseValidate() {
@@ -82,10 +85,10 @@ module.exports = homePageModule =>{
                 layer.msg("应用名称不能为空或超过长度限制50");
                 result = false;
             }
-            if(!lengthCheck($scope.vm.newLicence,0,20)){
-                layer.msg("LICENSE不能为空或超过长度限制20");
-                result = false;
-            }
+            // if(!lengthCheck($scope.vm.newLicence,0,20)){
+            //     layer.msg("LICENSE不能为空或超过长度限制20");
+            //     result = false;
+            // }
             return result;
         }
         //添加
@@ -93,14 +96,17 @@ module.exports = homePageModule =>{
             HomePageServer.addApplication.save({
                 "name": $scope.vm.newApplicationName,
                 "license": $scope.vm.newLicence,
-            },function(data){
-                if(data.status==200){
-                    $state.reload();
+                "description":$scope.vm.description
+            },function(response){
+                if(response.status==200){
+                    let app = response.data.filter(item=>(item.name==$scope.vm.newApplicationName))[0] ;
+                    selectApplication(app);
+                    $state.go("AM.info");
                 }else{
-                    layer.msg(data.data);
+                    layer.msg(response.info);
                 }
-            },function(err){
-                console.log(err)
+            },function(error){
+                console.log(error)
             })
         }
     }])

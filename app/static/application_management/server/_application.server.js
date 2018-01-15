@@ -21,13 +21,13 @@ class ApplicationServer {
         //添加热点知识
         this.addHotKnowledge = $resource(API_APPLICATION+"/hot/question/batch/add", {}, {});
         //删除热点知识
-        this.removeHotKnowledge = $resource(API_APPLICATION+"/hotQuestion/deleteHotQuestionByIds", {}, {});
+        this.removeHotKnowledge = $resource(API_APPLICATION+"/hot/question/batch/delete", {}, {});
         //上移知识
-        this.hotKnowledgeUp = $resource(API_APPLICATION+"/scene/findMultiInteractiveSetting", {}, {});
+        this.hotKnowledgeUp = $resource(API_APPLICATION+"/hot/question/up", {}, {});
         //下移知识
-        this.hotKnowledgeDown = $resource(API_APPLICATION+"/hotQuestion/moveDown", {}, {});
+        this.hotKnowledgeDown = $resource(API_APPLICATION+"/hot/question/down", {}, {});
         //置顶知识
-        this.hotKnowledgeStick = $resource(API_APPLICATION+"/hotQuestion/moveUp", {}, {});
+        this.hotKnowledgeStick = $resource(API_APPLICATION+"/hot/question/top", {}, {});
 
 //   参数设置
         //查看应用参数

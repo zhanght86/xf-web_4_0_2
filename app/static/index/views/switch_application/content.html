@@ -20,13 +20,13 @@
         </div>
     </div>
     <div class="application_box clearfix">
-        <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication">
+        <div class="L text-c application_box_list bd" ng-repeat="application in vm.myApplication" style="padding-top:30px">
             <a ui-sref="AM.info">
                 <!--<img ng-if="application.sceneId==2" ng-click="vm.selectScene(application.sceneId,application.applicationId)"  src="../../../../images/marketing.png" width="80" height="80"/>-->
                 <img ng-click="vm.selectApplication(application)" src="../../../../images/cust_service.png" width="80" height="80"/>
                 <!--<img ng-if="application.sceneId==3" ng-click="vm.selectScene(application.sceneId,application.applicationId)" src="../../../../images/images/u33.png" width="80" height="80"/>-->
             </a>
-            <div class="p10 mb-10 bd_bot" >
+            <div class="p10 mb-10" >
                 <p title="{{application.name}}" class="name" >{{application.name | limitCheckFilter:8}}</p>
                 <!--<p class="name" ng-if="application.name.length<=8">{{application.name}}</p>-->
                 <p class="scene">场景类型：<span>客服型</span></p>
@@ -36,7 +36,7 @@
                         <span ng-if="application.status==40003" class="c-error">已停用</span>
                     </p>
             </div>
-            <p title="{{application.description}}" class="describe">{{application.description | limitCheckFilter:8}}</p>
+            <!--<p title="{{application.description}}" class="describe">{{application.description | limitCheckFilter:8}}</p>-->
         </div>
     </div>
 </div>

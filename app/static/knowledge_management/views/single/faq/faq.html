@@ -50,7 +50,7 @@
                         <div class="ipt-txt-box L mr-10">
                             <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
                                 <input class="ipt-txt bd" style="width:407px;height:32px;" type="text"
-                                       ng-model="ext" ng-change="parameter.extensionQuestionList[$index]=ext" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
+                                       ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="vm.skipNewLine($event)" >
                                 <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
                                     ng-click="($last&&$first)?parameter.extensionQuestionList.splice($index,1):''"
                                 ></span>
@@ -81,6 +81,12 @@
                             <span class="mr-10" ng-bind="item.channel | channel:$parent.$parent.MASTER.channelList"></span>
                         </div>
                     </div>
+                    <div class="item-line item_line" ng-repeat="relation in item.contentRelevantList track by $index">
+                        <div class="left"></div>
+                        <div class="optionDiv">相关知识：{{$index+1}}
+                            <span class="mr-10" ng-bind="relation.title"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="item-line" style="margin-top: 15px">
                     <div class="lable">
@@ -88,7 +94,7 @@
                     </div>
                     <div class="value">
                         <div class="ipt-txt-box">
-                            <input class="addBth" ng-click="vm.knowledgeAdd('',(vm.scanContent.length)?(vm.scanContent.length):0)" type="button" value="+ 新增"/>
+                            <input class="addBth" ng-click="vm.knowledgeAdd('',parameter.contents.length)" type="button" value="+ 新增"/>
                             <i class="btn-empty"></i>
                         </div>
                     </div>

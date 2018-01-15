@@ -51,7 +51,7 @@
                                 <div class="clearfix" style="width:420px">
                                     <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
                                         <input class="ipt-txt bd" style="width:407px;height:22px;" type="text"
-                                               ng-model="ext" ng-change="parameter.extensionQuestionList[$index]=ext" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
+                                               ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')">
                                         <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
                                               ng-click="($last&&$first)?parameter.extensionQuestionList.splice($index,1):''"
                                         ></span>
@@ -93,6 +93,11 @@
                             <div class="item-line item_line">
                                 <div class="optionDiv">渠道：
                                     <span class="mr-10">{{item.channel | channel:$parent.$parent.MASTER.channelList}}</span>
+                                </div>
+                            </div>
+                            <div class="item-line item_line" ng-repeat="relation in item.contentRelevantList track by $index">
+                                <div class="optionDiv">相关知识{{$index+1}}：
+                                    <span class="mr-10" ng-bind="relation.title"></span>
                                 </div>
                             </div>
                         </div>

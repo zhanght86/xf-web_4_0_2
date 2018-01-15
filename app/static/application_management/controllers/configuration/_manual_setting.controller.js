@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('ManualSettingController',
-    [ '$scope', 'localStorageService' ,"ApplicationServer", "$state" ,"ngDialog",'$http', "$cookieStore","$rootScope",
-    ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$http,$cookieStore,$rootScope) =>{
+    [ '$scope', 'localStorageService' ,"ApplicationServer", "$state" ,"ngDialog",'$http', "$cookieStore","$rootScope","$filter",
+    ($scope,localStorageService, ApplicationServer ,$state,ngDialog,$http,$cookieStore,$rootScope,$filter) =>{
         $scope.vm = {
             id : '',                      //返回的id
             workStartTime: '',               //开始时间
@@ -31,7 +31,6 @@ module.exports = applicationManagementModule =>{
             }
 
         }
-
         getData();
 
         /**
@@ -40,17 +39,6 @@ module.exports = applicationManagementModule =>{
         function add0(m) {
             return m < 10 ? '0' + m : m;
         }
-
-        function format(shijianchuo) {
-            // ijianchuo是整数，否则要parseInt转换
-            var time = new Date(shijianchuo);
-            var h = time.getHours();
-            var m = time.getMinutes();
-            var s = time.getSeconds();
-            return add0(h) + ':' + add0(m) + ':' + add0(s);
-        }
-
-
         /**
          *** 获取数据
          **/
@@ -58,24 +46,22 @@ module.exports = applicationManagementModule =>{
             var i = layer.msg('资源加载中..',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:1000});
             ApplicationServer.manualGetData.get({
                 applicationId : APPLICATION_ID
-            },function(data){
+            },function(response){
                 layer.close(i);
-                console.log(data);
-                if(data.status==10000){
-                    $scope.vm.workStartTime =format(data.data[0].workStartTime);
-                    $scope.vm.workEndTime = format(data.data[0].workEndTime);
-                    $scope.vm.commandOn = data.data[0].commandOn;
-                    $scope.vm.noAnswerOn = data.data[0].noAnswerOn;
-                    $scope.vm.noAnswerNumber = data.data[0].noAnswerNumber;
-                    $scope.vm.id =  data.data[0].id;
+                if(response.status==200){
+                    $scope.vm.workStartTime  = response.data.workStartTime;
+                    $scope.vm.workEndTime    = response.data.workEndTime;
+                    $scope.vm.commandOn      = response.data.commandOn;
+                    $scope.vm.noAnswerOn     = response.data.noAnswerOn;
+                    $scope.vm.noAnswerNumber = response.data.noAnswerNumber;
+                    $scope.vm.id             =  response.data.id;
                 }
-
-            },function(err){
+            },function(error){
                 layer.close(i);
-                console.log(err);
+                console.log(error);
             });
             if($scope.vm.noAnswerOn ==0){
-                $scope.vm.noAnswerNumber =0;
+                $scope.vm.noAnswerNumber = 0;
             }
         }
         function saveData(){

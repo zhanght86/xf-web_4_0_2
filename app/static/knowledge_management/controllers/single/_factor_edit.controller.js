@@ -16,7 +16,7 @@ module.exports = knowledgeManagementModule =>{
             "expDateEnd"            : "",   //知识有效期结束时间
             "origin"                : 120,  //数据来源
             "classifyList"          : [],   //所属类目ID集合
-            "extensionQuestionList" : [""], //扩展问集合
+            "extensionQuestionList" : [{"title":""}], //扩展问集合
             "contents"              :  [
                 {
                     "content":["对象名称"]
@@ -187,7 +187,7 @@ module.exports = knowledgeManagementModule =>{
             let result = false ;
             let params = angular.copy($scope.parameter) ;
             params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             if(!params.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
@@ -207,11 +207,16 @@ module.exports = knowledgeManagementModule =>{
         function skipNewLine(e) {
             let len = $scope.parameter.extensionQuestionList.length ;
             e = e || window.event ;
-            if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                $scope.parameter.extensionQuestionList.push("") ;
+            // if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
+            //     $scope.parameter.extensionQuestionList.push("") ;
+            // }
+            if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
+                $scope.parameter.extensionQuestionList.push({
+                    "title":""
+                }) ;
+                $timeout(function(){
+                    $(e.target).parent().parent().children().last().find("input").focus();
+                })
             }
-            $timeout(function(){
-                $(e.target).parent().next().find("input").focus();
-            },)
         }
     }])};

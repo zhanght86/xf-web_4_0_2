@@ -1,13 +1,13 @@
 <div class="" style="padding:15px 0;">
     <h3 class="f16 tc mb-20">添加热点问题</h3>
-    <div style="height:360px;overflow:auto;">
-        <div class="framework cl">
+    <div style="overflow:auto;">
+        <div class="framework cl" style="padding-left:80px">
             <span class="framework_s bold">已选知识：</span>
             <div >
-                <ul id="already_select" ng-repeat="item in knowledge.selectedList track by $index">
-                    <!--{{item}}-->
-                    <li><span class="mr-10">{{item.title}}</span>
+                <ul id="already_select">
+                    <li ng-repeat="item in knowledge.selectedList track by $index">
                         <a href="javascript:;" ng-click="knowledge.removeSelected($index)" class="c-red">X</a>
+                        <span class="mr-10">{{item.title}}</span>
                     </li>
                 </ul>
             </div>
@@ -28,7 +28,7 @@
                     </thead>
                     <tbody class="text-c">
                     <tr ng-repeat="item in knowledge.knowledgeList track by $index">
-                        <td ><input class="selectSingle"  type="checkbox" ng-checked="knowledge.isAllKnowSelected" ng-click="knowledge.selectSingle(item,item.id)"/></td>
+                        <td ><input class="selectSingle"  type="checkbox" ng-checked="knowledge.selectedIdList.inArray(item.id)" ng-click="knowledge.selectSingle(item,item.id)"/></td>
                         <td>{{item.title}}</td>
                     </tr>
                     </tbody>
@@ -43,3 +43,20 @@
         <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
     </div>
 </div>
+<style>
+    #already_select li{
+        width:100% ;
+        float: left;
+        overflow: hidden;
+    }
+    #already_select span{
+        display: inline-block;
+        width:90%;
+        float: left;
+    }
+    #already_select a{
+        display: inline-block;
+        width:6%;
+        float: left;
+    }
+</style>

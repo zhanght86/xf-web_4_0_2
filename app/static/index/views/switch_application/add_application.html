@@ -25,14 +25,14 @@
              </div>
              <div class="info_line">
                  <p>并发数量：{{info.concurrentNum}}</p>
-                 <p>有效期：{{info.startTime | date : 'yyyy-MM-dd'}}-{{info.endTime | date : 'yyyy-MM-dd'}}</p>
+                 <p style="width:67%">有效期：{{info.startTime | date : 'yyyy-MM-dd'}}-{{info.endTime | date : 'yyyy-MM-dd'}}</p>
              </div>
              <div class="info_line info_address_date">
                  <p>mac地址：{{info.macAddressStr}}</p>
              </div>
          </fieldset>
      </form>
-     <div class="tc">
+     <div class="tc" style="margin-top: 8px;">
          <input type="submit" ng-if="!vm.licensePass" class="btn1 btn1_blue mr-15" value="授权" ng-click="vm.isLicenseValidate()"/>
          <input type="submit" ng-if="vm.licensePass" class="btn1 btn1_blue mr-15" value="确认添加应用" ng-click="vm.applicationValidate()?closeThisDialog(1):''"/>
      </div>

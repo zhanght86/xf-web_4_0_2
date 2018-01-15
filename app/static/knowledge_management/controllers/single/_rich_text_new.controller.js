@@ -15,14 +15,13 @@ module.exports = knowledgeManagementModule => {
                 "expDateEnd"            : "",   //知识有效期结束时间
                 "origin"                : 120,  //数据来源
                 "classifyList"          : [],   //所属类目ID集合
-                "extensionQuestionList" : [""], //扩展问集合
+                "extensionQuestionList" : [{"title":""}], //扩展问集合
                 "contents"              : []    //内容集合
             };
             $scope.newKnow = {
                 "content"               : "", //知识内容
                 "type"                  : "", //类型
                 "channel"               : "", //渠道
-                "contentRelevantList"   : [], //相关问
                 "name"                  : "", //名称展示用
                 "voiceKeyWord"          : "", //语音搜索关键字
                 "imageList"             : [], //图片列表
@@ -58,14 +57,12 @@ module.exports = knowledgeManagementModule => {
                 "imageApi"            : "/api/material/picture/get/img/id?pictureId=" ,  // 图片请求地址
                 "localNameOfExt"      : "cust_rich_text_ext",    // 本地存储字段 用于编辑扩展问二次添加
                 "frames"              : [],                      //业务框架
-                "channelList"         : [],                      //已增加的渠道id集合
                 "skipNewLine"         : skipNewLine,
                 "knowledgeAdd"        : knowledgeAdd,             //新增点击事件
                 "save"                : save,                     //保存
                 "scan"                : scan,                     //预览
                 "newKnowCheck"        : newKnowCheck,             //知识新增弹框保存按钮
                 "addMultimedia"       : addMultimedia ,
-                "enterEvent"          : enterEvent,
                 "saveLimitTimer"      : true,
                 "selectMultimedia"    : selectMultimedia          //图片，语音，图文选择弹出框
             };
@@ -76,10 +73,11 @@ module.exports = knowledgeManagementModule => {
                 limitTimer;
             init() ;
             function knowledgeAdd(data, index) {
-                if ($scope.vm.channelList.inArray("130") || $scope.vm.channelList.length==3) {
-                    layer.msg("已添加全渠道内容");
-                    return;
-                };
+                if(!data){
+                    if(($scope.parameter.contents.length==1 && $scope.parameter.contents[0].channel == 130) || $scope.parameter.contents.length==3){
+                        return layer.msg("已添加所有渠道内容");
+                    }
+                }
                 valuation(data) ;
                 $scope.$parent.$parent.MASTER.openNgDialog($scope, contentHtml, "650px", function () {
                     addNewOrEditKnow(index)
@@ -103,7 +101,7 @@ module.exports = knowledgeManagementModule => {
                 }
                 content.type                     = $scope.newKnow.type;
                 content.channel                  = $scope.newKnow.channel;
-                content.contentRelevantList      = $scope.newKnow.contentRelevantList;
+                content.contentRelevantList      = $scope.vm.knowledgeRelevantContentList;
                 $scope.parameter.contents[index] = content;
             }
             //弹出选择媒体对话框
@@ -138,6 +136,7 @@ module.exports = knowledgeManagementModule => {
                 close(1);
             }
             function newKnowCheck(close) {
+                // 验证是否可以保存   内容  渠道两部分
                 // 验证是否可以保存   内容  渠道两部分
                 let isContentExist =
                     ($scope.newKnow.type == 1010 && $scope.newKnow.content) ||
@@ -212,24 +211,24 @@ module.exports = knowledgeManagementModule => {
                 $scope.newKnow.imgTextSelected = "";
                 $scope.newKnow.voiceSelected = "" ;
                 if(params){
-                    switch (params.type) {
-                        case  "1010" :    //文本
+                    switch (parseInt(params.type)) {
+                        case  1010 :    //文本
                             $scope.newKnow.content = params.content;
                             break;
-                        case  "1018" :  //图片
+                        case  1018 :  //图片
                             $scope.newKnow.imgSelected = {
                                 "name": params.name,
                                 "id": params.content,
                             };
                             break;
-                        case  "1020" :  // 图文
+                        case  1020 :  // 图文
                             $scope.newKnow.imgTextSelected = {
                                 "id": params.content,
                                 "name": params.name,
                                 "url": params.url
                             };
                             break;
-                        case  "1019": //声音
+                        case  1019: //声音
                             $scope.newKnow.voiceSelected = {
                                 "name": params.name,
                                 "id": params.content,
@@ -238,25 +237,28 @@ module.exports = knowledgeManagementModule => {
                     }
                     $scope.newKnow.type = params.type;
                     $scope.newKnow.channel = params.channel;
-                    $scope.newKnow.contentRelevantList = params.contentRelevantList;
+                    $scope.vm.knowledgeRelevantContentList = params.contentRelevantList;
                 }else{
                     $scope.newKnow.type                = 1010 ;
                     $scope.newKnow.content             = "" ;
                     $scope.newKnow.channel             = "" ;
-                    $scope.newKnow.contentRelevantList = [] ;
+                    $scope.vm.knowledgeRelevantContentList = [] ;
                     $scope.newKnow.name                = "" ;
                 }
             }
 // 扩展问换行
             function skipNewLine(e) {
-                let len = $scope.parameter.extensionQuestionList.length;
-                e = e || window.event;
-                if ((e != "blur" && (e.keyCode || e.which) == 13 && nullCheck($scope.parameter.extensionQuestionList[len - 1])) || e == "blur" && nullCheck($scope.parameter.extensionQuestionList[len - 1])) {
-                    $scope.parameter.extensionQuestionList.push("");
+                let len = $scope.parameter.extensionQuestionList.length ;
+                e = e || window.event ;
+                // if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
+                //     $scope.parameter.extensionQuestionList.push("") ;
+                // }
+                if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
+                    $scope.parameter.extensionQuestionList.push("") ;
+                    $timeout(function(){
+                        $(e.target).parent().parent().children().last().find("input").focus();
+                    })
                 }
-                $timeout(function () {
-                    $(e.target).parent().next().find("input").focus();
-                })
             }
             //保存
             function save() {
@@ -310,7 +312,7 @@ module.exports = knowledgeManagementModule => {
                 let result = false ;
                 let params = angular.copy($scope.parameter);
                 params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-                params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
+                params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
                 angular.forEach(params.contents,function(item,index){
                     if(item.name){
                         delete params.contents[index].name ;

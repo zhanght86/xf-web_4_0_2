@@ -13,17 +13,17 @@
             <span>指定相关知识:</span>
             <input type="text" class="appoint input-text extended_query_txt" ng-blur="dirCont.leaveAppointEnter()" ng-model="dirCont.appointRelative"  placeholder="请输入相关知识" style="width:380px;">
             <ul class="specify_know_ul"  >
-                <li ng-repeat="item in dirCont.appointRelativeList track by $index" ng-click="dirCont.addAppoint(item,vm.appointRelativeGroup)">{{item}}</li>
+                <li ng-repeat="item in dirCont.appointRelativeList track by $index" ng-click="dirCont.addAppoint(item,vm.knowledgeRelevantContentList)">{{item.title}}</li>
                 <li ng-if="dirCont.search" style="background:#fff">查询中请稍后...</li>
                 <li ng-if="dirCont.empty" style="background:#fff;color:red">查询到数据为空!</li>
             </ul>
         </div>
-        <div class="channel_div mb-20" ng-if="vm.appointRelativeGroup.length">
+        <div class="channel_div mb-20" ng-if="vm.knowledgeRelevantContentList.length">
             <span class="channel_s c-primary">已添加</span>
             <ul>
-                <li ng-repeat="item in vm.appointRelativeGroup track by $index">
-                    <span class="mr-10">{{$index+1}}、{{item}}</span>
-                    <span class="delete_a dib"  ng-click="vm.appointRelativeGroup.splice($index,1)"></span>
+                <li ng-repeat="item in vm.knowledgeRelevantContentList track by $index">
+                    <span class="mr-10">{{$index+1}}、{{item.title}}</span>
+                    <span class="delete_a dib"  ng-click="vm.knowledgeRelevantContentList.splice($index,1)"></span>
                 </li>
             </ul>
         </div>

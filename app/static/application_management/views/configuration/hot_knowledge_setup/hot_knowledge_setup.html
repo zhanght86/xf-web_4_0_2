@@ -1,4 +1,4 @@
-<div class="r-cont pd30">
+<div class="r-cont pd30 hot_know_container">
     <div class="r-cont-hd">
         <span>热点知识设置</span>
     </div>
@@ -18,16 +18,16 @@
                     </div>
                 </div>
                 <div class="cl mb-20">
-                    <button class="btn1 btn_delete mr-10" ng-click="hotKnowledge.removeHotKnowledge()">批量删除</button>
+                    <button class="btn1 btn_delete mr-10" ng-click="hotKnowledge.removeHotKnowledge(hotKnowledge.deleteIds)">批量删除</button>
                     <button class="btn1 btn1_blue mr-10" ng-click="hotKnowledge.addHotHotKnow()">添加</button>
                     <div class="pr con_box_serl bd mr10 R" style="margin:0 auto 20px;">
-                        <input type="text" class="txt L" placeholder="" ng-model="hotKnowledge.keyWord" style="width:257px;">
+                        <input type="text" class="txt L" placeholder="" ng-model="hotKnowledge.keyWord" style="width:257px;height: 100%;border-right: 0;">
                         <button class="btn1" type="button"  ng-click="hotKnowledge.queryHotKnowledgeList()">查找</button>
                     </div>
                 </div>
 
                 <div>
-                    <table class="stop_word_tab" >
+                    <table class="stop_word_tab hot_table" >
                         <thead>
                         <tr>
                             <th class="bold" width="5%"><input class="selectAllBtn" type="checkbox"
@@ -43,26 +43,29 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="item in hotKnowledge.hotKnowList">
-                            <!--{{hotKnowledge.hotKnowList}}-->
                             <td><input type="checkbox" ng-checked="hotKnowledge.deleteIds.inArray(item.id)" ng-click="hotKnowledge.deleteIds.inArray(item.id)?hotKnowledge.deleteIds.remove(item.id):hotKnowledge.deleteIds.push(item.id)"/></td>
-                            <td>{{item.hotQuestionTitle}}</td>
-                            <td>{{item.hotQuestionOrder}}</td>
-                            <td>{{item.hotQuestionUpdateTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.knowledgeTitle}}</td>
+                            <td>{{item.visitsNum}}</td>
+                            <td>{{item.rank}}</td>
+                            <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>
-                                <input type="button" style="display: inline-block;background:#fff" class="c-primary mr-10" ng-class="cur-point"  ng-click="hotKnowledge.top(item)"  ng-if="item.hotQuestionOrder!=1" value="置顶">
-                                <input type="button" style="display: inline-block;background:#fff" class="c-primary mr-10" ng-class="cur-point"  ng-click="hotKnowledge.up(item)"   ng-if="item.hotQuestionOrder!=1" value="上移">
-                                <input type="button" style="display: inline-block;background:#fff" class="c-primary mr-10" ng-class="cur-point"  ng-click="hotKnowledge.remove(item)"   ng-if="item.hotQuestionOrder!=1" value="上移">
-                                <input type="button" style="display: inline-block;background:#fff" class="c-primary"       ng-class="cur-point"  ng-click="hotKnowledge.down(item)"   ng-if="item.hotQuestionOrder!=vm.vm.hotPaginationConf.totalItems || item.hotQuestionOrder == 1" value="下移">
+                                <input type="button" style="display: inline-block;background:#fff" class="c-primary mr-10"   ng-click="hotKnowledge.top(item)"  ng-if="item.rank!=1" value="置顶">
+                                <input type="button" style="display: inline-block;background:#fff" class="c-primary mr-10"   ng-click="hotKnowledge.up(item)"   ng-if="item.rank!=1" value="上移">
+                                <input type="button" style="display: inline-block;background:#fff" class="c-primary"         ng-click="hotKnowledge.down(item)"   ng-if="item.rank!=hotKnowledge.paginationConf.totalItems || (item.rank == 1 && hotKnowledge.paginationConf.totalItems>1)" value="下移">
+                                <input type="button" style="display: inline-block;background:#fff" class="c-primary mr-10"   ng-click="hotKnowledge.removeHotKnowledge([item.id])" value="删除">
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <pagination ng-if="hotKnowledge.hotPaginationConf.totalItems && hotKnowledge.hotPaginationConf.totalItems>0" conf="hotKnowledge.hotPaginationConf"></pagination>
+                <pagination ng-if="hotKnowledge.paginationConf.totalItems && hotKnowledge.paginationConf.totalItems>0" conf="hotKnowledge.paginationConf"></pagination>
             </div>
         </div>
     </div>
 </div>
 <style>
-
+.hot_know_container .hot_table input{
+    border:0;
+    cursor: pointer;
+}
 </style>
