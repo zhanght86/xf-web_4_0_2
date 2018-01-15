@@ -27,6 +27,15 @@ module.exports=module=>{
                     break;
             }
         };
+    })
+    .filter('learnWay', function () {
+        return function (value) {
+            switch (value){
+                case 1 : return "关联学习";
+                    break;
+
+            }
+        };
     });
 
 }
