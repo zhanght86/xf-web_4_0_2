@@ -88,9 +88,25 @@ class FunctionServer{
         //上下文
         this.content = $resource(API_ANALYSIS+'/log/content/get',{},{});
 
+                                /******************************
+                                                 *纠正学习*    API_ANALYSIS = "/api/analysis" ;    API_MS = "/api/ms",
+                                 ********************************/
+        //获取列表 未学习
+        this.unStudy = $resource(API_ANALYSIS+'/knowledge/learning/correction/unlearn/get',{},{});
+        //获取列表 未学习
+        this.studyed = $resource(API_ANALYSIS+'/knowledge/learning/correction/learned/get',{},{});
+        //获取未学习问答数据
+        this.getUnstudyData = $resource(API_ANALYSIS+'/knowledge/learning/correction/unlearn/qalog/get',{},{});
+        //忽略
+        this.ignoreSig = $resource(API_ANALYSIS+'/knowledge/learning/delete/:id',{},{});
+        //获取已学习问答数据
+        this.getstudyData = $resource(API_ANALYSIS+'/knowledge/learning/correction/learned/qalog/get',{},{});
+        //单条审核
+        this.reviewSig = $resource(API_ANALYSIS+'/knowledge/learning/review',{},{});
 
-        //通过 不通过
-        this.review2 = $resource(API_ANALYSIS+'/knowledgeLearn/review',{},{});
+
+
+
 
 
 

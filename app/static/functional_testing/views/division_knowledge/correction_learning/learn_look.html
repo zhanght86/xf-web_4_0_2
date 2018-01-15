@@ -2,12 +2,9 @@
     <div class="mb-10">
         <p>
             <b>知识标题：</b>
-            <span>VISA信用卡白金卡年费</span>
+            <span>{{vm.currQuestion1}}</span>
         </p>
-        <p>
-            <b>答案：</b>
-            <span></span>
-        </p>
+
     </div>
     <div>
         <table class="access_amount_table">
@@ -15,28 +12,26 @@
                 <tr>
                     <th width="25%" class="text-c">用户提问</th>
                     <th width="25%" class="text-c">上下文</th>
-                    <th width="25%" class="text-c">创建时间</th>
+                    <th width="25%" class="text-c">学习类别</th>
                     <th width="25%" class="text-c">操作</th>
                 </tr>
             </thead>
             <tbody>
-                <tr role="row" class="odd">
-                    <td>信用卡</td>
-                    <td><a href="javascript:;" class="mr-10 c_blue" ng-click="vm.learnContent()">上下文</a></td>
-                    <td>纠正学习</td>
+                <tr role="row" class="odd"  ng-repeat="v in vm.studyData1">
+
+                    <td>{{v.question}}</td>
+                    <td><a href="javascript:;" class="mr-10 c_blue" ng-click="vm.unlearnContent(v.id)">上下文</a></td>
+                    <td>{{v.learnWay|learnWay}}</td>
                     <td>
-                        <a href="javascript:;" class="c_green mr-10" ng-click="">通过</a>
-                        <a href="javascript:;" class="c_delete" ng-click="">不通过</a>
+                        <a href="javascript:;" class="c_green mr-10" ng-click="vm.review(3,v.id)">通过</a>
+                        <a href="javascript:;" class="c_delete" ng-click="vm.review(1,v.id)">不通过</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div>分页</div>
-    <!--<div class="tc mt-10">-->
-        <!--<input type="button" class="btn1 btn_blue mr-10" ng-click="" value="纠正"/>-->
-        <!--<input type="button" class="btn1 btn_green" ng-click="" value="忽略"/>-->
-    <!--</div>-->
+    <pagination ng-if="vm.paginationConf4.totalItems && vm.paginationConf4.totalItems>0" conf="vm.paginationConf4"></pagination>
+
 </div>
 <style>
 

@@ -15,13 +15,19 @@
                 <div ng-show="vm.contentType==0" >
                     <div class="con_box mb25  mt10" style="min-height:500px;padding:0;">
                         <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;">
-                            <select class="sel bd L mr-5" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
-                                <option value="">全部渠道</option>
+                            <select class="sel bd L mr-5" id="request_time_type" ng-model="vm.timeType">
+                                <option value="">全部时间</option>
+                                <option value="1">今日</option>
+                                <option value="2">昨日</option>
+                                <option value="3">过去7天</option>
+                                <option value="4">过去30天</option>
                             </select>
-                            <!--<select class="sel bd L mr-5"  ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
-                                <!--<option  value="" >全部维度</option>-->
+                            <!--<select class="sel bd L mr-5" ng-model="vm.channelId" >-->
+                                <!--<option value="130">全部渠道</option>-->
+                                <!--<option value="131">维信</option>-->
+                                <!--<option value="132">web</option>-->
+                                <!--<option value="133">app</option>-->
                             <!--</select>-->
-
                             <span>
                                 日期范围:
                                     <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
@@ -31,40 +37,35 @@
                             <span>
                                 知识标题:
                                 <input type="text" id="question" ng-model="vm.question" class="input-text" style="width: 180px"/>
-                                <input type="button" class="btn1 btn1_blue" ng-click="vm.searchReinforcement(1)" value="查找" />
+                                <input type="button" class="btn1 btn1_blue" ng-click="vm.searchReinforcement(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)" value="查找" />
                             </span>
 
                         </div>
                         <div class="cl mb-10">
-                            <input type="button" class="btn1 btn_delete" ng-click="vm.ignore()" value="忽略" />
+                            <!--<input type="button" class="btn1 btn_delete" ng-click="vm.ignore(vm.unstuydyArr)" value="忽略" />-->
                         </div>
                         <div>
                             <table class="access_amount_table" id="user_session_statistic">
                                 <thead>
                                 <tr>
-                                    <th width="4%">
-                                        <input type="checkbox" ng-click="vm.selectAll()"  ng-checked="vm.selectAllCheck">
-                                    </th>
+
                                     <th width="20%">知识标题</th>
                                     <th width="20%">知识类型</th>
-                                    <th width="12%">来源渠道</th>
-                                    <th width="12%">待学习数量</th>
+                                    <!--<th width="12%">来源渠道</th>-->
+                                    <th width="20%">待学习数量</th>
                                     <th width="20%">创建时间</th>
-                                    <th width="12%">操作</th>
+                                    <th width="20%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr role="row" class="odd" ng-repeat="item in vm.listData" >
 
-                                <tr role="row" class="odd" >
-                                    <td>
-                                        <input type="checkbox" name="sid" value="{{item.content}}" ng-checked="vm.unstudyArr.inArray(item.content) " ng-click="vm.selectSingle(item.content)">
-                                    </td>
-                                    <td>VISA信用卡白金卡年费</td>
-                                    <td>长沙银行/信用卡业务</td>
-                                    <td>web</td>
-                                    <td>1</td>
-                                    <td>2018-01-08 16:04:44</td>
-                                    <td><a href="javascript:;" class="c-green" ng-click="vm.unLearnLook()">查看</a></td>
+                                    <td>{{item.knowledgeTitle}}</td>
+                                    <td>{{item.classifyName}}</td>
+                                    <!--<td>{{item.channelId| channelFilter}}</td>-->
+                                    <td>{{item.num}}</td>
+                                    <td>{{item.modifyTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td><a href="javascript:;" class="c-green" ng-click="vm.unLearnLook(1,item.knowledgeId,item.knowledgeTitle)">查看</a></td>
                                 </tr>
 
                                 </tbody>
@@ -76,26 +77,19 @@
                 <div ng-show="vm.contentType==1">
                     <div class="con_box mb25  mt10" style="min-height:500px;padding:0;">
                         <div class="data_time_statis_top pt-10" style="width:auto ;margin: 5px auto 20px;">
-                            <!--<select class="sel bd L mr-5" id="request_time_type1" ng-model="vm.timeType1">-->
-                                <!--<option value="0">全部时间</option>-->
-                                <!--<option value="1">今日</option>-->
-                                <!--<option value="2">昨日</option>-->
-                                <!--<option value="3">过去7天</option>-->
-                                <!--<option value="4">过去30天</option>-->
-                            <!--</select>-->
 
-                            <select class="sel bd L mr-5" ng-model="vm.channelId" ng-options="site.channelCode as site.channelName for site in MASTER.channelList">
-                                <option value="">全部渠道</option>
+                            <select class="sel bd L mr-5" id="" ng-model="vm.timeType1">
+                                <option value="">全部时间</option>
+                                <option value="1">今日</option>
+                                <option value="2">昨日</option>
+                                <option value="3">过去7天</option>
+                                <option value="4">过去30天</option>
                             </select>
-                            <span>
-                                <select class="sel bd" id="statusId" ng-model="vm.statusId">
-                                    <option>审核状态:</option>
-                                    <option value="0">待审核</option>
-                                    <option value="1">已审核</option>
-                                </select>
-                            </span>
-                            <!--<select class="sel bd L mr-5"  ng-model="vm.dimensionId" ng-options="site.dimensionId as site.dimensionName for site in MASTER.dimensionList">-->
-                                <!--<option  value="" >全部维度</option>-->
+                            <!--<select class="sel bd L mr-5" ng-model="vm.channelId1" >-->
+                                <!--<option value="130">全部渠道</option>-->
+                                <!--<option value="131">维信</option>-->
+                                <!--<option value="132">web</option>-->
+                                <!--<option value="133">app</option>-->
                             <!--</select>-->
 
                             <span class="mr-10">
@@ -107,40 +101,42 @@
                             <span>
                                 知识标题:
                                     <input type="text" id="question1" ng-model="vm.question1" class="input-text" style="width: 180px"/>
-                                    <input type="button" class="btn1 btn1_blue" ng-click="vm.listNoReview(1)" value="查找" />
+                                    <input type="button" class="btn1 btn1_blue" ng-click="vm.listNoReview(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)" value="查找" />
                             </span>
                         </div>
-                        <!--<div class="cl mb-10">-->
-                            <!--<b class="l f-14">智能学习</b>-->
+                        <div class="cl mb-10">
+                            <b class="l f-14">纠正学习</b>
                             <!--<p class="r f-12 c-999" style="display: none;">共有数据<span id="total1"></span>条</p>-->
-                        <!--</div>-->
-                        <!--<div class="mt-10 mb-10">-->
-                            <!--<input type="button" class="btn1 btn1_blue mr-10" ng-click="vm.review(1)" value="通过" />-->
-                            <!--<input type="button" class="btn1 btn_delete" ng-click="vm.review(0)" value="不通过" />-->
-                        <!--</div>-->
+                        </div>
                         <div>
                             <table class="access_amount_table" id="user_session_statistic1">
                                 <thead>
                                 <tr>
                                     <th width="21%">知识标题</th>
-                                    <th width="14%">知识类型</th>
-                                    <th width="13%">来源渠道</th>
-                                    <th width="13%">待审核数量</th>
-                                    <th width="14%">审核状态</th>
-                                    <th width="17%">学习时间</th>
-                                    <th width="10%">操作</th>
+                                    <th width="16%">知识类型</th>
+                                    <!--<th width="16%">来源渠道</th>-->
+                                    <th width="15%">待审核数量</th>
+                                    <th width="20%">学习时间</th>
+                                    <th width="12%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr >
-                                        <td>信用卡</td>
-                                        <td>埋点测试</td>
-                                        <td>web</td>
-                                        <td>1</td>
-                                        <td>知识学习未审核</td>
-                                        <td>2018-01-08 14:50:16</td>
-                                        <td><a href="javascript:;" ng-click="vm.learnLook()">查看</a></td>
+                                    <tr ng-repeat="item in vm.listData1">
+                                        <td>{{item.knowledgeTitle}}</td>
+                                        <td>{{item.classifyName}}</td>
+                                        <!--<td>web</td>-->
+                                        <td>{{item.num}}</td>
+                                        <td>{{item.modifyTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                        <td><a href="javascript:;" ng-click="vm.learnLook(1,item.knowledgeId,item.knowledgeTitle)">查看</a></td>
                                     </tr>
+                                    <!--<tr >-->
+                                        <!--<td>信用卡</td>-->
+                                        <!--<td>埋点测试</td>-->
+                                        <!--<td>web</td>-->
+                                        <!--<td>1</td>-->
+                                        <!--<td>2018-01-08 14:50:16</td>-->
+                                        <!--<td><a href="javascript:;" ng-click="vm.learnLook()">查看</a></td>-->
+                                    <!--</tr>-->
                                 </tbody>
                             </table>
                             <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
