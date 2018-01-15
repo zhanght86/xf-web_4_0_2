@@ -5,10 +5,17 @@
     <div class="r-cont-bd oh ">
         <div class="con_box  mb25">
             <div class="mb10 bd p20 cl" style="background:#fcfdfd;border-color:#f2f4f7;">
-                <div class="cl mb-20">
-                    热点知识更新频率：
-                    <input type="text" class="txt bd" placeholder="" ng-model="hotKnowledge.updataRate" style="width:100px;">
-                    分钟
+                <div style="border">
+                    <div class="cl mb-20">
+                        热点知识更新频率：
+                        <input type="text" class="txt bd" placeholder="" ng-model="hotKnowledge.hotQuestionTimeout" ng-blur="hotKnowledge.updateHotKnowledgeConfig()" style="width:100px;">
+                        分钟
+                    </div>
+                    <div class="cl mb-20">
+                        热点知识上限个数：
+                        <input type="text" class="txt bd" placeholder="" ng-blur="hotKnowledge.updateHotKnowledgeConfig()" ng-model="hotKnowledge.hotQuestionLimit" style="width:100px;">
+                        个
+                    </div>
                 </div>
                 <div class="cl mb-20">
                     <button class="btn1 btn_delete mr-10" ng-click="hotKnowledge.removeHotKnowledge()">批量删除</button>
@@ -24,7 +31,7 @@
                         <thead>
                         <tr>
                             <th class="bold" width="5%"><input class="selectAllBtn" type="checkbox"
-                                                           ng-click="hotKnowledge.deleteIds.length==hotKnowledge.hotKnowListIds.length?hotKnowledge.deleteIds=[]:hotKnowledge.deleteIds=$parent.$parent.MASTER.selectAll(vm.hotKnowListIds,0)"
+                                                           ng-click="hotKnowledge.deleteIds.length==hotKnowledge.hotKnowListIds.length?hotKnowledge.deleteIds=[]:hotKnowledge.deleteIds=$parent.$parent.MASTER.selectAll(hotKnowledge.hotKnowListIds,0)"
                                                            ng-checked="(hotKnowledge.deleteIds.length==hotKnowledge.hotKnowListIds.length) && hotKnowledge.hotKnowListIds.length!=0"/>
                             </th>
                             <th class="bold" width="15%">热点知识</th>

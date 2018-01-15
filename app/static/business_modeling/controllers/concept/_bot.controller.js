@@ -27,8 +27,8 @@ module.exports = applicationManagementModule =>{
                 location : true
             },
             listData : "",   // table 数据  
-            keyNullOrBeyondLimit:"概念类名不能为空或超过长度限制50",
-            termNullOrBeyondLimit:"概念集合不能为空或超过长度限制5000",
+            keyNullOrBeyondLimit:"BOT类名不能为空或超过长度限制50",
+            termNullOrBeyondLimit:"BOT集合不能为空或超过长度限制5000",
             loadSynonymConceptTable:loadSynonymConceptTable,
             selectAll:selectAll,           //全选
             selectSingle:selectSingle,     //单选 

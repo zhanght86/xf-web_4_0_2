@@ -44,22 +44,25 @@ module.exports = applicationManagementModule =>{
         listServiceData(1);
         //获取服务列表
         function listServiceData(index){
+            let i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
             return ApplicationServer.queryServiceList.save({
                 "index" : 0,
                 "pageSize": 9999
             },function(response){
+                layer.close(i) ;
                 $scope.vm.serviceData = response.data.data;
                 // $scope.vm.paginationConf.totalItems = response.data.total ;
                 // $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize ;
-            },function(error){console.log(error)})
+            },function(error){console.log(error);layer.close(i) ;})
 
         }
-// var a = listServiceData()
-//
-//           a.$promise.then(function(re){
-//                 console.log(re)})
+        function addHotKnowledge(){
+            ApplicationServer.addHotKnowledge.save({
+                "ids":ids
+            },function(){
 
-
+            })
+        }
         //发布服务
         function publishService(serviceId){
             ApplicationServer.releaseService.save({
@@ -193,7 +196,7 @@ module.exports = applicationManagementModule =>{
                 },function(response){
                     if(response.status==200){
                         layer.msg("删除成功");
-                        // $state.go("admin.manage");
+                        $state.go("HP.management");
                     }else{
                         layer.msg("删除失败");
                     }

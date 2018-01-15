@@ -14,10 +14,12 @@ class ApplicationServer {
         this.queryHotKnowledgeList = $resource(API_APPLICATION+"/hot/question/get", {}, {});
         //获取热点知识配置 (更新频率)
         this.getHotKnowledgeConfig = $resource(API_APPLICATION+"/hot/question/config/get/:id", {}, {});
+        //修改热点知识配置 (更新频率)
+        this.updateHotKnowledgeConfig = $resource(API_APPLICATION+"/hot/question/config/update", {}, {});
         //获取知识列表 + 查询
         this.queryKnowledgeList = $resource(API_APPLICATION+"/hot/question/knowledge/get", {}, {});
         //添加热点知识
-        this.addHotKnowledge = $resource(API_APPLICATION+"/hotQuestion/batchAdd", {}, {});
+        this.addHotKnowledge = $resource(API_APPLICATION+"/hot/question/batch/add", {}, {});
         //删除热点知识
         this.removeHotKnowledge = $resource(API_APPLICATION+"/hotQuestion/deleteHotQuestionByIds", {}, {});
         //上移知识
@@ -37,11 +39,18 @@ class ApplicationServer {
         //查看机器人参数
         this.queryRobotParameter = $resource(API_APPLICATION+"/config/robot/get/:id", {}, {});
         //更新机器人参数
-        this.updateRobotParameter = $resource(API_APPLICATION+"/config/update/robot", {}, {});
+        this.updateRobotParameter = $resource(API_APPLICATION+"/config/robot/update", {}, {});
         //保存经典机器人头像
-        this.storeClassicalAvatar = $resource(API_APPLICATION+"/config/update/classic/avatar", {}, {});
+        this.storeClassicalAvatar = $resource(API_APPLICATION+"/config/classic/avatar/update", {}, {});
         //保存自定义机器人头像
         // this.uploadCustomizedAvatar = $resource(API_APPLICATION+"/config/upload/avatar", {}, {});
+//   授权
+        //查看授权参数
+        this.getLicenseInfo = $resource(API_APPLICATION+"/config/license/info/:applicationId", {}, {});
+        //更新授权参数
+        this.updateRobotParameter = $resource(API_APPLICATION+"/config/robot/update", {}, {});
+        //重新授权参数
+        this.updateLicense = $resource(API_APPLICATION+"/config/license/regrant", {}, {});
 
 //  转人工设置
         //获取列表

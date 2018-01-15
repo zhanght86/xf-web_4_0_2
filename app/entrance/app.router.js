@@ -944,7 +944,7 @@ module.exports = (angular) => {
         },
         {
             name: "KM.preview",
-            url: "/preview",
+            url: "/preview/:id/:type",
             data: {
                 roles: []
             },
@@ -966,7 +966,7 @@ module.exports = (angular) => {
             // 新增
         {
             name: "KM.faq",
-            url: "/faq",
+            url: "/faq/:knowledgeId",
             data: {
                 roles: []
             },

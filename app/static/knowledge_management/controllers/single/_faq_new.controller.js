@@ -203,5 +203,4 @@ module.exports = knowledgeManagementModule =>{
                 $(e.target).parent().next().find("input").focus();
             },)
         }
-    }
-])};
+}])};

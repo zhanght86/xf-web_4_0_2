@@ -1,26 +1,60 @@
 
 <div class="pd-20" >
-         <form  class="" >
-             <div class="mb-15 framework">
-                 <span class="framework_s">应用名称：</span>
-                 <input type="text" ng-model="vm.newApplicationName" class="input-text"/>
+    <p style="text-align: center;font-size: 110%">新增应用</p>
+     <div class="mb-15 framework">
+         <span class="framework_s">应用名称：</span>
+         <input type="text" ng-model="vm.newApplicationName" class="input-text"/>
+     </div>
+     <div class="mb-15 framework">
+         <span class="framework_s">licence：</span>
+         <input type="text"  class="input-text" ng-model="vm.newLicence" placeholder="请输入license"/>
+     </div>
+     <form class="pl30 license_info" ng-if="info.projectName">
+         <fieldset>
+             <legend  style="width:auto;border-bottom: 0">授权信息</legend>
+             <div class="info_line">
+                 <p>项目名称：{{info.projectName}}</p>
+                 <p>场景：{{info.scene}}</p>
+                 <p>版本：{{info.version}}</p>
+
              </div>
-             <div class="mb-15 framework">
-                 <span class="framework_s">licence：</span>
-                 <input type="text"  class="input-text" ng-model="vm.newLicence" placeholder="请输入license"/>
+             <div class="info_line">
+                 <p>项目类型：{{info.projectType}}</p>
+                 <p>项目领域：{{info.sector}}</p>
+                 <p>业务知识数量：{{info.knowledgeNum}}</p>
              </div>
-             <div class="mb-15 framework">
-                 <span class="framework_s">应用描述：</span>
-                 <textarea class="textarea" ng-model="vm.newDescribe"></textarea>
+             <div class="info_line">
+                 <p>并发数量：{{info.concurrentNum}}</p>
+                 <p>有效期：{{info.startTime | date : 'yyyy-MM-dd'}}-{{info.endTime | date : 'yyyy-MM-dd'}}</p>
              </div>
-             <div class="tc">
-                 <input type="submit" class="btn1 btn1_blue mr-15" value="确认" ng-click="closeThisDialog(1)"/>
-                 <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
+             <div class="info_line info_address_date">
+                 <p>mac地址：{{info.macAddressStr}}</p>
              </div>
-         </form>
-    </div>
+         </fieldset>
+     </form>
+     <div class="tc">
+         <input type="submit" ng-if="!vm.licensePass" class="btn1 btn1_blue mr-15" value="授权" ng-click="vm.isLicenseValidate()"/>
+         <input type="submit" ng-if="vm.licensePass" class="btn1 btn1_blue mr-15" value="确认添加应用" ng-click="vm.applicationValidate()?closeThisDialog(1):''"/>
+     </div>
+</div>
 <style>
     .framework{padding-left:80px;}
+     .license_info .info_line{
+         overflow: hidden;
+         margin:20px 6px;
+     }
+    .license_info .info_line p{
+        width:33%;
+        float: left;
+        text-align: left;
+    }
+    .license_info .info_line p.date{
+        width:67%;
+    }
+    .license_info .info_address_date p{
+        width:50%;
+    }
+
 </style>
 
 

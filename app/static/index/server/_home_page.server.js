@@ -15,6 +15,8 @@ class HomePageServer {
         this.qeuryApplicationAtUser = $resource(API_APPLICATION+"/application/list/get/:id",{},{}) ;
     // 获取用户信息
         this.getUserRoleList = $resource(API_USER+"/user/role/get/:id",{},{}) ;
+    // 验证授权证书
+        this.checkLicense = $resource(API_APPLICATION+"/config/license/check",{},{}) ;
     // 添加应用
         this.addApplication = $resource(API_APPLICATION+"/application/add",{},{}) ;
         /******************************
