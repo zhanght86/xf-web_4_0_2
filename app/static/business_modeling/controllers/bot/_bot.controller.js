@@ -70,7 +70,7 @@ module.exports = businessModelingModule =>{
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/ms/classify/get/path",
+            serviceUrl: "/api/ms/classify/library/get/path",
             type:'GET',
             params:params,
             paramName:'name',

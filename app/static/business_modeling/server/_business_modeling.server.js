@@ -24,7 +24,23 @@ class BusinessModelingServer {
         //根据类目名称获取信息
         this.classifyGetPath=$resource(API_MS+"/classify/get/path", {}, {});  
 
-
+    /******************************
+                        *BOT类目库*
+                ********************************/   
+        //添加类目        
+        this.libraryAdd=$resource(API_MS+"/classify/library/add", {}, {});
+        //修改类目
+        this.libraryUpdate=$resource(API_MS+"/classify/library/update", {}, {});  
+        //删除类目
+        this.libraryDelete=$resource(API_MS+"/classify/library/delete", {}, {});
+        //查询下级类目
+        this.libraryGetChildren=$resource(API_MS+"/classify/library/get/children", {}, {});
+        //检查类目名称
+        this.libraryNameCheck=$resource(API_MS+"/classify/library/check/name", {}, {});
+        //获取类目的全路径
+        this.libraryGetFullname=$resource(API_MS+"/classify/library/get/fullname/:userId", {userId:'id'}, {});
+        //根据类目名称获取信息
+        this.libraryGetPath=$resource(API_MS+"/classify/library/get/path", {}, {});
 
         /******************************
                         *框架库*
@@ -33,12 +49,10 @@ class BusinessModelingServer {
         //检查类目名称
         this.frameRepeatTtitle=$resource(API_MS+"/frame/repeat/title", {}, {});
     
-
-		 /******************************
-		                        *同意词概念管理*
-		                ********************************/   
-
-    //列表展示
+	 /******************************
+	                        *同意词概念管理*
+	                ********************************/   
+   //列表展示
     this.synConceptGetParam=$resource(API_MS+"/concept/synonym/get/param", {}, {}); 
     //概念新增
     this.synConceptAdd=$resource(API_MS+"/concept/synonym/add", {}, {}) ;
@@ -68,7 +82,7 @@ class BusinessModelingServer {
     this.colConceptRepeat=$resource(API_MS+"/concept/collective/repeat", {}, {});
 
 
-     /******************************
+     /******************************ni
                         *业务词概念管理*
                 ********************************/   
 
