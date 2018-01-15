@@ -24,7 +24,6 @@ module.exports=functionalTestModule =>{
             timeStart : '',
             timeEnd : '',
             ignore:ignore,             //忽略
-            //learn:learn,               //学习
 
 
             //-----弹窗
@@ -79,17 +78,6 @@ module.exports=functionalTestModule =>{
                 location:true
             } ,
             studyData1 :[],
-
-            // //未学习全选 单选；
-            // selectAllCheck : false,
-            // selectAll : selectAll,
-            // selectSingle : selectSingle,
-            // unstudyArr : [],
-            // //已学习全选 单选；
-            // selectAllCheck1 : false,
-            // selectAll1 : selectAll1,
-            // selectSingle1 : selectSingle1,
-            // studyArr : [],
 
 
         };
@@ -488,83 +476,7 @@ module.exports=functionalTestModule =>{
 
          }
 
-        // /**
-        //  * 未学习全选
-        //  */
-        // function selectAll(){
-        //     if(!$scope.vm.selectAllCheck){
-        //         $scope.vm.selectAllCheck = true;
-        //         $scope.vm.unstudyArr = [];
-        //         angular.forEach($scope.vm.listData,function(item){
-        //             $scope.vm.unstudyArr.push(item.id);
-        //         });
-        //     }else{
-        //         $scope.vm.selectAllCheck = false;
-        //         $scope.vm.unstudyArr = [];
-        //     }
-        //     console.log($scope.vm.unstudyArr);
-        // }
-        // /**
-        //  * 未学习单选
-        //  */
-        // function selectSingle(id){
-        //     if($scope.vm.unstudyArr.inArray(id)){
-        //         $scope.vm.unstudyArr.remove(id);
-        //         $scope.vm.selectAllCheck = false;
-        //     }else{
-        //         $scope.vm.unstudyArr.push(id);
-        //     }
-        //     if($scope.vm.unstudyArr.length == $scope.vm.listData.length){
-        //         $scope.vm.selectAllCheck = true;
-        //     }
-        //     console.log($scope.vm.unstudyArr);
-        // }
-        // /**
-        //  * 未学习清空全选 数组
-        //  */
-        // function clearSelect(){
-        //     $scope.vm.selectAllCheck = false;
-        //     $scope.vm.unstudyArr = [];
-        // }
-        // /**
-        //  * 已学习全选
-        //  */
-        // function selectAll1(){
-        //     if(!$scope.vm.selectAllCheck1){
-        //         $scope.vm.selectAllCheck1 = true;
-        //         $scope.vm.studyArr = [];
-        //         angular.forEach($scope.vm.listData1,function(item){
-        //             $scope.vm.studyArr.push(item.recordId);
-        //         });
-        //     }else{
-        //         $scope.vm.selectAllCheck1 = false;
-        //         $scope.vm.studyArr = [];
-        //     }
-        //     console.log($scope.vm.studyArr);
-        // }
-        // /**
-        //  * 已学习单选
-        //  */
-        // function selectSingle1(id){
-        //     if($scope.vm.studyArr.inArray(id)){
-        //         $scope.vm.studyArr.remove(id);
-        //         $scope.vm.selectAllCheck1 = false;
-        //     }else{
-        //         $scope.vm.studyArr.push(id);
-        //     }
-        //     if($scope.vm.studyArr.length == $scope.vm.listData1.length){
-        //         $scope.vm.selectAllCheck1 = true;
-        //     }
-        //     console.log($scope.vm.studyArr);
-        // }
-        //
-        // /**
-        //  * 已学习清空全选 数组
-        //  */
-        // function clearSelect1(){
-        //     $scope.vm.selectAllCheck1 = false;
-        //     $scope.vm.studyArr = [];
-        // }
+
 
     }
 ])};
