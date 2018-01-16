@@ -253,7 +253,7 @@ module.exports = applicationManagementModule =>{
         function initBot(){
             $("#category").empty();
              $(".aside-navs").empty();
-            $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
+            $http.get('api/ms/classify/children/get/root').success(function(data,status,headers,congfig){
                 var html =  '<ul class="menus show">';
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].id+'">' +
