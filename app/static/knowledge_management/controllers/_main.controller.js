@@ -22,61 +22,67 @@ module.exports = knowledgeManagementModule =>{
                 hideTip : hideTip,
                 prevDiv : prevDiv,
                 nextDiv : nextDiv
-             }
+             } ,
+            skipNewLine : skipNewLine ,// 跳转到新的行
+            removeExtention :removeExtention,
+            isExtensionTagRepeat : isExtensionTagRepeat,
+            showFrame :showFrame
+
         };
+        /**
+         *  业务框架
+         *
+         * */
+        function showFrame(scope){
+            if(!scope.parameter.classifyList.length){
+                return layer.msg("请先选择添加类目")
+            }
+            let html = "<div frame='100' type='100'></div>";
+            scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
+
+            },"",function(){
+
+            });
+
+        }
         /**
          * 检测扩展问标签是否重复
          * false   return   ；  true  return ext
          * */
-        function isExtensionTagRepeat(current,allExtension,title,weight){
-            console.log(allExtension) ;
-            var isRepeat = true ;
-            var tag = [] ;
-            angular.forEach(current,function(tagList){
-                angular.forEach(tagList.extensionQuestionTagList,function(item){
-                    if(item.exist){   //标签存在情况下
-                        tag.push(item.tagName);
-                    }
-                });
-            });
-            angular.forEach(allExtension,function(extension){
-                var tagLen = 0 ;
-                var itemTag = [] ;
-                angular.forEach(extension.extensionQuestionTagList,function(item){
-                    if(item.exist){       //存在标签
-                        itemTag.push(item.tagName);
-                    }
-                    if(tag.inArray(item.tagName) && item.exist){   //标签重复数量
-                        tagLen += 1;
-                    }
-                }) ;
-                if(tagLen == itemTag.length && tag.length == itemTag.length && weight==extension.extensionQuestionType){
-                    layer.msg('根据"'+ title+ '"生成扩展问重复,已阻止添加') ;
-                    return   isRepeat = false ;
+        function isExtensionTagRepeat(allExtension,title,weight){
+            let titleList = [] ;
+            angular.forEach(allExtension,function (item,index) {
+                if(!titleList.inArray(item.title)){
+                    titleList.push(item.title)
+                }else{
+                    layer.msg("扩展问"+item.title+"重复")
                 }
-            }) ;
-            //判断是否是重复
-            if(isRepeat != false){
-                var extension = {
-                    "extensionQuestionTitle" : title ,
-                    "extensionQuestionType" : weight ,
-                    "extensionQuestionTagList" : []
-                }  ;
-                angular.forEach(current,function(tagList){
-                    angular.forEach(tagList.extensionQuestionTagList,function(item){
-                        var tagTem = {
-                            "exist" : item.exist ,
-                            "tagClass" : item.tagClass ,
-                            "tagName" : item.tagName ,
-                            "tagType" : item.tagType
-                        };
-                        extension.extensionQuestionTagList.push(tagTem) ;
-                    });
-                });
-                isRepeat = extension
-            }
-            return isRepeat
+            })
         }
+          /**
+         * 扩展问 跳转到新的行
+         *
+         * */
+        function skipNewLine(scope,e) {
+              let len = scope.parameter.extensionQuestionList.length ;
+              e = e || window.event ;
+              if((e.keyCode|| e.which)==13 && nullCheck(scope.parameter.extensionQuestionList[len-1])){
+                  scope.parameter.extensionQuestionList.push({
+                      "title":""
+                  }) ;
+                  $timeout(function(){
+                      $(e.target).parent().parent().children().last().find("input").focus();
+                  })
+              }
+          }
+        function removeExtention(scope,index) {
+            if(index == 0){
+                scope.parameter.extensionQuestionList[0].title = ""
+            }else{
+                scope.parameter.extensionQuestionList.splice(index,1)
+            }
+        }
+
         /**
          *  知识编辑 删除扩展问 本地备份
          *  isEdit  在编辑情况下使用
@@ -108,7 +114,7 @@ module.exports = knowledgeManagementModule =>{
             console.log(1) ;
             var result = {             //定义bot对象
                 "value" : path ,
-                "id"    : id
+                "classifyId"    : id
             } ;    //返回對象
             var len = allBot.length;  //所有bot 長度
             // 集合转为string 便于比较  并不改变原数组
@@ -232,7 +238,7 @@ module.exports = knowledgeManagementModule =>{
                     if(data.data){
                         angular.forEach(data.data,function(item){
                             result.suggestions.push({
-                                id:item.id,
+                                classifyId:item.id,
                                 value:item.name,
                             })
                         }) ;

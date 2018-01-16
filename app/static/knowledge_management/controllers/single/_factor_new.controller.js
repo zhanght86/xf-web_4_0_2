@@ -29,8 +29,8 @@ module.exports = knowledgeManagementModule =>{
             localExtensionName  : "cust_factor_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
             isTimeTable         : false,  //时间表隐藏
             frames              : [],      //业务框架
-            tableRow            : null,   //行
-            tableColumn         : null,  //刪除用
+            tableRow            : null,    //行
+            tableColumn         : null,    //刪除用
             listTableType       : "",
             data                : "",
             column              : "" ,
@@ -59,7 +59,7 @@ module.exports = knowledgeManagementModule =>{
                     }else if($scope.vm.tableRow==null){
                         layer.msg("请先选择要删除的行")
                     }else{
-                        $scope.vm.tableList.data.listTable.splice($scope.vm.tableRow,1);
+                        $scope.parameter.contents.splice($scope.vm.tableRow,1);
                         $scope.vm.tableRow = null
                     }
                     break;
@@ -69,14 +69,10 @@ module.exports = knowledgeManagementModule =>{
                     }else if($scope.vm.tableRow==null){
                         layer.msg("请先选择要删除的列")
                     }else{
-                        angular.forEach($scope.vm.tableList.data.listTable,function(item,tableRow){
-                            angular.forEach(item,function(val,index){
-                                if(index == $scope.vm.tableColumn){
-                                    $scope.vm.tableList.data.listTable[tableRow].splice(index,1)
-                                }
-                            })
+                        angular.forEach($scope.parameter.contents,function(item,tableRow){
+                            $scope.parameter.contents[tableRow].content.splice($scope.vm.tableColumn,1)
                         });
-                        $scope.vm.tableList.data.listTableType.splice($scope.vm.tableColumn,1) ;
+                        $scope.parameter.slotList.splice($scope.vm.tableColumn,1)
                         $scope.vm.tableColumn = null
                     }
                     break;
@@ -141,39 +137,53 @@ module.exports = knowledgeManagementModule =>{
             limitTimer = $timeout(function(){
                 $scope.vm.saveLimitTimer = false ;
             },180000) ;
+            //  转换字符串
+            angular.forEach(resultParams.contents,function (item,index) {
+                resultParams.contents[index].content =JSON.stringify(item.content)
+            });
             KnowledgeService.storeFactorKnow.save(resultParams,function (response) {
                 if (response.status == 200) {
-                    // $state.go('knowledgeManagement.custOverview');
+                    layer.confirm('是前往总览页面查看？', {
+                        btn: ['是','继续添加'] //按钮
+                    }, function(){
+                        $state.go("KM.overview")
+                    },function(){
+                        $state.go("KM.factor")
+                    });
                 } else {
                     layer.msg(response.info) ;
                     $timeout.cancel(limitTimer) ;
-                    $scope.vm.saveLimitTimer = false ;
+                    $scope.vm.saveLimitTimer = true ;
                     console.log($scope.vm.saveLimitTimer)
                 }
             }, function (error) {
                 $timeout.cancel(limitTimer) ;
-                $scope.vm.saveLimitTimer = false ;
+                $scope.vm.saveLimitTimer = true ;
             })
 
         }
         function scan(){
-            if(!checkSave() || $scope.vm.saveLimitTimer){
+            if(!checkSave()){
                 return false
+            }else{
+                var obj = {};
+                obj.params = $scope.parameter;
+                obj.type = 103;
+                obj.back = "KM.factor" ;
+                obj.save = save ;
+                $window.knowledge = obj;
+                var url = $state.href('KM.scan');
+                $window.open(url,'_blank');
             }
-            $window.knowledgeScan = {
-                api : api ,
-                params : $scope.parameter,
-            };
-            var url = $state.href('knowledgeManagement.knowledgeScan');
-            $window.open(url,'_blank');
 
         }
 //        提交 检验参数
         function checkSave(){
             let result = false ;
             let params = angular.copy($scope.parameter) ;
-            // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+            params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            params.extensionQuestionList = params.extensionQuestionList.map((item)=>(item.title)) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
             if(!params.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
@@ -184,9 +194,9 @@ module.exports = knowledgeManagementModule =>{
                 layer.msg("请完善表格知识");
                 return false;
             } else {
-                angular.forEach(params.contents,function (item,index) {
-                    params.contents[index].content =JSON.stringify(item.content)
-                });
+                // angular.forEach(params.contents,function (item,index) {
+                //     params.contents[index].content =JSON.stringify(item.content)
+                // });
                 result = params
             }
             return result ;

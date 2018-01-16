@@ -86,7 +86,7 @@ module.exports = knowledgeManagementModule =>{
                     if(response.data.extensionQuestionList.length==0){
                         $scope.parameter.extensionQuestionList = [{"title":""}]
                     }else{
-                        $scope.parameter.extensionQuestionList.push([{"title":""}])
+                        $scope.parameter.extensionQuestionList.push({"title":""})
                     }
                     delete $scope.parameter.modifyTime;
                     delete $scope.parameter.modifierId;
@@ -302,7 +302,13 @@ module.exports = knowledgeManagementModule =>{
             KnowledgeService.updateConceptKnow.save(resultParams,function (response) {
                 layer.close(i);
                 if(response.status == 200){
-
+                    layer.confirm('是前往总览页面查看？', {
+                        btn: ['是','继续添加'] //按钮
+                    }, function(){
+                        $state.go("KM.overview")
+                    },function(){
+                        $state.go("KM.concept")
+                    });
                 }else{
                     layer.msg(response.info)
                 }
@@ -337,7 +343,6 @@ module.exports = knowledgeManagementModule =>{
         function checkSave() {
             let result = false ;
             let params = angular.copy($scope.parameter);
-            // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             angular.forEach(params.contents,function(item,index){
                 if(item.name){

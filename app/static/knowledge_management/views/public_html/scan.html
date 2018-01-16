@@ -1,0 +1,68 @@
+<div ui-view="header"></div>
+<div class="main warp">
+    <div class="addContent pd30">
+        <div class="r-cont-hd">
+            <span>知识预览</span>
+        </div>
+        <ul class="preview pd-30">
+            <li class="preview_li pr" >
+                <span class="pa preview_span">知识标题：</span>
+                <div>{{vm.knowledge.title}}</div>
+            </li>
+            <li class="preview_li pr" ng-if="vm.knowledge.expDateStart || vm.knowledge.expDateEnd">
+                <span class="pa preview_span">知识有效期：</span>
+                <i>{{!knowledge.expDateStart?"--":(knowledge.expDateStart | date : 'yyyy-MM-dd')}}</i>
+                至
+                <i> {{!knowledge.expDateEnd?"--":(knowledge.expDateEnd | date : 'yyyy-MM-dd')}}</i>
+            </li>
+            <li class="preview_li pr" >
+                <span class="pa preview_span">知识bot：</span>
+                <span ng-repeat="item in vm.knowledge.classifyList track by $index">{{item.value}}<i ng-if="$index!=(vm.knowledge.classifyList.length-1)">,</i></span>
+            </li>
+            <li class="preview_li pr" ng-if="vm.knowledge.extensionQuestionList">
+                <p ng-repeat="ext in vm.knowledge.extensionQuestionList">
+                    <span class="pa preview_span" style="color:#333;" ng-bind="{100:'用户问法：',101:'概念扩展：',102:'用户问法：',103:'触发问法：'}[vm.knowledgeType]"></span>
+                    <span>{{ext.title}}</span>
+                </p>
+            </li>
+            <li class="preview_li pr">
+                <!--   要素  -->
+                <span class="pa preview_span">知识内容：</span>
+                <table class="essential_factor_tab" ng-if="vm.knowledgeType == 103">
+                    <tr ng-repeat="(indexRow,row) in vm.knowledge.contents track by $index">
+                        <td ng-repeat="(columnRow,column) in row.content track by $index">
+                            {{column}}
+                        </td>
+                    </tr>
+                </table>
+                <!--   其他   -->
+                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType == 100 || vm.knowledgeType == 101" ng-repeat="item in vm.knowledge.contents track by $index">
+                    <li class="preview_li pr" style="padding-left: 80px;">
+                        <span class="pa preview_span2">内容 {{$index+1 | numberToWord}}</span>
+                        <p ng-bind="{1010:item.content,1018:'[图片]',1019:'[图文]',1020:'[语音]'}[item.type]"></p>
+                    </li>
+                    <li class="preview_li pr" style="padding-left: 80px;min-height:25px;" >
+                        <span class="pa preview_span2">渠道:</span>
+                        <span >{{item.channel | channel:$parent.$parent.MASTER.channelList}}<span></span></span>
+                    </li>
+                </ul>
+                <!--   其他   -->
+                <ul class="clearfix" style="min-height:85px;" ng-if="vm.knowledgeType == 102">
+                    <li class="preview_li pr" style="padding-left: 0;" ng-repeat="item in vm.knowledge.contents track by $index">
+                        <p ng-bind="{1010:'肯定回答',1011:'否定回答'}[item.type]+':'+item.content">:</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="jqrsz-btn-box" style="padding-left: 150px;">
+            <a class="btn btn-blue mr10" ng-click="vm.save()">保存</a>
+            <!--ui-sref="{{vm.editUrl}}"-->
+            <a class="btn btn-gray" href="javascript:window.opener=null;window.open('','_self');window.close();" style="background: #2bcacc; color: #fff;">修改</a>
+        </div>
+    </div>
+</div>
+<style>
+    .preview_li{padding-left:130px;margin-bottom:10px;}
+    .preview_span{left:0;top:0;text-align:right;width:130px;diaplay:inline-block;}
+    .preview_span2{left:0;top:0;text-align:right;width:80px;diaplay:inline-block;padding-right:10px;}
+</style>

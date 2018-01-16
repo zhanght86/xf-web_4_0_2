@@ -24,14 +24,10 @@ module.exports = knowledgeManagementModule =>{
             exportExcel:exportExcel ,
             getData : getData ,             //数据获取
             delData : delData ,             //删除
-
-
             keySearch : keySearch,
             napSearch : napSearch ,
             heighSarch : false ,
             seekAdvanceParameter : {
-                // "knowledgeType" : "" , //搜索知识类型
-                // "searchExtension" : "", //搜索的擴展問
                 "classifyList" : [] ,
                 "knowledgeTitle": "",         //知识标题默认值null
                 "knowledgeContent": "",        //知识内容默认值null
@@ -81,7 +77,7 @@ module.exports = knowledgeManagementModule =>{
         //是否清空 搜索内容  true  清空 false 不清空
         //@1 分頁 false   @2初始化 true
         function napSearch(type){
-            getData(1,$scope.vm.paginationConf.pageSize);
+            getData($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
             if(type){
                 $timeout(function(){
                     $scope.vm.paramsReset();
@@ -109,7 +105,7 @@ module.exports = knowledgeManagementModule =>{
                     "applicationId":APPLICATION_ID ,
                     "index": (index-1)*pageSize,
                     "pageSize": pageSize,
-                    "title": $scope.vm.knowledgeTitle || null,         //知识标题默认值null
+                    "title": $scope.vm.seekAdvanceParameter.knowledgeTitle || null,         //知识标题默认值null
                     "content": $scope.vm.seekAdvanceParameter.knowledgeContent || null ,        //知识内容默认值null
                     "account": $scope.vm.seekAdvanceParameter.knowledgeCreator || null,        //作者默认值null
                     "expDateEnd": $scope.vm.seekAdvanceParameter.knowledgeExpDateEnd || null ,        //知识有效期开始值默认值null
@@ -120,19 +116,26 @@ module.exports = knowledgeManagementModule =>{
                     "channel":130
                 },function(response){
                     $scope.vm.knowledgeIdList = [] ;
+                    $scope.vm.deleteIdList = [] ;
                     layer.close(i) ;
-                    if(response.data.total){
-                        $scope.vm.listData = response.data.data ;
-                        $scope.vm.knowledgeIdList = response.data.data.map(item=>item.id) ;
-                        $scope.vm.paginationConf.totalItems = response.data.total ;
-                        $scope.vm.paginationConf.numberOfPages = response.data.total/pageSize ;
-
+                    if(response.status == 200){
+                        if(response.data.total){
+                            $scope.vm.listData = response.data.data ;
+                            $scope.vm.knowledgeIdList = response.data.data.map(item=>item.id) ;
+                            $scope.vm.paginationConf.totalItems = response.data.total ;
+                            $scope.vm.paginationConf.numberOfPages = response.data.total/pageSize ;
+                        }else{
+                            layer.msg("未查询到数据",{time:1000});
+                            $scope.vm.listData = [];
+                            $scope.vm.paginationConf.totalItems = 0 ;
+                        }
                     }else{
-                        layer.msg("未查询到数据");
+                        layer.msg(response.info,{time:1000});
                         $scope.vm.listData = [];
                         $scope.vm.paginationConf.totalItems = 0 ;
                     }
                 },function(error){
+                    $scope.vm.deleteIdList = [] ;
                     layer.close(i) ;
                     console.log(error);
                 })
@@ -173,7 +176,7 @@ module.exports = knowledgeManagementModule =>{
                         "ids":ids
                     },function(response){
                         if(response.status == 200){
-                            getData($scope.paginationConf.currentPage,$scope.paginationConf.pageSize);
+                            getData($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                             layer.msg("刪除成功");
                         }
                     },function(error){console.log(error)})

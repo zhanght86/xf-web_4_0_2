@@ -20,7 +20,7 @@ module.exports = knowledgeManagementModule =>{
         $scope.newKnow = {
             "content"	: "",           //知识内容
             "channel"	: "",           //渠道
-            "type"      : 110
+            "type"      : 1010
         } ;
         $scope.vm = {
             ctrName : "faq" ,
@@ -38,18 +38,22 @@ module.exports = knowledgeManagementModule =>{
 //D 知识内容配置
             knowledgeRelevantContentList : [] ,
             saveLimitTimer : true , //限制多次打标
-            skipNewLine : skipNewLine ,
             showFrame : showFrame //选择业务框架
         };
         let knowNewHtml = require("../../views/public_html/knowledge_increase.html") ;
         let frameHtml   = require("../../views/public_html/frame.html") ;
         let limitTimer ;
-        function showFrame(){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,frameHtml,"650px",function(){
+        function showFrame(scope){
+            if(!$scope.parameter.classifyList.length){
+                return layer.msg("请先选择添加类目")
+            }
+            let html = "<div frame='100'></div>";
+            scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
 
             },"",function(){
 
             });
+
         }
         function knowledgeAdd(data,index){
             // 判断是否渠道添加重复
@@ -96,13 +100,13 @@ module.exports = knowledgeManagementModule =>{
             },180000) ;
             KnowledgeService.storeFaqKnow.save(resultParams,function (response) {
                 if (response.status == 200) {
-                    // $state.go("KM.overview")
-                    if ($scope.vm.docmentation) {
-                        //文档知识分类状态回掉
-                        knowledgeClassifyCall()
-                    } else {
-                        // $state.go('knowledgeManagement.custOverview');
-                    }
+                    layer.confirm('是前往总览页面查看？', {
+                        btn: ['是','继续添加'] //按钮
+                    }, function(){
+                        $state.go("KM.overview")
+                    },function(){
+                        $state.go("KM.faq")
+                    });
                 }else{
                     layer.msg(response.info) ;
                     $timeout.cancel(limitTimer) ;
@@ -114,46 +118,17 @@ module.exports = knowledgeManagementModule =>{
             });
 
         }
-        // 知识文档分类回调
-        function knowledgeClassifyCall(){
-            httpRequestPost("/api/ms/knowledgeDocumentation/documentationKnowledgeClassify",
-                {
-                    knowledgeId: $scope.vm.docmentation.knowledgeId,
-                    knowledgeStatus: 2
-                },
-                function(data){
-                    if(data && data.status == 200) {
-                        $state.go("back.doc_results_view",
-                            {
-                                knowDocId: $scope.vm.docmentation.documentationId,
-                                knowDocCreateTime: $scope.vm.docmentation.knowDocCreateTime,
-                                knowDocUserName: $scope.vm.docmentation.knowDocUserName
-                            }
-                        );
-                    }
-                }
-            );
-        };
         function scan(){
             if(!checkSave()){
                 return false
             }else{
                 var obj = {};
-                obj.params = $scope.paremeter;
-                obj.editUrl = "knowledgeManagement.faqAdd";
-                obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
-                if($scope.vm.knowledgeId){
-                    //编辑
-                    obj.api = "/api/ms/faqKnowledge/editFAQKnowledge" ;
-                    params.knowledgeId = $scope.vm.knowledgeId ;
-                }else{
-                    //新增
-                    obj.api = "/api/ms/faqKnowledge/addFAQKnowledge"
-                }
-                obj.knowledgeType = 101 ;
-                obj.knowledgeId = $scope.vm.knowledgeId ;
-                $window.knowledgeScan = obj;
-                var url = $state.href('knowledgeManagement.knowledgeScan');
+                obj.params = $scope.parameter;
+                obj.type = 100;
+                obj.back = "KM.faq" ;
+                obj.save = save ;
+                $window.knowledge = obj;
+                var url = $state.href('KM.scan');
                 $window.open(url,'_blank');
             }
         };
@@ -162,6 +137,7 @@ module.exports = knowledgeManagementModule =>{
             let result = false ;
             var params = angular.copy($scope.parameter);
             params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            params.extensionQuestionList = params.extensionQuestionList.map((item)=>(item.title)) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
             if(!$scope.parameter.title){
                 layer.msg("知识标题不能为空，请填写");
@@ -189,16 +165,24 @@ module.exports = knowledgeManagementModule =>{
                 ngDialog.closeAll(1) ;
             }
         }
-        function skipNewLine(e) {
-            let len = $scope.parameter.extensionQuestionList.length ;
-            e = e || window.event ;
-            if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                $scope.parameter.extensionQuestionList.push({
-                    "title":""
-                }) ;
-                $timeout(function(){
-                    $(e.target).parent().parent().children().last().find("input").focus();
-                })
-            }
-        }
+        // 知识文档分类回调
+        function knowledgeClassifyCall(){
+            httpRequestPost("/api/ms/knowledgeDocumentation/documentationKnowledgeClassify",
+                {
+                    knowledgeId: $scope.vm.docmentation.knowledgeId,
+                    knowledgeStatus: 2
+                },
+                function(data){
+                    if(data && data.status == 200) {
+                        $state.go("back.doc_results_view",
+                            {
+                                knowDocId: $scope.vm.docmentation.documentationId,
+                                knowDocCreateTime: $scope.vm.docmentation.knowDocCreateTime,
+                                knowDocUserName: $scope.vm.docmentation.knowDocUserName
+                            }
+                        );
+                    }
+                }
+            );
+        };
 }])};

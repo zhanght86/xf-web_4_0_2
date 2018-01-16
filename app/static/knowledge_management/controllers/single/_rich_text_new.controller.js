@@ -64,7 +64,8 @@ module.exports = knowledgeManagementModule => {
                 "newKnowCheck"        : newKnowCheck,             //知识新增弹框保存按钮
                 "addMultimedia"       : addMultimedia ,
                 "saveLimitTimer"      : true,
-                "selectMultimedia"    : selectMultimedia          //图片，语音，图文选择弹出框
+                "selectMultimedia"    : selectMultimedia  ,       //图片，语音，图文选择弹出框
+                "showFrame"           : showFrame                 //选择业务框架
             };
             let contentHtml = require("../../views/single/rich_text/content.html"),
                 imageHtml = require("../../views/single/rich_text/select_image.html"),
@@ -72,6 +73,18 @@ module.exports = knowledgeManagementModule => {
                 voiceHtml = require("../../views/single/rich_text/select_voice.html"),
                 limitTimer;
             init() ;
+            function showFrame(scope){
+                if(!$scope.parameter.classifyList.length){
+                    return layer.msg("请先选择添加类目")
+                }
+                let html = "<div frame='101'></div>";
+                scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
+
+                },"",function(){
+
+                });
+
+            }
             function knowledgeAdd(data, index) {
                 if(!data){
                     if(($scope.parameter.contents.length==1 && $scope.parameter.contents[0].channel == 130) || $scope.parameter.contents.length==3){
@@ -275,36 +288,31 @@ module.exports = knowledgeManagementModule => {
                 KnowledgeService.storeConceptKnow.save(resultParams,function (response) {
                     layer.close(i);
                     if(response.status == 200){
-
+                        layer.confirm('是前往总览页面查看？', {
+                            btn: ['是','继续添加'] //按钮
+                        }, function(){
+                            $state.go("KM.overview")
+                        },function(){
+                            $state.go("KM.concept")
+                        });
                     }else{
+                        scope.vm.saveLimitTimer = true;
                         layer.msg(response.info)
                     }
-                },function(error){console.log(error)});
+                },function(error){console.log(error);scope.vm.saveLimitTimer = true;});
             }
-            // 预览
+            // 预览d
             function scan() {
-                if (!checkSave()) {
+                if(!checkSave()){
                     return false
-                } else {
+                }else{
                     var obj = {};
-                    var params;
-                    console.log(params);
-                    obj.params = params;
-                    obj.editUrl = "knowledgeManagement.markKnow";
-                    if ($scope.vm.knowledgeId) {
-                        //编辑
-                        obj.api = "/api/ms/richtextKnowledge/editKnowledge";
-                        params.knowledgeId = $scope.vm.knowledgeId;
-                    } else {
-                        //新增
-                        obj.api = "/api/ms/richtextKnowledge/addKnowledge"
-                    }
-                    obj.params = params;
-                    obj.knowledgeType = 106;
-                    $window.knowledgeScan = obj;
-                    //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
-                    var url = $state.href('knowledgeManagement.knowledgeScan');
-                    $window.open(url, '_blank');
+                    obj.params = $scope.parameter;
+                    obj.type = 100;
+                    obj.back = "KM.concept" ;
+                    $window.knowledge = obj;
+                    var url = $state.href('KM.scan');
+                    $window.open(url,'_blank');
                 }
             };
 
@@ -312,7 +320,8 @@ module.exports = knowledgeManagementModule => {
                 let result = false ;
                 let params = angular.copy($scope.parameter);
                 params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-                params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+                params.extensionQuestionList = params.extensionQuestionList.map((item)=>(item.title)) ;
+                params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
                 angular.forEach(params.contents,function(item,index){
                     if(item.name){
                         delete params.contents[index].name ;

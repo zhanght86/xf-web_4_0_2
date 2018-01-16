@@ -1,11 +1,29 @@
 <div class="pd-10 knowPopup"  style="width: 100%;" >
     <p>套用业务框架<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
     <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
-
+        <div style="padding-left: 70px;">
+            <input type="text" class="ipt-txt frame_key" style="width: 400px;height: 32px;border: 1px solid #908888;" ng-model="dirFrameBot.key.title">
+        </div>
+        <div style="padding-left: 70px;margin-bottom: 16px;width: 470px;" class="frame_container">
+            <ul class="frame_list">
+                <li class="frame" ng-repeat="frame in dirFrameBot.frames"  ng-click="dirFrameBot.selectFrame(frame)">{{frame.title}}</li>
+            </ul>
+        </div>
         <div class="tc mb-10">
-            <input  value="保存" type="button" class="btn1 btn1_blue mr-20" ng-click="vm.increaseCheck()" >
+            <input  value="套用" type="button" class="btn1 btn1_blue mr-20" ng-click="dirFrameBot.addExt(closeThisDialog)" >
             <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>
         </div>
     </div>
 </div>
+<style>
+    .frame_list{
+        line-height: 28px;
+        background: #dacdda ;
+        overflow: hidden;
+    }
+    .frame_list .frame{
+        line-height: 28px;
+        cursor: pointer;
+    }
 
+</style>

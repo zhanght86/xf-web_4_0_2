@@ -6,28 +6,28 @@
             <!--<a ui-sref="homePage.define"><strong>小富机器人控制平台</strong><em class="edition">V4.0</em></a>-->
         </div>
         <ul class="nav" style="padding-left: 0;">
-            <li>
+            <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('1') && applicationId">
                 <a ui-sref="HP.define">首页</a>
             </li>
             <li>
-                <a ng-click="vm.logApplication()">应用管理</a>
+                <a ng-click="vm.logApplication()" ng-if="$parent.$parent.MASTER.permissionTree.inArray('2') && applicationId">应用管理</a>
             </li>
-            <li >
+            <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('3') && applicationId">
                 <a href="javascript:;">业务建模<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('3-1') && applicationId">
                         <a ui-sref="BM.bot">
                             <i class="icon-nav icon-nav__icon-nav_jmzy"></i>
                             <span>BOT</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('3-2') && applicationId">
                         <a ui-sref="BM.frame">
                             <i class="icon-nav icon-nav__icon-nav_lmgl"></i>
                             <span>框架库</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('3-3') && applicationId">
                         <a ui-sref="BM.concept.synonym">
                             <i class="icon-nav icon-nav__icon-nav_gngl"></i>
                             <span>概念库</span>
@@ -35,39 +35,45 @@
                     </li>
                 </ul>
             </li>
-            <li >
+            <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('4') && applicationId">
                 <a href="javascript:;">知识管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('4-1') && applicationId">
                         <a ui-sref="KM.overview">
                             <i class="icon-nav icon-nav__icon-nav_zszl"></i>
                             <span>知识总览</span>
                         </a>
                     </li>
-                    <li>
-                        <ul class="menu_1 menu_2 " style="min-height: 40%;">
-                            <li>
-                                <a ui-sref="KM.faq">
-                                    <span>FAQ知识新增</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="KM.concept">
-                                    <span>概念知识新增</span>
-                                </a>
-                            </li>
-                            <li>
-                          
-                                <a ui-sref="KM.list">
-                                    <span>列表知识新增</span>
-                                </a>
-                            </li>
-                            <li>
-                             
-                                <a ui-sref="KM.factor">
-                                    <span>任务知识新增</span>
-                                </a>
-                            </li>
+                    <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('4-2') && applicationId">
+                        <a ui-sref="KM.document">
+                            <i class="icon-nav icon-nav__icon-wdjgxz"></i>
+                            <span>文档自学习</span>
+                        </a>
+                    </li>
+                    <!--<li>-->
+                        <!--<ul class="menu_1 menu_2 " style="min-height: 40%;">-->
+                            <!--<li>-->
+                                <!--<a ui-sref="KM.faq">-->
+                                    <!--<span>FAQ知识新增</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a ui-sref="KM.concept">-->
+                                    <!--<span>概念知识新增</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+
+                                <!--<a ui-sref="KM.list">-->
+                                    <!--<span>列表知识新增</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+
+                                <!--<a ui-sref="KM.factor">-->
+                                    <!--<span>任务知识新增</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
                             <!--<li>-->
                                 <!--<a ui-sref="KM.richText">-->
                                     <!--<span>富文本知识</span>-->
@@ -78,30 +84,25 @@
                                     <!--<span>对话知识</span>-->
                                 <!--</a>-->
                             <!--</li>-->
-                        </ul>
-                        <a href="javascript:;">
-                            <i class="icon-nav icon-nav__icon-nav_zsjg"></i>
-                            <span>知识新增</span>
-                        </a>
-                    </li>
-                    <li>
+                        <!--</ul>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="icon-nav icon-nav__icon-nav_zsjg"></i>-->
+                            <!--<span>知识新增</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('4-3') && applicationId">
                         <a ui-sref="KM.dialogue">
                             <i class="icon-nav icon-nav__icon-zsplxz"></i>
                             <span>对话新增</span>
                         </a>
                     </li>
-                    <li>
+                    <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('4-4') && applicationId">
                         <a ui-sref="KM.batch">
                             <i class="icon-nav icon-nav__icon-zsplxz"></i>
                             <span>知识批量新增</span>
                         </a>
                     </li>
-                    <li>
-                        <a ui-sref="KM.document">
-                            <i class="icon-nav icon-nav__icon-wdjgxz"></i>
-                            <span>文档加工新增</span>
-                        </a>
-                    </li>
+
                     <!--<li>-->
                         <!--<a ui-sref="setting.releaseMan">-->
                             <!--<i class="icon-nav icon-nav__icon-nav_zsfb"></i>-->
@@ -122,22 +123,22 @@
                     <!--</li>-->
                 </ul>
             </li>
-            <li >
+            <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('6') && applicationId">
                 <a href="javascript:;">系统工具<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
-                    <li>
+                    <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('6-1') && applicationId">
                         <a ui-sref="ST.test.question">
                             <i class="icon-nav icon-nav__icon-nav_wfcs"></i>
                             <span>测试工具</span>
                         </a>
                     </li>
-                    <li>
+                    <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('6-2') && applicationId">
                         <a ui-sref="ST.participle">
                             <i class="icon-nav icon-nav__icon-nav_ltcs"></i>
                             <span>分词工具</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('6-3') && applicationId">
                         <a ui-sref="ST.study.correction">
                             <i class="icon-nav icon-nav_zqxx"></i>
                             <span>  知识学习</span>
@@ -145,19 +146,19 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li  ng-if="$parent.$parent.MASTER.permissionTree.inArray('7') && applicationId">
                 <a href="javascript:;">统计分析<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('7-1') && applicationId">
                         <a ui-sref="ANM.accessStatistics">
                             <i class="icon-nav icon-nav__icon-nav_fwtj"></i>
                             <span>访问统计</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('7-2') && applicationId">
                         <a ui-sref="ANM.knowledgeRanking">
                             <i class="icon-nav icon-nav__icon-nav_zsdpm"></i>
-                            <span>知识点排名统计</span>
+                            <span>未匹配问题统计</span>
                         </a>
                     </li>
                     <!--<li>-->
@@ -172,22 +173,22 @@
                             <!--<span>分类统计</span>-->
                         <!--</a>-->
                     <!--</li>-->
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('7-3') && applicationId">
                         <a ui-sref="ANM.sessionDetails">
                             <i class="icon-nav icon-nav__icon-nav_hhmx"></i>
                             <span>会话明细统计</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('7-4') && applicationId">
                         <a ui-sref="ANM.satisfactionDegree">
                             <i class="icon-nav icon-nav__icon-nav_jjltj"></i>
-                            <span>会话满意度统计</span>
+                            <span>满意率统计</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('7-5') && applicationId">
                         <a ui-sref="ANM.resolutionStatistics">
                             <i class="icon-nav icon-nav__icon-nav_fltj"></i>
-                            <span>问答解决率统计</span>
+                            <span>解决率统计</span>
                         </a>
                     </li>
                     <!--<li >-->
@@ -202,18 +203,18 @@
                             <!--<span>未匹配问题聚类</span>-->
                         <!--</a>-->
                     <!--</li>-->
-                    <li>
-                        <a ui-sref="ANM.sessionLog">
-                            <i class="icon-nav icon-nav_hhrz" ></i>
-                            <span>会话日志</span>
-                        </a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a ui-sref="ANM.sessionLog">-->
+                            <!--<i class="icon-nav icon-nav_hhrz" ></i>-->
+                            <!--<span>会话日志</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
                 </ul>
             </li>
-            <li >
+            <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('5') && applicationId">
                 <a href="javascript:;">素材管理<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('5-5') && applicationId">
                         <a ui-sref="MM.chat">
                             <i class="icon-nav icon-nav__icon-nav_ltzsk"></i>
                             <span>聊天知识库</span>
@@ -225,19 +226,19 @@
                             <!--<span>寒暄词库</span>-->
                         <!--</a>-->
                     <!--</li>-->
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('5-1') && applicationId">
                         <a ui-sref="MM.pic">
                             <i class="icon-nav icon-nav__icon-nav_tpk"></i>
                             <span>图片库</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('5-2') && applicationId">
                         <a ui-sref="MM.teletext">
                             <i class="icon-nav icon-nav__icon-nav_twfxk"></i>
                             <span>图文消息库</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('5-4') && applicationId">
                         <a ui-sref="MM.voice">
                             <i class="icon-nav icon-nav__icon-nav_wdk"></i>
                             <span>语音库</span>
@@ -287,22 +288,22 @@
                 <!--</ul>-->
             <!--</li>-->
 
-            <li >
+            <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('8') && applicationId">
                 <a href="javascript:;">系统监控<i class="nav-more nav-more__nav-more"></i></a>
                 <ul class="menu_1">
-                    <li >
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('8-1') && applicationId">
                         <a ui-sref="SisM.operationLog" style="border-top: 1px dashed #afafb8;">
                             <i class="icon-nav icon-nav_czrz" ></i>
                             <span>操作日志</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('8-2') && applicationId">
                         <a ui-sref="SisM.resource">
                             <i class="icon-nav icon-nav__icon-nav_mxgj"></i>
                             <span>资源监控</span>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('8-3') && applicationId">
                         <a ui-sref="SisM.service">
                             <i class="icon-nav icon-nav__icon-nav_mxgj"></i>
                             <span>服务监控</span>
@@ -356,7 +357,7 @@
                 <a class="user-name" href="javascript:;"><i></i><span>{{vm.userName}}</span></a>
                 <div class="ua-menu_1-box">
                     <ul class="ua-menu_1">
-                        <li>
+                        <li ng-if="$parent.$parent.MASTER.permissionTree.inArray('9') && applicationId">
                             <a ui-sref="HP.permission.user">
                                 <i class="icon-header-r icon-header-r__h-r1"></i>
                                 <span>权限管理</span>

@@ -44,15 +44,15 @@
                 <div class="item-line mb-10">
                     <div class="lable"> 用户问法：</div>
                     <div class="value Div clearfix" style="padding-top: 8px;">
-                        不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame">业务框架</a>吧
+                        不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame(this)">业务框架</a>吧
                     </div>
                     <div class="value Div clearfix">
                         <div class="ipt-txt-box L mr-10">
                             <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
                                 <input class="ipt-txt bd" style="width:407px;height:32px;" type="text"
-                                       ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="vm.skipNewLine($event)" >
+                                       ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event)" >
                                 <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
-                                    ng-click="($last&&$first)?parameter.extensionQuestionList.splice($index,1):''"
+                                    ng-click="$parent.knowCtr.removeExtention(this,$index)"
                                 ></span>
                             </p>
                         </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="jqrsz-btn-box" style="margin-bottom:120px;">
                 <input class="btn btn-blue mr10" value="保存" type="button"  ng-disabled="vm.limitSave" ng-click="vm.save(vm.knowledgeId?'updateFaqKnow':'storeFaqKnow')">
-                <!--<a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>-->
+                <a class="btn btn-gray" href="javascript:;" style="background: #2bcacc; color: #fff;" ng-click="vm.scan()">预览</a>
             </div>
             <!--引导-->
             <div class="shadow_div dn" ></div>

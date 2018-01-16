@@ -12,6 +12,7 @@ module.exports = applicationManagementModule =>{
             isSlide2 : isSlide2,
             robotName : "" //机器人名称
         };
+        $scope.applicationId = APPLICATION_ID ;
         //获取应用的头像
         findRobotHead();
 

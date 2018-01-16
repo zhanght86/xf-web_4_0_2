@@ -18,6 +18,7 @@ module.exports = ngModule =>
             //$rootScope.
             $scope.MASTER = {
                 //const for Downstream
+                permissionTree : getCookie("permissionTree").split(","),
                 robotName : getCookie("robotName") , //机器人名字
                 avatarUrl : getCookie("avatarUrl") , // 头像 url
                 avatarId :  getCookie("avatarId") ,  // 头像id
@@ -42,7 +43,6 @@ module.exports = ngModule =>
                 ],
                 channelListIds :[],
                 /*>>>>>=========method for DownStream simple========<<<<<<<<*/
-                queryChannelList : queryChannelList ,  //获取渠道
                 slideToggle : slideToggle ,   //滑动控制
                                               // @params el callBack
                 openNgDialog : openNgDialog ,  //打开弹框
@@ -55,9 +55,6 @@ module.exports = ngModule =>
                 botTreeOperate : botTreeOperate ,
                 selectAll : selectAll
             } ;
-            if(APPLICATION_ID){
-                queryChannelList(APPLICATION_ID)
-            }
             //滑动
             function slideToggle(el,callBack){
                 $timeout(function(){
@@ -127,8 +124,6 @@ module.exports = ngModule =>
                         }
                     });
                 }
-            }
-            function queryChannelList(applicationId){
             }
   //------------------------------------------------------ 后期确认删除-----------------------------------------------------------
             //BOT搜索自动补全

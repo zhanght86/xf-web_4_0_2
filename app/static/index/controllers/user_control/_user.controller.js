@@ -79,8 +79,8 @@ module.exports = homePageModule =>{
             $scope.$parent.$parent.MASTER.openNgDialog($scope,changePasswordHtml,"450px",function(){
                 HomePageServer.changePassword.save({
                     "id":id,
-                    "oldPwd": $scope.vm.userOldPassword ,
-                    "pwd": $scope.vm.userPassword
+                    "oldPwd": hex_md5($scope.vm.userOldPassword) ,
+                    "pwd":  hex_md5($scope.vm.userPassword)
                 },function (response) {
                     if(response.status == 200){
                         $state.reload() ;
@@ -146,7 +146,7 @@ module.exports = homePageModule =>{
                 if($scope.vm.userId){
                     param.id = $scope.vm.userId
                 }else{
-                    param.pwd = $scope.vm.userPassword
+                    param.pwd = hex_md5($scope.vm.userPassword)
                 }
                 callback(param) ;
             })
@@ -216,8 +216,10 @@ module.exports = homePageModule =>{
             $scope.vm.userName = "";
             $scope.vm.userLoginName = "";
             $scope.vm.userPassword = "";
+            $scope.vm.userConfirmPassword = "";
             $scope.vm.userPhoneNumber = "";
             $scope.vm.userEmail = "";
+            $scope.vm.applicationIds = [];
             $scope.vm.roleId = $scope.vm.roleList[0].id ;  // 初始化roleId
         }
         queryAllApplication();

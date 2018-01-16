@@ -5,7 +5,7 @@
  */
 module.exports = applicationManagementModule =>{
     applicationManagementModule
-    .directive('uploadAvatar', function($timeout,ngDialog){
+    .directive('uploadAvatar', function($timeout,ngDialog,ApplicationServer){
         return {
             restrict:'EA',
             template :'<span id="picker">选择图片</span>' ,
@@ -62,13 +62,20 @@ module.exports = applicationManagementModule =>{
                     uploader.on('uploadError', function (file) {
                         console.log("上传失败")
                     });
-                    uploader.on('uploadSuccess', function (file,response) {
-                        if(response.status == 200){
+                    uploader.on('uploadSuccess', function (file,responseAvatar) {
+                        if(responseAvatar.status == 200){
+                            ApplicationServer.storeClassicalAvatar.save({
+                                "avatarDocId": responseAvatar.data,
+                            },function(response){
+                                if(response.status===200){
+                                    setCookie('avatarUrl',API_MATERIAL+"/picture/get/img/id?pictureId=");
+                                    setCookie('avatarId',responseAvatar.data);
+                                    $scope.$parent.$parent.MASTER.avatarUrl = API_MATERIAL+"/picture/get/img/id?pictureId=" ;
+                                    $scope.$parent.$parent.MASTER.avatarId = responseAvatar.data ;
+                                }
+                                layer.msg(response.data);
+                            },function(error){console.log(error)})
                             ngDialog.closeAll();
-                            setCookie('avatarUrl',API_MATERIAL+"/picture/get/img/id?pictureId=");
-                            setCookie('avatarId',response.data);
-                            $scope.$parent.$parent.MASTER.avatarUrl = API_MATERIAL+"/picture/get/img/id?pictureId=" ;
-                            $scope.$parent.$parent.MASTER.avatarId = response.data ;
                         }else{
                             layer.msg(response.data)
                         }
@@ -76,6 +83,7 @@ module.exports = applicationManagementModule =>{
                     });
                     $(".start_upload_avatar").click(function () {
                         uploader.options.formData = {
+                            status : 1,
                             x : position.x,
                             y : position.y,
                             height : position.h,
@@ -83,7 +91,7 @@ module.exports = applicationManagementModule =>{
                             origin : 1 ,
                             inTrusteeship : 1
                         } ;
-                        uploader.upload()
+                        uploader.upload();
                     })
                 })
             }

@@ -58,7 +58,7 @@ module.exports = knowledgeManagementModule =>{
                     if(response.data.extensionQuestionList.length==0){
                         $scope.parameter.extensionQuestionList = [{"title":""}]
                     }else{
-                        $scope.parameter.extensionQuestionList.push([{"title":""}])
+                        $scope.parameter.extensionQuestionList.push({"title":""})
                     }
                     delete $scope.parameter.modifyTime;
                     delete $scope.parameter.modifierId;
@@ -69,12 +69,17 @@ module.exports = knowledgeManagementModule =>{
                 }
             })
         }
-        function showFrame(){
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,frameHtml,"650px",function(){
+        function showFrame(scope){
+            if(!$scope.parameter.classifyList.length){
+                return layer.msg("请先选择添加类目")
+            }
+            let html = "<div frame='100' type='100'></div>";
+            scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
 
             },"",function(){
 
             });
+
         }
         // 通过frame 获取扩展问
         function knowledgeAdd(data,index){
@@ -122,12 +127,19 @@ module.exports = knowledgeManagementModule =>{
             },180000) ;
             KnowledgeService.updateFaqKnow.save(resultParams,function (response) {
                 if (response.status == 200) {
-                    if ($scope.vm.docmentation) {
-                        //文档知识分类状态回掉
-                        knowledgeClassifyCall()
-                    } else {
-                        // $state.go('knowledgeManagement.custOverview');
-                    }
+                    layer.confirm('是前往总览页面查看？', {
+                        btn: ['是','继续添加'] //按钮
+                    }, function(){
+                        $state.go("KM.overview")
+                    },function(){
+                        $state.go("KM.faq")
+                    });
+                    // if ($scope.vm.docmentation) {
+                    //     //文档知识分类状态回掉
+                    //     knowledgeClassifyCall()
+                    // } else {
+                    //     // $state.go('knowledgeManagement.custOverview');
+                    // }
 
                 }else{
                     layer.msg(response.info) ;
@@ -166,21 +178,12 @@ module.exports = knowledgeManagementModule =>{
                 return false
             }else{
                 var obj = {};
-                obj.params = $scope.paremeter;
-                obj.editUrl = "knowledgeManagement.faqAdd";
-                obj.api = "/api/ms/faqKnowledge/addFAQKnowledge" ;
-                if($scope.vm.knowledgeId){
-                    //编辑
-                    obj.api = "/api/ms/faqKnowledge/editFAQKnowledge" ;
-                    params.knowledgeId = $scope.vm.knowledgeId ;
-                }else{
-                    //新增
-                    obj.api = "/api/ms/faqKnowledge/addFAQKnowledge"
-                }
-                obj.knowledgeType = 101 ;
-                obj.knowledgeId = $scope.vm.knowledgeId ;
-                $window.knowledgeScan = obj;
-                var url = $state.href('knowledgeManagement.knowledgeScan');
+                obj.params = $scope.parameter;
+                obj.type = 100;
+                obj.back = "KM.faq" ;
+                obj.save = save ;
+                $window.knowledge = obj;
+                var url = $state.href('KM.scan');
                 $window.open(url,'_blank');
             }
         };
@@ -190,6 +193,7 @@ module.exports = knowledgeManagementModule =>{
             var params = angular.copy($scope.parameter);
             // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+            // params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
             if(!$scope.parameter.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false

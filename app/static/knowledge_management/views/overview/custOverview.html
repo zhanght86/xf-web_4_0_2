@@ -96,9 +96,9 @@
                             <option value="101">概念知识新增</option>
                             <option value="102">列表知识新增</option>
                             <option value="103">任务知识新增</option>
-                            <option value="104">多轮会话新增</option>
+                            <!--<option value="104">多轮会话新增</option>-->
                         </select>
-                        <a class="L btn btn-blue mr-10" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions" style="line-height:17px;">批量导入</a>
+                        <a class="L btn btn-blue mr-10" href="javascript:;" ui-sref="knowledgeManagement.knowBatchAdditions" style="line-height:22px;">批量导入</a>
                         <!--<a class="btn btn-green" href="javascript:;" style="line-height:17px;">知识加工</a>-->
                         <button class="btn1 L btn_green"  ng-click="vm.exportExcel()" style="height:31px;font-size:14px;">知识导出</button>
 
@@ -125,6 +125,10 @@
                                     <span checkbox-overview ng-click="vm.deleteIdList.inArray(item.id)?vm.deleteIdList.remove(item.id):vm.deleteIdList.push(item.id)" result="vm.deleteIdList.inArray(item.id)"></span>
                                     <a href="javascript:;" ui-sref="KM.preview({id:item.id,type:item.type})">
                                         {{item.title}}
+                                    </a>
+                                    <a class="ljtClose-btn" href="javascript:;" style="float: right;margin-right: 46px;cursor: pointer" title="删除"
+                                       ng-click="vm.delData([item.id])">
+                                        <i class="icon-ljtClose"></i>
                                     </a>
                                 </div>
                                 <div class="txt-cont mt10">

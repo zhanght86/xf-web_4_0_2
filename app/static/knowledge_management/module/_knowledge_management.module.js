@@ -55,6 +55,7 @@ module.exports = angular => {
     require('../directives/_know_content_configuration.directive')(knowledgeManagementModule);
     require('../directives/_checkbox.directive')(knowledgeManagementModule);
     require('../directives/_upload')(knowledgeManagementModule);
+    require('../directives/_frame.directive')(knowledgeManagementModule);
     //--------------------------------------------------
     //         filter
     //--------------------------------------------------

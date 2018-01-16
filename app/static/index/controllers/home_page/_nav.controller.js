@@ -11,6 +11,7 @@ module.exports = homePageModule =>{
                 $scope.url = $location.url();
                 $scope.urls=$state.current.name;
                 $scope.map = [] ; // 定义导航
+                $scope.applicationId = APPLICATION_ID;
                 $scope.vm = {
                         applicationId : APPLICATION_ID,
                         loginout : loginout,
@@ -23,6 +24,7 @@ module.exports = homePageModule =>{
                         serviceUrl: "",
                         serviceUrlList: ""
                     };
+                $scope.permission = getCookie("permissionTree") || "";
                 if($scope.url == "/HP/define"){
                     document.getElementsByTagName("body")[0].style.cssText = "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../images/images/index-bg.jpg',sizingMethod='scale');background: url(../../images/images/index-bg.jpg) no-repeat;background-size:100%";
                     //document.getElementsByClassName("bodyBg")[0].src = "../../images/images/index-bg.jpg";
@@ -53,7 +55,6 @@ module.exports = homePageModule =>{
                     // },function(){
                         $state.go("login")
                     // })
-
                 }
                 //初始化分页配置
                 self.initSearch = function (column) {

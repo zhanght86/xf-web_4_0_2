@@ -43,7 +43,7 @@
                             <div class="list_facContent mb-10">
                                 <div class="list_facContent_L">概念扩展：</div>
                                 <div class=" clearfix" >
-                                    不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame">业务框架</a>吧
+                                    不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame(this)">业务框架</a>吧
                                 </div>
                             </div>
                             <div class="list_facContent mb-10">
@@ -114,8 +114,8 @@
                     <div class="list_facContent " style="margin-bottom:80px;">
                         <div class="list_facContent_L"></div>
                         <div >
-                            <input type="button" class="btn1 btn1_blue mr-20" ng-disabled="vm.limitSave"  ng-click="vm.save()" value="保存"/>
-                            <!--<input type="button" class="btn1 btn_green" value="预览" ng-click="vm.scan()"/>-->
+                            <input type="button" class="btn1 btn1_blue mr-20"  ng-click="vm.save()" value="保存"/>
+                            <input type="button" class="btn1 btn_green" value="预览" ng-click="vm.scan()"/>
                         </div>
                     </div>
                     <!--引导-->

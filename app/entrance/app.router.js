@@ -18,18 +18,292 @@ module.exports = (angular) => {
         deepLearningPath = "../static/login",  // 深度学习
         systemPath       = "../static/login" ; // 系统监控
 
-    const map = {
-        name : "xf_map",
-        nodes : [
-            {
-                describe : "登录" ,
-                permissionId : "" ,
-                name : "login" ,
-                url  : "/login" ,
-                children : ""
-            }
-        ]
-    };
+    // const map = {
+    //     name : "xf_map",
+    //     nodes : [
+    //         {
+    //             describe : "登录" ,
+    //             permissionId : "" ,
+    //             name : "login" ,
+    //             url  : "/login" ,
+    //             children : ""
+    //         }
+    //     ]
+    // };
+    const map = [
+    {
+        "id":"1",
+        "name":"首页",
+        "description":"homepage",
+        "pId":"0"
+    },
+    {
+        "id":"1-1",
+        "name":"知识总览",
+        "description":"homeknowledgeoverview",
+        "pId":"1"
+    },
+    {
+        "id":"1-2",
+        "name":"业务建模",
+        "description":"businessmodeling",
+        "pId":"1"
+    },
+    {
+        "id":"1-3",
+        "name":"测试功能",
+        "description":"testfunction",
+        "pId":"1"
+    },
+    {
+        "id":"1-4",
+        "name":"素材管理",
+        "description":"materialmanage",
+        "pId":"1"
+    },
+    {
+        "id":"1-5",
+        "name":"文档自学习",
+        "description":"knowledgeautogenerate",
+        "pId":"1"
+    },
+    //  权限 区别
+    {
+        "id":"2",
+        "name":"应用管理",
+        "description":"application",
+        "pId":"0"
+    },
+    {
+        "id":"2-1",
+        "name":"应用配置",
+        "description":"applicationconfig",
+        "pId":"2"
+    },
+    {
+        "id":"2-2",
+        "name":"应用发布",
+        "description":"applicationrelease",
+        "pId":"2"
+    },
+    {
+        "id":"2-3",
+        "name":"应用发布",
+        "description":"applicationrelease",
+        "pId":"2"
+    },
+    {
+        "id":"3",
+        "name":"业务建模",
+        "description":"modeling",
+        "pId":"0"
+    },
+    {
+        "id":"3-1",
+        "name":"BOT",
+        "description":"classify",
+        "pId":"3"
+    },
+    {
+        "id":"3-2",
+        "name":"框架库",
+        "description":"frame",
+        "pId":"3"
+    },
+    {
+        "id":"3-3",
+        "name":"概念库",
+        "description":"concept",
+        "pId":"3"
+    },
+    {
+        "id":"4",
+        "name":"知识管理",
+        "description":"knowledge",
+        "pId":"0"
+    },
+    {
+        "id":"4-1",
+        "name":"知识总览",
+        "description":"overview",
+        "pId":"4"
+    },
+    {
+        "id":"4-2",
+        "name":"文档自学习",
+        "description":"documentautoknowledge",
+        "pId":"4"
+    },
+    {
+        "id":"4-3",
+        "name":"对话知识添加",
+        "description":"dialogknowledgeadd",
+        "pId":"4"
+    },
+    {
+        "id":"4-4",
+        "name":"知识批量新增",
+        "description":"knowledgebatchadd",
+        "pId":"4"
+    },
+    {
+        "id":"5",
+        "name":"素材管理",
+        "description":"material",
+        "pId":"0"
+    },
+    {
+        "id":"5-1",
+        "name":"图片库",
+        "description":"image",
+        "pId":"5"
+    },
+    {
+        "id":"5-2",
+        "name":"图文消息库",
+        "description":"richtext",
+        "pId":"5"
+    },
+    {
+        "id":"5-3",
+        "name":"文档库",
+        "description":"document",
+        "pId":"5"
+    },
+    {
+        "id":"5-4",
+        "name":"语音库",
+        "description":"voice",
+        "pId":"5"
+    },
+    {
+        "id":"5-5",
+        "name":"聊天知识库",
+        "description":"chatknowledge",
+        "pId":"5"
+    },
+    {
+        "id":"6",
+        "name":"系统工具",
+        "description":"systemtool",
+        "pId":"0"
+    },
+    {
+        "id":"6-1",
+        "name":"测试工具",
+        "description":"testtool",
+        "pId":"6"
+    },
+    {
+        "id":"6-2",
+        "name":"分词工具",
+        "description":"wordsegmentool",
+        "pId":"6"
+    },
+    {
+        "id":"6-3",
+        "name":"知识学习",
+        "description":"knowledgelearning",
+        "pId":"6"
+    },
+    {
+        "id":"6-4",
+        "name":"标签重要性推荐",
+        "description":"tagimportantrecommend",
+        "pId":"6"
+    },
+    {
+        "id":"7",
+        "name":"统计分析",
+        "description":"analysis",
+        "pId":"0"
+    },
+    {
+        "id":"7-1",
+        "name":"访问统计",
+        "description":"access",
+        "pId":"7"
+    },
+    {
+        "id":"7-2",
+        "name":"未匹配问题统计",
+        "description":"unmatchedquestion",
+        "pId":"7"
+    },
+    {
+        "id":"7-3",
+        "name":"会话明细统计",
+        "description":"detail",
+        "pId":"7"
+    },
+    {
+        "id":"7-4",
+        "name":"满意度统计",
+        "description":"satification",
+        "pId":"7"
+    },
+    {
+        "id":"7-5",
+        "name":"解决率统计",
+        "description":"reslove",
+        "pId":"7"
+    },
+    {
+        "id":"8",
+        "name":"系统监控",
+        "description":"systemnonitoring",
+        "pId":"0"
+    },
+    {
+        "id":"8-1",
+        "name":"操作日志",
+        "description":"operationlog",
+        "pId":"8"
+    },
+    {
+        "id":"8-2",
+        "name":"资源监控",
+        "description":"resourcemonitoring",
+        "pId":"8"
+    },
+    {
+        "id":"8-3",
+        "name":"服务监控",
+        "description":"servicemonitoring",
+        "pId":"8"
+    },
+    {
+        "id":"9",
+        "name":"权限管理",
+        "description":"authority",
+        "pId":"0"
+    },
+    {
+        "id":"9-1",
+        "name":"用户管理",
+        "description":"user",
+        "pId":"9"
+    },
+    {
+        "id":"9-2",
+        "name":"角色管理",
+        "description":"role",
+        "pId":"9"
+    },
+    {
+        "id":"10",
+        "name":"历史查看",
+        "description":"uploadhistory",
+        "pId":"0"
+    },
+    {
+        "id":"10-1",
+        "name":"上传历史",
+        "description":"uploadhistory",
+        "pId":"10"
+    },
+
+    ];
     return [
 //--------------------------------------------------
 //           ##登录页面##
@@ -958,6 +1232,25 @@ module.exports = (angular) => {
                 "content": {
                     template: require("../static/knowledge_management/views/overview/custPreview.html"),
                     controller: "CustPreviewController"
+                }
+            }
+        },
+        {
+            name: "KM.scan",
+            url: "/scan",
+            data: {
+                roles: []
+            },
+            parent : "KM",
+            title : "知识查看" ,
+            views: {
+                "header": {
+                    template: nav,
+                    controller: "NavController"
+                },
+                "content": {
+                    template: require("../static/knowledge_management/views/public_html/scan.html"),
+                    controller: "KnowledgeScanController"
                 }
             }
         },

@@ -35,7 +35,20 @@ module.exports = knowledgeManagementModule =>{
             scan :scan ,   //预览
             enterEvent : enterEvent,
             saveLimitTimer : true, //限制多次打标
+            showFrame : showFrame //选择业务框架
         };
+        function showFrame(scope){
+            if(!$scope.parameter.classifyList.length){
+                return layer.msg("请先选择添加类目")
+            }
+            let html = "<div frame='102'></div>";
+            scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
+
+            },"",function(){
+
+            });
+
+        }
         let  limitTimer;
         //限制一个知识多次保存
         function save() {
@@ -52,25 +65,29 @@ module.exports = knowledgeManagementModule =>{
             KnowledgeService.storeListKnow.save(resultParams,function (response) {
                 layer.close(i);
                 if(response.status == 200){
-
+                    layer.confirm('是前往总览页面查看？', {
+                        btn: ['是','继续添加'] //按钮
+                    }, function(){
+                        $state.go("KM.overview")
+                    },function(){
+                        $state.go("KM.list")
+                    });
                 }else{
+                    $scope.vm.saveLimitTimer = true;
                     layer.msg(response.info)
                 }
-            },function(error){console.log(error)});
+            },function(error){console.log(error);$scope.vm.saveLimitTimer = true;});
         }
         function scan(api){
             if(!checkSave()){
                 return false
             }else{
-                var obj = {
-                    params : "",
-                    knowledgeType : 102 ,
-                    knowledgeId : $scope.vm.knowledgeId ,
-                    api : api
-                };
-                obj.editUrl = "knowledgeManagement.listAdd";
-                $window.knowledgeScan = obj;
-                var url = $state.href('knowledgeManagement.knowledgeScan');
+                var obj = {};
+                obj.params = $scope.parameter;
+                obj.type = 102;
+                obj.back = "KM.list" ;
+                $window.knowledge = obj;
+                var url = $state.href('KM.scan');
                 $window.open(url,'_blank');
             }
         }
@@ -79,6 +96,7 @@ module.exports = knowledgeManagementModule =>{
             let result = false ;
             let params = angular.copy($scope.parameter);
             params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
+            params.extensionQuestionList = params.extensionQuestionList.map((item)=>(item.title)) ;
             params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
             angular.forEach(params.contents,function(item,index){
               if(item.type==1010 && !item.content){

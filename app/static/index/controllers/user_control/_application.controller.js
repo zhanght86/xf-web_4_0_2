@@ -35,6 +35,16 @@ module.exports = homePageModule =>{
         },function(error){
             console.log(error)
         }) ;
+         // 获取用户权限
+        HomePageServer.queryRoleInfo.get({roleId:"456234996772896768"},function (rolePermission) {
+            let PERMISSION_TREE = rolePermission.data.roleMenuList.map(item=>item.groupId);
+            $scope.$parent.$parent.MASTER.permissionTree = PERMISSION_TREE;
+            setCookie("permissionTree",PERMISSION_TREE);
+            // console.log(rolePermission)
+            // angular.forEach(rolePermission,function(permission,index){
+            //
+            // }) ;
+        })
          //获取用户关联应用
         HomePageServer.qeuryApplicationAtUser.get({
             id : getCookie("userId")

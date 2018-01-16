@@ -57,21 +57,28 @@ module.exports = homePageModule =>{
                     "name": $scope.vm.roleName
                 },function (response) {
                     queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
-                })
+                });
                 console.log(nodes);
                 // var permissionList = nodes.filter(nodes)
             })
         }
         // 删除
         function deleteRole(roleId){
-            HomePageServer.deleteRole.get({id:roleId},function(response){
-                if(response.status == 200){
-                    queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
-                }
-                layer.msg(response.info)
-            },function (error) {
-                console.log(error)
-            })
+            layer.confirm('是否删该角色？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                HomePageServer.deleteRole.get({id:roleId},function(response){
+                    if(response.status == 200){
+                        queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                    }
+                    layer.msg(response.info)
+                },function (error) {
+                    console.log(error)
+                })
+            },function(){
+                console.log(1)
+            });
+
         }
     }
 ])

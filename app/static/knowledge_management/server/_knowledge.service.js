@@ -30,13 +30,16 @@ class KnowledgeService {
                 /******************************
                           * 知识单条新增 *
                          **********************************/
+//   frame
+                //获取bot全路径
+                this.queryFrame = $resource(API_MS + "/frame/get/param", {}, {});
 //   bot
                 //获取bot全路径
-                this.getBotFullPath = $resource(API_MS + "/classify/get/fullname/:id", {}, {});
+                this.getBotFullPath = $resource(API_MS + "/classify/fullname/get/:id", {}, {});
                 //根据名字模糊搜索
                 this.seekBotByName = $resource(API_MODELING + "/category/searchbycategoryname", {}, {});
                 //获取bot子节点
-                this.queryChildNodes = $resource(API_MS + "/classify/get/children/:id", {}, {});
+                this.queryChildNodes = $resource(API_MS + "/classify/children/get//:id", {}, {});
 //   faq知识新增
                 // 保存
                 this.storeFaqKnow = $resource(API_MS + "/knowledge/FAQ/add", {}, {});

@@ -45,13 +45,13 @@ module.exports = knowledgeManagementModule =>{
                 }
                 scope.$parent.knowCtr.botTreeOperate(scope,getBotFullPath) ;
                 //BOT搜索自动补全
-                scope.$parent.knowCtr.searchBotAutoTag(".botTagAuto",API_MS+"/classify/get/path",function(suggestion){
+                scope.$parent.knowCtr.searchBotAutoTag(".botTagAuto",API_MS+"/classify/path/get",function(suggestion){
                     let botResult = scope.$parent.knowCtr.isBotRepeat(suggestion.classifyId,suggestion.value,scope.parameter.classifyList) ;
                     scope.dirBot.knowledgeBotVal = botResult || {"value":"","classifyId":""};
                 });
                 //点击bot分类的 加号
                 function botSelectAdd(){
-                    console.log(1)
+                    console.log(1);
                     if(scope.dirBot.knowledgeBotVal.value && scope.dirBot.knowledgeBotVal.classifyId){
                         scope.parameter.classifyList.push(scope.dirBot.knowledgeBotVal);
                         scope.dirBot.knowledgeBotVal = "";

@@ -106,7 +106,7 @@ module.exports = applicationManagementModule =>{
             }
             let greeting = [];
             let tag  = [] ;
-            greeting.push(data.lowerLimit,data.upperLimit)
+            greeting.push(data.lowerLimit,data.upperLimit) ;
             tag.push(data.tagLowerLimit,data.tagUpperLimit);
             console.log(greeting,tag) ;
             $('.slider-input-greeting').jRange('setValue',greeting.join(","));

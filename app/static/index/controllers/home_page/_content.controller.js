@@ -7,6 +7,7 @@ module.exports = homePageModule =>{
         .controller('HomePageContentController', [
             '$scope', '$location', 'localStorageService',"$state","$cookieStore",
             function ($scope, $location, localStorageService,$state,$cookieStore) {
+            $scope.applicationId = APPLICATION_ID;
                 // $scope.vm = {
                 //     sceneId : SCENE_ID
                 // };
