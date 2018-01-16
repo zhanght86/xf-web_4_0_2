@@ -66,6 +66,8 @@ class MaterialServer {
     this.exportVoice =API_MATERIAL+'/voice/export' ;
     //语音名称校验
     this.checkVoice = $resource(API_MATERIAL+'/voice/check/name',{},{}) ;
+    //引用
+    this.quoteVoice = $resource(API_MATERIAL+'/voice/check/quote',{},{});
 
     
                         /********************************
@@ -94,6 +96,9 @@ class MaterialServer {
     this.addTwApi = $resource(API_MATERIAL+'/graphic/message/insert',{},{});
     //图文名称校验
     this.checkTitle = $resource(API_MATERIAL+'/graphic/message/check/title',{},{});
+
+    //引用
+    this.quoteTw = $resource(API_MATERIAL+'/graphic/message/check/quote',{},{});
 
                         /********************************
                                     * 文档库

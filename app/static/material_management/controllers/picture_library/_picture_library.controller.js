@@ -36,6 +36,7 @@ module.exports=materialModule => {
             checkName : checkName,
             quote : quote,              //引用
             quoteList:[],
+            deleteQuoteList :[],
 
 
         };
@@ -82,9 +83,15 @@ module.exports=materialModule => {
                     console.log(data);
                    // alert('图片被引用中');
                     $scope.vm.quoteList = data.data;
+                    let quote = require("../../views/picture_library/quote.html") ;
+                    $scope.$parent.$parent.MASTER.openNgDialog($scope,quote,"500px",function(){
+
+                    },"",function(){
+
+                    })
                 }
                 if(data.status==500){
-                    layer.msg(data.info);
+                    layer.msg(data.info,{time:1000});
                 }
 
             },function(err){
@@ -110,9 +117,19 @@ module.exports=materialModule => {
                     },function(data){
                         if(data.status == 200){
                             layer.msg("图片删除成功") ;
-                            $state.reload();
+                            //$state.reload();
+                            getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else if(data.status == 500){
+                            $scope.vm.deleteQuoteList = data.data;
+                            console.log($scope.vm.deleteQuoteList);
+                            initBatchTest();
+                            //getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                            angular.forEach($scope.vm.deleteQuoteList,function(val){
+                                $scope.vm.pictureIds.push(val) ;
+                            });
                             layer.msg(data.info) ;
+
+
                         }
                     },function(err){
                         console.log(err);

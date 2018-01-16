@@ -145,6 +145,18 @@ module.exports = module=>{
                 case 1030:
                     result ="权限管理/修改密码";
                     break;
+                case 1031:
+                    result ="知识学习";
+                    break;
+                case 1032:
+                    result ="知识学习/纠正学习";
+                    break;
+                case 1033:
+                    result ="知识学习/智能学习";
+                    break;
+                case 1034:
+                    result ="知识学习/为匹配问题聚类学习";
+                    break;
             }
             return result;
         }

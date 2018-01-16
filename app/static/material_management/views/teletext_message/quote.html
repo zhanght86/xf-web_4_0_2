@@ -1,0 +1,15 @@
+<div class="pd-20 ">
+    <div class="mb-10">
+        <p class="tc mb-10" >查看引用</p>
+        <p>该图文被以下知识引用</p>
+    </div>
+    <div class="text-c mb-10 pic_box_wrap">
+        <table class="pic_tab">
+            <tr ng-repeat="v in vm.quoteList">
+                <td><a href="javascript:;" class="c_blue"  ui-sref="KM.concept.edit({knowledgeId:v.id})">引用知识 {{v.title}}</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
