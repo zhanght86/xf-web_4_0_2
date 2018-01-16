@@ -27,8 +27,8 @@ module.exports = applicationManagementModule =>{
             botInfo:null,  //bot信息
             deleteBot:deleteBot,
             categoryId: "",
-            categoryTypeId: 163,
-            botSelectType:163,
+            categoryTypeId: 160,
+            botSelectType:160,
             categorySceneId: 0,
             categoryAttributeName: "edge",
             categoryName: "",
@@ -40,8 +40,8 @@ module.exports = applicationManagementModule =>{
             editBotLibrary:editBotLibrary,
             deleteBotLibrary:deleteBotLibrary,
             categoryLibraryId: "",
-            categoryLibraryTypeId: 163,
-            botLibrarySelectType:163,
+            categoryLibraryTypeId: 160,
+            botLibrarySelectType:160,
             categoryLibrarySceneId: 0,
             categoryLibraryAttributeName: "edge",
             categoryLibraryName: "",
@@ -62,12 +62,10 @@ module.exports = applicationManagementModule =>{
             locationForBot:locationForBot,
             suggestionValue:"",
             suggestionData:"",
-            winHeight:0
+            winHeight:0,
+             dataSplit:{},
         };
 
-        // var categoryApplicationId = $cookieStore.get("applicationId");
-        // var categoryModifierId = $cookieStore.get("userId");
-        // var categorySceneId = $cookieStore.get("sceneId");
         var categoryApplicationId = APPLICATION_ID;
         var categoryModifierId = USER_ID;
         var categorySceneId = "";
@@ -255,7 +253,7 @@ module.exports = applicationManagementModule =>{
         function initBot(){
             $("#category").empty();
              $(".aside-navs").empty();
-            $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
+            $http.get('api/ms/classify/children/get/root').success(function(data,status,headers,congfig){
                 var html =  '<ul class="menus show">';
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].id+'">' +
@@ -263,7 +261,7 @@ module.exports = applicationManagementModule =>{
                         '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
                         '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
                         '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -281,15 +279,15 @@ module.exports = applicationManagementModule =>{
         }
         function initBotLibrary(){
             $("#library").empty();
-            $http.get('api/ms/classify/library/get/children/root').success(function(data,status,headers,congfig){
+            $http.get('api/ms/classify/library/children/get/root').success(function(data,status,headers,congfig){
                 var html =  '<ul class="menus show">';
                 for(var i=0;data.data != null && i<data.data.length;i++){
-                    html+= '<li data-option="'+data.data[i].categoryPid+'">' +
+                    html+= '<li data-option="'+data.data[i].id+'">' +
                         '<div class="slide-a">'+
-                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
-                        '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                        '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'" title="'+data.data[i].categoryName+'">'+subStringWithTail(data.data[i].categoryName,10,"...")+'</span>'+
-                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[i])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                        '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
+                        '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                        '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                        '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                         '</a>' +
                         '</div>' +
                         '</li>';
@@ -322,9 +320,13 @@ module.exports = applicationManagementModule =>{
         }
         $("#category").on("click","span",function(){
             clearColor();
-            $scope.vm.knowledgeBotVal = $(this).html();
+             $scope.vm.knowledgeBotVal = $(this).html();
             $scope.vm.botSelectValue = $(this).attr("data-option");
+            $scope.vm.botSelectType = $(this).attr("type-option");
             $scope.vm.categoryAttributeName = $(this).attr("node-option");
+            $scope.vm.categoryId=$(this).attr("id-option");
+            $scope.vm.categoryPid=$(this).attr("pid-option")
+            $scope.vm.categoryDescribe=$(this).attr("depict-option");
             if($scope.vm.categoryAttributeName=="node"){
                 $(this).attr("style","color:black;font-weight:bold;");
             }else if($scope.vm.categoryAttributeName=="edge"){
@@ -358,7 +360,7 @@ module.exports = applicationManagementModule =>{
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                $.ajax("api/ms/classify/get/children/"+id+"",{
+                $.ajax("api/ms/classify/children/get/"+id+"",{
                 dataType: 'json', //服务器返回json格式数据
                 type: "GET", //HTTP请求类型
                 async:false,
@@ -398,30 +400,35 @@ module.exports = applicationManagementModule =>{
         function appendLibraryTree(obj){
             var id = $(obj).attr("data-option");
             var that = $(obj);
-            if(!that.parent().parent().siblings().length){
+             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                httpRequestPostAsync("/api/ms/modeling/categorylibrary/listbycategorypid",{
-                    "categoryPid": id
-                },function(data){
-                    if(data.data){
-                        var html = '<ul class="menus">';
-                        for(var i=0;i<data.data.length;i++){
-                            html+= '<li data-option="'+data.data[i].categoryPid+'">' +
+                $.ajax("api/ms/classify/library/children/get/"+id+"",{
+                dataType: 'json', //服务器返回json格式数据
+                type: "GET", //HTTP请求类型
+                async:false,
+                cache:false,
+                success:function(data) {
+                    if(data.status==200){
+                        if(data.data){
+                            var html = '<ul class="menus">';
+                            for(var i=0;i<data.data.length;i++){
+                             html+= '<li data-option="'+data.data[i].id+'">' +
                                 '<div class="slide-a">'+
-                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].categoryDescribe)+'>'+
-                                '<i '+styleSwitch(data.data[i].categoryTypeId,data.data[i].categoryLeaf,data.data[i].categoryAttributeName)+' data-option="'+data.data[i].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[i].categoryAttributeName)+' node-option="'+data.data[i].categoryAttributeName+'" type-option="'+data.data[i].categoryTypeId+'" data-option="'+data.data[i].categoryId+'" title="'+data.data[i].categoryName+'">'+subStringWithTail(data.data[i].categoryName,10,"...")+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[i])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                                '<a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[i].name)+'>'+
+                                '<i '+styleSwitch(data.data[i].type,data.data[i].leaf,data.data[i].relation)+' data-option="'+data.data[i].id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.data[i].relation)+' id-option="'+data.data[i].id+'" pid-option="'+data.data[i].pid+'" node-option="'+data.data[i].relation+'" depict-option="'+data.data[i].depict+'" type-option="'+data.data[i].type+'" data-option="'+data.data[i].id+'" title="'+data.data[i].name+'">'+subStringWithTail(data.data[i].name,10,"...")+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data.data[i])+' node-option="'+data.data[i].relation+'" bot-name="'+data.data[i].name+'" bot-type="'+data.data[i].type+'" bot-pid="'+data.data[i].pid+'" depict-option="'+data.data[i].depict+'" bot-id="'+data.data[i].id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
                         }
-                        html+="</ul>";
-                        $(html).appendTo((that.parent().parent().parent()));
-                        that.parent().parent().next().slideDown();
+                            html+="</ul>";
+                            $(html).appendTo((that.parent().parent().parent()));
+                            that.parent().parent().next().slideDown();
+                        }
                     }
-                },function(err){
-                });
+                },
+            })
             }else{
                 if(that.css("backgroundPosition")=="0% 0%"){
                     that.css("backgroundPosition","0% 100%");
@@ -480,17 +487,26 @@ module.exports = applicationManagementModule =>{
             if(applyValid()==false){
                 return;
             }
-            httpRequestPost("/api/ms/modeling/categorylibrary/applycategorybyid",{
-                "categoryId": $scope.vm.botLibrarySelectValue,
-                "categoryPid": $scope.vm.botSelectValue,
-                "categoryApplicationId": categoryApplicationId,
-                "categoryModifierId": categoryModifierId
+            BusinessModelingServer.classifyAdd.save({
+                  "leaf": 0,
+                  "name":$scope.vm.categoryLibraryName,
+                  "pid":$scope.vm.categoryId,
+                  "relation":$scope.vm.categoryLibraryAttributeName,
+                  "type":$scope.vm.categoryLibraryTypeId,
+                  "depict":$scope.vm.categoryLibraryDescribe,
             },function(data){
-                if(responseView(data)==true){
-                    initBot();
-                }
+                 if(data.status==200){
+                       layer.msg(data.info)
+                      // initBot();
+                       //  //数据组装
+                       //  reloadBot($scope.vm.dataSplit,0);
+                       // $scope.vm.categoryRootPid=data.data;
+                 }else if(data.status==500){
+                      layer.msg(data.info)
+                 }
+                
             },function(err){
-            });
+            })
         }
         //套用验证
         function applyValid(){
@@ -514,17 +530,36 @@ module.exports = applicationManagementModule =>{
            // botInfoToCategoryAttribute();
              deleteBot($(this).parent().attr("bot-id"));
         });
+         $("#library").on("click","span",function(){
+            alert(1)
+             $scope.vm.botLibraryInfo = $(this).parent().attr("bot-info");
+             $scope.vm.categoryLibraryName=$(this).html();
+             $scope.vm.categoryLibraryTypeId=$(this).attr("type-option");
+             $scope.vm.categoryLibraryDescribe=$(this).attr("depict-option");
+             $scope.vm.categoryLibraryAttributeName = $(this).attr("node-option");
+             $scope.vm.categoryLibraryPid=$(this).attr("pid-option");
+             $scope.vm.categoryLibraryId=$(this).attr("id-option");
+             console.log($scope.vm.categoryLibraryName)
+             console.log($scope.vm.categoryLibraryAttributeName)
+        });
         $("#library").on("click",".edit",function(){
             $scope.vm.botLibraryInfo = $(this).parent().attr("bot-info");
-            botLibraryInfoToCategoryAttribute();
-            editBotLibrary();
+           // botLibraryInfoToCategoryAttribute();
+             $scope.vm.categoryLibraryName=$(this).parent().attr("bot-name");
+             $scope.vm.categoryLibraryTypeId=$(this).parent().attr("bot-type");
+             $scope.vm.categoryLibraryDescribe=$(this).parent().attr("depict-option");
+             $scope.vm.categoryLibraryAttributeName = $(this).parent().attr("node-option");
+             $scope.vm.categoryLibraryPid=$(this).parent().attr("bot-pid");
+             $scope.vm.categoryLibraryId=$(this).parent().attr("bot-pid");
+          // botInfoToCategoryAttribute();
+            editBotLibrary($(this).parent().attr("bot-pid"),$(this).parent().attr("bot-id"));
         });
         $("#library").on("click",".delete",function(){
             $scope.vm.botLibraryInfo = $(this).parent().attr("bot-info");
-            botLibraryInfoToCategoryAttribute();
-            deleteBotLibrary();
+           // botLibraryInfoToCategoryAttribute();
+            deleteBotLibrary($(this).parent().attr("bot-id"));
         });
-       //节点删除
+       //节点删除deleteBot
         function deleteBot(categoryId){
             var categoryId=categoryId;
             var dialog = ngDialog.openConfirm({
@@ -572,7 +607,8 @@ module.exports = applicationManagementModule =>{
         //属性填充
         function botLibraryInfoToCategoryAttribute(){
             if($scope.vm.botLibraryInfo){
-                var category = JSON.parse($scope.vm.botLibraryInfo);
+                var category = $scope.vm.botLibraryInfo;
+                console.log(category)
                 $scope.vm.botLibrarySelectValue=category.categoryId;
                 $scope.vm.categoryLibraryId=category.categoryId;
                 $scope.vm.categoryLibraryTypeId=category.categoryTypeId;
@@ -697,73 +733,69 @@ module.exports = applicationManagementModule =>{
                                 $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val().trim();
                             }
                         }
-                        // httpRequestPost("/api/ms/modeling/categorylibrary/add",{
-                        //     "categoryPid": $scope.vm.botLibrarySelectValue,
-                        //     "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
-                        //     "categoryName": $("#categoryLibraryNameAdd").val().trim(),
-                        //     "categoryTypeId": $("#categoryLibraryTypeIdAdd").val(),
-                        //     "categoryModifierId": categoryModifierId,
-                        //     "categoryDescribe": $scope.vm.categoryLibraryDescribe,
-                        //     "categorySceneId": categorySceneId,
-                        //     "categoryLeaf": 0
-                        // },function(data){
-                        //     if(responseView(data)==true){
-                        //         //重新加载
-                        //         reloadBotLibrary(data,0);
-                        //     }
-                        //     $("#categoryLibraryDescribe").val('');
-                        // },function(err){
-                        // });
-
-                    BusinessModelingServer.libraryAdd.save({
-                      "leaf": 0,
-                      "name":$("#categoryLibraryNameAdd").val().trim(),
-                      "pid": $scope.vm.botLibrarySelectValue,
-                      "relation": $scope.vm.categoryLibraryAttributeName=="edge"?"node":$scope.vm.categoryLibraryAttributeName,
-                      "type":  $("#categoryLibraryTypeIdAdd").val(),
-                      "depict":$scope.vm.categoryLibraryDescribe,
-                   },function(data){
-                     if(data.status==200){
-                            //数据组装
-                            $scope.vm.dataSplit.name=$("#category-name").val().trim();
-                            $scope.vm.dataSplit.pid=pid;
-                            $scope.vm.dataSplit.relation=relation;
-                            $scope.vm.dataSplit.id=data.data;
-                            $scope.vm.dataSplit.type=$("#category-type").val().trim();
-                            $scope.vm.dataSplit.leaf=0;
-                            $scope.vm.dataSplit.depict=$("#category-describe").val();
-                            $scope.vm.categoryId=data.data;
-                            $("#category-name").val('');
-                            $("#category-describe").val('');
-                            reloadBot($scope.vm.dataSplit,0);
-                           $scope.vm.categoryRootPid=data.data;
-                     }else if(data.status==500){
-                          layer.msg(data.info)
-                     }
                     
-                },function(err){
-                })
-
-                    }else{
-                    }
-                }
-            });
-            if(dialog){
-                $timeout(function () {
-                    disableAttributeTypeForApply();
-                    $("#categoryLibraryNameAdd").blur(function(){
-                        if(lengthCheck($("#categoryLibraryNameAdd").val(),0,50)==false){
-                            $("#addErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
-                        }else if(isHtmlLabel($("#categoryLibraryNameAdd").val())){
-                            $("#addErrorView").html($scope.vm.notContainHtmlLabel);
+                        if($scope.vm.botLibrarySelectValue==""){
+                            var pid="root";
+                            var relation="node";
+                        }else if($scope.vm.botLibrarySelectValue=="root"){
+                            var pid= $scope.vm.botLibrarySelectValue;
+                            var relation= ($scope.vm.categoryLibraryAttributeName=="node") ? "edge" :"node"
                         }else{
-                            $("#addErrorView").html('');
-                            repeatCheckForCategory("#addErrorView",0);
+                            var pid= $scope.vm.botLibrarySelectValue;
+                            var relation= ($scope.vm.categoryLibraryAttributeName=="node") ? "edge" :"node"
+                        }
+                             console.log(relation)
+                             alert(1)
+                            BusinessModelingServer.libraryAdd.save({
+                              "leaf": 0,
+                              "name":$("#categoryLibraryNameAdd").val().trim(),
+                              "pid": pid,
+                              "relation": relation,
+                              "type":  $("#categoryLibraryTypeIdAdd").val(),
+                              "depict":$scope.vm.categoryLibraryDescribe,
+                              "origin":120
+                           },function(data){
+                             if(data.status==200){
+                                    //数据组装
+                                    $scope.vm.dataSplit.name=$("#categoryLibraryNameAdd").val().trim(),
+                                    $scope.vm.dataSplit.pid=pid;
+                                    $scope.vm.dataSplit.relation=relation;
+                                    $scope.vm.dataSplit.id=data.data;
+                                    $scope.vm.dataSplit.type=$("#categoryLibraryTypeIdAdd").val();
+                                    $scope.vm.dataSplit.leaf=0;
+                                    $scope.vm.dataSplit.depict=$scope.vm.categoryLibraryDescribe;
+                                    $scope.vm.categoryId=data.data;
+                                    $("#categoryLibraryNameAdd").val('');
+                                    $scope.vm.categoryLibraryDescribe="";
+                                    reloadBotLibrary($scope.vm.dataSplit,0);
+                                   $scope.vm.categoryRootPid=data.data;
+                             }else if(data.status==500){
+                                  layer.msg(data.info)
+                             }
+                            
+                        },function(err){
+                        })
+
+                            }else{
+                            }
                         }
                     });
-                }, 100);
-            }
-        }
+                    if(dialog){
+                        $timeout(function () {
+                            disableAttributeTypeForApply();
+                            $("#categoryLibraryNameAdd").blur(function(){
+                                if(lengthCheck($("#categoryLibraryNameAdd").val(),0,50)==false){
+                                    $("#addErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
+                                }else if(isHtmlLabel($("#categoryLibraryNameAdd").val())){
+                                    $("#addErrorView").html($scope.vm.notContainHtmlLabel);
+                                }else{
+                                    $("#addErrorView").html('');
+                                    repeatCheckForCategory("#addErrorView",0);
+                                }
+                            });
+                        }, 100);
+                    }
+                }
         /**
          * 类目名称城府判断  0:添加时的重复判断 1:修改时的重复判断
          * @param type
@@ -784,7 +816,7 @@ module.exports = applicationManagementModule =>{
                 request.name=$("#categoryLibraryNameAdd").val();
                // request.categorySceneId=categorySceneId;
             }
-             $.ajax("/api/ms/classify/library/check/name",{
+             $.ajax("/api/ms/classify/library/name/check",{
                 dataType: 'json', //服务器返回json格式数据
                 type: "GET", //HTTP请求类型
                 async:false,
@@ -803,9 +835,19 @@ module.exports = applicationManagementModule =>{
             })
             return flag;
         }
-        function editBotLibrary(){
+        function editBotLibrary(pid,id){
+             if($scope.vm.categoryLibraryPid==""){
+                var editpid="root";
+                var relation="node";
+            }else if($scope.vm.categoryLibraryPid=="root"){
+                var editpid=$scope.vm.categoryLibraryPid;
+                var relation= $scope.vm.categoryLibraryAttributeName
+            }else{
+                var editpid= $scope.vm.categoryLibraryPid;
+                var relation= $scope.vm.categoryLibraryAttributeName
+            }
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/bot/edit_category_library.html",
+                template:"/static/business_modeling/views/bot/edit_category_library.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -821,9 +863,9 @@ module.exports = applicationManagementModule =>{
                             $("#editErrorView").html($scope.vm.notContainHtmlLabel);
                             return false;
                         }
-                        if(repeatCheckForCategory("#editErrorView",1)==false){
-                            return false;
-                        }
+                        // if(repeatCheckForCategory("#editErrorView",1)==false){
+                        //     return false;
+                        // }
                         if(nullCheck($("#categoryLibraryDescribe").val())==true){
                             if(lengthCheck($("#categoryLibraryDescribe").val(),0,2000)==false){
                                 $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
@@ -835,22 +877,29 @@ module.exports = applicationManagementModule =>{
                                 $scope.vm.categoryLibraryDescribe=$("#categoryLibraryDescribe").val().trim();
                             }
                         }
-                        httpRequestPost("/api/ms/modeling/categorylibrary/updatebycategoryid",{
-                            "categoryId": $scope.vm.categoryLibraryId,
-                            "categoryPid": $scope.vm.categoryLibraryPid,
-                            "categoryAttributeName": $scope.vm.categoryLibraryAttributeName,
-                            "categoryName": $("#categoryLibraryName").val().trim(),
-                            "categoryTypeId": $("#categoryLibraryTypeId").val(),
-                            "categoryModifierId": categoryModifierId,
+                        httpRequestPost("/api/ms/classify/library/update",{
+                            "id": id,
+                            "pid": editpid,
+                            "relation": relation,
+                            "name": $scope.vm.categoryLibraryName,
+                            "type": $scope.vm.categoryLibraryTypeId,
                             "categoryDescribe": $scope.vm.categoryLibraryDescribe,
-                            "categorySceneId": categorySceneId,
-                            "categoryLeaf": $scope.vm.categoryLibraryLeaf
+                            "leaf": 0
                         },function(data){
-                            if(responseView(data)==true){
+                            if(data.status==200){
+                                layer.msg(data.info);
                                 //重新加载
-                                reloadBotLibrary(data,2);
+                                 $scope.vm.dataSplit.name=$scope.vm.categoryLibraryName;
+                                $scope.vm.dataSplit.pid=editpid;
+                                $scope.vm.dataSplit.relation=relation;
+                                $scope.vm.dataSplit.id=data.data;
+                                $scope.vm.dataSplit.type=$scope.vm.categoryLibraryTypeId;
+                                $scope.vm.dataSplit.leaf=0;
+                                $scope.vm.dataSplit.depict=$scope.vm.categoryLibraryDescribe;
+                                $scope.vm.categoryRootPid=data.data;
+                                reloadBotLibrary($scope.vm.dataSplit,2);
                             }
-                            $("#categoryLibraryDescribe").val('')
+                            $scope.vm.dataSplit.name="";
                         },function(err){
                         });
                     }else{
@@ -892,9 +941,12 @@ module.exports = applicationManagementModule =>{
                 }, 100);
             }
         }
-        function deleteBotLibrary(){
+       
+        //节点删除
+        function deleteBotLibrary(categoryId){
+            var categoryId=categoryId;
             var dialog = ngDialog.openConfirm({
-                template:"/static/business_modeling/bot/delete_category.html",
+                template:"/static/business_modeling/views/bot/delete_category.html",
                 scope: $scope,
                 closeByDocument:false,
                 closeByEscape: true,
@@ -902,21 +954,21 @@ module.exports = applicationManagementModule =>{
                 backdrop : 'static',
                 preCloseCallback:function(e){    //关闭回调
                     if(e === 1){
-                        httpRequestPost("/api/ms/modeling/categorylibrary/deletebycategoryid",{
-                            "categoryId": $scope.vm.categoryLibraryId,
-                            "categoryPid": $scope.vm.categoryLibraryPid,
-                            "categoryLeaf": $scope.vm.categoryLibraryLeaf
-                        },function(data){
-                            if(responseView(data)==true){
-                                //重新加载
-                                reloadBotLibrary(data,1);
-                            }
-                        },function(err){
-                        });
+                    $http.post("api/ms/classify/library/delete/"+categoryId+"").success(function(data){
+                        if(data.status==200){ 
+                            //数据组装
+                            $scope.vm.botLibrarySelectValue=data.data;
+                            layer.msg(data.info);
+                            reloadBotLibrary(data.data,1);
+                        }else if(data.status==500){
+                            layer.msg(data.info)
+                        }
+                    })
+                      
                     }else{
                     }
-                    //初始节点类型
-                    $scope.vm.categoryLibraryAttributeName="edge";
+                    //还原类目属性类型
+                    $scope.vm.categoryAttributeName="edge";
                 }
             });
         }
@@ -943,6 +995,7 @@ module.exports = applicationManagementModule =>{
         }
         //局部加载 type:0->添加 1:删除 2:修改
         function reloadBotLibrary(data,type){
+            console.log(data)
             if(type!=0){
                 $.each($("#library").find("li"),function(index,value){
                     if($(value).find("i").attr("data-option")==$scope.vm.botLibrarySelectValue){
@@ -966,14 +1019,14 @@ module.exports = applicationManagementModule =>{
                 var count = 0;
                 $.each($("#library").find("i"),function(index,value){
                     if(type==2){
-                        if($(value).attr("data-option")==data.data[0].categoryPid){
+                         if($(value).attr("data-option")==data.pid){
                             count++;
-                            var html = '<li data-option="'+data.data[0].categoryPid+'">' +
+                              var html = '<li data-option="'+data.pid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'"title="'+data.data[0].categoryName+'">'+subStringWithTail(data.data[0].categoryName,10,"...")+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[0])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.name)+'>'+
+                                '<i '+styleSwitch(data.type,data.leaf,data.relation)+' data-option="'+data.id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.relation)+' node-option="'+data.relation+'"  id-option="'+data.id+'" type-option="'+data.type+'" data-option="'+data.id+'" title="'+data.name+'">'+subStringWithTail(data.name,10,"...")+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data)+' node-option="'+data.relation+'" bot-name="'+data.name+'" bot-type="'+data.type+'" bot-pid="'+data.pid+'" depict-option="'+data.depict+'"  bot-id="'+data.id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
@@ -981,26 +1034,26 @@ module.exports = applicationManagementModule =>{
                             $(value).parent().parent().next().append(html);
                         }
                     }else if(type==0){
-                        if($(value).attr("data-option")==data.data[0].categoryPid){
+                        if($(value).attr("data-option")==data.pid){
                             count++;
-                            var html = '<li data-option="'+data.data[0].categoryPid+'">' +
+                            var html = '<li data-option="'+data.pid+'">' +
                                 '<div class="slide-a">'+
-                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.data[0].categoryDescribe)+'>'+
-                                '<i '+styleSwitch(data.data[0].categoryTypeId,data.data[0].categoryLeaf,data.data[0].categoryAttributeName)+' data-option="'+data.data[0].categoryId+'"></i>'+
-                                '<span '+nodeStyleSwitch(data.data[0].categoryAttributeName)+' node-option="'+data.data[0].categoryAttributeName+'" type-option="'+data.data[0].categoryTypeId+'" data-option="'+data.data[0].categoryId+'"title="'+data.data[0].categoryName+'">'+subStringWithTail(data.data[0].categoryName,10,"...")+'</span>'+
-                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryLibraryString(data.data[0])+'><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
+                                ' <a class="ellipsis" href="javascript:;" '+categoryDescribeView(data.name)+'>'+
+                                '<i '+styleSwitch(data.type,data.leaf,data.relation)+' data-option="'+data.id+'"></i>'+
+                                '<span '+nodeStyleSwitch(data.relation)+' node-option="'+data.relation+'" id-option="'+data.id+'" type-option="'+data.type+'" data-option="'+data.id+'" title="'+data.name+'">'+subStringWithTail(data.name,10,"...")+'</span>'+
+                                '&nbsp;<p class="treeEdit" bot-info='+toCategoryString(data)+' node-option="'+data.relation+'" bot-name="'+data.name+'" bot-type="'+data.type+'" bot-pid="'+data.pid+'" depict-option="'+data.depict+'"  bot-id="'+data.id+'"><img class="edit" src="../../../../../images/bot-edit.png"/><img class="delete" style="width: 12px;" src="../../../../../images/detel.png"/></p>'+
                                 '</a>' +
                                 '</div>' +
                                 '</li>';
                             //按照修改时间排序 把数据添加到前面
                             var obj = $(value).parent().parent().next();
                             var nodeType = "edge";
-                            if(data.data[0].categoryAttributeName=="node"){
+                            if(data.relation=="node"){
                                 nodeType = "edge";
-                            }else if(data.data[0].categoryAttributeName=="edge"){
+                            }else if(data.relation=="edge"){
                                 nodeType = "node";
                             }
-                            var sty = styleSwitch(data.data[0].categoryTypeId,1,nodeType);
+                             var sty = styleSwitch(data.type,1,nodeType);
                             sty = sty.substring(7,sty.length-1);
                             if($(value).parent().parent().next()!=null){
                                 var len = $(value).parent().parent().next().find("li").length;
@@ -1013,6 +1066,7 @@ module.exports = applicationManagementModule =>{
                             }else{
                                 var htmlAppend='<ul class="menus show">'+html+'</ul>';
                                 $(value).parent().parent().parent().append(htmlAppend);
+                                //加上子节点之后 把开关按钮显示
                                 $(value).attr("style",sty);
                             }
                         }

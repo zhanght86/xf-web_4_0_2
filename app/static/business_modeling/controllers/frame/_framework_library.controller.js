@@ -9,10 +9,6 @@
         ($scope,$timeout,$state, $stateParams,BusinessModelingServer,$compile,$location,ngDialog,$cookieStore,$interval,$http) =>{
         // $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
-            success : 10000,
-            illegal : 10003,
-            failed : 10004,
-            empty : 10005,
             botSelectValue:"root",
             botRoot : "",     //根节点
             knowledgeBotVal:"",  //bot 内容
@@ -44,10 +40,7 @@
             frameEnableStatusId: 1,
             frameModifierId: "",
             defaultString: "null",
-            textAndTagSplit: "#",
-            conceptSplit: "；",
             defaultInt: 0,
-            //responseView:responseView,
             turnOn:turnOn,
             elementIdArray:[],
             addEle:addEle,
@@ -320,7 +313,7 @@ function recursionForFrameAgain(suggestion,node){
         //获取root 数据
         function initBot(){
             $(".aside-navs").empty();
-            $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
+            $http.get('api/ms/classify/children/get/root').success(function(data,status,headers,congfig){
               console.log(data)
               var html =  '<ul class="menus show">';
               for(var i=0;data.data != null && i<data.data.length;i++){
@@ -399,7 +392,7 @@ $(".aside-navs").on("click","span",function(){
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                $.ajax("api/ms/classify/get/children/"+id+"",{
+                $.ajax("api/ms/classify/children/get/"+id+"",{
                 dataType: 'json', //服务器返回json格式数据
                 type: "GET", //HTTP请求类型
                 async:false,
@@ -837,29 +830,7 @@ $(".aside-navs").on("click","span",function(){
                     }
                 }
             });
-            if(dialog){
-                $timeout(function () {
-                //     $(".ele-name").blur(function(){
-                //         alert(1)
-                //         console.log($(this).val())
-                //         //  alert(1)
-                //         // $.each($("#add-item").find("tr"),function(index,value){
-                //         //     if($(".ele-name").val()==$(value).find(".ele-name-add").val()){
-                //         //        layer.msg('要素名称不能与已有要素名称重复');
-                //         //         $("#ele-name-error").attr("style","display:inline-block;left: 10px;z-index:9999;");
-                //         //         return true;
-                //         //     }else{
-                //         //         $("#ele-name-error").html('');
-                //         //         $("#ele-name-error").attr("style","display:none;");
-                //         //     }
-                //         // });
-                // });
-                
-
-            }, 100);
-            }
         }
-
 
 
         //元素类型验证
@@ -967,7 +938,6 @@ $(".aside-navs").on("click","span",function(){
             });
        }
 
-
         //开关
         function turnOn(targetValue,targetName){
             $scope.vm[targetName] = targetValue ? 0 : 1 ;
@@ -1050,7 +1020,7 @@ $(".aside-navs").on("click","span",function(){
      });
       }
 
-        /**
+     /**
      * 长度检测 包括边界
      * @param value
      * @param min
@@ -1068,7 +1038,6 @@ $(".aside-navs").on("click","span",function(){
         }
         return true;
     }
-
 
         ////////////////////////////////导入、导出、模板下载///////////////////////////////////////////
 

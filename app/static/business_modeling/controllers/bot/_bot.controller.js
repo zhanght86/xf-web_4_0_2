@@ -70,7 +70,7 @@ module.exports = businessModelingModule =>{
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/ms/classify/library/get/path",
+            serviceUrl: "/api/ms/classify/get/path",
             type:'GET',
             params:params,
             paramName:'name',
@@ -246,7 +246,7 @@ module.exports = businessModelingModule =>{
         //获取root 数据
         function initBot(){
             $(".aside-navs").empty();
-            $http.get('api/ms/classify/get/children/root').success(function(data,status,headers,congfig){
+            $http.get('api/ms/classify/children/get/root').success(function(data,status,headers,congfig){
                 var html =  '<ul class="menus show">';
                 for(var i=0;data.data != null && i<data.data.length;i++){
                     html+= '<li data-option="'+data.data[i].id+'">' +
@@ -298,7 +298,7 @@ module.exports = businessModelingModule =>{
             }
         }
         $(".aside-navs").on("click",".edit",function(){
-            $scope.vm.botInfo = $(this).parent().attr("bot-info");
+             $scope.vm.botInfo = $(this).parent().attr("bot-info");
              $scope.vm.categoryName=$(this).parent().attr("bot-name");
              $scope.vm.categoryTypeId=$(this).parent().attr("bot-type");
              $scope.vm.categoryDescribe=$(this).parent().attr("depict-option");
@@ -432,7 +432,7 @@ module.exports = businessModelingModule =>{
             var that = $(obj);
             if(!that.parent().parent().siblings().length){
                 that.css("backgroundPosition","0% 100%");
-                $.ajax("api/ms/classify/get/children/"+id+"",{
+                $.ajax("api/ms/classify/children/get/"+id+"",{
                 dataType: 'json', //服务器返回json格式数据
                 type: "GET", //HTTP请求类型
                 async:false,
@@ -559,7 +559,7 @@ module.exports = businessModelingModule =>{
                 request.name=$("#category-name").val().trim();
             }
             var flag;
-            $.ajax("/api/ms/classify/check/name",{
+            $.ajax("/api/ms/classify/name/check",{
                 dataType: 'json', //服务器返回json格式数据
                 type: "GET", //HTTP请求类型
                 async:false,

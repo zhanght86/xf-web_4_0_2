@@ -18,6 +18,7 @@ module.exports = materialModule =>{
                 swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
                 server: "/api/material/picture/upload",
                 formData:{
+                    "status":0,
                     "modifierId":USER_ID,
                     "origin" : 0,
                     "inTrusteeship" : 1

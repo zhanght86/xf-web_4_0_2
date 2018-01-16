@@ -29,10 +29,10 @@
                     <td width="5%"><input type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/> </td>
                     <td width="22%">图片预览</td>
                     <td width="23%">图片名称</td>
-                    <td width="12%">文件大小</td>
+                    <td width="10%">文件大小</td>
                     <td width="13%">添加时间</td>
-                    <td width="12%">添加人</td>
-                    <td width="13%">操作</td>
+                    <td width="10%">添加人</td>
+                    <td width="17%">操作</td>
                 </tr>
                 <tr ng-repeat="item in vm.imageList.objs">
                     <!--<td><input type="checkbox"  ng-click="vm.singleAdd(item.id,vm.pictureIds,vm.isSelectAll,vm.imageList.objs.length)"  ng-checked="vm.pictureIds.inArray(item.id)"/></td>-->
@@ -52,7 +52,8 @@
                     <td>{{item.modifierId}}</td>
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>
-                        <a href="javascript:;" class="c_red" ng-click="vm.batchDeletePicture([item.id])">删除</a>
+                        <a href="javascript:;" class="mr-10 c_red" ng-click="vm.batchDeletePicture([item.id])">删除</a>
+                        <a href="javascript:;" class="c_green" ng-click="vm.quote(item.id)">引用</a>
                     </td>
                 </tr>
 

@@ -24,7 +24,7 @@ module.exports=functionalTestModule => {
             listData :[],
             deletePart : deletePart,                    //删除
             startTestPart : startTestPart ,              //启动
-            exportPart : exportPart
+           // exportPart : exportPart
 
 
         };
@@ -70,6 +70,10 @@ module.exports=functionalTestModule => {
             FunctionServer.startTestPart.save({
                 "id":id
             },function(data){
+                if(data.status==500){
+                    layer.msg(data.info,{time:1000});
+                    //console.log(data.info);
+                }
                 if(data.status==200){
                     //$state.reload();
                     getPartList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
@@ -84,6 +88,10 @@ module.exports=functionalTestModule => {
             FunctionServer.startPart.save({
                 "id":id
             },function(data){
+                if(data.status==500){
+                    layer.msg(data.info,{time:1000});
+                    //console.log(data.info);
+                }
                 if(data.status==200){
                    //$state.reload();
                     getPartList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
@@ -96,12 +104,12 @@ module.exports=functionalTestModule => {
         /**
          ** 导出    (get方法)
          **/
-        function exportPart(id){
-            var urlParams = "/"+id;
-            var url = FunctionServer.exportPart + urlParams;
-            downLoadFiles($('.participle')[0],url);
-
-        }
+        // function exportPart(id){
+        //     var urlParams = "/"+id;
+        //     var url = FunctionServer.exportPart + urlParams;
+        //     downLoadFiles($('.participle')[0],url);
+        //
+        // }
 
         /**
          ** 删除

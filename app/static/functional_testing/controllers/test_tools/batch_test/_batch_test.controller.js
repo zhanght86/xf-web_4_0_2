@@ -185,7 +185,7 @@ module.exports=functionalTestModule => {
 
                 },function (data) {
                     if(data.status == 500){
-                        layer.msg(data.data,{time:1000});
+                        layer.msg(data.info,{time:1000});
                     }
                     if(data.status == 200){
                         //$state.reload();
@@ -213,7 +213,7 @@ module.exports=functionalTestModule => {
                     searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
                 }
                 if(data.status==500){
-                    layer.msg(data.data,{time:10000});
+                    layer.msg(data.info,{time:1000});
                 }
             },function(err){
                 layer.close(i);
@@ -255,8 +255,8 @@ module.exports=functionalTestModule => {
                     batchName :name
                 },function (data) {
                     if(data.status == 500){
-                        // layer.msg(data.info,{time:10000});
-                        console.log(data.info);
+                        layer.msg(data.info,{time:1000});
+                        //console.log(data.info);
                     }
                     if(data.status == 200){
                         //$state.reload();
@@ -285,8 +285,8 @@ module.exports=functionalTestModule => {
                     searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
                 }
                 if(data.status==500){
-                   // layer.msg(data.info,{time:10000});
-                    console.log(data.info);
+                    layer.msg(data.info,{time:1000});
+                    //console.log(data.info);
                 }
             },function(err){
                 layer.close(i);

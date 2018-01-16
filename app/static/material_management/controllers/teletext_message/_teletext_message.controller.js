@@ -19,6 +19,11 @@ module.exports=materialModule => {
             imageList : [] ,        //所有图片列表
             showImg : showImg,
             removeImg : removeImg,
+
+            quote : quote,              //引用
+            quoteList:[],
+            deleteQuoteList :[],
+
         };
 
         showImg($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
@@ -57,6 +62,32 @@ module.exports=materialModule => {
             });
         }
 
+        //引用
+        function quote(id){
+            MaterialServer.quoteTw.get({
+                "id":id
+            },function(data){
+                if(data.status==200){
+                    console.log(data);
+                    // alert('图片被引用中');
+                    $scope.vm.quoteList = data.data;
+                    let quote = require("../../views/teletext_message/quote.html") ;
+                    $scope.$parent.$parent.MASTER.openNgDialog($scope,quote,"500px",function(){
+
+                    },"",function(){
+
+                    })
+                }
+                if(data.status==500){
+                    layer.msg(data.info,{time:1000});
+                }
+
+            },function(err){
+                console.log(err);
+            });
+
+        }
+
 
         /**
          * 删除图片
@@ -73,10 +104,11 @@ module.exports=materialModule => {
                 },function(data){
                     if(data.status == 200){
                         layer.msg("图文消息删除成功") ;
-                        //showImg(1)
-                        $state.reload();
+                        //$state.reload();
+                        showImg($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     }else if(data.status == 500){
-                        layer.msg("图文消息删除失败") ;
+                        layer.msg(data.info) ;
+
                     }
                 },function(err){
                     $log.log(err);

@@ -42,7 +42,8 @@
                     <td>
                         <a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName(item)">修改名称</a>
                         <a href="javascript:;" class="c_red mr-10" ng-click="vm.batchDeleteVoice([item.id])">删除</a>
-                        <a href="/api/material/voice/download?fileName={{item.url}}" target="_blank">下载</a>
+                        <a href="/api/material/voice/download?fileName={{item.url}}" class="mr-10" target="_blank">下载</a>
+                        <a href="javascript:;" class="c_green" ng-click="vm.quote(item.id)">引用</a>
                     </td>
                 </tr>
                 <!--<tr>-->

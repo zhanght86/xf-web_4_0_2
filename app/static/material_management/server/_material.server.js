@@ -36,11 +36,6 @@ class MaterialServer {
      this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/by/id',{},{});
 
 
-
-
-
-
-
                         /********************************
                                     * 图片库
                                 ***********************************/
@@ -54,6 +49,10 @@ class MaterialServer {
     this.exportImg =API_MATERIAL+'/picture/export' ;
     //修改名称校验
     this.checkName = $resource(API_MATERIAL+'/picture/check/name',{},{});
+    //引用
+    this.quote = $resource(API_MATERIAL+'/picture/check/quote',{},{});
+
+
                         /********************************
                                 * 语音库    API_MATERIAL = "api/material"
                                 ***********************************/
@@ -67,6 +66,8 @@ class MaterialServer {
     this.exportVoice =API_MATERIAL+'/voice/export' ;
     //语音名称校验
     this.checkVoice = $resource(API_MATERIAL+'/voice/check/name',{},{}) ;
+    //引用
+    this.quoteVoice = $resource(API_MATERIAL+'/voice/check/quote',{},{});
 
     
                         /********************************
@@ -95,6 +96,9 @@ class MaterialServer {
     this.addTwApi = $resource(API_MATERIAL+'/graphic/message/insert',{},{});
     //图文名称校验
     this.checkTitle = $resource(API_MATERIAL+'/graphic/message/check/title',{},{});
+
+    //引用
+    this.quoteTw = $resource(API_MATERIAL+'/graphic/message/check/quote',{},{});
 
                         /********************************
                                     * 文档库

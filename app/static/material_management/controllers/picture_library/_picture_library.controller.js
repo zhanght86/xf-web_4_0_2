@@ -33,13 +33,14 @@ module.exports=materialModule => {
                 uploadNumber : 0 ,
                 process : "0%"
             },
-            checkName : checkName
+            checkName : checkName,
+            quote : quote,              //引用
+            quoteList:[],
+            deleteQuoteList :[],
+
+
         };
-        //查询
-        // function  napSearch(){
-        //     getPicList(1) ;
-        // }
-        //
+        //获取列表
         getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
         function getPicList(index,pageSize,reset){
             if(reset){
@@ -73,6 +74,31 @@ module.exports=materialModule => {
                 console.log(err);
             });
         }
+        //引用
+        function quote(id){
+            MaterialServer.quote.get({
+                "id":id
+            },function(data){
+                if(data.status==200){
+                    console.log(data);
+                   // alert('图片被引用中');
+                    $scope.vm.quoteList = data.data;
+                    let quote = require("../../views/picture_library/quote.html") ;
+                    $scope.$parent.$parent.MASTER.openNgDialog($scope,quote,"500px",function(){
+
+                    },"",function(){
+
+                    })
+                }
+                if(data.status==500){
+                    layer.msg(data.info,{time:1000});
+                }
+
+            },function(err){
+                console.log(err);
+            });
+
+        }
 
         /**
          * 删除图片
@@ -91,9 +117,19 @@ module.exports=materialModule => {
                     },function(data){
                         if(data.status == 200){
                             layer.msg("图片删除成功") ;
-                            $state.reload();
+                            //$state.reload();
+                            getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else if(data.status == 500){
-                            layer.msg("图片删除失败") ;
+                            $scope.vm.deleteQuoteList = data.data;
+                            console.log($scope.vm.deleteQuoteList);
+                            initBatchTest();
+                            //getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                            angular.forEach($scope.vm.deleteQuoteList,function(val){
+                                $scope.vm.pictureIds.push(val) ;
+                            });
+                            layer.msg(data.info) ;
+
+
                         }
                     },function(err){
                         console.log(err);

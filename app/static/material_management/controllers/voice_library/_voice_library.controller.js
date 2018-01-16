@@ -36,7 +36,10 @@ module.exports=materialModule => {
                 process :"0%"               //上传进度
             },
             checkVoiceName : checkVoiceName,
-            checkVoiceName2 : checkVoiceName2
+            checkVoiceName2 : checkVoiceName2,
+            quote : quote,              //引用
+            quoteList:[],
+            deleteQuoteList :[],
 
         };
         /**
@@ -72,6 +75,32 @@ module.exports=materialModule => {
                 layer.close(i);
                 console.log(error);
             });
+        }
+
+        //引用
+        function quote(id){
+            MaterialServer.quoteVoice.get({
+                "id":id
+            },function(data){
+                if(data.status==200){
+                    console.log(data);
+                    // alert('图片被引用中');
+                    $scope.vm.quoteList = data.data;
+                    let quote = require("../../views/voice_library/quote.html") ;
+                    $scope.$parent.$parent.MASTER.openNgDialog($scope,quote,"500px",function(){
+
+                    },"",function(){
+
+                    })
+                }
+                if(data.status==500){
+                    layer.msg(data.info,{time:1000});
+                }
+
+            },function(err){
+                console.log(err);
+            });
+
         }
 
 
@@ -142,45 +171,7 @@ module.exports=materialModule => {
 
         }
 
-        /**
-         * 全选
-         */
-        function selectAll(){
-            if($scope.vm.isSelectAll){
-                $scope.vm.isSelectAll = false;
-                $scope.vm.voiceIds = [];
-            }else{
-                $scope.vm.isSelectAll=true;
-                $scope.vm.voiceIds=[];
-                angular.forEach($scope.vm.voiceList.objs,function (val) {
-                    $scope.vm.voiceIds.push(val.id);
-                })
-            }
-            console.log($scope.vm.voiceIds);
-        }
-        /**
-         * 单选
-         */
-        function selectSingle(id){
-            if($scope.vm.voiceIds.inArray(id)){
-                $scope.vm.voiceIds.remove(id);
-                $scope.vm.isSelectAll = false;
-            }else{
-                $scope.vm.voiceIds.push(id);
 
-            }
-            if($scope.vm.voiceIds.length==$scope.vm.voiceList.objs.length){
-                $scope.vm.isSelectAll = true;
-            }
-            console.log( $scope.vm.voiceIds);
-        }
-        /**
-         * 全选清空
-         */
-        function initBatchTest(){
-            $scope.vm.isSelectAll=false;
-            $scope.vm.voiceIds=[];
-        }
         /**
          * 批量删除
          */
@@ -201,10 +192,16 @@ module.exports=materialModule => {
                         if(data.status == 200){
                             layer.msg("语音删除成功") ;
                             initBatchTest();
-                            //searchVoice(1)
-                            $state.reload();
+                            searchVoice($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                           // $state.reload();
                         }else if(data.status == 500){
-                            layer.msg("语音删除失败") ;
+                            $scope.vm.deleteQuoteList = data.data;
+                            console.log($scope.vm.deleteQuoteList);
+                            initBatchTest();
+                            angular.forEach($scope.vm.deleteQuoteList,function(val){
+                                $scope.vm.voiceIds.push(val) ;
+                            });
+                            layer.msg(data.info) ;
                         }
                     },function(err){
                         $log.log(err);
@@ -255,6 +252,46 @@ module.exports=materialModule => {
                         //$log.log(err);
                     });
             }
+        }
+
+        /**
+         * 全选
+         */
+        function selectAll(){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false;
+                $scope.vm.voiceIds = [];
+            }else{
+                $scope.vm.isSelectAll=true;
+                $scope.vm.voiceIds=[];
+                angular.forEach($scope.vm.voiceList.objs,function (val) {
+                    $scope.vm.voiceIds.push(val.id);
+                })
+            }
+            console.log($scope.vm.voiceIds);
+        }
+        /**
+         * 单选
+         */
+        function selectSingle(id){
+            if($scope.vm.voiceIds.inArray(id)){
+                $scope.vm.voiceIds.remove(id);
+                $scope.vm.isSelectAll = false;
+            }else{
+                $scope.vm.voiceIds.push(id);
+
+            }
+            if($scope.vm.voiceIds.length==$scope.vm.voiceList.objs.length){
+                $scope.vm.isSelectAll = true;
+            }
+            console.log( $scope.vm.voiceIds);
+        }
+        /**
+         * 全选清空
+         */
+        function initBatchTest(){
+            $scope.vm.isSelectAll=false;
+            $scope.vm.voiceIds=[];
         }
 
     }
