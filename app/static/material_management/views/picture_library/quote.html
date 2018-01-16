@@ -1,0 +1,14 @@
+<div class="pd-20 ">
+    <form class="form form-horizontal">
+        <div class="mb-10">
+            <p class="tc mb-10" >修改名称</p>
+            <input type="text" class="input-text" ng-model="vm.editPictureName" maxlength="20"/>
+            <span><span>{{vm.editPictureName.length}}</span>/20</span>
+        </div>
+        <div class="text-c">
+            <button  class="btn1 btn1_blue mr10" type="button" ng-click="vm.checkName()">确定</button>
+            <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)">取消</button>
+        </div>
+    </form>
+</div>
+

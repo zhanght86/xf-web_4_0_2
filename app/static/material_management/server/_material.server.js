@@ -36,11 +36,6 @@ class MaterialServer {
      this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/by/id',{},{});
 
 
-
-
-
-
-
                         /********************************
                                     * 图片库
                                 ***********************************/
@@ -54,6 +49,10 @@ class MaterialServer {
     this.exportImg =API_MATERIAL+'/picture/export' ;
     //修改名称校验
     this.checkName = $resource(API_MATERIAL+'/picture/check/name',{},{});
+    //引用
+    this.quote = $resource(API_MATERIAL+'/picture/check/quote',{},{});
+
+
                         /********************************
                                 * 语音库    API_MATERIAL = "api/material"
                                 ***********************************/

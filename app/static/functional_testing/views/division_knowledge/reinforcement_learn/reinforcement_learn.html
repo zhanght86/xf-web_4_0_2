@@ -70,7 +70,7 @@
                                         <input type="checkbox" name="sid" value="" ng-checked="vm.unstudyArr.inArray(item.id) " ng-click="vm.selectSingle(item.id)">
                                     </td>
                                     <td>{{item.question}}</td>
-                                    <td>{{item.channelId | channelFilter}}</td>
+                                    <td>{{item.channelId | channelFilter2}}</td>
                                     <td>{{item.modifyTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <td><a href="javascript:;" class="c-green" ng-click="vm.learn(item.id,item.question)">学习</a></td>
                                 </tr>
@@ -159,7 +159,7 @@
                                             <!--{{vm.channelId1 | channelFilter}}-->
                                         <!--</span>-->
                                     <!--</td>-->
-                                    <td>{{item.channelId |channelFilter}} </td>
+                                    <td>{{item.channelId |channelFilter2}} </td>
 
                                     <td>{{item.knowledgeTitle}}</td>
                                     <td>{{item.modifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>

@@ -33,13 +33,13 @@ module.exports=materialModule => {
                 uploadNumber : 0 ,
                 process : "0%"
             },
-            checkName : checkName
+            checkName : checkName,
+            quote : quote,              //引用
+            quoteList:[],
+
+
         };
-        //查询
-        // function  napSearch(){
-        //     getPicList(1) ;
-        // }
-        //
+        //获取列表
         getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
         function getPicList(index,pageSize,reset){
             if(reset){
@@ -73,6 +73,25 @@ module.exports=materialModule => {
                 console.log(err);
             });
         }
+        //引用
+        function quote(id){
+            MaterialServer.quote.get({
+                "id":id
+            },function(data){
+                if(data.status==200){
+                    console.log(data);
+                   // alert('图片被引用中');
+                    $scope.vm.quoteList = data.data;
+                }
+                if(data.status==500){
+                    layer.msg(data.info);
+                }
+
+            },function(err){
+                console.log(err);
+            });
+
+        }
 
         /**
          * 删除图片
@@ -93,7 +112,7 @@ module.exports=materialModule => {
                             layer.msg("图片删除成功") ;
                             $state.reload();
                         }else if(data.status == 500){
-                            layer.msg("图片删除失败") ;
+                            layer.msg(data.info) ;
                         }
                     },function(err){
                         console.log(err);
