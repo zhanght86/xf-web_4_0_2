@@ -12,7 +12,7 @@
                             -
                 <input type="text" id="endTime"   onchange="" ng-model="vm.endTime" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="请选择结束日期" readonly>
             </span>
-            <input type="button" class="btn1 btn1_blue" value="查询" ng-click="vm.getData(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)"/>
+            <input type="button" class="btn1 btn1_blue" value="查询" ng-click="vm.getData(vm.paginationConf.currentPage,vm.paginationConf.pageSize)"/>
         </div>
         <div>
             <table class="access_amount_table">

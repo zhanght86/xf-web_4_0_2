@@ -36,17 +36,18 @@ module.exports=materialModule => {
             checkName : checkName,
             quote : quote,              //引用
             quoteList:[],
-            deleteQuoteList :[],
+
 
 
         };
         //获取列表
         getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-        function getPicList(index,pageSize,reset){
-            if(reset){
-                $scope.vm.paginationConf.currentPage = 1;
-                $location.search("currentPage",1);
-            }
+
+        function getPicList(index,pageSize,reset){             //reset    值为true：清空 删除的id；
+            // if(reset){
+            //     $scope.vm.paginationConf.currentPage = 1;
+            //     $location.search("currentPage",1);
+            // }
             var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:5000}) ;
             MaterialServer.getList.get({
                 "index": (index-1)*pageSize,
@@ -57,8 +58,10 @@ module.exports=materialModule => {
                 layer.close(i);
                 console.log(data);
                 if(data.status == 200){
-                    initBatchTest() ;
-                    $scope.vm.imageList = data.data ;
+                    if(!reset){
+                        initBatchTest() ;
+                    }
+                    $scope.vm.imageList = data.data.objs ;
                     $scope.vm.paginationConf.currentPage =index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
@@ -120,15 +123,10 @@ module.exports=materialModule => {
                             //$state.reload();
                             getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else if(data.status == 500){
-                            $scope.vm.deleteQuoteList = data.data;
-                            console.log($scope.vm.deleteQuoteList);
-                            initBatchTest();
-                            //getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                            angular.forEach($scope.vm.deleteQuoteList,function(val){
-                                $scope.vm.pictureIds.push(val) ;
-                            });
-                            layer.msg(data.info) ;
 
+                            $scope.vm.pictureIds=data.data ;
+                            getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize,true);
+                            layer.msg(data.info) ;
 
                         }
                     },function(err){
@@ -140,6 +138,7 @@ module.exports=materialModule => {
                 });
             }
         }
+
         /**
          * 图片导出  没有查询条件导出全部，有查询条件导出查询出的结果；
          */
@@ -228,7 +227,7 @@ module.exports=materialModule => {
             }else{
                 $scope.vm.isSelectAll = true ;
                 $scope.vm.pictureIds = [] ;
-                angular.forEach($scope.vm.imageList.objs,function(val){
+                angular.forEach($scope.vm.imageList,function(val){
                     $scope.vm.pictureIds.push(val.id)
                 });
             }
@@ -245,7 +244,7 @@ module.exports=materialModule => {
                 $scope.vm.pictureIds.push(id);
 
             }
-            if($scope.vm.pictureIds.length==$scope.vm.imageList.objs.length){
+            if($scope.vm.pictureIds.length==$scope.vm.imageList.length){
                 $scope.vm.isSelectAll = true;
             }
             console.log( $scope.vm.pictureIds);
@@ -257,6 +256,15 @@ module.exports=materialModule => {
             $scope.vm.pictureIds = [] ;
             $scope.vm.isSelectAll = false;
         }
+
+        // //被引用选中
+        // function getPicList2(arr){
+        //     for(var i=0;i<arr.length;i++){
+        //
+        //     }
+        // }
+
+
     }
     ])};
 

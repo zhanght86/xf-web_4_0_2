@@ -17,7 +17,7 @@
             <div class="R dib">
                 <span class="L mr-10">
                     <input type="text" class="L input-text" ng-model="vm.voiceName" placeholder="请输入查询语音的名称" style="width:200px;"/>
-                    <input type="button" value="" class="L tw_btn " ng-click="vm.searchVoice(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)"/>
+                    <input type="button" value="" class="L tw_btn " ng-click="vm.searchVoice(vm.paginationConf.currentPage,vm.paginationConf.pageSize)"/>
                 </span>
                 <button class="L btn1 btn1_blue mr-10" ng-click="vm.exportExcel()">导出</button>
                 <button class="L btn1 btn_delete" ng-click="vm.batchDeleteVoice(vm.voiceIds)">批量删除</button>

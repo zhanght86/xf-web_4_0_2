@@ -39,7 +39,7 @@ module.exports=materialModule => {
             checkVoiceName2 : checkVoiceName2,
             quote : quote,              //引用
             quoteList:[],
-            deleteQuoteList :[],
+
 
         };
         /**
@@ -61,11 +61,15 @@ module.exports=materialModule => {
                 layer.close(i);
                 if(data.status==200){
                     console.log(data.data);
+                    if(!reset){
+                        initBatchTest();
+                    }
                     $scope.vm.voiceList = data.data ;
                     $scope.vm.paginationConf.currentPage =index ;
                     $scope.vm.paginationConf.totalItems =data.data.total ;
                     $scope.vm.paginationConf.numberOfPages = data.data.total/$scope.vm.paginationConf.pageSize ;
                     console.log($scope.vm.paginationConf);
+
                 }else if(data.status==500){
                     layer.msg('查询失败');
                     $scope.vm.voiceList=[];
@@ -193,14 +197,10 @@ module.exports=materialModule => {
                             layer.msg("语音删除成功") ;
                             initBatchTest();
                             searchVoice($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
-                           // $state.reload();
+
                         }else if(data.status == 500){
-                            $scope.vm.deleteQuoteList = data.data;
-                            console.log($scope.vm.deleteQuoteList);
-                            initBatchTest();
-                            angular.forEach($scope.vm.deleteQuoteList,function(val){
-                                $scope.vm.voiceIds.push(val) ;
-                            });
+                            $scope.vm.voiceIds = data.data;
+                            searchVoice($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize,true) ;
                             layer.msg(data.info) ;
                         }
                     },function(err){

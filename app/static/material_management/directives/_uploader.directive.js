@@ -84,6 +84,7 @@ module.exports = materialModule =>{
                     if(response.status == 500){
                         scope.vm.isUploadStart = false ;
                         //layer.msg("模板错误")
+                        layer.msg(response.info);
                     }
                     if(response.status == 200){
                         layer.msg("上传成功");
