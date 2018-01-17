@@ -296,10 +296,10 @@ module.exports = knowledgeManagementModule => {
                             $state.go("KM.concept")
                         });
                     }else{
-                        scope.vm.saveLimitTimer = true;
+                        $scope.vm.saveLimitTimer = true;
                         layer.msg(response.info)
                     }
-                },function(error){console.log(error);scope.vm.saveLimitTimer = true;});
+                },function(error){console.log(error);$scope.vm.saveLimitTimer = true;});
             }
             // 预览d
             function scan() {

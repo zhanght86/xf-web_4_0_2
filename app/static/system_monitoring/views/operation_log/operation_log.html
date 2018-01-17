@@ -34,8 +34,8 @@
                         <!--<span  ng-if="item.content.indexOf(',')==-1">{{item.content|contentShow}}</span>-->
                     <!--</td>-->
                     <td>
-                        <a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="(item.content|strToJson).id">{{(item.content|strToJson).title}}</a>
-                        <span ng-if="!(item.content|strToJson).id">{{item.content}}</span>
+                        <a class="c_blue" target="_blank" ng-click="vm.pageJump(item)" ng-if="(item.content|strToJson).id" style="word-break: break-all;">{{(item.content|strToJson).title}}</a>
+                        <span ng-if="!(item.content|strToJson).id"  style="word-break: break-all;">{{item.content}}</span>
                     </td>
                     <td>{{item.time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>

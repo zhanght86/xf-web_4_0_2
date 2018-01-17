@@ -21,8 +21,23 @@ class SystemServer {
                      ********************************/
         this.getServiceDate = $resource(API_ANALYSIS+'/serviceMonitoring/monitoring',{},{});
         
-        //根据id查询
+        //根据id查询-聊天知识库
         this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/by/id',{},{});
+        //根据id查询-faq
+        this.searchByIdFaq = $resource(API_MS+'/knowledge/FAQ/get/:knowledgeId',{},{});
+        //根据id查询-概念
+        this.searchByIdCon = $resource(API_MS+'/knowledge/concept/get/:knowledgeId',{},{});
+        //根据id查询-列表
+        this.searchByIdList = $resource(API_MS+'/knowledge/list/get/:knowledgeId',{},{});
+        //根据id查询-任务
+        this.searchByIdTask = $resource(API_MS+'/knowledge/task/get/:knowledgeId',{},{});
+        //根据id查询-对话
+        this.searchByIdDialogue = $resource(API_MS+'/knowledge/dialogue/get/:knowledgeId',{},{});
+
+
+
+
+
     }
 }
 SystemServer.$inject = ['$resource'];
