@@ -20,7 +20,6 @@ module.exports = applicationManagementModule =>{
                             return;
                         }
                         ApplicationServer.verifyApplicationName.save({
-                            "license": scope.vm.applicationInfo.license,
                             "name": scope.vm.applicationInfo.newName
                         },function(response){
                             if(response.status==200){

@@ -27,21 +27,22 @@ module.exports = applicationManagementModule =>{
             restartService : restartService, //重启服务
             deleteService : deleteService, //删除服务
             addOrEditService : addOrEditService, //发布及编辑服务弹窗
-
             categoryIds : [], //分类id列表
             channels : [], //渠道id列表
-            nodeCode : "", //节点编号
+            code : "", //节点编号
             serviceName: "", //服务名称
             serviceStatus : 0, //服务状态
             serviceType : 10, //服务类型
             categoryData : "", //分类数据
             channelData : "", //渠道数据
-            serviceTypeList : "", //类型数据
             botRoot : "",     //根节点
             newCategoryIds : [],  //选中的分类节点
-            verifyRelease : verifyRelease //发布服务校验
+            serviceids:[],
+            verifyRelease : verifyRelease, //发布服务校验
+            deleteAllService : deleteAllService,   //批量删除服务
+            selectAll:selectAll,
+            selectSingle:selectSingle
         };
-        queryServiceTypeList();//获取发布类型数据
         queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);    // 获取服务列表
         //请求服务列表
         function queryServiceList(index,pageSize){
@@ -58,17 +59,7 @@ module.exports = applicationManagementModule =>{
                 }
             },function(error){console.log(error)})
         }
-        //获取发布类型数据
-        function queryServiceTypeList(){
-            ApplicationServer.queryServiceTypeList.save({
-            },function(data){
-                if(data.status==200){
-                    $scope.vm.serviceTypeList=data.data;
-                }else{
-                    layer.msg("查询服务类型失败");
-                }
-            },function(error){console.log(error)})
-        }
+     
         /**
          * 加载分页条
          * @type {{currentPage: number, totalItems: number, itemsPerPage: number, pagesLength: number, perPageOptions: number[]}}
@@ -80,11 +71,16 @@ module.exports = applicationManagementModule =>{
                 "id": serviceId
             },function(data){
                 if(data.status==200){
-                    $scope.vm.nodeCode=data.data.nodeCode;//节点编号
-                    $scope.vm.serviceName=data.data.serviceName;//服务名称
-                    $scope.vm.serviceStatus=data.data.serviceStatus;//服务状态
+                    $scope.vm.code=data.data.id;//节点编号
+                    $scope.vm.serviceName=data.data.name;//服务名称
+                    $scope.vm.serviceStatus=data.data.status;//服务状态
                     $scope.vm.serviceType=data.data.serviceType;//服务类型
-                }else{
+                    $scope.vm.url=data.data.url;
+                     $scope.vm.nodeList.available.push({
+                        id:data.data.id,
+                        url:data.data.url,
+                     })
+                }else{  
                     layer.msg("查询服务失败");
                 }
             },function(error){console.log(error) })
@@ -94,7 +90,7 @@ module.exports = applicationManagementModule =>{
             if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
                 layer.msg("发布服务的名称不能为空!");
                 return 0;
-            }else if($scope.vm.nodeCode==null||$scope.vm.nodeCode==""){
+            }else if($scope.vm.code==null||$scope.vm.code==""){
                 layer.msg("发布服务时未选择发布节点!");
                 return 0;
             }else{
@@ -112,7 +108,7 @@ module.exports = applicationManagementModule =>{
                 }, function (data) {
                     if (data.status == 200) {
                         layer.msg("发布服务成功");
-                        queryServiceList(1);
+                         queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     } else {
                         layer.msg("发布服务失败");
                     }
@@ -132,7 +128,7 @@ module.exports = applicationManagementModule =>{
                 },function(data){
                     if(data.status==200){
                         layer.msg("上线服务成功");
-                        queryServiceList(1);
+                         queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     }else{
                         layer.msg("上线服务失败");
                     }
@@ -150,7 +146,7 @@ module.exports = applicationManagementModule =>{
                },function(response){
                    if(response.status==200){
                        layer.msg("下线服务成功");
-                       queryServiceList(1);
+                        queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                    }else{
                        layer.msg("下线服务失败");
                    }
@@ -168,7 +164,7 @@ module.exports = applicationManagementModule =>{
                 },function(response){
                     if(response.status==200){
                         layer.msg("重启服务成功");
-                        queryServiceList(1);
+                         queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     }else{
                         layer.msg("重启服务失败");
                     }
@@ -186,7 +182,7 @@ module.exports = applicationManagementModule =>{
                 },function(data){
                     if(data.status==200){
                         layer.msg("删除服务成功");
-                        queryServiceList(1);
+                         queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                     }else{
                         layer.msg("删除服务失败");
                     }
@@ -198,14 +194,20 @@ module.exports = applicationManagementModule =>{
             ApplicationServer.queryAvailableNodeList.save({
                 },function(data){
                     if(data.status==200){
-                        $scope.vm.nodeList.available=data.data;
+                        angular.forEach(data.data,(val,index)=>{
+                            $scope.vm.nodeList.available.push(val)
+                        })
                     }else{
                         layer.msg("查询可用节点失败");
                     }
                 },function(error){console.log(error)})
         }
-        function addOrEditService(serviceId){
+        //新增和修改
+        function addOrEditService(serviceId,status){
+            $scope.vm.nodeList.available.length=0;
+            queryAvailableNodeList() ;
             let server_html = require("../../views/release/release_manage/release_service.html") ;
+            $scope.vm.allowSubmit=1
             if(!serviceId){   // 新增
                 $scope.vm.dialogTitle="发布新服务";
                 $scope.vm.serviceId = "" ;
@@ -214,34 +216,32 @@ module.exports = applicationManagementModule =>{
                  $scope.vm.serviceId = serviceId ;
                  findServiceByServiceId(serviceId);
             }
-            queryAvailableNodeList() ;
+            
             $scope.$parent.$parent.MASTER.openNgDialog($scope,server_html,"700px",function(){
                 var parameter = {
-                    "applicationId": APPLICATION_ID,
-                    "nodeCode" : $scope.vm.nodeCode, //节点编号
-                    "serviceName": $scope.vm.serviceName, //服务名称
-                    "serviceType" : $scope.vm.serviceType, //服务类型
-                    "userName" : USER_LOGIN_NAME //获取用户名称
+                    "nodeCode" : $scope.vm.code, //节点id
+                    "name": $scope.vm.serviceName, //服务名称
                 } ;
                 if(!serviceId){
                     ApplicationServer.addService.save(parameter,function(data){
                         if(data.status==200){
                             layer.msg("已成功添加服务");
-                            queryServiceList(1);
+                            queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else{
                             layer.msg("新增服务失败");
                         }
                     },function(error){console.log(error);})
                 }else{
-                    parameter.serviceId = serviceId ;
+                    parameter.id = serviceId ;
+                    parameter.status = status ;
+                    // parameter.remark = "30002" ;
                     ApplicationServer.updateService.save(parameter,function(data){
                         if(data.status==200){
-                            layer.msg("服务修改成功");
-                            queryServiceList(1);
+                            layer.msg(data.info);
+                             queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else{
-                            layer.msg("服务修改失败");
+                            layer.msg(data.info);
                         }
-                    },function(error){console.log(error);})
                 }
             },"",function(){
                 initPublishServiceInput();
@@ -251,9 +251,63 @@ module.exports = applicationManagementModule =>{
         //重置弹框内容
         function initPublishServiceInput(){
             $scope.vm.channels=""; //渠道id列表
-            $scope.vm.nodeCode=""; //节点编号
+            $scope.vm.code=""; //节点编号
             $scope.vm.serviceName=""; //服务名称
             $scope.vm.serviceType=""; //服务类型
         }
+
+        //批量删除
+        function deleteAllService(){
+            if($scope.vm.serviceids.length==0){
+               layer.msg("请选择要删除的服务")
+               return
+            }
+            ApplicationServer.removetAllService.save({
+               "idList":$scope.vm.serviceids
+            },function(data){
+                  if(data.status==200){
+                     initBatchTest();  //清空所选
+                    layer.msg(data.data);
+                    queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                    
+
+                  }else{
+                    layer.msg("删除失败")
+                  }
+            })
+        }
+
+         //全选
+        function selectAll(){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false;
+                $scope.vm.serviceids = [];
+            }else{
+                $scope.vm.isSelectAll=true;
+                $scope.vm.serviceids=[];
+                angular.forEach($scope.vm.serviceList,function (val) {
+                    $scope.vm.serviceids.push(val.id);
+                })
+            }
+        }
+        //单选
+        function selectSingle(id){
+            if($scope.vm.serviceids.inArray(id)){
+                $scope.vm.serviceids.remove(id);
+                $scope.vm.isSelectAll = false;
+            }else{
+                $scope.vm.serviceids.push(id);
+
+            }
+            if($scope.vm.serviceList.length==$scope.vm.serviceids.length){
+                $scope.vm.isSelectAll = true;
+            }
+            }
+            //全选清空
+            function initBatchTest(){
+                $scope.vm.isSelectAll=false;
+                $scope.vm.serviceids=[];
+
+            }
     }
 ])};

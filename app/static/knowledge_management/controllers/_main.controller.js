@@ -231,6 +231,7 @@ module.exports = knowledgeManagementModule =>{
                 type:'GET',
                 params:{
                     "name":$(el).val(),
+                    "relation"  :"node"
                 },
                 paramName:'name',
                 dataType:'json',

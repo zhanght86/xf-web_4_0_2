@@ -37,7 +37,7 @@ class KnowledgeService {
                 //获取bot全路径
                 this.getBotFullPath = $resource(API_MS + "/classify/fullname/get/:id", {}, {});
                 //根据名字模糊搜索
-                this.seekBotByName = $resource(API_MODELING + "/category/searchbycategoryname", {}, {});
+                this.queryBotByName = $resource(API_MODELING + "/classify/path/get/:name/:relation", {}, {});
                 //获取bot子节点
                 this.queryChildNodes = $resource(API_MS + "/classify/children/get//:id", {}, {});
 //   faq知识新增

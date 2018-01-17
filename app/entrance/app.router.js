@@ -30,6 +30,12 @@ module.exports = (angular) => {
     //         }
     //     ]
     // };
+    /**
+     *   权限管理
+     *   @1   没有不在权限范围内的  permission : ""
+     *   @2   父级权限以上都为父级权限  ，自己不在权限内   permission ： {id:"",pid:"2"}
+     *   @2   父级,自身都在权限内   permission ： {id:"2-1",pid:"2"}
+     * */
     const map = [
     {
         "id":"1",
@@ -76,13 +82,13 @@ module.exports = (angular) => {
     },
     {
         "id":"2-1",
-        "name":"应用配置",
+        "name":"应用信息",
         "description":"applicationconfig",
         "pId":"2"
     },
     {
         "id":"2-2",
-        "name":"应用发布",
+        "name":"应用配置",
         "description":"applicationrelease",
         "pId":"2"
     },
@@ -311,6 +317,7 @@ module.exports = (angular) => {
         {
             name: "login",
             url: "/login",
+            permission : "",
             data: {
                 roles: []
             },
@@ -346,9 +353,7 @@ module.exports = (angular) => {
         {
             name: "HP",
             url: "/HP",
-            data: {
-                roles: []
-            },
+            permission : "",
             title : "首页容器加载依赖" ,
             template : require("../static/index/main.html"),
             resolve:
@@ -370,8 +375,9 @@ module.exports = (angular) => {
         {
             name: "HP.define",
             url: "/define",
-            data: {
-                roles: []
+            permission : {
+                id  : "1" ,
+                pid : "0"
             },
             parent : "HP",
             title : "首页" ,
@@ -386,15 +392,13 @@ module.exports = (angular) => {
                 }
             }
         },
-        // 应用 管理
+        // 选择应用
         {
             name: "HP.management",
             url: "/management",
-            data:   {
-                roles: []
-            },
+            permission : "",
             parent : "HP",
-            title : "应用管理" ,
+            title : "选择应用管理" ,
             views: {
                 "header": {
                     template: nav,
@@ -410,8 +414,9 @@ module.exports = (angular) => {
         {
             name: "HP.permission",
             url: "/permission",
-            data: {
-                roles: []
+            permission : {
+                id  : "9" ,
+                pid : "0"
             },
             parent : "HP",
             title : "默认首页" ,
@@ -429,8 +434,9 @@ module.exports = (angular) => {
         {
             name: "HP.permission.role",
             url: "/role",
-            data: {
-                roles: []
+            permission : {
+                id  : "9-2" ,
+                pid : "9"
             },
             parent : "HP.permission",
             title : "角色管理" ,
@@ -445,8 +451,9 @@ module.exports = (angular) => {
         {
             name: "HP.permission.user",
             url: "/user",
-            data: {
-                roles: []
+            permission : {
+                id  : "9-1" ,
+                pid : "9"
             },
             parent : "HP.permission",
             title : "用户管理" ,
@@ -457,10 +464,13 @@ module.exports = (angular) => {
                 }
             }
         },
+
+
         // 上传记录
         {
             name: "HP.uploadRecord",
             url: "/uploadRecord",
+            permission : "",
             data: {
                 roles: []
             },
@@ -484,8 +494,9 @@ module.exports = (angular) => {
         {
             name: "ST",
             url: "/ST",
-            data: {
-                roles: []
+            permission : {
+                id  : "6" ,
+                pid : "0"
             },
             title : "系统工具",
             templateProvider:
@@ -517,8 +528,9 @@ module.exports = (angular) => {
         {
             name: "ST.test",
             url: "/test",
-            data: {
-                roles: []
+            permission : {
+                id  : "6-1" ,
+                pid : "6"
             },
             parent : "ST",
             title : "测试工具" ,
@@ -536,9 +548,7 @@ module.exports = (angular) => {
         {
             name: "ST.test.question",
             url: "/question",
-            data: {
-                roles: []
-            },
+            permission : "",
             parent : "ST.test",
             title : "问法测试" ,
             views: {
@@ -555,9 +565,7 @@ module.exports = (angular) => {
         {
             name: "ST.test.session",
             url: "/session",
-            data: {
-                roles: []
-            },
+            permission : "",
             parent : "ST.test",
             title : "聊天测试" ,
             views: {
@@ -574,9 +582,7 @@ module.exports = (angular) => {
         {
             name: "ST.test.batch",
             url: "/batch",
-            data: {
-                roles: []
-            },
+            permission : "",
             parent : "ST.test",
             title : "批量测试" ,
             views: {
@@ -596,8 +602,9 @@ module.exports = (angular) => {
         {
             name: "ST.participle",
             url: "/participle",
-            data: {
-                roles: []
+            permission : {
+                id  : "6-2" ,
+                pid : "6"
             },
             parent : "ST",
             title : "分词工具" ,
@@ -633,12 +640,13 @@ module.exports = (angular) => {
         // },
 
 
-        //----------智能学习-------------
+        //----------知识学习-------------
         {
             name: "ST.study",
             url: "/study",
-            data: {
-                roles: []
+            permission : {
+                id  : "6-3" ,
+                pid : "6"
             },
             parent : "ST",
             title : "知识学习" ,
@@ -656,9 +664,7 @@ module.exports = (angular) => {
         {
             name: "ST.study.correction",
             url: "/correction",
-            data: {
-                roles: []
-            },
+            permission : "",
             parent : "ST.study",
             title : "知识学习" ,
             views: {
@@ -675,9 +681,7 @@ module.exports = (angular) => {
         {
             name: "ST.study.reinforcement",
             url: "/reinforcement",
-            data: {
-                roles: []
-            },
+            permission : "",
             parent : "ST.study",
             title : "知识学习" ,
             views: {
@@ -694,9 +698,7 @@ module.exports = (angular) => {
         {
             name: "ST.study.newKnow",
             url: "/newKnow",
-            data: {
-                roles: []
-            },
+            permission :"",
             parent : "ST.study",
             title : "知识学习" ,
             views: {
@@ -713,13 +715,14 @@ module.exports = (angular) => {
 
 
 //--------------------------------------------------
-//          ##应用管理MP##
+//          ##应用管理AM##
 //--------------------------------------------------
         {
             name: "AM",
             url: "/AM",
-            data: {
-                roles: []
+            permission : {
+                id  : "2" ,
+                pid : "0"
             },
             title : "应用管理",
             templateProvider:
@@ -748,12 +751,12 @@ module.exports = (angular) => {
             }
         },
         // --------------------应用信息-------------------- //
-        // 应用信息
         {
             name: "AM.info",
             url: "/info",
-            data: {
-                roles: []
+            permission : {
+                id  : "2-1" ,
+                pid : "2"
             },
             parent : "AM",
             title : "应用信息" ,
@@ -768,12 +771,14 @@ module.exports = (angular) => {
                 }
             }
         },
+        // --------------------应用配置-------------------- //
         // 备份还原
         {
             name: "AM.restore",
             url: "/restore",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "备份还原" ,
@@ -788,13 +793,13 @@ module.exports = (angular) => {
                 }
             }
         },
-        // --------------------应用配置-------------------- //
         // 机器人设置
         {
             name: "AM.robot",
             url: "/robot",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "机器人设置" ,
@@ -813,8 +818,9 @@ module.exports = (angular) => {
         {
             name: "AM.parameter",
             url: "/parameter",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "参数设置" ,
@@ -833,8 +839,9 @@ module.exports = (angular) => {
         {
             name: "AM.manual",
             url: "/manual",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "转人工" ,
@@ -853,8 +860,9 @@ module.exports = (angular) => {
         {
             name: "AM.authorization",
             url: "/authorization",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "授权管理" ,
@@ -873,8 +881,9 @@ module.exports = (angular) => {
         {
             name: "AM.hot",
             url: "/hot",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "转人工" ,
@@ -893,8 +902,9 @@ module.exports = (angular) => {
         {
             name: "AM.interaction",
             url: "/scene",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-2"
             },
             parent : "AM",
             title : "交互管理" ,
@@ -914,11 +924,12 @@ module.exports = (angular) => {
         {
             name: "AM.release",
             url: "/release",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-3"
             },
             parent : "AM",
-            title : "渠道管理" ,
+            title : "发布管理",
             views: {
                 "header": {
                     template: nav,
@@ -934,8 +945,9 @@ module.exports = (angular) => {
         {
             name: "AM.node",
             url: "/node",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "2-3"
             },
             parent : "AM",
             title : "节点管理" ,
@@ -957,8 +969,9 @@ module.exports = (angular) => {
         {
             name: "BM",
             url: "/BM",
-            data: {
-                roles: []
+            permission : {
+                id  : "3" ,
+                pid : "0"
             },
             title : "业务建模容器加载依赖" ,
             template : require("../static/business_modeling/main.html"),
@@ -981,8 +994,9 @@ module.exports = (angular) => {
         {
             name: "BM.bot",
             url: "/bot",
-            data: {
-                roles: []
+            permission : {
+                id  : "3-1" ,
+                pid : "3"
             },
             parent : "BM",
             title : "bot" ,
@@ -1000,8 +1014,9 @@ module.exports = (angular) => {
         {
             name: "BM.botApply",
             url: "/botApply",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-1"
             },
             parent : "BM",
             title : "类目库套用" ,
@@ -1020,8 +1035,9 @@ module.exports = (angular) => {
         {
             name: "BM.frame",
             url: "/frame",
-            data: {
-                roles: []
+            permission : {
+                id  : "3-2" ,
+                pid : "3"
             },
             parent : "BM",
             title : "框架库" ,
@@ -1040,8 +1056,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept",
             url: "/concept",
-            data: {
-                roles: []
+            permission : {
+                id  : "3-3" ,
+                pid : "3"
             },
             parent : "BM",
             title : "概念库" ,
@@ -1060,8 +1077,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.synonym",
             url: "/synonym",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "同义概念" ,
@@ -1076,8 +1094,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.aggregate",
             url: "/aggregate",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "集合概念" ,
@@ -1092,8 +1111,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.business",
             url: "/business",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "业务概念" ,
@@ -1108,8 +1128,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.sensitive",
             url: "/sensitive",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "敏感词概念" ,
@@ -1124,8 +1145,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.disable",
             url: "/disable",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "停用词概念" ,
@@ -1140,8 +1162,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.enforcement",
             url: "/enforcement",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "强制分词概念" ,
@@ -1156,8 +1179,9 @@ module.exports = (angular) => {
         {
             name: "BM.concept.bot",
             url: "/bot",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "3-3"
             },
             parent : "BM.concept",
             title : "bot概念" ,
@@ -1175,8 +1199,9 @@ module.exports = (angular) => {
         {
             name: "KM",
             url: "/KM",
-            data: {
-                roles: []
+            permission : {
+                id  : "4" ,
+                pid : "0"
             },
             title : "知识管理容器加载依赖" ,
             template : require("../static/knowledge_management/main.html"),
@@ -1200,8 +1225,9 @@ module.exports = (angular) => {
         {
             name: "KM.overview",
             url: "/overview",
-            data: {
-                roles: []
+            permission : {
+                id  : "4-1" ,
+                pid : "4"
             },
             parent : "KM",
             title : "知识总览" ,
@@ -1219,8 +1245,9 @@ module.exports = (angular) => {
         {
             name: "KM.preview",
             url: "/preview/:id/:type",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "知识查看" ,
@@ -1238,8 +1265,9 @@ module.exports = (angular) => {
         {
             name: "KM.scan",
             url: "/scan",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "知识查看" ,
@@ -1260,8 +1288,9 @@ module.exports = (angular) => {
         {
             name: "KM.faq",
             url: "/faq/:knowledgeId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "faq 新增" ,
@@ -1280,8 +1309,9 @@ module.exports = (angular) => {
         {
             name: "KM.faq.edit",
             url: "/faq/edit/:knowledgeId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "faq 编辑" ,
@@ -1301,8 +1331,9 @@ module.exports = (angular) => {
         {
             name: "KM.list",
             url: "/list",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "列表 新增" ,
@@ -1321,8 +1352,9 @@ module.exports = (angular) => {
         {
             name: "KM.list.edit",
             url: "/list/edit/:knowledgeId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "列表 编辑" ,
@@ -1342,8 +1374,9 @@ module.exports = (angular) => {
         {
             name: "KM.factor",
             url: "/factor",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "要素 新增" ,
@@ -1362,8 +1395,9 @@ module.exports = (angular) => {
         {
             name: "KM.factor.edit",
             url: "/factor/edit/:knowledgeId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "要素 编辑" ,
@@ -1383,8 +1417,9 @@ module.exports = (angular) => {
         {
             name: "KM.concept",
             url: "/concept",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "概念 新增" ,
@@ -1403,8 +1438,9 @@ module.exports = (angular) => {
         {
             name: "KM.concept.edit",
             url: "/concept/edit/:knowledgeId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "4-1"
             },
             parent : "KM",
             title : "概念 编辑" ,
@@ -1424,8 +1460,9 @@ module.exports = (angular) => {
         {
             name: "KM.dialogue",
             url: "/dialogue",
-            data: {
-                roles: []
+            permission : {
+                id  : "4-3" ,
+                pid : "4"
             },
             parent : "KM",
             title : "对话 新增" ,
@@ -1444,8 +1481,9 @@ module.exports = (angular) => {
         {
             name: "KM.dialogue.edit",
             url: "/dialogue/edit/:knowledgeId",
-            data: {
-                roles: []
+            permission : {
+                id  : "4-3" ,
+                pid : "4"
             },
             parent : "KM",
             title : "对话 编辑" ,
@@ -1464,8 +1502,9 @@ module.exports = (angular) => {
         {
             name: "KM.batch",
             url: "/batch",
-            data: {
-                roles: []
+            permission : {
+                id  : "4-4" ,
+                pid : "4"
             },
             parent : "KM",
             title : "批量 新增" ,
@@ -1501,6 +1540,7 @@ module.exports = (angular) => {
     //         }
     //     },
     // 历史查看
+        /*
         {
             name: "KM.history",
             url: "/history",
@@ -1520,22 +1560,19 @@ module.exports = (angular) => {
                 }
             }
         },
-
+        */
 //--------------------------------------------------
-//          ##测试功能##
-//--------------------------------------------------
-
-//--------------------------------------------------
-//          ##应用分析##
+//          ##统计分析##
 //--------------------------------------------------
 
      {
             name: "ANM",
             url: "/ANM",
-            data: {
-                roles: []
+            permission : {
+                id  : "7" ,
+                pid : "0"
             },
-            title : "访问统计" ,
+            title : "统计分析" ,
             templateProvider:
                 ["$q", function ($q) {
                     let deferred = $q.defer();
@@ -1566,8 +1603,9 @@ module.exports = (angular) => {
         {
             name: "ANM.accessStatistics",
             url: "/accessStatistics",
-            data: {
-                roles: []
+            permission : {
+                id  : "7-1" ,
+                pid : "7"
             },
             parent : "ANM",
             title : "访问统计" ,
@@ -1583,15 +1621,16 @@ module.exports = (angular) => {
             }
         },
 
-         // 知识点排名统计
+         // 未匹配问题统计
         {
             name: "ANM.knowledgeRanking",
             url: "/knowledgeRanking",
-            data: {
-                roles: []
+            permission : {
+                id  : "7-2" ,
+                pid : "7"
             },
             parent : "ANM",
-            title : "知识点排名统计" ,
+            title : "未匹配问题统计" ,
             views: {
                 "header": {
                     template: nav,
@@ -1607,8 +1646,9 @@ module.exports = (angular) => {
         {
             name: "ANM.sessionDetails",
             url: "/sessionDetails",
-            data: {
-                roles: []
+            permission : {
+                id  : "7-3" ,
+                pid : "7"
             },
             parent : "ANM",
             title : "会话明细统计" ,
@@ -1627,8 +1667,9 @@ module.exports = (angular) => {
         {
             name: "ANM.satisfactionDegree",
             url: "/satisfactionDegree",
-            data: {
-                roles: []
+            permission : {
+                id  : "7-4" ,
+                pid : "7"
             },
             parent : "ANM",
             title : "会话满意度统计" ,
@@ -1648,8 +1689,9 @@ module.exports = (angular) => {
         {
             name: "ANM.resolutionStatistics",
             url: "/resolutionStatistics",
-            data: {
-                roles: []
+            permission : {
+                id  : "7-5" ,
+                pid : "7"
             },
             parent : "ANM",
             title : "问答解决率统计" ,
@@ -1664,49 +1706,7 @@ module.exports = (angular) => {
                 }
             }
         },
-
-         // 智能学习
-        {
-            name: "ANM.reinforcementLearn",
-            url: "/reinforcementLearn",
-            data: {
-                roles: []
-            },
-            parent : "ANM",
-            title : "智能学习" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/application_analysis/views/reinforcement_learn/reinforcement_learn.html"),
-                    controller: "reinforcementLearnController"
-                }
-            }
-        },
-
-          // 为匹配问题聚类
-        {
-            name: "ANM.newKnowledgeDiscoveryLearn",
-            url: "/newKnowledgeDiscoveryLearn",
-            data: {
-                roles: []
-            },
-            parent : "ANM",
-            title : "为匹配问题聚类" ,
-            views: {
-                "header": {
-                    template: nav,
-                    controller: "NavController"
-                },
-                "content": {
-                    template: require("../static/application_analysis/views/new_know_discovery_learn/new_know_discovery_learn.html"),
-                    controller: "newKnowledgeDiscoveryLearnController"
-                }
-            }
-        },
-
+/*
 
          // 会话日志
         {
@@ -1728,17 +1728,16 @@ module.exports = (angular) => {
                 }
             }
         },
-
-        
-
+ */
 //--------------------------------------------------
 //          ##素材管理##
 //--------------------------------------------------
         {
             name: "MM",
             url: "/MM",
-            data: {
-                roles: []
+            permission : {
+                id  : "5" ,
+                pid : "0"
             },
             title : "素材管理" ,
             templateProvider:
@@ -1770,8 +1769,9 @@ module.exports = (angular) => {
         {
             name: "MM.chat",
             url: "/chat",
-            data: {
-                roles: []
+            permission : {
+                id  : "5-5" ,
+                pid : "5"
             },
             parent : "MM",
             title : "聊天知识库" ,
@@ -1790,8 +1790,9 @@ module.exports = (angular) => {
         {
             name: "MM.chatAdd",
             url: "/chatAdd",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "5-5"
             },
             parent : "MM",
             title : "聊天知识库" ,
@@ -1810,8 +1811,9 @@ module.exports = (angular) => {
         {
             name: "MM.chatEdit",
             url: "/chatEdit/:knowTextId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "5-5"
             },
             parent : "MM",
             title : "聊天知识库" ,
@@ -1830,8 +1832,9 @@ module.exports = (angular) => {
         {
             name: "MM.pic",
             url: "/pic",
-            data: {
-                roles: []
+            permission : {
+                id  : "5-1" ,
+                pid : "5"
             },
             parent : "MM",
             title : "图片库" ,
@@ -1850,8 +1853,9 @@ module.exports = (angular) => {
         {
             name: "MM.voice",
             url: "/voice",
-            data: {
-                roles: []
+            permission : {
+                id  : "5-4" ,
+                pid : "5"
             },
             parent : "MM",
             title : "语音库" ,
@@ -1870,8 +1874,9 @@ module.exports = (angular) => {
         {
             name: "MM.doc",
             url: "/doc",
-            data: {
-                roles: []
+            permission : {
+                id  : "5-3" ,
+                pid : "5"
             },
             parent : "MM",
             title : "文档库" ,
@@ -1890,8 +1895,9 @@ module.exports = (angular) => {
         {
             name: "MM.teletext",
             url: "/teletext",
-            data: {
-                roles: []
+            permission : {
+                id  : "5-2" ,
+                pid : "5"
             },
             parent : "MM",
             title : "图文消息" ,
@@ -1910,8 +1916,9 @@ module.exports = (angular) => {
         {
             name: "MM.addTw",
             url: "/addTw/:imgTextId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "5-2"
             },
             parent : "MM",
             title : "添加图文消息" ,
@@ -1930,8 +1937,9 @@ module.exports = (angular) => {
         {
             name: "MM.detail",
             url: "/detail/:imgTextId",
-            data: {
-                roles: []
+            permission : {
+                id  : "" ,
+                pid : "5-2"
             },
             parent : "MM",
             title : "图文消息详情" ,
@@ -1956,8 +1964,9 @@ module.exports = (angular) => {
         {
             name: "SisM",
             url: "/SisM",
-            data: {
-                roles: []
+            permission : {
+                id  : "8" ,
+                pid : "0"
             },
             title : "系统监控" ,
             templateProvider:
@@ -1990,8 +1999,9 @@ module.exports = (angular) => {
         {
             name: "SisM.operationLog",
             url: "/operationLog",
-            data: {
-                roles: []
+            permission : {
+                id  : "8-1" ,
+                pid : "8"
             },
             parent : "SisM",
             title : "操作日志" ,
@@ -2010,8 +2020,9 @@ module.exports = (angular) => {
         {
             name: "SisM.resource",
             url: "/resource",
-            data: {
-                roles: []
+            permission : {
+                id  : "8-2" ,
+                pid : "8"
             },
             parent : "SisM",
             title : "资源监控" ,
@@ -2030,8 +2041,9 @@ module.exports = (angular) => {
         {
             name: "SisM.service",
             url: "/service",
-            data: {
-                roles: []
+            permission : {
+                id  : "8-3" ,
+                pid : "8"
             },
             parent : "SisM",
             title : "服务监控" ,
@@ -2052,9 +2064,7 @@ module.exports = (angular) => {
         {
             name: "HC",
             url: "/HC",
-            data: {
-                roles: []
-            },
+            permission : "",
             title : "帮助中心" ,
             templateProvider:
                 ["$q", function ($q) {
@@ -2086,9 +2096,7 @@ module.exports = (angular) => {
         {
             name: "HC.problem",
             url: "/problem",
-            data: {
-                roles: []
-            },
+            permission : "",
             parent : "HC",
             title : "常见问题" ,
             views: {
@@ -2102,6 +2110,4 @@ module.exports = (angular) => {
                 }
             }
         },
-
-
     ];};
