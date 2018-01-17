@@ -16,7 +16,7 @@ module.exports = homePageModule =>{
                 location : true
             }  ,
             roleName : "" ,
-            roleDescription : "" ,
+            description : "" ,
             addRole : addRole ,
             deleteRole : deleteRole
         }  ;
@@ -55,7 +55,7 @@ module.exports = homePageModule =>{
                 }) ;
                 if(roleId){
                     HomePageServer.addRole.save({
-                        "description": $scope.vm.roleDescription,
+                        "description": $scope.vm.description,
                         "groupList": resultNodes,
                         "name": $scope.vm.roleName
                     },function (response) {
@@ -63,7 +63,7 @@ module.exports = homePageModule =>{
                     });
                 }else{
                     HomePageServer.updateRole.save({
-                        "description": $scope.vm.roleDescription,
+                        "description": $scope.vm.description,
                         "groupList": resultNodes,
                         "name": $scope.vm.roleName
                     },function (response) {
