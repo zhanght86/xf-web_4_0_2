@@ -4,13 +4,8 @@
     </h4>
     <div class="p20 my_appbox cl mb-20">
         <div class="L">
-            <div class="mb-10">用户名称： {{vm.userName}}</div>
-            <div>
-                <!--<span>所属部门：云创中心</span>-->
-                <span>用户权限：
-                    <span ng-repeat="role in vm.userRole" >{{role}} </span>
-                </span>
-            </div>
+            <p class="mb-10">用户名称： {{vm.userName}}</p>
+            <p>用户权限：{{vm.userRole}}</p>
         </div>
         <div class="R">
             <div ng-click="vm.addApplicationWindow()" style="cursor: pointer">

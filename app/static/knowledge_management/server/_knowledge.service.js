@@ -35,7 +35,7 @@ class KnowledgeService {
                 this.queryFrame = $resource(API_MS + "/frame/get/param", {}, {});
 //   bot
                 //获取bot全路径
-                this.getBotFullPath = $resource(API_MS + "/classify/fullname/get/:id", {}, {});
+                this.getBotFullPath = $resource(API_MS + "/classify/path/get/:name/:relation", {}, {});
                 //根据名字模糊搜索
                 this.seekBotByName = $resource(API_MODELING + "/category/searchbycategoryname", {}, {});
                 //获取bot子节点

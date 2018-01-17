@@ -42,6 +42,8 @@ module.exports = homePageModule =>{
               $scope.vm.description = description ;
             }else{
                 $scope.vm.roleId = "" ;
+                $scope.vm.roleName = "" ;
+                $scope.vm.description = "" ;
             }
             $scope.$parent.$parent.MASTER.openNgDialog($scope,roleHtml,"900px",function(){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
@@ -53,7 +55,7 @@ module.exports = homePageModule =>{
                         resultNodes.push(item.id)
                     }
                 }) ;
-                if(roleId){
+                if(!roleId){
                     HomePageServer.addRole.save({
                         "description": $scope.vm.description,
                         "groupList": resultNodes,
@@ -63,6 +65,7 @@ module.exports = homePageModule =>{
                     });
                 }else{
                     HomePageServer.updateRole.save({
+                        "id" :  $scope.vm.roleId ,
                         "description": $scope.vm.description,
                         "groupList": resultNodes,
                         "name": $scope.vm.roleName
