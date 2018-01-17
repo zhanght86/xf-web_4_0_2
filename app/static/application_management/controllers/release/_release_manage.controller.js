@@ -242,8 +242,8 @@ module.exports = applicationManagementModule =>{
                         }else{
                             layer.msg(data.info);
                         }
-                }
-            },"",function(){
+                })
+            }},"",function(){
                 initPublishServiceInput();
             })
         }

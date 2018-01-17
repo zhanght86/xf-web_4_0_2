@@ -105,7 +105,7 @@ module.exports = knowledgeManagementModule =>{
                     }, function(){
                         $state.go("KM.overview")
                     },function(){
-                        $state.go("KM.faq")
+                        $state.reload("KM.faq")
                     });
                 }else{
                     layer.msg(response.info) ;

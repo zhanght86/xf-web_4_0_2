@@ -44,6 +44,11 @@ class ApplicationServer {
         this.storeClassicalAvatar = $resource(API_APPLICATION+"/config/classic/avatar/update", {}, {});
         //保存自定义机器人头像
         // this.uploadCustomizedAvatar = $resource(API_APPLICATION+"/config/upload/avatar", {}, {});
+//   交互管理
+        //查看多伦回话设置
+        this.getInteractiveParameter = $resource(API_APPLICATION+"/config/interactive/get/:id", {}, {});
+        //修改多伦回话设置
+        this.updateInteractiveParameter = $resource(API_APPLICATION+"/config/interactive/update", {}, {});
 //   授权
         //查看授权参数
         this.getLicenseInfo = $resource(API_APPLICATION+"/config/license/info/:applicationId", {}, {});
@@ -57,9 +62,6 @@ class ApplicationServer {
         this.manualGetData = $resource(API_APPLICATION+"/config/customservice/get/:applicationId", {}, {});
         //修改
         this.manualSaveData = $resource(API_APPLICATION+"/config/customservice/update", {}, {});
-
-
-       
                         /******************************
                                         *应用发布*
                                    ********************************/

@@ -42,6 +42,7 @@ module.exports = knowledgeManagementModule =>{
             selectedBot : [] ,
             paramsReset : paramsReset //搜索重置参数
         };
+        console.log($location.search())
         function jumpToNewKonwledge(id){
             var addUrl;
             switch(id){
@@ -152,7 +153,7 @@ module.exports = knowledgeManagementModule =>{
         function paramsReset(){
             //重置 参数 问题
             // $scope.vm.classifyList = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-            $scope.vm.knowledgeTitle = "",         //知识标题默认值null
+            $scope.vm.knowledgeTitle = "";         //知识标题默认值null
             $scope.vm.seekAdvanceParameter =  {
                 "knowledgeType" : "" , //搜索知识类型
                 "searchExtension" : "", //搜索的擴展問

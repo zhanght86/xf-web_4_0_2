@@ -70,7 +70,7 @@ module.exports = knowledgeManagementModule =>{
                     }, function(){
                         $state.go("KM.overview")
                     },function(){
-                        $state.go("KM.list")
+                        $state.reload("KM.list")
                     });
                 }else{
                     $scope.vm.saveLimitTimer = true;
