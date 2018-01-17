@@ -91,7 +91,7 @@ module.exports = materialModule =>{
                 uploader.on('uploadSuccess', function (file,response) {
                     if(response.status == 500){
                         scope.vm.isUploadStart = false ;
-                        //layer.msg("模板错误")
+                        layer.msg(response.info)
                     }
                     if(response.status == 200){
                         ngDialog.closeAll();

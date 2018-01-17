@@ -44,7 +44,8 @@ module.exports = systemMonitoringModule =>{
             //window.location.reload();
             getServiceDate();
         }
-        var timer = $interval($scope.vm.refresh,3000);
+        var timer = $interval($scope.vm.refresh,300000);
+
 
 
     }
