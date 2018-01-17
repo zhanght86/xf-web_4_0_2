@@ -8,43 +8,40 @@
                 <!--<div class="cl mb-20">-->
                     <!--<button  class=" btn1 btn1_blue " ng-click="vm.addNode()" >添加节点</button>-->
                 <!--</div>-->
-                <div class="cl mb-20">
+                <!-- <div class="cl mb-20">
                     <button  class="btn1 btn_delete R" ng-click="vm.remove()" >删除</button>
-                </div>
+                </div> -->
                 <div>
                     <table class="stop_word_tab">
                         <thead>
                         <tr>
-                            <th class="bold" width="5%"><input  type="checkbox" /></th>
-                            <th class="bold" width="10%">节点ID</th>
+                           <!--  <th class="bold" width="5%"><input  type="checkbox" /></th> -->
+                            <th class="bold" width="20%">节点ID</th>
                             <th class="bold" width="30%">访问地址</th>
-                            <th class="bold" width="12%">使用状态</th>
-                            <th class="bold" width="12%">运行状态</th>
-                            <th class="bold" width="12%">节点说明</th>
-                            <th class="bold" width="20%">操作</th>
+                            <th class="bold" width="15%">使用状态</th>
+                            <th class="bold" width="15%">运行状态</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="item in vm.nodeData">
-                            <td><input  type="checkbox" /></td>
-
-                            <td>{{item.nodeId}}</td>
-                            <td>{{item.nodeAccessIp}}</td>
+                           <!--  <td><input  type="checkbox" /></td> -->
+                            <td>{{item.id}}</td>
+                            <td>{{item.url}}</td>
                             <!--<td ng-if="item.nodeType==201">集群节点</td>-->
-                            <td ng-if="item.statusId==60001">未使用</td>
-                            <td ng-if="item.statusId==60002">已使用</td>
-                            <td ng-if="item.statusId==60003">已禁用</td>
-                            <td ng-if="item.nodeRunningId==70001" ng-bind="item.nodeRunningId==70001?'运行正常':'运行异常'"></td>
-                            <!--<td ng-if="item.nodeRunningId==70002"></td>-->
-                            <td ng-if="item.nodeType==200" ng-bind="item.nodeType==200?'单个节点':'集群节点'"></td>
-                            <td>
-                              <!--  <a ng-if="item.statusId==60001"
-                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode,'禁用')" class="mr-10 c-orange">禁用</a>-->
-                                <!--<a ng-if="item.statusId==60003"-->
-                                   <!--ng-click="vm.disabledAndEnabledNode(item.nodeCode,'启用')" class="mr-10 c-orange">启用</a>-->
+                            <td ng-if="item.inUse==0">禁用</td>
+                            <td ng-if="item.inUse==1">启用</td>
+                            <td ng-if="item.inUse==2">使用中</td>
+                            <td ng-if="item.inRun==0">运行正常</td>
+                             <td ng-if="item.inRun==1">运行异常</td>
+                          <!--   <td ng-if="item.nodeType==200" ng-bind="item.nodeType==200?'单个节点':'集群节点'"></td>
+                           <td>
+                               <a ng-if="item.statusId==60001"
+                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode,'禁用')" class="mr-10 c-orange">禁用</a>
+                               <a ng-if="item.statusId==60003"
+                                   ng-click="vm.disabledAndEnabledNode(item.nodeCode,'启用')" class="mr-10 c-orange">启用</a>
                                 <a ng-click="vm.editNode(item.nodeCode)" class="c-primary mr-10" >编辑</a>
                                 <a ng-if="item.statusId!=60002" ng-click="vm.deleteNode(item.nodeCode)" class="c-error">删除</a>
-                            </td>
+                            </td> -->
                         </tr>
                         </tbody>
                     </table>

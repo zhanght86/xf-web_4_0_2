@@ -14,10 +14,10 @@ module.exports = applicationManagementModule =>{
                     return ;
                 }else{
                     ApplicationServer.verifyServiceName.save({
-                        serviceName: scope.vm.serviceName,
-                        serviceId : scope.vm.serviceId
+                        id:scope.vm.serviceId,
+                        name: scope.vm.serviceName,
                     },function(data){
-                        if(data.data){
+                        if(data.status==200){
                             c.$setValidity('unique', true);
                             scope.vm.allowSubmit=1;
                         }else{
