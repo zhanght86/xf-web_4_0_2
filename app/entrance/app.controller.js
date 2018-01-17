@@ -15,10 +15,12 @@ module.exports = ngModule =>
              * @For   下游调用
              * @Info  self === $scope
              * */
+            alert(getCookie("permissionTree"))
+            console.log(getCookie("permissionTree"))
             //$rootScope.
             $scope.MASTER = {
                 //const for Downstream
-                permissionTree : getCookie("permissionTree").split(","),
+                permissionTree : getCookie("permissionTree")!=null?getCookie("permissionTree").split(","):"",
                 robotName : getCookie("robotName") , //机器人名字
                 avatarUrl : getCookie("avatarUrl") , // 头像 url
                 avatarId :  getCookie("avatarId") ,  // 头像id
