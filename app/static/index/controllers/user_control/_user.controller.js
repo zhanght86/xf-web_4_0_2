@@ -229,7 +229,8 @@ module.exports = homePageModule =>{
             },function(error){console.log(error)}) ;
         })()
         //获取角色列表
-        (function queryRoleList(index){
+        queryRoleList();
+        function queryRoleList(){
             HomePageServer.queryRoleList.save({
                 "index":0,
                 "pageSize":999
@@ -238,7 +239,5 @@ module.exports = homePageModule =>{
                     $scope.vm.roleList = response.data.data.filter(item => (item.name != '超级管理员'));
                 }
             })
-        })()
-
-}])
-};
+        }
+}])};
