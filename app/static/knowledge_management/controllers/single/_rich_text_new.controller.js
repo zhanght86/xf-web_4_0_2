@@ -321,7 +321,7 @@ module.exports = knowledgeManagementModule => {
                 let params = angular.copy($scope.parameter);
                 params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
                 params.extensionQuestionList = params.extensionQuestionList.map((item)=>(item.title)) ;
-                params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
+                params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!=""&&item!=null)) ;
                 angular.forEach(params.contents,function(item,index){
                     if(item.name){
                         delete params.contents[index].name ;

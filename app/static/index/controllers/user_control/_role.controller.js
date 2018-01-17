@@ -16,7 +16,7 @@ module.exports = homePageModule =>{
                 location : true
             }  ,
             roleName : "" ,
-            roleDescription : "" ,
+            description : "" ,
             addRole : addRole ,
             deleteRole : deleteRole
         }  ;
@@ -35,9 +35,11 @@ module.exports = homePageModule =>{
             })
         }
         // addRole();
-        function addRole(roleId){
+        function addRole(roleId,name,description){
             if(roleId){
               $scope.vm.roleId = roleId ;
+              $scope.vm.roleName = name ;
+              $scope.vm.description = description ;
             }else{
                 $scope.vm.roleId = "" ;
             }
@@ -51,13 +53,24 @@ module.exports = homePageModule =>{
                         resultNodes.push(item.id)
                     }
                 }) ;
-                HomePageServer.addRole.save({
-                    "description": $scope.vm.roleDescription,
-                    "groupList": resultNodes,
-                    "name": $scope.vm.roleName
-                },function (response) {
-                    queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
-                });
+                if(roleId){
+                    HomePageServer.addRole.save({
+                        "description": $scope.vm.description,
+                        "groupList": resultNodes,
+                        "name": $scope.vm.roleName
+                    },function (response) {
+                        queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                    });
+                }else{
+                    HomePageServer.updateRole.save({
+                        "description": $scope.vm.description,
+                        "groupList": resultNodes,
+                        "name": $scope.vm.roleName
+                    },function (response) {
+                        queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+                    });
+                }
+
                 console.log(nodes);
                 // var permissionList = nodes.filter(nodes)
             })

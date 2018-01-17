@@ -15,8 +15,7 @@ module.exports = ngModule =>
              * @For   下游调用
              * @Info  self === $scope
              * */
-            // alert(getCookie("permissionTree"))
-            console.log(getCookie("permissionTree"))
+            console.log(getCookie("permissionTree")) ;
             //$rootScope.
             $scope.MASTER = {
                 //const for Downstream

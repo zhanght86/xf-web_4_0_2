@@ -209,6 +209,9 @@ module.exports = knowledgeManagementModule =>{
                 $(".aside-navs").on("click","span",function(){
                     //类型节点
                     var pre = $(this).prev() ;
+                    if(pre.hasClass("bot-edge")){
+                        return layer.msg("只能选择node类型添加",{time:1000})
+                    }
                     angular.element(".icon-jj").css("backgroundPosition","0% 0%");
                     var id = pre.attr("data-option");
                     selectCall(id) ;   //添加bot分類

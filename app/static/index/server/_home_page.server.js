@@ -42,6 +42,8 @@ class HomePageServer {
     this.queryRoleInfo = $resource(API_USER+"/role/get/:roleId",{},{}) ;
     // 查询所有角色
     this.queryRoleList = $resource(API_USER+"/role/get",{},{}) ;
+    // 更新角色
+    this.updateRole = $resource(API_USER+"/role/update",{},{}) ;
     // 添加角色
     this.addRole = $resource(API_USER+"/role/add",{},{}) ;
     // 删除角色

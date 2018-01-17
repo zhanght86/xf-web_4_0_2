@@ -114,7 +114,7 @@ module.exports = knowledgeManagementModule =>{
             let result = false ;
             let params = angular.copy($scope.parameter);
             // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
             angular.forEach(params.contents,function(item,index){
                 if(item.type==1010 && !item.content){
                     layer.msg("请填写肯定回答");

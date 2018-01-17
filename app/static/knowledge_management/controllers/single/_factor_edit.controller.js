@@ -203,7 +203,7 @@ module.exports = knowledgeManagementModule =>{
         function checkSave(){
             let result = false ;
             let params = angular.copy($scope.parameter) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
             if(!params.title){
                 layer.msg("知识标题不能为空，请填写");
                 return false;
