@@ -42,7 +42,7 @@ module.exports = knowledgeManagementModule =>{
                 return layer.msg("请先选择添加类目")
             }
             let html = "<div frame='102'></div>";
-            scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,html,"650px",function(){
 
             },"",function(){
 

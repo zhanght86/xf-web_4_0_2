@@ -158,7 +158,7 @@ module.exports = knowledgeManagementModule =>{
                                        if((response.data[i].leaf == 0)){
                                            typeClass = "bot-leaf"　;
                                        }else if((response.data[i].leaf != 0) && (response.data[i].relation == "edge" )){
-                                           typeClass = "bot-edge"　;
+                                           typeClass = "bot-edge disable_select"　;
                                        }else if((response.data[i].leaf != 0) && (response.data[i].relation == "node" )){
                                            typeClass = "icon-jj"
                                        }
