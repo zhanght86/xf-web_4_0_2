@@ -80,6 +80,7 @@ module.exports = applicationManagementModule =>{
                         id:data.data.id,
                         url:data.data.url,
                      })
+                     console.log( $scope.vm.nodeList.available)
                 }else{  
                     layer.msg("查询服务失败");
                 }
@@ -216,6 +217,7 @@ module.exports = applicationManagementModule =>{
                  $scope.vm.serviceId = serviceId ;
                  findServiceByServiceId(serviceId);
             }
+            console.log( $scope.vm.nodeList.available)
             
             $scope.$parent.$parent.MASTER.openNgDialog($scope,server_html,"700px",function(){
                 var parameter = {
@@ -233,7 +235,7 @@ module.exports = applicationManagementModule =>{
                     },function(error){console.log(error);})
                 }else{
                     parameter.id = serviceId ;
-                    parameter.status = status ;
+                    parameter.status = 30002 ;
                     // parameter.remark = "30002" ;
                     ApplicationServer.updateService.save(parameter,function(data){
                         if(data.status==200){
@@ -242,8 +244,9 @@ module.exports = applicationManagementModule =>{
                         }else{
                             layer.msg(data.info);
                         }
-                })
-            }},"",function(){
+                    },function(error){console.log(error);})
+                }
+            },"",function(){
                 initPublishServiceInput();
             })
         }
@@ -265,11 +268,11 @@ module.exports = applicationManagementModule =>{
             ApplicationServer.removetAllService.save({
                "idList":$scope.vm.serviceids
             },function(data){
+              console.log(data)
                   if(data.status==200){
-                     initBatchTest();  //清空所选
-                    layer.msg(data.data);
                     queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-                    
+                    initBatchTest();  //清空所选
+                    layer.msg(data.data);
 
                   }else{
                     layer.msg("删除失败")
@@ -289,6 +292,7 @@ module.exports = applicationManagementModule =>{
                     $scope.vm.serviceids.push(val.id);
                 })
             }
+            console.log($scope.vm.serviceids);
         }
         //单选
         function selectSingle(id){
@@ -302,6 +306,7 @@ module.exports = applicationManagementModule =>{
             if($scope.vm.serviceList.length==$scope.vm.serviceids.length){
                 $scope.vm.isSelectAll = true;
             }
+            console.log( $scope.vm.serviceids);
             }
             //全选清空
             function initBatchTest(){

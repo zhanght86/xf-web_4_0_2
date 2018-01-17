@@ -1,0 +1,106 @@
+<div ui-view="header"></div>
+<div class="msgR-cont pd-20 ">
+    <div class="r-cont-hd mb-10">
+        <span>批量测试</span>
+    </div>
+    <div class="pr chat_test_wrap" style="padding-top:10px;background:#fff;">
+        <div class="mb-10 cl" style="height:40px;">
+            <div class="L">
+                <div class="L mr-10" style="display:inline-block;"  batch-test-only  factor="vm.paginationConf.currentPage" is-upload="vm.upload"></div>
+                <!--<a href="/api/application/batchTest/download?fileName=batchTest.xls" class="btn1 L btn1_blue2  mr-10" style="line-height:20px;">下载模板</a>-->
+            </div>
+            <div class="R">
+                <span class="L mr-5">
+                    状态：
+                    <select class="sel bd " id="selected" ng-model="vm.searchType" style="width:90px;">
+                        <option value="0">全部</option>
+                        <option value="21006">测试失败</option>
+                        <option value="21007">待测试</option>
+                        <option value="21008">测试中</option>
+                        <option value="21009">已完成</option>
+
+                    </select>
+                </span>
+                <input type="text" class="input-text L mr-10" ng-model="vm.selectInput" placeholder="测试文件" style="width:250px;height:30px;" />
+                <button class="btn1 btn1_blue L mr-10" type="button"  ng-click="vm.searchFile(vm.paginationConf.currentPage,vm.paginationConf.pageSize)">查找</button>
+                <span class="L btn1 btn_delete" ng-click="vm.deleteQuestion(vm.deleteIds)" style="line-height:20px;display:block;"> 删除</span>
+                <!--<span class="c-999 pl-10">共有数据：<strong >{{vm.listDataTotal}}</strong> 条 </span>-->
+            </div>
+        </div>
+        <div class="bd p10" style="background:#fcfdfd;">
+
+            <div class="mt-20">
+                <div class="dataTables_wrapper no-footer">
+                    <table class="stop_word_tab" >
+                        <thead>
+                        <tr>
+                            <th class="bold" width="3%">
+                                <input class="selectAllBtn" ng-click="vm.selectAll()" type="checkbox"  ng-checked="vm.selectAllCheck"/>
+                            </th>
+                            <th class="bold" width="16%">测试文件</th>
+                            <th class="bold" width="7%">渠道</th>
+                            <th class="bold" width="7%">状态</th>
+                            <th class="bold" width="7%">测试总数</th>
+                            <th class="bold" width="7%">准确率</th>
+                            <th class="bold" width="15%">上传时间</th>
+                            <th class="bold" width="7%">操作人</th>
+                            <th class="bold" width="10%">备注</th>
+                            <th class="bold" width="16%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="v in vm.listData">
+                            <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.id)"  ng-click="vm.selectSingle(v.id)"></td>
+                            <td><span class="c-primary" >{{v.docName}}</span></td>
+                            <td>{{v.channelId|channelFilter}}</td>
+                            <td ng-if="v.status==21007">待测试</td>
+                            <td ng-if="v.status==21008">测试中</td>
+                            <td ng-if="v.status==21009">已完成</td>
+                            <td>{{v.amount}}</td>
+                            <td>{{v.precision}}%</td>
+                            <td >{{v.testTime |date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{v.userName}}</td>
+                            <td>{{v.remark}}</td>
+                            <td>
+                                <a href="/api/material/document/get/document/id?id={{v.docId}}" target="_blank" class="c-green mr-5" ng-if="v.status==21009" >下载</a>
+                                <a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks(v.id)" ng-if="v.status==21009||v.status==21007">备注</a>
+                                <a class="c-blue mr-5" ng-click="vm.startUp(v.id,v.remark)" ng-if="v.status==21007">测试</a>
+                                <a class="c-blue mr-5" ng-click="vm.startUpagain(v.id,v.docName)" ng-if="v.status==21009">重测</a>
+                                <a class="c-red" ng-click="vm.deleteQuestion([v.id])" ng-if="v.status==21009||v.status==21007">删除</a>
+                            </td>
+                        </tr>
+                        <!--<tr >-->
+                            <!--<td><input type="checkbox" /></td>-->
+                            <!--<td><span class="c-primary" >高铁管家第一版.xlsx</span></td>-->
+                            <!--<td >待测试</td>-->
+                            <!--<td>100</td>-->
+                            <!--<td>80%</td>-->
+                            <!--<td >2016-8-17 13:45:23</td>-->
+                            <!--<td>{{v.batchOperator}}</td>-->
+                            <!--<td>第一次测试</td>-->
+                            <!--<td>-->
+                                <!--<a href="javascript:;" class="c-green mr-5" >下载</a>-->
+                                <!--<a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks()">备注</a>-->
+                                <!--<a class="c-blue mr-5" ng-click="vm.startUp()">测试</a>-->
+                                <!--&lt;!&ndash;<a class="c-blue mr-5" >重新测试</a>&ndash;&gt;-->
+                                <!--<a class="c-red" >删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        </tbody>
+                    </table>
+
+                    <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                    <div class="text-r pt-10">
+                        <!--<button type="button" class="btn1 btn1_blue" >导出</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
