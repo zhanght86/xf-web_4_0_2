@@ -343,7 +343,7 @@ module.exports = knowledgeManagementModule =>{
         function checkSave() {
             let result = false ;
             let params = angular.copy($scope.parameter);
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
             angular.forEach(params.contents,function(item,index){
                 if(item.name){
                     delete params.contents[index].name ;

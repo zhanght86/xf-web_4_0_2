@@ -192,7 +192,7 @@ module.exports = knowledgeManagementModule =>{
             let result = false ;
             var params = angular.copy($scope.parameter);
             // params.classifyList = angular.copy($scope.parameter.classifyList).map(item=>item.classifyId) ;
-            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!="")) ;
+            params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
             // params.extensionQuestionList = params.extensionQuestionList.filter((item)=>(item!="")) ;
             if(!$scope.parameter.title){
                 layer.msg("知识标题不能为空，请填写");

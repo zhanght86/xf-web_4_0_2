@@ -29,7 +29,7 @@
                         <td>{{item.lastModifiedDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td>{{item.modifierName}}</td>
                         <td>
-                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.addRole(item.id)">编辑</a>
+                            <a href="javascript:;" title="编辑" class="mr-10 c-orange" ng-click="vm.addRole(item.id,item.name,item.description)">编辑</a>
                             <a href="javascript:;" title="删除" class="mr-10 c-red" ng-click="vm.deleteRole(item.id)">删除</a>
                         </td>
                     </tr>
