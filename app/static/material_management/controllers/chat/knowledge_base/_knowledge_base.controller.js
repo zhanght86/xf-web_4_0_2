@@ -116,7 +116,8 @@ module.exports=materialModule => {
                         if(response.status==200){
                             initBatchTest();
                             layer.msg("删除成功") ;
-                            $state.reload();
+                            //$state.reload();
+                            search($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }
                         if(response.status==500){
                             console.log("删除失败");
@@ -164,6 +165,9 @@ module.exports=materialModule => {
                 layer.close(i);
                 if(data.status==200){
                     console.log(data);
+                    if(!reset){
+                        initBatchTest();
+                    }
                     //$scope.vm.delArr = [] ;
                     $scope.vm.listData = data.data;
                     $scope.vm.paginationConf.currentPage =index ;

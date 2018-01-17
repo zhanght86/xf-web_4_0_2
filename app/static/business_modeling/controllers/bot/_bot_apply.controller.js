@@ -50,7 +50,7 @@ module.exports = applicationManagementModule =>{
             categoryLibraryLeaf: 1,
             reloadBotLibrary:reloadBotLibrary,
             reloadBot:reloadBot,
-            disableAttributeTypeForApply:disableAttributeTypeForApply,
+            //disableAttributeTypeForApply:disableAttributeTypeForApply,
             repeatCheckForCategory:repeatCheckForCategory,
             categoryNameNullOrBeyondLimit:"类目名称为空或超过长度限制50",
             notContainHtmlLabel:"不能包含HTML标签",
@@ -86,10 +86,10 @@ module.exports = applicationManagementModule =>{
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/ms/classify/library/get/path",
-            type:'POST',
+            serviceUrl: "/api/ms/classify/library/path/get",
+            type:'GET',
             params:params,
-            paramName:'categoryName',
+            paramName:'name',
             dataType:'json',
             transformResult:function(data){
                 var result = new Object();
@@ -97,8 +97,8 @@ module.exports = applicationManagementModule =>{
                 if(data.data){
                     for(var i=0;i<data.data.length;i++){
                         array[i]={
-                            data:data.data[i].categoryId,
-                            value:data.data[i].categoryName
+                             data:data.data[i].id,
+                            value:data.data[i].name
                         }
                     }
                 }
@@ -123,6 +123,62 @@ module.exports = applicationManagementModule =>{
                 }
             }
         },2000);
+
+         //搜寻节点
+        function searchNodeForBot(suggestion){
+            console.log(suggestion.data)
+            var currentNodeId = suggestion.data;
+            var firstNode = $("#library").find("i").filter(":eq(0)");
+            if($(firstNode).css("backgroundPosition")=="0% 0%"){
+                appendLibraryTree(firstNode);
+            }else if($(firstNode).parent().parent().next()==null){
+                appendLibraryTree(firstNode);
+            }
+            if($(firstNode).attr("data-option")==currentNodeId){
+                clearColorLibrary();
+                $scope.vm.knowledgeBotLibraryVal = $(firstNode).next().html();
+                $scope.vm.botLibrarySelectValue = $(firstNode).next().attr("data-option");
+                $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
+                $scope.vm.categoryLibraryAttributeName = $(firstNode).next().attr("node-option");
+                $(firstNode).next().attr("style","color:black;font-weight:bold;");
+                $scope.$apply();
+            }else{
+                recursionForBot(suggestion,firstNode);
+            }
+        }
+        function recursionForBot(suggestion,node){
+            var list = $("#library").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+                if($(value).attr("data-option")==$(node).attr("data-option")){
+                    var currNode = $(value).find("i").filter(":eq(0)");
+                    if($(currNode).attr("data-option")==suggestion.data){
+                        clearColorLibrary();
+                        $scope.vm.knowledgeBotLibraryVal = $(currNode).next().html();
+                        $scope.vm.botLibrarySelectValue = $(currNode).next().attr("data-option");
+                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                        $scope.vm.categoryLibraryAttributeName = $(currNode).next().attr("node-option");
+                        $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        $scope.$apply();
+                        flag = true;
+                        //跳出
+                        return true;
+                    }else{
+                        if(flag==true){
+                            return true;
+                        }
+                        //展开
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendLibraryTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendLibraryTree(currNode);
+                        }
+                        //递归
+                        recursionForBot(suggestion,currNode);
+                    }
+                }
+            });
+        }
         function locationForBot(suggestion){
             var currentNodeId = suggestion.data;
             var initHeight = 0;
@@ -192,61 +248,7 @@ module.exports = applicationManagementModule =>{
             });
             return flag;
         }
-        //搜寻节点
-        function searchNodeForBot(suggestion){
-            var currentNodeId = suggestion.data;
-            var firstNode = $("#library").find("i").filter(":eq(0)");
-            if($(firstNode).css("backgroundPosition")=="0% 0%"){
-                appendLibraryTree(firstNode);
-            }else if($(firstNode).parent().parent().next()==null){
-                appendLibraryTree(firstNode);
-            }
-            if($(firstNode).attr("data-option")==currentNodeId){
-                clearColorLibrary();
-                $scope.vm.knowledgeBotLibraryVal = $(firstNode).next().html();
-                $scope.vm.botLibrarySelectValue = $(firstNode).next().attr("data-option");
-                $scope.vm.botSelectType = $(firstNode).next().attr("type-option");
-                $scope.vm.categoryLibraryAttributeName = $(firstNode).next().attr("node-option");
-                $(firstNode).next().attr("style","color:black;font-weight:bold;");
-                $scope.$apply();
-            }else{
-                recursionForBot(suggestion,firstNode);
-            }
-        }
-        function recursionForBot(suggestion,node){
-            var list = $("#library").find("li");
-            var flag = false;
-            $.each(list,function(index,value){
-                if($(value).attr("data-option")==$(node).attr("data-option")){
-                    var currNode = $(value).find("i").filter(":eq(0)");
-                    if($(currNode).attr("data-option")==suggestion.data){
-                        clearColorLibrary();
-                        $scope.vm.knowledgeBotLibraryVal = $(currNode).next().html();
-                        $scope.vm.botLibrarySelectValue = $(currNode).next().attr("data-option");
-                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
-                        $scope.vm.categoryLibraryAttributeName = $(currNode).next().attr("node-option");
-                        $(currNode).next().attr("style","color:black;font-weight:bold;");
-                        $scope.$apply();
-                        flag = true;
-                        //跳出
-                        return true;
-                    }else{
-                        if(flag==true){
-                            return true;
-                        }
-                        //展开
-                        if($(currNode).css("backgroundPosition")=="0% 0%"){
-                            appendLibraryTree(currNode);
-                        }else if($(currNode).parent().parent().next()==null){
-                            appendLibraryTree(currNode);
-                        }
-                        //递归
-                        recursionForBot(suggestion,currNode);
-                    }
-                }
-            });
-        }
-        //加载业务树
+               //加载业务树
         initBot();
         initBotLibrary();
         //获取root 数据
@@ -459,7 +461,6 @@ module.exports = applicationManagementModule =>{
                 }
             });
         }
-        //自动转换图标类型
         function styleSwitch(type,leaf,attrType){
             var styleHidden = "display: inline-block;";
             if(leaf==0){
@@ -468,16 +469,20 @@ module.exports = applicationManagementModule =>{
             if(attrType=="node"){
                 return "style='"+styleHidden+"position: relative;top: -1px;margin-right: 2px;width: 15px;height: 15px;vertical-align: middle;background-position: left top;background-repeat: no-repeat;background-image: url(../../images/images/aside-nav-icon.png);'";
             }
-            var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
+             var style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';
             switch (type){
+                case 160:
+                    style ='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-rq.png);"';break;
                 case 161:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-sx.png);"';break;
-                case 160:
+                case 163:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-lc.png);"';break;
                 case 162:
                     style='style="'+styleHidden+'position: relative;top: -1px; margin-right: 5px; width: 15px; height: 15px; vertical-align: middle; background-position: left top; background-repeat: no-repeat;background-image:url(../../images/pic-navs-dy.png);"';break;
             }
+            
             return style;
+
         }
 
 
@@ -497,10 +502,8 @@ module.exports = applicationManagementModule =>{
             },function(data){
                  if(data.status==200){
                        layer.msg(data.info)
-                      // initBot();
-                       //  //数据组装
-                       //  reloadBot($scope.vm.dataSplit,0);
-                       // $scope.vm.categoryRootPid=data.data;
+                        initBot();
+                        initBotLibrary();
                  }else if(data.status==500){
                       layer.msg(data.info)
                  }
@@ -531,7 +534,6 @@ module.exports = applicationManagementModule =>{
              deleteBot($(this).parent().attr("bot-id"));
         });
          $("#library").on("click","span",function(){
-            alert(1)
              $scope.vm.botLibraryInfo = $(this).parent().attr("bot-info");
              $scope.vm.categoryLibraryName=$(this).html();
              $scope.vm.categoryLibraryTypeId=$(this).attr("type-option");
@@ -702,6 +704,7 @@ module.exports = applicationManagementModule =>{
             }
         }
         function addBotLibrary(){
+            $scope.vm.categoryLibraryTypeId=160;
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/bot/add_category_library.html",
                 scope: $scope,
@@ -719,9 +722,9 @@ module.exports = applicationManagementModule =>{
                             $("#addErrorView").html($scope.vm.notContainHtmlLabel);
                             return false;
                         }
-                        // if(repeatCheckForCategory("#addErrorView",0)==false){
-                        //     return false;
-                        // }
+                        if(repeatCheckForCategory("#addErrorView",0)==false){
+                            return false;
+                        }
                         if(nullCheck($("#categoryLibraryDescribe").val())==true){
                             if(lengthCheck($("#categoryLibraryDescribe").val(),0,2000)==false){
                                 $("#describeErrorView").html($scope.vm.categoryDescribeBeyondLimit);
@@ -744,8 +747,6 @@ module.exports = applicationManagementModule =>{
                             var pid= $scope.vm.botLibrarySelectValue;
                             var relation= ($scope.vm.categoryLibraryAttributeName=="node") ? "edge" :"node"
                         }
-                             console.log(relation)
-                             alert(1)
                             BusinessModelingServer.libraryAdd.save({
                               "leaf": 0,
                               "name":$("#categoryLibraryNameAdd").val().trim(),
@@ -782,7 +783,7 @@ module.exports = applicationManagementModule =>{
                     });
                     if(dialog){
                         $timeout(function () {
-                            disableAttributeTypeForApply();
+                            //disableAttributeTypeForApply();
                             $("#categoryLibraryNameAdd").blur(function(){
                                 if(lengthCheck($("#categoryLibraryNameAdd").val(),0,50)==false){
                                     $("#addErrorView").html($scope.vm.categoryNameNullOrBeyondLimit);
@@ -805,16 +806,11 @@ module.exports = applicationManagementModule =>{
             var flag = false;
             var request = new Object();
             if(type==1){
-                request.categoryId=$scope.vm.categoryLibraryId;
-                request.categoryPid=$scope.vm.categoryLibraryPid;
-                request.categoryAttributeName=$("#categoryLibraryName").val().trim();
-                request.categoryName=$("#categoryLibraryName").val().trim();
-                request.categorySceneId=categorySceneId;
+                request.pid=$scope.vm.botLibrarySelectValue;
+                request.name=$scope.vm.categoryLibraryName;
             }else{
                 request.pid=$scope.vm.botLibrarySelectValue;
-               // request.categoryAttributeName=$("#categoryLibraryNameAdd").val().trim();
                 request.name=$("#categoryLibraryNameAdd").val();
-               // request.categorySceneId=categorySceneId;
             }
              $.ajax("/api/ms/classify/library/name/check",{
                 dataType: 'json', //服务器返回json格式数据
@@ -898,6 +894,8 @@ module.exports = applicationManagementModule =>{
                                 $scope.vm.dataSplit.depict=$scope.vm.categoryLibraryDescribe;
                                 $scope.vm.categoryRootPid=data.data;
                                 reloadBotLibrary($scope.vm.dataSplit,2);
+                            }else{
+                                layer.msg(data.info)
                             }
                             $scope.vm.dataSplit.name="";
                         },function(err){
@@ -920,25 +918,25 @@ module.exports = applicationManagementModule =>{
                             repeatCheckForCategory("#editErrorView",1);
                         }
                     });
-                    $("#categoryLibraryTypeId").empty();
-                    var attrArr = [];
-                    attrArr[0]={name:"默认",value:163};
-                    attrArr[1]={name:"流程",value:161};
-                    attrArr[2]={name:"划分",value:160};
-                    attrArr[3]={name:"属性",value:162};
-                    for(var index=0;index<attrArr.length;index++){
-                        if($scope.vm.categoryLibraryAttributeName=="edge"){
-                            $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
-                        }else{
-                            if((attrArr[index].value==$scope.vm.botSelectType)>0){
-                                $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
-                            }else{
-                                $("#categoryLibraryTypeId").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
-                            }
-                        }
-                    }
-                    $("#categoryLibraryTypeId").val($scope.vm.botSelectType);
-                }, 100);
+                //     $("#categoryLibraryTypeId").empty();
+                //     var attrArr = [];
+                //     attrArr[0]={name:"默认",value:160};
+                //     attrArr[1]={name:"流程",value:161};
+                //     attrArr[2]={name:"划分",value:163};
+                //     attrArr[3]={name:"属性",value:162};
+                //     for(var index=0;index<attrArr.length;index++){
+                //         if($scope.vm.categoryLibraryAttributeName=="edge"){
+                //             $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                //         }else{
+                //             if((attrArr[index].value==$scope.vm.botSelectType)>0){
+                //                 $("#categoryLibraryTypeId").append('<option value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                //             }else{
+                //                 $("#categoryLibraryTypeId").append('<option disabled="disabled" style="background-color: lightgrey;" value='+attrArr[index].value+'>'+attrArr[index].name+'</option>');
+                //             }
+                //         }
+                //     }
+                //     $("#categoryLibraryTypeId").val($scope.vm.botSelectType);
+                 }, 100);
             }
         }
        
@@ -1081,9 +1079,9 @@ module.exports = applicationManagementModule =>{
         function disableAttributeTypeForApply(){
             $("#categoryLibraryTypeIdAdd").empty();
             var attrArr = [];
-            attrArr[0]={name:"默认",value:163};
+            attrArr[0]={name:"默认",value:160};
             attrArr[1]={name:"流程",value:161};
-            attrArr[2]={name:"划分",value:160};
+            attrArr[2]={name:"划分",value:163};
             attrArr[3]={name:"属性",value:162};
             for(var index=0;index<attrArr.length;index++){
                 if($scope.vm.categoryLibraryAttributeName=="node"){

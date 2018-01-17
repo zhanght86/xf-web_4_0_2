@@ -43,13 +43,13 @@ module.exports = materialModule =>{
             });
             uploader.on('uploadSuccess', function (file,response) {
                 console.log(response)
-                // if(response.status == 500){
-                //     layer.msg("模板错误");
-                // }
+                if(response.status == 500){
+                    layer.msg(response.info);
+                }
                 if(response.code==10006){
                     layer.msg("图片名称重复");
                 }
-                else{
+                else if(response.status==200){
                     scope.$apply(function(){
                         scope.vm.imgSelected = response.data ;
                     }) ;
@@ -58,7 +58,7 @@ module.exports = materialModule =>{
                     layer.msg("上传成功");
                     //$state.reload() ;
                 }
-                console.log(response)
+                console.log(response);
             });
 
         }

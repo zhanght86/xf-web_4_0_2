@@ -81,20 +81,21 @@ module.exports = materialModule =>{
             });
             uploader.on('uploadSuccess', function (file,response) {
                 if(response.status == 500){
-                    console.log("模板错误");
+                    layer.msg(response.info);
+                    //console.log("模板错误");
                 }
                 if(response.code == 10006 ){
                     layer.msg("图片名称重复,请重新上传",{time: 1000});
                 }
                 if(response.status == 200){
-                   // layer.msg("上传成功");
+                   layer.msg("上传成功");
                     //$state.reload() ;
                 }
                 //console.log(response)
             });
             // 所有文件上传成功 之后 刷新数据列表
             uploader.on('uploadFinished', function (file) {
-                layer.msg("上传完成");
+                //layer.msg("上传完成");
                 scope.isUpload = false;
                 $state.reload();
                 //console.log(response);

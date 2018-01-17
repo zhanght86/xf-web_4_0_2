@@ -70,7 +70,7 @@ module.exports = businessModelingModule =>{
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/ms/classify/get/path",
+            serviceUrl: "/api/ms/classify/path/get",
             type:'GET',
             params:params,
             paramName:'name',
@@ -555,7 +555,7 @@ module.exports = businessModelingModule =>{
                 request.pid=$scope.vm.botSelectValue;
                 request.name=$("#categoryName").val().trim();
             }else{
-                request.pid=$scope.vm.categoryId;
+                request.pid=$scope.vm.categoryId==""?"root":$scope.vm.categoryId;
                 request.name=$("#category-name").val().trim();
             }
             var flag;

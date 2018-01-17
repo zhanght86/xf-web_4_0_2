@@ -17,7 +17,7 @@
             <div class="R dib">
                 <span class="L mr-10">
                     <input type="text" class="L input-text"  placeholder="请输入查询图片的名称"  ng-model="vm.pictureName"   style="width:200px;"/>
-                    <input type="button" value=""  ng-click="vm.getPicList(vm.paginationConf.currentPage,vm.paginationConf.pageSize,1)" class="L tw_btn " />
+                    <input type="button" value=""  ng-click="vm.getPicList(vm.paginationConf.currentPage,vm.paginationConf.pageSize)" class="L tw_btn " />
                 </span>
                 <button class="L btn1 btn1_blue mr-10"  ng-click="vm.exportExcel()">导出</button>
                 <button class="L btn1 btn_delete"  ng-click="vm.batchDeletePicture(vm.pictureIds)">批量删除</button>
@@ -34,10 +34,9 @@
                     <td width="10%">添加人</td>
                     <td width="17%">操作</td>
                 </tr>
-                <tr ng-repeat="item in vm.imageList.objs">
-                    <!--<td><input type="checkbox"  ng-click="vm.singleAdd(item.id,vm.pictureIds,vm.isSelectAll,vm.imageList.objs.length)"  ng-checked="vm.pictureIds.inArray(item.id)"/></td>-->
+                <tr ng-repeat="item in vm.imageList">
                     <td><input type="checkbox"  ng-click="vm.singleAdd(item.id)"  ng-checked="vm.pictureIds.inArray(item.id)"/></td>
-
+                    <!--<td><input type="checkbox"  ng-click="vm.singleAdd(item.id)"  ng-checked="vm.picChecked(item.id)"/></td>-->
                     <td>
                         <div >
                             <!--<img ng-src="/img/{{item.url}}" />-->

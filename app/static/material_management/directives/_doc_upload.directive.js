@@ -79,7 +79,8 @@ module.exports = materialModule =>{
             });
             uploader.on('uploadSuccess', function (file,response) {
                 if(response.status == 500){
-                    console.log("模板错误");
+                    //console.log("模板错误");
+                    layer.msg(response.info);
                 }
                 if(response.code == 10006 ){
                     layer.msg("文档名称重复,请重新上传",{time: 1000});
