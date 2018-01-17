@@ -84,16 +84,89 @@ module.exports=systemMonitoringModule => {
                         console.log(err);
                     });
 
-                }else if(item.moduleType==1004){
-                    $state.go();
-                }else if(item.moduleType==1005){
-                    $state.go();
-                }else if(item.moduleType==1006){
-                    $state.go();
-                }else if(item.moduleType==1007){
-                    $state.go();
-                }else if(item.moduleType==1008){
-                    $state.go();
+                }else if(item.moduleType==1004){                     //faq 100
+                    var mmId = angular.fromJson(item.content).id;
+                    SystemServer.searchByIdFaq.get({
+                        "knowledgeId": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("KM.preview",{id: mmId,type:100});
+                        }
+                        if(data.status==500){
+                            // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
+                }else if(item.moduleType==1005){                     //概念  101
+                    var mmId = angular.fromJson(item.content).id;
+                    SystemServer.searchByIdCon.get({
+                        "knowledgeId": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("KM.preview",{id: mmId,type:101});
+                        }
+                        if(data.status==500){
+                            // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
+
+                }else if(item.moduleType==1006){                     //列表  102
+                    var mmId = angular.fromJson(item.content).id;
+                    SystemServer.searchByIdList.get({
+                        "knowledgeId": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("KM.preview",{id: mmId,type:102});
+                        }
+                        if(data.status==500){
+                            // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
+
+                }else if(item.moduleType==1007){                    //任务  103
+                    var mmId = angular.fromJson(item.content).id;
+                    SystemServer.searchByIdTask.get({
+                        "knowledgeId": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("KM.preview",{id: mmId,type:103});
+                        }
+                        if(data.status==500){
+                            // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
+
+                }else if(item.moduleType==1008){                    //对话   104
+                    var mmId = angular.fromJson(item.content).id;
+                    SystemServer.searchByIdDialogue.get({
+                        "knowledgeId": mmId
+                    },function(data){
+                        if(data.status==200){
+                            $state.go("KM.preview",{id: mmId,type:104});
+                        }
+                        if(data.status==500){
+                            // layer.msg(data.info,{time:1000});
+                            alert(data.info);
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
                 }
             }
         }
