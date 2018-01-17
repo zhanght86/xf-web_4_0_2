@@ -115,6 +115,7 @@ module.exports=materialModule => {
                 checkVoiceName();
             },function(){
                 $scope.vm.isUploadStart = false ;
+                $scope.vm.voiceTitle = "";
             })
 
 
