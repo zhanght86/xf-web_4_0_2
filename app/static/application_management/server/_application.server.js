@@ -69,7 +69,7 @@ class ApplicationServer {
         //获取服务类型
         this.queryServiceTypeList = $resource(API_APPLICATION+"/service/type/get", {}, {});
         //获取可用节点
-        this.queryAvailableNodeList = $resource(API_APPLICATION+"/node/listNoUsingNode", {}, {});
+        this.queryAvailableNodeList = $resource(API_APPLICATION+"/node/free/get", {}, {});
         //检查服务名称是否重复
         this.verifyServiceName = $resource(API_APPLICATION+"/service/name/check", {}, {});
         //通过id查看服务
@@ -77,22 +77,26 @@ class ApplicationServer {
         //获取己用节点(通过父节点信息)
         this.queryParentNodeInfo = $resource(API_APPLICATION+"/node/findParentNodeInfo", {}, {});
         //新增服务
-        this.addService = $resource(API_APPLICATION+"/service/addAndPublishService", {}, {});
+        this.addService = $resource(API_APPLICATION+"/service/add/publish", {}, {});
         //发布服务
         this.releaseService = $resource(API_APPLICATION+"/service/publish", {}, {});
         //更新服务
-        this.updateService = $resource(API_APPLICATION+"/service/editService", {}, {});
+        this.updateService = $resource(API_APPLICATION+"/service/update", {}, {});
         //删除服务
-        this.removeService = $resource(API_APPLICATION+"/service/deleteService", {}, {});
+        this.removeService = $resource(API_APPLICATION+"/service/delete", {}, {});
         //上线服务
         this.startService = $resource(API_APPLICATION+"/service/start", {}, {});
         //下线服务
-        this.downService = $resource(API_APPLICATION+"/service/stopService", {}, {});
+        this.downService = $resource(API_APPLICATION+"//service/stop", {}, {});
         //重启服务
         this.restartService = $resource(API_APPLICATION+"/service/restart", {}, {});
+        //根据服务id获取url
+        this.nodeService=$resource(API_APPLICATION+"/node/url/get/:serviceId",{},{})
+         //批量删除服务 
+        this.removetAllService = $resource(API_APPLICATION+"/service/batch/delete", {}, {});
 //节点管理
         //查看节点列表
-        this.queryNodeList = $resource(API_APPLICATION+"/node/id/get/:applicationId", {}, {});
+        this.queryNodeList = $resource(API_APPLICATION+"/node/get", {}, {});
         //查看未使用节点
         this.queryUnusedNodeList = $resource(API_APPLICATION+"/node/free/get", {}, {});
         //查看父节点信息
@@ -110,8 +114,8 @@ class ApplicationServer {
         this.disableNode = $resource(API_APPLICATION+"/node/disabledAndEnabledNode", {}, {});
         //删除节点
         this.removetNode = $resource(API_APPLICATION+"/node/deleteNode", {}, {});
-        //检验节点是否合理
-        this.verifyNode = $resource(API_APPLICATION+"/node/checkNode", {}, {});
+
+       
                                         /******************************
                                                         *应用信息*
                                                   ********************************/

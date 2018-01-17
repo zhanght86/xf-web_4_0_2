@@ -14,43 +14,18 @@
                                 ng-model="vm.serviceName"
                                 name="serviceName" check-service-name="serviceName"
                                 placeholder=""  style="width:100%;" required>
-                        <!--<p class="c-red" ng-show="myService.serviceName.$dirty && myForm.serviceName.$invalid">-->
-                            <!--<div class="c-red" ng-show="myService.serviceName.$error.required">服务名称不能为空！</div>-->
-                        <!--<div class="c-red" ng-show="myService.serviceName.$error.unique">服务名称重复，请重新输入！</div>-->
+                        <div class="c-red" ng-if="vm.allowSubmit==0">服务名称重复，请重新输入！</div>
                         </p>
-                    </div>
-                </div>
-
-
-                <!--<div class="framework mb-10">-->
-                    <!--<span class="framework_s text-r">发布渠道：</span>-->
-                    <!--<div >-->
-                        <!--<label class="mr-10" ng-repeat="channel in $parent.$parent.$parent.MASTER.channelList">-->
-                            <!--<input type="radio" ng-model="vm.channels"/> {{channel.channelName}}-->
-                        <!--</label>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <div class="framework mb-10">
-                    <span class="framework_s text-r">发布类型：</span>
-                    <div >
-                        <label ng-repeat="serviceType in vm.serviceTypeList" class="mr-10">
-                            <input type="radio" name="style" ng-checked="vm.serviceType==serviceType.statusId"
-                                   ng-click="vm.serviceType=serviceType.statusId"> {{serviceType.statusName}}
-                        </label>
                     </div>
                 </div>
                 <div class="framework mb-10">
                     <span class="framework_s text-r">发布节点：</span>
-                    <div >
-                        <ul class="bd pd-10 node_ul L mr-10" style="width:100%;min-height:30px;">
-                            <li ng-if="vm.dialogTitle!='发布新服务'" ng-class="{'btn1_blue':vm.nodeCode==vm.nodeList.using.nodeCode}"
-                                ng-click="vm.nodeCode=vm.nodeList.using.nodeCode">{{vm.nodeList.using.nodeAccessIp}}
-                            </li>
-                            <li ng-repeat="node in vm.nodeList.available"  ng-class="{'btn1_blue':vm.nodeCode==node.nodeCode}"
-                                ng-click="vm.nodeCode=node.nodeCode">{{node.nodeAccessIp}}
+                    <div>
+                        <ul class="bd pd-10 node_ul  mr-10" style="width:100%;min-height:30px;">
+                            <li ng-repeat="node in vm.nodeList.available"  ng-class="{'btn1_blue':vm.code==node.id}"\
+                                ng-click="vm.code=node.id">{{node.url}}
                             </li>
                         </ul>
-                        <a ui-sref="AM.node" class="c-primary" ng-click="closeThisDialog(0)">不在列表内，去创建新节点</a>
                     </div>
                 </div>
 
