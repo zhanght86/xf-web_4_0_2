@@ -917,7 +917,7 @@ module.exports = applicationManagementModule =>{
                                 $scope.vm.dataSplit.relation=relation;
                                 $scope.vm.dataSplit.id=data.data;
                                 $scope.vm.dataSplit.type=$scope.vm.categoryLibraryTypeId;
-                                $scope.vm.dataSplit.leaf=0;
+                                $scope.vm.dataSplit.leaf=1;
                                 $scope.vm.dataSplit.depict=$scope.vm.categoryLibraryDescribe;
                                 $scope.vm.categoryRootPid=data.data;
                                 reloadBotLibrary($scope.vm.dataSplit,2);

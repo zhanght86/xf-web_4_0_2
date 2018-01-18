@@ -367,7 +367,7 @@ module.exports = businessModelingModule =>{
                                 $scope.vm.dataSplit.relation=relation;
                                 $scope.vm.dataSplit.id=data.data;
                                 $scope.vm.dataSplit.type=$("#categoryTypeId").val();
-                                $scope.vm.dataSplit.leaf=0;
+                                $scope.vm.dataSplit.leaf=1;
                                 $scope.vm.dataSplit.depict=$scope.vm.categoryDescribe;
                                $scope.vm.categoryId=data.data;
                                //重新加载
@@ -524,7 +524,7 @@ module.exports = businessModelingModule =>{
                             $scope.vm.dataSplit.relation=relation;
                             $scope.vm.dataSplit.id=data.data;
                             $scope.vm.dataSplit.type=$("#category-type").val().trim();
-                            $scope.vm.dataSplit.leaf=0;
+                            $scope.vm.dataSplit.leaf=1;
                             $scope.vm.dataSplit.depict=$("#category-describe").val();
                             $scope.vm.categoryId=data.data;
                             $("#category-name").val('');
