@@ -515,20 +515,14 @@ module.exports = applicationManagementModule =>{
 
         }
 
-
-
-        //类目库
+        //类目库套用
         function applyCategory(){
             if(applyValid()==false){
                 return;
             }
-            BusinessModelingServer.classifyAdd.save({
-                  "leaf": 0,
-                  "name":$scope.vm.categoryLibraryName,
+            BusinessModelingServer.libraryQuote.save({
+                  "lid": $scope.vm.categoryLibraryId,
                   "pid":$scope.vm.categoryId,
-                  "relation":$scope.vm.categoryLibraryAttributeName,
-                  "type":$scope.vm.categoryLibraryTypeId,
-                  "depict":$scope.vm.categoryLibraryDescribe,
             },function(data){
                  if(data.status==200){
                        layer.msg(data.info)
@@ -536,6 +530,8 @@ module.exports = applicationManagementModule =>{
                         initBotLibrary();
                  }else if(data.status==500){
                       layer.msg(data.info)
+                       initBotLibrary();
+                       initBot();
                  }
                 
             },function(err){

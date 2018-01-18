@@ -646,13 +646,19 @@ module.exports = businessModelingModule =>{
                                     $(value).parent().parent().next().append(html);
                                 }else{
                                     $(value).parent().parent().next().append(html);
+                                      //加上子节点之后 把开关按钮显示
                                     $(value).attr("style",sty);
+                                     console.log(data.type)
+                                     console.log(nodeType)
+                                     console.log(sty)
                                 }
                             }else{
                                 var htmlAppend='<ul class="menus show">'+html+'</ul>';
                                 $(value).parent().parent().parent().append(htmlAppend);
                                 //加上子节点之后 把开关按钮显示
                                 $(value).attr("style",sty);
+                                console.log(data.type)
+                                console.log(nodeType)
                             }
                         }
                     }

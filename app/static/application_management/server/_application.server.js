@@ -81,7 +81,7 @@ class ApplicationServer {
         //新增服务
         this.addService = $resource(API_APPLICATION+"/service/add/publish", {}, {});
         //发布服务
-        this.releaseService = $resource(API_APPLICATION+"/service/publish", {}, {});
+        this.releaseService = $resource(API_APPLICATION+"/service/pulish", {}, {});
         //更新服务
         this.updateService = $resource(API_APPLICATION+"/service/update", {}, {});
         //删除服务
