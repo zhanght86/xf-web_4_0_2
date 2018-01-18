@@ -367,7 +367,7 @@ module.exports = businessModelingModule =>{
                                 $scope.vm.dataSplit.relation=relation;
                                 $scope.vm.dataSplit.id=data.data;
                                 $scope.vm.dataSplit.type=$("#categoryTypeId").val();
-                                $scope.vm.dataSplit.leaf=0;
+                                $scope.vm.dataSplit.leaf=1;
                                 $scope.vm.dataSplit.depict=$scope.vm.categoryDescribe;
                                $scope.vm.categoryId=data.data;
                                //重新加载
@@ -524,7 +524,7 @@ module.exports = businessModelingModule =>{
                             $scope.vm.dataSplit.relation=relation;
                             $scope.vm.dataSplit.id=data.data;
                             $scope.vm.dataSplit.type=$("#category-type").val().trim();
-                            $scope.vm.dataSplit.leaf=0;
+                            $scope.vm.dataSplit.leaf=1;
                             $scope.vm.dataSplit.depict=$("#category-describe").val();
                             $scope.vm.categoryId=data.data;
                             $("#category-name").val('');
@@ -646,13 +646,19 @@ module.exports = businessModelingModule =>{
                                     $(value).parent().parent().next().append(html);
                                 }else{
                                     $(value).parent().parent().next().append(html);
+                                      //加上子节点之后 把开关按钮显示
                                     $(value).attr("style",sty);
+                                     console.log(data.type)
+                                     console.log(nodeType)
+                                     console.log(sty)
                                 }
                             }else{
                                 var htmlAppend='<ul class="menus show">'+html+'</ul>';
                                 $(value).parent().parent().parent().append(htmlAppend);
                                 //加上子节点之后 把开关按钮显示
                                 $(value).attr("style",sty);
+                                console.log(data.type)
+                                console.log(nodeType)
                             }
                         }
                     }

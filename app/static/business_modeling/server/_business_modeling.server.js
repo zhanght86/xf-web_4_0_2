@@ -41,6 +41,8 @@ class BusinessModelingServer {
         this.libraryGetFullname=$resource(API_MS+"/classify/library/get/fullname/:userId", {userId:'id'}, {});
         //根据类目名称获取信息
         this.libraryGetPath=$resource(API_MS+"/classify/library/get/path", {}, {});
+        //类目库套用
+        this.libraryQuote=$resource(API_MS+"/classify/quote/library", {}, {})
 
         /******************************
                         *框架库*

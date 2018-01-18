@@ -21,7 +21,7 @@
                             <div class="clearfix">
                                 <span class="L mr-10">
                                     <input type="text" class="L input-text"  placeholder="请输入知识标题"  ng-model="vm.chatKnowledgeTopic"   style="width:200px;"/>
-                                    <input type="button" value=""  ng-click="vm.search(vm.paginationConf.currentPage,vm.paginationConf.pageSize)" class="L tw_btn " />
+                                    <input type="button" value=""  ng-click="vm.searchChat(vm.paginationConf.currentPage,vm.paginationConf.pageSize)" class="L tw_btn " />
                                 </span>
                                 <button class="L btn se-search-btn advanced_sear_btn" style="border: 1px solid #3ea9fb;" ng-click="vm.searchHeighFlag=!vm.searchHeighFlag">高级查找</button>
                             </div>
@@ -44,7 +44,7 @@
                                     <input type="text" ng-model="vm.chatKnowledgeModifier" class="input_text"/>
                                 </div>
                                 <div class="tc">
-                                    <input type="button" class="btn1 btn1_blue" ng-click="vm.search(vm.paginationConf.currentPage,vm.paginationConf.pageSize)" value="高级搜索" style="width:100px;"/>
+                                    <input type="button" class="btn1 btn1_blue" ng-click="vm.searchChat(vm.paginationConf.currentPage,vm.paginationConf.pageSize)" value="高级搜索" style="width:100px;"/>
                                 </div>
                             </div>
                         </div>

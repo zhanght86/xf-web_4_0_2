@@ -135,7 +135,7 @@
         };
         //类目查找自动补全
         $('#category-autocomplete').autocomplete({
-            serviceUrl: "/api/ms/classify/get/path",
+            serviceUrl: "/api/ms/classify/path/get",
             type:'GET',
             params:params,
             paramName:'name',

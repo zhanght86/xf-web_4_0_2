@@ -126,6 +126,7 @@ module.exports = applicationManagementModule =>{
 
          //搜寻节点
         function searchNodeForBot(suggestion){
+            console.log(suggestion)
             console.log(suggestion.data)
             var currentNodeId = suggestion.data;
             var firstNode = $("#library").find("i").filter(":eq(0)");
@@ -150,7 +151,6 @@ module.exports = applicationManagementModule =>{
             var list = $("#library").find("li");
             var flag = false;
             $.each(list,function(index,value){
-                if($(value).attr("data-option")==$(node).attr("data-option")){
                     var currNode = $(value).find("i").filter(":eq(0)");
                     if($(currNode).attr("data-option")==suggestion.data){
                         clearColorLibrary();
@@ -173,9 +173,39 @@ module.exports = applicationManagementModule =>{
                         }else if($(currNode).parent().parent().next()==null){
                             appendLibraryTree(currNode);
                         }
-                        //递归
-                        recursionForBot(suggestion,currNode);
+                        
                     }
+               
+            });
+           recursionForBotnAgain(suggestion,node)
+        }
+        function recursionForBotnAgain(suggestion,node){
+            var list = $("#library").find("li");
+            var flag = false;
+            $.each(list,function(index,value){
+                var currNode = $(value).find("i").filter(":eq(0)");
+                if($(value).attr("data-option")==suggestion.data){
+                        clearColorLibrary();
+                        $scope.vm.knowledgeBotLibraryVal = $(currNode).next().html();
+                        $scope.vm.botLibrarySelectValue = $(currNode).next().attr("data-option");
+                        $scope.vm.botSelectType = $(currNode).next().attr("type-option");
+                        $scope.vm.categoryLibraryAttributeName = $(currNode).next().attr("node-option");
+                        $(currNode).next().attr("style","color:black;font-weight:bold;");
+                        console.log($(currNode).next().attr("id-option"))
+                        $scope.$apply();
+                        flag = true;
+                        //跳出
+                        return true;
+                    }else{
+                        if(flag==true){
+                            return true;
+                        }
+                        //展开
+                        if($(currNode).css("backgroundPosition")=="0% 0%"){
+                            appendLibraryTree(currNode);
+                        }else if($(currNode).parent().parent().next()==null){
+                            appendLibraryTree(currNode);
+                        }
                 }
             });
         }
@@ -485,20 +515,14 @@ module.exports = applicationManagementModule =>{
 
         }
 
-
-
-        //类目库
+        //类目库套用
         function applyCategory(){
             if(applyValid()==false){
                 return;
             }
-            BusinessModelingServer.classifyAdd.save({
-                  "leaf": 0,
-                  "name":$scope.vm.categoryLibraryName,
+            BusinessModelingServer.libraryQuote.save({
+                  "lid": $scope.vm.categoryLibraryId,
                   "pid":$scope.vm.categoryId,
-                  "relation":$scope.vm.categoryLibraryAttributeName,
-                  "type":$scope.vm.categoryLibraryTypeId,
-                  "depict":$scope.vm.categoryLibraryDescribe,
             },function(data){
                  if(data.status==200){
                        layer.msg(data.info)
@@ -506,6 +530,8 @@ module.exports = applicationManagementModule =>{
                         initBotLibrary();
                  }else if(data.status==500){
                       layer.msg(data.info)
+                       initBotLibrary();
+                       initBot();
                  }
                 
             },function(err){
@@ -757,6 +783,7 @@ module.exports = applicationManagementModule =>{
                               "origin":120
                            },function(data){
                              if(data.status==200){
+                                    layer.msg(data.info)
                                     //数据组装
                                     $scope.vm.dataSplit.name=$("#categoryLibraryNameAdd").val().trim(),
                                     $scope.vm.dataSplit.pid=pid;
@@ -890,7 +917,7 @@ module.exports = applicationManagementModule =>{
                                 $scope.vm.dataSplit.relation=relation;
                                 $scope.vm.dataSplit.id=data.data;
                                 $scope.vm.dataSplit.type=$scope.vm.categoryLibraryTypeId;
-                                $scope.vm.dataSplit.leaf=0;
+                                $scope.vm.dataSplit.leaf=1;
                                 $scope.vm.dataSplit.depict=$scope.vm.categoryLibraryDescribe;
                                 $scope.vm.categoryRootPid=data.data;
                                 reloadBotLibrary($scope.vm.dataSplit,2);
