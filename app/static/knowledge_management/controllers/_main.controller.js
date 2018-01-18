@@ -10,7 +10,6 @@ module.exports = knowledgeManagementModule =>{
         $state.go("KM.overview");
         $scope.knowCtr = {
             // selectChannel : selectChannel , //选择渠道
-            // isExtensionTagRepeat : isExtensionTagRepeat  ,  // 检测扩展问标签是否重复    营销 概念 列表 富文本知识新增
             rmeoveExtToLocal : rmeoveExtToLocal ,           //删除扩展问并添加到localStorage , 应用于所有知识编辑
             setKnowParamHasDialog : setKnowParamHasDialog ,  //弹框重置参数  应用于概念，faq
             isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
@@ -25,9 +24,8 @@ module.exports = knowledgeManagementModule =>{
              } ,
             skipNewLine : skipNewLine ,// 跳转到新的行
             removeExtention :removeExtention,
-            isExtensionTagRepeat : isExtensionTagRepeat,
-            showFrame :showFrame
-
+            showFrame :showFrame ,
+            extensionUnique : extensionUnique
         };
         /**
          *  业务框架
@@ -49,13 +47,15 @@ module.exports = knowledgeManagementModule =>{
          * 检测扩展问标签是否重复
          * false   return   ；  true  return ext
          * */
-        function isExtensionTagRepeat(allExtension,title,weight){
-            let titleList = [] ;
-            angular.forEach(allExtension,function (item,index) {
-                if(!titleList.inArray(item.title)){
-                    titleList.push(item.title)
+        function extensionUnique(all,msg){
+            console.log(all);
+            let allExt = all.map(ext=>ext.title).filter(ext=>ext) ;
+            let newExt = [];
+            angular.forEach(allExt,function(ext,index){
+                if(!newExt.inArray(ext)){
+                    newExt.push(ext)
                 }else{
-                    layer.msg("扩展问"+item.title+"重复")
+                    return layer.msg(msg?msg:''+ext+"添加重复",{time:1000})
                 }
             })
         }
@@ -63,13 +63,20 @@ module.exports = knowledgeManagementModule =>{
          * 扩展问 跳转到新的行
          *
          * */
-        function skipNewLine(scope,e) {
-              let len = scope.parameter.extensionQuestionList.length ;
+        function skipNewLine(scope,e,index,list) {
+              let len = scope.parameter.extensionQuestionList.length ,
+                  count;
               e = e || window.event ;
               if((e.keyCode|| e.which)==13 && nullCheck(scope.parameter.extensionQuestionList[len-1])){
-                  scope.parameter.extensionQuestionList.push({
-                      "title":""
-                  }) ;
+                  if(!scope.parameter.extensionQuestionList[index].title){
+                      return layer.msg("请填写完整")
+                  }else if(list && scope.parameter.extensionQuestionList[index].title.match(/#\S+#/g)==null){
+                      layer.msg("用户问法必须含有#概念词/集合词#")
+                  }else{
+                      scope.parameter.extensionQuestionList.push({
+                          "title":""
+                      })
+                  };
                   $timeout(function(){
                       $(e.target).parent().parent().children().last().find("input").focus();
                   })
@@ -82,7 +89,6 @@ module.exports = knowledgeManagementModule =>{
                 scope.parameter.extensionQuestionList.splice(index,1)
             }
         }
-
         /**
          *  知识编辑 删除扩展问 本地备份
          *  isEdit  在编辑情况下使用

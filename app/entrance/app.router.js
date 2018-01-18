@@ -17,23 +17,10 @@ module.exports = (angular) => {
         materialgPath    = "../static/login" , // 素材管理
         deepLearningPath = "../static/login",  // 深度学习
         systemPath       = "../static/login" ; // 系统监控
-
-    // const map = {
-    //     name : "xf_map",
-    //     nodes : [
-    //         {
-    //             describe : "登录" ,
-    //             permissionId : "" ,
-    //             name : "login" ,
-    //             url  : "/login" ,
-    //             children : ""
-    //         }
-    //     ]
-    // };
     /**
      *   权限管理
      *   @1   没有不在权限范围内的  permission : ""
-     *   @2   父级权限以上都为父级权限  ，自己不在权限内   permission ： {id:"",pid:"2"}
+     *   @2   父级权限以上都为父级权限  ，自身不在权限表内   permission ： {id:"",pid:"2"}
      *   @2   父级,自身都在权限内   permission ： {id:"2-1",pid:"2"}
      * */
     const map = [

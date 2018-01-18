@@ -148,7 +148,7 @@ module.exports = knowledgeManagementModule =>{
                     }, function(){
                         $state.go("KM.overview")
                     },function(){
-                        $state.go("KM.factor")
+                        $state.reload("KM.factor")
                     });
                 } else {
                     layer.msg(response.info) ;

@@ -64,10 +64,8 @@ module.exports = homePageModule =>{
                     $scope.vm.userIds = [] ;
                     $scope.vm.userList = response.data.data;
                     $scope.vm.paginationConf.totalItems = response.data.total ;
-                    $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize;
-                    angular.forEach(response.data.data,function(user,index){
-                        $scope.vm.userListIds.push(user.id)
-                    })
+                    $scope.vm.paginationConf.numberOfPages = response.data.total/pageSize;
+                    $scope.vm.userListIds = response.data.data.map(user=>user.id)
                 }
             },function(error){
                 layer.close(i) ;
@@ -75,12 +73,12 @@ module.exports = homePageModule =>{
             })
         }
         // // 修改密码
-        function changePassword(id,oldPwd,pwd){
+        function changePassword(id){
             $scope.$parent.$parent.MASTER.openNgDialog($scope,changePasswordHtml,"450px",function(){
                 HomePageServer.changePassword.save({
-                    "id":id,
+                    "id"    : id,
                     "oldPwd": hex_md5($scope.vm.userOldPassword) ,
-                    "pwd":  hex_md5($scope.vm.userPassword)
+                    "pwd"   : hex_md5($scope.vm.userPassword)
                 },function (response) {
                     if(response.status == 200){
                         $state.reload() ;
@@ -222,17 +220,17 @@ module.exports = homePageModule =>{
             $scope.vm.applicationIds = [];
             $scope.vm.roleId = $scope.vm.roleList[0].id ;  // 初始化roleId
         }
-        queryAllApplication();
-        //得到应用列表
-        function queryAllApplication(){
+        //获取应用列表
+        (function queryAllApplication(){
             HomePageServer.queryAllApplication.save({},function (response) {
                 if(response.status == 200 ){
                     $scope.vm.listApplication = response.data
                 }
             },function(error){console.log(error)}) ;
-        }
-        //得到角色列表
-        (function queryRoleList(index){
+        })()
+        //获取角色列表
+        queryRoleList();
+        function queryRoleList(){
             HomePageServer.queryRoleList.save({
                 "index":0,
                 "pageSize":999
@@ -241,7 +239,5 @@ module.exports = homePageModule =>{
                     $scope.vm.roleList = response.data.data.filter(item => (item.name != '超级管理员'));
                 }
             })
-        })()
-
-}])
-};
+        }
+}])};
