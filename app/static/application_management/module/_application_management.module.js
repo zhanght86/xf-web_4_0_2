@@ -23,13 +23,13 @@ module.exports = angular => {
     //--------------------------------------------------
     // 应用信息
     require('../controllers/info/_application_info.controller')(applicationManagementModule);           // 应用信息
-    require('../controllers/info/_backup_restore.controller')(applicationManagementModule);             // 备份还原
     // 应用配置
     require('../controllers/configuration/_authorization_management.controller')(applicationManagementModule); // 授权管理
     require('../controllers/configuration/_hot_knowledge_setup.controller')(applicationManagementModule);      // 热点知识设置
     require('../controllers/configuration/_manual_setting.controller')(applicationManagementModule);           // 转人工
     require('../controllers/configuration/_parameter_setup.controller')(applicationManagementModule);          // 参数设置
     require('../controllers/configuration/_robot_setup.controller')(applicationManagementModule);              // 机器人管理
+    require('../controllers/configuration/_backup_restore.controller')(applicationManagementModule);           // 备份还原
     require('../controllers/configuration/_interaction_manage.controller')(applicationManagementModule);       // 交互管理
     // 应用发布
     require('../controllers/release/_node_manage.controller')(applicationManagementModule);             // 节点管理

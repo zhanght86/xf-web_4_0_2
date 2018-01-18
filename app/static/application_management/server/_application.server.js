@@ -8,7 +8,6 @@ class ApplicationServer {
                 /******************************
                                   *应用配置*
                             ********************************/
-
 //   热点知识设置
         //获取热点知识列表 + 查询       删除 /hotQuestion/getHotQuestionList
         this.queryHotKnowledgeList = $resource(API_APPLICATION+"/hot/question/get", {}, {});
@@ -44,11 +43,13 @@ class ApplicationServer {
         this.storeClassicalAvatar = $resource(API_APPLICATION+"/config/classic/avatar/update", {}, {});
         //保存自定义机器人头像
         // this.uploadCustomizedAvatar = $resource(API_APPLICATION+"/config/upload/avatar", {}, {});
+
 //   交互管理
         //查看多伦回话设置
         this.getInteractiveParameter = $resource(API_APPLICATION+"/config/interactive/get/:id", {}, {});
         //修改多伦回话设置
         this.updateInteractiveParameter = $resource(API_APPLICATION+"/config/interactive/update", {}, {});
+
 //   授权
         //查看授权参数
         this.getLicenseInfo = $resource(API_APPLICATION+"/config/license/info/:applicationId", {}, {});
@@ -56,6 +57,11 @@ class ApplicationServer {
         this.updateRobotParameter = $resource(API_APPLICATION+"/config/robot/update", {}, {});
         //重新授权参数
         this.updateLicense = $resource(API_APPLICATION+"/config/license/regrant", {}, {});
+
+//   备份还原
+        //备份
+        this.backup = $resource(API_APPLICATION+"/backuprestore/backup", {}, {});
+
 
 //  转人工设置
         //获取列表
@@ -81,7 +87,7 @@ class ApplicationServer {
         //新增服务
         this.addService = $resource(API_APPLICATION+"/service/add/publish", {}, {});
         //发布服务
-        this.releaseService = $resource(API_APPLICATION+"/service/publish", {}, {});
+        this.releaseService = $resource(API_APPLICATION+"/service/pulish", {}, {});
         //更新服务
         this.updateService = $resource(API_APPLICATION+"/service/update", {}, {});
         //删除服务

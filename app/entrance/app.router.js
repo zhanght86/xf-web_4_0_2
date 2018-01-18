@@ -775,7 +775,7 @@ module.exports = (angular) => {
                     controller: "NavController"
                 },
                 "content": {
-                    template: require("../static/application_management/views/info/backup_restore.html"),
+                    template: require("../static/application_management/views/configuration/backup_restore/backup_restore.html"),
                     controller: "BackupRestoreController"
                 }
             }

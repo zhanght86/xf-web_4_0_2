@@ -9,10 +9,8 @@ module.exports = loginModule => {
         $scope.vm = {
             userName: '',
             password: '',
-            // randomNumber: randomNumber(4),
-            // randomNumberValue: "",
-            randomNumber: 0,
-            randomNumberValue:"",
+            randomSrc: API_USER+"/validate/code/get?r="+Math.random(),
+            randomNumberValue: "",
             randomNumberChange : randomNumberChange,
             login: login,
             keyLogin : keyLogin
@@ -30,20 +28,14 @@ module.exports = loginModule => {
         }
         //登陆
         function login(){
-            //$state.go("materialManagement.chatKnowledgeBase",{userPermission : "['超级管理员','初级管理员']"});
-            // if($scope.vm.randomNumberValue.length==0){
-            //     console.log($scope.vm.randomNumberValue);
-            //     layer.msg("验证码不能为空");
-            //     setRandomNumber();
-            // }else if($scope.vm.randomNumberValue!=$scope.vm.randomNumber){
-            //     layer.msg("验证码错误");
-            //     setRandomNumber();
-            // }else
             if($scope.vm.randomNumberValue == ""){
+                randomNumberChange() ;
                 layer.msg("验证码不能为空");
             }else if($scope.vm.userName == ""){
+                randomNumberChange() ;
                 layer.msg("用户名不能为空");
             }else if($scope.vm.password == ""){
+                randomNumberChange() ;
                 layer.msg("密码不能为空");
             }else{
                 LoginServer.login.save({
@@ -58,31 +50,18 @@ module.exports = loginModule => {
                         setCookie("accessToken" , response.data.accessToken);
                         $state.go("HP.management");
                     }else{
-                        // setRandomNumber();
+                        randomNumberChange() ;
                         layer.msg(response.info);
                     }
                 },function(error){
-                    // setRandomNumber();
+                    randomNumberChange() ;
                    console.log(error)
                 });
             }
         }
         //改变验证码
         function randomNumberChange(){
-            $scope.vm.randomNumber = randomNumber(4)
-        }
-        function setRandomNumber(){
-            $scope.vm.randomNumberValue = "";
-            $scope.vm.randomNumber = randomNumber(4);
-        }
-
-        //  随机产生四位验证码
-        function randomNumber(number){
-            var rnd="";
-            for(var i=0;i<number;i++){
-                rnd+=Math.floor(Math.random()*10);
-            }
-            return rnd;
+            $scope.vm.randomSrc = API_USER+"/validate/code/get?r="+Math.random()
         }
     }
 ])}

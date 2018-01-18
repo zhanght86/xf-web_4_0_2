@@ -163,13 +163,13 @@ module.exports = homePageModule =>{
                     {
                         /*case 'homePage.define':
                             return 0;*/
-                        case 'relationalCatalog.manage':
+                        case 'BM.bot':
                             return 'BOT';
-                        case 'frameworkLibrary.manage':
+                        case 'BM.frame':
                             return '框架库';
-                        case (url.match(/^conceptManage/) || {}).input:
-                            return '概念管理';
-                        case (url.match(/^setting/) || {}).input:
+                        case 'BM.concept.synonym':
+                            return '概念管理';    
+                        case 'AM.info':
                             return '我的应用';
                         case (url.match(/^custServScenaOverview/) || {}).input:
                             return '知识管理';
@@ -206,23 +206,23 @@ module.exports = homePageModule =>{
                             return '文档加工新增';
                         case 'knowledgeManagement.historyView':
                             return '历史查看';
-                        case 'applAnalysis.accessStatistics':
+                        case 'ANM.accessStatistics':
                             return '访问统计';
-                        case 'applAnalysis.knowledgeRanking':
-                            return '知识点排名统计';
-                        case 'applAnalysis.sessionDetails':
+                        case 'ANM.knowledgeRanking':
+                            return '未匹配问题统计';
+                        case 'ANM.sessionDetails':
                             return '会话明细统计';
-                        case 'applAnalysis.satisfactionDegree':
-                            return '会话满意度统计';
-                        case 'applAnalysis.resolutionStatistics':
-                            return '问答解决率统计';
-                        case 'applAnalysis.reinforcementLearn':
+                        case 'ANM.satisfactionDegree':
+                            return '满意率统计';
+                        case 'ANM.resolutionStatistics':
+                            return '解决率统计';
+                        case 'ANM.reinforcementLearn':
                             return '智能学习';
-                        case 'applAnalysis.newKnowledgeDiscoveryLearn':
+                        case 'ANM.newKnowledgeDiscoveryLearn':
                             return '未匹配问题聚类';
-                        case 'applAnalysis.operationLog':
+                        case 'ANM.operationLog':
                             return '操作日志';
-                        case 'applAnalysis.sessionLog':
+                        case 'ANM.sessionLog':
                             return '会话日志';
                         case 'MM.chat':
                             return '聊天知识库';

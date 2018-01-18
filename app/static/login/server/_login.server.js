@@ -5,11 +5,7 @@
  */
 class LoginServer {
     constructor($resource) {
-        /******************************
-         *应用配置*
-         ********************************/
-//   渠道管理
-        //请求渠道列表
+        //登录
         this.login = $resource(API_USER+"/user/login", {}, {});
     }
 }
