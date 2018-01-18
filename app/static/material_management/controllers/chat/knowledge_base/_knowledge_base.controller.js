@@ -11,14 +11,14 @@ module.exports=materialModule => {
         $state.go("MM.chat");
         $scope.vm = {
             title : "" ,           //知识标题
-            search : search,  //查询
+            searchChat : searchChat,  //查询
             exportExcel:exportExcel,//知识导出
             //seeDtails:seeDtails,//标题预览
             //searchList : "",   //查询数据结果
             paginationConf : {     //分页条件
                 pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
                 currentPage: $location.search().currentPage?$location.search().currentPage:1,
-                search: search ,
+                search: searchChat ,
                 location:true
             }  ,
 
@@ -117,7 +117,7 @@ module.exports=materialModule => {
                             initBatchTest();
                             layer.msg("删除成功") ;
                             //$state.reload();
-                            search($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                            searchChat($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }
                         if(response.status==500){
                             console.log("删除失败");
@@ -142,8 +142,8 @@ module.exports=materialModule => {
         /**
          * 查询
          */
-        search($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
-        function search(index,pageSize,reset){
+        searchChat($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+        function searchChat(index,pageSize,reset){
             if(reset){
                 $scope.vm.paginationConf.currentPage = 1;
                 $location.search("currentPage",1);
