@@ -26,7 +26,7 @@ module.exports = applicationManagementModule =>{
             step: 0.01,
             scale: [0,0.2,0.4,0.6,0.8,1],
             format: '%s',
-            width: 400,
+            width: 348,
             showLabels: true,
             isRange : true,
             onstatechange : function(val){
@@ -42,13 +42,13 @@ module.exports = applicationManagementModule =>{
             step: 0.01,
             scale: [0,0.2,0.4,0.6,0.8,1],
             format: '%s',
-            width: 400,
+            width: 348,
             showLabels: true,
             isRange : true,
             onstatechange : function(val){
                 val = val.split(",") ;
-                $scope.parameter.tagLowerLimit = val[0]
-                $scope.parameter.tagUpperLimit = val[1]
+                $scope.parameter.tagLowerLimit = val[0] ;
+                $scope.parameter.tagUpperLimit = val[1] ;
             }
         });
         $scope.vm = {

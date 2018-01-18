@@ -1,0 +1,44 @@
+<div class="backup_restore">
+    <p class="backup_title">备份还原</p>
+    <div class="backup_content">
+        <div>
+            <h4 class="content_title">系统备份</h4>
+            <div class="content_detail">
+                请选择您希望备份的模块
+                <span ng-repeat="item in vm.backList">
+               <input type="checkbox" ng-disabled="$first && (!vm.selectList.inArray(2) || !vm.selectList.inArray(3))" ng-checked="vm.selectList.inArray(item.id)" ng-click="vm.addToList(item.id)"> {{item.name}}
+            </span>
+            </div>
+            <!--<form action="/api/material/backuprestore/download">-->
+                <!--<input type="submit" value="开始备份">-->
+            <!--</form>-->
+            <a href="javascript:;" class="btn btn-primary" ng-click="vm.backup()">开始备份</a>
+            <span class="c-red">*点击备份过后直接下载</span>
+        </div>
+        <div>
+            <h4 class="content_title">系统备份</h4>
+            <a href="javascript:;" class="btn btn-primary" ng-click="vm.restore()">开始还原</a>
+            <span class="c-red">*还原完成之后，是否退出系统</span>
+        </div>
+    </div>
+</div>
+<style>
+    .backup_restore{
+        width:100%;
+        padding-top: 30px;;
+        padding-left:30px;
+    }
+    .backup_restore .backup_title{
+        font-size:22px;
+        font-weight: 700;
+    }
+    .backup_restore .backup_content .content_title{
+        width:100%;
+        line-height: 60px;
+        font-size:100%;
+        font-weight: 700;
+    }
+    .backup_restore .backup_content .content_detail{
+        line-height: 40px;
+    }
+</style>

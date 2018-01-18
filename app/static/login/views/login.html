@@ -18,7 +18,9 @@
                 <div class="item">
                     <input class="login-ipt-box textIndent10" style="width: 216px;border:0" ng-keydown="vm.keyLogin($event)" ng-model="vm.randomNumberValue" type="text" placeholder="验证码" />
                     <!--<span class="yzm"  ng-click="vm.randomNumberChange()">{{vm.randomNumber}}</span>-->
-                    <img title="看不清？点击换一张" id="random-number" class="yzm" src="/api/authority/validate/code/get" onclick="this.src='/api/authority/validate/code/get?r='+Math.random();"/>
+                    <img title="看不清？点击换一张" id="random-number" class="yzm"
+                         ng-src="{{vm.randomSrc}}"
+                         ng-click="vm.randomNumberChange()"/>
                 </div>
                 <div class="tac">
                     <span  class="login-btn"   ng-click="vm.login()">登录</span>

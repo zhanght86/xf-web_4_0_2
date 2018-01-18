@@ -1,68 +1,90 @@
-<div class="r-cont pd30 parameterSetting">
-    <!--<span caliper ></span>-->
-
-    <div class="r-cont-hd">
-        <span>参数设置</span>
-    </div>
-    <form class="pl30 license_info">
-        <fieldset>
-            <legend  style="width:auto;border-bottom: 0">匹配方式：</legend>
-            <div style="margin: 0 0 30px 0;"><p style="display: inline-block;margin-right:10px">标签语义匹配:</p> <p style="display: inline-block"><input type="hidden" style="margin-left: 40px;" class="slider-input-greeting"/></p></div>
-            <div style="margin: 30px 0;"><p style="display: inline-block;margin-right:10px">深度语义匹配:</p> <p style="display: inline-block"><input type="hidden" class="slider-input-tag"/></p></div>
-        </fieldset>
-    </form>
-    <div class="r-cont-bd oh pt30">
-        <div class="jqrsz-item jqrsz-item2">
-            <div class="item-line">
-                <div class="lable">
-                    评论小尾巴：
-                </div>
-                <div class="value">
-                    <div class="dib pt-5 mr-15">
-                        <div switch value="parameter.commentOn"></div>
-                    </div>
-                </div>
+<div class="parameter_setting">
+    <p class="parameter_title">参数配置</p>
+    <div class="parameter_content">
+        <div class="item">
+            <p class="item_left caliper_title">标签语义匹配：</p>
+            <div class="item_right caliper_content">
+                <input type="hidden" style="margin-left: 40px;" class="slider-input-greeting"/>
             </div>
         </div>
-        <div class="jqrsz-item jqrsz-item2">
-            <div class="item-line">
-                <div class="lable">
-                    寒暄开关：
-                </div>
-                <div class="value">
-                    <div class="dib pt-5 mr-15">
-                        <div switch value="parameter.greetingOn"></div>
-                    </div>
-                </div>
+        <div class="item">
+            <p class="item_left caliper_title"> 深度语义匹配：</p>
+            <div class="item_right caliper_content">
+                <input type="hidden" class="slider-input-tag"/>
             </div>
         </div>
-        <div class="jqrsz-item jqrsz-item2">
-            <div class="item-line">
-                <div class="lable">
-                    推荐个数：
-                </div>
-                <div class="value">
-                    <input class="input-text" type="number" ng-model="parameter.recommendNumber"
-                           ng-change="vm.parameterLimit(1,'recommendNumber')" step="1"
-                           placeholder="配置推荐问题个数，标准格式为数字型" style="width: 350px;" required>
-                </div>
+        <div class="item">
+            <p class="item_left"> 评论小尾巴：</p>
+            <div class="item_right">
+                <div switch value="parameter.commentOn"></div>
             </div>
         </div>
-        <div class="jqrsz-item jqrsz-item2">
-            <div class="item-line">
-                <div class="lable">
-                    寒暄阈值：
-                </div>
-                <div class="value">
-                    <input class="input-text" type="number" ng-model="parameter.greetingUpperLimit"
-                           ng-change="vm.parameterLimit(0,'greetingUpperLimit')" step="0.1"
-                           placeholder="配置寒暄阈值，标准格式为float型" style="width: 350px;" required>
-                </div>
+        <div class="item">
+            <p class="item_left">  寒暄开关：</p>
+            <div class="item_right">
+                <div switch value="parameter.greetingOn"></div>
             </div>
         </div>
-        <div class="jqrsz-btn-box">
+        <div class="item">
+            <p class="item_left">  推荐个数：</p>
+            <div class="item_right">
+                <input class="input-text" type="number" ng-model="parameter.recommendNumber"
+                       ng-change="vm.parameterLimit(1,'recommendNumber')" step="1"
+                       placeholder="配置推荐问题个数，标准格式为数字型" style="width: 350px;" required>
+            </div>
+        </div>
+        <div class="item">
+            <p class="item_left">  寒暄阈值：</p>
+            <div class="item_right">
+                <input class="input-text" type="number" ng-model="parameter.greetingUpperLimit"
+                       ng-change="vm.parameterLimit(0,'greetingUpperLimit')" step="0.1"
+                       placeholder="配置寒暄阈值，标准格式为float型" style="width: 350px;" required>
+            </div>
+        </div>
+        <div class="item btn_group">
             <a class="btn btn-blue mr10" ng-click="vm.updateParameter()">保存</a>
             <a class="btn btn-gray" ng-click="vm.queryParameter()">取消</a>
         </div>
     </div>
 </div>
+<style>
+    .parameter_setting{
+        width:100%;
+        padding-top: 30px;;
+        padding-left:30px;
+    }
+    .parameter_setting .parameter_title{
+        font-size:22px;
+        font-weight: 700;
+    }
+    .parameter_setting .parameter_content{
+        font-size:100%;
+        width:100%;
+    }
+    .parameter_setting .parameter_content .item{
+        margin-top:10px;;
+        width:100%;
+        overflow: hidden;
+    }
+    .parameter_setting .parameter_content .btn_group{
+        padding-left:20%;
+    }
+    .parameter_setting .parameter_content .item .item_left{
+        float: left;
+        margin-right:6px;
+        width:14%;
+        text-align: right;
+    }
+    .parameter_setting .parameter_content .item .item_right {
+        float: left;
+        font-size:100%;
+        width:80%;
+    }
+    .parameter_setting .parameter_content .item .caliper_title{
+        height:50px;
+        padding-top:10px;
+    }
+    .parameter_setting .parameter_content .item .caliper_content{
+        padding-top:18px;
+    }
+</style>

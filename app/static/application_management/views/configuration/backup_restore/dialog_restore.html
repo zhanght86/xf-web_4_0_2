@@ -1,0 +1,41 @@
+<div class="restore">
+   <p class="restore_title">选择还原文件</p>
+    <div>
+
+    </div>
+    <table class="stop_word_tab">
+        <tr class="title">
+            <td width="20%" class="bold">还原模块</td>
+            <td width="60%" class="bold">还原内容</td>
+            <td width="20%" class="bold">备份时间</td>
+        </tr>
+        <tr ng-repeat="item in vm.restoreList" ng-class="!$last?'bd_none':''">
+            <td>{{item.name}}</td>
+            <td><a class="description">{{item.description}}</a></td>
+            <td>{{item.time}}</td>
+        </tr>
+    </table>
+
+</div>
+<style>
+    .restore .restore_title{
+        text-align: center;
+    }
+    .stop_word_tab{
+        border : 1px solid #f0f0f0;
+    }
+    .stop_word_tab .title{
+        background : #f0f0f0;
+    }
+    .stop_word_tab td{
+        border:0;
+    }
+    .stop_word_tab tr.bd_none{
+        padding:5%;
+        border-bottom:1px solid  #f0f0f0;
+    }
+    .stop_word_tab .description {
+        color: #a5a5a5
+    }
+
+</style>
