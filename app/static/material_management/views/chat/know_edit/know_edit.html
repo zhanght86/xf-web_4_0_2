@@ -17,56 +17,32 @@
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">用户问法：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                            <div>
-                                <table class="access_amount_table material_table">
-                                    <tr>
-                                        <td>
-                                            <input type="text" class="txt"  ng-model="vm.extendedQuestion" ng-keydown="vm.addExtension1($event)" placeholder="请输入用户问法" style="width:90%;"/>
-                                            <!--<a href="javascript:;" class="create_a" ng-click="vm.addExtension()">-->
-                                                <!--<img src="../../images/images/add_img.png" >-->
-                                            <!--</a>-->
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="item in vm.extendedQuestionArr">
-                                        <td ng-mouseenter="vm.addExtensionShow($event)" ng-mouseleave="vm.addExtensionHide($event)">
-                                            <input type="text" class="txt"  ng-model="item.content" readonly style="width:90%;"/>
-                                            <a style="display: none;" href="javascript:;" class="create_a" ng-click="vm.remove(item,vm.extendedQuestionArr)">
-                                                <img src="../../images/images/delete_img.png" >
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                </table>
+                            <div style="margin-bottom:10px;">
+                                <p ng-repeat="ext in vm.extensionQuestionList track by $index" style="position: relative;width:407px;height:32px;">
+                                    <input class="ipt-txt bd" style="width:407px;height:32px;padding:0 6px;" type="text"
+                                           ng-model="ext.content" ng-change="vm.extensionQuestionList[$index].content=ext.content" ng-keydown="vm.skipNewLine(this,$event,$index)"
+                                           ng-blur="vm.extensionUnique(vm.extensionQuestionList)">
+                                    <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
+                                          ng-click="vm.removeExtention(this,$index)"
+                                    ></span>
+                                </p>
                             </div>
-                            <div class="c-red " style="display:none;" ></div>
                         </div>
                     </div>
                     <!--知识内容-->
                     <div class="row cl mb-10">
                         <label class="form-label col-xs-4 col-sm-2 text-r">知识内容：</label>
                         <div class="formControls col-xs-8 col-sm-9" style="padding-right:0;">
-                            <div>
-                                <table class="access_amount_table material_table">
-                                    <tr>
-                                        <td>
-                                            <input type="text" class="txt"  ng-model="vm.contentVal" ng-keydown="vm.addContent1($event)" placeholder="请输入知识内容" style="width:90%;"/>
-                                            <!--<a href="javascript:;" class="create_a" ng-click="vm.addContent()">-->
-                                                <!--<img src="../../images/images/add_img.png" >-->
-                                            <!--</a>-->
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="item in vm.contentArr">
-                                        <td ng-mouseenter="vm.addExtensionShow($event)" ng-mouseleave="vm.addExtensionHide($event)">
-                                            <input type="text" class="txt"  ng-model="item.content" readonly style="width:90%;"/>
-                                            <a style="display: none;" href="javascript:;" class="create_a" ng-click="vm.removeCon(item,vm.contentArr)">
-                                                <img src="../../images/images/delete_img.png" >
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                </table>
+                            <div style="margin-bottom:10px;">
+                                <p ng-repeat="ext in vm.contentArr track by $index" style="position: relative;width:407px;height:32px;">
+                                    <input class="ipt-txt bd" style="width:407px;height:32px;padding:0 6px;" type="text"
+                                           ng-model="ext.content" ng-change="vm.contentArr[$index].content=ext.content" ng-keydown="vm.skipNewLineCon(this,$event,$index)"
+                                           ng-blur="vm.ConUnique(vm.contentArr)">
+                                    <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
+                                          ng-click="vm.removeCon(this,$index)"
+                                    ></span>
+                                </p>
                             </div>
-                            <div class="c-red " style="display:none;" ></div>
                         </div>
                     </div>
                     <div class="row cl mb-10 ">

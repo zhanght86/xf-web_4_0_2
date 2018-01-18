@@ -14,12 +14,12 @@ class SystemServer {
                     /******************************
                         *资源监控*   API_ANALYSIS = "/api/analysis" ;
                      ********************************/
-        this.getData = $resource(API_ANALYSIS+'/monitoringServer/monitoring',{},{});
+        this.getData = $resource(API_ANALYSIS+'/monitoring/resources',{},{});
 
                     /******************************
                         *服务监控*   API_ANALYSIS = "/api/analysis" ;
                      ********************************/
-        this.getServiceDate = $resource(API_ANALYSIS+'/serviceMonitoring/monitoring',{},{});
+        this.getServiceDate = $resource(API_ANALYSIS+'/monitoring/service',{},{});
         
         //根据id查询-聊天知识库
         this.searchById = $resource(API_MATERIAL+'/chat/knowledge/get/by/id',{},{});
