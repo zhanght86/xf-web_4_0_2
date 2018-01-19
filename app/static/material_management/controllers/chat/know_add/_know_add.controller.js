@@ -5,142 +5,167 @@
 module.exports=materialModule => {
     materialModule
     .controller('KnowAddController', [
-    '$scope',"$state","MaterialServer","ngDialog", "$cookieStore","$stateParams",
-    ($scope,$state,MaterialServer,ngDialog,$cookieStore,$stateParams)=> {
+    '$scope',"$state","MaterialServer","ngDialog", "$cookieStore","$stateParams","$timeout",
+    ($scope,$state,MaterialServer,ngDialog,$cookieStore,$stateParams,$timeout)=> {
         $state.go("MM.chatAdd");
 
         $scope.vm = {
             standardQuestion :  '',   //标准问
             editStandardQuestion :'',    //编辑标准问
-            extendedQuestion : "",         //扩展问
-            extendedQuestionArr : [],     //扩展问数组
-            addExtension : addExtension ,  //添加扩展
-            remove : remove ,
 
-            contentVal : "",                  //知识内容
-            contentArr : [] ,                 //知识内容数组
-            addContent : addContent,         //添加知识内容
-            removeCon : removeCon,
 
             chatKnowledgeId : '',
             save : save ,
             checkTitle : checkTitle ,          //标题
-            addExtension1 : addExtension1,
-            addContent1 : addContent1,
-            addExtensionShow: addExtensionShow,
-            addExtensionHide: addExtensionHide,
+
+            extensionQuestionList : [{"content":"",type:60}], //扩展问集合
+            skipNewLine : skipNewLine ,// 跳转到新的行
+            extensionUnique : extensionUnique,
+            removeExtention :removeExtention,
+
+            contentArr : [{"content":""}], //知识内容集合
+            skipNewLineCon : skipNewLineCon ,// 跳转到新的行
+            ConUnique : ConUnique,
+            removeCon : removeCon,
+
 
         };
-        //显示隐藏 删除标签
-        function addExtensionShow(e){
-            var obj = e.srcElement ? e.srcElement : e.target;
-            $(obj).children('a').show();
-        }
-        function addExtensionHide(e){
-            var obj = e.srcElement ? e.srcElement : e.target;
-            $(obj).children('a').hide();
+        /**
+         * 检测扩展问标签是否重复
+         * false   return   ；  true  return ext
+         * */
+        function extensionUnique(all,msg){
+            console.log(all);
+            let allExt = all.map(ext=>ext.content).filter(ext=>ext) ;
+            let newExt = [];
+            angular.forEach(allExt,function(ext,index){
+                if(!newExt.inArray(ext)){
+                    //newExt.push(ext)
+                    MaterialServer.addExtension.get({
+                        "questionContent" : ext
+                    },function(data){
+                        console.log(data);
+                        if(data.status == 200){
+                            newExt.push(ext);
+                            console.log(newExt);
+                        }else if(data.status == 500){
+                            layer.msg(msg?msg:''+ext+"添加重复",{time:1000});
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
+                }else{
+                    layer.msg(msg?msg:''+ext+"添加重复",{time:1000})
+                }
+            })
+
         }
         /**
-         ** 添加扩展问
-         **/
-        function addExtension1(e) {
+         * 扩展问 跳转到新的行
+         *
+         * */
+        function skipNewLine(scope,e,index) {
+            let len = scope.vm.extensionQuestionList.length ;
             e = e || window.event ;
-            let keycode = e.keyCode|| e.which;
-            if(keycode==13 ){
-                $scope.vm.addExtension();
-
+            if((e.keyCode|| e.which)==13 && nullCheck(scope.vm.extensionQuestionList[len-1])){
+                if(!scope.vm.extensionQuestionList[index].content){
+                    return layer.msg("请填写完整")
+                }else {
+                    scope.vm.extensionQuestionList.push({
+                        "content":"",type:60
+                    })
+                    console.log($scope.vm.extensionQuestionList);
+                };
+                $timeout(function(){
+                    $(e.target).parent().parent().children().last().find("input").focus();
+                })
             }
         }
-        //添加扩展问 (先在前台校验重复，再校验后台与数据库的是否重复---点完保存后数据才能添加到数据库)
-        function addExtension(){
-            if($scope.vm.extendedQuestion.length==0||$scope.vm.extendedQuestion==""){
-                layer.msg("扩展不能为空",{time:1000});
-            }else if(checkRepeat($scope.vm.extendedQuestion,$scope.vm.extendedQuestionArr,"content")){
-                layer.msg("扩展问题重复，请重新输入",{time:1000});
+        //删除扩展问
+        function removeExtention(scope,index) {
+            if(index == 0){
+                scope.vm.extensionQuestionList[0].content = ""
             }else{
-                //console.log($scope.vm.extendedQuestionArr);   //[]
-                MaterialServer.addExtension.get({
-                    //"applicationId" : APPLICATION_ID,
-                    "questionContent" : $scope.vm.extendedQuestion
-                },function(data){
-                    console.log(data);
-                    if(data.status == 200){
-                        var obj = {};
-                        obj.content = angular.copy($scope.vm.extendedQuestion);
-                        obj.type = 60;
-                        $scope.vm.extendedQuestionArr.push(obj);
-                        $scope.vm.extendedQuestion='';
-                        console.log($scope.vm.extendedQuestionArr);
-                    }else if(data.status == 500){
-                        layer.msg("扩展问重复",{time:1000});
-
-                    }
-                },function(err){
-                    console.log(err);
-                });
-
+                scope.vm.extensionQuestionList.splice(index,1);
             }
-
         }
-        //刪除
-        function remove(item,arr){
-            arr.remove(item);
+
+        /**
+         * 检测知识内容是否重复
+         * false   return   ；  true  return ext
+         * */
+        function ConUnique(all,msg){
+            console.log(all);
+            let allExt = all.map(ext=>ext.content).filter(ext=>ext) ;
+            let newExt = [];
+            angular.forEach(allExt,function(ext,index){
+                if(!newExt.inArray(ext)){
+                    //newExt.push(ext)
+                    MaterialServer.addContentArr.get({
+                        "content" : ext
+                    },function(data){
+                        console.log(data);
+                        if(data.status == 200){
+                            newExt.push(ext);
+                            console.log(newExt);
+                        }else if(data.status == 500){
+                            layer.msg(msg?msg:''+ext+"添加重复",{time:1000});
+                        }
+                    },function(err){
+                        console.log(err);
+                    });
+
+                }else{
+                    layer.msg(msg?msg:''+ext+"添加重复",{time:1000})
+                }
+            })
+
         }
         /**
-         ** 添加知识内容
-         **/
-        function addContent1(e) {
+         * 知识内容 跳转到新的行
+         *
+         * */
+        function skipNewLineCon(scope,e,index) {
+            let len = scope.vm.contentArr.length ;
             e = e || window.event ;
-            let keycode = e.keyCode|| e.which;
-            if(keycode==13 ){
-                $scope.vm.addContent();
-
+            if((e.keyCode|| e.which)==13 && nullCheck(scope.vm.contentArr[len-1])){
+                if(!scope.vm.contentArr[index].content){
+                    return layer.msg("请填写完整")
+                }else {
+                    scope.vm.contentArr.push({
+                        "content":"",
+                    })
+                    console.log($scope.vm.contentArr);
+                };
+                $timeout(function(){
+                    $(e.target).parent().parent().children().last().find("input").focus();
+                })
             }
         }
-        //添加知识内容
-        function addContent(){
-            if($scope.vm.contentVal.length==0||$scope.vm.contentVal==""){
-                layer.msg("知识内容不能为空",{time:1000});
-            }else if(checkRepeat($scope.vm.contentVal,$scope.vm.contentArr,"content")){
-                layer.msg("知识内容重复，请重新输入",{time:1000});
+        //删除知识内容
+        function removeCon(scope,index) {
+            if(index == 0){
+                scope.vm.contentArr[0].content = ""
             }else{
-                MaterialServer.addContentArr.get({
-                    //"applicationId":APPLICATION_ID,
-                    "content" : $scope.vm.contentVal
-                },function(data){
-                    console.log(data);
-                    if(data.status == 200){
-                        var obj = {};
-                        obj.content = angular.copy($scope.vm.contentVal);
-                        $scope.vm.contentArr.push(obj);
-                        $scope.vm.contentVal='';
-                        console.log($scope.vm.contentArr);
-                    }else if(data.status == 500){
-                        layer.msg("知识内容重复",{time:1000});
-                    }
-                },function(err){
-                    console.log(err);
-                });
+                scope.vm.contentArr.splice(index,1);
             }
         }
-        //刪除知识内容
-        function removeCon(item,arr){
-            arr.remove(item);
-        }
+
         //保存
         function save(){
             if(check()){
                 //alert("新增知识");
                 MaterialServer.faqSave.save({
-                    //"applicationId":APPLICATION_ID,
-                    "chatKnowledgeQuestionList":$scope.vm.extendedQuestionArr,
+                    //"chatKnowledgeQuestionList":$scope.vm.contentArr,
+                    "chatKnowledgeQuestionList":$scope.vm.extensionQuestionList,
                     "chatKnowledgeContentList":$scope.vm.contentArr,
                     "modifierId":USER_ID,
                     "origin":0,
                     "topic":$scope.vm.standardQuestion,
                 },function(data){
                     if(data.status==500){
-                        layer.msg("保存失败");
+                        layer.msg(data.info,{time:1000});
                     }else if(data.status==200){
                         //console.log();
                         layer.msg("保存成功");

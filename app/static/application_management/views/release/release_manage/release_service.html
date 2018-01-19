@@ -8,7 +8,7 @@
             <form name="myService" class="css-form" novalidate>
 
                 <div class="framework mb-10">
-                    <span class="framework_s text-r">发布名称：</span>
+                    <span class="framework_s text-r">服务名称：</span>
                     <div >
                         <input  type="text" class="bk-gray input-text"
                                 ng-model="vm.serviceName"
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="framework mb-10">
-                    <span class="framework_s text-r">发布节点：</span>
+                    <span class="framework_s text-r">选择节点：</span>
                     <div>
                         <ul class="bd pd-10 node_ul  mr-10" style="width:100%;min-height:30px;">
                             <li ng-repeat="node in vm.nodeList.available"  ng-class="{'btn1_blue':vm.code==node.id}"\

@@ -524,13 +524,13 @@ module.exports = businessModelingModule =>{
                             $scope.vm.dataSplit.relation=relation;
                             $scope.vm.dataSplit.id=data.data;
                             $scope.vm.dataSplit.type=$("#category-type").val().trim();
-                            $scope.vm.dataSplit.leaf=1;
+                            $scope.vm.dataSplit.leaf=0;
                             $scope.vm.dataSplit.depict=$("#category-describe").val();
-                            $scope.vm.categoryId=data.data;
+                            //$scope.vm.categoryId=data.data;
                             $("#category-name").val('');
 		                    $("#category-describe").val('');
                             reloadBot($scope.vm.dataSplit,0);
-		                   $scope.vm.categoryRootPid=data.data;
+		                   //$scope.vm.categoryRootPid=data.data;
 	            	 }else if(data.status==500){
 	            	 	  layer.msg(data.info)
 	            	 }

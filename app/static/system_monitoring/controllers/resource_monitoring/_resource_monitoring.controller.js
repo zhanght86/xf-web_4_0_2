@@ -66,7 +66,7 @@ module.exports = systemMonitoringModule =>{
         function refreshPage(){
             $window.location.reload();
         }
-        var timer=$interval($scope.vm.refreshPage,60000);
+        var timer=$interval($scope.vm.refreshPage,300000);
         /**
         ******图形请求列表
          **/
