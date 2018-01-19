@@ -1,15 +1,16 @@
 
 <div class="pd-20" >
-    <p style="text-align: center;font-size: 110%">新增应用</p>
+    <p style="text-align: center;font-size: 110%;padding:10px;">新增应用</p>
      <div class="mb-15 framework">
-         <span class="framework_s">应用名称：</span>
+         <span class="framework_s" style="width: 77px;text-align: right;">应用名称：</span>
          <input type="text" ng-model="vm.newApplicationName" class="input-text"/>
      </div>
      <div class="mb-15 framework">
-         <span class="framework_s">licence：</span>
-         <input type="text"  class="input-text" ng-model="vm.newLicence" placeholder="请输入license"/>
+         <span class="framework_s" style="width: 77px;text-align: right;">Licence：</span>
+        <!--  <input type="text"  class="input-text" ng-model="vm.newLicence" placeholder="请输入Licence"/> -->
+         <textarea class="textarea ng-pristine ng-valid" ng-model="vm.newLicence"></textarea>
      </div>
-     <form class="pl30 license_info" ng-if="info.projectName">
+     <form class="mb20 license_info" ng-if="info.projectName">
          <fieldset>
              <legend  style="width:auto;border-bottom: 0">授权信息</legend>
              <div class="info_line">
@@ -32,9 +33,11 @@
              </div>
          </fieldset>
      </form>
-     <div class="tc" style="margin-top: 8px;">
-         <input type="submit" ng-if="!vm.licensePass" class="btn1 btn1_blue mr-15" value="授权" ng-click="vm.isLicenseValidate()"/>
-         <input type="submit" ng-if="vm.licensePass" class="btn1 btn1_blue mr-15" value="确认添加应用" ng-click="vm.applicationValidate()?closeThisDialog(1):''"/>
+     <div class="tc" style="margin-top: 1px;">
+         <input type="submit" ng-if="!vm.licensePass||!info.projectName" class="btn1 btn1_blue mr-15" value="授权" ng-click="vm.isLicenseValidate()"/>
+         <input type="submit" ng-if="vm.licensePass&&info.projectName" class="btn1 btn1_blue mr-15" value="确认添加应用" ng-click="vm.applicationValidate()?closeThisDialog(1):''"/>
+         <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>  
+
      </div>
 </div>
 <style>
