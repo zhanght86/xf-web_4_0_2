@@ -5,8 +5,8 @@
  */
  module.exports = businessModelingModule =>{
     businessModelingModule.controller('FrameLibraryController', [
-        '$scope','$timeout',"$state", "$stateParams","BusinessModelingServer","$compile","$location","ngDialog","$cookieStore","$interval","$http",
-        ($scope,$timeout,$state, $stateParams,BusinessModelingServer,$compile,$location,ngDialog,$cookieStore,$interval,$http) =>{
+        '$scope','$timeout',"$state", "$stateParams","BusinessModelingServer","$compile","$location","ngDialog","$cookieStore","$interval","$http","$window","$rootScope","$filter",
+        ($scope,$timeout,$state, $stateParams,BusinessModelingServer,$compile,$location,ngDialog,$cookieStore,$interval,$http,$window,$rootScope,$filter) =>{
         // $state.go("frameworkLibrary.manage",{userPermission:$stateParams.userPermission});
         $scope.vm = {
             botSelectValue:"root",
@@ -77,8 +77,9 @@
             delSelectAll:delSelectAll,
             delSelectSingle:delSelectSingle,
             delIds:[],
-            skipNewLine : skipNewLine ,
-            delContent:delContent
+            skipNewLine : skipNewLine ,// 跳转到新的行
+            removeExtention :removeExtention,  // 删除扩展问
+            extensionUnique : extensionUnique //检测扩展问标签是否重复
         };
 
         //添加扩展问模板
@@ -86,39 +87,56 @@
            "attributeType":80,
            "order":0
        })
-         function skipNewLine(e) {
-            let len = $scope.vm.contentList.length ;
-            e = e || window.event ;
-            if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck( $scope.vm.contentList[len-1].content)) || e=="blur"&& nullCheck( $scope.vm.contentList[len-1].content)){
-                // for(var i=0;i<len-1;i++){
-                //     if($(e.target).val()==$scope.vm.contentList[i].content){
-                //        layer.msg("扩展问题不能重复")
-                //        return
-                //     }
-                // }
-                 $scope.vm.contentList.push({
-                   "attributeType":"80",
-                   "content":"",
-                 }) ;
-            }
-            $timeout(function(){
-                $(e.target).parent().next().find("input").focus();
-            },)
-          
+         /**
+         * 检测扩展问标签是否重复
+         * false   return   ；  true  return ext
+         * */
+        function extensionUnique(all,msg){
+            console.log(all);
+            let allExt = all.map(ext=>ext.content).filter(ext=>ext) ;
+            let newExt = [];
+            angular.forEach(allExt,function(ext,index){
+                if(!newExt.inArray(ext)){
+                    newExt.push(ext)
+                    $scope.vm.extRepeat=false;
+                }else{
+                    $scope.vm.extRepeat=true;
+                    return layer.msg(msg?msg:''+ext+"添加重复",{time:1000})
+                }
+            })
         }
-        //点击删除
-        function delContent(index){
-            if($scope.vm.contentList.length!=1){
-                $scope.vm.contentList.splice(index,1);
+          /**
+         * 扩展问 跳转到新的行
+         *
+         * */
+        function skipNewLine(scope,e,index,list) {
+              let len = scope.vm.contentList.length ,
+                  count;
+              e = e || window.event ;
+              if((e.keyCode|| e.which)==13 && nullCheck(scope.vm.contentList[len-1])){
+                  if(!scope.vm.contentList[index].content){
+                      return layer.msg("请填写完整")
+                  }else{
+                      scope.vm.contentList.push({
+                         "attributeType":"80",
+                         "content":"",
+                      })
+                  };
+                  $timeout(function(){
+                      $(e.target).parent().parent().children().last().find("input").focus();
+                  })
+              }
+          }
+        function removeExtention(scope,index) {
+            if($scope.vm.contentList.length == 1){
+                scope.vm.contentList[0].content = ""
             }else{
-                 $scope.vm.contentList.splice(index,1);
-                  $scope.vm.contentList.push({
-                   "attributeType":"80",
-                   "content":"",
-                 }) ;
+                scope.vm.contentList.splice(index,1)
             }
-             
         }
+
+
+
          $scope.categoryAttributeName;
         //自动获高度
         autoHeightForFrame();
@@ -704,6 +722,10 @@ $(".aside-navs").on("click","span",function(){
                                 layer.msg("扩展问题不能为空");
                                 return false
                             }
+                            if($scope.vm.extRepeat==true){
+                                layer.msg("扩展问重复")
+                                return false
+                            }
                             faqRequestAdd();
 
                         }else{
@@ -766,6 +788,7 @@ $(".aside-navs").on("click","span",function(){
                     attributeType:80
                 })
             })
+            
             console.log($scope.vm.contentList)
 
            var dialog = ngDialog.openConfirm({
