@@ -8,6 +8,7 @@ module.exports=functionalTestModule=>{
      ['$scope',"localStorageService","$state","$log","FunctionServer","$timeout","$stateParams","ngDialog","$cookieStore","$location",
      ($scope,localStorageService,$state,$log,FunctionServer, $timeout,$stateParams,ngDialog,$cookieStore,$location, )=>{
         $scope.vm = {
+
             //-------未学习-------
             searchNewKnowledgeDiscovery : searchNewKnowledgeDiscovery ,
             paginationConf : {      //分页条件
