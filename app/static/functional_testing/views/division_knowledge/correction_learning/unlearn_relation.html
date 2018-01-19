@@ -29,6 +29,9 @@
         </table>
     </div>
     <pagination ng-if="vm.paginationConf2.totalItems && vm.paginationConf2.totalItems>0" conf="vm.paginationConf2"></pagination>
+    <div ng-if="!vm.paginationConf2.totalItems" style="text-align:right;padding-top:10px;">
+        本页共0条，总共0条！
+    </div>
     <div class="tc mt-10">
         <input type="button" class="btn1 btn_green mr-10" ng-click="closeThisDialog(1)" value="保存"/>
         <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="返回"/>

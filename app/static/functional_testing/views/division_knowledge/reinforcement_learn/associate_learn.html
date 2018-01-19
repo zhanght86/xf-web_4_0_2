@@ -28,6 +28,9 @@
         </table>
     </div>
     <pagination ng-if="vm.paginationConf2.totalItems && vm.paginationConf2.totalItems>0" conf="vm.paginationConf2"></pagination>
+    <div ng-if="!vm.paginationConf2.totalItems" style="text-align:right;padding-top:10px;">
+        本页共0条，总共0条！
+    </div>
     <div class="framework mb-10 pt-10">
         <span class="framework_s text-r"></span>
         <div class="text-c">

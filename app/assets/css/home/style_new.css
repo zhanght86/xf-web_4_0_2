@@ -174,7 +174,7 @@
 
 /**/
 .framework{position: relative;padding-left:110px;min-height:25px;}
-.framework_s{position:absolute;left:0;top:0;}
+.framework_s{position:absolute;left:0;top:5px;}
 .framework_sel{height:30px;}
 
 /**/
@@ -210,7 +210,7 @@
 /*6/20-add*/
 .list_facContent{position: relative;padding-left:230px;min-height:30px;box-sizing:border-box;}
 .list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:30px;text-align:right;line-height:35px;}
-.session .session_label input {vertical-align:middle; margin:1px 0px 0px 0px;}
+.session_label input {vertical-align:middle!important; margin:1px 0px 0px 0px!important;}
 /*------------引导页样式-----------------*/
 .shadow_div{
     top: 0;
@@ -601,7 +601,7 @@
 
 /* 应用管理 场景管理 */
 .scene_setup .framework{padding-left:135px;}
-.scene_setup .framework_s{font-size:14px;}
+.scene_setup .framework_s{font-size:14px; }
 /* 机器人设置样式*/
 .robotSetup .setting_div .input-text{width:406px;}
 .robotSetup .setting_div .textarea{width:406px;}

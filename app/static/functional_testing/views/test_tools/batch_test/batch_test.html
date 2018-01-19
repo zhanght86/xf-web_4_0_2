@@ -70,29 +70,13 @@
                                 <a class="c-red" ng-click="vm.deleteQuestion([v.id])" ng-if="v.status==21009||v.status==21007">删除</a>
                             </td>
                         </tr>
-                        <!--<tr >-->
-                            <!--<td><input type="checkbox" /></td>-->
-                            <!--<td><span class="c-primary" >高铁管家第一版.xlsx</span></td>-->
-                            <!--<td >待测试</td>-->
-                            <!--<td>100</td>-->
-                            <!--<td>80%</td>-->
-                            <!--<td >2016-8-17 13:45:23</td>-->
-                            <!--<td>{{v.batchOperator}}</td>-->
-                            <!--<td>第一次测试</td>-->
-                            <!--<td>-->
-                                <!--<a href="javascript:;" class="c-green mr-5" >下载</a>-->
-                                <!--<a href="javascript:;" class="mr-5 c_orange" ng-click="vm.addRemarks()">备注</a>-->
-                                <!--<a class="c-blue mr-5" ng-click="vm.startUp()">测试</a>-->
-                                <!--&lt;!&ndash;<a class="c-blue mr-5" >重新测试</a>&ndash;&gt;-->
-                                <!--<a class="c-red" >删除</a>-->
-                            <!--</td>-->
-                        <!--</tr>-->
+
                         </tbody>
                     </table>
 
                     <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
-                    <div class="text-r pt-10">
-                        <!--<button type="button" class="btn1 btn1_blue" >导出</button>-->
+                    <div ng-if="!vm.paginationConf.totalItems" style="text-align:right;margin-top:10px;">
+                        本页共0条，总共0条！
                     </div>
                 </div>
             </div>

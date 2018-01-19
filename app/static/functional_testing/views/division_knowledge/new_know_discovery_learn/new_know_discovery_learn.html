@@ -38,20 +38,23 @@
                             </select>
                             <span >
                                 日期范围:
-                                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
+                                    <input type="text" id="startTime" onchange=""  ng-model="vm.timeStart"  onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="input-text Wdate "  style="width:150px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择开始日期" readonly>
                                     -
-                                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:165px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
+                                    <input type="text" id="endTime"   onchange="" ng-model="vm.timeEnd" onclick="WdatePicker({startDate:'%y',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="input-text Wdate "  style="width:150px;border:1px solid #e1e1e1;height: 31px;font-size: 14px;color: #333!important;" placeholder="请选择结束日期" readonly>
                             </span>
                             <span>
                                 用户提问:
                                 <input type="text" id="question" ng-model="vm.question" class="input-text" style="width: 170px"/>
                                 <input type="button" class="btn1 btn1_blue" ng-click="vm.searchNewKnowledgeDiscovery(vm.paginationConf.currentPage,vm.paginationConf.pageSize)" value="查找" />
-                                <input type="button" class="btn1 btn_green2" ng-click="vm.ignore(vm.unstudyArr)" value="忽略" />
+                                <!--<input type="button" class="btn1 btn_green2" ng-click="vm.ignore(vm.unstudyArr)" value="忽略" />-->
                             </span>
                         </div>
                         <div class="cl mb-10">
                             <b class="l f-14">新知识发现</b>
                             <!--<p class="r f-12 c-999" style="display: none;">共有数据<span id="total"></span>条</p>-->
+                        </div>
+                        <div class="cl mb-10">
+                            <input type="button" class="btn1 btn_green2" ng-click="vm.ignore(vm.unstudyArr)" value="忽略" />
                         </div>
                         <div>
                             <table class="access_amount_table" id="user_session_statistic">
@@ -85,6 +88,9 @@
                                 </tbody>
                             </table>
                             <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                            <div ng-if="!vm.paginationConf.totalItems" style="text-align:right;padding-top:10px;">
+                                本页共0条，总共0条！
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,6 +186,9 @@
                                 </tbody>
                             </table>
                             <pagination ng-if="vm.paginationConf1.totalItems && vm.paginationConf1.totalItems>0" conf="vm.paginationConf1"></pagination>
+                            <div ng-if="!vm.paginationConf1.totalItems" style="text-align:right;padding-top:10px;">
+                                本页共0条，总共0条！
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -42,6 +42,9 @@
 
             </table>
             <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+            <div ng-if="!vm.paginationConf.totalItems" style="text-align:right;padding-top:10px;">
+                本页共0条，总共0条！
+            </div>
 
         </div>
     </div>
