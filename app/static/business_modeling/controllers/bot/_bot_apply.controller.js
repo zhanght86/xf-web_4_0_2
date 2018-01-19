@@ -522,7 +522,7 @@ module.exports = applicationManagementModule =>{
             }
             BusinessModelingServer.libraryQuote.save({
                   "lid": $scope.vm.categoryLibraryId,
-                  "pid":$scope.vm.categoryId,
+                  "pid":$scope.vm.categoryId==""?"root":$scope.vm.categoryId,
             },function(data){
                  if(data.status==200){
                        layer.msg(data.info)

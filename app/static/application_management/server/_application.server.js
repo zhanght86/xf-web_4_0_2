@@ -147,7 +147,7 @@ class ApplicationServer {
         //修改应用名称
         this.updateApplicationName = $resource(API_APPLICATION+"/application/update", {}, {});
         //删除当前应用（当前所有服务）
-        this.removeApplicationServer = $resource(API_APPLICATION+"/service/delete/all", {}, {});
+        this.removeApplicationServer = $resource(API_APPLICATION+"/service/all/delete", {}, {});
 
         /******************************
                          *应用部分 登录后续部分*
