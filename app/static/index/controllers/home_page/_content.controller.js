@@ -8,9 +8,11 @@ module.exports = homePageModule =>{
             '$scope', '$location', 'localStorageService',"$state","$cookieStore",
             function ($scope, $location, localStorageService,$state,$cookieStore) {
             $scope.applicationId = APPLICATION_ID;
-                // $scope.vm = {
-                //     sceneId : SCENE_ID
-                // };
+                $scope.jump = function (sref,id) {
+                    if(APPLICATION_ID && $scope.$parent.MASTER.permissionTree.inArray(id)){
+                        $state.go(sref)
+                    }
+                };
             }
         ])
-}
+};

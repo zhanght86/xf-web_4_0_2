@@ -1,9 +1,7 @@
 <div class="restore">
    <p class="restore_title">选择还原文件</p>
-    <div>
-
-    </div>
-    <table class="stop_word_tab">
+    <div restore></div>
+    <table class="stop_word_tab" ng-if="vm.restoreList">
         <tr class="title">
             <td width="20%" class="bold">还原模块</td>
             <td width="60%" class="bold">还原内容</td>
@@ -15,7 +13,6 @@
             <td>{{item.time}}</td>
         </tr>
     </table>
-
 </div>
 <style>
     .restore .restore_title{

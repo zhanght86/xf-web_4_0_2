@@ -31,8 +31,8 @@ class KnowledgeService {
                           * 知识单条新增 *
                          **********************************/
 //   frame
-                //获取bot全路径
-                this.queryFrame = $resource(API_MS + "/frame/get/param", {}, {});
+                //套用框架
+                this.queryFrame = $resource(API_MS + "/frame/classifys/get", {}, {});
 //   bot
                 //获取bot全路径
                 this.getBotFullPath = $resource(API_MS + "/classify/fullname/get/:id", {}, {});

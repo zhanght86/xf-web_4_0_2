@@ -270,7 +270,14 @@ function delCookie(name) {
     if(cval!=null)
         document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 }
-
+//清除cookie
+function clearCookie(){
+    var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+    if (keys) {
+        for (var i = keys.length; i--;)
+            document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+    }
+}
 /**
  * 为空判断 包括空字符串及回车换行符
  * @param value

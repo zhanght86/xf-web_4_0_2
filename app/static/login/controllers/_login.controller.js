@@ -15,6 +15,8 @@ module.exports = loginModule => {
             login: login,
             keyLogin : keyLogin
         };
+        clearCookie() ;
+        localStorageService.clearAll();
         //设置 背景样式
         document.getElementsByTagName("body")[0].style.cssText = "background: url(../../images/images/log-bg.jpg) repeat";
         function keyLogin(e){
@@ -63,5 +65,19 @@ module.exports = loginModule => {
         function randomNumberChange(){
             $scope.vm.randomSrc = API_USER+"/validate/code/get?r="+Math.random()
         }
+        function checkRandomNumber(){
+            if($scope.vm.randomNumberValue == ""){
+                randomNumberChange() ;
+                layer.msg("验证码不能为空");
+            }else if($scope.vm.userName == ""){
+                randomNumberChange() ;
+                layer.msg("用户名不能为空");
+            }else if($scope.vm.password == ""){
+                randomNumberChange() ;
+                layer.msg("密码不能为空");
+            }else{
+                return true
+            }
+        }
     }
-])}
+])};

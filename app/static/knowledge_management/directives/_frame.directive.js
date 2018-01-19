@@ -35,7 +35,8 @@ module.exports = knowledgeManagementModule =>{
                                 "title":val,
                                 "type" : scope.dirFrameBot.type,
                                 "classifyIds" : scope.parameter.classifyList.map(item=>item.classifyId),
-                                "applicationId" : APPLICATION_ID
+                                "applicationId" : APPLICATION_ID,
+                                "status" : 1
                             },function (response) {
                                 if(response.data.total){
                                     scope.dirFrameBot.frames = response.data.data;
