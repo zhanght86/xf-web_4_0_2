@@ -230,7 +230,7 @@ module.exports = applicationManagementModule =>{
                             layer.msg("已成功添加服务");
                             queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else{
-                            layer.msg("新增服务失败");
+                            layer.msg(data.info);
                         }
                     },function(error){console.log(error);})
                 }else{
