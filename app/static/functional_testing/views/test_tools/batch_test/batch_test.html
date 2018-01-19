@@ -53,6 +53,7 @@
                             <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(v.id)"  ng-click="vm.selectSingle(v.id)"></td>
                             <td><span class="c-primary" >{{v.docName}}</span></td>
                             <td>{{v.channelId|channelFilter}}</td>
+                            <td ng-if="v.status==21006">测试失败</td>
                             <td ng-if="v.status==21007">待测试</td>
                             <td ng-if="v.status==21008">测试中</td>
                             <td ng-if="v.status==21009">已完成</td>

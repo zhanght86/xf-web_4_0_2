@@ -209,7 +209,8 @@
 }
 /*6/20-add*/
 .list_facContent{position: relative;padding-left:230px;min-height:30px;box-sizing:border-box;}
-.list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:30px;text-align:right;line-height:30px;}
+.list_facContent_L{position:absolute;left:0;top:0;width:230px;min-height:30px;text-align:right;line-height:35px;}
+.session .session_label input {vertical-align:middle; margin:1px 0px 0px 0px;}
 /*------------引导页样式-----------------*/
 .shadow_div{
     top: 0;
