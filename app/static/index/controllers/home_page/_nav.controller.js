@@ -49,13 +49,13 @@ module.exports = homePageModule =>{
                     USER_ID = "" ;
                     APPLICATION_ID : ""
                     // 清除所有cookie
-                    clearCookie()
+                    clearCookie();
 
                     // HomePageServer.logout.save({
                     //     "id" : USER_ID ,
                     //     "account" : USER_LOGIN_NAME
                     // },function(){
-                        $state.go("login")
+                        $state.go("login");
                     // })
                 }
                 //初始化分页配置

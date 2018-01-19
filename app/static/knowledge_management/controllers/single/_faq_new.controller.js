@@ -18,9 +18,10 @@ module.exports = knowledgeManagementModule =>{
             "contents"           : []    //内容集合
         } ;
         $scope.newKnow = {
-            "content"	: "",           //知识内容
-            "channel"	: "",           //渠道
-            "type"      : 1010
+            "isNewContent" : -1 ,
+            "content"	   : "",           //知识内容
+            "channel"	   : "",           //渠道
+            "type"         : 1010
         } ;
         $scope.vm = {
             ctrName : "faq" ,
@@ -61,6 +62,8 @@ module.exports = knowledgeManagementModule =>{
                 if(($scope.parameter.contents.length==1 && $scope.parameter.contents[0].channel == 130) || $scope.parameter.contents.length==3){
                     return layer.msg("已添加所有渠道内容");
                 }
+            }else{
+                $scope.newKnow.isNewContent = index ;
             }
             if(data){    //增加
                 $scope.newKnow.content = data.content;
@@ -85,6 +88,8 @@ module.exports = knowledgeManagementModule =>{
                     $scope.parameter.contents[index].content             = $scope.newKnow.content;
                     $scope.parameter.contents[index].contentRelevantList = $scope.vm.knowledgeRelevantContentList;
                 }
+            },"",function () {
+                $scope.newKnow.isNewContent = -1 ;
             });
         }
         function save(){
@@ -154,6 +159,19 @@ module.exports = knowledgeManagementModule =>{
             return result ;
         }
         function increaseCheck(){
+            let channelUnique = false ;
+            if($scope.newKnow.isNewContent==-1){  // 新增
+                if($scope.newKnow.channel==130 && $scope.parameter.contents.length ){
+                    channelUnique = true ;
+                }else if (!$scope.parameter.contents.every(item=>item.channel!=$scope.newKnow.channel)) {
+                    channelUnique = true ;
+                }
+            }else{
+                let existChannel = $scope.parameter.contents.filter((item,index)=>index!=$scope.newKnow.isNewContent).map(item=>item.channel);
+                if(($scope.newKnow.channel==130 && existChannel.length) || (existChannel.inArray($scope.newKnow.channel))){
+                    channelUnique = true ;
+                }
+            }
             //判斷维度是否为空 0 不变 1 全维度
             if(!$scope.newKnow.content && !$scope.newKnow.channel){
                 layer.msg("请填写知识内容,并选择渠道后保存")
@@ -161,6 +179,8 @@ module.exports = knowledgeManagementModule =>{
                 layer.msg("请填写知识内容后保存")
             }else if(!$scope.newKnow.channel){
                 layer.msg("请选择渠道后保存")
+            }else if(channelUnique){
+                layer.msg("添加渠道重复，请重新选择");
             }else{
                 ngDialog.closeAll(1) ;
             }

@@ -12,7 +12,7 @@
                 <th width="20%">播放</th>
             </tr>
             <tr ng-repeat="item in newKnow.voiceList">
-                <td><input type="radio" name="voice"></td>
+                <td><input type="radio" name="voice" ng-click="newKnow.voiceSelected.id=item.id;newKnow.voiceSelected.name=item.name" ng-checked="newKnow.voiceSelected.id == item.id"></td>
                 <td>{{item.name}}</td>
                 <td>--播放--</td>
             </tr>
@@ -25,7 +25,7 @@
     </div>
     <div class="row cl">
         <div class="text-c">
-            <button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>
+            <button  class="btn1 btn1_blue mr-20" type="button" ng-click="vm.addMultimedia(1020,newKnow.voiceSelected,closeThisDialog)"> 保存</button>
             <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>
         </div>
     </div>
