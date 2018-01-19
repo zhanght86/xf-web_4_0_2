@@ -18,6 +18,7 @@ module.exports = angular => {
     require('../directives/_verify_node.directive')(applicationManagementModule);                        // 验证节点名称
     require('../directives/caliper/_caliper.directive')(applicationManagementModule);                    // 标尺
     require('../directives/_tip_bar_directive')(applicationManagementModule);                            // 提示框
+    require('../directives/_restore.directive')(applicationManagementModule);                            // 还原
     //--------------------------------------------------
     //          controller
     //--------------------------------------------------

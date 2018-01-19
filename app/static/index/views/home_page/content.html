@@ -1,6 +1,6 @@
 <div class="i-nav">
     <div class="i-img-box i-img1">
-        <a ui-sref="knowledgeManagement.custOverview" >
+        <a ng-click="jump('KM.overview','4-1')">
             <div class="psa" >
                 <strong>客服场景知识管理</strong>
                 <p>可以针对客服场景内容的知识进行管理</p>
@@ -8,7 +8,7 @@
         </a>
     </div>
     <div class="i-img-box i-img2">
-        <a ui-sref="relationalCatalog.manage">
+        <a ng-click="jump('BM.bot','3-1')">
             <div class="psa">
                 <strong>业务建模</strong>
                 <p>针对概念，业务分类进行继承复用以及上传</p>
@@ -16,19 +16,19 @@
         </a>
     </div>
     <div class="i-img-box i-img3">
-        <a ui-sref="functionalTest.questionTest">
+        <a ng-click="jump('ST.test.question','6-1')">
             <strong class="psa1">测试功能</strong>
             <p class="psa2">提供多样化测试工具</p>
         </a>
     </div>
     <div class="i-img-box i-img4">
-        <a ui-sref="materialManagement.chatKnowledgeBase">
+        <a ng-click="jump('MM.chat','5-5')">
             <strong class="psa1">素材管理</strong>
             <p class="psa2">可以上传不同的富文本内容</p>
         </a>
     </div>
     <div class="i-img-box i-img5">
-        <a ui-sref="back.gateway">
+        <a ng-click="jump()">
             <div class="psa">
                 <strong>知识自动加工</strong>
                 <p>针对不同格式的知识，生成结构化知识的体系</p>

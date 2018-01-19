@@ -6,8 +6,8 @@
 module.exports = homePageModule =>{
     homePageModule
         .controller('NavController', [
-            '$scope', '$location', 'localStorageService', 'ngDialog',"$timeout", "$cookieStore","$state",
-            function ($scope, $location, localStorageService,ngDialog,$timeout,$cookieStore,$state) {
+            '$scope', '$location', 'localStorageService', 'ngDialog',"$timeout", "$cookieStore","$state","$cookies",
+            function ($scope, $location, localStorageService,ngDialog,$timeout,$cookieStore,$state,$cookies) {
                 $scope.url = $location.url();
                 $scope.urls=$state.current.name;
                 $scope.map = [] ; // 定义导航
@@ -44,11 +44,13 @@ module.exports = homePageModule =>{
                     // }
                 }
                 function loginout(){
-                    $cookieStore.remove('applicationId');
-                    $cookieStore.remove('userId');
-                    $cookieStore.remove('userName');
-                    $cookieStore.remove('userLoginName');
                     localStorage.removeItem('history');
+                    USER_LOGIN_NAME = "" ;
+                    USER_ID = "" ;
+                    APPLICATION_ID : ""
+                    // 清除所有cookie
+                    clearCookie()
+
                     // HomePageServer.logout.save({
                     //     "id" : USER_ID ,
                     //     "account" : USER_LOGIN_NAME
@@ -70,7 +72,6 @@ module.exports = homePageModule =>{
                         totalItems: 0, //总条数
                         pageSize: $scope.SearchPOJO.pageSize,//第页条目数
                         pagesLength: 6,//分页框数量
-
                     };
                 }
                 self.initSearch();
@@ -124,7 +125,7 @@ module.exports = homePageModule =>{
                     }
                 } ;
                 $scope.checkShowClose=function(url){
-                    if(url == 'homePage.define'){
+                    if(url == 'HP.define'){
                         return true;
                     }
                 }
@@ -153,7 +154,7 @@ module.exports = homePageModule =>{
                     }
                     else {
                         var obj={
-                            use:[{"url":"homePage.define","name":"首页"}]
+                            use:[{"url":"HP.define","name":"首页"}]
                         }
                         window.localStorage.history=JSON.stringify(obj);
                     }
@@ -170,7 +171,13 @@ module.exports = homePageModule =>{
                         case 'BM.concept.synonym':
                             return '概念管理';    
                         case 'AM.info':
-                            return '我的应用';
+                            return '应用信息';
+                        case 'AM.restore':
+                            return '备份还原';
+                        case 'AM.robot':
+                            return '机器人设置';
+                        // case 'AM.info':
+                        //     return '应用信息';
                         case (url.match(/^custServScenaOverview/) || {}).input:
                             return '知识管理';
                         case 'functionalTest.questionTest':
@@ -183,28 +190,22 @@ module.exports = homePageModule =>{
                             return '分词应用';
                         case 'functionalTest.participleResult':
                             return '分词测试结果';
-                        case 'knowledgeManagement.custOverview':
+                        case 'KM.overview':
                             return '知识总览';
-                        case 'knowledgeManagement.markOverview':
-                            return '知识总览';
-                        case 'knowledgeManagement.conceptAdd':
-                            return '营销知识新增';
-                        case 'knowledgeManagement.faqAdd':
-                            return 'FAQ知识新增';
-                        case 'knowledgeManagement.singleAddConcept':
+                        case 'KM.concept':
                             return '概念知识新增';
-                        case 'knowledgeManagement.listAdd':
+                        case 'KM.faq':
+                            return 'FAQ知识新增';
+                        case 'KM.list':
                             return '列表知识新增';
-                        case 'knowledgeManagement.factorAdd':
-                            return '要素知识新增';
-                        case 'knowledgeManagement.markKnow':
-                            return '营销知识新增';
-                        case 'knowledgeManagement.knowBatchAdditions':
+                        case 'KM.factor':
+                            return '任务知识新增';
+                        case 'KM.batch':
                             return '知识批量新增';
                        // case (url.match(/^gateway/) || {}).input:
                         case 'back.gateway':
                             return '文档加工新增';
-                        case 'knowledgeManagement.historyView':
+                        case 'KM.history':
                             return '历史查看';
                         case 'ANM.accessStatistics':
                             return '访问统计';
