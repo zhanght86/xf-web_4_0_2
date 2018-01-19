@@ -37,10 +37,11 @@ module.exports = homePageModule =>{
         // 添加修改角色
         function addRole(roleId,name,description){
             if(roleId){
-                $scope.vm.roleId = roleId
-              $scope.vm.roleName = name ;
-              $scope.vm.description = description ;
+                $scope.vm.roleId   = roleId
+                $scope.vm.roleName = name ;
+                $scope.vm.description = description ;
             }else{
+                $scope.vm.roleId   = ""
                 $scope.vm.roleName = "" ;
                 $scope.vm.description = "" ;
             }
