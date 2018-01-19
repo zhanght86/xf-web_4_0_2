@@ -46,27 +46,17 @@
                         <a href="javascript:;" class="c_green" ng-click="vm.quote(item.id)">引用</a>
                     </td>
                 </tr>
-                <!--<tr>-->
-                    <!--<td><input type="checkbox" /></td>-->
-                    <!--<td>国歌.mp3</td>-->
-                    <!--<td>140.3kb</td>-->
-                    <!--<td>2017-08-15</td>-->
-                    <!--<td>zhangzheng</td>-->
-                    <!--<td>-->
-                        <!--<a href="javascript:;" class="mr-10 c_blue" ng-click="vm.changeName()">修改名称</a>-->
-                        <!--<a href="javascript:;" class="c_red">删除</a>-->
-                    <!--</td>-->
-                <!--</tr>-->
+
             </table>
 
         </div>
 
         <div class="cl">
-            <!--<div class="L pd-20">-->
-                <!--<span >本页<b>{{vm.voiceList.objs.length}}</b>条，共有<b>{{vm.voiceList.total}}</b>条</span>-->
-            <!--</div>-->
             <div class="R">
                 <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                <div ng-if="!vm.paginationConf.totalItems" style="text-align:right;padding-top:10px;">
+                    本页共0条，总共0条！
+                </div>
             </div>
         </div>
     </div>

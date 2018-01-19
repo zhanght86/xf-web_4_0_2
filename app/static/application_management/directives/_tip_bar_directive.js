@@ -7,7 +7,7 @@ module.exports = applicationManagementModule =>{
     applicationManagementModule
         .directive('tipBar', function(){
             return {
-                template:'<span class="pt-5 set_tip_bar">'+
+                template:'<span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">'+
                             '<a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>'+
                             '<span class="pd-5 tip_bar_info" >{{tipBarInfo}}</span>'+
                          '</span>',

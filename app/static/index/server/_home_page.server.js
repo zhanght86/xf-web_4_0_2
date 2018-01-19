@@ -52,6 +52,14 @@ class HomePageServer {
     this.queryAllApplication = $resource(API_APPLICATION+"/application/get", {}, {});
     // 查询所有权限
     this.queryPermissionList = $resource(API_USER+"/role/group/get",{},{}) ;
+     /******************************
+                        *问答地址*
+                ********************************/ 
+    this.getUrl=$resource(API_APPLICATION+"/node/urllist/get/:applicationId",{},{}) ;
+
+
+
+
 
      /******************************
                         *上传记录*

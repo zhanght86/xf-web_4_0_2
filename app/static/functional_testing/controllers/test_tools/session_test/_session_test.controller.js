@@ -12,7 +12,7 @@ module.exports=functionalTestModule => {
             //title:"",
             testAsking : "" ,
             listService:[],
-            channel:'',
+            channel:'132',
             selectChannel : selectChannel,
             //channel:"",
             //channelList : [] ,
@@ -107,11 +107,9 @@ module.exports=functionalTestModule => {
             $scope.vm.testAsking='';
             $scope.vm.question='';
             $scope.vm.result='';
+            $scope.vm.channel = "132";
 
-            //$scope.vm.channel= $scope.$parent.$parent.MASTER.channelList[0].channelCode ;
-            ////$scope.vm.listDimension =  angular.copy($scope.vm.listDimensionUpBack) ;
-            //$scope.vm.dimensionArray =  {"id":[],"name":[]};
-            //console.log($scope.vm.listDimension);
+
         }
 
         /*****************

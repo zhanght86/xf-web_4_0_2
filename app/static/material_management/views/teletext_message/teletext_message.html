@@ -36,27 +36,16 @@
                     <a href="javascript:;" class="c_green ml-30" ng-click="vm.quote(item.id)">引用</a>
                 </div>
             </div>
-            <!--<div class="picture_div bd L">-->
-                <!--<dl class="picture_dl teletext_dl ">-->
-                    <!--<dt ><img src="../../../images/u13699.png" /></dt>-->
-                    <!--<dd class="cl">-->
-                        <!--<p class="L titp">湖光景色湖光景色湖光景色湖光景色湖光景色</p>-->
-                        <!--<span class="R time_span">2017-02-09</span>-->
-                    <!--</dd>-->
-                <!--</dl>-->
-                <!--<div class="pt-5 pb-5 pl-10" style="border-top:1px solid #eee;">-->
-                    <!--<a href="javascript:;" class="mr-10 c_blue ml-50">编辑</a>-->
-                    <!--<a href="javascript:;" class="c_red ml-50">删除</a>-->
-                <!--</div>-->
-            <!--</div>-->
+
 
         </div>
         <div class="cl">
-            <!--<div class="L pd-20">-->
-                <!--<span >本页<b>{{vm.imageList.objs.length}}</b>条，共有<b>{{vm.imageList.total}}</b>条</span>-->
-            <!--</div>-->
+
             <div class="R">
                 <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                <div ng-if="!vm.paginationConf.totalItems" style="text-align:right;padding-top:10px;">
+                    本页共0条，总共0条！
+                </div>
             </div>
         </div>
     </div>

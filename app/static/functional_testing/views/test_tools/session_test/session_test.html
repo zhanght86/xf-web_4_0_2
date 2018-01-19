@@ -57,10 +57,10 @@
             <div class="bd chat_test_lbot pd-10" >
                 <textarea class="chat_text_txta f-14 mb-5" ng-model="vm.testAsking"  placeholder="请输入测试问题" style="border:1px solid #eee;width:90%;height:40px;padding:5px;"></textarea>
                 <div class=" mb-10 cl" style="min-height:25px;">
-                    <div class="L" style="width:50%;">
-                        <div class="mb-10">
+                    <div class="L" style="width:60%;">
+                        <div class="mb-10 clearfix">
                             <span class="">选择服务：</span>
-                            <select class="bd mr-30" style="height:30px;min-width: 50px" ng-model="vm.serviceId"  ng-options="service.id as service.name for service in vm.listService">
+                            <select class="bd mr-30" style="height:30px;min-width: 100px" ng-model="vm.serviceId"  ng-options="service.id as service.name for service in vm.listService">
                                 <option value="" ng-if="vm.listService.length==0">应用下服务为空</option>
                             </select>
                         </div>
@@ -70,30 +70,28 @@
                                 <!--<input type="radio"  name="channel" ng-model="vm.channel" ng-value="channel.channelCode"/> {{channel.channelName}}-->
                             <!--</label>-->
                         <!--</div>-->
-                        <div style="min-height: 30px;">
-                            <span class="mr-20">渠道：</span>
-                            <label class="mr-10"><input type="checkbox" ng-checked="vm.channel==131" ng-click="vm.selectChannel(131)" /> 微信</label>
-                            <label class="mr-10"><input type="checkbox" ng-checked="vm.channel==132" ng-click="vm.selectChannel(132)" /> web</label>
-                            <label class="mr-10"><input type="checkbox" ng-checked="vm.channel==133" ng-click="vm.selectChannel(133)" /> app</label>
+                        <div style="min-height: 30px;" >
+                            <span style="margin-right:28px;">渠道：</span>
+                            <label class="mr-15 session_label"><input type="checkbox" ng-checked="vm.channel==132" ng-click="vm.selectChannel(132)" /> web</label>
+                            <label class="mr-15 session_label"><input type="checkbox" ng-checked="vm.channel==131" ng-click="vm.selectChannel(131)" /> 微信</label>
+                            <label class="mr-15 session_label"><input type="checkbox" ng-checked="vm.channel==133" ng-click="vm.selectChannel(133)" /> app</label>
 
                         </div>
                     </div>
-                    <div class="R text-r mt-20" style="width:50%;">
+                    <div class="R text-r mt-25" style="width:40%;">
                         <button class="btn1 btn1_blue mr-10" ng-click="vm.test()">测试</button>
-                        <button class="btn1 btn_gray" ng-click="vm.reset()">重置</button>
+                        <button class="btn1 btn_gray" ng-click="vm.reset()">清空</button>
                     </div>
                     <!--<span class="L">维度：</span>-->
                     <!--<div class="L">-->
                         <!--<div auto-complete=""  source="vm.listDimension" result="vm.dimensionArray" style="width:140px;"></div>-->
                     <!--</div>-->
                 </div>
-                <!--<div class="text-r mt-10">-->
-                    <!---->
-                <!--</div>-->
+
             </div>
         </div>
         <div class="R bd chat_test_r p10" style="width:380px;">
-            <p>问答流程:</p>
+            <p>聊天流程:</p>
             <div class="flow_chart_wrap" >
                 <ul>
                     <li class="clearfix mb-10" ng-repeat="v in vm.result.flowInfo track by $index">

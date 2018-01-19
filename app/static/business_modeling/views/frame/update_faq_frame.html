@@ -20,11 +20,16 @@
             <div class="exten_problem" id="faq_extension">
                 <div class="framework " style="padding-left: 80px;min-height: 31px;" >
                     <span class="framework_s text-r">扩展问题：</span>
-                    <div class="frameList" style="height: 31px;position:relative;" ng-repeat="(key,item) in vm.contentList">
-                          <input type="text"  class="L input-text mr-10 extended_query_txt extensionProblem ipt-txt bd" style="width:450px;height:31px;line-height:31px" 
-                           ng-model="item.content" ng-change="vm.contentList[$index].content=item.content" ng-keydown="vm.skipNewLine($event)" ng-blur="vm.skipNewLine('blur')" value="item.content"
-                          /> 
-                           <span style="position:absolute;right: 80px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png');cursor: pointer;" ng-click="vm.delContent($index)"></span>    
+                    <div class="frameList" style="height: 31px;position:relative;" ng-repeat="item in vm.contentList">
+                          <input type="text" 
+                           class="L input-text mr-10 extended_query_txt extensionProblem ipt-txt bd" 
+                           style="width:450px;height:31px;line-height:31px" ng-model="item.content" 
+                           ng-change="vm.contentList[$index].content=item.content"
+                           ng-keydown="vm.skipNewLine(this,$event,$index)"
+                           ng-blur="vm.extensionUnique(vm.contentList)">
+                            <span style="position:absolute;right: 80px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
+                                ng-click="vm.removeExtention(this,$index)"
+                            ></span> 
                     </div>
                 </div>
             </div>

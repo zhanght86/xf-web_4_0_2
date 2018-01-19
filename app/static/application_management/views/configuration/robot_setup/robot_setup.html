@@ -12,7 +12,7 @@
                 <div>
                     <input name="robotName" class="input-text" type="text" placeholder="给机器人起个名字吧"
                            ng-model="robot.name" ng-maxlength="8" ng-pattern="/^[\u2E80-\uFE4F]+$/"/>
-                    <span tip-bar="'昵称将会被用作聊天页面中上方机器人的名字，长度不超过8个字'"></span>
+                    <span tip-bar="'问答页面机器人的昵称'"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotName.$dirty && mySetting.robotName.$invalid">
                         昵称输入不能超过8个汉字，请重新输入！
                     </div>
@@ -22,7 +22,7 @@
                 <div class="lable">
                     机器人头像：
                 </div>
-                <div class="value">
+                <div class="value" style="padding:4px"  >
                     <div class="poto-box">
                         <img ng-src="{{$parent.$parent.MASTER.avatarUrl}}{{$parent.$parent.MASTER.avatarId}}"/>
                     </div>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="setting_div">
-                <span class="setting_span">欢迎语：</span>
+                <span class="setting_span" style=" line-height: 20px;">欢迎语：</span>
                 <div style="height: 100px;">
                     <textarea class="textarea" name="robotWelcome" check-welcome="robotWelcome" placeholder="请再次输入欢迎语!"
                               style="float: left;"
@@ -62,7 +62,7 @@
                     <input class="input-text" type="text" name="robotUnknown" placeholder="当机器人答不上来时，机器人的回复"
                            ng-model="robot.defaultUnknownAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <span tip-bar="'昵称将会被用作聊天页面回答不上来的回复'"></span>
+                    <span tip-bar="'机器人不能回答用户问题时的回复'"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotUnknown.$dirty && mySetting.robotUnknown.$invalid">
                         您输入的未知回答不能超过50个汉字，请重新输入
                     </div>
@@ -87,7 +87,7 @@
                     <input class="input-text" type="text" name="robotSensitive" placeholder="当会话中包含敏感词时，机器人的回复"
                            ng-model="robot.defaultSensitiveAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <span tip-bar="'昵称将会被用作聊天页面会话中含敏感词时，机器人的回复'"></span>
+                    <span tip-bar="敏感词回答"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotSensitive.$dirty && mySetting.robotSensitive.$invalid">
                         您输入的敏感词回答不能超过50个汉字，请重新输入
                     </div>
@@ -162,3 +162,8 @@
         </form>
     </div>
 </div>
+<style>
+    .setting_span{
+          line-height: 31px;
+        }   
+</style>

@@ -60,12 +60,11 @@ module.exports = homePageModule =>{
         }
         //打开添加窗口
         function addApplicationWindow() {
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,addApplicationHtml,"650px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,addApplicationHtml,"600px",function(){
                 addApplication();
             },function(){
-            },function(){
                 $scope.info = {} ;
-                $scope.vm.newApplicationName="";
+                //$scope.vm.newApplicationName="";
                 $scope.vm.newLicence="";
             });
         }
@@ -102,7 +101,9 @@ module.exports = homePageModule =>{
                 "description":$scope.vm.description
             },function(response){
                 if(response.status==200){
+                    console.log($scope.vm.newApplicationName)
                     let app = response.data.filter(item=>(item.name==$scope.vm.newApplicationName))[0] ;
+                    console.log(app)
                     selectApplication(app);
                     $state.go("AM.info");
                 }else{

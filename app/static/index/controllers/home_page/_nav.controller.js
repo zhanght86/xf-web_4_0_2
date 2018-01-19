@@ -6,8 +6,8 @@
 module.exports = homePageModule =>{
     homePageModule
         .controller('NavController', [
-            '$scope', '$location', 'localStorageService', 'ngDialog',"$timeout", "$cookieStore","$state","$cookies",
-            function ($scope, $location, localStorageService,ngDialog,$timeout,$cookieStore,$state,$cookies) {
+            '$scope', '$location', 'localStorageService','ngDialog',"$timeout", "$cookieStore","$state","$cookies",
+            function ($scope, $location, localStorageService,ngDialog,$timeout,$cookieStore,$state,$cookies,) {
                 $scope.url = $location.url();
                 $scope.urls=$state.current.name;
                 $scope.map = [] ; // 定义导航
@@ -78,28 +78,40 @@ module.exports = homePageModule =>{
 
                 function queryServiceList(){
                     //服务列表请求
-                    httpRequestPost("/api/application/service/listServiceByPage",{
-                        "applicationId" :  $scope.vm.applicationId,
-                        "index": ($scope.SearchPOJO.currentPage-1)*$scope.SearchPOJO.pageSize,
-                        "pageSize": $scope.SearchPOJO.pageSize
-                    },function(resource){
-                        if(resource.status == 200 && resource.data != null && resource.data.length >0){
-                            $scope.paginationConf.totalItems = resource.total;
-                            $scope.vm.serviceArray = resource.data;
-                            $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;//设置默认选择
-                            $scope.vm.openServiceConfirm();
+                    HomePageServer.getUrl.get({
+                        applicationId:APPLICATION_ID
+                    },function(data){
+                        if(data.status==200){
+                           $scope.vm.serviceArray = data.data;
+                           $scope.vm.serviceUrl = data.data[0];//设置默认选择
+                           $scope.vm.openServiceConfirm();
                         }else{
-                            layer.msg("无应用服务",{time:1000});
+                            layer.info(data.info)
                         }
-                    },function(){
-                        layer.msg("无法加载服务列表",{time:1000});
-                    });
+                        console.log(data)
+                    })
+                    // httpRequestPost("/api/application/service/listServiceByPage",{
+                    //     "applicationId" :  $scope.vm.applicationId,
+                    //     "index": ($scope.SearchPOJO.currentPage-1)*$scope.SearchPOJO.pageSize,
+                    //     "pageSize": $scope.SearchPOJO.pageSize
+                    // },function(resource){
+                    //     if(resource.status == 200 && resource.data != null && resource.data.length >0){
+                    //         $scope.paginationConf.totalItems = resource.total;
+                    //         $scope.vm.serviceArray = resource.data;
+                    //         $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;//设置默认选择
+                    //         $scope.vm.openServiceConfirm();
+                    //     }else{
+                    //         layer.msg("无应用服务",{time:1000});
+                    //     }
+                    // },function(){
+                    //     layer.msg("无法加载服务列表",{time:1000});
+                    // });
                 }
                 //引擎跳转方法
                 function openServiceConfirm(){
                     //对话框打开方法
                     var dialog = ngDialog.openConfirm({
-                        template: "/static/index/home_page/qa_system.html",
+                        template: "/static/index/views/home_page/qa_system.html",
                         scope: $scope,
                         closeByDocument: false,
                         closeByEscape: true,

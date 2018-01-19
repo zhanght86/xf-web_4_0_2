@@ -1,11 +1,11 @@
 <div class="robotSetup r-cont pd30 L" style="width: 990px;">
     <div class="r-cont-hd">
-        <span>lisence授权</span>
+        <span>Lisence授权</span>
     </div>
     <div class="pl30 mb20 mt20 clearfix">
-        <span class="">请输入lisence：</span>
+        <span class="">请输入Lisence：</span>
         <input type="text" class="bd txt " style="width: 60%;height:31px;" ng-model="info.license"/>
-        <input type="button" class="btn1 btn1_blue " style="width: 15%;" ng-click="vm.authorize()" value="重新授权">
+        <input type="button" class="btn1 btn1_blue " style="width: 10%;" ng-click="vm.authorize()" value="重新授权">
     </div>
     <form class="pl30 license_info">
         <fieldset>
@@ -25,10 +25,10 @@
                 <p>并发数量：{{info.concurrentNum}}</p>
             </div>
             <div class="info_line info_address_date">
-                <p>mac地址：{{info.macAddressStr}}</p>
+                <p>MAC地址：{{info.macAddressStr}}</p>
             </div>
             <div class="info_line info_address_date">
-                <p>有效期：{{info.startTime | date : 'yyyy-MM-dd'}}-{{info.endTime | date : 'yyyy-MM-dd'}}</p>
+                <p>有效期：{{info.startTime | date : 'yyyy-MM-dd'}}至{{info.endTime | date : 'yyyy-MM-dd'}}</p>
             </div>
         </fieldset>
     </form>

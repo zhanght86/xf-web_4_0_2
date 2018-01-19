@@ -4,20 +4,19 @@
         <div class="l-aside fl">
             <div  id="test-nav">
                 <ul>
-                    <li class="cur_test_li">
+                    <li >
                         <a class="slide-a ellipsis" ui-sref=".correction">
                             <i class="icon-l icon-navquestion"></i>
                             <span>纠正学习</span>
-                            <!--<i class="icon-r icon-jt"></i>-->
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a class="slide-a ellipsis" ui-sref=".reinforcement">
                             <i class="icon-l icon-navchat"></i>
                             <span >智能学习</span>
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a class="slide-a ellipsis"  ui-sref=".newKnow">
                             <i class="icon-l icon-navbatch"></i>
                             <span >新知识发现 </span>
@@ -26,7 +25,7 @@
                 </ul>
             </div>
         </div>
-        <div ui-view="content"></div>
+        <div ui-view="content" id="content"></div>
     </div>
 
 </div>
@@ -40,6 +39,11 @@
     $('#test-nav li').click(function(){
         $(this).addClass('cur_test_li').siblings().removeClass('cur_test_li');
     });
+    var rightCon = $("#content .r-cont-hd span")[0];
+
+
+
+
 </script>
 
 

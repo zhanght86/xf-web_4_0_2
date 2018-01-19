@@ -16,21 +16,21 @@
             </div>
         </div>
         <div class="setting_div mb20 pr" style="padding-left:130px;">
-            <span class="setting_span pa" style="width:130px;line-height:20px;">转人工条件：</span>
+            <span class="setting_span pa" style="width:130px;line-height:30px;">转人工条件：</span>
             <div class="clearfix mb30">
-                <label class="L mr30"><input type="checkbox" ng-model="vm.commandOn"  ng-checked="vm.commandOn"/> 人工命令</label>
+                <label class="L mr10" style="line-height:30px;"><input type="checkbox" ng-model="vm.commandOn"  ng-checked="vm.commandOn"/> 人工命令</label>
                 <span tip-bar="'人工命令'"></span>
             </div>
             <div class="clearfix mb30">
-                <label class="L mr30"><input type="checkbox"  ng-model="vm.noAnswerOn"  name="checkbox"  ng-checked="vm.noAnswerOn"/> 机器人未直接回答</label>
+                <label class="L mr10" style="line-height:30px;"><input type="checkbox"  ng-model="vm.noAnswerOn"  name="checkbox"  ng-checked="vm.noAnswerOn"/> 机器人未直接回答</label>
                 <span tip-bar="'机器人未直接回答'"></span>
             </div>
             <div class="clearfix mb20">
                 未直接回答次数：
-                <input type="text" class="bd txt input_xs" ng-model="vm.noAnswerNumber" ng-keyup="vm.checkNum()" ng-disabled="!vm.noAnswerOn"/>
+                <input type="text" class="bd input-text input_xs" style="height: 31px;width: 150px;" ng-model="vm.noAnswerNumber" ng-keyup="vm.checkNum()" ng-disabled="!vm.noAnswerOn"/>
             </div>
         </div>
-        <div class=" pt30 pb30 pl130">
+        <div class="pt10 pb30 pl130">
             <button class="btn btn-primary" ng-click="vm.saveData()">保存</button>
         </div>
     </div>

@@ -78,7 +78,7 @@ module.exports=functionalTestModule => {
         }
 
         /*****************
-         * //获取列表  、查询
+         * 获取列表  、查询
          * *****************/
         searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
 
@@ -89,7 +89,6 @@ module.exports=functionalTestModule => {
             }
             var i = layer.msg('资源加载中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.BatchsearchFile.save({
-               // applicationId:APPLICATION_ID,
                 batchName: $scope.vm.selectInput,
                 batchStatusId :$scope.vm.searchType,
                 index:(index - 1)*pageSize,
@@ -200,13 +199,13 @@ module.exports=functionalTestModule => {
         }
 
         function startTest(id,channelId){
-            var i = layer.msg('测试中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+           // var i = layer.msg('测试中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.startTest.save({
                 batchNumberId: id,
                 channel:channelId,
                 serviceId:$scope.vm.serviceId,
             },function(data){
-                layer.close(i);
+               // layer.close(i);
                 console.log(data);
                 if(data.status=200){
                     //$state.reload();
@@ -216,7 +215,7 @@ module.exports=functionalTestModule => {
                     layer.msg(data.info,{time:1000});
                 }
             },function(err){
-                layer.close(i);
+                //layer.close(i);
                 $log.log(err);
             });
         }
@@ -272,13 +271,13 @@ module.exports=functionalTestModule => {
         }
 
         function startTest2(channelId){
-            var i = layer.msg('测试中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
+           // var i = layer.msg('测试中...',{icon:16,shade:[0.5,'#000'],scrollbar:false,time:100000});
             FunctionServer.startTest.save({
                 batchNumberId: $scope.vm.idNew ,
                 channel:channelId,
                 serviceId:$scope.vm.serviceId,
             },function(data){
-                layer.close(i);
+               // layer.close(i);
                 console.log(data);
                 if(data.status=200){
                     //$state.reload();
@@ -289,7 +288,7 @@ module.exports=functionalTestModule => {
                     //console.log(data.info);
                 }
             },function(err){
-                layer.close(i);
+               // layer.close(i);
                 $log.log(err);
             });
         }
