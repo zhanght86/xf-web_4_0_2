@@ -14,7 +14,7 @@
         <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
             <span class="framework_s">推荐问相似度：</span>
             <div>
-                <input type="number" class="bd" ng-model="multipleConversation.recommendedSimilarity" required  ng-disabled="multipleConversation.categoryFuzzyOn==''?true:false"/>
+                <input type="number" class="bd input-text" style="width:200px" ng-model="multipleConversation.recommendedSimilarity" required  ng-disabled="multipleConversation.categoryFuzzyOn==''?true:false"/>
             </div>
         </div>
     <div >
@@ -30,7 +30,7 @@
         <div class="framework mb-10 " style="margin-left:100px;padding-left:135px;">
             <span class="framework_s">主题记忆轮数：</span>
             <div>
-                <input type="number" class="bd" ng-model="multipleConversation.topicMemoryRounds" required  ng-disabled="multipleConversation.topicMissingOn==''?true:false"/>
+                <input type="number" class="bd input-text" style="width:200px" ng-model="multipleConversation.topicMemoryRounds" required  ng-disabled="multipleConversation.topicMissingOn==''?true:false"/>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <div class="text-c">
+    <div class="text-c pt15 pb15">
         <input type="submit" class="btn1 btn1_blue mr-15" ng-click="closeThisDialog(1)" value="保存"/>
         <input type="button" class="btn1 btn_gray" ng-click="closeThisDialog(0)" value="取消" />
     </div>
