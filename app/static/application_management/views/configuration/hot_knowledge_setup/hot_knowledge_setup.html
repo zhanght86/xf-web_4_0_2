@@ -41,8 +41,8 @@
                             <th class="bold" width="17%">操作</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr ng-repeat="item in hotKnowledge.hotKnowList">
+                        <tbody  ng-if="hotKnowledge.hotKnowList.length>0">
+                        <tr  ng-repeat="item in hotKnowledge.hotKnowList">
                             <td><input type="checkbox" ng-checked="hotKnowledge.deleteIds.inArray(item.id)" ng-click="hotKnowledge.deleteIds.inArray(item.id)?hotKnowledge.deleteIds.remove(item.id):hotKnowledge.deleteIds.push(item.id)"/></td>
                             <td>{{item.knowledgeTitle}}</td>
                             <td>{{item.visitsNum}}</td>
@@ -58,7 +58,10 @@
                         </tbody>
                     </table>
                 </div>
-                <pagination ng-if="hotKnowledge.paginationConf.totalItems && hotKnowledge.paginationConf.totalItems>0" conf="hotKnowledge.paginationConf"></pagination>
+                <div ng-if="hotKnowledge.hotKnowList.length==0" class="bd" style="height: 80px; line-height: 80px; text-align: center; font-weight: bold; font-size: 16px;margin-top: -1px;"> 
+                     暂无数据
+                </div>
+                <pagination  conf="hotKnowledge.paginationConf"></pagination>
             </div>
         </div>
     </div>

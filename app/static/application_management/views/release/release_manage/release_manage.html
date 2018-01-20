@@ -16,9 +16,9 @@
                                 <button class=" btn1 btn_delete">删除</button>
                             </a> 
                         </span>
-                        <span class="R">
+                       <!--  <span class="R">
                             <span>共有数据：<b >{{vm.paginationConf.totalItems}}</b> 条</span>
-                        </span>
+                        </span> -->
                 </div>
                 <div>
                     <table class="stop_word_tab" >
@@ -31,7 +31,7 @@
                             <th class="bold" width="20%">操作</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody ng-if="vm.serviceList.length>0">
                         <tr ng-repeat="item in vm.serviceList">
                             <td><input  type="checkbox" ng-checked="vm.serviceids.inArray(item.id)" ng-click="vm.selectSingle(item.id)"/></td>
                             <td>{{item.name}}</td>
@@ -53,11 +53,14 @@
                                 <a ng-click="vm.deleteService(item.id)" class="c-error">删除</a>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
-                <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
+                <div ng-if="vm.serviceList.length==0" class="bd" style="height: 80px; line-height: 80px; text-align: center; font-weight: bold; font-size: 16px;margin-top: -1px;"> 
+                     暂无数据
+                </div>
+              <!--   <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination> -->
+                <pagination  conf="vm.paginationConf"></pagination>
             </div>
         </div>
     </div>
