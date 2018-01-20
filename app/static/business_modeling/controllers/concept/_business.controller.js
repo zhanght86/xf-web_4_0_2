@@ -181,9 +181,8 @@ module.exports = applicationManagementModule =>{
                                     console.log("cancel");
                                 });
                             }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加业务概念";
-                                addSynonymConceptDialog(singleAdd);
+                                //业务词提取
+                                extract()
                             }
                         },()=>{
                             console.log('添加失败');
@@ -503,6 +502,27 @@ module.exports = applicationManagementModule =>{
                     }
                 
             });
+        }
+
+        /**
+         * 也无此提取
+         */
+        function extract() {
+            BusinessModelingServer.busConceptExtract.get({
+                "work":$scope.vm.key
+            },(data)=>{
+                if(data.status == 200 && data.data != null){
+                    $scope.vm.term = data.data;
+                }else{
+                    console.log('业务词提取失败');
+                }
+                $scope.vm.dialogTitle="增加业务概念";
+                addSynonymConceptDialog(singleAdd);
+            },()=>{
+                console.log('业务词提取异常');
+                $scope.vm.dialogTitle="增加业务概念";
+                addSynonymConceptDialog(singleAdd);
+            })
         }
     }
 ])};

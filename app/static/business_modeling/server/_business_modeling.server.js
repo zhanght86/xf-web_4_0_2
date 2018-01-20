@@ -101,7 +101,8 @@ class BusinessModelingServer {
         this.busConceptAllDelete=$resource(API_MS+"/concept/business/batch/delete", {}, {});
         //判断重复
         this.busConceptRepeat=$resource(API_MS+"/concept/business/repeat", {}, {});
-
+        //业务词提取
+        this.busConceptExtract=$resource(API_MS+"/concept/business/extract", {}, {});
 
 
          /******************************

@@ -426,7 +426,10 @@ module.exports = applicationManagementModule =>{
                 
             });
         }
-        
+
+        /**
+         * 同义词提取
+         */
         function extract() {
             BusinessModelingServer.synConceptExtract.get({
                 "work":$scope.vm.key
