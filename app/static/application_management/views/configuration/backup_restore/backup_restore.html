@@ -4,21 +4,19 @@
         <div>
             <h4 class="content_title">系统备份</h4>
             <div class="content_detail">
-                请选择您希望备份的模块
-                <span ng-repeat="item in vm.backList">
-               <input type="checkbox" ng-disabled="$first && (!vm.selectList.inArray(2) || !vm.selectList.inArray(3))" ng-checked="vm.selectList.inArray(item.id)" ng-click="vm.addToList(item.id)"> {{item.name}}
+                请选择您希望备份的模块：
+                <span ng-repeat="item in vm.backList" class="pr20">
+               <input type="checkbox" ng-disabled="$index==2 && (!vm.selectList.inArray(2) || !vm.selectList.inArray(3))" ng-checked="vm.selectList.inArray(item.id)" ng-click="vm.addToList(item.id)"> {{item.name}}
             </span>
             </div>
             <!--<form action="/api/material/backuprestore/download">-->
                 <!--<input type="submit" value="开始备份">-->
             <!--</form>-->
-            <a href="javascript:;" class="btn btn-primary" ng-click="vm.backup()">开始备份</a>
-            <span class="c-red">*点击备份过后直接下载</span>
+            <a href="javascript:;" class="btn btn-primary"  ng-click="vm.backup()">开始备份</a>
         </div>
         <div>
-            <h4 class="content_title">系统备份</h4>
+            <h4 class="content_title">系统还原</h4>
             <a href="javascript:;" class="btn btn-primary" ng-click="vm.restore()">开始还原</a>
-            <span class="c-red">*还原完成之后，是否退出系统</span>
         </div>
     </div>
 </div>

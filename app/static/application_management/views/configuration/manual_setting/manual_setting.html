@@ -9,7 +9,7 @@
                 <span class="L mr10">
                     <input type="text" id="startTime" onchange="" ng-model="vm.workStartTime" onclick="WdatePicker({dateFmt:'HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}',onpicked:function(){}})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="HH:mm:ss" readonly="readonly">
                     -
-                    <input type="text" id="endTime" onchange="" ng-model="vm.workEndTime" onclick="WdatePicker({dateFmt:'HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}',onpicked:function(){}})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="HH:mm:ss" readonly="readonly">
+                    <input type="text" id="endTime" onchange="" ng-model="vm.workEndTime" onclick="WdatePicker({dateFmt:'HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}',onpicked:function(){}})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="HH:mm:ss" readonly="readonly">
                 </span>
                 <span tip-bar="'人工客服有效期'"></span>
 

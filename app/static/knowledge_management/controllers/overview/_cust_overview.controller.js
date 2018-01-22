@@ -17,7 +17,6 @@ module.exports = knowledgeManagementModule =>{
                 search : getData,
                 location : true
             } ,
-
             knowledgeIdList : [] ,// 此页知识id集合
             deleteIdList : [] ,   //要删除的知识i集合
             //fn
@@ -28,7 +27,7 @@ module.exports = knowledgeManagementModule =>{
             napSearch : napSearch ,
             heighSarch : false ,
             seekAdvanceParameter : {
-                "classifyList" : [] ,
+                "classifyList" : null ,
                 "knowledgeTitle": "",         //知识标题默认值null
                 "knowledgeContent": "",        //知识内容默认值null
                 "knowledgeCreator": "",        //作者默认值null
@@ -42,7 +41,7 @@ module.exports = knowledgeManagementModule =>{
             selectedBot : [] ,
             paramsReset : paramsReset //搜索重置参数
         };
-        console.log($location.search())
+        console.log($location.search());
         function jumpToNewKonwledge(id){
             var addUrl;
             switch(id){
@@ -113,7 +112,7 @@ module.exports = knowledgeManagementModule =>{
                     "expDateStart": $scope.vm.seekAdvanceParameter.knowledgeExpDateStart || null ,        //知识有效期结束值默认值null
                     "origin":$scope.vm.seekAdvanceParameter.sourceType || null,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                     "timeType": $scope.vm.seekAdvanceParameter.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                    "classifyId":$scope.vm.seekAdvanceParameter.classifyId,
+                    "classifyList":$scope.vm.seekAdvanceParameter.classifyList,
                     "channel":130
                 },function(response){
                     $scope.vm.knowledgeIdList = [] ;
@@ -155,6 +154,7 @@ module.exports = knowledgeManagementModule =>{
             // $scope.vm.classifyList = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
             $scope.vm.knowledgeTitle = "";         //知识标题默认值null
             $scope.vm.seekAdvanceParameter =  {
+                "classifyList" : null ,
                 "knowledgeType" : "" , //搜索知识类型
                 "searchExtension" : "", //搜索的擴展問
                 "knowledgeTitle": "",         //知识标题默认值null
@@ -213,7 +213,7 @@ module.exports = knowledgeManagementModule =>{
             }
         });
         //获取root 数据
-        void function(){
+        (function(){
             KnowledgeService.queryChildNodes.get({"id":"root"},function (response) {
                 if(response.status == 200){
                     $scope.vm.botRoot = response.data;
@@ -221,7 +221,7 @@ module.exports = knowledgeManagementModule =>{
             },function (error) {
                 console.log(error)
             }) ;
-        }() ;
+        })() ;
         //点击更改bot value
         //绑定点击空白隐藏（滚动条除外）
 
@@ -238,7 +238,6 @@ module.exports = knowledgeManagementModule =>{
             }
 
             var id = angular.element(this).find("span").attr("data-option-id");
-            $scope.vm.sceneIds.push(id);
             //获取bot全路径
             KnowledgeService.getBotFullPath.get({
                 id: id
@@ -247,16 +246,20 @@ module.exports = knowledgeManagementModule =>{
                     $scope.vm.selectedBot = response.data.split("/") ;
                 }
             },function(error){console.log(error)});
-            KnowledgeService.queryChildNodes.get({"id":id},function (response) {
-                if(response.status == 200){
-                    angular.forEach(response.data,function(item){
-                        $scope.vm.classifyList.push(item.id)
-                    });
-                    napSearch()
-                }
-            },function (error) {
-                console.log(error)
-            }) ;
+            $scope.vm.seekAdvanceParameter.classifyList = id;
+            napSearch() ;
+            // KnowledgeService.queryChildNodes.get({"id":id},function (response) {
+            //     if(response.status == 200){
+            //         if(response.data.length){
+            //             $scope.vm.seekAdvanceParameter.classifyList = response.data.map(item=>item.id);
+            //         }else{
+            //             $scope.vm.seekAdvanceParameter.classifyList = [];
+            //         }
+            //         napSearch()
+            //     }
+            // },function (error) {
+            //     console.log(error)
+            // }) ;
         });
         //点击下一级 bot 下拉数据填充以及下拉效果
         $(".aside-nav").on("click",'.ngBotAdd',function(){
@@ -289,7 +292,8 @@ module.exports = knowledgeManagementModule =>{
                     if(response.status == 200){
                         var itemClassName = isEdg?"pas-menu_1":"menu_1";
                         var leafClassName = isEdg?"icon-jj":"icon-ngJj";
-                        var  html = '<ul class="'+itemClassName+'" style="overflow:visible">';
+                        console.log(111)
+                        var  html = '<ul class="'+itemClassName+'" >';
                         //已经移除 icon-ngJj  ngBotAdd 样式 所有的应用于选择
                         angular.forEach(response.data,function(item){
                             var typeClass ;
@@ -324,9 +328,10 @@ module.exports = knowledgeManagementModule =>{
                                 '</li>' ;
                         });
                         html+="</ul>";
+
                         $(html).appendTo((that.parent().parent()));
                         $timeout(function(){
-                            that.parents().next().slideDown()
+                            that.parents().next().slideDown().css("overflow","visible");
                         },50) ;
                     }
                 },function (error) {console.log(error)}) ;

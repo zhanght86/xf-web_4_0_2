@@ -108,11 +108,8 @@ module.exports= functionalTestModule =>{
                         uploader.on('uploadSuccess', function (file, response) {
                             if (response.status == 500) {
                                 scope.isUpload = false;
-                                layer.msg("模板错误")
-                            }else if(response.status == 60000){
-                                scope.isUpload = false;
-                                layer.msg("文件内容错误!")
-                            }  else {
+                                layer.msg(response.info,{time:1000})
+                            }else if(response.status==200){
                                 scope.isUpload = false;
                                 scope.factor = 1 ;
                                 $state.reload();

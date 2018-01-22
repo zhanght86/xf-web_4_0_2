@@ -6,14 +6,17 @@
                 <li ng-repeat="item in vm.imageList"  ng-class="vm.imgSelected.id==item.id ? 'active' : ''"
                     ng-click="vm.selectImage(item)">
                     <div style="width:88px;height:81px;overflow:hidden;margin-bottom: 5px;">
-                        <!--<img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="/img/{{item.url}}">-->
-                        <img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="api/material/picture/get/img?url={{item.url}}">
+                        <!--<img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="api/material/picture/get/img?url={{item.url}}">-->
+                        <img title="{{item.name}}" style="width: 100%;height: 100%;cursor:pointer;" ng-src="api/material/picture/get/img/id?pictureId={{item.id}}">
                     </div>
                     <p class="f14">{{item.name}}</p>
                 </li>
             </ul>
         </div>
-        <pagination ng-if="(vm.imgPaginationConf.totalItems) && (vm.imgPaginationConf.totalItems>0)" conf="vm.imgPaginationConf"></pagination>
+        <pagination ng-if="(vm.paginationConf.totalItems) && (vm.paginationConf.totalItems>0)" conf="vm.paginationConf"></pagination>
+        <div ng-if="!vm.paginationConf.totalItems" style="text-align:right;padding-top:10px;">
+            本页共0条，总共0条！
+        </div>
         <div class="text-c">
             <button  class="btn1 btn1_blue mr-20" type="button" ng-click="closeThisDialog(1)"> 保存</button>
             <button  class="btn1 btn_gray" type="button" ng-click="closeThisDialog(0)"> 取消</button>

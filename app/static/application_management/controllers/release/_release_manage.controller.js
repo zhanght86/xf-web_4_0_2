@@ -73,13 +73,13 @@ module.exports = applicationManagementModule =>{
                 "id": serviceId
             },function(data){
                 if(data.status==200){
-                    $scope.vm.code=data.data.id;//节点编号
+                    $scope.vm.code=data.data.nodeCode;//节点编号
                     $scope.vm.serviceName=data.data.name;//服务名称
                     $scope.vm.serviceStatus=data.data.status;//服务状态
                     $scope.vm.serviceType=data.data.serviceType;//服务类型
                     $scope.vm.url=data.data.url;
                      $scope.vm.nodeList.available.push({
-                        id:data.data.id,
+                        id:data.data.nodeCode,
                         url:data.data.url,
                      })
                      console.log( $scope.vm.nodeList.available)
@@ -93,9 +93,15 @@ module.exports = applicationManagementModule =>{
             if($scope.vm.serviceName==null||$scope.vm.serviceName==""){
                 layer.msg("发布服务的名称不能为空!");
                 return 0;
+            }else if($scope.vm.nodeList.available.length==0){
+                 layer.msg("无可用节点!");
+                 ngDialog.closeAll(0) ;
+
+                return 0;
             }else if($scope.vm.code==null||$scope.vm.code==""){
                 layer.msg("发布服务时未选择发布节点!");
                 return 0;
+            
             }else{
                 return 1;
             }
@@ -197,6 +203,7 @@ module.exports = applicationManagementModule =>{
             ApplicationServer.queryAvailableNodeList.save({
                 },function(data){
                     if(data.status==200){
+                        console.log(data)
                         angular.forEach(data.data,(val,index)=>{
                             $scope.vm.nodeList.available.push(val)
                         })
