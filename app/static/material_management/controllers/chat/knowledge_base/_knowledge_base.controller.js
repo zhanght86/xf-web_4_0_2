@@ -117,7 +117,7 @@ module.exports=materialModule => {
                             initBatchTest();
                             layer.msg("删除成功") ;
                             //$state.reload();
-                            searchChat($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
+                            searchChat($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize,true);
                         }
                         if(response.status==500){
                             console.log("删除失败");
