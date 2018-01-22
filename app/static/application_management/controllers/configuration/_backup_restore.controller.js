@@ -57,7 +57,8 @@ module.exports = applicationManagementModule =>{
                 list : $scope.vm.selectList
             },function (response) {
                 if(response.status == 200 ){
-                  downLoadFiles(null,API_MATERIAL+"/backuprestore/download?fileName=1516434812045.xf")
+                    var fileName=response.data;
+                  downLoadFiles(null,API_MATERIAL+"/backuprestore/download?fileName="+fileName+"")
                  //  backupDownload(response.data)
                 }
             })
