@@ -6,8 +6,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('SynonymConceptController', [
-    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout","$location",
-    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout,$location) =>{
+    '$scope', 'localStorageService' ,'BusinessModelingServer',"$http","$state" ,"ngDialog","$timeout","$location","$resource",
+    ($scope,localStorageService,BusinessModelingServer,$http,$state,ngDialog,$timeout,$location, $resource) =>{
         $scope.vm = {
             listData : "",   // table 数据
             topic:"",
@@ -37,6 +37,7 @@ module.exports = applicationManagementModule =>{
             deleteSingle:deleteSingle,
             batchDelete:batchDelete,         //批量删除
             addConcept : addConcept,    //新增概念
+            getForObject : getForObject,
             ids:[],
         };
 
@@ -431,7 +432,7 @@ module.exports = applicationManagementModule =>{
          * 同义词提取
          */
         function extract() {
-            BusinessModelingServer.synConceptExtract.get({
+            getForObject(API_MS+"/concept/synonym/extract",{
                 "work":$scope.vm.key
             },(data)=>{
                 if(data.status == 200 && data.data != null){
@@ -446,6 +447,22 @@ module.exports = applicationManagementModule =>{
                 $scope.vm.dialogTitle="增加同义概念";
                 addSynonymConceptDialog(singleAdd);
             })
+        }
+
+        function getForObject(url, params, onSuccess, onError) {
+            var _resource = $resource(url, {}, {
+                create: {
+                    method: 'GET',
+                    params: {},
+                    cache: false ,
+                    timeout: 2500, //超时时间设置为2.5秒；
+                    headers: {
+                        'Accept': 'text/plain,text/html,application/json',
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    }
+                }
+            });
+            return _resource.create(params).$promise.then(onSuccess, onError);
         }
     }
 ])};
