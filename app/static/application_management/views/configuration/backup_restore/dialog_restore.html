@@ -13,16 +13,16 @@
 </thead>
 <tbody >
     <tr ng-repeat="item in vm.restoreList.list track by $index" >
-      <th><input  type="checkbox" ng-checked="vm.backupIds.inArray(item)" ng-click="vm.selectSingle(item)" checked="checked" /></th>
+      <th><input  type="checkbox" ng-checked="vm.backupIds.inArray(item)" ng-click="vm.selectSingle(item)" ng-disabled="item==1&& (!vm.backupIds.inArray(2) || !vm.backupIds.inArray(3))" ng-checked="true"/></th>
       <th  ng-if="item==1">知识管理</th>
       <th  ng-if="item==1">所有知识条目</th>
       <th  ng-if="item==2">业务建模</td>
       <th  ng-if="item==2">意图树、实体库、会话库</th>
       <th  ng-if="item==3">素材管理</th>
-      <th  ng-if="item==3">图片库、图文消息库、语音库、聊天知识库</th>
+      <th  ng-if="item==3">图片库、图文消息库、语音库、聊天知识库</th> 
       <th  ng-if="item==4">系统管理</th>
       <th  ng-if="item==4">系统管理所有子模块</th>
-      <th>2018-01-18 15:48:2</th>
+      <th>{{vm.restoreList.date}}</th>
   </tr>
 </tbody>
 </table>
