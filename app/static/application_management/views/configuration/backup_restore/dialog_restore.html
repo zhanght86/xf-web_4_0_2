@@ -1,18 +1,37 @@
 <div class="restore">
-   <p class="restore_title">选择还原文件</p>
-    <div restore></div>
-    <table class="stop_word_tab" ng-if="vm.restoreList">
-        <tr class="title">
-            <td width="20%" class="bold">还原模块</td>
-            <td width="60%" class="bold">还原内容</td>
-            <td width="20%" class="bold">备份时间</td>
-        </tr>
-        <tr ng-repeat="item in vm.restoreList" ng-class="!$last?'bd_none':''">
-            <td>{{item.name}}</td>
-            <td><a class="description">{{item.description}}</a></td>
-            <td>{{item.time}}</td>
-        </tr>
-    </table>
+ <p class="restore_title">选择还原文件</p>
+ <div restore></div>
+ <span class="c-red pb10"  style="display: inline-block;">*还原后，之前的设置和知识都将被替换，切不可恢复</span>
+ <table class="stop_word_tab">
+   <thead>
+    <tr>
+        <th class="bold" width="5%"><input  type="checkbox"  ng-click="vm.selectAll()" ng-checked="vm.isSelectAll"/></th>
+        <th class="bold" width="30%">还原模块</th>
+        <th class="bold" width="30%">还原内容</th>
+        <th class="bold" width="35%">备份时间</th>
+    </tr>
+</thead>
+<tbody >
+    <tr ng-repeat="item in vm.restoreList.list track by $index" >
+      <th><input  type="checkbox" ng-checked="vm.backupIds.inArray(item)" ng-click="vm.selectSingle(item)" checked="checked" /></th>
+      <th  ng-if="item==1">知识管理</th>
+      <th  ng-if="item==1">所有知识条目</th>
+      <th  ng-if="item==2">业务建模</td>
+      <th  ng-if="item==2">意图树、实体库、会话库</th>
+      <th  ng-if="item==3">素材管理</th>
+      <th  ng-if="item==3">图片库、图文消息库、语音库、聊天知识库</th>
+      <th  ng-if="item==4">系统管理</th>
+      <th  ng-if="item==4">系统管理所有子模块</th>
+      <th>2018-01-18 15:48:2</th>
+  </tr>
+</tbody>
+</table>
+<div ng-if="vm.restoreList.length==0" class="bd" style="height: 80px; line-height: 80px; text-align: center; font-weight: bold; font-size: 16px;margin-top: -1px;">暂无数据</div>
+<div class="tc" style="padding: 20px 0 10px 0;">
+         <button class="btn1 btn1_blue mr-15"  ng-click="vm.reductionBtn()">还原</button>
+         <button class="btn1 btn_gray" ng-click="closeThisDialog(0)">取消</button>  
+
+     </div>
 </div>
 <style>
     .restore .restore_title{

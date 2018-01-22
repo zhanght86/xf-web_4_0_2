@@ -1,32 +1,26 @@
 /**
- * @Author : MILES .
- * @Create : 2018/1/18.
- * @Module :
+ * Created by miles on 2017/7/16.
+ *
+ * 语音上传  ====》》  指令
  */
 module.exports = knowledgeManagementModule =>{
     knowledgeManagementModule
-        .directive("restore", ["$parse", function($parse) {
-            return {
-                restrict:'A',
-                scope:{
-                    accept:'=',
-                    server : '='   , //url
-                    //item  : '@'
-                    type : "="   ,   //image：图片 video：音视频  flash：flash   file：办公文档，压缩文件等等
-                    isAuto : "=",
-                    selectBtn : "=",
-                    "tableList" : "="
-                },
-                template:
-                    '<span  id="picker" style="float:left">选择文件</span>'
-                ,
-                link:function(scope,element,attrs){
-                    //var $list = angular.element("#thelist");
-                    var uploader = WebUploader.create({
+    .directive("restore", ["$parse","$state","$timeout", "ngDialog",
+    function($parse,$state,$timeout,ngDialog) {
+    return {
+        restrict:'EA',
+        template:
+            '<span  id="picker" style="float:left">选择文件</span><br/><br/>'+
+             '<p ng-repeat="item in fileNames">{{item}}</p>'
+        ,
+        link:function(scope,element,attrs){
+            scope.fileNames = [] ;
+            $timeout(function(){
+                var uploader = WebUploader.create({
                         auto: true, // 选完文件后，是否自动上传
                         // swf文件路径
                         swf: '/bower_components/webuploader-0.1.5/dist/Uploader.swf',
-                        server: API_APPLICATION+"/backuprestore/restore",
+                        server: API_APPLICATION+"/backuprestore/info/read",
                         //accept: {
                         //    title: 'file',
                         //    extensions: 'xls,xlsx',
@@ -34,8 +28,8 @@ module.exports = knowledgeManagementModule =>{
                         //},
                         pick: '#picker',
                     });
-                    uploader.on( 'fileQueued', function( file ) {
-                        console.log(file + "file  add success");
+                 uploader.on( 'fileQueued', function( file ) {
+                        scope.vm.file=file;
                     });
                     uploader.on( 'uploadProgress', function( file, percentage ) {
                         var $li = $( '#'+file.id ),
@@ -49,7 +43,6 @@ module.exports = knowledgeManagementModule =>{
                         }
                         $li.find('p.state').text('上传中');
                         $percent.css( 'width', percentage * 100 + '%' );
-                        console.log(percentage);
                     });
                     uploader.on('uploadError', function (file) {
                         console.log("上传失败")
@@ -58,13 +51,36 @@ module.exports = knowledgeManagementModule =>{
                         if(response.status == 500){
                             layer.msg("模板错误")
                         }else{
-                            scope.tableList = response ;
+                            scope.vm.restoreList = response.data;
+                            scope.vm.data=true;
+                            scope.vm.flage=true;
+                             layer.msg(response.info,{time:1000})
                             scope.$apply();
                         }
-                        console.log(response)
                     });
+                // scope.$watch("vm.isUploadStart",function(val){
+                //     if(val){
+                //         if(!scope.vm.voiceTitle){
+                //             layer.msg("请添加语音标题");
+                //         }else if(!uploader.getFiles().length){
+                //             layer.msg("请选择文件");
+                //         }else{
+                //             uploader.options.formData = {
+                //                 // "voiceName" : scope.vm.voiceTitle,
+                //                 // "applicationId":APPLICATION_ID,
+                //                 // "voiceUserName":USER_LOGIN_NAME
+                //                 "voiceName": scope.vm.voiceTitle,
+                //                 "modifierId" : USER_ID,
 
-                }
-            }
-        }])
-}
+                //             } ;
+                //             console.log(uploader.options.formData);
+                //             uploader.upload() ;
+                //         }
+                //     }
+                // })
+            },0)
+
+        }
+    }
+
+}])} ;

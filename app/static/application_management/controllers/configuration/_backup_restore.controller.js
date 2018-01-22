@@ -13,25 +13,30 @@ module.exports = applicationManagementModule =>{
             addToList  : addToList ,
             backup     :backup ,
             restore    : restore ,
-            backList   : [
-                {
-                    "name" : "知识库",
-                    "id"   : 1
-                },
+            reductionBtn:reductionBtn,
+            backList   : [ 
                 {
                     "name" : "业务建模",
                     "id"   : 2
-                },
-                {
+                },{
                     "name" : "素材管理",
                     "id"   : 3
-                },
-                {
+                },{
+                    "name" : "知识管理",
+                    "id"   : 1
+                },{
                     "name" : "系统管理",
                     "id"   : 4
                 }
+               
             ],
-            restoreList : []
+            backupIds:[],
+            restoreList :"",
+            selectAll:selectAll,    //全选
+            selectSingle:selectSingle, //单选
+
+
+
         };
         let restoreHtml = require("../../views/configuration/backup_restore/dialog_restore.html");
         function addToList(id){
@@ -52,13 +57,87 @@ module.exports = applicationManagementModule =>{
                 list : $scope.vm.selectList
             },function (response) {
                 if(response.status == 200 ){
-                    downLoadFiles("",API_MATERIAL+"/backuprestore/download")
+                  downLoadFiles(null,API_MATERIAL+"/backuprestore/download?fileName=1516434812045.xf")
+                 //  backupDownload(response.data)
                 }
             })
         }
         function restore() {
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,restoreHtml,"",function(){
+            console.log($scope.vm.restoreList)
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,restoreHtml,"700px",function(){
 
             })
         }
+
+       function reductionBtn(){
+        console.log($scope.vm.restoreList.length)
+        // if(!$scope.vm.restoreList.length>0){
+        //     layer.msg("请上传文件")
+        //     return
+        // }
+         ApplicationServer.restore.save({
+            "list":$scope.vm.backupIds,
+            "fileName":$scope.vm.restoreList.fileName,
+            "workspace":$scope.vm.restoreList.workspace,
+         },(data)=>{
+            console.log(data)
+            console.log($scope.vm.file)
+            if(data.status==200){
+                layer.msg(data.info)
+            }else{
+                layer.msg(data.info)
+            }
+
+         })
+       }
+       console.log("_______________")
+       console.log($scope.vm.data)
+        if($scope.vm.data){
+            alert(1)
+             selectAll() 
+        }
+         
+         //全选
+        function selectAll(){
+            if($scope.vm.isSelectAll){
+                $scope.vm.isSelectAll = false;
+                $scope.vm.backupIds = [];
+            }else{
+                $scope.vm.isSelectAll=true;
+                $scope.vm.backupIds=[];
+                angular.forEach($scope.vm.restoreList.list,function (val) {
+                    $scope.vm.backupIds.push(val);
+                })
+            }
+            console.log($scope.vm.backupIds);
+        }
+        //单选
+        function selectSingle(id){
+            if($scope.vm.backupIds.inArray(id)){
+                $scope.vm.backupIds.remove(id);
+                $scope.vm.backList = false;
+            }else{
+                $scope.vm.backupIds.push(id);
+
+            }
+            if($scope.vm.backupIds.length==$scope.vm.restoreList.list.length){
+                $scope.vm.isSelectAll = true;
+            }else{
+                $scope.vm.isSelectAll = false;
+            }
+            console.log( $scope.vm.backupIds);
+            }
+            //全选清空
+            function initBatchTest(){
+                $scope.vm.isSelectAll=false;
+                $scope.vm.backupIds=[];
+            }
+
+        //  function backupDownload(fileName){
+        //   ApplicationServer.backupDownload.save({
+        //     "fileName":fileName
+        //   },(data)=>{
+        //       console.log(data)
+        //   })
+        // }
 }])};
