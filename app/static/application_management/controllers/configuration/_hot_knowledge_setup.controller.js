@@ -108,19 +108,6 @@ module.exports = applicationManagementModule =>{
                     $scope.knowledge.paginationConf.numberOfPages = 0 ;
                 } 
 
-                // if(response.data.total == 0 ){
-                //     layer.msg("查询记录为空") ;
-                //     $scope.knowledge.knowledgeList = [] ;
-                //     $scope.knowledge.paginationConf.totalItems = 0 ;
-                // }else{
-                //     if(response.data.data.length){
-                //         $scope.knowledge.knowledgeIdList =  response.data.data.map(item=>item.id) ;
-                //     }
-                //     $scope.knowledge.knowledgeList = response.data.data;
-                //     $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList).items.length==0?true:false
-                //     $scope.knowledge.paginationConf.totalItems = response.data.total ;
-                //     $scope.knowledge.paginationConf.numberOfPages = response.data.total/pageSize ;
-                // }
             },function(error){console.log(error)})
         }
         function selectAllKnow() {
