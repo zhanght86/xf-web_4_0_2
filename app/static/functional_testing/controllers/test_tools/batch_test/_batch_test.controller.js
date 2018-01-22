@@ -93,8 +93,7 @@ module.exports=functionalTestModule => {
                 batchStatusId :$scope.vm.searchType,
                 index:(index - 1)*pageSize,
                 pageSize: pageSize,
-                //channel: $scope.vm.selectInput,
-                //batchOperator: $scope.vm.selectInput
+
             },function(data){
                 layer.close(i);
                 if(data.status == 500){
@@ -103,6 +102,9 @@ module.exports=functionalTestModule => {
                     //$scope.vm.listDataTotal = 0;
                     $scope.vm.paginationConf.totalItems = 0;
                 }else if(data.status==200){
+                    if(!reset){
+                        initBatchTest();
+                    }
                     console.log(data);
                     //alert(typeof data.data.batchTestList[0].batchNumberId);
                     $scope.vm.listData = data.data.list;
@@ -136,7 +138,8 @@ module.exports=functionalTestModule => {
                             initBatchTest();
                             layer.msg("文件删除成功") ;
                             layer.closeAll();
-                            $state.reload();
+                            //$state.reload();
+                            searchFile($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize,true) ;
                         }else if(data.status == 500){
                             layer.msg("文件删除失败") ;
                         }
