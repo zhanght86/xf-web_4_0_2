@@ -147,7 +147,7 @@ class ApplicationServer {
         // //重启服务
         // this.restartService = $resource(API_APPLICATION+"/service/restart", {}, {});
         //下线所有服务
-        this.stopAllService = $resource(API_APPLICATION+"/service/stop/all", {}, {});
+        this.stopAllService = $resource(API_APPLICATION+"/service/all/stop", {}, {});
         //查看应用信息
         this.viewApplicationInfo = $resource(API_APPLICATION+"/application/get/:id", {}, {});
         //修改应用名称

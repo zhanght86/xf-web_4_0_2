@@ -26,8 +26,10 @@
                     <div style="width: 25%;float: left;text-align: center;">
                         <span  ng-if="item.status==30002">已发布</span>
                         <span  ng-if="item.status==30001">未发布</span>
+                        <span  ng-if="item.status==30003">已下线</span>
                     </div>
                     <div style="width: 30%;float: left;text-align: right;">
+                        <buttom class="btn btn-blue" ng-if="item.status==30003" ng-click="vm.startService(item.id)">发布</buttom>
                         <buttom class="btn btn-gray" ng-if="item.status==30002" ng-click="vm.stopService(item.id)">下线</buttom>
                         <buttom class="btn btn-blue" ng-if="item.status==30001" ng-click="vm.startService(item.id)">发布</buttom>
                     </div>
