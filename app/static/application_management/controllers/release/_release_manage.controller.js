@@ -50,12 +50,14 @@ module.exports = applicationManagementModule =>{
                 "index" : (index-1)*pageSize,
                 "pageSize": pageSize
             },function(response){
-                if(response.status == 200){
+                if(response.status == 200&&response.data!=null||response.data.length>0){
                     $scope.vm.serviceList = response.data.data;
                     $scope.vm.paginationConf.totalItems = response.data.total ;
                     $scope.vm.paginationConf.numberOfPages = response.total/pageSize ;
                 }else{
-
+                    $scope.vm.serviceList = "";
+                    $scope.vm.paginationConf.totalItems = 0 ;
+                    $scope.vm.paginationConf.numberOfPages =0 ;
                 }
             },function(error){console.log(error)})
         }
@@ -71,13 +73,13 @@ module.exports = applicationManagementModule =>{
                 "id": serviceId
             },function(data){
                 if(data.status==200){
-                    $scope.vm.code=data.data.id;//节点编号
+                    $scope.vm.code=data.data.nodeCode;//节点编号
                     $scope.vm.serviceName=data.data.name;//服务名称
                     $scope.vm.serviceStatus=data.data.status;//服务状态
                     $scope.vm.serviceType=data.data.serviceType;//服务类型
                     $scope.vm.url=data.data.url;
                      $scope.vm.nodeList.available.push({
-                        id:data.data.id,
+                        id:data.data.nodeCode,
                         url:data.data.url,
                      })
                      console.log( $scope.vm.nodeList.available)
@@ -195,6 +197,7 @@ module.exports = applicationManagementModule =>{
             ApplicationServer.queryAvailableNodeList.save({
                 },function(data){
                     if(data.status==200){
+                        console.log(data)
                         angular.forEach(data.data,(val,index)=>{
                             $scope.vm.nodeList.available.push(val)
                         })
@@ -230,7 +233,7 @@ module.exports = applicationManagementModule =>{
                             layer.msg("已成功添加服务");
                             queryServiceList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize);
                         }else{
-                            layer.msg("新增服务失败");
+                            layer.msg(data.info);
                         }
                     },function(error){console.log(error);})
                 }else{

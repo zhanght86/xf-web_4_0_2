@@ -30,42 +30,35 @@ module.exports = loginModule => {
         }
         //登陆
         function login(){
-            if($scope.vm.randomNumberValue == ""){
-                randomNumberChange() ;
-                layer.msg("验证码不能为空");
-            }else if($scope.vm.userName == ""){
-                randomNumberChange() ;
-                layer.msg("用户名不能为空");
-            }else if($scope.vm.password == ""){
-                randomNumberChange() ;
-                layer.msg("密码不能为空");
-            }else{
-                LoginServer.login.save({
-                    "account":$scope.vm.userName,
-                    "validateCode":$scope.vm.randomNumberValue,
-                    "pwd": hex_md5($scope.vm.password)
-                },function(response){
-                    if(response.status==200){
-                        // cookie  userId userName
-                        setCookie("userId" , response.data.userId);
-                        setCookie("userName" , response.data.account);
-                        setCookie("accessToken" , response.data.accessToken);
-                        $state.go("HP.management");
-                    }else{
-                        randomNumberChange() ;
-                        layer.msg(response.info);
-                    }
-                },function(error){
-                    randomNumberChange() ;
-                   console.log(error)
-                });
+            if(!checkRandomNumber()){
+                return ;
             }
+            LoginServer.login.save({
+                "account":$scope.vm.userName,
+                "validateCode":$scope.vm.randomNumberValue,
+                "pwd": hex_md5($scope.vm.password)
+            },function(response){
+                if(response.status==200){
+                    // cookie  userId userName
+                    setCookie("userId" , response.data.userId);
+                    setCookie("userName" , response.data.account);
+                    setCookie("accessToken" , response.data.accessToken);
+                    $state.go("HP.management");
+                }else{
+                    randomNumberChange() ;
+                    layer.msg(response.info);
+                }
+            },function(error){
+                randomNumberChange() ;
+               console.log(error)
+            });
         }
         //改变验证码
         function randomNumberChange(){
             $scope.vm.randomSrc = API_USER+"/validate/code/get?r="+Math.random()
         }
         function checkRandomNumber(){
+            let result = false ;
             if($scope.vm.randomNumberValue == ""){
                 randomNumberChange() ;
                 layer.msg("验证码不能为空");
@@ -76,8 +69,9 @@ module.exports = loginModule => {
                 randomNumberChange() ;
                 layer.msg("密码不能为空");
             }else{
-                return true
+                result = true ;
             }
+            return result ;
         }
     }
 ])};

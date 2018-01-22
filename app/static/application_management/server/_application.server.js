@@ -61,6 +61,12 @@ class ApplicationServer {
 //   备份还原
         //备份
         this.backup = $resource(API_APPLICATION+"/backuprestore/backup", {}, {});
+        //备份下载
+        this.backupDownload=$resource("/api/material/backuprestore/download", {}, {});
+        //备份包信息
+        this.backuprestore=$resource(API_APPLICATION+"/backuprestore/info/read", {}, {})
+        //还原
+        this.restore=$resource(API_APPLICATION+"/backuprestore/restore", {}, {})
 
 
 //  转人工设置

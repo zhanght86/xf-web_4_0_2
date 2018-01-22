@@ -15,10 +15,10 @@ module.exports = homePageModule =>{
                 search     : queryRoleList,
                 location   : true
             }  ,
-            roleName      : "" ,
-            description   : "" ,
-            addRole       : addRole ,
-            deleteRole    : deleteRole
+            roleName       : "" ,
+            description    : "" ,
+            addRole        : addRole ,
+            deleteRole     : deleteRole
         }  ;
         let roleHtml = require("../../views/permission_management/dialog_role.html");
         queryRoleList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
@@ -37,11 +37,11 @@ module.exports = homePageModule =>{
         // 添加修改角色
         function addRole(roleId,name,description){
             if(roleId){
-                $scope.vm.roleId   = roleId
+                $scope.vm.roleId   = roleId ;
                 $scope.vm.roleName = name ;
                 $scope.vm.description = description ;
             }else{
-                $scope.vm.roleId   = ""
+                $scope.vm.roleId   = "" ;
                 $scope.vm.roleName = "" ;
                 $scope.vm.description = "" ;
             }
@@ -50,7 +50,7 @@ module.exports = homePageModule =>{
                     resultNodes = [] ,                                 //根据过滤机制获得zTree的所有节点
                     nodes       = zTree.getNodesByFilter(node=>node),  //权限返回节点id
                     parameter ,apiRes;                                 //参数 & 请求
-                angular.forEach(nodes,function(item,index){           //获取所有选择节点
+                angular.forEach(nodes,function(item){                 //获取所有选择节点
                     if(item.checked){
                         resultNodes.push(item.id)
                     }

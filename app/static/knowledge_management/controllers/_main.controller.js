@@ -9,7 +9,6 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService, $state,KnowledgeService,$timeout) =>{
         $state.go("KM.overview");
         $scope.knowCtr = {
-            // selectChannel : selectChannel , //选择渠道
             rmeoveExtToLocal : rmeoveExtToLocal ,           //删除扩展问并添加到localStorage , 应用于所有知识编辑
             setKnowParamHasDialog : setKnowParamHasDialog ,  //弹框重置参数  应用于概念，faq
             isBotRepeat : isBotRepeat ,// 验证Bot 是否重复      For 知识新增bot添加
@@ -24,8 +23,8 @@ module.exports = knowledgeManagementModule =>{
              } ,
             skipNewLine : skipNewLine ,// 跳转到新的行
             removeExtention :removeExtention,
-            showFrame :showFrame ,
-            extensionUnique : extensionUnique
+            showFrame :showFrame ,             //业务框架弹框
+            extensionUnique : extensionUnique  //扩展问重复判断
         };
         /**
          *  业务框架
@@ -49,15 +48,22 @@ module.exports = knowledgeManagementModule =>{
          * */
         function extensionUnique(all,msg){
             console.log(all);
+            let cur = -1 ;
+            let repeatExt ;
             let allExt = all.map(ext=>ext.title).filter(ext=>ext) ;
             let newExt = [];
             angular.forEach(allExt,function(ext,index){
                 if(!newExt.inArray(ext)){
                     newExt.push(ext)
                 }else{
-                    return layer.msg(msg?msg:''+ext+"添加重复",{time:1000})
+                    cur       = index;
+                    repeatExt = ext  ;
                 }
-            })
+            });
+            if(repeatExt){
+                layer.msg(msg?msg:''+'"'+repeatExt+'"'+"添加重复，请修改，否在会在保存时自动清楚",{time:1000})
+            }
+            return cur
         }
           /**
          * 扩展问 跳转到新的行
@@ -65,20 +71,36 @@ module.exports = knowledgeManagementModule =>{
          * */
         function skipNewLine(scope,e,index,list) {
               let len = scope.parameter.extensionQuestionList.length ,
-                  count;
+                  focusCur = index ;
               e = e || window.event ;
+              // @1本行为空，提示填写
+              // @2本行存在 |
+              //             ----存在空行  -- 焦点移动
+              //             ----存在重复  -- 焦点移动
+
               if((e.keyCode|| e.which)==13 && nullCheck(scope.parameter.extensionQuestionList[len-1])){
                   if(!scope.parameter.extensionQuestionList[index].title){
-                      return layer.msg("请填写完整")
-                  }else if(list && scope.parameter.extensionQuestionList[index].title.match(/#\S+#/g)==null){
-                      layer.msg("用户问法必须含有#概念词/集合词#")
+                      return layer.msg("请填写完整") ;
                   }else{
-                      scope.parameter.extensionQuestionList.push({
-                          "title":""
-                      })
-                  };
+                      if(list && scope.parameter.extensionQuestionList[index].title.match(/#\S+#/g)==null){
+                         return layer.msg("用户问法必须含有#概念词/集合词#")
+                      }
+                      let repeatIndex = extensionUnique(scope.parameter.extensionQuestionList);
+                      if(repeatIndex!=-1){
+                          focusCur = repeatIndex;
+                      }else{
+                          if(scope.parameter.extensionQuestionList.every(item=>item.title)){
+                              scope.parameter.extensionQuestionList.push({
+                                  "title":""
+                              }) ;
+                              focusCur = scope.parameter.extensionQuestionList.length -1 ;
+                          }else{
+                              focusCur = scope.parameter.extensionQuestionList.findIndex(item=>!item.title) ;
+                          }
+                      }
+                  }
                   $timeout(function(){
-                      $(e.target).parent().parent().children().last().find("input").focus();
+                      $(e.target).parent().parent().children().eq(focusCur).find("input").focus().select();
                   })
               }
           }
@@ -261,6 +283,16 @@ module.exports = knowledgeManagementModule =>{
                 }
             });
         }
+
+        //*********************************************     faq  概念知识    ****************************************************************//
+        // function concept
+        /**
+         *  知识编辑 删除扩展问 本地备份
+         *  isEdit  在编辑情况下使用
+         *  概念 ： cust_concept_ext   ； faq ： cust_faq_ext
+         *  列表 ： cust_list_ext      ；要素 ： cust_factor_ext
+         *  富文本 ： cust_rich_text_ext
+         * */
         // 键盘事件
         function keyEnter(e,callback) {
             var  srcObj = e.srcElement ? e.srcElement : e.target;

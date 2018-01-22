@@ -21,6 +21,7 @@ module.exports = knowledgeManagementModule => {
                 "contents"              : []    //内容集合
             };
             $scope.newKnow = {
+                "isNewContent"          : -1 ,
                 "content"               : "", //知识内容
                 "type"                  : "", //类型
                 "channel"               : "", //渠道
@@ -59,7 +60,6 @@ module.exports = knowledgeManagementModule => {
                 "imageApi"            : "/api/material/picture/get/img/id?pictureId=" ,  // 图片请求地址
                 "localNameOfExt"      : "cust_rich_text_ext",    // 本地存储字段 用于编辑扩展问二次添加
                 "frames"              : [],                      //业务框架
-                "skipNewLine"         : skipNewLine,
                 "knowledgeAdd"        : knowledgeAdd,             //新增点击事件
                 "save"                : save,                     //保存
                 "scan"                : scan,                     //预览
@@ -74,7 +74,6 @@ module.exports = knowledgeManagementModule => {
                 imageTextHtml = require("../../views/single/rich_text/select_imgage_text.html"),
                 voiceHtml = require("../../views/single/rich_text/select_voice.html"),
                 limitTimer;
-            init() ;
             function showFrame(scope){
                 if(!$scope.parameter.classifyList.length){
                     return layer.msg("请先选择添加类目")
@@ -85,34 +84,37 @@ module.exports = knowledgeManagementModule => {
                 },"",function(){
 
                 });
-
             }
             function knowledgeAdd(data, index) {
                 if(!data){
                     if(($scope.parameter.contents.length==1 && $scope.parameter.contents[0].channel == 130) || $scope.parameter.contents.length==3){
                         return layer.msg("已添加所有渠道内容");
                     }
+                }else{
+                    $scope.newKnow.isNewContent = index ;
                 }
-                valuation(data) ;
+                valuation(data,index) ;
                 $scope.$parent.$parent.MASTER.openNgDialog($scope, contentHtml, "650px", function () {
                     addNewOrEditKnow(index)
+                },"",function () {
+                    $scope.newKnow.isNewContent = -1 ;
                 });
             }
             // 更新内容
             function addNewOrEditKnow(index) {
-               let content = $scope.parameter.contents[index]||{} ;
+                let content = $scope.parameter.contents[index]||{} ;
                 if ($scope.newKnow.type == 1010) {
                     content.content = $scope.newKnow.content;
                 } else if ($scope.newKnow.type == 1018) {
                     content.content = $scope.newKnow.imgSelected.id;
-                    content.name   = $scope.newKnow.imgSelected.name;
+                    content.name    = $scope.newKnow.imgSelected.name;
                 } else if ($scope.newKnow.type == 1019) {
                     content.content = $scope.newKnow.imgTextSelected.id;
-                    content.name   = $scope.newKnow.imgTextSelected.name;
-                    content.url    = $scope.newKnow.imgTextSelected.url;
+                    content.name    = $scope.newKnow.imgTextSelected.name;
+                    content.url     = $scope.newKnow.imgTextSelected.url;
                 } else if ($scope.newKnow.type == 1020) {
                     content.content = $scope.newKnow.voiceSelected.id;
-                    content.name   = $scope.newKnow.voiceSelected.name;
+                    content.name    = $scope.newKnow.voiceSelected.name;
                 }
                 content.type                     = $scope.newKnow.type;
                 content.channel                  = $scope.newKnow.channel;
@@ -122,37 +124,57 @@ module.exports = knowledgeManagementModule => {
             //弹出选择媒体对话框
             function selectMultimedia(type) {
                 if (type == 1018) {
-                    $scope.$parent.$parent.MASTER.openNgDialog($scope, imageHtml, "900px", "", "", "", 2);
+                    getPicList(1, $scope.newKnow.imgPaginationConf.pageSize).$promise.then(function () {
+                        $scope.$parent.$parent.MASTER.openNgDialog($scope, imageHtml, "900px", "", "", "", 2);
+                    })
                 } else if (type == 1019) {
-                    $scope.$parent.$parent.MASTER.openNgDialog($scope, imageTextHtml, "900px", "", "", "", 2);
+                    queryImgText(1, $scope.newKnow.imgTextPaginationConf.pageSize).$promise.then(function () {
+                        $scope.$parent.$parent.MASTER.openNgDialog($scope, imageTextHtml, "900px", "", "", "", 2);
+                    })
                 } else {
-                    $scope.$parent.$parent.MASTER.openNgDialog($scope, voiceHtml, "640px", "", "", "", 2);
+                    getVoiceList(1, $scope.newKnow.voicePaginationConf.pageSize).$promise.then(function () {
+                        $scope.$parent.$parent.MASTER.openNgDialog($scope, voiceHtml, "640px", "", "", "", 2);
+                    })
                 }
             }
             // 选择媒体文件
             function addMultimedia(type, item, close) {
-                if (type == 1018) {// 111 图片
+                if (type == 1018) {       // 111 图片
                     $scope.newKnow.imgSelected = {
-                        "id": item.id,
+                        "id"  : item.id,
                         "name": item.name,
                     };
                 } else if (type == 1020) {//    声音
                     $scope.newKnow.voiceSelected = {
-                        "id": item.id,
+                        "id"  : item.id,
                         "name": item.name,
                     };
                 } else if (type == 1019) {//    图文
                     $scope.newKnow.imgTextSelected = {
-                        "id": item.id,
+                        "id"  : item.id,
                         "name": item.title,
-                        "url": item.coverPicId
+                        "url" : item.coverPicId
                     };
+                }else{
+                    close(1);
                 }
-                close(1);
             }
             function newKnowCheck(close) {
                 // 验证是否可以保存   内容  渠道两部分
                 // 验证是否可以保存   内容  渠道两部分
+                let channelUnique = false ;
+                if($scope.newKnow.isNewContent==-1){  // 新增
+                    if($scope.newKnow.channel==130 && $scope.parameter.contents.length ){
+                        channelUnique = true ;
+                    }else if (!$scope.parameter.contents.every(item=>item.channel!=$scope.newKnow.channel)) {
+                        channelUnique = true ;
+                    }
+                }else{
+                    let existChannel = $scope.parameter.contents.filter((item,index)=>index!=$scope.newKnow.isNewContent).map(item=>item.channel);
+                    if(($scope.newKnow.channel==130 && existChannel.length) || (existChannel.inArray($scope.newKnow.channel))){
+                        channelUnique = true ;
+                    }
+                }
                 let isContentExist =
                     ($scope.newKnow.type == 1010 && $scope.newKnow.content) ||
                     ($scope.newKnow.type == 1018 && $scope.newKnow.imgSelected.id) ||
@@ -164,17 +186,15 @@ module.exports = knowledgeManagementModule => {
                     layer.msg("请选择渠道后保存")
                 } else if (!isContentExist && !$scope.newKnow.channel) {
                     layer.msg("请完善知识内容,并选择渠道后保存")
-                } else if($scope.newKnow.channel==130 && $scope.parameter.contents.length){
+                } else if(channelUnique){
                     layer.msg("添加渠道重复，请重新选择");
-                }else if (!$scope.parameter.contents.every(item=>item.channel!=$scope.newKnow.channel)) {
-                    layer.msg("已添加此渠道内容");
-                } else {
+                }else {
                     close(1);
                 }
             }
             // 获取图片列表
             function getPicList(index, pageSize) {
-                KnowledgeService.queryConceptImage.get({
+                return  KnowledgeService.queryConceptImage.get({
                     "name": "",
                     "index": (index - 1) * pageSize,
                     "pageSize": pageSize
@@ -188,7 +208,7 @@ module.exports = knowledgeManagementModule => {
             }
             // 获取声音列表
             function getVoiceList(index, pageSize) {
-                KnowledgeService.queryConceptVoice.get({
+                return KnowledgeService.queryConceptVoice.get({
                     "name": $scope.newKnow.voiceKeyWord,
                     "index": (index - 1) * pageSize,
                     "pageSize": pageSize
@@ -202,7 +222,7 @@ module.exports = knowledgeManagementModule => {
             }
             // 获取图文列表
             function queryImgText(index, pageSize) {
-                KnowledgeService.queryConceptImageText.get({
+                return KnowledgeService.queryConceptImageText.get({
                     "title": "",
                     "index": (index - 1) * pageSize,
                     "pageSize": pageSize
@@ -214,12 +234,7 @@ module.exports = knowledgeManagementModule => {
                     console.log(error)
                 })
             }
-            function init(){
-                getPicList(1, $scope.newKnow.imgPaginationConf.pageSize);
-                getVoiceList(1, $scope.newKnow.voicePaginationConf.pageSize);
-                queryImgText(1, $scope.newKnow.imgTextPaginationConf.pageSize);
-            }
-            function valuation(params){
+            function valuation(params,index){
                 $scope.newKnow.voiceKeyWord  = "" ;
                 $scope.newKnow.content = "";
                 $scope.newKnow.imgSelected = "" ;
@@ -237,16 +252,16 @@ module.exports = knowledgeManagementModule => {
                             };
                             break;
                         case  1020 :  // 图文
-                            $scope.newKnow.imgTextSelected = {
+                            $scope.newKnow.voiceSelected = {
                                 "id": params.content,
                                 "name": params.name,
-                                "url": params.url
                             };
                             break;
                         case  1019: //声音
-                            $scope.newKnow.voiceSelected = {
+                            $scope.newKnow.imgTextSelected = {
                                 "name": params.name,
                                 "id": params.content,
+                                "url": params.url
                             };
                             break;
                     }
@@ -259,20 +274,6 @@ module.exports = knowledgeManagementModule => {
                     $scope.newKnow.channel             = "" ;
                     $scope.vm.knowledgeRelevantContentList = [] ;
                     $scope.newKnow.name                = "" ;
-                }
-            }
-// 扩展问换行
-            function skipNewLine(e) {
-                let len = $scope.parameter.extensionQuestionList.length ;
-                e = e || window.event ;
-                // if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                //     $scope.parameter.extensionQuestionList.push("") ;
-                // }
-                if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                    $scope.parameter.extensionQuestionList.push("") ;
-                    $timeout(function(){
-                        $(e.target).parent().parent().children().last().find("input").focus();
-                    })
                 }
             }
             //保存

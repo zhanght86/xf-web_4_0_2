@@ -69,7 +69,7 @@ module.exports = applicationManagementModule =>{
                 },
                 function(response){
                     layer.close(i) ;
-                    if( response.status == 200 ){
+                    if( response.status == 200&&response.data.data!=null){
                         if(response.data.data.length){
                             $scope.hotKnowledge.hotKnowListIds =  response.data.data.map(item=>item.id) ;
                         }
@@ -77,8 +77,10 @@ module.exports = applicationManagementModule =>{
                         $scope.hotKnowledge.paginationConf.totalItems = response.data.total ;
                         $scope.hotKnowledge.paginationConf.numberOfPages = response.data.total/pageSize ;
                     }else{
-                        layer.msg(response.data) ;
-                        $scope.hotKnowledge.paginationConf.totalItems = 0 ;
+                        //layer.msg(response.data) ;
+                         $scope.hotKnowledge.hotKnowList="";
+                         $scope.hotKnowledge.paginationConf.totalItems = 0 ;
+                          $scope.hotKnowledge.paginationConf.numberOfPages=0 ;
                     }
                     initHotKnowSelected() ;
                 },function(error){console.log(error);layer.close(i) ;})

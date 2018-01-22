@@ -26,10 +26,11 @@
              </div>
              <div class="info_line">
                  <p>并发数量：{{info.concurrentNum}}</p>
-                 <p style="width:67%">有效期：{{info.startTime | date : 'yyyy-MM-dd'}}-{{info.endTime | date : 'yyyy-MM-dd'}}</p>
+                 <p>节点数量：{{info.nodeNum}}</p>
+                 <p style="width:67%">有效期：{{info.startTime | date : 'yyyy-MM-dd'}}至{{info.endTime | date : 'yyyy-MM-dd'}}</p>
              </div>
              <div class="info_line info_address_date">
-                 <p>mac地址：{{info.macAddressStr}}</p>
+                 <p>MAC地址：{{info.macAddressStr}}</p>
              </div>
          </fieldset>
      </form>
