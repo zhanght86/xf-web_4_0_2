@@ -1,3 +1,4 @@
+
 /*!
  * UEditor
  * version: ueditor
@@ -24526,15 +24527,19 @@
                                 result = body.innerText || body.textContent || '';
                             json = (new Function("return " + result))();
                            // link = me.options.imageUrlPrefix + json.data.url;
-                            link = json.url;
+                           // link = json.url;       //通过url;
+                            link = json.id;          //通过url;
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
-                                 loader.setAttribute('src', 'api/material/picture/get/img?url='+link);
+                                 // loader.setAttribute('src', 'api/material/picture/get/img?url='+link);          //通过url;
+                                loader.setAttribute('src', 'api/material/picture/get/img/id?pictureId'+link);
 
                                 //设置图片宽高
                                 //loader.setAttribute('width', "200px");
                                 //loader.setAttribute('height', "120px");
-                                 loader.setAttribute('_src', 'api/material/picture/get/img?url='+link);
+                                //  loader.setAttribute('_src', 'api/material/picture/get/img?url='+link);        //通过url;
+                                loader.setAttribute('_src', 'api/material/picture/get/img/id?pictureId'+link);
+
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');
