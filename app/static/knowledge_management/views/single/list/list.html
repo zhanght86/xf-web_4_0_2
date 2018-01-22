@@ -46,7 +46,7 @@
                     <div class="exten_problem">
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">用户问法：</div>
-                            <p style="line-height: inherit">
+                            <p style="line-height: inherit;padding-top:7px">
                                 不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame(this)">业务框架</a>吧
                             </p>
                         </div>
@@ -67,13 +67,13 @@
                     <div class="list_facContent mb-50">
                         <div class="list_facContent_L">知识内容: &nbsp;</div>
                         <div>
-                            <div class="clearfix mb-10" ng-repeat="content in parameter.contents track by $index">
-                                <p class="mb-10 f-16">
+                            <div class="clearfix" ng-class="$first?'mb-10':''" ng-repeat="content in parameter.contents track by $index" style="width: 396px;border: 1px solid #e3e3e3">
+                                <p  style="border-bottom:1px solid #e3e3e3;line-height:36px;padding-left:9px;float: left;width:100%;">
                                     {{content.type==1010?'肯定回答:':'否定回答:'}}
-                                    <small ng-bind="content.type==1010?'*当所提问的概念在预设概念类内的回答':' *当所提问的概念不在预设概念类内的回答'"></small>
+                                    <span ng-bind="content.type==1010?'*当所提问的概念在预设概念类内的回答':' *当所提问的概念不在预设概念类内的回答'"></span>
                                 </p>
-                                <textarea class="word_div bd" style="height:100px" ng-model="content.content"
-                                          placeholder="{{content.type==1010?'例如：#违禁品#是违禁物品，不可以带上飞机':'例如：不是违禁物品，可以带上飞机'}}"></textarea>
+                                <textarea class="word_div" style="height:100px;width:100%;float: left;" ng-model="content.content"
+                                          placeholder="{{content.type==1010?'例如：#违禁品#是违禁物品，不可以带上飞机':'例如：#非违禁品#不是违禁物品，可以带上飞机'}}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                         <div class="step_one_s">3</div>
                         <div class="step_one_arrow"></div>
                         <div class="step_one_con">
-                            <p>业务框架：选择完毕路径之后，我们根据目前所选择的BOT，为您列出符合要求的业务框架，您可以选择对应的业务框架以节省编写扩展问的时间。业务框架可以添加多个哦~
+                            <p>扩展问题：您可以自行填写扩展问题，应对问题的多样化.
                             </p>
 
                             <div class="tr introjs-tooltipbuttons">
@@ -137,7 +137,7 @@
                         <div class="step_one_s">4</div>
                         <div class="step_one_arrow"></div>
                         <div class="step_one_con">
-                            <p>扩展问题：您可以自行填写扩展问题，应对问题的多样化.
+                            <p>业务框架：选择完毕路径之后，我们根据目前所选择的BOT，为您列出符合要求的业务框架，您可以选择对应的业务框架以节省编写扩展问的时间。业务框架可以添加多个哦~
                             </p>
                             <div class="tr introjs-tooltipbuttons">
                                 <button class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
@@ -150,9 +150,8 @@
                         <div class="step_one_s">5</div>
                         <div class="step_one_arrow"></div>
                         <div class="step_one_con">
-                            <p>知识内容：知识内容就是答案，可以根据渠道维度的不同填写多个哦!
+                            <p>知识内容：知识内容就是答案，可以否定回答肯定回答必须为业务词或者集合词!
                             </p>
-
                             <div class="tr introjs-tooltipbuttons">
                                 <button class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
                                 <button class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
@@ -160,22 +159,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="step_one step_six dn" id="step_six">
-                        <div class="step_one_s">6</div>
-                        <div class="step_one_arrow"></div>
-                        <div class="step_one_con">
-                            <p>渠道维度：渠道和维度的组合是不可以重复的，添加时一定要注意哦!
-                            </p>
 
-                            <div class="tr introjs-tooltipbuttons">
-                                <button class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>
-                                <button class="introjs-button introjs-prev" ng-click="$parent.knowCtr.introduction.prevDiv($event)">上一步</button>
-                                <button class="introjs-button introjs-next" ng-click="$parent.knowCtr.introduction.nextDiv($event)">下一步</button>
-                            </div>
-                        </div>
-                    </div>
                     <div class="step_one step_seven dn" id="step_seven">
-                        <div class="step_one_s">7</div>
+                        <div class="step_one_s">6</div>
                         <div class="step_one_arrow"></div>
                         <div class="step_one_con">
                             <p>最后一步：编辑完知识可以选择预览，或者保存，就可以啦!
