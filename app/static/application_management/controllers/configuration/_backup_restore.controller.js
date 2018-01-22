@@ -36,6 +36,7 @@ module.exports = applicationManagementModule =>{
             selectSingle:selectSingle, //单选
 
         };
+        
         //备份模块赛选
         let restoreHtml = require("../../views/configuration/backup_restore/dialog_restore.html");
         function addToList(id){
