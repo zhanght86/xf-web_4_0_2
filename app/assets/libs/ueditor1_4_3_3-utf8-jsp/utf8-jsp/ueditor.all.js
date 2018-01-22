@@ -24533,7 +24533,6 @@
                            // link = me.options.imageUrlPrefix + json.data.url;
                            // link = json.url;       //通过url;
                             link = json.id;          //通过url;
-                            alert(link);
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
                                  // loader.setAttribute('src', 'api/material/picture/get/img?url='+link);          //通过url;

@@ -97,7 +97,6 @@ module.exports = knowledgeManagementModule =>{
                 }
             })
         }
-        init() ;
         function knowledgeAdd(data, index) {
             if(!data){
                 if(($scope.parameter.contents.length==1 && $scope.parameter.contents[0].channel == 130) || $scope.parameter.contents.length==3){
