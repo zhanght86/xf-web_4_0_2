@@ -10,7 +10,7 @@ module.exports=materialModule => {
         $state.go("MM.teletext");
         $scope.vm = {
             paginationConf : {
-                pageSize : $location.search().pageSize?$location.search().pageSize:8,        //每页条目数量
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
                 currentPage: $location.search().currentPage?$location.search().currentPage:1,
                 search: showImg ,
                 location:true
