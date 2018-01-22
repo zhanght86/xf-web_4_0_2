@@ -61,6 +61,12 @@ class ApplicationServer {
 //   备份还原
         //备份
         this.backup = $resource(API_APPLICATION+"/backuprestore/backup", {}, {});
+        //备份下载
+        this.backupDownload=$resource("/api/material/backuprestore/download", {}, {});
+        //备份包信息
+        this.backuprestore=$resource(API_APPLICATION+"/backuprestore/info/read", {}, {})
+        //还原
+        this.restore=$resource(API_APPLICATION+"/backuprestore/restore", {}, {})
 
 
 //  转人工设置
@@ -141,7 +147,7 @@ class ApplicationServer {
         // //重启服务
         // this.restartService = $resource(API_APPLICATION+"/service/restart", {}, {});
         //下线所有服务
-        this.stopAllService = $resource(API_APPLICATION+"/service/stop/all", {}, {});
+        this.stopAllService = $resource(API_APPLICATION+"/service/all/stop", {}, {});
         //查看应用信息
         this.viewApplicationInfo = $resource(API_APPLICATION+"/application/get/:id", {}, {});
         //修改应用名称

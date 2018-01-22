@@ -50,6 +50,7 @@ module.exports = applicationManagementModule =>{
                     $scope.$parent.MASTER.avatarUrl = location ;
                     $scope.$parent.MASTER.avatarId = response.data.avatarDocId ;
                     $scope.$parent.MASTER.robotName = response.data.name; //机器人名称
+                     $scope.$parent.MASTER.applicationName = APPLICATION_NAME; //机器人名称
                 }
             },function(error){
                 console.log(error);

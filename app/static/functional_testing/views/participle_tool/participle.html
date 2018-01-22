@@ -15,7 +15,7 @@
                 <option value="21009">已完成</option>
 
             </select>
-            <input type="text" class="input-text L mr-10" ng-model="vm.selectInput" placeholder="测试文件/操作人" style="width:250px;height:30px;" />
+            <input type="text" class="input-text L mr-10" ng-model="vm.selectInput" placeholder="分词文件" style="width:250px;height:30px;" />
             <button class="btn1 btn1_blue L" type="button"  ng-click="vm.getPartList(vm.paginationConf.currentPage,vm.paginationConf.pageSize)">查找</button>
         </div>
         <div class="bd p20" style="background:#fcfdfd;">
@@ -50,6 +50,7 @@
                                 <td><input type="checkbox" ng-checked="vm.deleteIds.inArray(item.id)"  ng-click="vm.selectSingle(item.id)"></td>
 
                                 <td class="c_blue">{{item.fileName}}</td>
+                                <td ng-if="item.status==21006">待分词</td>
                                 <td ng-if="item.status==21007">待分词</td>
                                 <td ng-if="item.status==21008">分词中</td>
                                 <td ng-if="item.status==21009">已完成</td>

@@ -9,6 +9,8 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
         $state.go("KM.faq") ;
         $scope.parameter = {
+            idArr:[],              //新知识id
+
             "title"	                : "",   //知识标题
             "expDateStart"          : "",   //知识有效期开始时间
             "expDateEnd"            : "",   //知识有效期结束时间
@@ -112,6 +114,24 @@ module.exports = knowledgeManagementModule =>{
                     },function(){
                         $state.reload("KM.faq")
                     });
+                    //保存成功，删除知识
+                    KnowledgeService.batchIgnore.save({
+                        "idList":$scope.parameter.idArr
+                    },function(data){
+                        if(data.status==200){
+                           // layer.msg("文件忽略成功");
+
+                        }
+                        if(data.status==500){
+                            layer.msg(data.info,{time:10000});
+                        }
+
+                    },function(err){
+                        console.log(err);
+                    });
+                    //保存成功，删除知识--end
+
+
                 }else{
                     layer.msg(response.info) ;
                     $timeout.cancel(limitTimer) ;
@@ -205,4 +225,34 @@ module.exports = knowledgeManagementModule =>{
                 }
             );
         };
+
+
+        //获取本地存储
+        function getList(){
+            var str = localStorageService.get("localStorageKey");
+            var json = JSON.parse(str);
+            console.log("本地存储的"+json);
+            // {   "title":null,
+            //     "extension":[
+            //         {"question":"信用卡办理","id":"460141182823956489"},
+            //         {"question":"咋办信用卡","id":"460141182823956490"},
+            //         {"question":"我想办个信用卡","id":"460141182823956491"},
+            //         {"question":"范德萨范德萨发","id":"460141182823956492"}
+            //      ]
+            // }
+            $scope.parameter.title = json.title;
+            var arr=json.extension;
+            angular.forEach(arr,function(obj){
+                $scope.parameter.idArr.push(obj.id);
+                $scope.parameter.extensionQuestionList.unshift({"title":obj.question});
+            })
+            console.log("获取的"+$scope.parameter.title);
+            console.log($scope.parameter.extensionQuestionList);
+            console.log($scope.parameter.idArr);
+        }
+        getList();
+
+
+
+
 }])};

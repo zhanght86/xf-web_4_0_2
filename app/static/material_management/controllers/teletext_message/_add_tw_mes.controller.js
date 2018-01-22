@@ -5,8 +5,8 @@
 module.exports=materialModule => {
     materialModule
     .controller('AddTwMesController', [
-    '$scope',"$state","ngDialog","$log","MaterialServer", "$cookieStore","$stateParams","$timeout",
-    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout)=> {
+    '$scope',"$state","ngDialog","$log","MaterialServer", "$cookieStore","$stateParams","$timeout","$location",
+    ($scope,$state,ngDialog,$log,MaterialServer,$cookieStore,$stateParams,$timeout,$location )=> {
         $state.go("MM.addTw");
         $scope.vm = {
             pictureName :'',
@@ -17,9 +17,15 @@ module.exports=materialModule => {
             link : "" ,                      // 链接
             selectLocalImg:selectLocalImg,  //选择本地图片
             imageList : "" ,         //图片库所有图片
-            imgPaginationConf : {    //图片库分页
-                pageSize: 8,//第页条目数
-                pagesLength: 10//分页框数量
+            // imgPaginationConf : {    //图片库分页
+            //     pageSize: 8,//第页条目数
+            //     pagesLength: 10//分页框数量
+            // },
+            paginationConf : {
+                pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
+                currentPage: $location.search().currentPage?$location.search().currentPage:1,
+                search: getPicList ,
+                location:true
             },
             imgSelected : "" ,       //已选择图片库选择封面图片
             selectImage : selectImage , //选择图片库图片
@@ -96,42 +102,31 @@ module.exports=materialModule => {
         /**
          *获取本地图片
          */
-        getPicList(1) ;
-        function getPicList(index){
+        getPicList($scope.vm.paginationConf.currentPage,$scope.vm.paginationConf.pageSize) ;
+        function getPicList(index,pageSize,reset){
+            if(reset){
+                $scope.vm.paginationConf.currentPage = 1;
+                $location.search("currentPage",1);
+            }
             MaterialServer.getPicList.get({
-                "index": (index-1)*$scope.vm.imgPaginationConf.pageSize,
-                "pageSize": $scope.vm.imgPaginationConf.pageSize ,
+                "index": (index-1)*pageSize,
+                "pageSize": pageSize ,
                 "name" : $scope.vm.pictureName,
             },function(response){
                 if(response.status == 200){
                     console.log(response);
                     $scope.vm.imageList = response.data.objs ;
-                    $scope.vm.imgPaginationConf.currentPage =index ;
-                    $scope.vm.imgPaginationConf.totalItems =response.data.total ;
+                    $scope.vm.paginationConf.currentPage =index ;
+                    $scope.vm.paginationConf.totalItems =response.data.total ;
                 }else{
                     $scope.vm.imageList="";
-                    $scope.vm.imgPaginationConf.totalItems=0;
+                    $scope.vm.paginationConf.totalItems=0;
                 }
             },function(err){
                 console.log(err);
             });
 
         }
-
-        /**
-         *设置本地图片分页
-         */
-        var picTimer ;
-        $scope.$watch('vm.imgPaginationConf.currentPage', function(current){
-            if(current){
-                if (picTimer) {
-                    $timeout.cancel(picTimer)
-                }
-                picTimer = $timeout(function () {
-                    getPicList(current);
-                }, 0)
-            }
-        },true);
 
         /**
          * 选择图片
@@ -175,10 +170,13 @@ module.exports=materialModule => {
         function checkUrl(){
             var url=$scope.vm.link;
             var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-            if(!reg.test(url)){
-                alert("请输入以http://或者 https://开头的正确网址！");
-                //return false;
+            if(url.length>0){
+                if(!reg.test(url)){
+                    alert("请输入以http://或者 https://开头的正确网址！");
+                    //return false;
+                }
             }
+
         }
         /**
          * 验证必填

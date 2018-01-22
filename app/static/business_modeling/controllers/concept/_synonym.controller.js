@@ -169,9 +169,8 @@ module.exports = applicationManagementModule =>{
                                     console.log("cancel");
                                 });
                             }else{
-                                //类名无冲突
-                                $scope.vm.dialogTitle="增加同义概念";
-                                addSynonymConceptDialog(singleAdd);
+                                //提取同义词
+                                extract();
                             }
                         },()=>{
                             console.log('添加失败');
@@ -200,6 +199,7 @@ module.exports = applicationManagementModule =>{
 
         //編輯彈框   添加公用
         function addSynonymConceptDialog(callback,item){
+            //调用提取同义词
             var dialog = ngDialog.openConfirm({
                 template:"/static/business_modeling/views/concept/synonym/synonym_dialog2.html",
                 scope: $scope,
@@ -425,6 +425,27 @@ module.exports = applicationManagementModule =>{
                     }
                 
             });
+        }
+
+        /**
+         * 同义词提取
+         */
+        function extract() {
+            BusinessModelingServer.synConceptExtract.get({
+                "work":$scope.vm.key
+            },(data)=>{
+                if(data.status == 200 && data.data != null){
+                    $scope.vm.term = data.data;
+                }else{
+                    console.log('同义词提取失败');
+                }
+                $scope.vm.dialogTitle="增加同义概念";
+                addSynonymConceptDialog(singleAdd);
+            },()=>{
+                console.log('同义词提取异常');
+                $scope.vm.dialogTitle="增加同义概念";
+                addSynonymConceptDialog(singleAdd);
+            })
         }
     }
 ])};

@@ -1,9 +1,9 @@
 <div class="" style="padding:15px 0;">
     <h3 class="f16 tc mb-20">添加热点问题</h3>
     <div style="overflow:auto;">
-        <div class="framework cl" style="padding-left:80px">
-            <span class="framework_s bold">已选知识：</span>
-            <div >
+        <div class="framework cl" style="padding-left:80px;padding-bottom: 20px;">
+            <span class="framework_s bold">热点知识：</span>
+            <div style="min-height: 30px;line-height: 31px;">
                 <ul id="already_select">
                     <li ng-repeat="item in knowledge.selectedList track by $index">
                         <a href="javascript:;" ng-click="knowledge.removeSelected($index)" class="c-red">X</a>
@@ -12,9 +12,9 @@
                 </ul>
             </div>
         </div>
-        <div class="mb-10 framework" style="padding-left: 70px;">
+        <div class="framework" style="padding-left: 70px;">
             <span class="framework_s bold"></span>
-            <div >
+            <div>
                 <div class="mb-10">
                     <input id="inputValue" type="text" placeholder="请输入要查找的知识" ng-model="knowledge.knowledgeTitle" style="width:220px" class="input-text">
                     <button class="btn1 btn1_blue" type="button"  ng-click="knowledge.queryKnowledgeList(1,knowledge.paginationConf.pageSize)">查找</button>
@@ -34,12 +34,14 @@
                     </tbody>
                 </table>
             </div>
+            <div ng-if="knowledge.knowledgeList.length==0" class="bd" style="width:88%;height: 80px; line-height: 80px; text-align: center; font-weight: bold; font-size: 16px;margin-top: -1px;">暂无数据</div>
+         
         </div>
-        <pagination ng-if="knowledge.paginationConf.totalItems && knowledge.paginationConf.totalItems>0" conf="knowledge.paginationConf" style="width: 96%;"></pagination>
+        <pagination  conf="knowledge.paginationConf" style="width: 96%;"></pagination>
 
     </div>
     <div class="row tc">
-        <button  class="btn btn-primary radius mr-10" type="button" ng-disabled="knowledge.selectedList.length==0"  ng-click="closeThisDialog(1)">保存</button>
+        <button  class="btn btn-primary radius mr-10" type="button"   ng-click="knowledge.saveSelectedList()">保存</button>
         <button  class="btn btn-default radius" type="button"  ng-click="closeThisDialog(0)">取消</button>
     </div>
 </div>

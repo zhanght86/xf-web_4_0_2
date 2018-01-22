@@ -529,14 +529,14 @@
 .voice_upload_dl dt{width:116px;height:89px;}
 .voice_upload_dl dd{width:300px;height:89px;padding-left: 10px;}
 
-.picture_div{width:23%;height:238px;margin:10px 1%;box-sizing: border-box;}
+.picture_div{width:19%;height:238px;margin:10px 5px;box-sizing: border-box;}
 .picture_div .picture_dl{width:100%;}
 .picture_div .picture_dl dt{width:100%;height:171px;overflow:hidden;}
 .picture_div .picture_dl dt img{width:100%;height:100%;}
 .picture_div .picture_dl dd{padding:5px 10px;}
 
 .picture_div  .teletext_dl dd{padding:5px;height:34px;box-sizing:border-box;}
-.picture_dl dd .titp{width:162px;height:30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.picture_dl dd .titp{width:124px;height:30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .picture_dl dd .time_span{width:80px;display:inline;height:30px;}
 
 /*深度学习*/
@@ -608,8 +608,8 @@
     margin-right: 4px;
 }
 
-.tw_mes_r{width:890px;box-sizing:border-box;}
-.tw_mes_r .tit .input_text{width:80%;height:40px;line-height:40px;}
+.tw_mes_r{width:910px;box-sizing:border-box;}
+.tw_mes_r .tit .input_text{width:80%;height:30px;line-height:30px;}
 .tw_mes_r .author .input_text{width:80%;}
 .upload_btndiv .butn{height:30px;padding:0 10px;border:1px solid #e3e3e3;background:#fff;border-radius:2px;}
 .upload_btndiv .butn:hover{background:#D9E0E7;}
@@ -779,5 +779,6 @@
 #test-nav .cur_test_li .icon-navbatch{background:url(../../images/test-icon.png) no-repeat 0 -42px;}
 
 
+.left_remark{width:68px;text-align:right;height:31px;line-height:31px;}
 
 

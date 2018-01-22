@@ -12,7 +12,10 @@
                 <div>
                     <input name="robotName" class="input-text" type="text" placeholder="给机器人起个名字吧"
                            ng-model="robot.name" ng-maxlength="8" ng-pattern="/^[\u2E80-\uFE4F]+$/"/>
-                    <span tip-bar="'问答页面机器人的昵称'"></span>
+                    <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" >问答页面机器人的昵称</span>
+                    </span>
                     <div class="error-tip c-red" ng-show="mySetting.robotName.$dirty && mySetting.robotName.$invalid">
                         昵称输入不能超过8个汉字，请重新输入！
                     </div>
@@ -43,7 +46,10 @@
                               style="float: left;"
                               ng-model="robot.welcomes"
                               ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！\\r\n]+$/"/> >小富机器人欢迎您！</textarea>
-                    <span style="display: inline-block;margin-top: 32px;margin-left: 4px;" tip-bar="'昵称将会被用作聊天页面中欢迎语'"></span>
+                    <span class="set_tip_bar" style="line-height: 100px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" style="line-height:31px;">问答页面的欢迎语，可以设置多个欢迎语，每个之间用回车换行符分割</span>
+                    </span>
                     <div class="error-tip c-red" ng-show="mySetting.robotWelcome.$error.pattern">
                         欢迎语只能是汉字，请重新输入
                     </div>
@@ -62,7 +68,10 @@
                     <input class="input-text" type="text" name="robotUnknown" placeholder="当机器人答不上来时，机器人的回复"
                            ng-model="robot.defaultUnknownAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <span tip-bar="'机器人不能回答用户问题时的回复'"></span>
+                     <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" >机器人不能回答用户问题时的回复</span>
+                    </span>
                     <div class="error-tip c-red" ng-show="mySetting.robotUnknown.$dirty && mySetting.robotUnknown.$invalid">
                         您输入的未知回答不能超过50个汉字，请重新输入
                     </div>
@@ -74,7 +83,10 @@
                     <input class="input-text" type="text" name="defaultFuzzyAnswer" placeholder="答案匹配不高时，机器人的模糊回答"
                            ng-model="robot.defaultFuzzyAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <span tip-bar="'昵称将会被用作聊天页面中答案匹配不高时，机器人的模糊回答'"></span>
+                    <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" >答案匹配不高时机器人的模糊回答</span>
+                    </span>
                     <!--<div class="error-tip c-red" ng-show="mySetting.defaultFuzzyAnswer.$dirty && mySetting.defaultFuzzyAnswer.$invalid">-->
                         <!--您输入的未知回答不能超过50个汉字，请重新输入-->
                     <!--</div>-->
@@ -87,7 +99,7 @@
                     <input class="input-text" type="text" name="robotSensitive" placeholder="当会话中包含敏感词时，机器人的回复"
                            ng-model="robot.defaultSensitiveAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <span tip-bar="敏感词回答"></span>
+                    <span tip-bar="当用户的提问中含有敏感内容时机器人的回复"></span>
                     <div class="error-tip c-red" ng-show="mySetting.robotSensitive.$dirty && mySetting.robotSensitive.$invalid">
                         您输入的敏感词回答不能超过50个汉字，请重新输入
                     </div>

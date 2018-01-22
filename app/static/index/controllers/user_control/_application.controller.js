@@ -51,12 +51,14 @@ module.exports = homePageModule =>{
             console.log(error)
         });
         function selectApplication(application){
+            $.getScript('assets/js/common/config.js');
             setCookie("applicationName",application.name);
             setCookie("applicationId",application.id);
             setCookie("description",application.description);
             APPLICATION_ID   = application.id;
             APPLICATION_NAME = application.name;
-            $.getScript('assets/js/common/config.js');
+            console.log(application)
+            //$.getScript('assets/js/common/config.js');
         }
         //打开添加窗口
         function addApplicationWindow() {
@@ -64,7 +66,7 @@ module.exports = homePageModule =>{
                 addApplication();
             },function(){
                 $scope.info = {} ;
-                //$scope.vm.newApplicationName="";
+                $scope.vm.newApplicationName="";
                 $scope.vm.newLicence="";
             });
         }

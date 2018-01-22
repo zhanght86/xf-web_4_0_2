@@ -74,6 +74,14 @@ class KnowledgeService {
                 this.getFactorKnow = $resource(API_MS + "/knowledge/task/get/:id", {}, {});
                 // 编辑
                 this.updateFactorKnow = $resource(API_MS + "/knowledge/task/update", {}, {});
+
+      //新知识发现 学习成功调用接口；
+                this.batchIgnore = $resource(API_ANALYSIS+"/knowledge/learning/batch/delete",{},{});
+
+
+
+
+
         }};
         KnowledgeService.$inject = ['$resource'];
 module.exports = knowledgeManagementModule =>{

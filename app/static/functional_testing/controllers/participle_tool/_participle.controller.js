@@ -47,6 +47,9 @@ module.exports=functionalTestModule => {
             },function (data) {
                 layer.close(i);
                 if(data.status==200){
+                    if(!reset){
+                        initBatchTest();
+                    }
                     console.log(data);
                     $scope.vm.listData = data.data.data;
                     $scope.vm.paginationConf.currentPage =index ;

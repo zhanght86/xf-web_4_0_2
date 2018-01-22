@@ -13,11 +13,13 @@ module.exports = applicationManagementModule =>{
                          '</span>',
                 link: function(scope, ele, attrs, c){
                     scope.tipBarInfo = attrs["tipBar"];
+                    console.log( scope.tipBarInfo)
                     scope.showTip = showTip ;
                     scope.hideTip = hideTip ;
                     //提示文字
                     function showTip(ev){
                         ev = ev || window.event ;
+                         console.log($(ev.target).attr("tipBar"))
                         $(ev.target).addClass("on").next("span").css("display","inline-block");
                     }
                     function hideTip(ev){

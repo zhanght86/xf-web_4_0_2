@@ -183,7 +183,7 @@ module.exports = applicationManagementModule =>{
                     }else{
                         layer.msg("下线所有服务失败");
                     }
-                },function(){console.log(error)})
+                },function(error){console.log(error)})
             });
         }
         //删除应用

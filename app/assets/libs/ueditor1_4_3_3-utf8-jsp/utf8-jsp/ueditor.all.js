@@ -1,3 +1,4 @@
+
 /*!
  * UEditor
  * version: ueditor
@@ -23767,12 +23768,16 @@
                     me.options.themePath + me.options.theme +
                     '/images/spacer.gif" title="' + (me.getLang('autoupload.loading') || '') + '" >';
                 successHandler = function(data) {
-                    var link = urlPrefix + data.url,
+                    //var link = urlPrefix + data.url,
+                      var link = urlPrefix + data.id,
 
                         loader = me.document.getElementById(loadingId);
                     if (loader) {
-                        loader.setAttribute('src', 'api/material/picture/upload/get?url='+link);
-                        loader.setAttribute('_src', 'api/material/picture/upload/get?url='+link);
+                        //loader.setAttribute('src', 'api/material/picture/upload/get?url='+link);
+                        loader.setAttribute('src', 'api/material/picture/get/img/id?pictureId='+link);
+
+                        loader.setAttribute('_src', 'api/material/picture/get/img/id?pictureId='+link);
+                        // loader.setAttribute('_src', 'api/material/picture/upload/get?url='+link);
                         loader.setAttribute('title', data.title || '');
                         loader.setAttribute('alt', data.original || '');
                         loader.removeAttribute('id');
@@ -23786,13 +23791,13 @@
                     '/images/spacer.gif" title="' + (me.getLang('autoupload.loading') || '') + '" >' +
                     '</p>';
                 successHandler = function(data) {
-                    var link = urlPrefix + data.url,
+                    var link = urlPrefix + data.id,
                         loader = me.document.getElementById(loadingId);
 
                     var rng = me.selection.getRange(),
                         bk = rng.createBookmark();
                     rng.selectNode(loader).select();
-                    me.execCommand('insertfile', {'url': link});
+                    me.execCommand('insertfile', {'pictureId': link});
                     rng.moveToBookmark(bk).select();
                 };
             }
@@ -24526,15 +24531,20 @@
                                 result = body.innerText || body.textContent || '';
                             json = (new Function("return " + result))();
                            // link = me.options.imageUrlPrefix + json.data.url;
-                            link = json.url;
+                           // link = json.url;       //通过url;
+                            link = json.id;          //通过url;
+                            alert(link);
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
-                                 loader.setAttribute('src', 'api/material/picture/get/img?url='+link);
+                                 // loader.setAttribute('src', 'api/material/picture/get/img?url='+link);          //通过url;
+                                loader.setAttribute('src', 'api/material/picture/get/img/id?pictureId='+link);
 
                                 //设置图片宽高
                                 //loader.setAttribute('width', "200px");
                                 //loader.setAttribute('height', "120px");
-                                 loader.setAttribute('_src', 'api/material/picture/get/img?url='+link);
+                                //  loader.setAttribute('_src', 'api/material/picture/get/img?url='+link);        //通过url;
+                                loader.setAttribute('_src', 'api/material/picture/get/img/id?pictureId='+link);
+
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');
