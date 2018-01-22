@@ -58,7 +58,7 @@ module.exports = knowledgeManagementModule =>{
                     if(response.data.extensionQuestionList.length==0){
                         $scope.parameter.extensionQuestionList = [{"title":""}]
                     }else{
-                        $scope.parameter.extensionQuestionList.push({"title":""})
+                        $scope.parameter.extensionQuestionList.unshift({"title":""})
                     }
                     delete $scope.parameter.modifyTime;
                     delete $scope.parameter.modifierId;
