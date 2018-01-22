@@ -11,6 +11,7 @@ module.exports = angular => {
     //--------------------------------------------------
     //          directive
     //--------------------------------------------------
+   // require('../../../components/length_limit/length_limit.filter')(applicationManagementModule);      // 长度限制
     require('../../../components/switch_turn/_switch_turn.directive')(applicationManagementModule);      // 开关
     require("../directives/_avatar.directive")(applicationManagementModule) ;                            // 头像
     require('../directives/_check_service_name.direvtive')(applicationManagementModule);                 // 验证服务名称

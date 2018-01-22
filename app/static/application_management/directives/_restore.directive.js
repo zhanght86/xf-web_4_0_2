@@ -52,9 +52,11 @@ module.exports = knowledgeManagementModule =>{
                             layer.msg("模板错误")
                         }else{
                             scope.vm.restoreList = response.data;
-                            scope.vm.data=true;
-                            scope.vm.flage=true;
+                            scope.vm.isSelectAll = true;
                              layer.msg(response.info,{time:1000})
+                             angular.forEach(scope.vm.restoreList.list,(val,index)=>{
+                                 scope.vm.backupIds.push(val)
+                             })
                             scope.$apply();
                         }
                     });

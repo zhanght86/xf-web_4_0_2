@@ -35,9 +35,8 @@ module.exports = applicationManagementModule =>{
             selectAll:selectAll,    //全选
             selectSingle:selectSingle, //单选
 
-
-
         };
+        //备份模块赛选
         let restoreHtml = require("../../views/configuration/backup_restore/dialog_restore.html");
         function addToList(id){
             if($scope.vm.selectList.inArray(id)){
@@ -49,6 +48,7 @@ module.exports = applicationManagementModule =>{
                $scope.vm.selectList.remove(1)
            }
         }
+        //系统备份
         function backup() {
             if(!nullCheck($scope.vm.selectList)){
                 return layer.msg("请先选择要备份的模块");
@@ -59,23 +59,28 @@ module.exports = applicationManagementModule =>{
                 if(response.status == 200 ){
                     var fileName=response.data;
                   downLoadFiles(null,API_MATERIAL+"/backuprestore/download?fileName="+fileName+"")
-                 //  backupDownload(response.data)
                 }
             })
         }
         function restore() {
-            console.log($scope.vm.restoreList)
+            $scope.vm.restoreList="";
+            initBatchTest();
             $scope.$parent.$parent.MASTER.openNgDialog($scope,restoreHtml,"700px",function(){
 
-            })
-        }
+            },"",function(){
 
+            });
+        }
+      // 系统还原
        function reductionBtn(){
-        console.log($scope.vm.restoreList.length)
-        // if(!$scope.vm.restoreList.length>0){
-        //     layer.msg("请上传文件")
-        //     return
-        // }
+        if($scope.vm.restoreList==""){
+            layer.msg("请上传文件")
+            return
+        }
+        if($scope.vm.backupIds.length==0){
+           layer.msg("请先选择要还原的模块")
+           return
+        }
          ApplicationServer.restore.save({
             "list":$scope.vm.backupIds,
             "fileName":$scope.vm.restoreList.fileName,
@@ -85,18 +90,13 @@ module.exports = applicationManagementModule =>{
             console.log($scope.vm.file)
             if(data.status==200){
                 layer.msg(data.info)
+                 ngDialog.closeAll(1) ;
             }else{
                 layer.msg(data.info)
             }
 
          })
        }
-       console.log("_______________")
-       console.log($scope.vm.data)
-        if($scope.vm.data){
-            alert(1)
-             selectAll() 
-        }
          
          //全选
         function selectAll(){
@@ -116,7 +116,7 @@ module.exports = applicationManagementModule =>{
         function selectSingle(id){
             if($scope.vm.backupIds.inArray(id)){
                 $scope.vm.backupIds.remove(id);
-                $scope.vm.backList = false;
+                $scope.vm.isSelectAll = false;
             }else{
                 $scope.vm.backupIds.push(id);
 
@@ -126,19 +126,14 @@ module.exports = applicationManagementModule =>{
             }else{
                 $scope.vm.isSelectAll = false;
             }
-            console.log( $scope.vm.backupIds);
+            if(!($scope.vm.backupIds.inArray("2") && $scope.vm.backupIds.inArray("3")) && $scope.vm.backupIds.inArray("1")){
+               $scope.vm.backupIds.remove("1")
             }
+            }
+
             //全选清空
             function initBatchTest(){
                 $scope.vm.isSelectAll=false;
                 $scope.vm.backupIds=[];
             }
-
-        //  function backupDownload(fileName){
-        //   ApplicationServer.backupDownload.save({
-        //     "fileName":fileName
-        //   },(data)=>{
-        //       console.log(data)
-        //   })
-        // }
 }])};
