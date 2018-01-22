@@ -5,8 +5,8 @@
 module.exports = applicationManagementModule =>{
     applicationManagementModule
     .controller('HotKnowledgeSetupController',
-    [ '$scope', 'localStorageService',"ApplicationServer" ,"$state" ,"$location",
-    ($scope,localStorageService,ApplicationServer, $state,$location) =>{
+    [ '$scope', 'localStorageService',"ApplicationServer" ,"ngDialog","$state" ,"$location",
+    ($scope,localStorageService,ApplicationServer,ngDialog, $state,$location) =>{
         $scope.vm = {
             "simpleOperateTitle" : "确定删除选中的热点知识"
         };
@@ -53,6 +53,7 @@ module.exports = applicationManagementModule =>{
             selectAllKnow :selectAllKnow ,  //全部选择
             selectSingle : selectSingle ,// 单条选择
             queryKnowledgeList : queryKnowledgeList,  // 知识列表弹框
+            saveSelectedList:saveSelectedList,
         };
         let addHotHtml = require("../../views/configuration/hot_knowledge_setup/add_hot_knowledge.html") ;
         let delHtml    = require("../../../../share/dialog_simple_operate.html") ;
@@ -77,7 +78,7 @@ module.exports = applicationManagementModule =>{
                         $scope.hotKnowledge.paginationConf.totalItems = response.data.total ;
                         $scope.hotKnowledge.paginationConf.numberOfPages = response.data.total/pageSize ;
                     }else{
-                        //layer.msg(response.data) ;
+                         layer.msg(response.info)
                          $scope.hotKnowledge.hotKnowList="";
                          $scope.hotKnowledge.paginationConf.totalItems = 0 ;
                           $scope.hotKnowledge.paginationConf.numberOfPages=0 ;
@@ -92,19 +93,34 @@ module.exports = applicationManagementModule =>{
                 "pageSize": pageSize,
                 "title": $scope.knowledge.knowledgeTitle,         //知识标题默认值null
             },function(response){
-                if( response.data.total == 0 ){
-                    layer.msg("查询记录为空") ;
-                    $scope.knowledge.knowledgeList = [] ;
-                    $scope.knowledge.paginationConf.totalItems = 0 ;
-                }else{
-                    if(response.data.data.length){
+                if(response.status==200&&response.data.data!=null){
+                       if(response.data.data.length){
                         $scope.knowledge.knowledgeIdList =  response.data.data.map(item=>item.id) ;
                     }
                     $scope.knowledge.knowledgeList = response.data.data;
                     $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList).items.length==0?true:false
                     $scope.knowledge.paginationConf.totalItems = response.data.total ;
                     $scope.knowledge.paginationConf.numberOfPages = response.data.total/pageSize ;
-                }
+                }else{
+                    layer.msg(response.info) ;
+                    $scope.knowledge.knowledgeList=""
+                    $scope.knowledge.paginationConf.totalItems =0 ;
+                    $scope.knowledge.paginationConf.numberOfPages = 0 ;
+                } 
+
+                // if(response.data.total == 0 ){
+                //     layer.msg("查询记录为空") ;
+                //     $scope.knowledge.knowledgeList = [] ;
+                //     $scope.knowledge.paginationConf.totalItems = 0 ;
+                // }else{
+                //     if(response.data.data.length){
+                //         $scope.knowledge.knowledgeIdList =  response.data.data.map(item=>item.id) ;
+                //     }
+                //     $scope.knowledge.knowledgeList = response.data.data;
+                //     $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList).items.length==0?true:false
+                //     $scope.knowledge.paginationConf.totalItems = response.data.total ;
+                //     $scope.knowledge.paginationConf.numberOfPages = response.data.total/pageSize ;
+                // }
             },function(error){console.log(error)})
         }
         function selectAllKnow() {
@@ -171,28 +187,51 @@ module.exports = applicationManagementModule =>{
             });
             return result ;
         }
-        //添加知识
+        //添加知识弹框
         function addHotHotKnow(){
+               //取消的同时清空数据
+                $scope.knowledge.isAllKnowSelected = false;
+                $scope.knowledge.selectedIdList = [];
+                $scope.knowledge.knowledgeList = [];
+                $scope.knowledge.selectedList = [];
+                $scope.knowledge.knowledgeIdList = [];
+                $scope.knowledge.knowledgeTitle = "";
             queryKnowledgeList($scope.knowledge.paginationConf.currentPage,$scope.knowledge.paginationConf.pageSize).$promise.then(function () {
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,addHotHtml,"700px",function(){
-                    ApplicationServer.addHotKnowledge.save({
-                        "ids" : $scope.knowledge.selectedList.map(item=>item.id)
-                    },function(response){
-                        if(response.status == 200){
-                            queryHotKnowledgeList($scope.hotKnowledge.paginationConf.currentPage,$scope.hotKnowledge.paginationConf.pageSize) ;
-                        }
-                        layer.msg(response.info)
-                    },function(error){console.log(error)}) ;
-                },function(){
-                    //取消的同时清空数据
-                    $scope.knowledge.isAllKnowSelected = false;
-                    $scope.knowledge.selectedIdList = [];
-                    $scope.knowledge.knowledgeList = [];
-                    $scope.knowledge.selectedList = [];
-                    $scope.knowledge.knowledgeIdList = [];
-                    $scope.knowledge.knowledgeTitle = "";
-                }) ;
+                   
             }) ;
+        })
+    }
+
+        //添加知识
+        function saveSelectedList(){
+            if($scope.knowledge.selectedList.map(item=>item.id).length==0){
+                layer.msg("请选择热点知识")
+                return;
+            }
+             ApplicationServer.addHotKnowledge.save({
+                    "ids" : $scope.knowledge.selectedList.map(item=>item.id)
+                },function(response){
+                    if(response.status == 200){
+                        queryHotKnowledgeList($scope.hotKnowledge.paginationConf.currentPage,$scope.hotKnowledge.paginationConf.pageSize) ;
+                        layer.msg(response.info,{time:2000})
+                        ngDialog.closeAll(1) ;
+
+                    }else{
+                        layer.msg(response.info)
+                    }
+                    
+                },function(error){console.log(error)}) ;
+                // },function(){
+                //     //取消的同时清空数据
+                //     $scope.knowledge.isAllKnowSelected = false;
+                //     $scope.knowledge.selectedIdList = [];
+                //     $scope.knowledge.knowledgeList = [];
+                //     $scope.knowledge.selectedList = [];
+                //     $scope.knowledge.knowledgeIdList = [];
+                //     $scope.knowledge.knowledgeTitle = "";
+                // }) ;
+
         }
         //删除知识
         function removeHotKnowledge(ids){
