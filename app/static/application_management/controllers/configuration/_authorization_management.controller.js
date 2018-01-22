@@ -36,7 +36,8 @@ module.exports = applicationManagementModule =>{
                 "license":$scope.info.license
             },function (response) {
                 if(response.status == 200){
-                    getInfo()
+                    getInfo();
+                     layer.msg(response.info,{time:1000})
                 }
                 layer.close(i) ;
             })
