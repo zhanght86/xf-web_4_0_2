@@ -101,11 +101,11 @@
                         </div>
                         <span class="flow_span L ml-10 mr-10">-</span>
 
-                        <div class="flow_con L" ng-if="v.content.indexOf('\\r\\n')==-1">
+                        <div class="flow_con L" ng-if="v.content.indexOf('\r\n')==-1">
                             {{v.content}}
                         </div>
-                        <div class="flow_con L" ng-if="v.content.indexOf('\\r\\n')!=-1">
-                            <div ng-repeat="i in v.content.split('\\r\\n') track by $index">{{i}}</div>
+                        <div class="flow_con L" ng-if="v.content.indexOf('\r\n')!=-1">
+                            <div class="mb-5" ng-repeat="i in v.content.split('\r\n') track by $index">{{i}}</div>
                         </div>
 
                     </li>

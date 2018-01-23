@@ -6,15 +6,15 @@
             <table class="access_amount_table ">
                 <tr>
                     <td width="25%">IP地址</td>
-                    <td width="25%">内存占用（MB）</td>
+                    <td width="25%">内存占用（%）</td>
                     <td width="25%">CPU占用(%)</td>
                     <td width="25%">服务状态</td>
                 </tr>
-                <tr>
-                    <td>{{vm.linuxIp}}</td>
-                    <td>{{vm.memory}}</td>
-                    <td>{{vm.cpu}}</td>
-                    <td>{{vm.responseStatus}}</td>
+                <tr ng-repeat="item in vm.result">
+                    <td>{{ item[item.length-1].ip }}</td>
+                    <td>{{ item[item.length-1].memory }}%</td>
+                    <td>{{ item[item.length-1].cpu }}%</td>
+                    <td>{{ item[item.length-1].responseStatus }}</td>
                 </tr>
             </table>
         </div>

@@ -47,7 +47,7 @@ module.exports = knowledgeManagementModule =>{
         let frameHtml   = require("../../views/public_html/frame.html") ;
         let limitTimer ;
         // 知识学习  （知识学习>新知识发现>学习）
-        if($stateParams.knowledgeId){
+        if($stateParams.knowledgeLearning){
             getNewKnowledgeLearningList();
         }
         function showFrame(scope){
