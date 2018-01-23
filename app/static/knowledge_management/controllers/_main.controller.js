@@ -187,8 +187,11 @@ module.exports = knowledgeManagementModule =>{
                                    var  html = '<ul class="menus">';
                                    for(var i=0;i<response.data.length;i++){
                                        var typeClass ;
-
+                                       var edgeClass = "";
                                        // 叶子节点 node
+                                       if(response.data[i].relation == "edge"){
+                                           edgeClass = " edge_class"
+                                       }
                                        if((response.data[i].leaf == 0)){
                                            typeClass = "bot-leaf"　;
                                        }else if((response.data[i].leaf != 0) && (response.data[i].relation == "edge" )){
@@ -214,7 +217,7 @@ module.exports = knowledgeManagementModule =>{
                                        html+= '<li>' +
                                            '<div class="slide-a">'+
                                            ' <a class="ellipsis" href="javascript:;">' ;
-                                       html+=              '<i class="'+typeClass + backImage +'" data-option="'+response.data[i].id+'"></i>' ;
+                                       html+=              '<i class="'+typeClass + edgeClass + backImage +'" data-option="'+response.data[i].id+'"></i>' ;
                                        html+=              '<span>'+response.data[i].name+'</span>'+
                                            '</a>' +
                                            '</div>' +
@@ -243,7 +246,7 @@ module.exports = knowledgeManagementModule =>{
                 $(".aside-navs").on("click","span",function(){
                     //类型节点
                     var pre = $(this).prev() ;
-                    if(pre.hasClass("bot-edge")){
+                    if(pre.hasClass("edge_class")){
                         return layer.msg("只能选择node类型添加",{time:1000})
                     }
                     angular.element(".icon-jj").css("backgroundPosition","0% 0%");

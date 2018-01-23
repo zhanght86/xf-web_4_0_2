@@ -13,6 +13,7 @@ module.exports = angular => {
     //--------------------------------------------------
     require('../server/_knowledge.service')(knowledgeManagementModule);  // 服务
     require('../server/_doc.server')(knowledgeManagementModule);         // 服务
+     require('../../index/server/_home_page.server')(knowledgeManagementModule);
     //--------------------------------------------------
     //         controller
     //--------------------------------------------------

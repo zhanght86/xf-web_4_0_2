@@ -27,6 +27,8 @@ class ApplicationServer {
         this.hotKnowledgeDown = $resource(API_APPLICATION+"/hot/question/down", {}, {});
         //置顶知识
         this.hotKnowledgeStick = $resource(API_APPLICATION+"/hot/question/top", {}, {});
+        //热点问题重复判断
+        this.hotKnowledgecheck = $resource(API_APPLICATION+"/hot/question/check/:knowledgeId", {}, {});
 
 //   参数设置
         //查看应用参数

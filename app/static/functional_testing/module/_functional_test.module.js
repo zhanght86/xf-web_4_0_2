@@ -35,7 +35,7 @@ module.exports = angular => {
     //          server
     //--------------------------------------------------
     require('../server/_function.server')(functionalTestModule);
-
+    require('../../index/server/_home_page.server')(functionalTestModule);
 
     //--------------------------------------------------
     //         directive

@@ -15,7 +15,7 @@
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">知识标题：</div>
                             <div>
-                                <input  type="text" class="bk-gray input-text " autofocus  placeholder="请输入标题" ng-model="parameter.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:420px;"/>
+                                <input  type="text" class="bk-gray input-text " autofocus  placeholder="请输入标题" ng-model="parameter.title" name="title" ng-focus="vm.titleTip=''" ng-minlength="1" ng-maxlength="1000" required  style="width:395px;"/>
                                 <p class="c-error pd-5"  ng-if="vm.titleTip">{{vm.titleTip}}</p>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                 <div class="list_facContent_L"></div>
                                 <div class="clearfix" style="width:420px">
                                     <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
-                                        <input class="ipt-txt bd" style="width:407px;height:22px;" type="text"
+                                        <input class="ipt-txt bd" style="width:395px;height:22px;" type="text"
                                                ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index)"
                                                ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)">
                                         <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
@@ -89,11 +89,6 @@
                                         <a href="javascript:;" ng-click="parameter.contents.splice($index,1);vm.channelList.remove(item.channel)" class="delete_a ml-10 L mt-20"></a>
                                         <a href="javascript:;" class="edit_a L mt-20 ml-10" ng-click="vm.knowledgeAdd(parameter.contents[$index],$index)"></a>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item-line item_line">
-                                <div class="optionDiv">渠道：
-                                    <span class="mr-10">{{item.channel | channel:$parent.$parent.MASTER.channelList}}</span>
                                 </div>
                             </div>
                             <div class="item-line item_line" ng-repeat="relation in item.contentRelevantList track by $index">

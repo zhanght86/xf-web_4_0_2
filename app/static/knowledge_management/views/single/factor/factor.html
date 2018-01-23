@@ -42,11 +42,11 @@
                         <div style="padding-top: 5px;">
                             <!--不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame(this)">业务框架</a>吧-->
                             <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="width: 410px;position: relative">
-                                <input class="ipt-txt bd" style="width:407px;height:32px;" type="text"
+                                <input class="ipt-txt bd" style="width:395px;height:32px;" type="text"
                                        ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index)"
                                        ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)"
                                 >
-                                <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
+                                <span style="position:absolute;right: 22px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('images/detel.png')"
                                       ng-click="$parent.knowCtr.removeExtention(this,$index)"
                                 ></span>
                             </p>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="list_facContent mb-50">
                         <div class="list_facContent_L">知识内容: &nbsp;</div>
-                        <div >
+                        <div>
                             <div class="clearfix mb-10">
                                 <span uploader-factor server="'api/elementKnowledgeAdd/upload'"  is-auto="'true'" table-list="vm.tableList"></span>
                                 <div class="essential_factor_div bd mt-10">
@@ -172,5 +172,4 @@
     </div>
     </div>
 </div>
-
 

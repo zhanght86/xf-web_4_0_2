@@ -1274,7 +1274,7 @@ module.exports = (angular) => {
             // 新增
         {
             name: "KM.faq",
-            url: "/faq/:knowledgeId",
+            url: "/faq/:knowledgeId/:knowledgeLearning",
             permission : {
                 id  : "" ,
                 pid : "4-1"
@@ -1317,7 +1317,7 @@ module.exports = (angular) => {
             // 新增
         {
             name: "KM.list",
-            url: "/list",
+            url: "/list/:knowledgeLearning",
             permission : {
                 id  : "" ,
                 pid : "4-1"
@@ -1360,7 +1360,7 @@ module.exports = (angular) => {
             // 新增
         {
             name: "KM.factor",
-            url: "/factor",
+            url: "/factor/:knowledgeLearning",
             permission : {
                 id  : "" ,
                 pid : "4-1"
@@ -1403,7 +1403,7 @@ module.exports = (angular) => {
             // 新增
         {
             name: "KM.concept",
-            url: "/concept",
+            url: "/concept/:knowledgeLearning",
             permission : {
                 id  : "" ,
                 pid : "4-1"

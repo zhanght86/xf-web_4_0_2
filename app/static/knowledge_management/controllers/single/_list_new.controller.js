@@ -10,8 +10,6 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService,KnowledgeService, $state,ngDialog,$cookieStore,$timeout,$compile,
      $window,$stateParams,$interval,$filter) =>{$state.go("KM.list");
         $scope.parameter = {
-            idArr:[],               //新知识id
-
             "title"	                : "",   //知识标题
             "expDateStart"          : "",   //知识有效期开始时间
             "expDateEnd"            : "",   //知识有效期结束时间
@@ -29,18 +27,18 @@ module.exports = knowledgeManagementModule =>{
         //内容集合
         } ;
         $scope.vm = {
-            localNameOfExt : "cust_list_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
-            titleTip :  "",
-            isTimeTable : false,  //时间表隐藏
-            skipNewLine : skipNewLine ,
-            save : save ,   //保存
-            scan :scan ,   //预览
-            enterEvent : enterEvent,
-            saveLimitTimer : true, //限制多次打标
-            showFrame : showFrame //选择业务框架
+            localNameOfExt     : "cust_list_ext" , // 本地存储字段 用于编辑扩展问二次添加
+            titleTip           : "",
+            isTimeTable        : false,           //时间表隐藏
+            knowLearningIdList : [],               //知识学习id
+            save               : save ,            //保存
+            scan               : scan ,            //预览
+            enterEvent         : enterEvent,
+            saveLimitTimer     : true,             //限制多次打标
+            showFrame          : showFrame         //选择业务框架
         };
         // 知识学习  （知识学习>新知识发现>学习）
-        if($stateParams.knowledgeId){
+        if($stateParams.knowledgeLearning){
             getNewKnowledgeLearningList();
         }
         function showFrame(scope){
@@ -78,25 +76,21 @@ module.exports = knowledgeManagementModule =>{
                     },function(){
                         $state.reload("KM.list")
                     });
-
-                    //保存成功，删除知识
-                    KnowledgeService.batchIgnore.save({
-                        "idList":$scope.parameter.idArr
-                    },function(data){
-                        if(data.status==200){
-                            // layer.msg("文件忽略成功");
-
-                        }
-                        if(data.status==500){
-                            layer.msg(data.info,{time:10000});
-                        }
-
-                    },function(err){
-                        console.log(err);
-                    });
-                    //保存成功，删除知识--end
-
-
+                    //保存成功，删除知识 //保存成功，删除知识--end
+                    if($stateParams.knowledgeLearning){
+                        KnowledgeService.batchIgnore.save({
+                            "idList":$scope.vm.knowLearningIdList
+                        },function(data){
+                            if(data.status==200){
+                                // layer.msg("文件忽略成功");
+                            }
+                            if(data.status==500){
+                                layer.msg(data.info,{time:10000});
+                            }
+                        },function(err){
+                            console.log(err);
+                        });
+                    }
                 }else{
                     $scope.vm.saveLimitTimer = true;
                     layer.msg(response.info)
@@ -142,22 +136,6 @@ module.exports = knowledgeManagementModule =>{
             }
             return result
         }
-        function skipNewLine(e) {
-            let len = $scope.parameter.extensionQuestionList.length ;
-            e = e || window.event ;
-            // if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
-            //     $scope.parameter.extensionQuestionList.push("") ;
-            // }
-            if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                $scope.parameter.extensionQuestionList.push({
-                    "title":""
-                }) ;
-                $timeout(function(){
-                    $(e.target).parent().parent().children().last().find("input").focus();
-                })
-            }
-        }
-
         //获取本地存储
         function getNewKnowledgeLearningList(){
             var str = localStorageService.get("localStorageKey");
@@ -174,12 +152,12 @@ module.exports = knowledgeManagementModule =>{
             $scope.parameter.title = json.title;
             var arr=json.extension;
             angular.forEach(arr,function(obj){
-                $scope.parameter.idArr.push(obj.id);
-                $scope.parameter.extensionQuestionList.unshift({"title":obj.question});
+                $scope.vm.knowLearningIdList.push(obj.id);
+                $scope.parameter.extensionQuestionList.push({"title":obj.question});
             });
             console.log("获取的"+$scope.parameter.title);
             console.log($scope.parameter.extensionQuestionList);
-            console.log($scope.parameter.idArr);
+            console.log($scope.vm.knowLearningIdList);
         }
     }
 ])};

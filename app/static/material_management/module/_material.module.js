@@ -36,6 +36,7 @@ module.exports = angular =>{
     //          server
     //--------------------------------------------------
     require('../server/_material.server')(materialModule);
+     require('../../index/server/_home_page.server')(materialModule);
     //--------------------------------------------------
     //         directive
     //--------------------------------------------------
