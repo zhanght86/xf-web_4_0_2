@@ -316,30 +316,19 @@ module.exports = knowledgeManagementModule =>{
         }
         // 预览
         function scan() {
-            if (!checkSave()) {
+            if(!checkSave()){
                 return false
-            } else {
+            }else{
                 var obj = {};
-                var params;
-                console.log(params);
-                obj.params = params;
-                obj.editUrl = "knowledgeManagement.markKnow";
-                if ($scope.vm.knowledgeId) {
-                    //编辑
-                    obj.api = "/api/ms/richtextKnowledge/editKnowledge";
-                    params.knowledgeId = $scope.vm.knowledgeId;
-                } else {
-                    //新增
-                    obj.api = "/api/ms/richtextKnowledge/addKnowledge"
-                }
-                obj.params = params;
-                obj.knowledgeType = 106;
-                $window.knowledgeScan = obj;
-                //    var url = $state.href('knowledgeManagement.knowledgeScan',{knowledgeScan: 111});
-                var url = $state.href('knowledgeManagement.knowledgeScan');
-                $window.open(url, '_blank');
+                obj.params = angular.copy($scope.parameter);
+                obj.params.extensionQuestionList = obj.params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
+                obj.type = 101;
+                obj.back = "KM.concept" ;
+                $window.knowledge = obj;
+                var url = $state.href('KM.scan');
+                $window.open(url,'_blank');
             }
-        };
+        }
         function checkSave() {
             let result = false ;
             let params = angular.copy($scope.parameter);
