@@ -25,6 +25,7 @@ module.exports = angular =>{
     //          server
     //--------------------------------------------------
     require('../server/_system.server')(systemMonitoringModule);
+      require('../../index/server/_home_page.server')(systemMonitoringModule);
 
 
     //--------------------------------------------------

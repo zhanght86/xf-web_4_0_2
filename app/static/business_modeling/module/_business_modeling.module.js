@@ -42,6 +42,7 @@ module.exports = angular => {
     //          server
     //--------------------------------------------------
     require('../server/_business_modeling.server')(businessModelingModule);
+     require('../../index/server/_home_page.server')(businessModelingModule);
     //--------------------------------------------------
     //         directive
     //--------------------------------------------------

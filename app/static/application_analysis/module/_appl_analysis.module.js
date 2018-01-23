@@ -13,6 +13,7 @@
     //         server
     //--------------------------------------------------
     require('../server/_application_analysis.server')(applAnalysisModule);  // 服务
+     require('../../index/server/_home_page.server')(applAnalysisModule);
     
     //--------------------------------------------------
     //         controller
