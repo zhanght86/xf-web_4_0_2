@@ -10,7 +10,7 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService,KnowledgeService, $state,ngDialog,$cookieStore,$timeout,$compile,
      $window,$stateParams,$interval,$rootScope,$filter) =>{
         $scope.parameter = {
-            "id"	                : "",   //知识id
+            "id"	                : $stateParams.knowledgeId,   //知识id
             "title"	                : "",   //知识标题
             "expDateStart"          : "",   //知识有效期开始时间
             "expDateEnd"            : "",   //知识有效期结束时间

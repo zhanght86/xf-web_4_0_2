@@ -1274,7 +1274,7 @@ module.exports = (angular) => {
             // 新增
         {
             name: "KM.faq",
-            url: "/faq/:knowledgeId",
+            url: "/faq/:knowledgeId/:knowledgeLearning",
             permission : {
                 id  : "" ,
                 pid : "4-1"

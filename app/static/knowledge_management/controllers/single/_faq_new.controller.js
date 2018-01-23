@@ -9,15 +9,13 @@ module.exports = knowledgeManagementModule =>{
     ($scope,localStorageService,KnowledgeService , $state,ngDialog,$cookieStore,$timeout,$compile,$stateParams,$window,$rootScope,$filter) =>{
         $state.go("KM.faq") ;
         $scope.parameter = {
-            idArr:[],              //新知识id
-
             "title"	                : "",   //知识标题
             "expDateStart"          : "",   //知识有效期开始时间
             "expDateEnd"            : "",   //知识有效期结束时间
             "origin"                : 120,  //数据来源
             "classifyList"          : [],   //所属类目ID集合
             "extensionQuestionList" : [{"title":""}], //扩展问集合
-            "contents"           : []    //内容集合
+            "contents"              : []    //内容集合
         } ;
         $scope.newKnow = {
             "isNewContent" : -1 ,
@@ -26,28 +24,24 @@ module.exports = knowledgeManagementModule =>{
             "type"         : 1010
         } ;
         $scope.vm = {
-            ctrName : "faq" ,
-            titleTip :  "",
-            localExtensionName : "cust_faq_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
-//时间
-            isTimeTable : false ,  //时间表隐藏
-//bot
-            frames : [],      //业务框架
-//展示内容
-            save : save ,   //保存
-            scan :scan ,    //预览
-            knowledgeAdd: knowledgeAdd,  //新增点击事件
-            increaseCheck  : increaseCheck , //知识新增弹框保存按钮
-//D 知识内容配置
+            ctrName                      : "faq" ,
+            titleTip                     : "",
+            localExtensionName           : "cust_faq_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
+            isTimeTable                  : false ,  //时间表隐藏
+            frames                       : [],      //业务框架
+            knowLearningIdList           : [],              //新知识学习id
+            save                         : save ,   //保存
+            scan                         : scan ,    //预览
+            knowledgeAdd                 : knowledgeAdd,  //新增点击事件
+            increaseCheck                : increaseCheck , //知识新增弹框保存按钮
             knowledgeRelevantContentList : [] ,
-            saveLimitTimer : true , //限制多次打标
-            showFrame : showFrame //选择业务框架
+            saveLimitTimer               : true , //限制多次打标
+            showFrame                    : showFrame //选择业务框架
         };
         let knowNewHtml = require("../../views/public_html/knowledge_increase.html") ;
-        let frameHtml   = require("../../views/public_html/frame.html") ;
         let limitTimer ;
         // 知识学习  （知识学习>新知识发现>学习）
-        if($stateParams.knowledgeId){
+        if($stateParams.knowledgeLearning){
             getNewKnowledgeLearningList();
         }
         function showFrame(scope){
@@ -60,7 +54,6 @@ module.exports = knowledgeManagementModule =>{
             },"",function(){
 
             });
-
         }
         function knowledgeAdd(data,index){
             // 判断是否渠道添加重复
@@ -119,13 +112,12 @@ module.exports = knowledgeManagementModule =>{
                         $state.reload("KM.faq")
                     });
                     //保存成功，删除知识 //保存成功，删除知识--end
-                    if($stateParams.knowledgeId){
+                    if($stateParams.knowledgeLearning){
                         KnowledgeService.batchIgnore.save({
-                            "idList":$scope.parameter.idArr
+                            "idList":$scope.vm.knowLearningIdList
                         },function(data){
                             if(data.status==200){
                                 // layer.msg("文件忽略成功");
-
                             }
                             if(data.status==500){
                                 layer.msg(data.info,{time:10000});
@@ -248,12 +240,12 @@ module.exports = knowledgeManagementModule =>{
             $scope.parameter.title = json.title;
             var arr=json.extension;
             angular.forEach(arr,function(obj){
-                $scope.parameter.idArr.push(obj.id);
+                $scope.vm.knowLearningIdList.push(obj.id);
                 $scope.parameter.extensionQuestionList.push({"title":obj.question});
             });
             console.log("获取的"+$scope.parameter.title);
             console.log($scope.parameter.extensionQuestionList);
-            console.log($scope.parameter.idArr);
+            console.log($scope.vm.knowLearningIdList);
         }
 
 }])};

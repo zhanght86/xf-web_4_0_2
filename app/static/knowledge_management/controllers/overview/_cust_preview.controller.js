@@ -50,7 +50,18 @@ module.exports = knowledgeManagementModule =>{
            var i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
            apiRes.$promise.then(function(response){
                if(response.status == 200 ){
-                   $scope.knowledge = response.data
+                   $scope.knowledge = response.data;
+                   if($scope.vm.type==103){
+                       angular.forEach($scope.knowledge.contents,function (item,index) {
+                           $scope.knowledge.contents[index].content = JSON.parse(item.content)
+                       })
+                       let contents = angular.copy($scope.knowledge.contents)
+                       $scope.knowledge.contents = {
+                           "contents" : contents
+                       }
+                   }
+
+                   console.log($scope.knowledge.contents)
                }
                 layer.close(i) ;
             },function(error){

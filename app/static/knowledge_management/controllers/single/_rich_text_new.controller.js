@@ -10,7 +10,6 @@ module.exports = knowledgeManagementModule => {
         ($scope, localStorageService, $state, ngDialog, $cookieStore, $timeout, $compile, KnowledgeService,
          $window, $stateParams, $interval, $filter)=> {$state.go("KM.concept");
             $scope.parameter = {
-                idArr:[],               //新知识id
                 "title"                 : "",   //知识标题
                 "expDateStart"          : "",   //知识有效期开始时间
                 "expDateEnd"            : "",   //知识有效期结束时间
@@ -59,6 +58,7 @@ module.exports = knowledgeManagementModule => {
                 "imageApi"            : "/api/material/picture/get/img/id?pictureId=" ,  // 图片请求地址
                 "localNameOfExt"      : "cust_rich_text_ext",    // 本地存储字段 用于编辑扩展问二次添加
                 "frames"              : [],                      //业务框架
+                "knowLearningIdList"  : [],                      //知识学习id
                 "knowledgeAdd"        : knowledgeAdd,             //新增点击事件
                 "save"                : save,                     //保存
                 "scan"                : scan,                     //预览
@@ -74,7 +74,7 @@ module.exports = knowledgeManagementModule => {
                 voiceHtml = require("../../views/single/rich_text/select_voice.html"),
                 limitTimer;
             // 知识学习  （知识学习>新知识发现>学习）
-            if($stateParams.knowledgeId){
+            if($stateParams.knowledgeLearning){
                 getNewKnowledgeLearningList();
             }
             function showFrame(scope){
@@ -301,9 +301,9 @@ module.exports = knowledgeManagementModule => {
                             $state.reload("KM.concept")
                         });
                         //保存成功，删除知识 //保存成功，删除知识--end
-                        if($stateParams.knowledgeId){
+                        if($stateParams.knowledgeLearning){
                             KnowledgeService.batchIgnore.save({
-                                "idList":$scope.parameter.idArr
+                                "idList":$scope.vm.knowLearningIdList
                             },function(data){
                                 if(data.status==200){
                                     // layer.msg("文件忽略成功");
@@ -382,11 +382,11 @@ module.exports = knowledgeManagementModule => {
                 $scope.parameter.title = json.title;
                 var arr=json.extension;
                 angular.forEach(arr,function(obj){
-                    $scope.parameter.idArr.push(obj.id);
+                    $scope.vm.knowLearningIdList.push(obj.id);
                     $scope.parameter.extensionQuestionList.push({"title":obj.question});
                 })
                 console.log("获取的"+$scope.parameter.title);
                 console.log($scope.parameter.extensionQuestionList);
-                console.log($scope.parameter.idArr);
+                console.log($scope.vm.knowLearningIdList);
             }
 }])};
