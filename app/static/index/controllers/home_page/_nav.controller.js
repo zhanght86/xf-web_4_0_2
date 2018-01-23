@@ -3,11 +3,10 @@
  * @Create : 2017/11/20.
  * @Module :  公用导航
  */
-module.exports = homePageModule =>{
-    homePageModule
-        .controller('NavController', [
-            '$scope', '$location', 'localStorageService','ngDialog',"$timeout", "$cookieStore","$state","$cookies",
-            function ($scope, $location, localStorageService,ngDialog,$timeout,$cookieStore,$state,$cookies,) {
+module.exports = applicationManagementModule =>{
+    applicationManagementModule.controller('NavController',
+    ['$scope','localStorageService','HomePageServer','$state','$timeout','$stateParams','ngDialog','$location',
+    function ($scope,localStorageService,HomePageServer,$state,$timeout,$stateParams,ngDialog,$location) {        
                 $scope.url = $location.url();
                 $scope.urls=$state.current.name;
                 $scope.map = [] ; // 定义导航
@@ -22,7 +21,9 @@ module.exports = homePageModule =>{
                         openServiceConfirm : openServiceConfirm,
                         queryServiceList: queryServiceList,
                         serviceUrl: "",
-                        serviceUrlList: ""
+                        serviceUrlList: "",
+                        serviceArray:""
+
                     };
                 $scope.permission = getCookie("permissionTree") || "";
                 if($scope.url == "/HP/define"){
@@ -77,35 +78,23 @@ module.exports = homePageModule =>{
                 self.initSearch();
 
                 function queryServiceList(){
+                     let i = layer.msg('资源加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
                     //服务列表请求
                     HomePageServer.getUrl.get({
                         applicationId:APPLICATION_ID
                     },function(data){
+                         layer.close(i) ;
                         if(data.status==200){
                            $scope.vm.serviceArray = data.data;
-                           $scope.vm.serviceUrl = data.data[0];//设置默认选择
+                           $scope.vm.serviceUrl = data.data[0].url;//设置默认选择
                            $scope.vm.openServiceConfirm();
                         }else{
                             layer.info(data.info)
                         }
-                        console.log(data)
+                    },function(){
+                         layer.close(i) ;
+                        layer.msg("无法加载服务列表",{time:1000});
                     })
-                    // httpRequestPost("/api/application/service/listServiceByPage",{
-                    //     "applicationId" :  $scope.vm.applicationId,
-                    //     "index": ($scope.SearchPOJO.currentPage-1)*$scope.SearchPOJO.pageSize,
-                    //     "pageSize": $scope.SearchPOJO.pageSize
-                    // },function(resource){
-                    //     if(resource.status == 200 && resource.data != null && resource.data.length >0){
-                    //         $scope.paginationConf.totalItems = resource.total;
-                    //         $scope.vm.serviceArray = resource.data;
-                    //         $scope.vm.serviceUrl = resource.data[0].nodeAccessIp;//设置默认选择
-                    //         $scope.vm.openServiceConfirm();
-                    //     }else{
-                    //         layer.msg("无应用服务",{time:1000});
-                    //     }
-                    // },function(){
-                    //     layer.msg("无法加载服务列表",{time:1000});
-                    // });
                 }
                 //引擎跳转方法
                 function openServiceConfirm(){
@@ -285,6 +274,4 @@ module.exports = homePageModule =>{
                 window.onbeforeunload = function () {
                     localStorage.removeItem('history');
                 }
-    }
-        ])
-};
+    }])};

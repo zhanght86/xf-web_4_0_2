@@ -55,9 +55,7 @@ class HomePageServer {
      /******************************
                         *问答地址*
                 ********************************/ 
-    this.getUrl=$resource(API_APPLICATION+"/node/urllist/get/:applicationId",{},{}) ;
-
-
+    this.getUrl=$resource(API_APPLICATION+"/node/service/get/:applicationId",{},{}) ;
 
 
 

@@ -57,7 +57,6 @@ module.exports = homePageModule =>{
             setCookie("description",application.description);
             APPLICATION_ID   = application.id;
             APPLICATION_NAME = application.name;
-            console.log(application)
             //$.getScript('assets/js/common/config.js');
         }
         //打开添加窗口
@@ -103,9 +102,7 @@ module.exports = homePageModule =>{
                 "description":$scope.vm.description
             },function(response){
                 if(response.status==200){
-                    console.log($scope.vm.newApplicationName)
                     let app = response.data.filter(item=>(item.name==$scope.vm.newApplicationName))[0] ;
-                    console.log(app)
                     selectApplication(app);
                     $state.go("AM.info");
                 }else{

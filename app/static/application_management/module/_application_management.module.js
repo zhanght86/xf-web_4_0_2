@@ -40,6 +40,8 @@ module.exports = angular => {
     //          server
     //--------------------------------------------------
     require('../server/_application.server')(applicationManagementModule);
+    require('../../index/server/_home_page.server')(applicationManagementModule);
+    
     // applicationManagementModule.run(['$injector', function($injector) {
     //     console.log(11);
     //
