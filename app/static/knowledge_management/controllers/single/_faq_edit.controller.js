@@ -21,7 +21,7 @@ module.exports = knowledgeManagementModule =>{
         $scope.newKnow = {
             "content"	: "",           //知识内容
             "channel"	: "",           //渠道
-            "type"      : 110
+            "type"      : 1010
         } ;
         $scope.vm = {
             ctrName : "faq" ,
