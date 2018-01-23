@@ -31,15 +31,15 @@ module.exports = applicationManagementModule =>{
             if(!$scope.info.license){
                 return layer.msg("请填写授权码")
             }
-            let i = layer.msg('重新授权中，请稍后...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000}) ;
             ApplicationServer.updateLicense.save({
                 "license":$scope.info.license
             },function (response) {
                 if(response.status == 200){
                     getInfo();
                      layer.msg(response.info,{time:1000})
+                }else{
+                     layer.msg(response.info,{time:1000})
                 }
-                layer.close(i) ;
             })
         }
         }

@@ -50,7 +50,7 @@ module.exports = applicationManagementModule =>{
                 "index" : (index-1)*pageSize,
                 "pageSize": pageSize
             },function(response){
-                if(response.status == 200&&response.data!=null||response.data.length>0){
+                if(response.status == 200&&response.data!=null){
                     $scope.vm.serviceList = response.data.data;
                     $scope.vm.paginationConf.totalItems = response.data.total ;
                     $scope.vm.paginationConf.numberOfPages = response.total/pageSize ;
