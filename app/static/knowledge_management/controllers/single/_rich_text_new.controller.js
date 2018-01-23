@@ -330,8 +330,9 @@ module.exports = knowledgeManagementModule => {
                     return false
                 }else{
                     var obj = {};
-                    obj.params = $scope.parameter;
-                    obj.type = 100;
+                    obj.params = angular.copy($scope.parameter);
+                    obj.params.extensionQuestionList = obj.params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
+                    obj.type = 101;
                     obj.back = "KM.concept" ;
                     $window.knowledge = obj;
                     var url = $state.href('KM.scan');

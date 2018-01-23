@@ -19,7 +19,7 @@
                 <span class="pa preview_span">知识bot：</span>
                 <span ng-repeat="item in vm.knowledge.classifyList track by $index">{{item.value}}<i ng-if="$index!=(vm.knowledge.classifyList.length-1)">,</i></span>
             </li>
-            <li class="preview_li pr" ng-if="vm.knowledge.extensionQuestionList">
+            <li class="preview_li pr" ng-if="vm.knowledge.extensionQuestionList.length">
                 <p ng-repeat="ext in vm.knowledge.extensionQuestionList">
                     <span class="pa preview_span" style="color:#333;" ng-bind="{100:'用户问法：',101:'概念扩展：',102:'用户问法：',103:'触发问法：'}[vm.knowledgeType]"></span>
                     <span>{{ext.title}}</span>

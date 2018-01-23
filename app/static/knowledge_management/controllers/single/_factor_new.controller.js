@@ -189,7 +189,8 @@ module.exports = knowledgeManagementModule =>{
                 return false
             }else{
                 var obj = {};
-                obj.params = $scope.parameter;
+                obj.params = angular.copy($scope.parameter);
+                obj.params.extensionQuestionList = obj.params.extensionQuestionList.filter((item)=>(item.title!=""&&item.title!=null)) ;
                 obj.type = 103;
                 obj.back = "KM.factor" ;
                 obj.save = save ;

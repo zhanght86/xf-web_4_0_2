@@ -155,23 +155,31 @@
                                                 </li>
                                                 <!-- 要素知識-->
                                                 <li ng-if="item.type==103">
-                                                    <p><strong>该要素知识包含条数：</strong> {{item.tableCount}}条</p>
-                                                    <p><strong>新添加要素数：</strong> {{item.elementsCount}}条</p>
+                                                    <p>新添加要素数： {{item.contents[0].length}}条</p>
+                                                    <p>该要素知识包含条数： {{item.contents.length}}条</p>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="txt-item oh">
-                                        <div class="lable fl">知识类型：</div>
-                                        <span ng-bind="{100:'FAQ知识',101:'概念知识',102:'列表知识',103:'任务知识',104:'多轮对话'}[item.type]"></span>
+                                        <div class="lable fl" style="overflow: hidden;width: 100%;">
+                                            <p style="float: left">
+                                                知识类型：
+                                                <span ng-bind="{100:'FAQ知识',101:'概念知识',102:'列表知识',103:'任务知识',104:'多轮对话'}[item.type]"></span>
+                                                <span> &nbsp;作者：{{item.account}}</span>
+                                            </p>
+                                            <p style="float: right">
+                                                更新时间：{{item.modifyTime |  date : 'yyyy-MM-dd HH:mm'}}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="csso-info oh">
-                                    <div class="fr">
-                                        <span class="mr-20">作者：{{item.account}}</span>
-                                        <span>更新时间：{{item.modifyTime |  date : 'yyyy-MM-dd HH:mm'}}</span>
-                                    </div>
-                                </div>
+                                <!--<div class="csso-info oh">-->
+                                    <!--<div class="fr">-->
+                                        <!--<span class="mr-20">作者：{{item.account}}</span>-->
+                                        <!--<span>更新时间：{{item.modifyTime |  date : 'yyyy-MM-dd HH:mm'}}</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                             </li>
                         </ul>
                         <pagination ng-if="vm.paginationConf.totalItems && vm.paginationConf.totalItems>0" conf="vm.paginationConf"></pagination>
