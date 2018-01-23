@@ -110,6 +110,28 @@ module.exports = applicationManagementModule =>{
 
             },function(error){console.log(error)})
         }
+
+        //判断重复
+        function hotKnowledgecheck(order){
+            angular.forEach($scope.knowledge.selectedList,(val,index)=>{
+             ApplicationServer.hotKnowledgecheck.get({
+                knowledgeId:val.id
+                },(data)=>{
+                    if(data.status==500){
+                        if(order==2){
+                            layer.msg("热点知识重复，不可添加")
+                        }else{
+                            layer.msg("部分热点问题重复，不可添加")
+                        }
+                       
+                         $scope.knowledge.selectedList.splice(index,1);
+                         $scope.knowledge.selectedIdList.splice(index,1);
+                    }
+                })
+            })
+           
+        }
+
         function selectAllKnow() {
             if($scope.knowledge.isAllKnowSelected == false){   // // 选择全部
                 angular.forEach($scope.knowledge.knowledgeList,function(val,cur){
@@ -128,6 +150,7 @@ module.exports = applicationManagementModule =>{
                 });
             }
             $scope.knowledge.isAllKnowSelected = !$scope.knowledge.isAllKnowSelected ;
+            hotKnowledgecheck(1)  //判断重复
         }
         function selectSingle(item,id) {
             let index = $scope.knowledge.selectedIdList.indexOf(id);
@@ -140,6 +163,8 @@ module.exports = applicationManagementModule =>{
             }
             // 是否全选
         $scope.knowledge.isAllKnowSelected = knowUnselected($scope.knowledge.selectedList,$scope.knowledge.knowledgeList).items.length==0?true:false
+
+            hotKnowledgecheck(2)  //判断重复
 
         }
         function removeSelected(index) {

@@ -68,6 +68,7 @@ module.exports = applicationManagementModule =>{
                                 "avatarDocId": responseAvatar.data,
                             },function(response){
                                 if(response.status===200){
+                                    console.log(response)
                                     setCookie('avatarUrl',API_MATERIAL+"/picture/get/img/id?pictureId=");
                                     setCookie('avatarId',responseAvatar.data);
                                     $scope.$parent.$parent.MASTER.avatarUrl = API_MATERIAL+"/picture/get/img/id?pictureId=" ;
