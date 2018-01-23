@@ -159,9 +159,8 @@ module.exports = knowledgeManagementModule => {
                         "name": item.title,
                         "url" : item.coverPicId
                     };
-                }else{
-                    close(1);
                 }
+                close(1);
             }
             function newKnowCheck(close) {
                 // 验证是否可以保存   内容  渠道两部分
