@@ -32,7 +32,6 @@ module.exports = knowledgeManagementModule =>{
             localNameOfExt : "cust_list_ext" ,    // 本地存储字段 用于编辑扩展问二次添加
             titleTip :  "",
             isTimeTable : false,  //时间表隐藏
-            skipNewLine : skipNewLine ,
             save : save ,   //保存
             scan :scan ,   //预览
             enterEvent : enterEvent,
@@ -78,25 +77,21 @@ module.exports = knowledgeManagementModule =>{
                     },function(){
                         $state.reload("KM.list")
                     });
-
-                    //保存成功，删除知识
-                    KnowledgeService.batchIgnore.save({
-                        "idList":$scope.parameter.idArr
-                    },function(data){
-                        if(data.status==200){
-                            // layer.msg("文件忽略成功");
-
-                        }
-                        if(data.status==500){
-                            layer.msg(data.info,{time:10000});
-                        }
-
-                    },function(err){
-                        console.log(err);
-                    });
-                    //保存成功，删除知识--end
-
-
+                    //保存成功，删除知识 //保存成功，删除知识--end
+                    if($stateParams.knowledgeId){
+                        KnowledgeService.batchIgnore.save({
+                            "idList":$scope.parameter.idArr
+                        },function(data){
+                            if(data.status==200){
+                                // layer.msg("文件忽略成功");
+                            }
+                            if(data.status==500){
+                                layer.msg(data.info,{time:10000});
+                            }
+                        },function(err){
+                            console.log(err);
+                        });
+                    }
                 }else{
                     $scope.vm.saveLimitTimer = true;
                     layer.msg(response.info)
@@ -142,22 +137,6 @@ module.exports = knowledgeManagementModule =>{
             }
             return result
         }
-        function skipNewLine(e) {
-            let len = $scope.parameter.extensionQuestionList.length ;
-            e = e || window.event ;
-            // if((e!="blur" && (e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])) || e=="blur"&& nullCheck($scope.parameter.extensionQuestionList[len-1])){
-            //     $scope.parameter.extensionQuestionList.push("") ;
-            // }
-            if((e.keyCode|| e.which)==13 && nullCheck($scope.parameter.extensionQuestionList[len-1])){
-                $scope.parameter.extensionQuestionList.push({
-                    "title":""
-                }) ;
-                $timeout(function(){
-                    $(e.target).parent().parent().children().last().find("input").focus();
-                })
-            }
-        }
-
         //获取本地存储
         function getNewKnowledgeLearningList(){
             var str = localStorageService.get("localStorageKey");

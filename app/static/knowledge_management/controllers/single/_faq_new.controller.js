@@ -118,21 +118,23 @@ module.exports = knowledgeManagementModule =>{
                     },function(){
                         $state.reload("KM.faq")
                     });
-                    //保存成功，删除知识
-                    KnowledgeService.batchIgnore.save({
-                        "idList":$scope.parameter.idArr
-                    },function(data){
-                        if(data.status==200){
-                           // layer.msg("文件忽略成功");
+                    //保存成功，删除知识 //保存成功，删除知识--end
+                    if($stateParams.knowledgeId){
+                        KnowledgeService.batchIgnore.save({
+                            "idList":$scope.parameter.idArr
+                        },function(data){
+                            if(data.status==200){
+                                // layer.msg("文件忽略成功");
 
-                        }
-                        if(data.status==500){
-                            layer.msg(data.info,{time:10000});
-                        }
+                            }
+                            if(data.status==500){
+                                layer.msg(data.info,{time:10000});
+                            }
 
-                    },function(err){
-                        console.log(err);
-                    });
+                        },function(err){
+                            console.log(err);
+                        });
+                    }
                     //保存成功，删除知识--end
 
 

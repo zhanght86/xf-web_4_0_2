@@ -11,7 +11,6 @@ module.exports = knowledgeManagementModule => {
          $window, $stateParams, $interval, $filter)=> {$state.go("KM.concept");
             $scope.parameter = {
                 idArr:[],               //新知识id
-
                 "title"                 : "",   //知识标题
                 "expDateStart"          : "",   //知识有效期开始时间
                 "expDateEnd"            : "",   //知识有效期结束时间
@@ -301,23 +300,23 @@ module.exports = knowledgeManagementModule => {
                         },function(){
                             $state.reload("KM.concept")
                         });
+                        //保存成功，删除知识 //保存成功，删除知识--end
+                        if($stateParams.knowledgeId){
+                            KnowledgeService.batchIgnore.save({
+                                "idList":$scope.parameter.idArr
+                            },function(data){
+                                if(data.status==200){
+                                    // layer.msg("文件忽略成功");
 
-                        //保存成功，删除知识
-                        KnowledgeService.batchIgnore.save({
-                            "idList":$scope.parameter.idArr
-                        },function(data){
-                            if(data.status==200){
-                                // layer.msg("文件忽略成功");
+                                }
+                                if(data.status==500){
+                                    layer.msg(data.info,{time:10000});
+                                }
 
-                            }
-                            if(data.status==500){
-                                layer.msg(data.info,{time:10000});
-                            }
-
-                        },function(err){
-                            console.log(err);
-                        });
-                        //保存成功，删除知识--end
+                            },function(err){
+                                console.log(err);
+                            });
+                        }
 
                     }else{
                         $scope.vm.saveLimitTimer = true;
