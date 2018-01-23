@@ -39,6 +39,10 @@ module.exports = knowledgeManagementModule =>{
             saveLimitTimer : true, //限制多次打标
             showFrame : showFrame //选择业务框架
         };
+        // 知识学习  （知识学习>新知识发现>学习）
+        if($stateParams.knowledgeId){
+            getNewKnowledgeLearningList();
+        }
         function showFrame(scope){
             if(!$scope.parameter.classifyList.length){
                 return layer.msg("请先选择添加类目")
@@ -155,7 +159,7 @@ module.exports = knowledgeManagementModule =>{
         }
 
         //获取本地存储
-        function getList(){
+        function getNewKnowledgeLearningList(){
             var str = localStorageService.get("localStorageKey");
             var json = JSON.parse(str);
             console.log("本地存储的"+json);
@@ -172,15 +176,11 @@ module.exports = knowledgeManagementModule =>{
             angular.forEach(arr,function(obj){
                 $scope.parameter.idArr.push(obj.id);
                 $scope.parameter.extensionQuestionList.unshift({"title":obj.question});
-            })
+            });
             console.log("获取的"+$scope.parameter.title);
             console.log($scope.parameter.extensionQuestionList);
             console.log($scope.parameter.idArr);
         }
-        getList();
-
-
-
     }
 ])};
 
