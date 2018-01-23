@@ -666,9 +666,10 @@ $(".aside-navs").on("click","span",function(){
                         }
 
                         if($scope.vm.frameTypeId==100||$scope.vm.frameTypeId==101){
+                            $scope.vm.contentList[0].content = ""
                             addFaq();
                         }
-                        if($scope.vm.frameTypeId==102){
+                        if($scope.vm.frameTypeId==102){ 
                             addElement();
                         }
                     }

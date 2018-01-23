@@ -94,9 +94,7 @@ module.exports = applicationManagementModule =>{
                 layer.msg("发布服务的名称不能为空!");
                 return 0;
             }else if($scope.vm.nodeList.available.length==0){
-                 layer.msg("无可用节点!");
                  ngDialog.closeAll(0) ;
-
                 return 0;
             }else if($scope.vm.code==null||$scope.vm.code==""){
                 layer.msg("发布服务时未选择发布节点!");
