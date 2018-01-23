@@ -43,11 +43,15 @@ module.exports=functionalTestModule=>{
             //弹窗
             searchByKnowledgeTitle:searchByKnowledgeTitle,
             keyLogin:keyLogin,                                       //回车查询
+            // paginationConf2 : {       //分页条件
+            //     pageSize : 5  ,    //默认每页数量
+            //     pagesLength: 10    //分页框数量
+            // } ,
             paginationConf2 : {       //分页条件
                 pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
                 currentPage: $location.search().currentPage?$location.search().currentPage:1,
                 search: searchByKnowledgeTitle ,
-                location:true
+                location:false
             } ,
             currQuestion:"",      // 关联弹窗
             knowledgeList:[],     //关联列表
@@ -299,6 +303,8 @@ module.exports=functionalTestModule=>{
           *  表格列表 未学习关联弹窗
           **/
          function searchByKnowledgeTitle(index){
+
+
              var i = layer.msg('查询中...', {icon: 16,shade: [0.5, '#000'],scrollbar: false, time:100000}) ;
              if(nullCheck($("#inputValue").val())==true){
 
@@ -406,6 +412,8 @@ module.exports=functionalTestModule=>{
             $scope.$parent.$parent.MASTER.openNgDialog($scope,associateLearn,'480px',function () {
                 assembleLearnData(requestId);
             },function(){
+                $scope.vm.knowledgeList = [];
+                $scope.vm.paginationConf2.totalItems = null;
 
             });
         }
