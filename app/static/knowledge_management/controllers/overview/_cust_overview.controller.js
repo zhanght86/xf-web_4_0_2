@@ -112,7 +112,7 @@ module.exports = knowledgeManagementModule =>{
                     "expDateStart": $scope.vm.seekAdvanceParameter.knowledgeExpDateStart || null ,        //知识有效期结束值默认值null
                     "origin":$scope.vm.seekAdvanceParameter.sourceType || null,        //知识来源默认值0   (0:全部   1:单条新增  2：文档加工)
                     "timeType": $scope.vm.seekAdvanceParameter.updateTimeType ,   //知识更新时间默认值0   (0:不限 1:近三天 2:近七天 3:近一月)
-                    "classifyList":$scope.vm.seekAdvanceParameter.classifyList,
+                    "classifyId":$scope.vm.seekAdvanceParameter.classifyList,
                     "channel":130
                 },function(response){
                     $scope.vm.knowledgeIdList = [] ;

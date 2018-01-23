@@ -52,7 +52,7 @@
                                     <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
                                         <input class="ipt-txt bd" style="width:407px;height:22px;" type="text"
                                                ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index)"
-                                               ng-blur="$parent.knowCtr.extensionUnique(parameter.extensionQuestionList)">
+                                               ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)">
                                         <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
                                               ng-click="$parent.knowCtr.removeExtention(this,$index)"
                                         ></span>
@@ -66,7 +66,7 @@
                         <!--预览内容-->
                         <div ng-repeat="(index,item) in parameter.contents track by $index">
                             <div class="item-line">
-                                <div class="lable" style="padding-right:10px;box-sizing:border-box;">
+                                <div class="lable" style="padding-right:10px;padding-top:6px;box-sizing:border-box;">
                                     内容{{index+1}}:
                                 </div>
                                 <div class="value">
@@ -178,7 +178,7 @@
                             <div class="step_one_s">5</div>
                             <div class="step_one_arrow"></div>
                             <div class="step_one_con">
-                                <p>知识内容：知识内容就是答案，可以根据渠道维度的不同填写多个哦!
+                                <p>知识内容 ：知识内容就是答案，可以根据渠道维度的不同填写多个哦!
                                 </p>
                                 <div class="tr introjs-tooltipbuttons">
                                     <button  class="introjs-button introjs-skip" ng-click="$parent.knowCtr.introduction.hideTip()">跳出</button>

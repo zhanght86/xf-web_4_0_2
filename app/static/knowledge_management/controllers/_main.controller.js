@@ -78,24 +78,30 @@ module.exports = knowledgeManagementModule =>{
               //             ----存在空行  -- 焦点移动
               //             ----存在重复  -- 焦点移动
 
-              if((e.keyCode|| e.which)==13 && nullCheck(scope.parameter.extensionQuestionList[len-1])){
+              if((((e.keyCode|| e.which)==13) || e.type=="blur")  && nullCheck(scope.parameter.extensionQuestionList[len-1])){
                   if(!scope.parameter.extensionQuestionList[index].title){
-                      return layer.msg("请填写完整") ;
+                      if(e.type=="blur"){
+                          return
+                      }else{
+                          return layer.msg("请填写完整") ;
+                      }
                   }else{
                       if(list && scope.parameter.extensionQuestionList[index].title.match(/#\S+#/g)==null){
                          return layer.msg("用户问法必须含有#概念词/集合词#")
                       }
                       let repeatIndex = extensionUnique(scope.parameter.extensionQuestionList);
                       if(repeatIndex!=-1){
-                          focusCur = repeatIndex;
+                          // focusCur = repeatIndex;
+                          focusCur = 0;
                       }else{
                           if(scope.parameter.extensionQuestionList.every(item=>item.title)){
-                              scope.parameter.extensionQuestionList.push({
+                              scope.parameter.extensionQuestionList.unshift({
                                   "title":""
                               }) ;
-                              focusCur = scope.parameter.extensionQuestionList.length -1 ;
+                              focusCur = 0 ;
                           }else{
-                              focusCur = scope.parameter.extensionQuestionList.findIndex(item=>!item.title) ;
+                              focusCur = 0 ;
+                              // focusCur = scope.parameter.extensionQuestionList.findIndex(item=>!item.title) ;
                           }
                       }
                   }

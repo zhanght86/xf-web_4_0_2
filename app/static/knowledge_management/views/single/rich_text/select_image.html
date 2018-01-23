@@ -9,6 +9,10 @@
             </li>
         </ul>
     </div>
+    <div class="media_empty" ng-if="!newKnow.imageList.length">
+        <p class="empty_tip ">当前记录为空</p>
+        <p class="empty_add"><a class="c_blue" ng-click="closeThisDialog()" target="_blank" ui-sref="MM.pic">点击跳转到添加图片页面</a></p>
+    </div>
     <pagination ng-if="(newKnow.imgPaginationConf.totalItems) && (newKnow.imgPaginationConf.totalItems>0) && (newKnow.type==1018)" conf="newKnow.imgPaginationConf"></pagination>
 </div>
 <style>
@@ -35,6 +39,26 @@
     .selectImage .image_container .image_title{
         line-height:30px;
         text-align: center;
+    }
+    .selectImage .media_empty{
+        width:100%;
+        margin:10px 0;
+        padding:20px 0 50px 0;
+        line-height:20px;
+        text-align: center;
+        border-bottom: 1px solid #8f949a;
+        border-top: 1px solid #8f949a;
+    }
+    .selectImage .media_empty .empty_tip{
+        margin:0 auto;
+        display: inline-block;
+        padding-left:20px;
+        backgroud:url("assets/images/warning.png") no-repeat left;
+        font-size:80%;
+        color: #6f7377;
+    }
+    .selectImage .media_empty .empty_add{
+        color: #3679b6;
     }
 
 </style>

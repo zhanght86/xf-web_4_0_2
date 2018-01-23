@@ -63,7 +63,7 @@ module.exports = knowledgeManagementModule =>{
                     if(response.data.extensionQuestionList.length==0){
                         $scope.parameter.extensionQuestionList = [{"title":""}]
                     }else{
-                        $scope.parameter.extensionQuestionList.push({"title":""})
+                        $scope.parameter.extensionQuestionList.unshift({"title":""})
                     }
                     // 转换字符串为json
                     angular.forEach(response.data.contents,function(content,index){
