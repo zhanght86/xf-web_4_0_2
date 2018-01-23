@@ -50,9 +50,14 @@ module.exports = applicationManagementModule =>{
                 "pageSize": 9999
             },function(response){
                 layer.close(i) ;
-                $scope.vm.serviceData = response.data.data;
+                if(response.status==200&&response.data!=null){
+                 $scope.vm.serviceData = response.data.data;
                 // $scope.vm.paginationConf.totalItems = response.data.total ;
                 // $scope.vm.paginationConf.numberOfPages = response.data.total/$scope.vm.paginationConf.pageSize ;
+                }else{
+                    $scope.vm.serviceData=""
+                }
+               
             },function(error){console.log(error);layer.close(i) ;})
 
         }

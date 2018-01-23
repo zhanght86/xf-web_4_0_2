@@ -226,10 +226,12 @@ module.exports=functionalTestModule => {
         /*****************
          * 重测
          * *****************/
-        function startUpagain(id,name){
+        function startUpagain(id,name,remark){
             if($scope.vm.serviceId) {
                 $scope.vm.batchNumberId = id ;
                 $scope.vm.batchName = name;
+                $scope.vm.remark2 = remark;
+
                 let test_html = require("../../../views/test_tools/batch_test/start_up_dialog2.html") ;
                 $scope.$parent.$parent.MASTER.openNgDialog($scope,test_html,"400px",function(){
 
@@ -299,9 +301,10 @@ module.exports=functionalTestModule => {
 
 
         //添加备注
-        function addRemarks(id){
+        function addRemarks(id,remark){
             $scope.vm.batchNumberId = id;
-            //alert(id);
+            $scope.vm.remark = remark;
+
             let remarks_html = require("../../../views/test_tools/batch_test/remarks_dialog.html") ;
             $scope.$parent.$parent.MASTER.openNgDialog($scope,remarks_html,"400px",function(){
                 remarks(id);

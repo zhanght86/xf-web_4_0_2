@@ -172,7 +172,7 @@ module.exports=materialModule => {
             var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
             if(url.length>0){
                 if(!reg.test(url)){
-                    alert("请输入以http://或者 https://开头的正确网址！");
+                    layer.msg("请输入以http://或者 https://开头的正确网址！",{time:3000});
                     //return false;
                 }
             }
