@@ -6,6 +6,10 @@
             <div class="item_right caliper_content">
                 <input type="hidden" style="margin-left: 40px;" class="slider-input-greeting"/>
             </div>
+            <span class="set_tip_bar" style="line-height: 25px; margin-left: 15px; padding-top: 8px;">
+                <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                <span class="pd-5 tip_bar_info" >机器人在标签语义匹配模块下的阈值设置</span>
+           </span>
         </div>
         <div class="item">
             <p class="item_left caliper_title"> 深度语义匹配：</p>
@@ -18,12 +22,20 @@
             <div class="item_right">
                 <div switch value="parameter.commentOn"></div>
             </div>
+            <span class="set_tip_bar" style="margin-left: 10px;">
+                <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                <span class="pd-5 tip_bar_info" >是否开启全局问答评价开关</span>
+           </span>
         </div>
         <div class="item">
             <p class="item_left">  寒暄开关：</p>
             <div class="item_right">
                 <div switch value="parameter.greetingOn"></div>
             </div>
+            <span class="set_tip_bar" style="margin-left: 10px;">
+                <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                <span class="pd-5 tip_bar_info" >是否开启全局机器人寒暄开关</span>
+           </span>
         </div>
         <div class="item">
             <p class="item_left">  推荐个数：</p>
@@ -32,6 +44,10 @@
                        ng-change="vm.parameterLimit(1,'recommendNumber')" step="1"
                        placeholder="配置推荐问题个数，标准格式为数字型" style="width: 350px;" required>
             </div>
+            <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                <span class="pd-5 tip_bar_info" >设置全局机器人推荐问题个数</span>
+           </span>
         </div>
         <div class="item">
             <p class="item_left">  寒暄阈值：</p>
@@ -40,6 +56,7 @@
                        ng-change="vm.parameterLimit(0,'greetingUpperLimit')" step="0.1"
                        placeholder="配置寒暄阈值，标准格式为float型" style="width: 350px;" required>
             </div>
+             <span tip-bar="是否采用寒暄回答的下线阈值"></span>
         </div>
         <div class="item btn_group">
             <a class="btn btn-blue mr10" ng-click="vm.updateParameter()">保存</a>
@@ -64,7 +81,6 @@
     .parameter_setting .parameter_content .item{
         margin-top:10px;;
         width:100%;
-        overflow: hidden;
     }
     .parameter_setting .parameter_content .btn_group{
         padding-left:20%;
@@ -75,10 +91,12 @@
         width:14%;
         text-align: right;
     }
+    .parameter_setting .parameter_content .item {
+        height: 50px;
+    }
     .parameter_setting .parameter_content .item .item_right {
         float: left;
         font-size:100%;
-        width:80%;
     }
     .parameter_setting .parameter_content .item .caliper_title{
         height:50px;
@@ -87,4 +105,5 @@
     .parameter_setting .parameter_content .item .caliper_content{
         padding-top:18px;
     }
+
 </style>

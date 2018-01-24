@@ -1,4 +1,4 @@
-<div class="r-cont pd30">
+    <div class="r-cont pd30">
     <p class="r-cont-hd mb-20">交互管理</p>
     <div class="scene_box">
         <table class="stop_word_tab">
@@ -9,7 +9,7 @@
             </tr>
             <tr ng-repeat="item in vm.exchangeModeData" ng-class="!$last?'bd_none':''">
                 <td>{{item.name}}</td>
-                <td><a class="description">{{item.description}}</a></td>
+                <td class="description">{{item.description}}</td>
                 <td><a ng-if="$index==1" class="c_blue" ng-click="vm.multipleConversationSetup()">多轮会话配置</a></td>
             </tr>
         </table>

@@ -24,7 +24,9 @@
             <div class="p10 mb-10" >
                 <p title="{{application.name}}" class="name" >{{application.name | limitCheckFilter:8}}</p>
                 <!--<p class="name" ng-if="application.name.length<=8">{{application.name}}</p>-->
-                <p class="scene">场景类型：<span>客服型</span></p>
+                    <p class="scene">场景类型：
+                        <span>客服型</span>
+                    </p>
                     <p class="status">应用状态：
                         <span ng-if="application.status==40001" class="c-orange">未使用</span>
                         <span ng-if="application.status==40002" class="c-primary">使用中</span>

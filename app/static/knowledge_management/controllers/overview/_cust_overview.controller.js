@@ -181,18 +181,18 @@ module.exports = knowledgeManagementModule =>{
                 });
             }
         }
-        // 获取今日新增数量
-        (function getNewNumber(){
-            let today = $filter("date")(new Date().getTime(),"yyyy-MM-dd");
-            KnowledgeService.queryCustNewNumber.save({
-                "applicationId":APPLICATION_ID ,
-                "updateTimeStart": today,        //知识有效期开始值默认值null
-                "updateTimeEnd": today ,      //知识有效期结束值默认值null
-                "channel":130
-            },function(data){
-                $scope.vm.newNumber = data.data;
-            },function(error){console.log(error)})
-        })();
+        // 获取今日新增数量 --- temp
+        // (function getNewNumber(){
+        //     let today = $filter("date")(new Date().getTime(),"yyyy-MM-dd");
+        //     KnowledgeService.queryCustNewNumber.save({
+        //         "applicationId":APPLICATION_ID ,
+        //         "updateTimeStart": today,        //知识有效期开始值默认值null
+        //         "updateTimeEnd": today ,      //知识有效期结束值默认值null
+        //         "channel":130
+        //     },function(data){
+        //         $scope.vm.newNumber = data.data;
+        //     },function(error){console.log(error)})
+        // })();
 /////////////////////////////////////////          Bot      /////////////////////////////////////////////////////
         $("body").on('click',function(e){
                   e = event || window.event;

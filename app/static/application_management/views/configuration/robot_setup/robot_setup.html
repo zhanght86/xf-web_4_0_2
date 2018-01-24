@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="item-line mt15 mb10">
-                <div class="lable">
+                <div class="lable" style="color: #333;">
                     机器人头像：
                 </div>
                 <div class="value" style="padding:4px"  >
@@ -85,7 +85,7 @@
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
                     <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
                             <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
-                            <span class="pd-5 tip_bar_info" >答案匹配不高时机器人的模糊回答</span>
+                            <span class="pd-5 tip_bar_info" >在机器人无法推出最高阈值答案的时候的回复</span>
                     </span>
                     <!--<div class="error-tip c-red" ng-show="mySetting.defaultFuzzyAnswer.$dirty && mySetting.defaultFuzzyAnswer.$invalid">-->
                         <!--您输入的未知回答不能超过50个汉字，请重新输入-->
@@ -99,7 +99,10 @@
                     <input class="input-text" type="text" name="robotSensitive" placeholder="当会话中包含敏感词时，机器人的回复"
                            ng-model="robot.defaultSensitiveAnswer" ng-maxlength="50"
                            ng-pattern="/^[\u2E80-\uFE4F\（\）\《\》\——\；\，\。\“\”\<\>\！]+$/"/>
-                    <span tip-bar="当用户的提问中含有敏感内容时机器人的回复"></span>
+                    <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" >当用户的提问中含有敏感内容时机器人的回复</span>
+                    </span>
                     <div class="error-tip c-red" ng-show="mySetting.robotSensitive.$dirty && mySetting.robotSensitive.$invalid">
                         您输入的敏感词回答不能超过50个汉字，请重新输入
                     </div>
@@ -117,6 +120,10 @@
                     <div class="error-tip c-red" ng-show="mySetting.robotRepeatNumber.$dirty && mySetting.robotRepeatNumber.$invalid">
                         重复回答次数必须设置为大于0，请重新输入
                     </div>
+                    <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" >设置机器人接收用户的重复提问的次数上限。达到重复上限，机器人就会对用户的重复提问进行提示，提示内容可以在下方重复回答提示中设置</span>
+                    </span>
                 </div>
             </div>
 
@@ -141,6 +148,10 @@
                     <div class="error-tip c-red" ng-show="mySetting.robotTimeoutLimit.$dirty && mySetting.robotTimeoutLimit.$invalid">
                         会话超时时间必须设置为大于0，请重新设置
                     </div>
+                     <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                            <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                            <span class="pd-5 tip_bar_info" >聊天页面当用户长时间未操作的时候，系统会自动关闭当前会话。超时时间是设置未操作时间的上限。提示内容可以在下方会话超时提示中设置</span>
+                    </span>
                 </div>
             </div>
 
@@ -164,6 +175,7 @@
                     <div class="error-tip c-red" ng-show="mySetting.robotExpire.$dirty && mySetting.robotExpire.$invalid">
                         过期知识回答不能超过50个汉字，请重新输入
                     </div>
+                    <span tip-bar="当机器人识别到过期知识的时候的回复"></span>
                 </div>
             </div>
         </div>

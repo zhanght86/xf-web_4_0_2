@@ -31,7 +31,7 @@ module.exports = applicationManagementModule =>{
             },
             {
                 "name" : "被动多轮文本型",
-                "description" : "用户先提问，机器人和用户进行多次交互。"
+                "description" : "用户先提问，机器人和用户进行多次交互"
             }
         ] ;
         function multipleConversationSetup(){

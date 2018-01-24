@@ -42,7 +42,7 @@
                         <div style="padding-top: 5px;">
                             <!--不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame(this)">业务框架</a>吧-->
                             <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="width: 410px;position: relative">
-                                <input class="ipt-txt bd" style="width:395px;height:32px;" type="text"
+                                <input class="ipt-txt bd" style="width:395px;height:32px;padding-right: 30px;" type="text"
                                        ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index)"
                                        ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)"
                                 >
@@ -82,8 +82,8 @@
                     <div class="list_facContent " style="margin-bottom:80px;">
                         <div class="list_facContent_L"></div>
                         <div>
-                            <input type="button" class="btn1 btn1_blue mr-20" value="预览" ng-click="vm.scan()"/>
                             <input type="button" class="btn1 btn_green"  ng-click="vm.save()" value="保存"/>
+                            <input type="button" class="btn1 btn1_blue mr-20" value="预览" ng-click="vm.scan()"/>
                         </div>
                     </div>
                     <!--引导-->

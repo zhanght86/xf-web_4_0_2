@@ -2,7 +2,7 @@
     <p class="backup_title">备份还原</p>
     <div class="backup_content">
         <div>
-            <h4 class="content_title">系统备份</h4>
+            
             <div class="content_detail">
                 请选择您希望备份的模块：
                 <span ng-repeat="item in vm.backList" class="pr20">
@@ -12,6 +12,7 @@
             <!--<form action="/api/material/backuprestore/download">-->
                 <!--<input type="submit" value="开始备份">-->
             <!--</form>-->
+            <h4 class="content_title">系统备份</h4>
             <a href="javascript:;" class="btn btn-primary"  ng-click="vm.backup()">开始备份</a>
         </div>
         <div>
@@ -32,11 +33,12 @@
     }
     .backup_restore .backup_content .content_title{
         width:100%;
-        line-height: 60px;
+        line-height: 40px;
         font-size:100%;
-        font-weight: 700;
+        
     }
     .backup_restore .backup_content .content_detail{
         line-height: 40px;
+        margin-top: 25px;
     }
 </style>
