@@ -196,3 +196,40 @@
         }
     }
 }
+.theme-blue-deep {
+  .back-bar {
+    height: 5px;
+    border-radius: 2px;
+    background-color: #3ea9fb;
+    #gradient > .vertical(#eeeeee, #dddddd);
+    .selected-bar {
+      border-radius: 2px;
+      #gradient > .vertical(#b1d1f9, #64a8f9);
+    }
+    .pointer {
+      width: 14px;
+      height: 14px;
+      top: -5px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid #AAA;
+      #gradient > .vertical(#eeeeee, #dddddd);
+    }
+    .pointer-label {
+      color: #999;
+    }
+    .focused {
+      color: #333;
+    }
+  }
+  .scale {
+    span {
+      border-left: 1px solid #e5e5e5;
+    }
+    ins {
+      color: #999;
+    }
+  }
+}

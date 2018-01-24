@@ -8,13 +8,13 @@
         <table class="voice_list">
             <tr class="voice_header">
                 <th width="20%">选择</th>
-                <th width="60%">文件名</th>
-                <th width="20%">播放</th>
+                <th width="70%">文件名</th>
+                <!--<th width="20%">播放</th>-->
             </tr>
             <tr ng-repeat="item in newKnow.voiceList">
                 <td><input type="radio" name="voice" ng-click="newKnow.voiceSelected.id=item.id;newKnow.voiceSelected.name=item.name" ng-checked="newKnow.voiceSelected.id == item.id"></td>
                 <td>{{item.name}}</td>
-                <td>--播放--</td>
+                <!--<td>&#45;&#45;播放&#45;&#45;</td>-->
             </tr>
         </table>
         <pagination ng-if="(newKnow.voicePaginationConf.totalItems) && (newKnow.voicePaginationConf.totalItems>0) && (newKnow.type==1020)" conf="newKnow.voicePaginationConf"></pagination>
