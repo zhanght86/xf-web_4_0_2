@@ -25,7 +25,7 @@ module.exports=materialModule => {
                 pageSize : $location.search().pageSize?$location.search().pageSize:5,        //每页条目数量
                 currentPage: $location.search().currentPage?$location.search().currentPage:1,
                 search: getPicList ,
-                location:true
+                location:false
             },
             imgSelected : "" ,       //已选择图片库选择封面图片
             selectImage : selectImage , //选择图片库图片
@@ -86,19 +86,7 @@ module.exports=materialModule => {
             //,scaleEnabled:false
 
         } ;
-        // void function(){
-        //     // httpRequestPost("/api/ms/picture/getIP",{},function(response){
-        //     //     $scope.vm.ip = response.data
-        //     // },function(error){})
-        //     MaterialServer.getIp.save({
-        //
-        //     },function(response){
-        //         $scope.vm.ip = response.data
-        //     },function(error){
-        //         $log.log(error);
-        //     });
-        //
-        // }() ;
+
         /**
          *获取本地图片
          */
@@ -137,10 +125,9 @@ module.exports=materialModule => {
             ngDialog.close(ngDialog.latestID);
         }
         function selectLocalImg(){
-            //$scope.MASTER.openNgDialog($scope,"/static/material_management/views/teletext_message/select_image.html","")
 
             let select_html = require("../../views/teletext_message/select_image.html") ;
-            $scope.$parent.$parent.MASTER.openNgDialog($scope,select_html,"400px",function(){
+            $scope.$parent.$parent.MASTER.openNgDialog($scope,select_html,"600px",function(){
 
             },"",function(){
 
@@ -173,7 +160,8 @@ module.exports=materialModule => {
             if(url.length>0){
                 if(!reg.test(url)){
                     layer.msg("请输入以http://或者 https://开头的正确网址！",{time:3000});
-                    //return false;
+                    $("#linkText").focus();
+                    return ;
                 }
             }
 
