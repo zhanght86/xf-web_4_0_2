@@ -37,7 +37,8 @@ module.exports=functionalTestModule=>{
             clusteringContent : "",                    //
             check : check ,                           //查找聚类名称相同数据
             juleiList:[] ,                           //聚类名称相同的数据列表
-
+            learnQuestion :'',
+            learnId :'',
 
 
             //弹窗
@@ -100,19 +101,27 @@ module.exports=functionalTestModule=>{
 
         //设置本地存储
 
-        localStorageService.set("localStorageKey",'');
-        function setStorage(titleVal,listData){
 
-            check(titleVal,listData);
-            //var obj = {
-            //          "title":"信用卡办理1",
-            //          "extension":[{"question":"信用卡办理2","id":"460141182823956482"},{"question":"信用卡办理3","id":"460141182823956483"}]
-            // }
+        function setStorage(titleVal,listData,question,id){
 
-            var obj = {
-                      title : titleVal,
-                      extension : $scope.vm.juleiList
-                   }
+            if(titleVal==null){
+                var obj = {
+                    "title":"",
+                    "extension":[{"question":question,"id":id }]
+                }
+            }else  if(titleVal!=null && titleVal!="全部" && titleVal!="未聚类"){
+                localStorageService.set("localStorageKey",'');
+                check(titleVal,listData);
+                //var obj = {
+                //          "title":"信用卡办理1",
+                //          "extension":[{"question":"信用卡办理2","id":"460141182823956482"},{"question":"信用卡办理3","id":"460141182823956483"}]
+                // }
+
+                var obj = {
+                    title : titleVal,
+                    extension : $scope.vm.juleiList
+                }
+            }
             localStorageService.set("localStorageKey",JSON.stringify(obj));
             var sign =  localStorageService.get("localStorageKey");
             console.log(sign);
@@ -132,6 +141,7 @@ module.exports=functionalTestModule=>{
              console.log($scope.vm.juleiList);
          }
 
+         //弹窗回车查询
         function keyLogin(e){
             var srcObj = e.srcElement ? e.srcElement : e.target;
             var keycode = window.event?e.keyCode:e.which;
@@ -287,8 +297,11 @@ module.exports=functionalTestModule=>{
          /**
           * 学习
           **/
-         function learn(id,clustering){
+         function learn(id,clustering,question){
+             $scope.vm.learnId = id ;
              $scope.vm.clusteringContent = clustering ;
+             $scope.vm.learnQuestion = question ;
+
              console.log("======="+$scope.vm.knowledgeContent);
 
              let switch_knowledge_type = require('../../../views/division_knowledge/new_know_discovery_learn/switch_knowledge_type.html');
