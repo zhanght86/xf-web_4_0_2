@@ -68,7 +68,7 @@ module.exports = knowledgeManagementModule =>{
                     // 转换字符串为json
                     angular.forEach(response.data.contents,function(content,index){
                         $scope.parameter.contents[index].content = JSON.parse(content.content) ;
-                    })
+                    });
                 }
             })
         }
