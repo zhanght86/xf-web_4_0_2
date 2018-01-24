@@ -11,19 +11,24 @@
                     -
                     <input type="text" id="endTime" onchange="" ng-model="vm.workEndTime" onclick="WdatePicker({dateFmt:'HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}',onpicked:function(){}})" class="input-text Wdate" style="width:185px;border:1px solid #e1e1e1;height:31px;font-size:14px;" placeholder="HH:mm:ss" readonly="readonly">
                 </span>
-                <span tip-bar="'人工客服有效期'"></span>
-
+                <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                    <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                    <span class="pd-5 tip_bar_info" >选择人工客服上班时间</span>
+                </span>
             </div>
         </div>
         <div class="setting_div mb20 pr" style="padding-left:130px;">
             <span class="setting_span pa" style="width:130px;line-height:30px;">转人工条件：</span>
             <div class="clearfix mb30">
                 <label class="L mr10" style="line-height:30px;"><input type="checkbox" ng-model="vm.commandOn"  ng-checked="vm.commandOn"/> 人工命令</label>
-                <span tip-bar="'人工命令'"></span>
+                <span class="set_tip_bar" style="line-height: 31px;margin-left: 10px;">
+                    <a href="javascript:;" class="tip_bar_warn" ng-mouseenter="showTip($event)" ng-mouseleave ="hideTip($event)"></a>
+                <span class="pd-5 tip_bar_info" >人工命令启动转人工</span>
+                </span>
             </div>
             <div class="clearfix mb30">
                 <label class="L mr10" style="line-height:30px;"><input type="checkbox"  ng-model="vm.noAnswerOn"  name="checkbox"  ng-checked="vm.noAnswerOn"/> 机器人未直接回答</label>
-                <span tip-bar="'机器人未直接回答'"></span>
+                <span tip-bar="当机器人未答出答案的时候启动转人工"></span>
             </div>
             <div class="clearfix mb20">
                 未直接回答次数：
