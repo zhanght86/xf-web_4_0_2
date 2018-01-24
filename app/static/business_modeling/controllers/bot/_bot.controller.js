@@ -301,7 +301,7 @@ module.exports = businessModelingModule =>{
              $scope.vm.botInfo = $(this).parent().attr("bot-info");
              $scope.vm.categoryName=$(this).parent().attr("bot-name");
              $scope.vm.categoryTypeId=$(this).parent().attr("bot-type");
-             $scope.vm.categoryDescribe=$(this).parent().attr("depict-option");
+             $scope.vm.categoryDescribe=$(this).parent().attr("depict-option")=="null"?"":$(this).parent().attr("depict-option");
              $scope.vm.categoryAttributeName = $(this).parent().attr("node-option");
              $scope.vm.categoryPid=$(this).parent().attr("bot-pid");
              $scope.vm.botSelectValue=$(this).parent().attr("bot-pid");

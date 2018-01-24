@@ -575,7 +575,7 @@ module.exports = applicationManagementModule =>{
            // botLibraryInfoToCategoryAttribute();
              $scope.vm.categoryLibraryName=$(this).parent().attr("bot-name");
              $scope.vm.categoryLibraryTypeId=$(this).parent().attr("bot-type");
-             $scope.vm.categoryLibraryDescribe=$(this).parent().attr("depict-option");
+             $scope.vm.categoryLibraryDescribe=$(this).parent().attr("depict-option")=="null"?"":$(this).parent().attr("depict-option");
              $scope.vm.categoryLibraryAttributeName = $(this).parent().attr("node-option");
              $scope.vm.categoryLibraryPid=$(this).parent().attr("bot-pid");
              $scope.vm.categoryLibraryId=$(this).parent().attr("bot-pid");

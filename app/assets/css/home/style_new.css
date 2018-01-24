@@ -701,6 +701,8 @@
     border-radius: 2px;
     vertical-align: middle;
     border: 1px solid #0b7cff;
+    z-index: 9999;
+    background: #fff;
 }
 .set_tip_bar .tip_bar_warn:hover .tip_bar_info{
     border-radius:2px;vertical-align: middle;border:1px solid #0b7cff;display:none;
