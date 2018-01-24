@@ -1,9 +1,9 @@
 <div class="pd-10 knowPopup"  style="width: 100%;" >
     <p>知识内容新增<span><i class="namePopupClose"  ng-click="closeThisDialog(0)"></i></span></p>
     <div class="addPopupCnt" style="width:100%;margin-left:0;padding-top:10px;">
-        <form action="" name="form" novalidate >
-            <textarea style="overflow: hidden" name="title" ng-model="newKnow.content" required></textarea>
-        </form>
+        <div>
+            <textarea style="" name="title" ng-model="newKnow.content" required style="height:200px"></textarea>
+        </div>
        <div know-content-configuration="{{vm.apiQueryRelatedQuestion}}" template-type="true">
        </div>
         <div class="tc mb-10">
