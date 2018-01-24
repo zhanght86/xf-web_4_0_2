@@ -109,7 +109,8 @@
                     <div class="clearfix csso-hd">
                         <div class="fl">
                             <span class="L" checkbox-overview ng-click="vm.knowledgeIdList.length==vm.deleteIdList.length?vm.deleteIdList=[]:vm.deleteIdList=$parent.$parent.MASTER.selectAll(vm.knowledgeIdList,0)" result="vm.deleteIdList.length==vm.knowledgeIdList.length&&vm.knowledgeIdList.length"></span>
-                            <span class="L"><span>总计<em>{{vm.paginationConf.totalItems}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>
+                            <!--<span class="L"><span>总计<em>{{vm.paginationConf.totalItems}}</em>条数据，今日新增<em>{{vm.newNumber}}</em>条</span></span>-->
+                            <span class="L"><span>总计<em>{{vm.paginationConf.totalItems}}</em>条数据</span>
                         </div>
                         <div class="fr"  ng-click="vm.delData(vm.deleteIdList)">
                             <a class="ljtClose-btn" href="javascript:;">
