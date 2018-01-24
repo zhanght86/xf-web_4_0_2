@@ -28,6 +28,7 @@ module.exports = applicationManagementModule =>{
             format: '%s',
             width: 348,
             showLabels: true,
+            theme : "theme-blue-deep",
             isRange : true,
             onstatechange : function(val){
                 val = val.split(",") ;
@@ -44,6 +45,7 @@ module.exports = applicationManagementModule =>{
             format: '%s',
             width: 348,
             showLabels: true,
+            theme : "theme-blue-deep",
             isRange : true,
             onstatechange : function(val){
                 val = val.split(",") ;

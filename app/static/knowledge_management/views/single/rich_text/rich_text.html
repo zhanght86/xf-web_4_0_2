@@ -30,7 +30,7 @@
                             <div class="list_facContent mb-10">
                                 <div class="list_facContent_L">BOT路径：</div>
                                 <div class=" clearfix" >
-                                    <div class="ipt-txt-box L" style="width: 420px;border: 1px solid #e1e1e1;margin-right: 10px;">
+                                    <div class="ipt-txt-box L" style="width: 395px;border: 1px solid #e1e1e1;margin-right: 10px;">
                                         <div class="ipt-txt" style="overflow:hidden;line-height:24px;">
                                             <a title="{{item.value}}">{{item.value}}</a>
                                         </div>
@@ -50,10 +50,10 @@
                                 <div class="list_facContent_L"></div>
                                 <div class="clearfix" style="width:420px">
                                     <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
-                                        <input class="ipt-txt bd" style="width:395px;height:22px;" type="text"
+                                        <input class="ipt-txt bd" style="width:383px;height:22px;" type="text"
                                                ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index)"
                                                ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)">
-                                        <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
+                                        <span style="position:absolute;right: 28px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
                                               ng-click="$parent.knowCtr.removeExtention(this,$index)"
                                         ></span>
                                     </p>
