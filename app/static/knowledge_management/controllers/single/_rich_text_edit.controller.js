@@ -303,7 +303,8 @@ module.exports = knowledgeManagementModule =>{
                 layer.close(i);
                 if(response.status == 200){
                     layer.confirm('是前往总览页面查看？', {
-                        btn: ['是','继续添加'] //按钮
+                        btn: ['是','继续添加'] ,//按钮
+                        closeBtn:false
                     }, function(){
                         $state.go("KM.overview")
                     },function(){
