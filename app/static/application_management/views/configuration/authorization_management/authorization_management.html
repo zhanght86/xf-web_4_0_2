@@ -1,35 +1,36 @@
 <div class="robotSetup r-cont pd30 L" style="width: 990px;">
     <div class="r-cont-hd">
-        <span>Lisence授权</span>
+        <span>Licence授权</span>
     </div>
     <div class="pl30 mb20 mt20 clearfix">
-        <span class="">请输入Lisence：</span>
-        <input type="text" class="bd txt " style="width: 60%;height:31px;" ng-model="info.license"/>
+        <span class="">请输入Licence：</span>
+       <!--      -->
+        <textarea class="textarea ng-pristine ng-valid" style="width: 75%;vertical-align: middle;" ng-model="info.license"></textarea>
         <input type="button" class="btn1 btn1_blue " style="width: 10%;" ng-click="vm.authorize()" value="重新授权">
     </div>
     <form class="pl30 license_info">
         <fieldset>
-            <legend  style="width:auto;border-bottom: 0">授权信息</legend>
-            <div class="info_line">
-                <p>项目名称：{{info.projectName}}</p>
-                <p>授权状态：{{info.status}}</p>
-                <p>项目类型：{{info.projectType}}</p>
+            <legend class="msgR-title fontSyle"  style="width:auto;border-bottom: 0;font-size:15px;">授权信息</legend>
+            <div class="info_line" style="margin-top:0">
+                <p>项目名称：<span class="fontSyle">{{info.projectName}}</span></p>
+                <p>授权状态：<span class="fontSyle">{{info.status}}</span></p>
+                <p>项目类型：<span class="fontSyle">{{info.projectType}}</span></p>
             </div>
             <div class="info_line">
-                <p>场景：{{info.scene}}</p>
-                <p>版本：{{info.version}}</p>
-                <p>业务知识数量：{{info.knowledgeNum}}</p>
+                <p>场景：<span class="fontSyle">{{info.scene}}</span></p>
+                <p>版本：<span class="fontSyle">{{info.version}}</span></p>
+                <p>业务知识数量：<span class="fontSyle">{{info.knowledgeNum}}</span></p>
             </div>
             <div class="info_line">
-                <p>项目领域：{{info.sector}}</p>
-                <p>并发数量：{{info.concurrentNum}}</p>
-                <p>节点数量：{{info.nodeNum}}</p>
+                <p>项目领域：<span class="fontSyle">{{info.sector}}</span></p>
+                <p>并发数量：<span class="fontSyle">{{info.concurrentNum}}</span></p>
+                <p>节点数量：<span class="fontSyle">{{info.nodeNum}}</span></p>
             </div>
             <div class="info_line info_address_date">
-                <p>MAC地址：{{info.macAddressStr}}</p>
+                <p>MAC地址：<span class="fontSyle">{{info.macAddressStr}}</span></p>
             </div>
             <div class="info_line info_address_date">
-                <p>有效期：{{info.startTime | date : 'yyyy-MM-dd'}}至{{info.endTime | date : 'yyyy-MM-dd'}}</p>
+                <p>有效期：<span class="fontSyle">{{info.startTime | date : 'yyyy-MM-dd'}} 至 {{info.endTime | date : 'yyyy-MM-dd'}}</span></p>
             </div>
         </fieldset>
     </form>
@@ -47,5 +48,8 @@
     }
     .license_info .info_address_date p{
         width:100%;
+    }
+    .fontSyle{
+        font-weight: 700;
     }
 </style>

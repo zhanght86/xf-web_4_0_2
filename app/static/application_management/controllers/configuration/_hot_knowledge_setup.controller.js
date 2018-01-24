@@ -88,6 +88,8 @@ module.exports = applicationManagementModule =>{
         }
         //从聊天知识库查询知识
         function queryKnowledgeList(index,pageSize){
+            $scope.knowledge.selectedList.length=0;
+            $scope.knowledge.selectedIdList.length=0;
             return ApplicationServer.queryKnowledgeList.save({
                 "index": (index-1)*pageSize,
                 "pageSize": pageSize,
@@ -209,7 +211,7 @@ module.exports = applicationManagementModule =>{
                 $scope.knowledge.knowledgeIdList = [];
                 $scope.knowledge.knowledgeTitle = "";
             queryKnowledgeList($scope.knowledge.paginationConf.currentPage,$scope.knowledge.paginationConf.pageSize).$promise.then(function () {
-                $scope.$parent.$parent.MASTER.openNgDialog($scope,addHotHtml,"700px",function(){
+                $scope.$parent.$parent.MASTER.openNgDialog($scope,addHotHtml,"750px",function(){
                    
             }) ;
         })
