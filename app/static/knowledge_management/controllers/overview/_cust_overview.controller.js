@@ -186,8 +186,8 @@ module.exports = knowledgeManagementModule =>{
             let today = $filter("date")(new Date().getTime(),"yyyy-MM-dd");
             KnowledgeService.queryCustNewNumber.save({
                 "applicationId":APPLICATION_ID ,
-                "updateTimeStart": today+" 00:00:00" ,        //知识有效期开始值默认值null
-                "updateTimeEnd": today+" 24:00:00" ,      //知识有效期结束值默认值null
+                "updateTimeStart": today,        //知识有效期开始值默认值null
+                "updateTimeEnd": today ,      //知识有效期结束值默认值null
                 "channel":130
             },function(data){
                 $scope.vm.newNumber = data.data;
