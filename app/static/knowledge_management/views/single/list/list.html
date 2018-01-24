@@ -46,22 +46,14 @@
                     <div class="exten_problem">
                         <div class="list_facContent mb-10">
                             <div class="list_facContent_L">用户问法：</div>
-                            <!--<p style="line-height: inherit;padding-top:7px">-->
-                                <!--不知道怎么写扩展问？试试套用<a class="c_blue" ng-click="vm.showFrame(this)">业务框架</a>吧-->
-                            <!--</p>-->
-                        </div>
-                        <div class="list_facContent mb-10">
-                            <div class="list_facContent_L"></div>
-                            <div style="width:397px">
-                                <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative">
-                                    <input class="ipt-txt bd" style="width:395px;height:32px;" type="text"
-                                           ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index,'list')"
-                                           ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)">
-                                    <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
-                                          ng-click="$parent.knowCtr.removeExtention(this,$index)">
+                            <p ng-repeat="ext in parameter.extensionQuestionList track by $index" style="position: relative;width: 395px">
+                                <input class="ipt-txt bd" style="width:395px;height:32px;" type="text"
+                                       ng-model="ext.title" ng-change="parameter.extensionQuestionList[$index].title=ext.title" ng-keydown="$parent.knowCtr.skipNewLine(this,$event,$index,'list')"
+                                       ng-blur="$parent.knowCtr.skipNewLine(this,$event,$index)">
+                                <span style="position:absolute;right: 8px;top: 8px;display: inline-block;width: 16px;height:16px;background: url('assets/images/detel.png')"
+                                      ng-click="$parent.knowCtr.removeExtention(this,$index)">
                                     </span>
-                                </p>
-                            </div>
+                            </p>
                         </div>
                     </div>
                     <div class="list_facContent mb-50">

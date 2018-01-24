@@ -70,10 +70,6 @@ module.exports = knowledgeManagementModule =>{
                 angular.element(".advanced_search").slideUp()
             }
         });
-        // 1 scenesIds
-        // 2 title
-        // 3 heighsearch
-
         //是否清空 搜索内容  true  清空 false 不清空
         //@1 分頁 false   @2初始化 true
         function napSearch(type){
@@ -151,8 +147,7 @@ module.exports = knowledgeManagementModule =>{
         }
         function paramsReset(){
             //重置 参数 问题
-            // $scope.vm.classifyList = [],				//类目编号集默认值null（格式String[],如{“1”,”2”,”3”}）
-            $scope.vm.knowledgeTitle = "";         //知识标题默认值null
+            $scope.vm.selectedBot = [] ;
             $scope.vm.seekAdvanceParameter =  {
                 "classifyList" : null ,
                 "knowledgeType" : "" , //搜索知识类型

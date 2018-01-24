@@ -155,8 +155,7 @@
                                                 </li>
                                                 <!-- 要素知識-->
                                                 <li ng-if="item.type==103">
-                                                    <p>新添加要素数： {{item.contents[0].length}}条</p>
-                                                    <p>该要素知识包含条数： {{item.contents.length}}条</p>
+                                                    <p ng-repeat="size in item.contents" ng-bind="{1021:'要素个数：',1022:'答案个数：'}[size.type]+size.content+'个'"></p>
                                                 </li>
                                             </ul>
                                         </div>
